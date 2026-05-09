@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AI 把執行變便宜以後，你該把時間花在哪｜收斂條件與回饋鏈這兩道邊界</title>
+<meta name="description" content="AI 把執行壓到接近免費後，整體品質取決於兩道邊界：系統知不知道「對」是什麼（收斂條件），以及真實訊號能不能無失真抵達決定者（回饋鏈）。一個跨製造、投資、管理、AI 工作流的同構結構。">
+<style>
+  :root {
+    --bg: #fafaf7;
+    --fg: #1a1a1a;
+    --accent: #c0392b;
+    --muted: #666;
+    --border: #e5e5e0;
+    --callout-tip: #e8f4f0;
+    --callout-warn: #fdf3e7;
+    --fs-meta: 0.85rem;
+    --fs-body: 1rem;
+    --fs-h2:   clamp(1.3rem, 3vw, 1.5rem);
+    --fs-h1:   clamp(1.75rem, 4vw, 2.25rem);
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #1a1a1a;
+      --fg: #f0f0e8;
+      --accent: #e87c6e;
+      --muted: #999;
+      --border: #333;
+      --callout-tip: #1f3530;
+      --callout-warn: #3a2d1c;
+    }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
+  }
+  * { box-sizing: border-box; }
+  body {
+    font-family: "Noto Serif TC", Georgia, serif;
+    background: var(--bg);
+    color: var(--fg);
+    line-height: 1.8;
+    margin: 0;
+    padding: 0;
+    -webkit-font-smoothing: antialiased;
+  }
+  .progress-bar {
+    position: fixed; top: 0; left: 0; height: 3px;
+    background: var(--accent); width: 0%; z-index: 100;
+    transition: width 0.1s;
+  }
+  main {
+    max-width: 680px;
+    margin: 0 auto;
+    padding: clamp(2rem, 5vw, 4rem) clamp(1.5rem, 4vw, 2rem);
+  }
+  /* === 字級階梯：嚴格 4 級。所有 font-size 必須引用以下 4 個變數之一 === */
+  /* === 違反 → KB-04 機械驗證會擋（font_levels > 4）=== */
+  h1 { font-size: var(--fs-h1); line-height: 1.3; margin: 0 0 1rem; }
+  h2 { font-size: var(--fs-h2); line-height: 1.4; margin: 2.5rem 0 0.75rem; padding-bottom: 0.5rem; border-bottom: 1px solid var(--border); }
+  h3 { font-size: var(--fs-body); font-weight: 700; line-height: 1.4; margin: 1.75rem 0 0.5rem; color: var(--accent); }
+  p { margin: 0 0 1.25rem; }
+  ul, ol { margin: 0 0 1.25rem; padding-left: 1.5rem; }
+  li { margin-bottom: 0.5rem; }
+  a { color: var(--accent); text-underline-offset: 3px; }
+  a:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+  .subtitle { font-size: var(--fs-body); color: var(--muted); margin: -0.5rem 0 1.5rem; font-style: italic; }
+  .bluf { background: var(--callout-tip); border-left: 3px solid var(--accent); padding: 1.25rem 1.5rem; margin: 1.5rem 0 2rem; border-radius: 4px; }
+  .bluf strong.label { display: block; font-size: var(--fs-meta); letter-spacing: 0.05em; color: var(--accent); margin-bottom: 0.5rem; text-transform: uppercase; }
+  .callout { padding: 1rem 1.25rem; margin: 1.5rem 0; border-radius: 4px; border-left: 3px solid var(--muted); }
+  .callout.tip { background: var(--callout-tip); border-left-color: var(--accent); }
+  .callout.warn { background: var(--callout-warn); border-left-color: #d97706; }
+  blockquote { margin: 1.5rem 0; padding: 0.5rem 1.25rem; border-left: 3px solid var(--accent); background: var(--callout-tip); border-radius: 0 4px 4px 0; }
+  blockquote p:last-child { margin-bottom: 0; }
+  table { border-collapse: collapse; width: 100%; margin: 1.5rem 0; font-size: var(--fs-body); }
+  th, td { padding: 0.6rem 0.8rem; border: 1px solid var(--border); text-align: left; vertical-align: top; }
+  th { background: var(--callout-tip); font-weight: 600; }
+  code { font-family: "JetBrains Mono", monospace; background: var(--callout-tip); padding: 0.1em 0.4em; border-radius: 3px; font-size: var(--fs-body); }
+  hr { border: none; border-top: 1px solid var(--border); margin: 2.5rem 0; }
+  footer { color: var(--muted); font-size: var(--fs-meta); margin-top: 4rem; padding-top: 1.5rem; border-top: 1px solid var(--border); }
+  @media print {
+    .progress-bar { display: none; }
+    body { font-size: 11pt; line-height: 1.6; }
+    main { max-width: 100%; padding: 1cm; }
+  }
+</style>
+</head>
+<body>
+<div class="progress-bar" id="progress" aria-hidden="true"></div>
+<main>
+<header>
+<h1>AI 把執行變便宜以後，你該把時間花在哪</h1>
+<p class="subtitle">一個跨領域同構：收斂條件與回饋鏈這兩道邊界</p>
+<div class="bluf">
+<strong class="label">結論先行</strong>
+<p>AI 把「執行」壓到接近免費，多數人於是更努力地寫提示詞、跑更多輪迭代，希望逼出更好的結果。</p>
+<p>但真正決定整體品質的是兩道邊界。一道是 <strong>收斂條件</strong>——系統知不知道「對」是什麼；一道是 <strong>回饋鏈</strong>——真實訊號能不能無失真抵達決定者。</p>
+<p>這個結構在 AI 工作流、企業管理、精密製造與投資判斷裡是同一個。本文先從第一性原理切入，再各拆一層給你看。</p>
+</div>
+</header>
+
+<article>
+
+<h2>為什麼「迭代次數」不是答案？</h2>
+
+<p>迭代本身只是放大器。方向對，越跑越好；方向錯，越跑越壞。</p>
+
+<p>如果一個 AI 工作流的目標模糊、驗收標準不清、停止條件太弱，讓它再跑十輪只會更快放大偏差。</p>
+
+<p>多數人遇到結果不滿意時，第一反應是「再跑一次」或「換個說法問」。在邊界沒設好的前提下，這等於把廉價執行的紅利花回到失真的方向上。</p>
+
+<p>真正成熟的 AI 工作流，重點在於知道何時繼續、何時停止、何時修正方向、何時判定結果已經可以交付。這四個「何時」就是收斂條件的核心。</p>
+
+<h2>收斂條件其實有兩種樣子</h2>
+
+<p>「收斂條件」看似一個概念，實際上是兩件事疊在一起，混用會錯位。</p>
+
+<p><strong>第一種：驗收條件（done-condition）。</strong> 一個任務「完成了」的客觀檢驗器。</p>
+
+<p>能不能用差異比對（diff）看出修改？能不能跑測試證明沒壞？能不能用日誌（log）證明真的執行了？這層回答「這一步算不算結束」。</p>
+
+<p><strong>第二種：導航條件（navigation condition）。</strong> 系統「該往哪走、什麼可以接受」的目標、邊界與回饋設計。</p>
+
+<p>要解決的問題是什麼？哪些狀況絕對不可接受？什麼時候該升級成人工介入？這層回答「整個系統往哪收斂」。</p>
+
+<p>這兩層要一起想清楚。</p>
+
+<ul>
+<li>只有導航條件、沒有驗收條件 → 方向對，但每一步不知道算不算完成</li>
+<li>只有驗收條件、沒有導航條件 → 在錯方向上極有效率地執行</li>
+</ul>
+
+<p>缺哪一層，AI 工作流都會出問題。</p>
+
+<h2>第三道邊界：訊號到不到得了決定者？</h2>
+
+<p>即使把上面兩層都想清楚，還有一個更上游的問題：你拿到的訊號，是真實世界的訊號，還是已經被中介層轉譯到失真的版本？</p>
+
+<p>任何決定都依賴訊號進場，但訊號很少直接抵達決定者。它要經過報表、轉述、會議、流程、格式、角色理解後才被看見。</p>
+
+<p>每多一層中介，訊號就多一次被壓縮、延遲或重寫的機會。看似理性的決策，最後可能只是在對「失真後的世界」做最佳化。</p>
+
+<p>很多高槓桿改善的關鍵動作，是縮短回饋鏈、減少轉譯損耗、讓關鍵訊號更早抵達真正能改變系統的節點。</p>
+
+<p>決策品質的上限，往往不是由分析工具決定，而是取決於訊號從現場走到判斷點的路徑品質。</p>
+
+<h2>同樣的結構，為什麼在四個領域都成立？</h2>
+
+<p>到這裡你會發現，三道邊界（驗收條件＋導航條件＋回饋鏈）其實是同一個機制在四個領域的不同投影。</p>
+
+<h3>精密製造</h3>
+<p>決定整體交付的不是上下料速度，而是熱漂移、治具精度與良率瓶頸。把資源投在已經不是瓶頸的環節，整體交付不會改善。</p>
+
+<h3>投資判斷</h3>
+<p>一個投資論點（thesis）的真正風險常落在某個未驗證的核心假設上。把其他枝節模型做得再精細，也不會讓論點更安全。優化非瓶頸是負槓桿。</p>
+
+<h3>企業管理</h3>
+<p>領導者若只透過層層彙報理解產品，問題往往會被包裝到失真。親自使用產品、縮短回饋鏈，比堆更多會議與儀表板有效。</p>
+
+<h3>AI 工作流</h3>
+<p>用 1000 個 token 完成任務的工作流，比用 500 個 token 但卡死在中途有價值。token 的關鍵在於密度，看的是「有沒有在推進任務」。</p>
+
+<p>四個領域服從同一條瓶頸數學：整體系統的上限取決於最弱的那道邊界。</p>
+
+<h2>對你個人的四個可操作含意</h2>
+
+<p>如果你接受上面的結構，下一步就有四個對應動作。</p>
+
+<h3>1. 設計層比措辭層槓桿大得多</h3>
+<p>多數人把時間花在調提示詞措辭，但邊際貢獻早就接近零。同樣的時間放到「先寫好驗收條件，再設計導航條件」，邊際貢獻是數量級差距。</p>
+
+<h3>2. 判準若只在腦中，AI 每次都得猜</h3>
+<p>把判斷標準外部化成系統可重複調用的接口（卡片結構、欄位規格、模板、規格檔案），AI 才能沿著它收斂。</p>
+
+<p>第二大腦的真正價值在於把判準外部化成 AI 可調用的收斂條件，儲存知識只是副產品。</p>
+
+<h3>3. 執行成本下降不會讓瓶頸消失，只會讓瓶頸位移</h3>
+<p>過去昂貴的是「做不做得出來」，現在更昂貴的是「要不要做、做到哪算夠」。下一個會浮現的瓶頸大概率是「跨人類—AI 協作介面」：誰來定義「對」、誰承擔驗收責任。</p>
+
+<h3>4. 遇到結果不順時，先問瓶頸在哪，再問執行哪裡出錯</h3>
+<p>多數人會直覺地檢查執行細節，但若真瓶頸在收斂條件或回饋鏈，再多執行優化也只是放大失真。</p>
+
+<h2>收斂</h2>
+
+<p>執行越便宜，邊界越貴。</p>
+
+<p>瓶頸數學會強迫推出這個結果。當原本最貴的環節變便宜，系統的上限會位移到下一個尚未同步擴張的節點。</p>
+
+<p>對 AI 時代的工作者來說，這個下一個節點就落在「收斂條件」與「回饋鏈」這兩道邊界上。</p>
+
+<p>寫更好的提示詞、跑更多輪迭代，當然仍有用。但若你已經做了一陣子還在原地打轉，問題大概率不在那裡。</p>
+
+</article>
+
+<footer>
+<p>2026-05-10｜跨域同構分析｜source: <em>MOC AI 工作流條件設計與收斂控制</em> / 2026-04 Anthropic After Software 活動筆記</p>
+</footer>
+
+</main>
+<script>
+  const bar = document.getElementById('progress');
+  window.addEventListener('scroll', () => {
+    const h = document.documentElement;
+    const pct = (h.scrollTop / (h.scrollHeight - h.clientHeight)) * 100;
+    bar.style.width = pct + '%';
+  });
+</script>
+</body>
+</html>
