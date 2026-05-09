@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>當代理夠強，檢索器反而成了瓶頸 — 一篇用 grep 打贏 RAG 的論文</title>
+<meta name="description" content="DCI 論文（arXiv 2605.05242）解讀：當 LLM agent 夠強時，直接讓它用 grep / bash 操作原始語料，比傳統 embedding retriever 更準、更便宜、不用建索引。">
+<style>
+  :root {
+    --bg: #fafaf7;
+    --fg: #1a1a1a;
+    --accent: #c0392b;
+    --muted: #666;
+    --border: #e5e5e0;
+    --callout-tip: #e8f4f0;
+    --callout-warn: #fdf3e7;
+    --code-bg: #f1efea;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #1a1a1a;
+      --fg: #f0f0e8;
+      --accent: #e87c6e;
+      --muted: #999;
+      --border: #333;
+      --callout-tip: #1f3530;
+      --callout-warn: #3a2d1c;
+      --code-bg: #2a2a2a;
+    }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
+  }
+  * { box-sizing: border-box; }
+  body {
+    font-family: "Noto Serif TC", "PingFang TC", Georgia, serif;
+    background: var(--bg);
+    color: var(--fg);
+    line-height: 1.8;
+    margin: 0;
+    padding: 0;
+    -webkit-font-smoothing: antialiased;
+  }
+  .progress-bar {
+    position: fixed; top: 0; left: 0; height: 3px;
+    background: var(--accent); width: 0%; z-index: 100;
+    transition: width 0.1s;
+  }
+  main {
+    max-width: 680px;
+    margin: 0 auto;
+    padding: clamp(2rem, 5vw, 4rem) clamp(1.5rem, 4vw, 2rem);
+  }
+  h1 { font-size: clamp(1.75rem, 4vw, 2.25rem); line-height: 1.3; margin: 0 0 0.5rem; letter-spacing: -0.01em; }
+  .subtitle { color: var(--muted); font-size: 0.85rem; margin: 0 0 1.5rem; line-height: 1.75; }
+  h2 { font-size: clamp(1.3rem, 3vw, 1.5rem); line-height: 1.4; margin: 2.75rem 0 0.75rem; padding-bottom: 0.5rem; border-bottom: 1px solid var(--border); }
+  h3 { font-size: 1rem; line-height: 1.5; margin: 1.75rem 0 0.5rem; color: var(--accent); font-weight: 700; }
+  p { margin: 0 0 1.1rem; }
+  a { color: var(--accent); text-underline-offset: 3px; }
+  a:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+  ul, ol { padding-left: 1.4rem; margin: 0 0 1.25rem; }
+  li { margin-bottom: 0.4rem; }
+  .bluf {
+    background: var(--callout-tip);
+    border-left: 3px solid var(--accent);
+    padding: 1.25rem 1.5rem;
+    margin: 1.5rem 0 2rem;
+    border-radius: 4px;
+  }
+  .bluf strong.label {
+    display: block;
+    font-size: 0.85rem;
+    letter-spacing: 0.08em;
+    color: var(--accent);
+    margin-bottom: 0.6rem;
+    text-transform: uppercase;
+    font-weight: 700;
+  }
+  .bluf p { margin-bottom: 0.7rem; }
+  .bluf p:last-child { margin-bottom: 0; }
+  blockquote {
+    margin: 1.25rem 0;
+    padding: 0.6rem 1.1rem;
+    border-left: 3px solid var(--accent);
+    color: var(--fg);
+    font-style: normal;
+    background: transparent;
+  }
+  blockquote p { margin: 0; }
+  blockquote p + p { margin-top: 0.5rem; }
+  .callout { padding: 1rem 1.25rem; margin: 1.5rem 0; border-radius: 4px; border-left: 3px solid var(--muted); }
+  .callout.tip { background: var(--callout-tip); border-left-color: var(--accent); }
+  .callout.warn { background: var(--callout-warn); border-left-color: #d97706; }
+  table {
+    border-collapse: collapse;
+    width: 100%;
+    margin: 1.5rem 0;
+    font-size: 1rem;
+  }
+  th, td { padding: 0.6rem 0.8rem; border: 1px solid var(--border); text-align: left; vertical-align: top; }
+  th { background: var(--callout-tip); font-weight: 600; }
+  td.num { text-align: right; font-variant-numeric: tabular-nums; white-space: nowrap; }
+  .row-highlight td { background: var(--callout-tip); font-weight: 600; }
+  code {
+    font-family: "JetBrains Mono", "Menlo", monospace;
+    background: var(--code-bg);
+    padding: 0.1em 0.4em;
+    border-radius: 3px;
+    font-size: 0.85em;
+  }
+  hr { border: 0; border-top: 1px solid var(--border); margin: 2rem 0; }
+  .paper-title-en {
+    display: block;
+    font-style: italic;
+    color: var(--muted);
+    margin: -0.6rem 0 1.25rem;
+    line-height: 1.6;
+    font-size: 1rem;
+  }
+  footer {
+    color: var(--muted);
+    font-size: 0.85rem;
+    margin-top: 4rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--border);
+    line-height: 1.7;
+  }
+  footer a { color: var(--muted); text-decoration: underline; }
+  @media print {
+    .progress-bar { display: none; }
+    body { font-size: 11pt; line-height: 1.6; }
+    main { max-width: 100%; padding: 1cm; }
+  }
+</style>
+</head>
+<body>
+<div class="progress-bar" id="progress"></div>
+<main>
+<header>
+<h1>當代理夠強，檢索器反而成了瓶頸</h1>
+<p class="subtitle">一篇用 grep 打贏 RAG 的論文 ｜ arXiv 2605.05242 解讀</p>
+
+<div class="bluf">
+<strong class="label">BLUF</strong>
+<p>當大型語言模型代理（LLM agent）夠強的時候，傳統的嵌入向量檢索器（embedding retriever）反而會變成代理式搜尋（agentic search）的瓶頸。</p>
+<p>讓代理直接用 <code>grep</code>、<code>bash</code> 這些命令列工具操作原始的語料庫（corpus），這個做法叫做「直接語料互動」（Direct Corpus Interaction, <strong>DCI</strong>）。</p>
+<p>結果：更準、更便宜，而且不用事先建任何索引。</p>
+</div>
+</header>
+
+<article>
+
+<h2>重點不是「grep 萬能」，是介面解析度</h2>
+
+<p>這不是「grep 萬能」的口號。論文用嚴謹實驗加上消融分析（ablation）得出的結論是：</p>
+
+<blockquote>
+<p>檢索品質取決於「介面解析度」（interface resolution），而不只是嵌入向量的相似度高不高。</p>
+</blockquote>
+
+<p>傳統的檢索增強生成（RAG）把所有需求壓縮成一次 top-k 相似度查詢。代理看到的，只是檢索器決定翻出來給它看的那幾筆。</p>
+
+<p>DCI 不一樣。它把語料庫打開成一個可以自由探索的環境，讓代理可以：</p>
+
+<ul>
+<li>執行精確的字面搜尋（lexical search）</li>
+<li>在文件局部做上下文驗證</li>
+<li>多步修正自己的假設</li>
+</ul>
+
+<p>這才是強大代理真正需要的操作能力。</p>
+
+<h2>這篇論文是誰寫的？</h2>
+
+<p>論文全名：</p>
+<cite class="paper-title-en">Beyond Semantic Similarity: Rethinking Retrieval for Agentic Search via Direct Corpus Interaction</cite>
+
+<ul>
+<li>arXiv：<a href="https://arxiv.org/abs/2605.05242">2605.05242</a>（2026-05-03 提交）</li>
+<li>作者包括 Dongfu Jiang、Wenhu Chen 等（從作者 X 貼文確認）</li>
+</ul>
+
+<h3>為什麼要重新設計檢索？</h3>
+
+<p>傳統 RAG 在靜態的大型語料上很有效。但代理式搜尋的需求不一樣，它需要：</p>
+
+<ul>
+<li>多跳推理（multi-hop reasoning）</li>
+<li>找出中間實體</li>
+<li>把零散的弱線索組起來</li>
+<li>看到部分證據後修正計畫</li>
+</ul>
+
+<p>一次相似度查詢有幾個硬限制：</p>
+
+<ul>
+<li>一開始就被過濾掉的證據，後面救不回來</li>
+<li>很難同時表達精確的字面條件，或多個稀疏線索的組合</li>
+<li>把豐富的互動壓成固定的 top-k，本身就成了瓶頸</li>
+</ul>
+
+<p>作者用了一個直觀的類比：</p>
+
+<blockquote>
+<p><strong>top-k 檢索</strong>像「請圖書館員幫你挑一小車可能相關的書」。</p>
+<p><strong>DCI</strong> 像「進到開放書庫的研究圖書館」——代理可以自己進去精確搜尋、看上下文、追線索、就地驗證假設。</p>
+</blockquote>
+
+<p>對人類來說太慢，但對「代理 + 電腦」這個組合來說，<code>grep + bash</code> 又便宜又能組合。</p>
+
+<h2>實驗結果：同模型下 +11 百分點，成本降近三成</h2>
+
+<p>用同一個語言模型（Claude Sonnet 4.6）跑 BrowseComp-Plus（固定 100K 文件的深度研究基準）：</p>
+
+<table>
+<thead>
+<tr><th>系統</th><th class="num">準確率</th><th class="num">成本</th></tr>
+</thead>
+<tbody>
+<tr><td>Qwen3-Embedding-8B 檢索器</td><td class="num">69.0%</td><td class="num">$1,440</td></tr>
+<tr class="row-highlight"><td>DCI-Agent-CC</td><td class="num">80.0%</td><td class="num">$1,016</td></tr>
+</tbody>
+</table>
+
+<p>準確率 <strong>+11.0 百分點</strong>，成本 <strong>降 29.4%</strong>。</p>
+
+<h3>其他任務也大幅領先</h3>
+
+<ul>
+<li>多跳問答（multi-hop QA）平均 83.0%，比最強的搜尋代理高 <strong>+30.7 百分點</strong></li>
+<li>資訊檢索排名（IR ranking, NDCG@10）達 68.5，比 ReasonRank-32B 高 <strong>+21.5 百分點</strong></li>
+</ul>
+
+<h3>不靠任何嵌入向量基礎建設</h3>
+
+<p>DCI 在 BRIGHT、BEIR 等多個資訊檢索基準上也大幅勝過稀疏（sparse）／稠密（dense）／重排序（reranking）所有基線——而且：</p>
+
+<ul>
+<li>不依賴任何嵌入模型</li>
+<li>不依賴向量資料庫</li>
+<li>不依賴檢索 API</li>
+<li>不需要離線建索引</li>
+</ul>
+
+<p>這對動態變動的本地語料特別合適。</p>
+<p>開源 lite 版（用 GPT-5.4-nano）在 BrowseComp-Plus 也達到 62.9%，超越許多用更強模型的傳統代理。</p>
+
+<h2>DCI 是怎麼實作的？</h2>
+
+<p>代理直接用一般命令列工具操作原始文字語料：</p>
+
+<ul>
+<li><code>rg</code>（ripgrep，快速搜尋）、<code>grep</code>、<code>find</code>、<code>sed</code>、<code>bash</code> 管線、檔案讀取、輕量腳本、正則表達式（regex）</li>
+<li>沒有嵌入、沒有向量資料庫、沒有檢索 API</li>
+<li>語料庫像程式碼庫一樣可以自由瀏覽、回溯、修正假設</li>
+</ul>
+
+<div class="callout tip">
+<p>開源最小實作：DCI-Agent-Lite ｜ <a href="https://github.com/DCI-Agent/DCI-Agent-Lite">github.com/DCI-Agent/DCI-Agent-Lite</a></p>
+<p style="margin-top: 0.5rem; color: var(--muted); font-size: 0.85rem;">基於 Pi framework + bash 工具 + 輕量上下文管理。</p>
+</div>
+
+<p>提示詞會引導代理優先使用 <code>rg</code> 等工具，並搭配上下文管理（截斷／壓縮／摘要，分多級控制長時程穩定性）。</p>
+
+<h2>為什麼 DCI 有效？</h2>
+
+<p>論文最有價值的發現不是「召回更多黃金文件」，而是：</p>
+
+<blockquote>
+<p><strong>「定位分數」高出一倍以上。</strong></p>
+</blockquote>
+
+<p>換句話說：</p>
+
+<ul>
+<li>傳統檢索器其實常常已經把有用證據翻給代理看了——但代理沒辦法把這些證據轉成下一步推理</li>
+<li>DCI 一旦找到一份有潛力的文件，可以立刻在文件內部做高解析度的本地搜尋與驗證（這正是 grep 的強項）</li>
+<li>代理因此能像人類研究員一樣：<strong>提出假設 → 測試 → 讀局部上下文 → 修正查詢 → 驗證</strong></li>
+<li>增益主要來自「把弱證據轉成可行動的證據」，不只是單純提高召回率</li>
+</ul>
+
+<h3>消融分析的三個重點</h3>
+
+<ul>
+<li>簡單的 read + grep 介面已經抓到大部分增益</li>
+<li>開放完整 bash 還能再提升，但成本較高</li>
+<li>上下文管理的重點是「保留正確的工作狀態」，不是「保留最多文字」</li>
+</ul>
+
+<h3>限制：沒有免費午餐</h3>
+
+<p>DCI 在「找到第一份有用的錨點文件（anchor document）」階段比較耗資源。語料庫越大，廣度搜尋的成本越高。</p>
+
+<p>它擅長<strong>搜尋深度</strong>（深度驗證），但<strong>搜尋廣度</strong>（找到第一個錨點）不會自動隨規模放大。</p>
+
+<div class="callout warn">
+<p>未來方向是混合式：語意檢索找錨點 + DCI 做深度互動 + 良好的上下文管理。</p>
+</div>
+
+<h2>動手實作的資源</h2>
+
+<ul>
+<li><strong>論文</strong>：<a href="https://arxiv.org/abs/2605.05242">arxiv.org/abs/2605.05242</a>（HuggingFace Papers trending 也有）</li>
+<li><strong>開源 Lite 版</strong>（含設定、基準腳本、提示詞）：<a href="https://github.com/DCI-Agent/DCI-Agent-Lite">github.com/DCI-Agent/DCI-Agent-Lite</a></li>
+<li><strong>作者 X 討論</strong>：Dongfu Jiang 與 Wenhu Chen 的貼文（含詳細洞見）</li>
+</ul>
+
+<h2>一句話收束</h2>
+
+<blockquote>
+<p>問題不再只是「哪個嵌入模型的 top-k 最好？」</p>
+<p>而是「代理對知識應該擁有什麼操作？」</p>
+</blockquote>
+
+<p>DCI 是把檢索重新設計成「高解析度互動層」的第一步——不是要全面取代檢索器。</p>
+
+</article>
+
+<footer>
+<p>論文：<a href="https://arxiv.org/abs/2605.05242">arXiv 2605.05242</a> ｜ Beyond Semantic Similarity: Rethinking Retrieval for Agentic Search via Direct Corpus Interaction</p>
+<p>整理：彥皓 ｜ 2026-05-10</p>
+</footer>
+</main>
+<script>
+  const bar = document.getElementById('progress');
+  window.addEventListener('scroll', () => {
+    const h = document.documentElement;
+    const pct = (h.scrollTop / (h.scrollHeight - h.clientHeight)) * 100;
+    bar.style.width = pct + '%';
+  });
+</script>
+</body>
+</html>
