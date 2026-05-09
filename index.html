@@ -1,405 +1,85 @@
 <!DOCTYPE html>
-<html lang="zh-TW">
+<html lang="zh-Hant">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-<meta name="color-scheme" content="light dark">
-<meta name="description" content="判斷一句話可不可信，看的不是它聽起來多有力，而是發這句話的人付了多少代價">
-<title>訊號可信度上限由其生產成本而非表面強度決定</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;500;700&family=Noto+Sans+TC:wght@400;500&display=swap" rel="stylesheet">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>brain-cards｜彥皓的卡片與文章合輯</title>
+<meta name="description" content="跨域思維、AI 協作、CNC 工程、投資分析、戰略觀察的對外卡片與文章合輯。">
 <style>
-:root {
-  --bg: #faf8f4;
-  --bg-soft: #f4ede0;
-  --text: #2a2a2a;
-  --text-soft: #6b6b6b;
-  --text-muted: #9a958c;
-  --accent: #8b6f47;
-  --accent-soft: rgba(139, 111, 71, 0.10);
-  --rule: rgba(0,0,0,0.08);
-  --warn-bg: #fbf2e9;
-  --warn-border: #c69968;
-  --serif: "Noto Serif TC", "Songti TC", "PMingLiU", serif;
-  --sans: "Noto Sans TC", -apple-system, system-ui, "PingFang TC", "Microsoft JhengHei", sans-serif;
-}
-
-@media (prefers-color-scheme: dark) {
   :root {
-    --bg: #1c1b18;
-    --bg-soft: #28251f;
-    --text: #e8e4dc;
-    --text-soft: #a8a39a;
-    --text-muted: #777267;
-    --accent: #c9a87c;
-    --accent-soft: rgba(201, 168, 124, 0.13);
-    --rule: rgba(255,255,255,0.10);
-    --warn-bg: #2b2419;
-    --warn-border: #b88858;
+    --bg: #fafaf7;
+    --fg: #1a1a1a;
+    --accent: #c0392b;
+    --muted: #666;
+    --border: #e5e5e0;
+    --callout-tip: #e8f4f0;
+    --callout-warn: #fdf3e7;
   }
-}
-
-* { box-sizing: border-box; }
-html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
-
-body {
-  margin: 0;
-  background: var(--bg);
-  color: var(--text);
-  font-family: var(--serif);
-  font-size: clamp(16px, 2.6vw, 18px);
-  line-height: 1.9;
-  letter-spacing: 0.01em;
-  -webkit-font-smoothing: antialiased;
-  text-rendering: optimizeLegibility;
-}
-
-.progress {
-  position: fixed;
-  top: 0; left: 0;
-  height: 3px;
-  width: 0%;
-  background: var(--accent);
-  z-index: 100;
-  transition: width 0.08s linear;
-}
-
-main {
-  max-width: 680px;
-  margin: 0 auto;
-  padding: clamp(2rem, 6vw, 4rem) clamp(1.25rem, 5vw, 2.5rem) 6rem;
-}
-
-header {
-  border-bottom: 1px solid var(--rule);
-  padding-bottom: 2rem;
-  margin-bottom: 2.5rem;
-}
-
-.eyebrow {
-  font-family: var(--sans);
-  font-size: 0.72rem;
-  letter-spacing: 0.18em;
-  color: var(--text-muted);
-  text-transform: uppercase;
-  margin-bottom: 1rem;
-}
-
-h1 {
-  font-family: var(--serif);
-  font-weight: 700;
-  font-size: clamp(1.55rem, 5.4vw, 2.15rem);
-  line-height: 1.45;
-  letter-spacing: 0.005em;
-  margin: 0 0 0.8rem;
-}
-
-.subtitle {
-  font-family: var(--sans);
-  font-size: clamp(0.95rem, 2.6vw, 1.05rem);
-  color: var(--text-soft);
-  line-height: 1.7;
-  margin: 0 0 1.5rem;
-  font-weight: 400;
-}
-
-.meta {
-  font-family: var(--sans);
-  font-size: 0.8rem;
-  color: var(--text-soft);
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.4rem 1.1rem;
-  line-height: 1.6;
-}
-
-.meta-key { color: var(--text-muted); margin-right: 0.3em; }
-
-.tags {
-  margin-top: 1rem;
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.4rem;
-}
-
-.tag {
-  font-family: var(--sans);
-  font-size: 0.7rem;
-  padding: 0.2rem 0.6rem;
-  background: var(--accent-soft);
-  color: var(--accent);
-  border-radius: 999px;
-  letter-spacing: 0.02em;
-}
-
-h2 {
-  font-family: var(--serif);
-  font-weight: 700;
-  font-size: clamp(1.18rem, 3.8vw, 1.4rem);
-  margin: 3.2rem 0 1rem;
-  line-height: 1.5;
-  letter-spacing: 0.005em;
-}
-
-h3 {
-  font-family: var(--serif);
-  font-weight: 500;
-  font-size: clamp(1rem, 3.2vw, 1.1rem);
-  color: var(--accent);
-  margin: 2rem 0 0.5rem;
-  letter-spacing: 0.01em;
-}
-
-p { margin: 0 0 1.2rem; }
-
-.lede {
-  background: var(--bg-soft);
-  padding: 1.5rem 1.5rem 1.4rem;
-  border-radius: 6px;
-  margin: 0 0 2rem;
-  font-size: 1.02em;
-}
-.lede p:last-child { margin-bottom: 0; }
-
-ol, ul {
-  margin: 0 0 1.5rem;
-  padding-left: 1.5em;
-}
-
-ol li, ul li { margin-bottom: 0.7rem; }
-ol li::marker { color: var(--accent); font-weight: 500; }
-
-strong { font-weight: 700; color: var(--text); }
-
-.warn {
-  border-left: 3px solid var(--warn-border);
-  background: var(--warn-bg);
-  padding: 1rem 1.25rem;
-  margin: 1.5rem 0 2rem;
-  border-radius: 0 4px 4px 0;
-}
-
-.warn ul { margin: 0; padding-left: 1.2em; }
-.warn ul li { margin-bottom: 0.4rem; line-height: 1.7; }
-
-.case {
-  border-left: 2px solid var(--accent);
-  padding-left: 1.25rem;
-  margin: 1.5rem 0 2rem;
-}
-
-.case h3 { margin-top: 0.4rem; }
-
-.case-tag {
-  display: inline-block;
-  font-family: var(--sans);
-  font-size: 0.7rem;
-  font-weight: 500;
-  color: var(--accent);
-  background: var(--accent-soft);
-  padding: 0.15em 0.5em;
-  border-radius: 3px;
-  margin-bottom: 0.2rem;
-  letter-spacing: 0.05em;
-}
-
-.wiki {
-  font-family: var(--sans);
-  font-size: 0.88em;
-  color: var(--text-soft);
-  background: var(--accent-soft);
-  padding: 0.05em 0.45em;
-  border-radius: 3px;
-}
-
-code {
-  font-family: ui-monospace, SFMono-Regular, "SF Mono", Menlo, monospace;
-  font-size: 0.9em;
-  background: var(--accent-soft);
-  padding: 0.1em 0.35em;
-  border-radius: 3px;
-  color: var(--accent);
-}
-
-footer {
-  margin-top: 4rem;
-  padding-top: 2rem;
-  border-top: 1px solid var(--rule);
-  font-family: var(--sans);
-  font-size: 0.85rem;
-  color: var(--text-soft);
-}
-
-footer h2 {
-  font-family: var(--sans);
-  font-size: 0.72rem;
-  font-weight: 500;
-  text-transform: uppercase;
-  letter-spacing: 0.18em;
-  color: var(--text-muted);
-  margin: 2rem 0 0.6rem;
-}
-
-footer ul { list-style: none; padding: 0; margin: 0; }
-footer ul li { margin-bottom: 0.5rem; line-height: 1.7; }
-
-.colophon {
-  margin-top: 3rem;
-  padding-top: 1.5rem;
-  border-top: 1px dashed var(--rule);
-  font-size: 0.75rem;
-  color: var(--text-muted);
-  text-align: center;
-  letter-spacing: 0.1em;
-}
-
-@media (max-width: 480px) {
-  body { line-height: 1.85; }
-  .meta { font-size: 0.78rem; gap: 0.35rem 0.85rem; }
-  ol, ul { padding-left: 1.3em; }
-}
-
-@media print {
-  .progress { display: none; }
-  body { background: white; color: black; font-size: 11pt; }
-  main { max-width: 100%; padding: 1rem; }
-  .case, .warn, .lede { break-inside: avoid; }
-}
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #1a1a1a;
+      --fg: #f0f0e8;
+      --accent: #e87c6e;
+      --muted: #999;
+      --border: #333;
+      --callout-tip: #1f3530;
+      --callout-warn: #3a2d1c;
+    }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
+  }
+  * { box-sizing: border-box; }
+  body {
+    font-family: "Noto Serif TC", Georgia, serif;
+    background: var(--bg);
+    color: var(--fg);
+    line-height: 1.8;
+    font-size: 17px;
+    margin: 0;
+    padding: 0;
+    -webkit-font-smoothing: antialiased;
+  }
+  main {
+    max-width: 680px;
+    margin: 0 auto;
+    padding: clamp(2rem, 5vw, 4rem) clamp(1.5rem, 4vw, 2rem);
+  }
+  h1 { font-size: clamp(1.75rem, 4vw, 2.25rem); line-height: 1.3; margin: 0 0 1rem; }
+  h2 { font-size: clamp(1.3rem, 3vw, 1.5rem); line-height: 1.4; margin: 2.5rem 0 0.75rem; padding-bottom: 0.5rem; border-bottom: 1px solid var(--border); }
+  p { margin: 0 0 1.25rem; }
+  a { color: var(--accent); text-underline-offset: 3px; }
+  a:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+  ul.cards { list-style: none; padding: 0; margin: 2rem 0 0; }
+  ul.cards li { margin-bottom: 1.75rem; padding-bottom: 1.5rem; border-bottom: 1px solid var(--border); }
+  ul.cards li:last-child { border-bottom: none; }
+  ul.cards a { font-size: 1.1rem; font-weight: 700; display: block; margin-bottom: 0.4rem; }
+  ul.cards .meta { color: var(--muted); font-size: 0.95rem; margin: 0; }
+  .lead { color: var(--muted); margin-bottom: 0; }
 </style>
 </head>
 <body>
-<div class="progress" id="progress" aria-hidden="true"></div>
 <main>
-
 <header>
-  <div class="eyebrow">第二大腦 · Synthesis Card</div>
-  <h1>訊號可信度上限由其生產成本而非表面強度決定</h1>
-  <p class="subtitle">一句話可不可信，看的不是它聽起來多有力，而是發這句話的人付了多少代價</p>
-  <div class="meta">
-    <span><span class="meta-key">建立</span>2026-05-08</span>
-    <span><span class="meta-key">來源</span>hybrid（人 + AI 共寫）</span>
-    <span><span class="meta-key">可信度</span>hypothesis（待驗證的假說）</span>
-    <span><span class="meta-key">推理路徑</span>第一性原理 → 來源品質 → 類比同構</span>
-  </div>
-  <div class="tags">
-    <span class="tag">status/seed</span>
-    <span class="tag">topology/first_principles</span>
-    <span class="tag">topology/risk_signal</span>
-    <span class="tag">domain/cross</span>
-    <span class="tag">domain/prompt_eng</span>
-    <span class="tag">domain/strategy</span>
-    <span class="tag">domain/hr</span>
-    <span class="tag">decay_rate/stable</span>
-  </div>
+<h1>brain-cards</h1>
+<p class="lead">彥皓的對外卡片與文章合輯。跨域思維、AI 協作、CNC 工程、投資分析、戰略觀察。</p>
 </header>
-
-<h2>一句話總結</h2>
-<div class="lede">
-<p>判斷一句話、一份推論、一個背書值不值得信時，真正的線索不是它聽起來多漂亮（流暢、權威、自信），而是發這句話的人<strong>付出了多少代價</strong>——花了多少時間分析、承擔了多少立場風險、做了多少次獨立驗證。</p>
-<p>人人都能輕鬆說出口的話，可信度天花板就低，不管它聽起來多合理；要付真實代價才講得出來的話，才有資格被當成判斷依據。這條規律在人際、AI、文化、工程四個完全不同的領域同時成立——所以它不是巧合，而是底層通則。</p>
-</div>
-
-<h2>為什麼是這樣？五步推理</h2>
-<ol>
-<li><strong>話的功能是幫你「篩」出該信誰</strong>：你聽一句話，是想知道這個人值不值得信。所以這句話本身要能幫你分出兩種人——「真的有判斷力、願意承擔後果、已獨立驗證過」和「隨便附和、講話流暢但沒思考、借名人光環」。</li>
-
-<li><strong>人人都能講的話，等於沒幫你篩</strong>：如果一句話誰都能輕鬆說出（隨口附和、AI 隨手生一段、引用名人、重複大家都在講的論點），它就幾乎沒有資訊量——因為它分不出說的人到底有沒有想過。</li>
-
-<li><strong>要付代價的話，自帶篩選功能</strong>：要花時間獨立分析、要承擔表態的後果、要多角度驗證、要做盡職調查（due diligence）——這些事在話講出來之前，就已經把沒能力或不肯花心思的人擋在外面了。經濟學家管這個叫「訊號成本」（signaling cost）：能信的不是話本身，而是說這句話付出的代價。</li>
-
-<li><strong>「聽起來很強」常被誤當「值得信」</strong>：流暢、自信、權威、視覺衝擊——這些表面強度很容易讓人覺得這句話可信。但它們其實都很便宜：流暢可以靠 AI 採樣、自信可以靠表演、權威可以借用、視覺可以裝飾。把表面強度當可信度，就會系統性地被低成本的話術帶著走。</li>
-
-<li><strong>想被信，就主動付代價；想評估別人，就反問代價</strong>：要讓自己的話可信，主動把驗證紀錄、獨立重現、來源標註、立場承擔攤出來——讓對方看見你付了什麼。要評估別人的話，反問一句就好：「這句話是怎麼來的？他付了什麼代價？」</li>
-</ol>
-
-<h2>什麼情況下這個說法會被推翻？</h2>
-<div class="warn">
-<ul>
-<li>找到一種「人人都能輕鬆複製、卻能長期累積信任」的真實案例（短期騙到人那種不算）</li>
-<li>統計上發現「付出代價講出來的話」整體上並不比「隨手能講的話」更可信</li>
-<li>可信度確實只看「聽起來有多強」（流暢、自信、權威），跟有沒有付代價完全無關</li>
+<article>
+<h2>合輯</h2>
+<ul class="cards">
+<li>
+<a href="./xai-colossus-anthropic/">xAI Colossus 1 租給 Anthropic：策略性資產輪轉的完整解析</a>
+<p class="meta">2026-05-09｜投資分析 + 技術文件｜22 萬顆 GPU 全租 Anthropic，xAI 把訓練效率僅 11% 的舊集群轉成年產 50–60 億美元現金流，為 SpaceXAI IPO 鋪好基礎設施收費站敘事。</p>
+</li>
+<li>
+<a href="./signal-credibility/">訊號可信度上限由其生產成本而非表面強度決定</a>
+<p class="meta">2026-05-08｜跨域思維｜訊號的可信度由它的生產成本決定，而不是它表面看起來多強。橫跨求職、投資、求偶、學術、AI 共五個 domain 同構。</p>
+</li>
 </ul>
-</div>
-
-<h2>四個不同領域，同樣的機制在運作</h2>
-
-<div class="case">
-<span class="case-tag">案例 1 · 人際 · 職場</span>
-<h3>「我覺得都可以」為什麼累積不了信任</h3>
-<p><span class="wiki">可被零成本複製的附和訊號無法累積決策圈中的信任資本</span></p>
-<p>「我覺得都可以」「照原案就好」這種話為什麼很難累積信任？不是道德問題，而是這句話成本太低——不用分析、不用扛風險、不用表態。零成本的話沒辦法區分說的人到底有沒有判斷力。主管慢慢就不再問這類人意見了——這是大腦在無聲計算「這人講話的代價有多低」。</p>
-</div>
-
-<div class="case">
-<span class="case-tag">案例 2 · AI · Prompt Engineering</span>
-<h3>AI 流暢的句子為什麼需要被標記</h3>
-<p><span class="wiki">認識論標記能防止 AI 推論被洗白成已驗證知識</span></p>
-<p>AI 模型隨手生出來的流暢句子，成本極低（跑一次運算就有）。如果沒幫它標上「這句話從哪來（origin）／可信度（confidence）／原始來源（Source）」這三層標記，過幾個月這些低成本句子就會被誤當成「已驗證的知識」。這三層標記的本質，就是強迫把每句話的成本攤在桌上——人類自己想出來的、AI 推論的、外部轉述的、還是經過驗證的——免得低成本的句子被悄悄漂白成高成本的知識。</p>
-</div>
-
-<div class="case">
-<span class="case-tag">案例 3 · 文化 · 設計</span>
-<h3>名人題字為什麼撐不起設計專業</h3>
-<p><span class="wiki">把名人權威等同於設計專業是文化分工尚未成熟的訊號</span></p>
-<p>找名人題字當品牌背書，成本其實很低——拿到一個手寫字 + 落款就好。但「這個 logo 能不能在不同尺寸、不同媒介上都被認出來」這件事，要付的真實代價完全不同：專業設計 + 跨媒介測試 + 應用規範。社會把「名人題字」誤當「設計專業」，就是拿低成本訊號替代高成本訊號的典型錯置——也解釋了為什麼名人題字的 logo，常常在縮小、放大、跨媒介使用時就糊掉。</p>
-</div>
-
-<div class="case">
-<span class="case-tag">案例 4（反向證明）· AI · 多代理審查</span>
-<h3>為什麼多代理審查比單一審查更可靠</h3>
-<p><span class="wiki">多代理獨立重現驗證能將幻覺過濾為高信號比的審查輸出</span></p>
-<p>Claude Code 的 <code>/ultrareview</code>（多代理審查）為什麼比一般 <code>/review</code> 更能過濾幻覺？因為它把生產成本拉高——同時叫多個 AI 平行做一次，再交叉比對誰講出來的內容能被別人重現。AI 隨機採樣產生的雜訊就被篩掉了，只剩多次獨立確認過的內容。<strong>這個案例反過來證明了主命題</strong>：刻意把生產成本拉高，可信度真的會跟著上升。</p>
-</div>
-
-<h2>同樣的邏輯還出現在這些地方</h2>
-<ul>
-<li><strong>科學論文要求可重現</strong>：另一個實驗室能重做出同樣結果 = 高成本訊號，是科學主張可信的最低門檻</li>
-<li><strong>企業盡職調查（due diligence）</strong>：把單方面的自我介紹（低成本）換成多方查證（高成本），是商業合作前的標準動作</li>
-<li><strong>法庭證據分級</strong>：直接證據（自己看到、有錄影）vs 傳聞證據（聽別人說），法律給的不同待遇本質就是訊號成本的編碼</li>
-<li><strong>學術同儕審查</strong>：盲審 + 多輪修改，等於強迫你的主張多付幾次代價</li>
-<li><strong>金融信用累積</strong>：多年的可查紀錄 + 高造假成本的擔保品，才是信用真正的構成</li>
-</ul>
-
-<h2>所以實務上怎麼用？</h2>
-<ul>
-<li><strong>評估別人時的快問</strong>：「這句話講出來，他付了什麼代價？」答案如果是「沒什麼代價」，可信度天花板就低</li>
-<li><strong>讓自己被信的反向操作</strong>：主動展示你思考的過程、推理鏈條、引用來源、實驗紀錄——讓對方看見你付了什麼</li>
-<li><strong>辨識「貪便宜」的傾向</strong>：當一個組織或一個人總是偏好低成本訊號（看名人代言、看 AI 流暢回答、看誰講話自信、看誰附和共識），這通常是分工不夠成熟、認知防線鬆動的訊號</li>
-<li><strong>AI 時代的特別風險</strong>：AI 把「生產流暢句子」的成本壓到接近零，整個訊號生態因此被衝擊。各種「來源標記、多代理審查、ultrareview」這類機制，本質都是在「人為把訊號生產成本拉高」，把可信度撐回來</li>
-</ul>
-
+</article>
 <footer>
-<h2>相關 Card（延伸閱讀）</h2>
-<ul>
-<li>可被零成本複製的附和訊號無法累積決策圈中的信任資本</li>
-<li>認識論標記能防止 AI 推論被洗白成已驗證知識</li>
-<li>把名人權威等同於設計專業是文化分工尚未成熟的訊號</li>
-<li>多代理獨立重現驗證能將幻覺過濾為高信號比的審查輸出</li>
-<li>高品質信用依賴可驗證紀錄與高造假成本訊號</li>
-</ul>
-
-<h2>來源</h2>
-<ul>
-<li>2026-05 第二大腦 REVIEW 訊號生產成本同構合成（對話）</li>
-</ul>
-
-<div class="colophon">彥皓 · Second Brain · 2026-05-08</div>
+<p style="color: var(--muted); font-size: 0.95rem; margin-top: 4rem; padding-top: 1.5rem; border-top: 1px solid var(--border);">最後更新：2026-05-10</p>
 </footer>
-
 </main>
-
-<script>
-const progress = document.getElementById('progress');
-const update = () => {
-  const h = document.documentElement;
-  const max = h.scrollHeight - h.clientHeight;
-  const ratio = max > 0 ? h.scrollTop / max : 0;
-  progress.style.width = (ratio * 100) + '%';
-};
-window.addEventListener('scroll', update, { passive: true });
-window.addEventListener('resize', update, { passive: true });
-update();
-</script>
 </body>
 </html>
