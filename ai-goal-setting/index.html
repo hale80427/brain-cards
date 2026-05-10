@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI 時代真正決定企業競爭力的是目標設定而非執行能力</title>
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --fs-meta: 0.825rem;
+  --fs-body: 1rem;
+  --fs-h2:   clamp(1.3rem, 2.5vw, 1.5rem);
+  --fs-h1:   clamp(1.75rem, 4vw, 2.25rem);
+  --c-bg:      #0f172a;
+  --c-surface: #1e293b;
+  --c-text:    #f1f5f9;
+  --c-muted:   #94a3b8;
+  --c-accent:  #38bdf8;
+  --c-warn:    #fb923c;
+  --slide-radius: 4px;
+}
+
+body {
+  background: var(--c-bg);
+  color: var(--c-text);
+  font-family: "Noto Sans TC", "Microsoft JhengHei", system-ui, sans-serif;
+  font-size: var(--fs-body);
+  line-height: 1.75;
+  min-height: 100dvh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
+  padding: 1rem;
+  overflow-x: hidden;
+}
+
+.deck {
+  position: relative;
+  width: min(960px, 100%);
+  aspect-ratio: 16 / 9;
+  overflow: hidden;
+  border-radius: var(--slide-radius, 4px);
+  box-shadow: 0 8px 40px rgba(0,0,0,0.5);
+}
+
+.slide {
+  position: absolute;
+  inset: 0;
+  padding: 3.5rem 4.5rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  background: var(--c-surface);
+  opacity: 0;
+  transform: translateX(56px);
+  transition: opacity 0.28s ease, transform 0.28s ease;
+  pointer-events: none;
+}
+.slide.active  { opacity: 1; transform: translateX(0);    pointer-events: auto; }
+.slide.exit-l  { opacity: 0; transform: translateX(-56px); }
+
+.slide-cover {
+  background: linear-gradient(145deg, #1e293b 0%, #0a1628 100%);
+  border-bottom: 3px solid var(--c-accent);
+  align-items: center;
+  text-align: center;
+}
+.slide-cover h1  { font-size: var(--fs-h1); font-weight: 800; line-height: 1.25; max-width: 90%; }
+.slide-cover .subtitle { font-size: var(--fs-h2); color: var(--c-muted); margin-top: 1rem; max-width: 80%; line-height: 1.5; }
+.slide-cover .meta     { font-size: var(--fs-meta); color: var(--c-muted); margin-top: 1.5rem; }
+
+.slide-content h2 {
+  font-size: var(--fs-h2);
+  font-weight: 700;
+  color: var(--c-accent);
+  margin-bottom: 1.5rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 1px solid rgba(56,189,248,0.25);
+}
+.slide-content ul {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 0.85rem;
+}
+.slide-content li { font-size: var(--fs-body); line-height: 1.65; }
+.slide-content li::before { content: "→ "; color: var(--c-accent); font-weight: 700; }
+
+.slide-highlight {
+  background: var(--c-surface);
+  align-items: center;
+  text-align: center;
+}
+.slide-highlight .key-msg {
+  font-size: var(--fs-h2);
+  font-weight: 700;
+  line-height: 1.6;
+  padding: 1.75rem 2.25rem;
+  border: 2px solid var(--c-accent);
+  border-radius: 8px;
+  color: var(--c-text);
+  max-width: 80%;
+}
+
+.slide-end {
+  background: linear-gradient(145deg, #1e293b 0%, #0a1628 100%);
+  align-items: center;
+  text-align: center;
+}
+.slide-end h2 { font-size: var(--fs-h1); font-weight: 800; color: var(--c-accent); }
+.slide-end p  { font-size: var(--fs-body); color: var(--c-muted); margin-top: 1rem; max-width: 75%; line-height: 1.7; }
+.slide-end p + p { margin-top: 0.6rem; }
+
+.note { display: none; }
+
+.controls {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  width: min(960px, 100%);
+}
+.btn {
+  background: var(--c-surface);
+  border: 1px solid rgba(255,255,255,0.12);
+  color: var(--c-text);
+  padding: 0.4rem 1rem;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: var(--fs-meta);
+  transition: background 0.18s;
+  flex-shrink: 0;
+}
+.btn:hover:not(:disabled) { background: rgba(56,189,248,0.18); }
+.btn:disabled { opacity: 0.3; cursor: not-allowed; }
+.progress-wrap {
+  flex: 1;
+  height: 3px;
+  background: rgba(255,255,255,0.08);
+  border-radius: 2px;
+  overflow: hidden;
+}
+.progress-bar { height: 100%; background: var(--c-accent); transition: width 0.28s; }
+.counter { font-size: var(--fs-meta); color: var(--c-muted); min-width: 5.5ch; text-align: right; }
+
+.notes-panel {
+  display: none;
+  width: min(960px, 100%);
+  background: rgba(0,0,0,0.4);
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 4px;
+  padding: 0.75rem 1.25rem;
+  font-size: var(--fs-meta);
+  color: var(--c-muted);
+  max-height: 100px;
+  overflow-y: auto;
+}
+.notes-panel.visible { display: block; }
+
+@media (max-width: 600px) {
+  .slide { padding: 1.75rem 2rem; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .slide { transition: none; }
+  .progress-bar { transition: none; }
+}
+</style>
+</head>
+<body>
+
+<div class="deck" id="deck" role="region" aria-label="投影片">
+
+  <!-- 1 封面 -->
+  <section class="slide slide-cover" role="group" aria-label="封面">
+    <h1>AI 時代真正決定企業競爭力的<br>是目標設定而非執行能力</h1>
+    <p class="subtitle">算力把「怎麼做」推平了，剩下「做什麼」才值錢</p>
+    <p class="meta">啟發自 Greg Brockman（OpenAI President） · Sequoia Capital 訪談 · 2026-05</p>
+    <p class="note">這份簡報把 Brockman 訪談的核心戰略觀，與彥皓自身在精密加工現場的反思結合，回答一個問題：當算力把執行端壓平，個人與企業的稀缺位置會移到哪裡？</p>
+  </section>
+
+  <!-- 2 一句話結論 -->
+  <section class="slide slide-highlight" role="group" aria-label="一句話結論">
+    <div class="key-msg">競爭軸心從「怎麼做」<br>強制移到「做什麼」。</div>
+    <p class="note">這不是趨勢觀察，是稀缺性的版圖重洗。算力暴力把執行端商品化的同時，方向端的判斷就吸收了所有溢價。</p>
+  </section>
+
+  <!-- 3 為什麼 1/3 算力 -->
+  <section class="slide slide-content" role="group" aria-label="為什麼 1/3 算力暴力壓平執行端">
+    <h2>為什麼會這樣？(1/3) 算力暴力壓平執行端</h2>
+    <ul>
+      <li>OpenAI 商業本質：買算力、封裝為模型、溢價賣</li>
+      <li>算力供給趨壟斷，需求被視為無上限</li>
+      <li>模型能力的邊際成本被資本暴力壓低</li>
+      <li>執行端的成本，正趨近於零</li>
+    </ul>
+    <p class="note">Brockman 在訪談直接說「I said all of it」——OpenAI 不計成本包攬全球算力。這個策略不只是技術擴張，是用資本暴力把「執行能力」商品化的工程。</p>
+  </section>
+
+  <!-- 4 為什麼 2/3 Agent -->
+  <section class="slide slide-content" role="group" aria-label="為什麼 2/3 Agent 化讓門檻塌陷">
+    <h2>為什麼會這樣？(2/3) Agent 化讓門檻塌陷</h2>
+    <ul>
+      <li>AI 工具一年內從輔助 20% 變主導 80% 程式碼</li>
+      <li>跨應用全局記憶讓建原型成本歸零</li>
+      <li>寫程式、跑分析、整理流程被一次性商品化</li>
+    </ul>
+    <p class="note">Brockman 提到 OpenAI 的 Chronicle 工具，能把跨 App 的全局記憶與上下文打通。原型成本歸零後，過去技術門檻撐起的差異化也跟著塌掉。</p>
+  </section>
+
+  <!-- 5 為什麼 3/3 軸心遷移 -->
+  <section class="slide slide-content" role="group" aria-label="為什麼 3/3 軸心強制遷移">
+    <h2>為什麼會這樣？(3/3) 軸心強制遷移</h2>
+    <ul>
+      <li>所有人取得同等執行引擎，「怎麼做」不再有差異</li>
+      <li>能定義問題、設定目標、判斷取捨的人才稀缺</li>
+      <li>這不是漸進調整，是稀缺性的整片重洗</li>
+    </ul>
+    <p class="note">「稀缺性遷移」是底層機制：當技術把某個能力推到無上限，那個能力就不再值錢，價值會強制流到下一個瓶頸。算力把執行端推平，方向端就成了新瓶頸。</p>
+  </section>
+
+  <!-- 6 組織結構 -->
+  <section class="slide slide-content" role="group" aria-label="組織結構也跟著塌">
+    <h2>連帶塌掉的，是組織結構</h2>
+    <ul>
+      <li>協調成本下降，單人企業（Solopreneur）變可行</li>
+      <li>傳統科層組織的中介層級被擠壓</li>
+      <li>OpenAI 內部已依財務／銷售／IT 配 Agent 團隊</li>
+      <li>新工作型態：擔任十萬名 AI 代理的 CEO</li>
+    </ul>
+    <p class="note">Brockman 預言每個工作者未來都會像「指揮十萬名 AI 代理的 CEO」。這個圖像揭示一件事：協調成本一旦下降，組織就會被重新定價。</p>
+  </section>
+
+  <!-- 7 案例 1/3 OpenAI 自證 -->
+  <section class="slide slide-content" role="group" aria-label="案例 1/3 OpenAI 用自己驗證">
+    <h2>現實裡長這樣（1/3）OpenAI 用自己驗證</h2>
+    <ul>
+      <li>應用層收斂於「目標導向型代理」</li>
+      <li>主動放棄邊緣應用</li>
+      <li>用內部資源印證「目標設定 &gt; 執行能力」</li>
+    </ul>
+    <p class="note">當一家公司用自己內部的資源配置去驗證自己提出的判斷，這比任何 PR 論述都更有說服力。OpenAI 正在示範它真正相信什麼。</p>
+  </section>
+
+  <!-- 8 案例 2/3 SaaS -->
+  <section class="slide slide-content" role="group" aria-label="案例 2/3 B2B SaaS 的命運">
+    <h2>現實裡長這樣（2/3）B2B SaaS 的命運</h2>
+    <ul>
+      <li>護城河若錨在介面 + 儀表板 + 流程執行</li>
+      <li>會被 Agent 直接吃掉</li>
+      <li>護城河被迫上移到三個位置：</li>
+      <li>信任機制 ／ 治理架構 ／ 領域真實資料</li>
+    </ul>
+    <p class="note">如果你正在做或投資 B2B SaaS，這張投影片值得停一下。問自己：你的產品價值有多大比重是「介面 + 儀表板」？那個比重，就是被 Agent 吃掉的風險敞口。</p>
+  </section>
+
+  <!-- 9 案例 3/3 加工現場 -->
+  <section class="slide slide-content" role="group" aria-label="案例 3/3 精密加工現場">
+    <h2>現實裡長這樣（3/3）精密加工現場</h2>
+    <ul>
+      <li>「能寫出參數表」的人不再稀缺</li>
+      <li>「知道哪個參數該被測、為何校正」的人才稀缺</li>
+      <li>原子世界沒有 Ctrl+Z，物理摩擦力是矽谷盲區</li>
+      <li>也是個人在 AI 平權時代的護城河</li>
+    </ul>
+    <p class="note">這張是彥皓自身在精密加工現場的反思。AI 可以給出完美的刀具路徑，但聽不到超音波模組加工硬脆陶瓷時那種異常高頻共振——那個「現場才有」的資料，就是個人差異化的錨點。</p>
+  </section>
+
+  <!-- 10 跨域同構 -->
+  <section class="slide slide-content" role="group" aria-label="這個規律不只發生在 AI">
+    <h2>這個規律不只發生在 AI</h2>
+    <ul>
+      <li>Internet 平權後：價值上移到「該關心什麼」的判準</li>
+      <li>量化投資商品化後：溢價上移到 outlier 嗅覺</li>
+      <li>規律：執行端被推平多少，方向端就吸收多少溢價</li>
+    </ul>
+    <p class="note">這條規律不是 AI 時代才有的新東西。Internet 商品化資訊取得、量化投資商品化基本面分析，都是同一個機制：技術把某層能力推平，溢價就強制上移到判斷層。</p>
+  </section>
+
+  <!-- 11 失效條件 -->
+  <section class="slide slide-content" role="group" aria-label="這個結論什麼時候會被推翻">
+    <h2>這個結論什麼時候會被推翻？</h2>
+    <ul>
+      <li>觀察點：AI 是否開始「自主設定」高階目標</li>
+      <li>目標條件強化學習（goal-conditioned RL）</li>
+      <li>當 AI 主動定義新指標，目標設定也會被吞掉</li>
+    </ul>
+    <p class="note">任何結論都該標明失效條件，這條也一樣。當 AI 從「執行你給的目標」進化到「主動定義新目標」，今天說的「目標設定者」就會失去稀缺性。觀察這條時間軸，比預測哪一天到來更重要。</p>
+  </section>
+
+  <!-- 12 結尾 -->
+  <section class="slide slide-end" role="group" aria-label="結尾與行動呼籲">
+    <h2>你現在能做的一個動作</h2>
+    <p>打開昨天剛交出的工作成果，問自己一個問題：這份成果裡，「執行」與「目標設定」哪個比重高？</p>
+    <p>如果執行 &gt; 目標設定，你正站在會被算力壓平的那一側。今天就找一個目標設定的位置開始練。</p>
+    <p class="note">這個練習可以每天做一次。一週後回頭看，你會看到自己的工作配比正在移動。</p>
+  </section>
+
+</div>
+
+<div class="controls" role="navigation" aria-label="投影片導覽">
+  <button class="btn" id="btn-prev" aria-label="上一張" tabindex="0">←</button>
+  <div class="progress-wrap" role="progressbar" aria-valuemin="1" aria-valuemax="12" aria-valuenow="1" aria-label="進度">
+    <div class="progress-bar" id="progress-bar"></div>
+  </div>
+  <span class="counter" id="counter" aria-live="polite">1 / 12</span>
+  <button class="btn" id="btn-next" aria-label="下一張" tabindex="0">→</button>
+</div>
+
+<div class="notes-panel" id="notes-panel" aria-label="演講者備註" aria-live="polite"></div>
+
+<script>
+(function () {
+  'use strict';
+  const slides   = Array.from(document.querySelectorAll('.slide'));
+  const total    = slides.length;
+  const progress = document.getElementById('progress-bar');
+  const counter  = document.getElementById('counter');
+  const btnPrev  = document.getElementById('btn-prev');
+  const btnNext  = document.getElementById('btn-next');
+  const notesPanel = document.getElementById('notes-panel');
+  const deck     = document.getElementById('deck');
+  let cur = 0;
+  let notesVisible = false;
+
+  deck.setAttribute('aria-label', `投影片（共 ${total} 張）`);
+  document.querySelector('[role="progressbar"]').setAttribute('aria-valuemax', total);
+
+  function goTo(n, dir) {
+    if (n < 0 || n >= total) return;
+    slides[cur].classList.remove('active');
+    if (dir === 'prev') slides[cur].classList.add('exit-l');
+    const prev = cur;
+    cur = n;
+    setTimeout(() => slides[prev].classList.remove('exit-l'), 300);
+    slides[cur].classList.add('active');
+    progress.style.width = `${(cur + 1) / total * 100}%`;
+    counter.textContent  = `${cur + 1} / ${total}`;
+    btnPrev.disabled = cur === 0;
+    btnNext.disabled = cur === total - 1;
+    document.querySelector('[role="progressbar"]').setAttribute('aria-valuenow', cur + 1);
+    const noteEl = slides[cur].querySelector('.note');
+    notesPanel.textContent = noteEl ? noteEl.textContent.trim() : '';
+  }
+
+  window.goTo = goTo;
+
+  slides[0].classList.add('active');
+  progress.style.width = `${1 / total * 100}%`;
+  btnPrev.disabled = true;
+  if (total === 1) btnNext.disabled = true;
+  counter.textContent = `1 / ${total}`;
+
+  btnPrev.addEventListener('click', () => goTo(cur - 1, 'prev'));
+  btnNext.addEventListener('click', () => goTo(cur + 1, 'next'));
+
+  document.addEventListener('keydown', e => {
+    if (['ArrowRight', ' '].includes(e.key)) { e.preventDefault(); goTo(cur + 1, 'next'); }
+    if (e.key === 'ArrowLeft')               { e.preventDefault(); goTo(cur - 1, 'prev'); }
+    if (e.key === 'n' || e.key === 'N') {
+      notesVisible = !notesVisible;
+      notesPanel.classList.toggle('visible', notesVisible);
+    }
+  });
+
+  let touchX = 0;
+  deck.addEventListener('touchstart', e => { touchX = e.touches[0].clientX; }, { passive: true });
+  deck.addEventListener('touchend',   e => {
+    const dx = e.changedTouches[0].clientX - touchX;
+    if (Math.abs(dx) > 40) {
+      if (dx < 0) goTo(cur + 1, 'next');
+      if (dx > 0) goTo(cur - 1, 'prev');
+    }
+  }, { passive: true });
+})();
+</script>
+
+</body>
+</html>
