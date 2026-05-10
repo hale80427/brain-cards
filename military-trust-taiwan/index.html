@@ -1,0 +1,413 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>為什麼台灣人信任國軍？底層邏輯不在文化，在制度</title>
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --fs-meta: 0.825rem;
+  --fs-body: 1rem;
+  --fs-h2:   clamp(1.3rem, 2.5vw, 1.5rem);
+  --fs-h1:   clamp(1.75rem, 4vw, 2.25rem);
+  --c-bg:      #0f172a;
+  --c-surface: #1e293b;
+  --c-text:    #f1f5f9;
+  --c-muted:   #94a3b8;
+  --c-accent:  #38bdf8;
+  --c-warn:    #fb923c;
+  --slide-radius: 4px;
+}
+
+body {
+  background: var(--c-bg);
+  color: var(--c-text);
+  font-family: "Noto Sans TC", "Microsoft JhengHei", system-ui, sans-serif;
+  font-size: var(--fs-body);
+  line-height: 1.75;
+  min-height: 100dvh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
+  padding: 1rem;
+  overflow-x: hidden;
+}
+
+/* 字重與字距硬規則（KB-05 §視覺判準 #3） */
+body, .slide-content li, .slide-end p { font-weight: 400; }
+strong, b, .slide-content h2, .key-msg,
+.slide-end h2, .slide-cover h1 { font-weight: 600; }
+[lang="en"], .uppercase { letter-spacing: 0.04em; }
+
+.deck {
+  position: relative;
+  width: min(960px, 100%);
+  aspect-ratio: 16 / 9;
+  overflow: hidden;
+  border-radius: var(--slide-radius);
+  box-shadow: 0 8px 40px rgba(0,0,0,0.5);
+}
+
+.slide {
+  position: absolute;
+  inset: 0;
+  padding: 3.5rem 4.5rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  background: var(--c-surface);
+  opacity: 0;
+  transform: translateX(56px);
+  transition: opacity 0.28s ease, transform 0.28s ease;
+  pointer-events: none;
+}
+.slide.active  { opacity: 1; transform: translateX(0);    pointer-events: auto; }
+.slide.exit-l  { opacity: 0; transform: translateX(-56px); }
+
+/* 封面 */
+.slide-cover {
+  background: linear-gradient(145deg, #1e293b 0%, #0a1628 100%);
+  border-bottom: 3px solid var(--c-accent);
+  align-items: center;
+  text-align: center;
+}
+.slide-cover h1  { font-size: var(--fs-h1); font-weight: 800; line-height: 1.2; }
+.slide-cover .subtitle { font-size: var(--fs-h2); color: var(--c-muted); margin-top: 0.85rem; font-weight: 400; }
+.slide-cover .meta     { font-size: var(--fs-meta); color: var(--c-muted); margin-top: 1.75rem; letter-spacing: 0.04em; }
+
+/* 內容 */
+.slide-content h2 {
+  font-size: var(--fs-h2);
+  font-weight: 700;
+  color: var(--c-accent);
+  margin-bottom: 1.5rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 1px solid rgba(56,189,248,0.25);
+}
+.slide-content ul {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 0.85rem;
+}
+.slide-content li {
+  font-size: var(--fs-body);
+  line-height: 1.65;
+}
+.slide-content li::before { content: "→ "; color: var(--c-accent); font-weight: 700; }
+
+/* 重點訊息 */
+.slide-highlight {
+  background: var(--c-surface);
+  align-items: center;
+  text-align: center;
+}
+.slide-highlight .key-msg {
+  font-size: var(--fs-h2);
+  font-weight: 700;
+  line-height: 1.5;
+  padding: 1.5rem 2rem;
+  border: 2px solid var(--c-accent);
+  border-radius: 8px;
+  color: var(--c-text);
+  max-width: 80%;
+}
+.slide-highlight .sub-msg {
+  font-size: var(--fs-body);
+  color: var(--c-muted);
+  max-width: 70%;
+  margin-top: 1.25rem;
+  line-height: 1.7;
+}
+
+/* 引言 */
+.slide-quote {
+  background: var(--c-surface);
+  align-items: flex-start;
+  justify-content: center;
+}
+.slide-quote blockquote {
+  font-size: var(--fs-h2);
+  line-height: 1.55;
+  border-left: 4px solid var(--c-warn);
+  padding-left: 1.5rem;
+  color: var(--c-text);
+  font-style: italic;
+  font-weight: 600;
+}
+.slide-quote .attribution {
+  font-size: var(--fs-meta);
+  color: var(--c-muted);
+  margin-top: 1rem;
+  margin-left: 1.5rem;
+  letter-spacing: 0.02em;
+}
+.slide-quote .quote-aside {
+  font-size: var(--fs-body);
+  color: var(--c-muted);
+  margin-top: 1.75rem;
+  margin-left: 1.5rem;
+  line-height: 1.7;
+  max-width: 80%;
+}
+
+/* 結尾 */
+.slide-end {
+  background: linear-gradient(145deg, #1e293b 0%, #0a1628 100%);
+  align-items: center;
+  text-align: center;
+}
+.slide-end h2 { font-size: var(--fs-h1); font-weight: 800; color: var(--c-accent); line-height: 1.25; }
+.slide-end p  { font-size: var(--fs-body); color: var(--c-muted); margin-top: 1.25rem; max-width: 75%; line-height: 1.7; }
+
+/* 演講者備註 */
+.note { display: none; }
+
+/* 控制列 */
+.controls {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  width: min(960px, 100%);
+}
+.btn {
+  background: var(--c-surface);
+  border: 1px solid rgba(255,255,255,0.12);
+  color: var(--c-text);
+  padding: 0.4rem 1rem;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: var(--fs-meta);
+  transition: background 0.18s;
+  flex-shrink: 0;
+}
+.btn:hover:not(:disabled) { background: rgba(56,189,248,0.18); }
+.btn:disabled { opacity: 0.3; cursor: not-allowed; }
+.progress-wrap {
+  flex: 1;
+  height: 3px;
+  background: rgba(255,255,255,0.08);
+  border-radius: 2px;
+  overflow: hidden;
+}
+.progress-bar { height: 100%; background: var(--c-accent); transition: width 0.28s; }
+.counter { font-size: var(--fs-meta); color: var(--c-muted); min-width: 4.5ch; text-align: right; }
+
+/* 備註面板 */
+.notes-panel {
+  display: none;
+  width: min(960px, 100%);
+  background: rgba(0,0,0,0.4);
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 4px;
+  padding: 0.75rem 1.25rem;
+  font-size: var(--fs-meta);
+  color: var(--c-muted);
+  max-height: 100px;
+  overflow-y: auto;
+}
+.notes-panel.visible { display: block; }
+
+/* RWD */
+@media (max-width: 600px) {
+  .slide { padding: 1.75rem 2rem; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .slide { transition: none; }
+  .progress-bar { transition: none; }
+}
+
+/* Print */
+@media print {
+  body { background: white; color: black; padding: 0; min-height: auto; }
+  .deck { box-shadow: none; aspect-ratio: auto; width: 100%; }
+  .slide {
+    position: static;
+    inset: auto;
+    opacity: 1 !important;
+    transform: none !important;
+    pointer-events: auto;
+    page-break-after: always;
+    break-after: page;
+    background: white !important;
+    color: black !important;
+    border-bottom: none;
+    padding: 1.5rem 2rem;
+  }
+  .slide:last-child { page-break-after: auto; break-after: auto; }
+  .slide-content h2, .slide-cover h1, .slide-end h2,
+  .slide-highlight .key-msg { color: black !important; border-color: #888 !important; }
+  .slide-cover .subtitle, .slide-cover .meta,
+  .slide-highlight .sub-msg, .slide-end p,
+  .slide-quote .attribution, .slide-quote .quote-aside { color: #333 !important; }
+  .slide-content li::before { color: #444 !important; }
+  .slide-quote blockquote { border-left-color: #888 !important; color: black !important; }
+  .controls, .notes-panel { display: none !important; }
+  .note { display: block !important; font-size: 0.75rem; color: #555; margin-top: 1rem; padding-top: 0.5rem; border-top: 1px dashed #ccc; }
+}
+</style>
+</head>
+<body>
+
+<div class="deck" id="deck" role="region" aria-label="投影片（共 8 張）">
+
+  <!-- ① cover -->
+  <section class="slide slide-cover" role="group" aria-label="封面">
+    <h1>為什麼台灣人信任國軍？</h1>
+    <p class="subtitle">底層邏輯不在文化，在制度</p>
+    <p class="meta">陳澤鑫研究科普 · ABS 2022 資料</p>
+    <p class="note">這份簡報重做陳澤鑫教授〈評估公共安全和台灣軍隊信任度：2022 年中國軍演後之分析〉一文。原研究使用亞洲民主動態調查（ABS）2022 年資料，三個核心假設全部成立。</p>
+  </section>
+
+  <!-- ② highlight：兩難命題 -->
+  <section class="slide slide-highlight" role="group" aria-label="民主體制最深的兩難">
+    <div class="key-msg">強大到能保家衛國的武力，要怎麼對公民唯命是從？</div>
+    <p class="sub-msg">這是民主體制最深的兩難。伊朗、委內瑞拉的動盪，源頭就在這裡。</p>
+    <p class="note">2022 年裴洛西訪台後，台灣頻繁面對中國政治性軍演。國防議題成為政治攻防焦點。國軍既是天災外患時的英雄，又被軍紀爭議動搖信任——這個矛盾正是民主體制處理武力的兩難。</p>
+  </section>
+
+  <!-- ③ content：研究設計 -->
+  <section class="slide slide-content" role="group" aria-label="這份研究是怎麼做的">
+    <h2>這份研究是怎麼做的？</h2>
+    <ul>
+      <li>來源：ABS 亞洲民主動態調查 2022 年資料</li>
+      <li>模型：PPOM（看不同信任級距差異的迴歸法）</li>
+      <li>假設一：安全感越高，越信任軍隊</li>
+      <li>假設二：政府信任越強，越信任軍隊</li>
+      <li>假設三：民主滿意度越高，越信任軍隊</li>
+    </ul>
+    <p class="note">PPOM 全名「部分比例勝敗比模型」（Partial Proportional Odds Model）。當資料違反「平行迴歸假設」時用來看不同信任級距下變數的差異作用力。研究結果三個假設全部成立。</p>
+  </section>
+
+  <!-- ④ highlight：核心發現 -->
+  <section class="slide slide-highlight" role="group" aria-label="政府信任是最強的預測因子">
+    <div class="key-msg">政府信任，是最強的預測因子。</div>
+    <p class="sub-msg">民眾把軍隊視為政府的一部分——當人們認為政府為他們的最佳利益行事，這份信任就會擴及軍隊。</p>
+    <p class="note">研究發現政府信任跨越每一個信任級距的推動力都均勻一致，且在統計上非常顯著。這是三個假設裡影響力最強的變因。</p>
+  </section>
+
+  <!-- ⑤ content：三條規律 -->
+  <section class="slide slide-content" role="group" aria-label="研究找到的三條規律">
+    <h2>研究找到的三條規律</h2>
+    <ul>
+      <li>安全感有影響，但只在「極端信任 vs 不信任」最明顯</li>
+      <li>政府信任跨每一個信任級距都顯著推動</li>
+      <li>民主滿意度 + 政府廉潔感越高，信任越強</li>
+    </ul>
+    <p class="note">第一條：第一組估計（「完全沒信任」與其他三級的對比）未達顯著；後兩組估計達 p < .01 顯著但效果集中在較高信任級距。第二條：政府信任的影響均勻一致。第三條：民主治理品質的兩個指標（滿意度 + 廉潔感）皆與軍隊信任正相關。</p>
+  </section>
+
+  <!-- ⑥ content：反直覺發現 -->
+  <section class="slide slide-content" role="group" aria-label="研究還推翻了一個常見迷思">
+    <h2>研究還推翻了一個常見迷思</h2>
+    <ul>
+      <li>「儒家文化讓亞洲人信任軍隊」？統計上不顯著</li>
+      <li>男性顯著比女性更信任軍隊</li>
+      <li>泛綠支持者比其他選民顯著低</li>
+      <li>制度的解釋力，遠遠大於文化</li>
+    </ul>
+    <p class="note">控制變數揭露的細節：性別、政黨傾向皆達統計顯著；但「文化因素」（如儒家階層觀念、威權遺毒）作為自變數時不顯著。這推翻了過去常見的解釋路徑——制度才是核心，不是文化。</p>
+  </section>
+
+  <!-- ⑦ quote：結論引用 -->
+  <section class="slide slide-quote" role="group" aria-label="結論引用">
+    <blockquote>國防安全與內政品質，不可分割。</blockquote>
+    <p class="attribution">— 陳澤鑫 研究結論</p>
+    <p class="quote-aside">軍隊信任的真正槓桿，不在公關，也不在裝備。研究結論強調：制度的解釋力，遠大於文化。</p>
+    <p class="note">作者結論段落原文強調「制度是影響人民對軍隊信任最核心的關鍵，其解釋力遠遠大於文化因素」。國防安全與內政品質一體兩面。</p>
+  </section>
+
+  <!-- ⑧ end -->
+  <section class="slide slide-end" role="group" aria-label="制度才是國軍信任的真正基石">
+    <h2>制度才是國軍信任的真正基石</h2>
+    <p>好治安、廉能政府、健康民主，加上長期的制度累積——這才是凝聚防衛意志的底層支點。</p>
+    <p class="note">本簡報改寫自陳澤鑫教授〈評估公共安全和台灣軍隊信任度：2022 年中國軍演後之分析〉。資料來源：亞洲民主動態調查（Asian Barometer Survey, ABS）2022 年台灣調查。</p>
+  </section>
+
+</div>
+
+<!-- 控制列 -->
+<div class="controls" role="navigation" aria-label="投影片導覽">
+  <button class="btn" id="btn-prev" aria-label="上一張" tabindex="0">←</button>
+  <div class="progress-wrap" role="progressbar" aria-valuemin="1" aria-valuemax="8" aria-valuenow="1" aria-label="進度">
+    <div class="progress-bar" id="progress-bar"></div>
+  </div>
+  <span class="counter" id="counter" aria-live="polite">1 / 8</span>
+  <button class="btn" id="btn-next" aria-label="下一張" tabindex="0">→</button>
+</div>
+
+<!-- 演講者備註面板 -->
+<div class="notes-panel" id="notes-panel" aria-label="演講者備註" aria-live="polite"></div>
+
+<script>
+(function () {
+  'use strict';
+  const slides   = Array.from(document.querySelectorAll('.slide'));
+  const total    = slides.length;
+  const progress = document.getElementById('progress-bar');
+  const counter  = document.getElementById('counter');
+  const btnPrev  = document.getElementById('btn-prev');
+  const btnNext  = document.getElementById('btn-next');
+  const notesPanel = document.getElementById('notes-panel');
+  const deck     = document.getElementById('deck');
+  let cur = 0;
+  let notesVisible = false;
+
+  deck.setAttribute('aria-label', `投影片（共 ${total} 張）`);
+  document.querySelector('[role="progressbar"]').setAttribute('aria-valuemax', total);
+
+  function goTo(n, dir) {
+    if (n < 0 || n >= total) return;
+    slides[cur].classList.remove('active');
+    if (dir === 'prev') slides[cur].classList.add('exit-l');
+    const prev = cur;
+    cur = n;
+    setTimeout(() => slides[prev].classList.remove('exit-l'), 300);
+    slides[cur].classList.add('active');
+    progress.style.width = `${(cur + 1) / total * 100}%`;
+    counter.textContent  = `${cur + 1} / ${total}`;
+    btnPrev.disabled = cur === 0;
+    btnNext.disabled = cur === total - 1;
+    document.querySelector('[role="progressbar"]').setAttribute('aria-valuenow', cur + 1);
+    const noteEl = slides[cur].querySelector('.note');
+    notesPanel.textContent = noteEl ? noteEl.textContent.trim() : '';
+  }
+
+  window.goTo = goTo;
+
+  slides[0].classList.add('active');
+  progress.style.width = `${1 / total * 100}%`;
+  btnPrev.disabled = true;
+  if (total === 1) btnNext.disabled = true;
+  counter.textContent = `1 / ${total}`;
+
+  btnPrev.addEventListener('click', () => goTo(cur - 1, 'prev'));
+  btnNext.addEventListener('click', () => goTo(cur + 1, 'next'));
+
+  document.addEventListener('keydown', e => {
+    if (['ArrowRight', ' '].includes(e.key)) { e.preventDefault(); goTo(cur + 1, 'next'); }
+    if (e.key === 'ArrowLeft')               { e.preventDefault(); goTo(cur - 1, 'prev'); }
+    if (e.key === 'n' || e.key === 'N') {
+      notesVisible = !notesVisible;
+      notesPanel.classList.toggle('visible', notesVisible);
+    }
+  });
+
+  let touchX = 0;
+  deck.addEventListener('touchstart', e => { touchX = e.touches[0].clientX; }, { passive: true });
+  deck.addEventListener('touchend',   e => {
+    const dx = e.changedTouches[0].clientX - touchX;
+    if (Math.abs(dx) > 40) {
+      if (dx < 0) goTo(cur + 1, 'next');
+      if (dx > 0) goTo(cur - 1, 'prev');
+    }
+  }, { passive: true });
+})();
+</script>
+
+</body>
+</html>
