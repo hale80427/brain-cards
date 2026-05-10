@@ -166,6 +166,29 @@ body {
   .slide { transition: none; }
   .progress-bar { transition: none; }
 }
+@media print {
+  body { background: white; color: black; padding: 0; min-height: auto; }
+  .deck { box-shadow: none; aspect-ratio: auto; width: 100%; }
+  .slide {
+    position: static;
+    inset: auto;
+    opacity: 1 !important;
+    transform: none !important;
+    pointer-events: auto;
+    page-break-after: always;
+    background: white !important;
+    color: black !important;
+    border-bottom: none;
+    padding: 1.5rem 2rem;
+  }
+  .slide:last-child { page-break-after: auto; }
+  .slide-content h2, .slide-cover h1, .slide-end h2,
+  .slide-highlight .key-msg, .slide-section h2 { color: black !important; border-color: #888 !important; }
+  .slide-content li::before { color: #444 !important; }
+  .slide-quote blockquote { border-left-color: #888 !important; color: black !important; }
+  .controls, .notes-panel { display: none !important; }
+  .note { display: block !important; font-size: 0.75rem; color: #555; margin-top: 1rem; padding-top: 0.5rem; border-top: 1px dashed #ccc; }
+}
 </style>
 </head>
 <body>
