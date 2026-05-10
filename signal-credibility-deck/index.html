@@ -1,0 +1,434 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>訊號的可信度，靠的是「生產成本」</title>
+<meta name="description" content="為什麼流暢、自信、權威都不是判準——一張 Card 改寫的 9 張投影片版本。">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --fs-meta: 0.825rem;
+  --fs-body: 1rem;
+  --fs-h2:   clamp(1.3rem, 2.5vw, 1.5rem);
+  --fs-h1:   clamp(1.75rem, 4vw, 2.25rem);
+  --c-bg:      #0f172a;
+  --c-surface: #1e293b;
+  --c-text:    #f1f5f9;
+  --c-muted:   #94a3b8;
+  --c-accent:  #38bdf8;
+  --c-warn:    #fb923c;
+  --slide-radius: 4px;
+}
+
+body {
+  background: var(--c-bg);
+  color: var(--c-text);
+  font-family: "Noto Sans TC", "Microsoft JhengHei", system-ui, sans-serif;
+  font-size: var(--fs-body);
+  line-height: 1.75;
+  min-height: 100dvh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
+  padding: 1rem;
+  overflow-x: hidden;
+}
+
+.deck {
+  position: relative;
+  width: min(960px, 100%);
+  aspect-ratio: 16 / 9;
+  overflow: hidden;
+  border-radius: var(--slide-radius, 4px);
+  box-shadow: 0 8px 40px rgba(0,0,0,0.5);
+}
+
+.slide {
+  position: absolute;
+  inset: 0;
+  padding: 3.5rem 4.5rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  background: var(--c-surface);
+  opacity: 0;
+  transform: translateX(56px);
+  transition: opacity 0.28s ease, transform 0.28s ease;
+  pointer-events: none;
+}
+.slide.active  { opacity: 1; transform: translateX(0);    pointer-events: auto; }
+.slide.exit-l  { opacity: 0; transform: translateX(-56px); }
+
+.slide-cover {
+  background: linear-gradient(145deg, #1e293b 0%, #0a1628 100%);
+  border-bottom: 3px solid var(--c-accent);
+  align-items: center;
+  text-align: center;
+}
+.slide-cover h1  { font-size: var(--fs-h1); font-weight: 800; line-height: 1.15; }
+.slide-cover .subtitle { font-size: var(--fs-h2); color: var(--c-muted); margin-top: 0.75rem; font-weight: 400; }
+.slide-cover .meta     { font-size: var(--fs-meta); color: var(--c-muted); margin-top: 1.5rem; }
+
+.slide-section {
+  background: var(--c-accent);
+  align-items: center;
+  text-align: center;
+}
+.slide-section h2 { font-size: var(--fs-h1); color: #0f172a; font-weight: 800; }
+
+.slide-content h2 {
+  font-size: var(--fs-h2);
+  font-weight: 700;
+  color: var(--c-accent);
+  margin-bottom: 1.5rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 1px solid rgba(56,189,248,0.25);
+}
+.slide-content ul {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 0.85rem;
+}
+.slide-content li { font-size: var(--fs-body); line-height: 1.65; }
+.slide-content li::before { content: "→ "; color: var(--c-accent); font-weight: 700; }
+.slide-content .closing {
+  margin-top: 1.5rem;
+  font-size: var(--fs-body);
+  color: var(--c-warn);
+  font-weight: 600;
+}
+
+.slide-highlight {
+  background: var(--c-surface);
+  align-items: center;
+  text-align: center;
+}
+.slide-highlight .key-msg {
+  font-size: var(--fs-h2);
+  font-weight: 700;
+  line-height: 1.5;
+  padding: 1.5rem 2rem;
+  border: 2px solid var(--c-accent);
+  border-radius: 8px;
+  color: var(--c-text);
+  max-width: 80%;
+}
+
+.slide-quote {
+  background: var(--c-surface);
+  align-items: flex-start;
+}
+.slide-quote blockquote {
+  font-size: var(--fs-h2);
+  line-height: 1.55;
+  border-left: 4px solid var(--c-warn);
+  padding-left: 1.5rem;
+  color: var(--c-text);
+  font-style: italic;
+}
+.slide-quote .attribution {
+  font-size: var(--fs-meta);
+  color: var(--c-muted);
+  margin-top: 1rem;
+  margin-left: 1.5rem;
+}
+
+.slide-two-col h2 {
+  font-size: var(--fs-h2);
+  font-weight: 700;
+  color: var(--c-accent);
+  margin-bottom: 1.25rem;
+}
+.two-col-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2rem;
+  flex: 1;
+  align-content: center;
+}
+.col-label {
+  font-size: var(--fs-meta);
+  font-weight: 700;
+  color: var(--c-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  margin-bottom: 0.5rem;
+}
+.two-col-grid ul {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+.two-col-grid li {
+  font-size: var(--fs-body);
+  line-height: 1.6;
+}
+.two-col-grid li::before {
+  content: "· ";
+  color: var(--c-accent);
+}
+
+.slide-end {
+  background: linear-gradient(145deg, #1e293b 0%, #0a1628 100%);
+  align-items: center;
+  text-align: center;
+}
+.slide-end h2 { font-size: var(--fs-h1); font-weight: 800; color: var(--c-accent); }
+.slide-end p  { font-size: var(--fs-body); color: var(--c-muted); margin-top: 1rem; }
+
+.note { display: none; }
+
+.controls {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  width: min(960px, 100%);
+}
+.btn {
+  background: var(--c-surface);
+  border: 1px solid rgba(255,255,255,0.12);
+  color: var(--c-text);
+  padding: 0.4rem 1rem;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: var(--fs-meta);
+  transition: background 0.18s;
+  flex-shrink: 0;
+}
+.btn:hover:not(:disabled) { background: rgba(56,189,248,0.18); }
+.btn:disabled { opacity: 0.3; cursor: not-allowed; }
+.progress-wrap {
+  flex: 1;
+  height: 3px;
+  background: rgba(255,255,255,0.08);
+  border-radius: 2px;
+  overflow: hidden;
+}
+.progress-bar { height: 100%; background: var(--c-accent); transition: width 0.28s; }
+.counter { font-size: var(--fs-meta); color: var(--c-muted); min-width: 4.5ch; text-align: right; }
+
+.notes-panel {
+  display: none;
+  width: min(960px, 100%);
+  background: rgba(0,0,0,0.4);
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 4px;
+  padding: 0.75rem 1.25rem;
+  font-size: var(--fs-meta);
+  color: var(--c-muted);
+  max-height: 100px;
+  overflow-y: auto;
+}
+.notes-panel.visible { display: block; }
+
+@media (max-width: 600px) {
+  .slide { padding: 1.75rem 2rem; }
+  .two-col-grid { grid-template-columns: 1fr; gap: 1.25rem; }
+  .slide-cover h1 { font-size: 1.5rem; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .slide { transition: none; }
+  .progress-bar { transition: none; }
+}
+</style>
+</head>
+<body>
+
+<div class="deck" id="deck" role="region" aria-label="投影片（共 9 張）">
+
+  <!-- 1 封面 -->
+  <section class="slide slide-cover" role="group" aria-label="封面">
+    <h1>訊號的可信度，靠的是「生產成本」</h1>
+    <p class="subtitle">為什麼流暢、自信、權威都不是判準</p>
+    <p class="meta">改寫自彥皓〈訊號可信度上限〉· 2026-05</p>
+    <p class="note">這份簡報原本是一張 Card，9 張投影片版本適合分享給朋友。鍵盤左右鍵或觸控可切換；按 N 顯示備註。</p>
+  </section>
+
+  <!-- 2 內容：哪些訊號其實在裝？ -->
+  <section class="slide slide-content" role="group" aria-label="哪些訊號其實在裝">
+    <h2>哪些訊號其實在「裝」？</h2>
+    <ul>
+      <li>講話流暢的人</li>
+      <li>充滿自信的人</li>
+      <li>有權威的人</li>
+      <li>視覺很有說服力的訊息</li>
+    </ul>
+    <p class="closing">這四種，其實都能「裝」出來。</p>
+    <p class="note">先讓觀眾在直覺上動搖：把流暢、自信、權威、視覺感這些常被當「可信線索」的東西點名出來。</p>
+  </section>
+
+  <!-- 3 重點：核心命題 -->
+  <section class="slide slide-highlight" role="group" aria-label="核心命題">
+    <div class="key-msg">訊號的可信度上限，由發出它要付的代價決定，不是由它表面多強決定</div>
+    <p class="note">這是整份簡報的核心命題。後面幾張都是這條命題的推導與證據。</p>
+  </section>
+
+  <!-- 4 內容：為什麼成本才是判準？ -->
+  <section class="slide slide-content" role="group" aria-label="為什麼成本才是判準">
+    <h2>為什麼成本才是判準？</h2>
+    <ul>
+      <li>訊號的功能是「區分」誰可信、誰不可信</li>
+      <li>零成本訊號人人能發，沒有區分力</li>
+      <li>高成本機制能在源頭就篩掉沒能力的人</li>
+      <li>流暢、自信、權威，都是低成本特徵</li>
+      <li>提升可信度的唯一辦法，是讓訊號變貴</li>
+    </ul>
+    <p class="note">五步推導：第 1 步建立「區分」這個功能定位；2-3 步說明為什麼零成本不行、高成本才行；4 步指出常見誤區其實都是低成本；5 步收結論。</p>
+  </section>
+
+  <!-- 5 雙欄：人際職場 vs AI 工作流 -->
+  <section class="slide slide-two-col" role="group" aria-label="人際職場 vs AI 工作流">
+    <h2>同樣的原理，跨到兩個領域</h2>
+    <div class="two-col-grid">
+      <div>
+        <p class="col-label">人際職場</p>
+        <ul>
+          <li>「我覺得都可以」是零成本訊號</li>
+          <li>主管慢慢就不再徵詢這種人</li>
+        </ul>
+      </div>
+      <div>
+        <p class="col-label">AI 工作流</p>
+        <ul>
+          <li>大型語言模型 (LLM) 採樣流暢但成本極低</li>
+          <li>沒有來源標記，會被誤認為已驗證</li>
+        </ul>
+      </div>
+    </div>
+    <p class="note">第一組跨域同構：人際信任資本的累積，與 AI 認識論標記的設計，背後是同一條原理。</p>
+  </section>
+
+  <!-- 6 雙欄：文化權威 vs 工程驗證 -->
+  <section class="slide slide-two-col" role="group" aria-label="文化權威 vs 工程驗證">
+    <h2>同樣的原理，再跨兩個領域</h2>
+    <div class="two-col-grid">
+      <div>
+        <p class="col-label">文化權威</p>
+        <ul>
+          <li>取得名人題字成本不高</li>
+          <li>但放大、縮小、跨媒介常常失靈</li>
+        </ul>
+      </div>
+      <div>
+        <p class="col-label">AI Review（反向支持）</p>
+        <ul>
+          <li>用多個獨立 AI 互相驗證</li>
+          <li>訊號變貴，幻覺被過濾掉</li>
+        </ul>
+      </div>
+    </div>
+    <p class="note">第二組跨域同構：文化端的名人題字錯把低成本當高成本；工程端的多代理 review 反向印證——刻意拉高成本，可信度真的上升。</p>
+  </section>
+
+  <!-- 7 內容：所以怎麼用？ -->
+  <section class="slide slide-content" role="group" aria-label="所以怎麼用">
+    <h2>所以日常怎麼用？</h2>
+    <ul>
+      <li>評估別人時：問「發這話要付什麼代價？」</li>
+      <li>想被信任時：展示推理、來源、立場</li>
+      <li>代價越高，可信度上限就越高</li>
+    </ul>
+    <p class="note">兩條操作建議落地。第一條是「接收方視角」、第二條是「發訊方視角」、第三條是兩邊共用的尺規。</p>
+  </section>
+
+  <!-- 8 引言 -->
+  <section class="slide slide-quote" role="group" aria-label="引言">
+    <blockquote>在大型語言模型把流暢句子的成本壓到接近零之後，恢復可信度只有一條路——人為提高訊號的生產成本。</blockquote>
+    <p class="attribution">— 改寫自彥皓〈訊號可信度上限〉Card · 2026-05</p>
+    <p class="note">這條是給 AI 時代的特殊註腳：當生成成本被壓到極低，整個訊號生態被重塑，恢復可信度的方向反而要逆向操作。</p>
+  </section>
+
+  <!-- 9 結尾 -->
+  <section class="slide slide-end" role="group" aria-label="結尾">
+    <h2>這是訊號評估的第一性原理</h2>
+    <p>想看完整推導？看原始 Card。</p>
+    <p class="note">結尾呼籲不強推、不放 CTA 表單，只留一個邀請：想再深入就回去看原始版本。對應 Layer 2「朋友」受眾不需強行套客戶 CTA 的設計選擇。</p>
+  </section>
+
+</div>
+
+<div class="controls" role="navigation" aria-label="投影片導覽">
+  <button class="btn" id="btn-prev" aria-label="上一張" tabindex="0">←</button>
+  <div class="progress-wrap" role="progressbar" aria-valuemin="1" aria-valuemax="9" aria-valuenow="1" aria-label="進度">
+    <div class="progress-bar" id="progress-bar"></div>
+  </div>
+  <span class="counter" id="counter" aria-live="polite">1 / 9</span>
+  <button class="btn" id="btn-next" aria-label="下一張" tabindex="0">→</button>
+</div>
+
+<div class="notes-panel" id="notes-panel" aria-label="演講者備註" aria-live="polite"></div>
+
+<script>
+(function () {
+  'use strict';
+  const slides   = Array.from(document.querySelectorAll('.slide'));
+  const total    = slides.length;
+  const progress = document.getElementById('progress-bar');
+  const counter  = document.getElementById('counter');
+  const btnPrev  = document.getElementById('btn-prev');
+  const btnNext  = document.getElementById('btn-next');
+  const notesPanel = document.getElementById('notes-panel');
+  const deck     = document.getElementById('deck');
+  let cur = 0;
+  let notesVisible = false;
+
+  deck.setAttribute('aria-label', `投影片（共 ${total} 張）`);
+  document.querySelector('[role="progressbar"]').setAttribute('aria-valuemax', total);
+
+  function goTo(n, dir) {
+    if (n < 0 || n >= total) return;
+    slides[cur].classList.remove('active');
+    if (dir === 'prev') slides[cur].classList.add('exit-l');
+    const prev = cur;
+    cur = n;
+    setTimeout(() => slides[prev].classList.remove('exit-l'), 300);
+    slides[cur].classList.add('active');
+    progress.style.width = `${(cur + 1) / total * 100}%`;
+    counter.textContent  = `${cur + 1} / ${total}`;
+    btnPrev.disabled = cur === 0;
+    btnNext.disabled = cur === total - 1;
+    document.querySelector('[role="progressbar"]').setAttribute('aria-valuenow', cur + 1);
+    const noteEl = slides[cur].querySelector('.note');
+    notesPanel.textContent = noteEl ? noteEl.textContent.trim() : '';
+  }
+
+  window.goTo = goTo;
+
+  slides[0].classList.add('active');
+  progress.style.width = `${1 / total * 100}%`;
+  btnPrev.disabled = true;
+  if (total === 1) btnNext.disabled = true;
+  counter.textContent = `1 / ${total}`;
+
+  btnPrev.addEventListener('click', () => goTo(cur - 1, 'prev'));
+  btnNext.addEventListener('click', () => goTo(cur + 1, 'next'));
+
+  document.addEventListener('keydown', e => {
+    if (['ArrowRight', ' '].includes(e.key)) { e.preventDefault(); goTo(cur + 1, 'next'); }
+    if (e.key === 'ArrowLeft')               { e.preventDefault(); goTo(cur - 1, 'prev'); }
+    if (e.key === 'n' || e.key === 'N') {
+      notesVisible = !notesVisible;
+      notesPanel.classList.toggle('visible', notesVisible);
+    }
+  });
+
+  let touchX = 0;
+  deck.addEventListener('touchstart', e => { touchX = e.touches[0].clientX; }, { passive: true });
+  deck.addEventListener('touchend',   e => {
+    const dx = e.changedTouches[0].clientX - touchX;
+    if (Math.abs(dx) > 40) {
+      if (dx < 0) goTo(cur + 1, 'next');
+      if (dx > 0) goTo(cur - 1, 'prev');
+    }
+  }, { passive: true });
+})();
+</script>
+
+</body>
+</html>
