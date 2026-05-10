@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Crucial X9 Pro 時光機備份完整指南</title>
+<meta name="description" content="Crucial X9 Pro 4TB 是最適合 MacBook 間歇備份的便攜 SSD。涵蓋選購建議、Apple 官方容量計算、Mac 格式化設定與日常使用流程。">
+<style>
+  :root {
+    --bg: #fafaf7;
+    --fg: #1a1a1a;
+    --accent: #c0392b;
+    --muted: #666;
+    --border: #e5e5e0;
+    --callout-tip: #e8f4f0;
+    --callout-warn: #fdf3e7;
+    --fs-meta: 0.85rem;
+    --fs-body: 1rem;
+    --fs-h2:   clamp(1.3rem, 3vw, 1.5rem);
+    --fs-h1:   clamp(1.75rem, 4vw, 2.25rem);
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #1a1a1a;
+      --fg: #f0f0e8;
+      --accent: #e87c6e;
+      --muted: #999;
+      --border: #333;
+      --callout-tip: #1f3530;
+      --callout-warn: #3a2d1c;
+    }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
+  }
+  * { box-sizing: border-box; }
+  body {
+    font-family: "Noto Serif TC", Georgia, serif;
+    background: var(--bg);
+    color: var(--fg);
+    line-height: 1.8;
+    font-size: var(--fs-body);
+    margin: 0;
+    padding: 0;
+    -webkit-font-smoothing: antialiased;
+  }
+  .progress-bar {
+    position: fixed; top: 0; left: 0; height: 3px;
+    background: var(--accent); width: 0%; z-index: 100;
+    transition: width 0.1s;
+  }
+  main {
+    max-width: 680px;
+    margin: 0 auto;
+    padding: clamp(2rem, 5vw, 4rem) clamp(1.5rem, 4vw, 2rem);
+  }
+  h1 { font-size: var(--fs-h1); line-height: 1.3; margin: 0 0 1rem; }
+  h2 { font-size: var(--fs-h2); line-height: 1.4; margin: 2.75rem 0 0.75rem; padding-bottom: 0.5rem; border-bottom: 1px solid var(--border); }
+  h3 { font-size: var(--fs-body); font-weight: 700; line-height: 1.4; margin: 1.75rem 0 0.5rem; color: var(--accent); }
+  p { margin: 0 0 1.25rem; font-size: var(--fs-body); }
+  a { color: var(--accent); text-underline-offset: 3px; }
+  a:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+  code {
+    font-family: "SF Mono", Menlo, monospace;
+    font-size: var(--fs-body);
+    background: var(--border);
+    padding: 0.1em 0.35em;
+    border-radius: 3px;
+  }
+  .subtitle {
+    font-size: var(--fs-body);
+    color: var(--muted);
+    margin: 0 0 2rem;
+    font-style: italic;
+  }
+  .bluf {
+    background: var(--callout-tip);
+    border-left: 3px solid var(--accent);
+    padding: 1.25rem 1.5rem;
+    margin: 1.5rem 0 2.5rem;
+    border-radius: 4px;
+  }
+  .bluf strong.label {
+    display: block;
+    font-size: var(--fs-meta);
+    letter-spacing: 0.05em;
+    color: var(--accent);
+    margin-bottom: 0.5rem;
+    text-transform: uppercase;
+  }
+  .bluf p { margin: 0 0 0.75rem; font-size: var(--fs-body); }
+  .bluf p:last-child { margin: 0; }
+  .bluf ul { margin: 0.25rem 0 0; padding-left: 1.25rem; font-size: var(--fs-body); }
+  .bluf ul li { margin-bottom: 0.35rem; }
+  blockquote {
+    margin: 1.75rem 0;
+    padding: 1rem 1.5rem;
+    border-left: 3px solid var(--accent);
+    color: var(--muted);
+    font-style: italic;
+    font-size: var(--fs-body);
+  }
+  blockquote p { margin: 0 0 0.5rem; }
+  blockquote cite {
+    display: block;
+    font-size: var(--fs-meta);
+    font-style: normal;
+    color: var(--muted);
+    margin-top: 0.25rem;
+  }
+  .callout {
+    padding: 1rem 1.25rem;
+    margin: 1.75rem 0;
+    border-radius: 4px;
+    border-left: 3px solid var(--muted);
+  }
+  .callout.tip {
+    background: var(--callout-tip);
+    border-left-color: var(--accent);
+  }
+  .callout h3 { margin-top: 0; }
+  .callout p:last-child { margin-bottom: 0; }
+  ul, ol { margin: 0 0 1.25rem; padding-left: 1.5rem; }
+  li { margin-bottom: 0.4rem; font-size: var(--fs-body); }
+  ol.steps {
+    counter-reset: step;
+    list-style: none;
+    padding-left: 0;
+  }
+  ol.steps > li {
+    counter-increment: step;
+    padding-left: 2.25rem;
+    position: relative;
+    margin-bottom: 1rem;
+  }
+  ol.steps > li::before {
+    content: counter(step);
+    position: absolute; left: 0; top: 0.15rem;
+    width: 1.6rem; height: 1.6rem;
+    background: var(--accent); color: #fff;
+    border-radius: 50%;
+    font-size: var(--fs-meta);
+    font-weight: 700;
+    display: flex; align-items: center; justify-content: center;
+  }
+  ol.steps > li ul { margin: 0.35rem 0 0; }
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 1.5rem 0;
+    font-size: var(--fs-meta);
+  }
+  thead th {
+    background: var(--border);
+    padding: 0.6rem 0.75rem;
+    text-align: left;
+    font-size: var(--fs-meta);
+    font-weight: 700;
+  }
+  tbody td {
+    padding: 0.5rem 0.75rem;
+    border-bottom: 1px solid var(--border);
+    font-size: var(--fs-meta);
+  }
+  tbody tr:last-child td { border-bottom: none; }
+  dl.spec-grid {
+    display: grid;
+    grid-template-columns: 5.5rem 1fr;
+    gap: 0.5rem 1rem;
+    margin: 1.25rem 0 1.5rem;
+  }
+  dl.spec-grid dt {
+    color: var(--muted);
+    font-size: var(--fs-meta);
+    padding-top: 0.1rem;
+  }
+  dl.spec-grid dd {
+    margin: 0;
+    font-size: var(--fs-body);
+  }
+  footer p {
+    color: var(--muted);
+    font-size: var(--fs-meta);
+    margin-top: 4rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--border);
+  }
+</style>
+</head>
+<body>
+<div class="progress-bar" id="progress"></div>
+<main>
+
+<header>
+  <h1>Crucial X9 Pro 時光機備份完整指南</h1>
+  <p class="subtitle">MacBook 間歇備份場景｜選購、設定、日常流程全覽</p>
+  <div class="bluf">
+    <strong class="label">BLUF</strong>
+    <p>強烈推薦 <strong>Crucial X9 Pro 4TB</strong>（其次 2TB）作為時光機外接備份碟。</p>
+    <ul>
+      <li>1,050 MB/s 讀寫，插上後備份快速完成，不占居家時間</li>
+      <li>IP55 防水 + 防摔 7.5 英尺，在家存放或偶爾攜帶皆可靠</li>
+      <li>即插即用支援 APFS 與時光機，5 年保固 + 硬體加密</li>
+      <li>4TB 符合 Apple「至少 2 倍內部容量」官方建議，歷史版本充足</li>
+    </ul>
+  </div>
+</header>
+
+<article>
+
+<h2>一、為什麼選 Crucial X9 Pro</h2>
+
+<h3>版本選擇</h3>
+<p>優先選「Crucial X9 Pro for Mac」版，出廠即 APFS 格式、即插即用。</p>
+<p>若無「for Mac」版，購買標準版自行格式化為 APFS 即可，效能相同。</p>
+
+<h3>核心規格</h3>
+<dl class="spec-grid">
+  <dt>傳輸速度</dt><dd>最高 1,050 MB/s 讀寫（USB 3.2 Gen 2）</dd>
+  <dt>介面</dt><dd>USB-C，附贈 USB-C 線</dd>
+  <dt>容量</dt><dd>2TB / 4TB（本指南聚焦此範圍）</dd>
+  <dt>尺寸</dt><dd>約 65 × 50 mm，附掛繩孔，便於收納</dd>
+  <dt>外殼</dt><dd>陽極處理鋁合金 + 軟觸橡膠底座</dd>
+  <dt>耐用</dt><dd>IP55 防塵防水、防摔 7.5 英尺（約 2.3 公尺）</dd>
+  <dt>加密</dt><dd>256-bit AES 硬體加密，可搭配 FileVault</dd>
+  <dt>保固</dt><dd>5 年有限保固（或達 TBW 寫入上限）</dd>
+  <dt>出廠格式</dt><dd>exFAT（建議重新格式化為 APFS）</dd>
+</dl>
+
+<h3>為什麼適合「回家才備份」的間歇場景？</h3>
+<p>速度快，插上後備份很快完成，不影響作息，不會因嫌慢而拖延。</p>
+<p>無 HDD 機械噪音，靜音運作，在家存放穩定，偶爾帶出門也耐碰撞。</p>
+<p>在 2–4TB 便攜 SSD 級距中，速度、耐用度與保固組合具優勢。</p>
+
+<h2>二、Apple 官方容量建議</h2>
+
+<blockquote>
+  <p>「使用至少為您的 Mac 儲存容量的兩倍的儲存裝置。如果您的 Mac 有 1TB 儲存容量，您的備份磁碟理想上應至少有 2TB 儲存容量。」</p>
+  <cite>— Apple Support 官方說明</cite>
+</blockquote>
+
+<p>Apple 同時建議備份磁碟<strong>專用</strong>，不要混放其他一般檔案。</p>
+<p>進階用戶可將外接碟分割成兩個 APFS 卷冊，一個給時光機，一個用於一般儲存。</p>
+
+<h3>為什麼需要「至少 2 倍」？</h3>
+<p>首次完整備份需要複製 Mac 目前所有資料。</p>
+<p>之後，時光機保留最近 24 小時每小時、過去一個月每天、之後每週的版本，空間不足才刪最舊。</p>
+<p>照片、影片、文件持續增長；最舊備份被刪後，重要的舊版本可能無法還原。2 倍是底線。</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Mac 內部容量</th>
+      <th>Apple 最低建議</th>
+      <th>本指南推薦</th>
+      <th>理由</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>512 GB</td>
+      <td>1 TB</td>
+      <td>2 TB</td>
+      <td>保留充足成長空間</td>
+    </tr>
+    <tr>
+      <td>1 TB</td>
+      <td>2 TB</td>
+      <td>2 TB 或 4 TB</td>
+      <td>2 TB 入門，4 TB 長期無壓力</td>
+    </tr>
+    <tr>
+      <td>2 TB</td>
+      <td>4 TB</td>
+      <td>4 TB</td>
+      <td>資料量大，建議 4 TB</td>
+    </tr>
+  </tbody>
+</table>
+
+<h2>三、完整設定流程</h2>
+
+<h3>步驟一：格式化 SSD</h3>
+<ol class="steps">
+  <li>將 SSD 連接至 MacBook。</li>
+  <li>開啟「磁碟工具程式」（Spotlight 搜尋即可）。</li>
+  <li>左側選取 SSD → 點擊「抹除」。</li>
+  <li>設定名稱（如 <code>TimeMachine_X9Pro</code>）、格式選 <strong>APFS</strong>、配置選 <strong>GUID 分割區圖表</strong>，點擊「抹除」完成。</li>
+</ol>
+
+<h3>步驟二：設定時光機</h3>
+<ol class="steps">
+  <li>前往「系統設定」→「一般」→「時光機」。</li>
+  <li>點擊「加入備份磁碟」，選擇剛格式化的 SSD。</li>
+  <li>勾選「加密備份磁碟」（強烈建議，保護隱私）。</li>
+  <li>首次備份為完整備份，插上電源並保持 Mac 喚醒直到完成。</li>
+</ol>
+
+<h3>步驟三：養成日常備份習慣</h3>
+
+<div class="callout tip">
+  <h3>回家就插上</h3>
+  <p>時光機會自動執行增量備份，只備份自上次以來有變更的部分。</p>
+  <p>可把 SSD 放在玄關固定位置，形成習慣。出遠門或完成重要專案前，主動手動備份一次確認。</p>
+</div>
+
+<p>間歇備份仍能保留每日 / 每週版本。4TB 版本歷史保留深度更長。</p>
+<p>空間快滿時，時光機會自動通知，無需手動監控。</p>
+
+<h2>四、進階最佳實踐</h2>
+
+<h3>線材與連接品質</h3>
+<p>使用原廠 USB-C 線或高品質資料傳輸線。</p>
+<p>避免廉價 USB hub 或過長延長線，容易造成斷線或速度下降。</p>
+
+<h3>電源與睡眠管理</h3>
+<p>備份進行中建議暫時關閉自動睡眠。</p>
+<p>或在終端機執行 <code>caffeinate</code> 指令，直到備份完成再離開。</p>
+
+<h3>定期驗證備份可用性</h3>
+<p>每 1–2 個月進入時光機瀏覽模式，隨機還原幾個舊檔案確認可用。</p>
+<p>同時在磁碟工具程式執行「急救」，確認磁碟健康狀態。</p>
+
+<h3>多重備份策略</h3>
+<ul>
+  <li><strong>本地快速還原</strong>：Crucial X9 Pro（本方案）</li>
+  <li><strong>雲端異地</strong>：iCloud+ 重要文件同步，或 Backblaze 等服務</li>
+  <li><strong>第三份（選配）</strong>：親友家或辦公室另一外接碟</li>
+</ul>
+
+<h3>排除不必要資料</h3>
+<p>在時光機選項中排除「下載」資料夾、瀏覽器暫存、巨型影片原始檔。</p>
+<p>可顯著加快備份速度並節省空間。</p>
+
+<div class="callout tip">
+  <h3>長時間未備份後的首次連接</h3>
+  <p>超過 7–14 天未連接，首次備份可能需要較久，視期間內變更量而定。</p>
+  <p>建議耐心等待，或先插電讓備份在背景完成，再正常使用電腦。</p>
+</div>
+
+<h2>購買決策一覽</h2>
+
+<table>
+  <thead>
+    <tr>
+      <th>項目</th>
+      <th>推薦選項</th>
+      <th>理由</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>首選容量</td>
+      <td>Crucial X9 Pro 4TB</td>
+      <td>長期無壓力、符合 Apple 2x 建議</td>
+    </tr>
+    <tr>
+      <td>預算替代</td>
+      <td>Crucial X9 Pro 2TB</td>
+      <td>適合內部容量 ≤ 1TB 用戶</td>
+    </tr>
+    <tr>
+      <td>版本優先</td>
+      <td>for Mac 版（若有售）</td>
+      <td>出廠 APFS，免格式化</td>
+    </tr>
+    <tr>
+      <td>備份習慣</td>
+      <td>回家就插上</td>
+      <td>維持版本新鮮度</td>
+    </tr>
+    <tr>
+      <td>額外保護</td>
+      <td>開啟加密 + 多重備份</td>
+      <td>本地 + 雲端雙保險</td>
+    </tr>
+  </tbody>
+</table>
+
+</article>
+
+<footer>
+  <p>整理：2026-05-10｜資料來源：Crucial 官方規格、Apple Support、2025–2026 年專業評測</p>
+</footer>
+
+</main>
+<script>
+  const bar = document.getElementById('progress');
+  window.addEventListener('scroll', () => {
+    const h = document.documentElement;
+    const pct = (h.scrollTop / (h.scrollHeight - h.clientHeight)) * 100;
+    bar.style.width = pct + '%';
+  });
+</script>
+</body>
+</html>
