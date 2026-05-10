@@ -1,0 +1,429 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>合約寫得再厚，也跑不過信任</title>
+<style>
+/* ── Reset ── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+/* ── Token ── */
+:root {
+  --fs-meta: 0.825rem;
+  --fs-body: 1rem;
+  --fs-h2:   clamp(1.3rem, 2.5vw, 1.5rem);
+  --fs-h1:   clamp(1.75rem, 4vw, 2.25rem);
+  --c-bg:      #0f172a;
+  --c-surface: #1e293b;
+  --c-text:    #f1f5f9;
+  --c-muted:   #94a3b8;
+  --c-accent:  #38bdf8;
+  --c-warn:    #fb923c;
+  --slide-radius: 4px;
+}
+
+/* ── Layout ── */
+body {
+  background: var(--c-bg);
+  color: var(--c-text);
+  font-family: "Noto Sans TC", "Microsoft JhengHei", system-ui, sans-serif;
+  font-size: var(--fs-body);
+  line-height: 1.75;
+  min-height: 100dvh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
+  padding: 1rem;
+  overflow-x: hidden;
+}
+
+/* ── Deck ── */
+.deck {
+  position: relative;
+  width: min(960px, 100%);
+  aspect-ratio: 16 / 9;
+  overflow: hidden;
+  border-radius: var(--slide-radius);
+  box-shadow: 0 8px 40px rgba(0,0,0,0.5);
+}
+
+/* ── Slide base ── */
+.slide {
+  position: absolute;
+  inset: 0;
+  padding: 3.5rem 4.5rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  background: var(--c-surface);
+  opacity: 0;
+  transform: translateX(56px);
+  transition: opacity 0.28s ease, transform 0.28s ease;
+  pointer-events: none;
+}
+.slide.active  { opacity: 1; transform: translateX(0);    pointer-events: auto; }
+.slide.exit-l  { opacity: 0; transform: translateX(-56px); }
+
+/* ── Cover ── */
+.slide-cover {
+  background: linear-gradient(145deg, #1e293b 0%, #0a1628 100%);
+  border-bottom: 3px solid var(--c-accent);
+  align-items: center;
+  text-align: center;
+}
+.slide-cover h1      { font-size: var(--fs-h1); font-weight: 800; line-height: 1.2; }
+.slide-cover .subtitle { font-size: var(--fs-h2); color: var(--c-muted); margin-top: 0.75rem; }
+.slide-cover .meta     { font-size: var(--fs-meta); color: var(--c-muted); margin-top: 1.5rem; }
+
+/* ── Highlight ── */
+.slide-highlight {
+  align-items: center;
+  text-align: center;
+}
+.slide-highlight .slide-label {
+  font-size: var(--fs-meta);
+  color: var(--c-accent);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  margin-bottom: 1.25rem;
+}
+.slide-highlight .key-msg {
+  font-size: var(--fs-h2);
+  font-weight: 700;
+  line-height: 1.55;
+  padding: 1.5rem 2rem;
+  border: 2px solid var(--c-accent);
+  border-radius: 8px;
+  color: var(--c-text);
+  max-width: 82%;
+}
+
+/* ── Content ── */
+.slide-content h2 {
+  font-size: var(--fs-h2);
+  font-weight: 700;
+  color: var(--c-accent);
+  margin-bottom: 1.5rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 1px solid rgba(56,189,248,0.25);
+}
+.slide-content ul {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+}
+.slide-content li { font-size: var(--fs-body); line-height: 1.6; }
+.slide-content li::before { content: "→ "; color: var(--c-accent); font-weight: 700; }
+
+/* ── Two-col ── */
+.slide-two-col h2 {
+  font-size: var(--fs-h2);
+  font-weight: 700;
+  color: var(--c-accent);
+  margin-bottom: 1.25rem;
+}
+.two-col-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2rem;
+  flex: 1;
+}
+.col-label {
+  font-size: var(--fs-meta);
+  font-weight: 700;
+  color: var(--c-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  margin-bottom: 0.6rem;
+}
+.col-box {
+  background: rgba(255,255,255,0.04);
+  border-radius: 6px;
+  padding: 1rem 1.25rem;
+}
+.col-box ul { list-style: none; display: flex; flex-direction: column; gap: 0.5rem; }
+.col-box li { font-size: var(--fs-body); line-height: 1.55; color: var(--c-text); }
+.col-box.accent { border-top: 2px solid var(--c-accent); }
+.col-box.warn   { border-top: 2px solid var(--c-warn); }
+
+/* ── Quote ── */
+.slide-quote { align-items: flex-start; }
+.slide-quote h2 {
+  font-size: var(--fs-h2);
+  font-weight: 700;
+  color: var(--c-accent);
+  margin-bottom: 1.25rem;
+}
+.slide-quote blockquote {
+  font-size: var(--fs-h2);
+  line-height: 1.6;
+  border-left: 4px solid var(--c-warn);
+  padding-left: 1.5rem;
+  color: var(--c-text);
+  font-style: italic;
+}
+.slide-quote .attribution {
+  font-size: var(--fs-meta);
+  color: var(--c-muted);
+  margin-top: 1rem;
+  margin-left: 1.5rem;
+}
+
+/* ── End ── */
+.slide-end {
+  background: linear-gradient(145deg, #1e293b 0%, #0a1628 100%);
+  align-items: center;
+  text-align: center;
+}
+.slide-end .end-quote {
+  font-size: var(--fs-h2);
+  font-weight: 700;
+  color: var(--c-text);
+  line-height: 1.55;
+  max-width: 75%;
+}
+.slide-end .end-sub {
+  font-size: var(--fs-body);
+  color: var(--c-muted);
+  margin-top: 1.5rem;
+}
+
+/* ── Speaker notes ── */
+.note { display: none; }
+
+/* ── Controls ── */
+.controls {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  width: min(960px, 100%);
+}
+.btn {
+  background: var(--c-surface);
+  border: 1px solid rgba(255,255,255,0.12);
+  color: var(--c-text);
+  padding: 0.4rem 1rem;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: var(--fs-meta);
+  transition: background 0.18s;
+  flex-shrink: 0;
+}
+.btn:hover:not(:disabled) { background: rgba(56,189,248,0.18); }
+.btn:disabled { opacity: 0.3; cursor: not-allowed; }
+.progress-wrap {
+  flex: 1;
+  height: 3px;
+  background: rgba(255,255,255,0.08);
+  border-radius: 2px;
+  overflow: hidden;
+}
+.progress-bar { height: 100%; background: var(--c-accent); transition: width 0.28s; }
+.counter { font-size: var(--fs-meta); color: var(--c-muted); min-width: 4.5ch; text-align: right; }
+
+/* ── Notes panel ── */
+.notes-panel {
+  display: none;
+  width: min(960px, 100%);
+  background: rgba(0,0,0,0.4);
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 4px;
+  padding: 0.75rem 1.25rem;
+  font-size: var(--fs-meta);
+  color: var(--c-muted);
+  max-height: 100px;
+  overflow-y: auto;
+}
+.notes-panel.visible { display: block; }
+
+/* ── RWD ── */
+@media (max-width: 600px) {
+  .slide { padding: 1.75rem 2rem; }
+  .two-col-grid { grid-template-columns: 1fr; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .slide { transition: none; }
+  .progress-bar { transition: none; }
+}
+</style>
+</head>
+<body>
+
+<div class="deck" id="deck" role="region" aria-label="投影片（共 7 張）">
+
+  <!-- 1 封面 -->
+  <section class="slide slide-cover" role="group" aria-label="封面">
+    <h1>合約寫得再厚，也跑不過信任</h1>
+    <p class="subtitle">高複雜供應鏈中，信任資本才是真正的護城河</p>
+    <p class="meta">來自 Vault Card｜domain/semiconductor · domain/strategy</p>
+    <p class="note">開場：直接點題，跳過客套。核心命題是「信任 > 合約」在特定條件下成立——不是永遠，而是在高複雜場景中。</p>
+  </section>
+
+  <!-- 2 BLUF -->
+  <section class="slide slide-highlight" role="group" aria-label="核心命題">
+    <p class="slide-label">一句話帶走</p>
+    <div class="key-msg">
+      當系統複雜度超過合約能枚舉的範圍，<br>
+      信任從「情感加分」升格為「協調骨幹」——<br>
+      讓談判與監督的成本，以極低摩擦消失。
+    </div>
+    <p class="note">這是整份簡報的 BLUF。後面 5 張都是在展開這句話的機制與證據。</p>
+  </section>
+
+  <!-- 3 合約失靈條件 -->
+  <section class="slide slide-content" role="group" aria-label="合約失靈的條件">
+    <h2>合約適合什麼？哪裡會失靈？</h2>
+    <ul>
+      <li>合約能管的：可事前定義、事後驗證的交易</li>
+      <li>失靈場景：插單、急單、良率波動、產能重排</li>
+      <li>失靈原因：關鍵狀況在事前根本無法完整枚舉</li>
+      <li>結果：條款讓雙方相互防衛，整體效率反而更低</li>
+    </ul>
+    <p class="note">這張說的是「合約是好工具，但有邊界條件」。邊界：可預期性。超出可預期範圍，合約變成對話阻礙而非協調工具。</p>
+  </section>
+
+  <!-- 4 對比雙欄 -->
+  <section class="slide slide-two-col" role="group" aria-label="信任 vs 合約">
+    <h2>信任 vs 合約：本質差異</h2>
+    <div class="two-col-grid">
+      <div>
+        <p class="col-label">合約</p>
+        <div class="col-box warn">
+          <ul>
+            <li>靠威脅與懲罰維持秩序</li>
+            <li>法務攻防成本昂貴</li>
+            <li>只能管理可預期情境</li>
+            <li>出問題時強化對抗姿態</li>
+          </ul>
+        </div>
+      </div>
+      <div>
+        <p class="col-label">信任資本</p>
+        <div class="col-box accent">
+          <ul>
+            <li>靠長期可預測性維持秩序</li>
+            <li>低監督成本，高執行彈性</li>
+            <li>在不確定時仍能快速收斂</li>
+            <li>出問題時傾向共同解決</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <p class="note">注意：這不是說合約沒用，而是說兩個工具適用的情境不同。信任資本在高不確定場景才顯示優勢。</p>
+  </section>
+
+  <!-- 5 台積電引言 -->
+  <section class="slide slide-quote" role="group" aria-label="台積電案例">
+    <h2>台積電 × NVIDIA：幾十年，幾乎沒有制式合約</h2>
+    <blockquote>「若依賴合約防禦，法務攻防只會破壞互信；遇到困難，我們選擇坐下來共體時艱。」</blockquote>
+    <p class="attribution">— 台積電前人資 VP 何麗梅，商周 MEGA TALK S2 EP.03</p>
+    <p class="note">這是整份簡報最有力的一手證據。台積電提供的是客製化技術服務，雙方投入成本極高，真的去告夥伴在商業上完全不現實——信任是唯一可持續的協調機制。</p>
+  </section>
+
+  <!-- 6 護城河結構 -->
+  <section class="slide slide-content" role="group" aria-label="信任資本的護城河結構">
+    <h2>信任資本的護城河是怎麼建成的？</h2>
+    <ul>
+      <li>不是一次承諾，是長期交付累積的可預測紀錄</li>
+      <li>不是情感好惡，是資訊不完備時仍選對系統最有利的動作</li>
+      <li>跨域同構：Agent / 半導體認證 / 代表作——同一結構</li>
+    </ul>
+    <p class="note">這張把「信任資本」從抽象概念拉到可操作的定義：「在你不確定的時候，對方還是做出對整個系統最好的選擇」——這才是護城河。</p>
+  </section>
+
+  <!-- 7 結尾 -->
+  <section class="slide slide-end" role="group" aria-label="結尾">
+    <p class="end-quote">真正讓人不換你的，<br>是你在出問題時仍值得被託付。</p>
+    <p class="end-sub">← → 或左右滑動導覽 · 按 N 顯示備註</p>
+    <p class="note">帶走這句話：護城河的本質不是報價最低，也不是合約最嚴，而是在最難的時候你仍然是可以被信任的那個人。</p>
+  </section>
+
+</div>
+
+<!-- 控制列 -->
+<div class="controls" role="navigation" aria-label="投影片導覽">
+  <button class="btn" id="btn-prev" aria-label="上一張" tabindex="0">←</button>
+  <div class="progress-wrap" role="progressbar" aria-valuemin="1" aria-valuemax="7" aria-valuenow="1" aria-label="進度">
+    <div class="progress-bar" id="progress-bar"></div>
+  </div>
+  <span class="counter" id="counter" aria-live="polite">1 / 7</span>
+  <button class="btn" id="btn-next" aria-label="下一張" tabindex="0">→</button>
+</div>
+
+<!-- 備註面板 -->
+<div class="notes-panel" id="notes-panel" aria-label="演講者備註" aria-live="polite"></div>
+
+<script>
+(function () {
+  'use strict';
+  const slides     = Array.from(document.querySelectorAll('.slide'));
+  const total      = slides.length;
+  const progress   = document.getElementById('progress-bar');
+  const counter    = document.getElementById('counter');
+  const btnPrev    = document.getElementById('btn-prev');
+  const btnNext    = document.getElementById('btn-next');
+  const notesPanel = document.getElementById('notes-panel');
+  const deck       = document.getElementById('deck');
+  let cur = 0;
+  let notesVisible = false;
+
+  deck.setAttribute('aria-label', `投影片（共 ${total} 張）`);
+  document.querySelector('[role="progressbar"]').setAttribute('aria-valuemax', total);
+
+  function goTo(n, dir) {
+    if (n < 0 || n >= total) return;
+    slides[cur].classList.remove('active');
+    if (dir === 'prev') slides[cur].classList.add('exit-l');
+    const prev = cur;
+    cur = n;
+    setTimeout(() => slides[prev].classList.remove('exit-l'), 300);
+    slides[cur].classList.add('active');
+    progress.style.width = `${(cur + 1) / total * 100}%`;
+    counter.textContent  = `${cur + 1} / ${total}`;
+    btnPrev.disabled = cur === 0;
+    btnNext.disabled = cur === total - 1;
+    document.querySelector('[role="progressbar"]').setAttribute('aria-valuenow', cur + 1);
+    const noteEl = slides[cur].querySelector('.note');
+    notesPanel.textContent = noteEl ? noteEl.textContent.trim() : '';
+  }
+
+  /* 初始化 */
+  slides[0].classList.add('active');
+  progress.style.width = `${1 / total * 100}%`;
+  btnPrev.disabled = true;
+  if (total === 1) btnNext.disabled = true;
+  counter.textContent = `1 / ${total}`;
+
+  btnPrev.addEventListener('click', () => goTo(cur - 1, 'prev'));
+  btnNext.addEventListener('click', () => goTo(cur + 1, 'next'));
+
+  document.addEventListener('keydown', e => {
+    if (['ArrowRight', ' '].includes(e.key)) { e.preventDefault(); goTo(cur + 1, 'next'); }
+    if (e.key === 'ArrowLeft')               { e.preventDefault(); goTo(cur - 1, 'prev'); }
+    if (e.key === 'n' || e.key === 'N') {
+      notesVisible = !notesVisible;
+      notesPanel.classList.toggle('visible', notesVisible);
+    }
+  });
+
+  window.goTo = goTo;
+
+  let touchX = 0;
+  deck.addEventListener('touchstart', e => { touchX = e.touches[0].clientX; }, { passive: true });
+  deck.addEventListener('touchend',   e => {
+    const dx = e.changedTouches[0].clientX - touchX;
+    if (Math.abs(dx) > 40) {
+      if (dx < 0) goTo(cur + 1, 'next');
+      if (dx > 0) goTo(cur - 1, 'prev');
+    }
+  }, { passive: true });
+})();
+</script>
+
+</body>
+</html>
