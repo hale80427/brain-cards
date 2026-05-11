@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>2026-05-11 工事回顧</title>
+<style>
+/* ── Reset ── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+/* ── Token ── */
+:root {
+  --fs-meta: 0.825rem;
+  --fs-body: 1rem;
+  --fs-h2:   clamp(1.3rem, 2.5vw, 1.5rem);
+  --fs-h1:   clamp(1.75rem, 4vw, 2.25rem);
+  --c-bg:      #0f172a;
+  --c-surface: #1e293b;
+  --c-text:    #f1f5f9;
+  --c-muted:   #94a3b8;
+  --c-accent:  #38bdf8;
+  --c-warn:    #fb923c;
+  --slide-radius: 4px;
+}
+
+/* ── Layout ── */
+body {
+  background: var(--c-bg);
+  color: var(--c-text);
+  font-family: "Noto Sans TC", "Microsoft JhengHei", system-ui, sans-serif;
+  font-size: var(--fs-body);
+  font-weight: 400;
+  line-height: 1.75;
+  min-height: 100dvh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
+  padding: 1rem;
+  overflow-x: hidden;
+}
+
+strong, b { font-weight: 600; }
+
+[lang="en"], .uppercase { letter-spacing: 0.04em; }
+
+/* ── Deck ── */
+.deck {
+  position: relative;
+  width: min(960px, 100%);
+  aspect-ratio: 16 / 9;
+  overflow: hidden;
+  border-radius: var(--slide-radius);
+  box-shadow: 0 8px 40px rgba(0,0,0,0.5);
+}
+
+/* ── 每張投影片 ── */
+.slide {
+  position: absolute;
+  inset: 0;
+  padding: 3.5rem 4.5rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  background: var(--c-surface);
+  opacity: 0;
+  transform: translateX(56px);
+  transition: opacity 0.28s ease, transform 0.28s ease;
+  pointer-events: none;
+}
+.slide.active  { opacity: 1; transform: translateX(0);    pointer-events: auto; }
+.slide.exit-l  { opacity: 0; transform: translateX(-56px); }
+
+/* ── 投影片類型 ── */
+.slide-cover {
+  background: linear-gradient(145deg, #1e293b 0%, #0a1628 100%);
+  border-bottom: 3px solid var(--c-accent);
+  align-items: center;
+  text-align: center;
+}
+.slide-cover h1  { font-size: var(--fs-h1); font-weight: 800; line-height: 1.15; }
+.slide-cover .subtitle { font-size: var(--fs-h2); font-weight: 600; color: var(--c-muted); margin-top: 0.75rem; }
+.slide-cover .meta     { font-size: var(--fs-meta); color: var(--c-muted); margin-top: 1.5rem; }
+
+.slide-content h2 {
+  font-size: var(--fs-h2);
+  font-weight: 600;
+  color: var(--c-accent);
+  margin-bottom: 1.5rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 1px solid rgba(56,189,248,0.25);
+}
+.slide-content ul {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 0.85rem;
+}
+.slide-content li { font-size: var(--fs-body); line-height: 1.65; }
+.slide-content li::before { content: "→ "; color: var(--c-accent); font-weight: 600; }
+
+.slide-highlight {
+  background: var(--c-surface);
+  align-items: center;
+  text-align: center;
+}
+.slide-highlight .key-msg {
+  font-size: var(--fs-h2);
+  font-weight: 600;
+  line-height: 1.5;
+  padding: 1.5rem 2rem;
+  border: 2px solid var(--c-accent);
+  border-radius: 8px;
+  color: var(--c-text);
+  max-width: 80%;
+}
+
+.slide-quote {
+  background: var(--c-surface);
+  align-items: flex-start;
+}
+.slide-quote blockquote {
+  font-size: var(--fs-h2);
+  line-height: 1.55;
+  border-left: 4px solid var(--c-warn);
+  padding-left: 1.5rem;
+  color: var(--c-text);
+  font-style: italic;
+}
+.slide-quote .attribution {
+  font-size: var(--fs-meta);
+  color: var(--c-muted);
+  margin-top: 1rem;
+  margin-left: 1.5rem;
+}
+
+.slide-end {
+  background: linear-gradient(145deg, #1e293b 0%, #0a1628 100%);
+  align-items: center;
+  text-align: center;
+}
+.slide-end h2 { font-size: var(--fs-h1); font-weight: 800; color: var(--c-accent); }
+.slide-end p  { font-size: var(--fs-body); color: var(--c-muted); margin-top: 1rem; max-width: 80%; }
+
+/* ── 演講者備註 ── */
+.note { display: none; }
+
+/* ── 控制列 ── */
+.controls {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  width: min(960px, 100%);
+}
+.btn {
+  background: var(--c-surface);
+  border: 1px solid rgba(255,255,255,0.12);
+  color: var(--c-text);
+  padding: 0.4rem 1rem;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: var(--fs-meta);
+  transition: background 0.18s;
+  flex-shrink: 0;
+}
+.btn:hover:not(:disabled) { background: rgba(56,189,248,0.18); }
+.btn:disabled { opacity: 0.3; cursor: not-allowed; }
+.progress-wrap {
+  flex: 1;
+  height: 3px;
+  background: rgba(255,255,255,0.08);
+  border-radius: 2px;
+  overflow: hidden;
+}
+.progress-bar { height: 100%; background: var(--c-accent); transition: width 0.28s; }
+.counter { font-size: var(--fs-meta); color: var(--c-muted); min-width: 4.5ch; text-align: right; }
+
+/* ── 備註面板 ── */
+.notes-panel {
+  display: none;
+  width: min(960px, 100%);
+  background: rgba(0,0,0,0.4);
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 4px;
+  padding: 0.75rem 1.25rem;
+  font-size: var(--fs-meta);
+  color: var(--c-muted);
+  max-height: 100px;
+  overflow-y: auto;
+}
+.notes-panel.visible { display: block; }
+
+/* ── RWD ── */
+@media (max-width: 600px) {
+  .slide { padding: 1.75rem 2rem; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .slide { transition: none; }
+  .progress-bar { transition: none; }
+}
+
+/* ── Print ── */
+@media print {
+  body { background: white; color: black; padding: 0; min-height: auto; }
+  .deck { box-shadow: none; aspect-ratio: auto; width: 100%; }
+  .slide {
+    position: static;
+    inset: auto;
+    opacity: 1 !important;
+    transform: none !important;
+    pointer-events: auto;
+    page-break-after: always;
+    background: white !important;
+    color: black !important;
+    border-bottom: none;
+    padding: 1.5rem 2rem;
+  }
+  .slide:last-child { page-break-after: auto; }
+  .slide-content h2, .slide-cover h1, .slide-end h2,
+  .slide-highlight .key-msg, .slide-cover .subtitle { color: black !important; border-color: #888 !important; }
+  .slide-content li::before { color: #444 !important; }
+  .slide-quote blockquote { border-left-color: #888 !important; color: black !important; }
+  .controls, .notes-panel { display: none !important; }
+  .note { display: block !important; font-size: 0.75rem; color: #555; margin-top: 1rem; padding-top: 0.5rem; border-top: 1px dashed #ccc; }
+}
+</style>
+</head>
+<body>
+
+<div class="deck" id="deck" role="region" aria-label="投影片">
+
+  <!-- ① 封面 -->
+  <section class="slide slide-cover" role="group" aria-label="封面">
+    <h1>2026-05-11 工事回顧</h1>
+    <p class="subtitle"><span lang="en">INGEST</span> Hassabis 思想體系 × <span lang="en">SYNTHESIZE</span> 描述語言躍升</p>
+    <p class="meta">彥皓 · 2026-05-11</p>
+    <p class="note">兩條主軸：上半 INGEST Hassabis 第二份 Source（5 月思想體系切角，與 4 月路線圖版互補）；下半接續本 Session 跨 Source SYNTHESIZE 收束「描述語言躍升」母命題。</p>
+  </section>
+
+  <!-- ② 主軸高亮 -->
+  <section class="slide slide-highlight" role="group" aria-label="今日兩主軸">
+    <div class="key-msg">今日兩主軸——思想體系切角 <span lang="en">INGEST</span> + 跨 <span lang="en">Source</span> 母命題 <span lang="en">SYNTHESIZE</span></div>
+    <p class="note">兩條主軸合計 1 Source + 12 Cards（含 1 母命題）+ 11 MOC 敘事段落。</p>
+  </section>
+
+  <!-- ③ INGEST Hassabis 思想體系 -->
+  <section class="slide slide-content" role="group" aria-label="INGEST Hassabis 思想體系">
+    <h2>Hassabis 思想體系（與 4 月路線圖互補）</h2>
+    <ul>
+      <li>4 月談紀律端：會不會做到、何時做到</li>
+      <li>5 月談預設端：為什麼相信能做到、哪裡會錯</li>
+      <li>1 Source + 6 Cards 覆蓋五個隱含預設</li>
+      <li>6 種句構覆蓋，C 類限額 1 次（<span lang="en">KB-03</span> §6 通過）</li>
+      <li>5 MOC 接點橫跨思維/工作流/投資/認識論/CNC</li>
+    </ul>
+    <p class="note">Source 命名「2026-05 Demis Hassabis AGI 思想體系與資訊實在論 (YouTube)」。六張 Card 含資訊實在論本質 / 學習型模擬器覆蓋度 / AI = 描述語言躍升 / 5 年硬體窗口 / 智能意識耦合湧現 / 反身性盲點。</p>
+  </section>
+
+  <!-- ④ 預設端最脆弱節點 -->
+  <section class="slide slide-content" role="group" aria-label="預設端最脆弱的單一節點">
+    <h2>預設端最脆弱的單一節點</h2>
+    <ul>
+      <li>智能與意識可工程剝離——失敗代價不對稱</li>
+      <li>內部矛盾：資訊實在論預設與意識湧現自相衝突</li>
+      <li>反身性使矽內模擬無法解決社會科學</li>
+      <li><span lang="en">LTCM 1998</span> / 信用違約模型 <span lang="en">2008</span> 同構失效</li>
+      <li>矽內模擬真正瓶頸在覆蓋度而非算力</li>
+    </ul>
+    <p class="note">「不對稱」指剝離成功無額外問題、剝離失敗時對齊窗口已關閉。資訊處理等效若足以支撐 AGI，就應該同等等效到湧現意識——這是內部矛盾。</p>
+  </section>
+
+  <!-- ⑤ Part II 起承 -->
+  <section class="slide slide-highlight" role="group" aria-label="跨 Source 接續">
+    <div class="key-msg">接續 <span lang="en">SYNTHESIZE</span>——<span lang="en">GitNexus</span> 文章與 Hassabis 兩 <span lang="en">Source</span> 收束跨 <span lang="en">Source</span> 母命題</div>
+    <p class="note">本 Session 接續執行 SYNTHESIZE 模式，從本 Session 完成的 GitNexus 6 Cards + 既有 Hassabis 4 月路線圖 Source 跨 domain 收束。</p>
+  </section>
+
+  <!-- ⑥ SYNTHESIZE 跨 Source 收束 -->
+  <section class="slide slide-content" role="group" aria-label="SYNTHESIZE 跨 Source 母命題合成">
+    <h2><span lang="en">SYNTHESIZE</span> · 跨 <span lang="en">Source</span> 母命題合成</h2>
+    <ul>
+      <li><span lang="en">GitNexus</span> 萃取 6 卡，六句構覆蓋</li>
+      <li>母命題 <span lang="en">Card</span>:描述語言躍升決定跨域突破</li>
+      <li><span lang="en">status: growing</span>｜跨 4+ <span lang="en">domain</span> 成立</li>
+      <li><span lang="en">HC</span> 路徑：<span lang="en">first</span>→<span lang="en">analogy</span>→<span lang="en">emergent</span></li>
+      <li>6 <span lang="en">MOC</span> 敘事段覆蓋 4 大 <span lang="en">domain</span></li>
+    </ul>
+    <p class="note">母命題標題用 D 類「看似 A 實際 B」句構，避開 INGEST 上批用過的 C 類限額。Card 內含 §1 並列結構同構表（6 行）+ §2 HC 三步推理 + §3 跨 domain 應用含意 + §4 邊界條件 + Synthesis Provenance。</p>
+  </section>
+
+  <!-- ⑦ 元層發現 -->
+  <section class="slide slide-quote" role="group" aria-label="元層發現">
+    <blockquote>「第二大腦從『主題分類』躍升到『<span lang="en">topology</span> + <span lang="en">wikilink</span> + <span lang="en">MOC</span> 樞紐』這套描述語言，才使這條跨 <span lang="en">Source emergent</span> 母命題得以浮現」</blockquote>
+    <p class="attribution">— <span lang="en">SYNTHESIZE</span> 元層收束（2026-05-11）</p>
+    <p class="note">若仍停留在主題分類層，Hassabis Source 會被歸到「AI 訪談類」、GitNexus 文章會被歸到「工程工具類」，兩者永遠不會在描述語言層級相遇。元層發現：第二大腦設計本身就是這條母命題的個人實作。</p>
+  </section>
+
+  <!-- ⑧ 下次起點 -->
+  <section class="slide slide-end" role="group" aria-label="下次起點">
+    <h2>下次起點</h2>
+    <p>收第三組獨立 <span lang="en">domain</span> 同構案例 → 升 <span lang="en">evergreen</span> / 4 月 + 5 月 Hassabis <span lang="en">Source</span> 反向 <span lang="en">stress test</span></p>
+    <p class="note">第三組候選 domain：音樂理論 / 建築學 / 法律論證 / 心理治療。若再收三組同構，母命題從 status/growing → status/evergreen。另：4 月路線圖 + 5 月思想體系兩份 Hassabis Source 跨 Source SYNTHESIZE 候選「Hassabis 工程紀律 vs 哲學預設的對齊張力」尚未執行，可下次接續。</p>
+  </section>
+
+</div>
+
+<!-- 控制列 -->
+<div class="controls" role="navigation" aria-label="投影片導覽">
+  <button class="btn" id="btn-prev" aria-label="上一張" tabindex="0">←</button>
+  <div class="progress-wrap" role="progressbar" aria-valuemin="1" aria-valuemax="8" aria-valuenow="1" aria-label="進度">
+    <div class="progress-bar" id="progress-bar"></div>
+  </div>
+  <span class="counter" id="counter" aria-live="polite">1 / 8</span>
+  <button class="btn" id="btn-next" aria-label="下一張" tabindex="0">→</button>
+</div>
+
+<!-- 演講者備註面板 -->
+<div class="notes-panel" id="notes-panel" aria-label="演講者備註" aria-live="polite"></div>
+
+<script>
+(function () {
+  'use strict';
+  const slides   = Array.from(document.querySelectorAll('.slide'));
+  const total    = slides.length;
+  const progress = document.getElementById('progress-bar');
+  const counter  = document.getElementById('counter');
+  const btnPrev  = document.getElementById('btn-prev');
+  const btnNext  = document.getElementById('btn-next');
+  const notesPanel = document.getElementById('notes-panel');
+  const deck     = document.getElementById('deck');
+  let cur = 0;
+  let notesVisible = false;
+
+  deck.setAttribute('aria-label', `投影片（共 ${total} 張）`);
+  document.querySelector('[role="progressbar"]').setAttribute('aria-valuemax', total);
+
+  function goTo(n, dir) {
+    if (n < 0 || n >= total) return;
+    slides[cur].classList.remove('active');
+    if (dir === 'prev') slides[cur].classList.add('exit-l');
+    const prev = cur;
+    cur = n;
+    setTimeout(() => slides[prev].classList.remove('exit-l'), 300);
+    slides[cur].classList.add('active');
+    progress.style.width = `${(cur + 1) / total * 100}%`;
+    counter.textContent  = `${cur + 1} / ${total}`;
+    btnPrev.disabled = cur === 0;
+    btnNext.disabled = cur === total - 1;
+    document.querySelector('[role="progressbar"]').setAttribute('aria-valuenow', cur + 1);
+    const noteEl = slides[cur].querySelector('.note');
+    notesPanel.textContent = noteEl ? noteEl.textContent.trim() : '';
+  }
+
+  window.goTo = goTo;
+
+  slides[0].classList.add('active');
+  progress.style.width = `${1 / total * 100}%`;
+  btnPrev.disabled = true;
+  if (total === 1) btnNext.disabled = true;
+  counter.textContent = `1 / ${total}`;
+
+  btnPrev.addEventListener('click', () => goTo(cur - 1, 'prev'));
+  btnNext.addEventListener('click', () => goTo(cur + 1, 'next'));
+
+  document.addEventListener('keydown', e => {
+    if (['ArrowRight', ' '].includes(e.key)) { e.preventDefault(); goTo(cur + 1, 'next'); }
+    if (e.key === 'ArrowLeft')               { e.preventDefault(); goTo(cur - 1, 'prev'); }
+    if (e.key === 'n' || e.key === 'N') {
+      notesVisible = !notesVisible;
+      notesPanel.classList.toggle('visible', notesVisible);
+    }
+  });
+
+  let touchX = 0;
+  deck.addEventListener('touchstart', e => { touchX = e.touches[0].clientX; }, { passive: true });
+  deck.addEventListener('touchend',   e => {
+    const dx = e.changedTouches[0].clientX - touchX;
+    if (Math.abs(dx) > 40) {
+      if (dx < 0) goTo(cur + 1, 'next');
+      if (dx > 0) goTo(cur - 1, 'prev');
+    }
+  }, { passive: true });
+})();
+</script>
+
+</body>
+</html>
