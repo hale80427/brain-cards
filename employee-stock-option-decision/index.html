@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>我參加了公司的員工認股說明會，想跟你說我發現的事</title>
+<meta name="description" content="一份給好同事兼好朋友的學習札記——拆解員工認股說明會的六件事，附上可帶到現場用的四題反詰問題。">
+<style>
+  :root {
+    --bg: #fafaf7;
+    --fg: #1a1a1a;
+    --accent: #c0392b;
+    --muted: #666;
+    --border: #e5e5e0;
+    --callout-tip: #e8f4f0;
+    --callout-warn: #fdf3e7;
+    --fs-meta: 0.85rem;
+    --fs-body: 1rem;
+    --fs-h2:   clamp(1.3rem, 3vw, 1.5rem);
+    --fs-h1:   clamp(1.75rem, 4vw, 2.25rem);
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #1a1a1a;
+      --fg: #f0f0e8;
+      --accent: #e87c6e;
+      --muted: #999;
+      --border: #333;
+      --callout-tip: #1f3530;
+      --callout-warn: #3a2d1c;
+    }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
+  }
+  * { box-sizing: border-box; }
+  body {
+    font-family: "Noto Serif TC", Georgia, serif;
+    background: var(--bg);
+    color: var(--fg);
+    line-height: 1.8;
+    margin: 0;
+    padding: 0;
+    -webkit-font-smoothing: antialiased;
+  }
+  .progress-bar {
+    position: fixed; top: 0; left: 0; height: 3px;
+    background: var(--accent); width: 0%; z-index: 100;
+    transition: width 0.1s;
+  }
+  main {
+    max-width: 680px;
+    margin: 0 auto;
+    padding: clamp(2rem, 5vw, 4rem) clamp(1.5rem, 4vw, 2rem);
+  }
+  h1 { font-size: var(--fs-h1); line-height: 1.3; margin: 0 0 1rem; }
+  h2 { font-size: var(--fs-h2); line-height: 1.4; margin: 2.75rem 0 0.75rem; padding-bottom: 0.5rem; border-bottom: 1px solid var(--border); }
+  h3 { font-size: var(--fs-body); font-weight: 700; line-height: 1.4; margin: 1.75rem 0 0.5rem; color: var(--accent); }
+  p { margin: 0 0 1.25rem; }
+  a { color: var(--accent); text-underline-offset: 3px; }
+  a:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+  .meta { color: var(--muted); font-size: var(--fs-meta); margin-bottom: 1.5rem; }
+  .bluf { background: var(--callout-tip); border-left: 3px solid var(--accent); padding: 1.25rem 1.5rem; margin: 1.5rem 0 2.5rem; border-radius: 4px; }
+  .bluf strong { display: block; font-size: var(--fs-meta); letter-spacing: 0.05em; color: var(--accent); margin-bottom: 0.5rem; text-transform: uppercase; }
+  .bluf p:last-child { margin-bottom: 0; }
+  .callout { padding: 1rem 1.25rem; margin: 1.75rem 0; border-radius: 4px; border-left: 3px solid var(--muted); }
+  .callout.tip { background: var(--callout-tip); border-left-color: var(--accent); }
+  .callout.warn { background: var(--callout-warn); border-left-color: #d97706; }
+  .callout p:last-child { margin-bottom: 0; }
+  table { border-collapse: collapse; width: 100%; margin: 1.5rem 0; font-size: var(--fs-body); }
+  th, td { padding: 0.6rem 0.8rem; border: 1px solid var(--border); text-align: left; vertical-align: top; }
+  th { background: var(--callout-tip); font-weight: 600; }
+  ol, ul { padding-left: 1.5rem; margin: 0 0 1.25rem; }
+  li { margin-bottom: 0.5rem; }
+  em.accent { font-style: normal; color: var(--accent); font-weight: 600; }
+  @media print {
+    .progress-bar { display: none; }
+    body { font-size: 11pt; line-height: 1.6; }
+    main { max-width: 100%; padding: 1cm; }
+  }
+</style>
+</head>
+<body>
+<div class="progress-bar" id="progress"></div>
+<main>
+<header>
+<h1>我參加了公司的員工認股說明會，想跟你說我發現的事</h1>
+<p class="meta">一份給好同事兼好朋友的學習札記 · 2026 年 5 月</p>
+<div class="bluf">
+<strong>BLUF · 先說結論</strong>
+<p>兩天決策期 + 每股 10 元 + 放棄即註銷，這套組合拳的真實目的是公司在 IPO 前清理股權結構，不是讓員工得到最佳優惠。</p>
+<p>下面六件事，會議上沒人會主動告訴你。看穿後再決定要不要認，比聽完現場敘事就直接選一邊安全得多。</p>
+</div>
+</header>
+<article>
+
+<p>兄弟，今天我參加完那場員工認股說明會，腦袋一直轉。</p>
+
+<p>兩天決策期、十塊錢一股、放棄就永遠註銷——這套組合拳打過來，現場很多人應該都覺得「機會難得，先認再說」。我也差點是其中一個。</p>
+
+<p>但我回家後花了好幾個小時，把整場會議的話術、稅務機制、股權結構、會計師的角色都拆了一遍，越拆越覺得不對勁。</p>
+
+<p>這份整理出來給你看，因為我們是朋友，也因為你跟我一樣是長期留任的員工，這個決定你也得做。</p>
+
+<p>我不是要勸你別認，<em class="accent">認與不認都有它的理由</em>。但我覺得有一些事會議上沒人會主動告訴你，你必須自己知道才能做出真正屬於你的決定。</p>
+
+<p>下面分六件事，每一件都是我這幾個小時挖出來的。</p>
+
+<h2>1. 真正的「優惠」不在 10 塊錢</h2>
+
+<p>會議一直強調「現在 10 元、未來 20 元」這個價差，讓你覺得是 50% 折扣。但真正能讓你賺到錢的關鍵點，其實不在這 10 塊的差距。</p>
+
+<p>關鍵在「現在繳稅是用公司淨值算 vs 上市後是用市價算」這條時間軸。</p>
+
+<p>你現在執行認股，當下要繳的所得稅是用「公司目前每股淨值 − 10 元」乘上你的所得稅率。如果公司現在每股淨值是 15 元，那你的稅基就是 5 元一股。</p>
+
+<p>但如果你等到上市以後再執行，稅基會變成「上市那天的市價 − 10 元」，可能變成 40 元一股，<em class="accent">差了 8 倍</em>。</p>
+
+<p>所以管理層催你現在認，講的是「未來 20 元」這個故事，但真正在後面推你的引擎，是這條稅基時間差。</p>
+
+<div class="callout tip">
+<p>這條也意味著：如果你決定要認，那「現在認」確實在稅務上是相對有利的時機。但前提是你願意接受其他下檔風險。</p>
+</div>
+
+<h2>2. 為什麼非要兩天內決定？</h2>
+
+<p>說真的，要做一個 3–5 年的財務決定，兩天根本不夠。光是諮詢會計師、做家庭現金流壓力測試、跟另一半討論，至少都要兩到三週。</p>
+
+<p>兩天這個窗口是設計過的。它的功能很明確：讓你來不及啟動慢思考的時候就先做決定。</p>
+
+<p>配上「放棄即永久註銷」，會啟動人類大腦最強的損失規避反應——不是去算「認了能賺多少」，而是去想「不認的話永遠失去這個機會多可惜」。</p>
+
+<p>後者的痛感比前者強多了，於是就會推著你選「先認再說」。</p>
+
+<p>最有效的破解方法其實很簡單：<em class="accent">把「決策窗口」跟「不放棄窗口」拆開</em>。意思是兩天內你可以「先不放棄」（保留權利），但詳細評估到底要不要認，這個時間可以拉長。</p>
+
+<p>如果公司不允許這種拆解，也就是兩天內你必須給最終答案、不能說 maybe——那就證明這個時間設計的目的不是讓你做出最好的決定。</p>
+
+<p>而是讓公司在某個截止日前把股權結構處理掉。</p>
+
+<h2>3. 為什麼公司急著要清掉這 200 萬股？</h2>
+
+<p>這 200 萬股認股權，對公司來說是個叫「股權懸浮」（equity overhang）的麻煩。</p>
+
+<p>簡單說，就是「已經授權給員工但還沒被行使」的股票會掛在公司的股權表上，讓未來上市或引進新投資人時很難說清楚。</p>
+
+<p>新投資人看到一堆未行使的員工選擇權，會擔心未來自己的持股會被稀釋，所以會用「打折估值」來補償這個風險。</p>
+
+<p>上市輔導的時候，券商也會卡這條，要求公司先把股權結構整理乾淨才能送件。</p>
+
+<p>所以「兩天 + 放棄即註銷」其實不是針對員工的懲罰，而是公司在做股權清理。</p>
+
+<p>員工的選擇對公司來說只有兩種有用的終態：要嘛行使（變成確定股本），要嘛註銷（變成零）。中間懸著最麻煩。</p>
+
+<p>理解這點之後，你就會發現一件事——<em class="accent">這份催促的真正動機是公司的時程表，不是你的最佳利益</em>。</p>
+
+<h2>4. 為什麼會計師那麼熱心？</h2>
+
+<p>我有個直覺一直跑出來——這個會計師看起來「為員工著想」，但他幹嘛這麼熱心？</p>
+
+<p>後來想清楚了。他是公司聘請來的，不是員工聘的。他的付費客戶是公司，他的長期合作關係也綁在公司身上。</p>
+
+<p>他對公司有受託義務，對員工只有「不違反專業倫理」這條較弱的底線。</p>
+
+<p>當公司的目標（清理 200 萬股懸浮股權）跟員工的目標（多花時間評估）衝突時，他會傾向協助公司。</p>
+
+<p>這不是說他在「欺騙」員工——他講的稅務公式可能都是對的。</p>
+
+<p>但他選擇用什麼方式講、用多強的急迫感講、選擇性地強調哪些事、選擇性地不提哪些事——這些都受公司委託內容影響。</p>
+
+<p>舉個具體例子：他告訴你「上市後處分只繳千分之三證交稅」，這是事實。</p>
+
+<p>但他沒主動告訴你：上市前股票無法變現、上市可能延宕或失敗、你自付的稅金沒辦法靠這張股票回填、最低稅負制可能適用、權利轉讓的稅單實際開立會有爭議。</p>
+
+<p>這些不提，是因為提了會增加員工抗拒。</p>
+
+<p>聽他的話的時候，要記得他講的是「公司立場下的稅務技術說明」，<em class="accent">不是「中立第三方為你個人把關」</em>。</p>
+
+<h2>5. 「陳董可以買回放棄的股份」這條最怪</h2>
+
+<p>會計師後來提出一個方案：員工如果不認，由陳董個人以 10 元買回，未來再以員工認股名義給新員工。</p>
+
+<p>我聽完一直覺得怪，後來才搞清楚為什麼。</p>
+
+<p>整套認股方案表面上有它的合法性，因為「10 元、兩天、放棄即註銷」對所有員工一視同仁。</p>
+
+<p>雖然下檔風險不對稱（員工承擔比較多），但只要規則統一適用，至少程序公平這條沒問題。</p>
+
+<p>但「陳董個人買回」這條把整套機制的程序公平拆掉了。原本員工只有「行使或註銷」兩個終態，現在多了第三個「放棄但被某人買回」。</p>
+
+<p><em class="accent">這個第三終態的入口只對一個人開放</em>。其他兼任員工身份的董事呢？為什麼只有陳董有這個權利？</p>
+
+<p>更深一層：原本員工放棄的股權應該回歸公司股本（消失），現在卻流向陳董個人帳戶。</p>
+
+<p>未來陳董再決定要把這些低價籌碼給誰、給多少、什麼條件，全部變成個人裁量。這就把「員工激勵工具」實質轉化成「控制者可支配的私人資源池」。</p>
+
+<p>而且還有循環論證——會計師原本說「放棄即註銷」是為了「避免股權過度稀釋」，現在又說「可以買回再轉給新員工」。</p>
+
+<p>如果可以買回再轉，那「註銷」根本不是必要的；如果註銷是必要的，那買回再轉就違反同一個目的。</p>
+
+<p>兩條論述不能同時成立，必有一條是工具性說詞。</p>
+
+<p>從受益方向反推：「放棄即註銷」對員工形成壓力、「個人買回」對陳董形成資源池，合在一起的功能是「逼員工出局 + 把出局資源送到單一人手上」。</p>
+
+<p>法律上這也是 IPO 輔導階段券商最容易卡的紅旗事項之一。</p>
+
+<h2>6. 「20 元股東 vs 10 元員工」是話術中最技術性的一條</h2>
+
+<p>會計師後來還加了一段，說「早期股東當年 20 元入股 1 股，員工現在 10 元可以買到 10 股，員工是更優惠的概念」。</p>
+
+<p>這條是話術操縱裡技術性最高、最迷惑人的一條。</p>
+
+<p>關鍵在於「面額」（par value）。台灣公司法允許每股面額由公司章程訂定。</p>
+
+<p>當公司做了股票分割（例如把面額 10 元的股票拆成 10 股面額 1 元），會發生三件事：</p>
+
+<ul>
+<li>公司總股本不變</li>
+<li>公司總股數變 10 倍</li>
+<li>每股對應的權益百分比變 1/10</li>
+</ul>
+
+<p>「股數變多」跟「每股權益變少」是同一件事的兩種講法，這叫恆等變換。把其中一邊單獨拿出來說「優惠」，等於把另一邊偷偷遮起來。</p>
+
+<p>如果你做等值換算：</p>
+
+<table>
+<thead>
+<tr><th>比一比&nbsp;</th><th>早期股東（換算到面額 1 元）&nbsp;</th><th>員工&nbsp;</th><th>結論</th></tr>
+</thead>
+<tbody>
+<tr><td>每股成本&nbsp;</td><td>2 元&nbsp;</td><td>10 元&nbsp;</td><td>員工貴 5 倍</td></tr>
+<tr><td>買 1% 公司權益要多少錢&nbsp;</td><td>200 萬&nbsp;</td><td>1000 萬&nbsp;</td><td>員工貴 5 倍</td></tr>
+<tr><td>假設未來上市 50 元能賺幾倍&nbsp;</td><td>25 倍&nbsp;</td><td>5 倍&nbsp;</td><td>員工只有股東 1/5</td></tr>
+</tbody>
+</table>
+
+<p>換句話說：當會計師說「員工更優惠」的時候，<em class="accent">員工付的每單位權益價格實際是早期股東的 5 倍</em>，未來升值倍數只有早期股東的 1/5。</p>
+
+<p>這條話術能成立，靠的是會計專業資訊不對稱——多數員工不熟悉「面額」「股票分割」這些概念。</p>
+
+<p>會直覺把「10 元 vs 20 元」當可比較數字，把「股數多」當作優惠證據。</p>
+
+<h2>你可以帶到現場用的四題反詰</h2>
+
+<p>如果你決定要去問清楚，這四題不需要懂財務理論，只需要要求對方做基本的等值換算：</p>
+
+<ol>
+<li>公司目前的每股面額是多少？以前是不是 10 元？什麼時候做過股票分割？比例是多少？</li>
+<li>早期股東當年的 20 元入股價，是在分割前還是分割後？換算到目前面額的基礎，等值單股成本是多少？</li>
+<li>如果用相同面額基準比較，員工付的單位權益價格是早期股東的多少倍？</li>
+<li>公司目前的精確每股淨值是多少？借款是否計息？權利轉讓的所得稅單實際開給誰？上市失敗時有沒有庫藏股買回機制？</li>
+</ol>
+
+<div class="callout warn">
+<p>這四題的殺傷力在於：對方要嘛承認話術錯誤（重新校準），要嘛迴避具體計算（暴露話術本質）。任何一種反應，都比你聽完現場敘事直接做決定來得安全。</p>
+</div>
+
+<h2>最後我想說的</h2>
+
+<p>我不是要勸你別認。認跟不認都有它的合理性：</p>
+
+<ul>
+<li>如果你對公司未來 3–5 年有強信心，現金流也支撐得住，認股是有意義的長期投入</li>
+<li>如果你需要保留流動性、家庭現金流不寬裕、對公司展望仍在觀望，不認也完全合理</li>
+<li>如果你對「兩天決策期」這個設計有疑慮，要求拉長評估時間，也是健康的反應</li>
+</ul>
+
+<p>但無論你最終怎麼選，都該是<em class="accent">「我看穿了這套設計後，自己決定要不要參與」</em>，而不是「我來不及想清楚就先選了一邊」。後者是直覺反應，前者是真正的決定。</p>
+
+<p>這六件事，沒人會主動告訴你。我整理出來給你，是希望你做的決定是後者，不是前者。</p>
+
+<p>兄弟，無論你最後怎麼選，我都支持你。但這幾個小時的功課，先送你。</p>
+
+</article>
+<footer>
+<p style="color: var(--muted); font-size: var(--fs-meta); margin-top: 4rem; padding-top: 1.5rem; border-top: 1px solid var(--border);">
+本文為個人學習札記，不構成任何投資、稅務或法律建議。所有重大財務決策請諮詢合格的會計師、稅務師與律師。
+</p>
+</footer>
+</main>
+<script>
+  const bar = document.getElementById('progress');
+  window.addEventListener('scroll', () => {
+    const h = document.documentElement;
+    const pct = (h.scrollTop / (h.scrollHeight - h.clientHeight)) * 100;
+    bar.style.width = pct + '%';
+  });
+</script>
+</body>
+</html>
