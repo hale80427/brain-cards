@@ -1,0 +1,422 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>明天碰面 Blaser 業務劉鎮瑋｜陶瓷加工切削液評估與 Synergy 915 對話準備</title>
+<meta name="description" content="陶瓷材料切削液選用要素、Synergy 915 規格底層機制、業務人物背景、市場情報與客戶案例的完整會議備忘。">
+<style>
+  :root {
+    --bg: #fafaf7;
+    --fg: #1a1a1a;
+    --accent: #c0392b;
+    --muted: #666;
+    --border: #e5e5e0;
+    --callout-tip: #e8f4f0;
+    --callout-warn: #fdf3e7;
+    --fs-meta: 0.85rem;
+    --fs-body: 1rem;
+    --fs-h2:   clamp(1.3rem, 3vw, 1.5rem);
+    --fs-h1:   clamp(1.75rem, 4vw, 2.25rem);
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #1a1a1a;
+      --fg: #f0f0e8;
+      --accent: #e87c6e;
+      --muted: #999;
+      --border: #333;
+      --callout-tip: #1f3530;
+      --callout-warn: #3a2d1c;
+    }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
+  }
+  * { box-sizing: border-box; }
+  body {
+    font-family: "Noto Serif TC", Georgia, serif;
+    background: var(--bg);
+    color: var(--fg);
+    line-height: 1.8;
+    margin: 0;
+    padding: 0;
+    -webkit-font-smoothing: antialiased;
+  }
+  .progress-bar {
+    position: fixed; top: 0; left: 0; height: 3px;
+    background: var(--accent); width: 0%; z-index: 100;
+    transition: width 0.1s;
+  }
+  main {
+    max-width: 680px;
+    margin: 0 auto;
+    padding: clamp(2rem, 5vw, 4rem) clamp(1.5rem, 4vw, 2rem);
+  }
+  h1 { font-size: var(--fs-h1); line-height: 1.3; margin: 0 0 1rem; }
+  h2 { font-size: var(--fs-h2); line-height: 1.4; margin: 2.5rem 0 0.75rem; padding-bottom: 0.5rem; border-bottom: 1px solid var(--border); }
+  h3 { font-size: var(--fs-body); font-weight: 700; line-height: 1.4; margin: 1.75rem 0 0.5rem; color: var(--accent); }
+  p { margin: 0 0 1.25rem; }
+  ul, ol { margin: 0 0 1.25rem; padding-left: 1.5rem; }
+  li { margin-bottom: 0.4rem; }
+  a { color: var(--accent); text-underline-offset: 3px; }
+  a:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+  .bluf { background: var(--callout-tip); border-left: 3px solid var(--accent); padding: 1.25rem 1.5rem; margin: 1.5rem 0 2rem; border-radius: 4px; }
+  .bluf strong { display: block; font-size: var(--fs-meta); letter-spacing: 0.05em; color: var(--accent); margin-bottom: 0.5rem; text-transform: uppercase; }
+  .callout { padding: 1rem 1.25rem; margin: 1.5rem 0; border-radius: 4px; border-left: 3px solid var(--muted); }
+  .callout.tip { background: var(--callout-tip); border-left-color: var(--accent); }
+  .callout.warn { background: var(--callout-warn); border-left-color: #d97706; }
+  table { border-collapse: collapse; width: 100%; margin: 1.5rem 0; font-size: var(--fs-body); }
+  th, td { padding: 0.6rem 0.8rem; border: 1px solid var(--border); text-align: left; vertical-align: top; }
+  th { background: var(--callout-tip); font-weight: 600; }
+  code { font-family: "JetBrains Mono", monospace; background: var(--callout-tip); padding: 0.1em 0.4em; border-radius: 3px; font-size: var(--fs-body); }
+  blockquote { border-left: 3px solid var(--border); padding: 0.5rem 1rem; margin: 1.5rem 0; color: var(--muted); font-style: italic; }
+  .meta-line { color: var(--muted); font-size: var(--fs-meta); margin-bottom: 2rem; }
+  .question-list { background: var(--callout-tip); padding: 1.25rem 1.5rem 1.25rem 2.5rem; border-radius: 4px; border-left: 3px solid var(--accent); margin: 1.5rem 0; }
+  .question-list li { margin-bottom: 1rem; }
+  .q-text { color: var(--accent); margin: 0 0 0.25rem; font-weight: 600; }
+  .q-rationale { color: var(--muted); margin: 0; }
+  @media print {
+    .progress-bar { display: none; }
+    body { line-height: 1.6; }
+    main { max-width: 100%; padding: 1cm; }
+  }
+</style>
+</head>
+<body>
+<div class="progress-bar" id="progress"></div>
+<main>
+<header>
+<h1>明天碰面 Blaser 業務劉鎮瑋｜陶瓷加工切削液評估與 Synergy 915 對話準備</h1>
+<p class="meta-line">2026-05-11｜會議備忘｜Blaser Swisslube Taiwan × 漢鼎</p>
+<div class="bluf">
+<strong>BLUF</strong>
+<p>對方劉鎮瑋是<strong>技術型業務</strong>（福裕 9 年磨床/主軸/QC/技術行銷出身），可直接進機制層對話。</p>
+<p>你已預選的 Synergy 915 是 Blaser Synergy 系列<strong>唯一</strong>標註適合陶瓷與 CFRP 濕式加工的型號，對 Al-SiC 線是正解。</p>
+<p>但這個選擇與學術主流觀點「陶瓷加工避免液體切削液」存在明確衝突——這正是明天最高價值的對話入口。</p>
+<p>本備忘整理：人物 → 陶瓷切削液選用要素 → Synergy 915 底層機制 → 已驗證客戶案例 → 市場結構 → 必問 6 題 → 與 Will-Fill 整合視角。</p>
+</div>
+</header>
+
+<article>
+
+<h2>一、先看人——劉鎮瑋的專業屬性與業務類型</h2>
+
+<p>名片上是「業務工程師」，但 LinkedIn 經歷揭露另一張臉。</p>
+
+<p>他在福裕事業做了 9 年，從產線一路爬上技術行銷。福裕（Falcon Machine Tools）是台灣磨床龍頭之一。</p>
+
+<table>
+<thead>
+<tr><th>期間</th><th>角色</th><th>建立的能力</th></tr>
+</thead>
+<tbody>
+<tr><td>2 年</td><td>福裕 組裝部門</td><td>機台機構整體理解</td></tr>
+<tr><td>1 年</td><td>主軸組裝技師</td><td>主軸動力學、軸承預壓、熱位移</td></tr>
+<tr><td>4 年</td><td>校內期間 QC / 成品檢驗</td><td>公差判讀、檢測儀器熟練</td></tr>
+<tr><td>2 年</td><td>福裕行銷部 技術行銷</td><td>CNC 銑床/車床客戶詢答；獨立 CNC 操作 + 夾具設計</td></tr>
+<tr><td>現職</td><td>Blaser 業務工程師</td><td>切削液對機台、刀具、工件的整合解方</td></tr>
+</tbody>
+</table>
+
+<h3>業務屬性判讀</h3>
+
+<p>福裕是磨床廠，不是一般加工中心廠。他做過主軸組裝技師，對磨削配方的嚴苛要求（極壓性、過濾度、表面張力）會有第一手敏感度。</p>
+
+<p>對照他現在賣的 Synergy 915 主打「grinding + machining 通用」，這條職涯銜接合理——他把磨床端的工件視角轉成切削液端的銷售敘事。</p>
+
+<div class="callout tip">
+<p><strong>對話策略</strong></p>
+<p>可直接進機制層，跳過基礎話術。問他「主軸熱位移對切削液配方溫控的要求」這類問題，能快速判讀他的專業深度——這是對純話術業務的鑑別題。</p>
+</div>
+
+<h2>二、陶瓷加工切削液——學術 vs 實務的衝突</h2>
+
+<p>你想問的「陶瓷切削液選用要素」表面看是技術問題，深掘下去會發現這個領域有一條學術與實務的明確分歧。</p>
+
+<h3>學術主流觀點：避免使用液體切削液</h3>
+
+<p>陶瓷材料加工的學術文獻（含 PMC、Springer Advances in Manufacturing 的回顧論文）一致指出：</p>
+
+<ul>
+<li>污染問題：陶瓷與陶瓷基複合材（CMC）有微孔結構，液體 coolant 會經由毛細作用滲入孔隙，後續無法清除</li>
+<li>熱衝擊：陶瓷導熱差，liquid coolant 在磨削區的局部驟冷可能導致微裂紋</li>
+<li>極端使用環境：超高溫或真空環境下，殘留液體會汽化破壞 CMC-SiC 部件</li>
+<li>替代方案：低溫氮（cryogenic）、雷射輔助、超音波輔助、乾式磨削</li>
+</ul>
+
+<h3>實務反例：Blaser Synergy 915 已在陶瓷磨削實證有效</h3>
+
+<p>Blaser 自家 case study「Coolant optimizes complex ceramic grinding processes」。</p>
+
+<p>客戶 BCE Special Ceramics GmbH（德國 Mannheim）實測數據：</p>
+
+<table>
+<thead>
+<tr><th>指標</th><th>導入前</th><th>導入 Synergy 915 後</th></tr>
+</thead>
+<tbody>
+<tr><td>切削液槽壽命</td><td>2–3 個月</td><td>6+ 個月（3 倍）</td></tr>
+<tr><td>砂輪壽命</td><td>基準</td><td>+30%</td></tr>
+<tr><td>表面光澤</td><td>有殘留痕跡</td><td>鏡面、無殘留</td></tr>
+<tr><td>員工皮膚問題</td><td>有過敏</td><td>消除</td></tr>
+<tr><td>機台油漆與沉積</td><td>溶解、附著</td><td>無</td></tr>
+</tbody>
+</table>
+
+<h3>衝突的化解點</h3>
+
+<p>學術文獻的反對主因是「液體進孔隙難清出」與「殘留物干擾後製程」。Blaser 的化解路徑是配方層：</p>
+
+<ul>
+<li>full-synthetic 全合成：無油基，不會留下油膜或脂類殘留</li>
+<li>excellent rinsing 強沖洗性：低表面張力，水洗即可帶走</li>
+<li>compact filter cake 緊密濾餅：陶瓷碎屑可被有效過濾不卡輪</li>
+<li>無 boron / 無 formaldehyde / 無 Cl-S EP：對精密磨削表面化學干擾低，無毒性殘留</li>
+</ul>
+
+<div class="callout warn">
+<p><strong>邊界條件</strong></p>
+<p>學術反對針對的是結構陶瓷部件（航太 CMC、超高溫應用），實務應用針對的是精密技術陶瓷部件（醫療、絕緣、精密機械導軌）。兩者使用環境不同，不直接矛盾。</p>
+<p>明天可問劉鎮瑋：Synergy 915 的「適用 ceramics」邊界到哪？多孔率多高就不建議？</p>
+</div>
+
+<h3>陶瓷切削液評估流程框架</h3>
+
+<ol>
+<li>材料分類：結構陶瓷（Si3N4、SiC、Al2O3 燒結件）vs 陶瓷基複合材（CMC、Al-SiC）vs 半導體製程治具用陶瓷</li>
+<li>加工類型：磨削（最寬容）→ 銑削/車削（中等）→ 鑽孔/攻牙（最嚴苛）</li>
+<li>後製程要求：是否進清洗、烘烤、塗佈、燒結；殘留容忍度</li>
+<li>切削液類型路由：水溶性全合成 → 半合成乳化 → 純油 → 乾式 / MQL → 低溫氮</li>
+<li>導入驗證：A/B 試片、表面粗糙度量測、孔隙吸液測試、長期 sump 監控</li>
+</ol>
+
+<h2>三、Synergy 915 規格深拆——你選對了什麼</h2>
+
+<p>從 Blaser 官方 datasheet（檔名 10.128_en，2020 年版）抓出的完整規格與機制對應：</p>
+
+<table>
+<thead>
+<tr><th>產品特性</th><th>底層機制</th><th>對陶瓷加工的意義</th></tr>
+</thead>
+<tbody>
+<tr><td>full-synthetic 全合成</td><td>水基 + 合成酯類，無礦物油</td><td>不留油膜，孔隙不吸油</td></tr>
+<tr><td>無 boron 無 formaldehyde</td><td>不需傳統殺菌劑</td><td>對人員與環境安全</td></tr>
+<tr><td>無 Cl 無 S EP additives</td><td>不含氯/硫極壓劑</td><td>對精密表面化學干擾低，後製程相容</td></tr>
+<tr><td>excellent rinse behavior</td><td>低表面張力配方</td><td>陶瓷工件易清洗，不卡屑</td></tr>
+<tr><td>low foaming 低泡</td><td>內含消泡劑</td><td>適合高壓 coolant 系統（磨削常用）</td></tr>
+<tr><td>compact filter cake</td><td>細乳液結構</td><td>陶瓷碎屑可被有效過濾</td></tr>
+<tr><td>適合軟水/去離子水</td><td>配方對水質敏感度低</td><td>台灣中部水質可直接使用</td></tr>
+<tr><td>high stability 高穩定性</td><td>抗微生物 + 抗氧化配方</td><td>適合中央系統、長停機不壞</td></tr>
+</tbody>
+</table>
+
+<h3>明確標註的適用材料</h3>
+
+<p>datasheet 寫明：</p>
+<blockquote>Suitable for steel alloys, cast iron, nickel alloys and ceramics. Ideal for wet machining of CFRP.</blockquote>
+
+<p>關鍵：Synergy 系列裡<strong>唯一</strong>同時點名 ceramics + CFRP wet machining 的就是 915。</p>
+
+<p>Synergy 735 主打鋁合金、鈦、不鏽鋼、銅、CFRP，但沒有 ceramics 標註。</p>
+
+<h3>Synergy 系列簡要對照</h3>
+
+<table>
+<thead>
+<tr><th>型號</th><th>主打材料</th><th>定位</th></tr>
+</thead>
+<tbody>
+<tr><td>Synergy 735</td><td>鋁、鈦、不鏽鋼、銅、CFRP</td><td>多金屬通用，強項在輕合金</td></tr>
+<tr><td>Synergy 915</td><td>鋼、鑄鐵、鎳合金、陶瓷、CFRP（濕式）</td><td>磨削 + 機加工通用，強項在精密磨削</td></tr>
+</tbody>
+</table>
+
+<div class="callout tip">
+<p><strong>選擇正確性確認</strong></p>
+<p>你要做 Al-SiC 複合材（含陶瓷相的金屬基複合材），915 是 Synergy 系列裡唯一含 ceramics 標註的型號。</p>
+<p>如果今早 Will-Fill 段討論的 Al-SiC 線確實要走切削液路徑而非乾式，這個預選是合理的。</p>
+</div>
+
+<h2>四、已驗證的客戶案例</h2>
+
+<h3>案例 1：BCE Special Ceramics GmbH（德國，陶瓷實證）</h3>
+
+<p>陶瓷醫療、絕緣、化學部件磨削，使用 DIA 砂輪。2021 年初試用 Synergy 915 三個月後決定全面導入。</p>
+
+<ul>
+<li>切削液槽壽命：2–3 個月 → 6+ 個月（<strong>3 倍</strong>）</li>
+<li>砂輪壽命：<strong>+30%</strong></li>
+<li>切削參數：可拉高 feed rate</li>
+<li>磨耗率下降、表面光澤改善</li>
+<li>原問題：油漆溶解、機台沉積、員工皮膚過敏 → 全部消除</li>
+</ul>
+
+<h3>案例 2：IG EVEARTH（日本愛知，成本實證）</h3>
+
+<p>汽車模具部件加工，總部 25 台機 + 精密廠 9 台高速加工中心。</p>
+
+<ul>
+<li>年成本節省：<strong>¥7,000,000（約 NT$ 165 萬）</strong></li>
+<li>切削液更換頻率：每年 3 次 → 每年 1 次</li>
+<li>長假停機後不需整槽更新</li>
+<li>機台異味與維護停機消除</li>
+</ul>
+
+<h3>案例 3：Schneeberger MINIRAIL（瑞士，精密磨削旗艦）</h3>
+
+<p>瑞士 Schneeberger AG 的 MINIRAIL 是業界最高精度的迷你導軌（速度 5 m/s、加速度 300 m/s²）。</p>
+
+<p>其磨削線採用 Synergy 915，由 Reto Herzig 領導的 grinding team 操作。</p>
+
+<p>Reto Herzig 是 Synergy 915 datasheet 封面人物，等於 Blaser 的精密磨削旗艦客戶背書。</p>
+
+<h3>台灣已知案例：AMI Industries（台南柳營）</h3>
+
+<p>注意：這家用的是 <strong>B-Cool 755（不同產品線）</strong>，不是 Synergy 915。AMI 做航太、汽車、醫療精密元件代工，由德製加工中心原廠推薦導入。</p>
+
+<p>可問劉鎮瑋：在台灣有沒有 Synergy 915 的客戶？做哪類陶瓷或精密磨削？是否能安排現場參觀？</p>
+
+<h2>五、市場情報——Blaser 在競品中的定位</h2>
+
+<h3>全球切削液市場前五</h3>
+
+<table>
+<thead>
+<tr><th>排名</th><th>公司</th><th>市占</th><th>定位</th></tr>
+</thead>
+<tbody>
+<tr><td>1</td><td>Quaker Houghton</td><td>~13%</td><td>2019 合併、最大綜合廠</td></tr>
+<tr><td>2</td><td>Fuchs（德）</td><td></td><td>歐系工業潤滑油大廠</td></tr>
+<tr><td>3</td><td>ExxonMobil</td><td></td><td>石油系延伸</td></tr>
+<tr><td>4</td><td>Yushiro（日）</td><td></td><td>日系汽車產業鏈強勢</td></tr>
+<tr><td>5</td><td>BP / Castrol</td><td></td><td>石油系延伸</td></tr>
+</tbody>
+</table>
+
+<p>前五合計約 40% 全球市占。其餘大廠包含 Idemitsu、Cimcool、Blaser Swisslube、ENEOS、Petrofer。</p>
+
+<h3>Blaser 的差異化定位</h3>
+
+<ul>
+<li>市占規模屬第二梯隊，不打總量戰</li>
+<li>瑞士家族企業（1936 創立、第三代），90% 營收來自國際市場</li>
+<li>3,500 m² 研發實驗室（業界最大），擁有切削液 DNA 分析技術</li>
+<li>「Liquid Tool」品牌敘事：把切削液當工程變數，不是耗材——對應你今早 Will-Fill 整理的「管理自動化把隱性損失明帳化」邏輯</li>
+<li>進場路徑：與工具機原廠（Hermle、DMG MORI、瑞士磨床廠）綁定，走精密客戶</li>
+</ul>
+
+<h3>巴索國際有限公司（Blaser Swisslube Taiwan Inc.）</h3>
+
+<table>
+<tbody>
+<tr><th>統編</th><td>53150549</td></tr>
+<tr><th>負責人</th><td>包姆柏格 Peter Baumberger（Blaser 家族瑞士派駐）</td></tr>
+<tr><th>創立</th><td>2010/09/07（台灣分公司 15 年）</td></tr>
+<tr><th>資本額</th><td>NT$ 3,250,000</td></tr>
+<tr><th>員工</th><td>7 人（小編制，業務技術一體）</td></tr>
+<tr><th>地址</th><td>台中市西屯區安和路 168 號 5 樓之 3</td></tr>
+<tr><th>認證</th><td>ISO 9001、ISO 14001</td></tr>
+<tr><th>已知客服經理</th><td>Dennis Wu</td></tr>
+</tbody>
+</table>
+
+<h2>六、明天必問的 6 題</h2>
+
+<p>依優先序排列（高價值在前）：</p>
+
+<ol class="question-list">
+<li>
+<p class="q-text">「Synergy 915 在『適用 ceramics』的邊界條件是什麼？多孔率多高、哪些陶瓷不建議？」</p>
+<p class="q-rationale">直接打學術 vs 實務衝突點，鑑別他的技術深度。</p>
+</li>
+<li>
+<p class="q-text">「Al-SiC 複合材磨削的配方推薦與已知案例？」</p>
+<p class="q-rationale">對應 Al-SiC 線實驗計畫，要求看 case data 不是 brochure。</p>
+</li>
+<li>
+<p class="q-text">「Synergy 915 與線上濃度監控設備（Will-Fill 級）的搭配經驗？歐洲是否有 Blaser × Will-Fill 整合案例？」</p>
+<p class="q-rationale">接續今早 Will-Fill 研究脈絡，探他對監控閉環的態度。</p>
+</li>
+<li>
+<p class="q-text">「Blaser DNA 切削液分析服務在台灣可不可以做？週期、費用、樣本要求？」</p>
+<p class="q-rationale">Blaser 全球差異化技術，問清楚是否落地台灣。</p>
+</li>
+<li>
+<p class="q-text">「除耗材銷售外，Blaser 提供哪些服務型項目（定期到場量測、配方診斷、教育訓練）？費用結構？」</p>
+<p class="q-rationale">對應 NT$ 120–160 萬／台 攤提算式，幫你重算 ROI。</p>
+</li>
+<li>
+<p class="q-text">「Synergy 915 與其他品牌（Quaker、Castrol、Yushiro）切換的相容性與管路清洗 SOP？」</p>
+<p class="q-rationale">對應跨工序污染洞察，問轉換成本。</p>
+</li>
+</ol>
+
+<h3>選配題（時間夠才問）</h3>
+
+<ul>
+<li>Synergy 915 vs Synergy 735 對銅合金、鋁合金的選用差異</li>
+<li>Blaser 在難加工材（Inconel、鈦合金、鎢鉬鋼）的配方推薦</li>
+<li>與工具機原廠（福裕、永進、東台、上銀、Hermle、DMG MORI）的捆綁推薦關係，在台灣怎麼運作</li>
+<li>切削液儲槽容積、最低 batch 採購量、年用量門檻</li>
+</ul>
+
+<h2>七、與 Will-Fill 整合的對話視角</h2>
+
+<p>今早完成的 Will-Fill 切削液濃度自動量測 + 添加設備分析，正好提供獨特對話槓桿。</p>
+
+<p>你不是被動聽 Blaser 介紹油品，而是從「切削液生命週期管理」全鏈視角談，包含：</p>
+
+<ul>
+<li>選液（Blaser 強項）：配方、化學、適用材料</li>
+<li>用液（Will-Fill 強項）：濃度監控、自動添加、防漂移</li>
+<li>監液（兩者交集）：pH、EC、菌相、油渣、磨耗顆粒</li>
+<li>換液（系統面）：sump 壽命、清洗 SOP、廢液處理</li>
+</ul>
+
+<p>這個框架會讓劉鎮瑋察覺你是準備度極高的買方，主動拋出更深的技術內容。</p>
+
+<p>可開場就點明：「我最近在評估切削液生命週期的全成本攤提，從油品本身到濃度監控設備到後段清洗，想聽 Blaser 在這條鏈上的整體策略。」</p>
+
+<div class="callout tip">
+<p><strong>會後追蹤建議</strong></p>
+<p>碰面結束當天，把對話紀錄整理成 Source 卡寫進第二大腦（2 Sources/2026-05 Blaser Synergy 915 銷售諮詢）。</p>
+<p>並產 1–2 張 INGEST Card 串接今早 Will-Fill 4 張卡，完成「切削液自動化評估」議題的證據面閉環。</p>
+</div>
+
+<h2>八、附錄：對話快速備忘表</h2>
+
+<table>
+<thead>
+<tr><th>類別</th><th>關鍵詞</th></tr>
+</thead>
+<tbody>
+<tr><td>對方背景</td><td>福裕 9 年｜磨床主軸出身｜技術型業務</td></tr>
+<tr><td>產品定位</td><td>Synergy 915｜full-synthetic｜grinding + machining 通用</td></tr>
+<tr><td>關鍵賣點</td><td>陶瓷適用｜CFRP 濕式｜無 B/F/Cl/S｜rinse 強</td></tr>
+<tr><td>實證數字</td><td>3 倍 sump life｜+30% wheel life｜年省 NT$ 165 萬</td></tr>
+<tr><td>對方公司</td><td>巴索國際｜台中｜7 人｜創立 2010｜瑞士母公司 1936</td></tr>
+<tr><td>核心競品</td><td>Quaker Houghton 13%｜Fuchs｜Yushiro｜Castrol</td></tr>
+<tr><td>整合視角</td><td>Will-Fill 監控 × Blaser 配方｜Liquid Tool 敘事</td></tr>
+</tbody>
+</table>
+
+</article>
+
+<footer>
+<p style="color: var(--muted); font-size: var(--fs-meta); margin-top: 4rem; padding-top: 1.5rem; border-top: 1px solid var(--border);">
+資料來源：Blaser Swisslube 官方 datasheet（10.128_en）｜BCE Special Ceramics 案例｜IG EVEARTH 案例｜LinkedIn 劉鎮瑋｜台灣公司網 53150549｜Springer Advances in Manufacturing｜PMC ceramic machining review｜CENS / Taiwantrade。<br>
+產製：2026-05-11｜內部會議備忘，未公開發布。
+</p>
+</footer>
+</main>
+<script>
+  const bar = document.getElementById('progress');
+  window.addEventListener('scroll', () => {
+    const h = document.documentElement;
+    const pct = (h.scrollTop / (h.scrollHeight - h.clientHeight)) * 100;
+    bar.style.width = pct + '%';
+  });
+</script>
+</body>
+</html>
