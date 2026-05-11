@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>從個人英雄到集體工程：姚順宇 4 小時訪談裡，AI 圈正在發生什麼變化</title>
+<meta name="description" content="姚順宇 4 小時訪談的跨章節彙整：規模法則推著走、回饋訊號決定落地速度、大廠與新創的結構性博弈，三條主軸拆解 AI 圈從個人英雄到集體工程的範式轉移。">
+<style>
+  :root {
+    --bg: #fafaf7;
+    --fg: #1a1a1a;
+    --accent: #c0392b;
+    --muted: #666;
+    --border: #e5e5e0;
+    --callout-tip: #e8f4f0;
+    --callout-warn: #fdf3e7;
+    --fs-meta: 0.85rem;
+    --fs-body: 1rem;
+    --fs-h2:   clamp(1.3rem, 3vw, 1.5rem);
+    --fs-h1:   clamp(1.75rem, 4vw, 2.25rem);
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #1a1a1a;
+      --fg: #f0f0e8;
+      --accent: #e87c6e;
+      --muted: #999;
+      --border: #333;
+      --callout-tip: #1f3530;
+      --callout-warn: #3a2d1c;
+    }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
+  }
+  * { box-sizing: border-box; }
+  body {
+    font-family: "Noto Serif TC", Georgia, serif;
+    background: var(--bg);
+    color: var(--fg);
+    line-height: 1.8;
+    margin: 0;
+    padding: 0;
+    -webkit-font-smoothing: antialiased;
+  }
+  .progress-bar {
+    position: fixed; top: 0; left: 0; height: 3px;
+    background: var(--accent); width: 0%; z-index: 100;
+    transition: width 0.1s;
+  }
+  main {
+    max-width: 680px;
+    margin: 0 auto;
+    padding: clamp(2rem, 5vw, 4rem) clamp(1.5rem, 4vw, 2rem);
+  }
+  h1 { font-size: var(--fs-h1); line-height: 1.3; margin: 0 0 1rem; }
+  h2 { font-size: var(--fs-h2); line-height: 1.4; margin: 2.5rem 0 0.75rem; padding-bottom: 0.5rem; border-bottom: 1px solid var(--border); }
+  h3 { font-size: var(--fs-body); font-weight: 700; line-height: 1.4; margin: 1.75rem 0 0.5rem; color: var(--accent); }
+  p { margin: 0 0 1.25rem; }
+  ul, ol { margin: 0 0 1.25rem; padding-left: 1.5rem; }
+  li { margin-bottom: 0.4rem; }
+  a { color: var(--accent); text-underline-offset: 3px; }
+  a:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+  .meta {
+    color: var(--muted);
+    font-size: var(--fs-meta);
+    margin: 0 0 2rem;
+    padding: 0.75rem 0;
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+  }
+  .meta p { margin: 0.3rem 0; }
+  .bluf { background: var(--callout-tip); border-left: 3px solid var(--accent); padding: 1.25rem 1.5rem; margin: 1.5rem 0 2rem; border-radius: 4px; }
+  .bluf strong.label { display: block; font-size: var(--fs-meta); letter-spacing: 0.05em; color: var(--accent); margin-bottom: 0.5rem; text-transform: uppercase; }
+  .callout { padding: 1rem 1.25rem; margin: 1.5rem 0; border-radius: 4px; border-left: 3px solid var(--muted); }
+  .callout.tip { background: var(--callout-tip); border-left-color: var(--accent); }
+  .callout.warn { background: var(--callout-warn); border-left-color: #d97706; }
+  blockquote {
+    margin: 1.25rem 0;
+    padding: 0.75rem 1.25rem;
+    border-left: 3px solid var(--border);
+    color: var(--muted);
+    font-style: normal;
+    font-size: var(--fs-body);
+  }
+  blockquote p { margin: 0.4rem 0; }
+  blockquote .src { display: block; margin-top: 0.4rem; font-size: var(--fs-meta); color: var(--muted); }
+  .tag {
+    display: inline-block;
+    font-size: var(--fs-meta);
+    padding: 0.05em 0.45em;
+    border-radius: 3px;
+    margin-left: 0.3em;
+    color: var(--muted);
+    border: 1px solid var(--border);
+    vertical-align: 0.1em;
+  }
+  .tag-c { color: #2d6a4f; border-color: #2d6a4f; }
+  .tag-i { color: #b07d2b; border-color: #b07d2b; }
+  .confidence {
+    display: inline-block;
+    font-size: var(--fs-meta);
+    color: var(--muted);
+    font-weight: 600;
+    margin-top: 0.5rem;
+  }
+  table { border-collapse: collapse; width: 100%; margin: 1.5rem 0; font-size: var(--fs-body); }
+  th, td { padding: 0.6rem 0.8rem; border: 1px solid var(--border); text-align: left; vertical-align: top; }
+  th { background: var(--callout-tip); font-weight: 600; }
+  code { font-family: "JetBrains Mono", monospace; background: var(--callout-tip); padding: 0.1em 0.4em; border-radius: 3px; font-size: var(--fs-body); }
+  hr { border: 0; border-top: 1px solid var(--border); margin: 3rem 0; }
+  footer p { color: var(--muted); font-size: var(--fs-meta); margin-top: 4rem; padding-top: 1.5rem; border-top: 1px solid var(--border); }
+  @media print {
+    .progress-bar { display: none; }
+    body { font-size: 11pt; line-height: 1.6; background: #fff; color: #000; }
+    main { max-width: 100%; padding: 1cm; }
+    .bluf, .callout, blockquote, th { background: #f5f5f0 !important; }
+    h2 { page-break-after: avoid; }
+    blockquote, .callout, .bluf { page-break-inside: avoid; }
+  }
+</style>
+</head>
+<body>
+<div class="progress-bar" id="progress"></div>
+<main>
+<header>
+<h1>從個人英雄到集體工程：姚順宇 4 小時訪談裡，AI 圈正在發生什麼變化</h1>
+<div class="meta">
+<p><strong>影片</strong>：張小珺商業訪談錄《對姚順宇的 4 小時訪談》｜<a href="https://youtu.be/ttkd0t5qTD4?si=WNTV_x5iBH-OGlB8" rel="noopener">YouTube</a></p>
+<p><strong>受訪者</strong>：姚順宇，清華大學物理系特獎得主，前 Anthropic 研究科學家，現任 Google DeepMind 研究科學家。參與 Claude 3.7、Claude 4.5、Gemini 3 開發，曾負責大規模強化學習（Reinforcement Learning, RL）。</p>
+<p><strong>訪談長度</strong>：約 4 小時（逐字稿分析至 03:47:52，章節六後段待補）</p>
+</div>
+<div class="bluf">
+<strong class="label">一句話結論</strong>
+<p>大模型開發的時代主旋律，已經從「天才個人靈光一閃」翻頁到「集體工程重工業」。</p>
+<p>底層原因可以拆成三條：</p>
+<ol>
+<li><strong>規模法則（Scaling Law）推著走</strong>：模型突破不再靠單一研究員的神技，而是靠系統性除錯與極致執行力。</li>
+<li><strong>回饋訊號（Reward Signal）必須夠客觀</strong>：模型要能自我改進，前提是有快速、可量化的對錯判斷。寫程式之所以進展最快，就是因為這條訊號最乾淨。</li>
+<li><strong>大廠與新創進入結構性博弈</strong>：大廠靠算力與基礎設施做戰略防守；新創靠技術與決策權合一做精準押注（Make bet）。</li>
+</ol>
+</div>
+</header>
+
+<article>
+
+<p><strong>因果鏈</strong>：當頭部模型的基準測試（Benchmark）數字差異多半是雜訊（noise）時，賽點就轉到「能不能定義對的問題」「Agent 能不能長時間自主運作」這兩件事。</p>
+
+<p>單點演算法創新的價值下降，組織協同、基礎設施穩定性、為整個系統負責的工程觀，反而成了稀缺能力。個人成功更多來自「順浪」的時機與執行力，而不是純智力碾壓。</p>
+
+<div class="callout tip">
+<p><strong>事實、推論與假設分層</strong></p>
+<ul>
+<li><strong>事實</strong>：寫程式因為回饋訊號明確、加上 GitHub 上有大量高品質程式碼，是目前 AI 進展最快的場景；具身智能（Embodied AI，機器人）還停留在特徵工程（Feature Engineering）階段，泛化能力不足。</li>
+<li><strong>推論</strong>：長文本（long-context）的終極解法是模仿人類「選擇性遺忘 + 動態取回」，而不是無限擴展 Context Window（上下文視窗）。</li>
+<li><strong>未明說的假設</strong>：Scaling Law 還沒撞牆。如果未來高品質資料或算力枯竭，純理論的範式轉移價值就可能回潮。</li>
+</ul>
+</div>
+
+<h2>五條主軸：訪談裡反覆出現的訊號</h2>
+
+<h3>主軸一：AI 研發從「個人英雄」走向「系統重工業」</h3>
+<p><em>涉及章節：一、四、五</em></p>
+<p>隨著規模法則推進，大模型的突破依賴大規模基礎設施與團隊協作。單一研究員主導突破的神話，已經被工程現實瓦解。</p>
+<blockquote>
+<p>「大家現在就是每個人都是衝浪的人，本質上是那個浪啊，不是你那個衝浪的人。」</p>
+<span class="src">章節一<span class="tag tag-c">CONFIRMED</span></span>
+</blockquote>
+<blockquote>
+<p>「個人英雄主義時代對於 language model 來說可能過去了……更多的是集體主義，就是這個集體能不能一起工作……」</p>
+<span class="src">章節四<span class="tag tag-c">CONFIRMED</span></span>
+</blockquote>
+<blockquote>
+<p>「預練已經是一個比較確定性的『範式』了，那可能 Google 就會更像把它做成一個工程項目。」</p>
+<span class="src">章節五<span class="tag tag-c">CONFIRMED</span></span>
+</blockquote>
+
+<h3>主軸二：客觀的回饋訊號，決定技術落地速度</h3>
+<p><em>涉及章節：一、二、三</em></p>
+<p>具備明確、客觀評價標準的任務（寫程式、數學），能快速建立模型自我改善的回饋迴圈。這也是 AI 最先產生湧現能力（emergent ability）的場景。</p>
+<blockquote>
+<p>「現在更難的事情就是你該怎麼去定義你的問題，定義你想要的行為……」</p>
+<span class="src">章節一<span class="tag tag-c">CONFIRMED</span></span>
+</blockquote>
+<blockquote>
+<p>「Coding 這個場景有兩個最大的優勢……reward signal 也就是回饋的信號是很好定義的……」</p>
+<span class="src">章節二<span class="tag tag-c">CONFIRMED</span></span>
+</blockquote>
+<blockquote>
+<p>「要做有比較客觀評價標準的事……要做對這個世界能夠產生影響的事。」</p>
+<span class="src">章節三<span class="tag tag-c">CONFIRMED</span></span>
+</blockquote>
+
+<h3>主軸三：新創的極致執行力 vs. 大廠的系統性防守</h3>
+<p><em>涉及章節：四、五、六</em></p>
+<p>新創靠技術與決策權合一，做出極致敏捷的押注；大廠則在產品形態確定後，憑藉橫向資源與算力降維打擊（用上位資源直接輾壓下位玩家，AI 圈用語）。</p>
+<blockquote>
+<p>「startup 重要的是 make bet，就是我得賭一件事……能很強力的推進一些決策。」</p>
+<span class="src">章節四<span class="tag tag-c">CONFIRMED</span></span>
+</blockquote>
+<blockquote>
+<p>「Google 特別擅長的一件事是，找到一個極為簡單的產品形態大家都長一個樣，他就瘋狂給你捲技術，你就捲不過他。」</p>
+<span class="src">章節五<span class="tag tag-c">CONFIRMED</span></span>
+</blockquote>
+<blockquote>
+<p>「在 ic（Anthropic）你可以把一條線……了解得很透……在 Google 它更多的是一種橫向……能見到不一樣的視角。」</p>
+<span class="src">章節六<span class="tag tag-c">CONFIRMED</span></span>
+</blockquote>
+
+<h3>主軸四：物理學思維跨界 AI 的隱形紅利</h3>
+<p><em>涉及章節：三、四、六</em></p>
+<p>物理學者不盲信純理論、重視數值實驗的實證主義，正好契合 AI 黑盒（black box，內部運作機制不可解釋）的性質。跨界者沒有師門包袱，敢直接戳破既定權威。</p>
+<blockquote>
+<p>「一開始是因為數值和理論對不上，才仔細研究那個問題。」</p>
+<span class="src">章節三<span class="tag tag-c">CONFIRMED</span></span>
+</blockquote>
+<blockquote>
+<p>「這可能就是不做 AI 出身的好處吧……沒有哪個老的人是你的親屬，所以你覺得他傻……就可以直接說他傻，沒有無謂的負擔。」</p>
+<span class="src">章節六<span class="tag tag-c">CONFIRMED</span></span>
+</blockquote>
+
+<h3>主軸五：模型廠與應用端的邊界博弈</h3>
+<p><em>涉及章節：一、四、五</em></p>
+<p>基準測試分數見頂後，新的競爭轉向兩條：模型廠（如 Anthropic、Google）與應用端（如 Cursor）相互吞併；長文本處理裡，「類人類遺忘與取回」的動態機制成為突破點。</p>
+<blockquote>
+<p>「C [Cursor] 和 ic [Anthropic] 已經進入了一個非常微妙的關係……現在又自己試圖做自己的模型，處於一種比較競爭的關係了。」</p>
+<span class="src">章節一<span class="tag tag-i">INFERRED</span></span>
+</blockquote>
+<blockquote>
+<p>「人本質上是很短，但他能夠選擇性的遺忘……把那些重要跟當前場景相關的信息再抓回來。」</p>
+<span class="src">章節四、五<span class="tag tag-c">CONFIRMED</span></span>
+</blockquote>
+
+<h2>同樣的訊號，如何穿透不同章節？</h2>
+
+<h3>跨段呼應：「折磨自己」的職涯哲學</h3>
+<p>姚順宇在章節二、三、六反覆提到「愛幹自己不會的事」。底層機制是：<strong>只有跳出舒適圈，才能在規模法則推動的技術巨浪裡保持稀缺性</strong>。從高能物理跨到 AI、從 Anthropic 跨到 Google DeepMind，都是這條哲學的實踐。</p>
+
+<h3>跨段呼應：長文本的終極解法</h3>
+<p>章節一提出「用有限上下文做無限推理」的假設，章節四與五給出具體推導：<strong>放棄無限擴展 Context Window，改為模仿人類的「選擇性遺忘 + 動態取回（Retrieve）」</strong>。</p>
+
+<h3>內在矛盾：宏觀集體主義 vs. 微觀超級個體</h3>
+<ul>
+<li>章節四強調「大模型是集體主義與基礎設施的勝利，告別個人英雄主義」。</li>
+<li>章節二卻指出，AI 會讓頂尖工程師的產出放大數十倍，一個人完成過去整個團隊的工作。</li>
+</ul>
+<p>這個矛盾揭示了：底層基礎設施依賴龐大系統，但商業端與應用架構上，極少數具備全局觀的超級節點將壟斷產出。集體主義在生產端、超級個體在應用端，兩者並存而非互斥。</p>
+
+<h3>未明說的假設：規模法則尚未撞牆</h3>
+<p>姚順宇批判學術界空談、批判「老登」（B 站／抖音流行詞，原意指倚老賣老、不懂裝懂的中老年男性，這裡指 AI 圈不懂技術細節卻指手畫腳的資深人士）的指手畫腳，背後隱含的預設是：目前 AI 仍處在「工程暴力美學」的紅利期，執行力大於理論創新。如果這個假設動搖，純粹的範式轉移價值就會回潮。</p>
+
+<h2>外行人能從訪談裡學到什麼？</h2>
+
+<h3>啟發一：回饋訊號是技術落地的唯一加速器</h3>
+<p><strong>訪談原意</strong>：AI 在寫程式領域進展最快，因為這個場景有極度明確的對錯回饋。</p>
+<p><strong>應用建議</strong>：評估技術導入或自動化專案時，優先選擇具備「強客觀物理或數值特徵」的場景——切削震動頻率、材料密度、良率檢測、財報數據清洗。建立明確的回饋訊號，是讓 AI Agent 產生湧現能力的先決條件。</p>
+<p class="confidence">信心等級：強</p>
+
+<h3>啟發二：拒絕單點優化，建立「為大系統負責」的工程觀</h3>
+<p><strong>訪談原意</strong>：頂尖研究員的核心價值不在單點演算法炫技，而在為整個系統的可靠度與公司成敗負責。</p>
+<p><strong>應用建議</strong>：跨領域專案中，局部最優解往往導致全局災難。管理者必須具備向下「救火」除錯的能力，以及向上包容異質工作模式的特質。</p>
+<p class="confidence">信心等級：強</p>
+
+<h3>啟發三：用「除錯」取代「找神技」</h3>
+<p><strong>訪談原意</strong>：規模法則推不動時，往往是底層科學假設錯誤或程式碼有 Bug，系統性除錯遠比花俏的捷徑有效。</p>
+<p><strong>應用建議</strong>：面對高度模糊任務時，不要迷信複雜預測模型。建立有紀律的假設驗證與排錯機制，把龐大問題拆解成可執行步驟。</p>
+<p class="confidence">信心等級：中</p>
+
+<h3>啟發四：借鏡中美生態分岔，構建迂迴護城河</h3>
+<p><strong>訪談原意</strong>：美國靠算力優勢主攻直接變現的效率工具；中國受制於算力，轉而精進複雜的 C 端應用（面向終端消費者的應用）與生態圈。</p>
+<p><strong>應用建議</strong>：如果核心製程或單一專利容易被對手「大力出奇蹟」降維打擊，應該效法生態圈打法，整合上下游建立競爭者難以單點突破的迂迴護城河。</p>
+<p class="confidence">信心等級：中</p>
+
+<h3>啟發五：善用「半路出家」的零包袱優勢</h3>
+<p><strong>訪談原意</strong>：非 AI 科班出身的物理背景，讓姚順宇不受傳統學派的人情束縛，能直接指出權威盲點。</p>
+<p><strong>應用建議</strong>：跨界者最大的資產是「不知常規」。進入新領域時，無須對未經驗證的「祖傳經驗」抱持敬畏，直接從底層機理與實地資料出發，敢於推翻缺乏邏輯支撐的行業慣例。</p>
+<p class="confidence">信心等級：中</p>
+
+<h2>哪些片段建議回原片驗證？</h2>
+
+<p>以下金句標註為 <span class="tag tag-i">INFERRED</span>，建議帶問題回原片驗證語境。<strong>依行業洞察重要性遞減排序</strong>：</p>
+
+<h3>1. 應用端與底層模型廠的博弈邊界</h3>
+<blockquote>
+<p>「C [Cursor] 和 ic [Anthropic] 已經進入了一個非常微妙的關係：曾經他們是親密無間的合作夥伴……現在又自己試圖做自己的模型……」</p>
+<span class="src">章節一，17:49<span class="tag tag-i">INFERRED</span></span>
+</blockquote>
+<p><strong>重聽目的</strong>：確認是否確指 Cursor 與 Anthropic，驗證「應用端逆向吞併模型廠」的關鍵趨勢判斷。</p>
+
+<h3>2. 資料廣度決定模型能力層級</h3>
+<blockquote>
+<p>「預學臉『預訓練』和 SFT 本質也沒啥區別……強化學習可能就是更寬廣的一個級別……最大區別在數據上。」</p>
+<span class="src">章節五<span class="tag tag-i">INFERRED</span></span>
+</blockquote>
+<p><strong>重聽目的</strong>：確認 RL 與 Pre-training 邊界模糊化的具體定義，以及資料分佈扮演的角色。（SFT = Supervised Fine-Tuning，監督式微調）</p>
+
+<h3>3. 拒絕 OpenAI 的底層考量</h3>
+<blockquote>
+<p>「OPI 最後沒有去的一個主要原因，還是我對他的文化至少當時來看，我對他的文化是有比較大的擔心的。」</p>
+<span class="src">章節五<span class="tag tag-i">INFERRED</span></span>
+</blockquote>
+<p><strong>重聽目的</strong>：驗證 OPI 是否指 OpenAI，以及對其內部「實際做事氛圍」的具體疑慮細節（章節五後續已確認為 OpenAI）。</p>
+
+<h3>4. 新創擴張期的管理混沌</h3>
+<p>姚順宇離開 Anthropic 的導火線之一，是不認同 CEO Dario Amodei 針對特定觀點（如 AI 安全）極端化與情緒化的表現。此外還有想探索更多元的研究方向、以及期權因素。<span class="tag tag-i">INFERRED</span></p>
+<p><strong>重聽目的</strong>：確認姚順宇描述 CEO 特質時的措辭，客觀評估 Anthropic 內部文化稀釋的程度。</p>
+
+<h3>5. 團隊規模與戰鬥力的比例</h3>
+<blockquote>
+<p>「那時候大家其實不太知道怎麼做大規模強化學習……只是知道這個大概方向。」</p>
+<p>「負責強化學習的 Horizon 團隊大約只有 10 人左右……」</p>
+<span class="src">章節三<span class="tag tag-i">INFERRED</span></span>
+</blockquote>
+<p><strong>重聽目的</strong>：驗證早期 Claude 關鍵技術團隊的實際人數，量化「極致執行力」的組織規模基準。</p>
+
+<h2>四小時訪談，一段一段看</h2>
+
+<h3>章節一｜AI 下半場：基準分數見頂後的應用突破<br><span class="confidence">00:00:00 – 00:26:00</span></h3>
+<ul>
+<li>基準測試的鑑別力遞減，頭部模型得分差異多半是雜訊。</li>
+<li>長文本突破方向：「用有限上下文訓練、做無限上下文推理」（train with finite context used as infinite context），今年有機會實現。</li>
+<li>Claude 在通用工具調用（Agent）表現最佳；Gemini 在純推理與日常交互較強。</li>
+<li>GitHub 資料品質高，這也解釋了早期模型寫程式能力為何意外好。</li>
+</ul>
+<p><strong>獨特事實</strong>：除了 Coding 之外，目前還沒看到其他純 AI 原生應用成功建立「資料飛輪」（data flywheel，用戶資料回流訓練、模型變強、再吸引更多用戶的正向循環）。</p>
+
+<h3>章節二｜模型邊界：規模法則、程式碼生成與具身智能<br><span class="confidence">00:26:00 – 01:15:00</span></h3>
+<ul>
+<li>規模法則尚未觸頂，算力與資料仍是核心驅動力；推不動時多半因為 Bug，而不是缺神技。</li>
+<li>Coding 是最快進展場景：回饋訊號明確 + GitHub 高品質資料。</li>
+<li>具身智能還在特徵工程階段，缺乏泛化性。</li>
+</ul>
+<p><strong>獨特事實</strong>：姚順宇估計自己 90% 以上的程式碼由 AI 生成，工作重心轉向系統架構規劃，效率提升數十倍。中國實驗室在「模型蒸餾」（distillation，用大模型訓練小模型的技術）上技術領先。</p>
+
+<h3>章節三｜物理學霸到 AI 衝浪者的非典型跨界<br><span class="confidence">01:15:00 – 02:00:00</span></h3>
+<ul>
+<li>AI 的黑盒性質與物理的經驗科學高度契合；規模法則類似 18 世紀熱力學的巨觀定律。</li>
+<li>「智能湧現」是工程規模化後的客觀水準提升，而不是神秘的意識覺醒。</li>
+<li>Anthropic 早期執行力極強（全公司只有 70-80 人，RL Horizon 團隊約 10 人）。</li>
+</ul>
+<p><strong>獨特事實</strong>：姚順宇從高能物理博士後僅入職兩週便辭職轉 AI。本科研究非厄米系統（non-Hermitian system，物理學的一類量子系統）時，因為數值與理論對不上而深入研究，養成實證主義習慣。</p>
+
+<h3>章節四｜揭秘 Anthropic：極致執行力與 Claude 3.7 幕後<br><span class="confidence">02:00:00 – 02:50:00</span></h3>
+<ul>
+<li>後訓練（post-training）與 RL 的壁壘在工程而非演算法；演算法高度依賴基礎設施。</li>
+<li>長文本終極解法：模仿人類「選擇性遺忘 + 動態取回」。</li>
+<li>Claude 3.7 從早期 RL 研究到發布只花了 4-5 個月。</li>
+</ul>
+<p><strong>獨特事實</strong>：姚順宇離開 Anthropic 的部分原因，是不認同 CEO Dario Amodei 對 AI 安全等議題的極端化與情緒化表達；公司擴張到近 2000 人後出現文化混沌（Slack 清談多、執行少）。</p>
+
+<h3>章節五｜Google DeepMind 的系統化工程與未來預判<br><span class="confidence">02:50:00 – 03:35:00</span></h3>
+<ul>
+<li>預訓練已經成為確定性的「工程項目」，Google 擅長系統化管理。</li>
+<li>基準測試見頂；中美生態分岔：美國主攻直接變現的效率工具，中國擅長複雜 C 端生態護城河。</li>
+<li>Google 的防守反擊：產品形態確定後，以算力與橫向資源降維打擊。</li>
+</ul>
+<p><strong>獨特事實</strong>：姚順宇轉職時曾考慮 OpenAI，但因為對其文化（實際做事的人不如預期多）有疑慮而選擇 Google DeepMind。TPU 與 GPU 底層設計邏輯不同：TPU 走 3D 拓樸、GPU 走高速互聯。</p>
+
+<h3>章節六｜打破神話：集體主義、識人標準與「老登」批判<br><span class="confidence">03:35:00 – 03:47:52，後段待補</span></h3>
+<ul>
+<li>AI 發展學術座標：Seq2Seq（序列到序列模型，2014 年的早期神經機器翻譯架構）是特徵工程時代的高峰；規模法則論文的貢獻在於引領「系統化研究」範式。</li>
+<li>新創 vs. 大廠環境互補：Anthropic 可以把單一技術線推向極致；Google 提供橫向多元視角。</li>
+<li>AI 領域高度客觀，打破了傳統學術資歷與人情束縛。</li>
+</ul>
+<p><strong>獨特事實</strong>：姚順宇批判「老登」的空談；推崇 Geoffrey Hinton 等在冷門時期堅守信念的先行者，以及 Transformer 論文作者群的「英雄集體」。推薦書籍：湯川秀樹自傳與《來自新世界》。</p>
+
+<div class="callout warn">
+<p><strong>章節六補充說明</strong>：原始逐字稿只提供到 03:47:52，建議後續補完剩餘約 12 分鐘的分析。</p>
+</div>
+
+<hr>
+
+<h2>附錄：使用說明</h2>
+<ul>
+<li>本文是跨段主題整合 + 章節時間軸重點的彙整版本，保留所有 <span class="tag tag-c">CONFIRMED</span> / <span class="tag tag-i">INFERRED</span> 標註，方便讀者驗證。</li>
+<li>建議搭配原影片使用：重點金句附有時間戳或章節標註。</li>
+<li>所有推論與假設均已明確標註，事實部分以姚順宇原話或可驗證細節為主。</li>
+</ul>
+
+</article>
+
+<footer>
+<p>來源：張小珺商業訪談錄《對姚順宇的 4 小時訪談：請允許我小瘋一下！在 Anthropic 和 Gemini 訓模型、技術預測、英雄主義已過去》｜整理日期：2026-05-11</p>
+</footer>
+</main>
+<script>
+  const bar = document.getElementById('progress');
+  window.addEventListener('scroll', () => {
+    const h = document.documentElement;
+    const pct = (h.scrollTop / (h.scrollHeight - h.clientHeight)) * 100;
+    bar.style.width = pct + '%';
+  });
+</script>
+</body>
+</html>
