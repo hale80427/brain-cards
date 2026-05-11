@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>4 月 vs 5 月跨領域成長對照｜從建構期到治理期</title>
+<meta name="description" content="盤點 2026 年 4 月與 5 月在七個領域的成長軌跡：第二大腦、Prompt Engineering、精密機械、商業策略、投資、人資教育、跨域同構。從 Vault 滿月保養到 second-brain skill 落地，從消費 Agent 到治理 Agent。">
+<style>
+  :root {
+    --bg: #fafaf7;
+    --fg: #1a1a1a;
+    --accent: #c0392b;
+    --muted: #666;
+    --border: #e5e5e0;
+    --callout-tip: #e8f4f0;
+    --callout-warn: #fdf3e7;
+    --fs-meta: 0.85rem;
+    --fs-body: 1rem;
+    --fs-h2:   clamp(1.3rem, 3vw, 1.5rem);
+    --fs-h1:   clamp(1.75rem, 4vw, 2.25rem);
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #1a1a1a;
+      --fg: #f0f0e8;
+      --accent: #e87c6e;
+      --muted: #999;
+      --border: #333;
+      --callout-tip: #1f3530;
+      --callout-warn: #3a2d1c;
+    }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
+  }
+  * { box-sizing: border-box; }
+  body {
+    font-family: "Noto Serif TC", Georgia, serif;
+    background: var(--bg);
+    color: var(--fg);
+    line-height: 1.8;
+    margin: 0;
+    padding: 0;
+    -webkit-font-smoothing: antialiased;
+  }
+  .progress-bar {
+    position: fixed; top: 0; left: 0; height: 3px;
+    background: var(--accent); width: 0%; z-index: 100;
+    transition: width 0.1s;
+  }
+  main {
+    max-width: 680px;
+    margin: 0 auto;
+    padding: clamp(2rem, 5vw, 4rem) clamp(1.5rem, 4vw, 2rem);
+  }
+  h1 { font-size: var(--fs-h1); line-height: 1.3; margin: 0 0 1rem; }
+  h2 { font-size: var(--fs-h2); line-height: 1.4; margin: 2.5rem 0 0.75rem; padding-bottom: 0.5rem; border-bottom: 1px solid var(--border); }
+  h3 { font-size: var(--fs-body); font-weight: 700; line-height: 1.4; margin: 1.75rem 0 0.5rem; color: var(--accent); }
+  p { margin: 0 0 1.25rem; }
+  ul, ol { margin: 0 0 1.25rem; padding-left: 1.5rem; }
+  li { margin-bottom: 0.4rem; }
+  a { color: var(--accent); text-underline-offset: 3px; }
+  a:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+  .bluf { background: var(--callout-tip); border-left: 3px solid var(--accent); padding: 1.25rem 1.5rem; margin: 1.5rem 0 2rem; border-radius: 4px; }
+  .bluf strong { display: block; font-size: var(--fs-meta); letter-spacing: 0.05em; color: var(--accent); margin-bottom: 0.5rem; text-transform: uppercase; }
+  .callout { padding: 1rem 1.25rem; margin: 1.5rem 0; border-radius: 4px; border-left: 3px solid var(--muted); }
+  .callout.tip { background: var(--callout-tip); border-left-color: var(--accent); }
+  .callout.warn { background: var(--callout-warn); border-left-color: #d97706; }
+  table { border-collapse: collapse; width: 100%; margin: 1.5rem 0; font-size: var(--fs-body); }
+  th, td { padding: 0.6rem 0.8rem; border: 1px solid var(--border); text-align: left; vertical-align: top; }
+  th { background: var(--callout-tip); font-weight: 600; }
+  code { font-family: "JetBrains Mono", monospace; background: var(--callout-tip); padding: 0.1em 0.4em; border-radius: 3px; font-size: var(--fs-body); }
+  .meta-row { color: var(--muted); font-size: var(--fs-meta); margin-bottom: 1.5rem; }
+  .meta-row span + span::before { content: "・"; margin: 0 0.5rem; color: var(--border); }
+  @media print {
+    .progress-bar { display: none; }
+    body { font-size: 11pt; line-height: 1.6; }
+    main { max-width: 100%; padding: 1cm; }
+  }
+</style>
+</head>
+<body>
+<div class="progress-bar" id="progress"></div>
+<main>
+<header>
+<h1>4 月 vs 5 月跨領域成長對照</h1>
+<div class="meta-row">
+<span>產出日期 2026-05-11</span>
+<span>受眾 自己</span>
+<span>來源 Second Brain Vault</span>
+</div>
+<div class="bluf">
+<strong>BLUF</strong>
+4 月是<strong>建構期</strong>：把第二大腦從零搭起、把多條商務線同步推進、把 Agent 工程的概念吸進來。5 月是<strong>治理期</strong>：把同一批東西從「能用」升級為「可治理、可驗證、可重複交付」。共通底層躍升是<strong>從消費者變治理者</strong>——從讀「Agent 應該怎樣」到動手「治理 Agent」，從寫筆記到設計筆記系統的執行紀律。
+</div>
+</header>
+<article>
+
+<h2>4 月骨架：從零到滿月的建構期</h2>
+
+<p>4 月 1 日 Vault 正式啟用，到 4 月 25 日做完滿月大保養，整月的核心是<strong>讓系統先跑起來</strong>。Cards 從 0 累積到 279 張，Sources、Logs、MOC 三層架構成形。</p>
+
+<p>同時間多條業務線並行：Al-SiC 供應鏈博弈、石英主線從推測到澤米科技拜訪驗證、永進機台維修治理、CNC 製程開發 AI Agent 四層架構成形、知識注入大批量（Agent 工程師 / Matt Pocock / Hamel Husain / HIT 龍蝦提案）。</p>
+
+<p>關係層也同步推進：4 月 6 日反饋整合與習慣啟動、4 月 7 日共同工作覆盤、4 月 11 日信任感凌晨擁抱、4 月 27 日生理期支持策略整合。這層在 4 月被穩定維護，沒有被工作密度壓垮。</p>
+
+<h3>4 月主要里程碑</h3>
+
+<ul>
+<li>4 月 1 日 Vault 啟用首日，AI 晶片 Lid 五供應商盤點骨架成形</li>
+<li>4 月 7 日專案架構解耦，從單一 monolithic 拆成澤米 / 半導體展 / Al-SiC 多主線</li>
+<li>4 月 8 日澤米科技拜訪，石英主線從假說升級為具體切入策略</li>
+<li>4 月 11 日首次週回顧，發現 14 張缺 Related、8 張無效 topology 標籤</li>
+<li>4 月 14 日光洋科拜訪，工研院機台維修進入價格合理性比對階段</li>
+<li>4 月 23 日 CNC 製程 AI Agent 四層架構成形（Layer -1 PLC 硬迴路 / 龍蝦 A/B/C/D）</li>
+<li>4 月 25 日第二大腦滿月大保養，收斂 origin / confidence / domain 詞彙</li>
+<li>4 月 28-29 日連續知識注入：Agent 工程師核心能力、Matt Pocock 軟工、Hamel Husain</li>
+</ul>
+
+<h2>5 月骨架：從可用升級為可治理</h2>
+
+<p>5 月的核心是<strong>把 4 月的東西拿出來重做一遍，但這次把治理層補上</strong>。第二大腦從個人筆記庫升級為具備 QUERY 分層、弱證據展開、跨 Source SYNTHESIZE 規律、§9 對外翻譯紀律的知識操作系統。</p>
+
+<p>Skill 工程化深度推進：從 GPT-5.5 Harness Architect 套件、harness_gpt55 本地落地、evaluate skill 雙向同步、HIT 簡報雙層驗證原則，到 /second-brain skill 從被動 memory rule 升級為主動 protocol。</p>
+
+<p>邊界協議 v0.1 到 v0.5 連續落地，把 dontAsk 模式下的三層防護、Bash 寫入保護、iCloud 同步架構、Playwright 登入態持久化全部摸清楚。這層在 4 月幾乎不存在。</p>
+
+<h3>5 月主要里程碑</h3>
+
+<ul>
+<li>5 月 2 日跨域同構大保養，12 個 topology 全部跑深保養</li>
+<li>5 月 3 日 GPT-5.5 Harness Architect 六文件套件 + CLAUDE.md 升級主動推斷規則</li>
+<li>5 月 4 日不鏽鋼水冷板 UAM 可行性三維度框架萃取</li>
+<li>5 月 5 日 Claude Code 個人助理邊界協議 v0.1.1 落地 + CNC 加工訂單分潤規則設計</li>
+<li>5 月 6 日 Skill 工程化深度日：harness_gpt55 本地落地 + Synergy 915 切削液 11 頁 HIT 簡報 + 水雷射 CVD-SiC 微鑽孔可行性 4 檔</li>
+<li>5 月 7 日 /second-brain skill 設計實作 + 4 批 INGEST + REVIEW 17 張高被引 seed 升級</li>
+<li>5 月 8 日補回近 14 天工作日誌軌跡 10 份</li>
+<li>5 月 10 日週保養，11 張新卡入網檢查 + 拓撲配對掃描</li>
+<li>5 月 11 日跨 Source SYNTHESIZE「描述語言躍升」母命題 + output-html 部署 8 張紀念簡報</li>
+</ul>
+
+<h2>七領域逐一比對</h2>
+
+<p>把兩個月的軌跡按領域切開，會看到同一條躍升軸線——<strong>從消費者變治理者</strong>——在七個領域同步發生。</p>
+
+<h3>領域 1｜Prompt Engineering 與 AI 工作流</h3>
+
+<p>4 月主要在<strong>讀</strong>：角色漂移的根本原因是 context 稀釋、Agent 的核心是觀察決策行動驗證更新閉環、AI 不會抹平能力差距反而放大知識密度差異——這些 Card 是「讀別人怎麼說」。</p>
+
+<p>5 月主要在<strong>做</strong>：AGENTS.md / CLAUDE.md 設計研究歸檔、settings.json 加 ask 區塊、harness_gpt55 多模型架構、/second-brain skill 主動 protocol、邊界協議 v0.5。</p>
+
+<p>視角從「Agent 應該怎樣」躍升到「我怎麼治理 Agent」。</p>
+
+<table>
+<thead>
+<tr><th>面向</th><th>4 月狀態</th><th>5 月躍升</th></tr>
+</thead>
+<tbody>
+<tr><td>知識形態</td><td>知識注入大量、Card 累積</td><td>Skill 工程化、行為承諾、機械鎖定</td></tr>
+<tr><td>角色</td><td>讀者 / 消費者</td><td>架構師 / 治理者</td></tr>
+<tr><td>產物</td><td>原子 Card</td><td>可重複呼叫的 skill 工作流</td></tr>
+<tr><td>關鍵動作</td><td>萃取、串接、MOC 編織</td><td>三層治理（settings / CLAUDE / code）</td></tr>
+</tbody>
+</table>
+
+<h3>領域 2｜第二大腦系統</h3>
+
+<p>4 月建構期：Cards 從 50 累積到 279，滿月大保養收斂硬性規格（origin 從 self 改 human、confidence 從 highly_likely 改 hypothesis、domain 從 psychology 改 hr）。</p>
+
+<p>5 月治理期：QUERY 分層、弱證據展開協議、跨 Source SYNTHESIZE 規律、§9 對外翻譯紀律、KB drift 偵測機械化、§8 寫作紀律 7 種句構替代清單。系統有了<strong>規則的執行紀律</strong>，不只有規格。</p>
+
+<div class="callout tip">
+<strong>關鍵躍升</strong><br>
+5 月 7 日 /second-brain skill 把「請讀取我的第二大腦」這類自然語言觸發從不可靠變可靠。memory 是被動 context（讀到但自由判斷），skill 是主動 protocol（invoke 後逐步走 checklist 是強制的）。這條分層機制是整月最重要的設計收斂。
+</div>
+
+<h3>領域 3｜精密機械工程與 CNC</h3>
+
+<p>4 月橫斷掃描：Al-SiC 五供應商、石英澤米拜訪、SiC 韓國樣品身份鑑定、CVD-SiC 微鑽孔需求總表、永進機台維修四方協調——多材料多客戶並進，主要在<strong>收集</strong>個別案件的事實層。</p>
+
+<p>5 月縱深整合：水雷射 × 超音波互補性框架（八維度能力對照表）+ Synergy 915 補位產品三層交集分析 + 雙層驗證原則（容器 × 內容）+ 不鏽鋼水冷板 UAM 三維度評估框架。從個別報價走到<strong>跨加工方法的物理同構</strong>。</p>
+
+<div class="callout tip">
+<strong>跨加工物理同構</strong><br>
+「石英玻璃機械鑽孔長徑比受排屑空間限制」與「水雷射受水柱直線可達 + 孔內全內反射維持限制」結構同——加工方法的物理約束直接決定可行特徵集，而非加工能量強弱。這條 5 月才從多案例累積中浮現。
+</div>
+
+<h3>領域 4｜商業策略與商務情報</h3>
+
+<p>4 月商流博弈：合一報價地板 200 / pc、世紀貿易拜訪策略、巨川金屬升級觀察、JFC / Fanuc 高設備對齊度路線、HIT 在澤米的最佳切入是單一特徵 POC。</p>
+
+<p>5 月產品 ROI 工程化：FDE 三層內化（產品 / 工程 / 客戶端同步）、JP Morgan 50/80/90 三段階梯（prompt engineer / workflow architect / HITL UX designer 邊際成本曲線完全不同）。</p>
+
+<p>同時看穿兩個結構性偏誤：demo 與上線之間的鴻溝七類非功能性問題、企業導 AI 失敗常被誤判為選型問題的便宜路徑偏誤。</p>
+
+<p>從「報價戰術」躍升到「AI 時代企業價值論述框架」——能對客戶說「你看的是模型，但問題在 deployment」這層位置。</p>
+
+<h3>領域 5｜投資分析</h3>
+
+<p>4 月單一指標 / 命題：FCF 轉換率 &gt; 80% 是判斷資本效率的最強單一指標、AGI 標準不是單點超人而是接近人類心智的廣泛認知一致性、AI 對勞動市場呈現高度不均勻分布、AI 帶來的財富重分配先表現在資產持有差距。</p>
+
+<p>5 月跨域系統動力學：算力包攬看起來像基礎設施實際由壟斷敘事的定價權控制、AI 加速時代判斷力因互補稀缺定律倍增市場溢價、人才擴編與算力擴編共同推高組織營運量能、責任不對稱下放與個體承責器結構。</p>
+
+<p>從「單一指標」到「跨域系統動力學嵌入投資判準」——投資判斷不再是看 P/E 或 FCF，而是看整個 AI 時代的稀缺重分配軸線。</p>
+
+<h3>領域 6｜人資、教育與自我發展</h3>
+
+<p>4 月個人成長感悟：心理安全感、目標函數還原、自我感知與防衛心、信任感的累積機制。</p>
+
+<p>5 月跨層級養成系統論述：DBS Skills 課堂教學日誌、AI 工作流升級學生從資料摘要者到系統性思考者、新手練功階梯被 AI 吃掉造成養成路徑斷裂、教育養成端三層鏡像（個體稀缺 ↔ 組織稀缺 ↔ 教育養成端）。</p>
+
+<p>從「個人感悟」到「跨層級論述」——能說出「個體上線肌肉、組織 deployment 戰場、教育養成端」這三層位置如何同源於 AI 加速時代的篩選紀律前置化。</p>
+
+<h3>領域 7｜跨域同構（meta-level）</h3>
+
+<p>4 月 topology 標籤散落，孤立 Card 偏多。週回顧時才發現 14 張缺 Related、8 張無效 topology。同構機會多停留在「個別 Card 寫進 MOC 跨域思維模型」這層。</p>
+
+<p>5 月 topology 全部跑深保養：5 月 2 日 12 個 topology 小型保養 + 跨域同構大保養 + 三拓撲深保養。</p>
+
+<p>5 月 7 日 SYNTHESIZE「介面層比主體層更決定系統的有效上限」——LLM 任務分解 × Mg-SiC 介面純淨度，hypothesis × verified 組合 medium。5 月 11 日跨 Source SYNTHESIZE「跨 domain 突破看似來自工具升級實際由描述語言躍升決定」，GitNexus × Hassabis 跨 4 domain 收斂。</p>
+
+<div class="callout tip">
+<strong>meta 躍升</strong><br>
+「描述語言躍升」本身成為跨域 emergent 母命題——AI 之於湧現系統，與微積分之於古典力學是同一種描述語言躍升。第二大腦從「主題分類」升級到「topology + wikilink + MOC 樞紐」這套描述語言，才使這條跨 Source emergent 母命題得以浮現。
+</div>
+
+<h2>共通底層躍升</h2>
+
+<p>把七個領域疊在一起看，會浮現一條共通軸線：</p>
+
+<table>
+<thead>
+<tr><th>領域</th><th>4 月：建構期</th><th>5 月：治理期</th></tr>
+</thead>
+<tbody>
+<tr><td>Prompt Engineering</td><td>讀別人怎麼設計 Agent</td><td>動手治理 Agent（三層治理）</td></tr>
+<tr><td>第二大腦</td><td>Cards 累積、滿月保養收斂規格</td><td>主動 protocol + 跨 Source SYNTHESIZE 規律</td></tr>
+<tr><td>精密機械</td><td>個別案件報價、多客戶橫斷</td><td>跨加工方法物理同構框架</td></tr>
+<tr><td>商業策略</td><td>商流博弈、報價戰術</td><td>AI 時代企業價值論述框架</td></tr>
+<tr><td>投資分析</td><td>單一指標、個別命題</td><td>跨域系統動力學嵌入判準</td></tr>
+<tr><td>人資教育</td><td>個人成長感悟</td><td>跨層級養成系統論述</td></tr>
+<tr><td>跨域同構</td><td>個別 topology 標籤</td><td>描述語言躍升成為母命題</td></tr>
+</tbody>
+</table>
+
+<p>共通機制是：4 月把材料密度推到一個臨界點，5 月開始<strong>從材料層升維到規律層</strong>——不是繼續加 Card，而是讓 Card 之間的關係（topology / wikilink / MOC 樞紐）開始浮現可被治理的規律。這條躍升不是單一領域的進步，而是同一套<strong>描述語言</strong>在七個領域同時升級。</p>
+
+<h2>5 月底前該接續的事</h2>
+
+<p>從 5 月各日 Logs 的「待續事項」收斂出來：</p>
+
+<ul>
+<li>second-brain skill Task 9 七項驗證（開新 session 跑完整觸發鏈）</li>
+<li>harness_gpt55 完整四步協議實測 + reverse-sync 推回雲端</li>
+<li>topology/network_effect 全卡綜合 SYNTHESIZE（9 張 Vault 最低密度區）</li>
+<li>11 張 5/10 新卡的高入網度候選升 growing 評估（兩週後）</li>
+<li>backlinks 篩選協議（≥ 5 / ≥ 18 / ≥ 28）寫進 SPEC §7</li>
+<li>3 Projects/ 工作待辦總覽更新（last updated 2026-04-03，多項已過期）</li>
+<li>關係層維護（生理期支持策略整合的後續觀察）</li>
+</ul>
+
+</article>
+<footer>
+<p style="color: var(--muted); font-size: var(--fs-meta); margin-top: 4rem; padding-top: 1.5rem; border-top: 1px solid var(--border);">
+資料來源：Second Brain Vault｜4 Logs/（2026-04-01 到 2026-05-10）+ 1 Cards/ + 0 Atlas/ MOC。產出方式：QUERY-C 深度 + 跨 4 月 5 月域對照 + §9 對外翻譯紀律。
+</p>
+</footer>
+</main>
+<script>
+  const bar = document.getElementById('progress');
+  window.addEventListener('scroll', () => {
+    const h = document.documentElement;
+    const pct = (h.scrollTop / (h.scrollHeight - h.clientHeight)) * 100;
+    bar.style.width = pct + '%';
+  });
+</script>
+</body>
+</html>
