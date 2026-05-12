@@ -1,0 +1,420 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>iMachining 的設計哲學：把切削物理轉成 CAM 演算法</title>
+<meta name="description" content="拆解 SolidCAM iMachining 背後的物理機制與工程取捨：七大專利機制、ACP 紅綠燈、Technology Wizard 5 輸出綁定、UTS 與切削速度的三條物理路徑。">
+<style>
+  :root {
+    --bg: #fafaf7;
+    --fg: #1a1a1a;
+    --accent: #c0392b;
+    --muted: #666;
+    --border: #e5e5e0;
+    --callout-tip: #e8f4f0;
+    --callout-warn: #fdf3e7;
+    --fs-meta: 0.85rem;
+    --fs-body: 1rem;
+    --fs-h2:   clamp(1.3rem, 3vw, 1.5rem);
+    --fs-h1:   clamp(1.75rem, 4vw, 2.25rem);
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #1a1a1a;
+      --fg: #f0f0e8;
+      --accent: #e87c6e;
+      --muted: #999;
+      --border: #333;
+      --callout-tip: #1f3530;
+      --callout-warn: #3a2d1c;
+    }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
+  }
+  * { box-sizing: border-box; }
+  body {
+    font-family: "Noto Serif TC", Georgia, serif;
+    background: var(--bg);
+    color: var(--fg);
+    line-height: 1.8;
+    margin: 0;
+    padding: 0;
+    -webkit-font-smoothing: antialiased;
+  }
+  .progress-bar {
+    position: fixed; top: 0; left: 0; height: 3px;
+    background: var(--accent); width: 0%; z-index: 100;
+    transition: width 0.1s;
+  }
+  main {
+    max-width: 680px;
+    margin: 0 auto;
+    padding: clamp(2rem, 5vw, 4rem) clamp(1.5rem, 4vw, 2rem);
+  }
+  h1 { font-size: var(--fs-h1); line-height: 1.3; margin: 0 0 1rem; }
+  h2 { font-size: var(--fs-h2); line-height: 1.4; margin: 2.5rem 0 0.75rem; padding-bottom: 0.5rem; border-bottom: 1px solid var(--border); }
+  h3 { font-size: var(--fs-body); font-weight: 700; line-height: 1.4; margin: 1.75rem 0 0.5rem; color: var(--accent); }
+  p { margin: 0 0 1.25rem; }
+  ul, ol { margin: 0 0 1.25rem; padding-left: 1.5rem; }
+  li { margin-bottom: 0.4rem; }
+  a { color: var(--accent); text-underline-offset: 3px; }
+  a:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+  .bluf { background: var(--callout-tip); border-left: 3px solid var(--accent); padding: 1.25rem 1.5rem; margin: 1.5rem 0 2rem; border-radius: 4px; }
+  .bluf .label { display: block; font-size: var(--fs-meta); letter-spacing: 0.05em; color: var(--accent); margin-bottom: 0.5rem; text-transform: uppercase; font-weight: 700; }
+  .bluf p:last-child { margin-bottom: 0; }
+  .callout { padding: 1rem 1.25rem; margin: 1.5rem 0; border-radius: 4px; border-left: 3px solid var(--muted); }
+  .callout.tip { background: var(--callout-tip); border-left-color: var(--accent); }
+  .callout.warn { background: var(--callout-warn); border-left-color: #d97706; }
+  .callout p:last-child { margin-bottom: 0; }
+  table { border-collapse: collapse; width: 100%; margin: 1.5rem 0; font-size: var(--fs-body); }
+  th, td { padding: 0.6rem 0.8rem; border: 1px solid var(--border); text-align: left; vertical-align: top; }
+  th { background: var(--callout-tip); font-weight: 600; }
+  code { font-family: "JetBrains Mono", monospace; background: var(--callout-tip); padding: 0.1em 0.4em; border-radius: 3px; font-size: var(--fs-body); }
+  pre { background: var(--callout-tip); padding: 1rem 1.25rem; border-radius: 4px; overflow-x: auto; margin: 1.25rem 0; font-size: var(--fs-body); line-height: 1.5; }
+  pre code { background: transparent; padding: 0; }
+  blockquote { border-left: 3px solid var(--border); padding: 0.3rem 1rem; margin: 1.25rem 0; color: var(--muted); font-style: italic; }
+  blockquote p:last-child { margin-bottom: 0; }
+  .ref-list { font-size: var(--fs-meta); color: var(--muted); }
+  .ref-list li { margin-bottom: 0.5rem; }
+  @media print {
+    .progress-bar { display: none; }
+    body { line-height: 1.6; }
+    main { max-width: 100%; padding: 1cm; }
+  }
+</style>
+</head>
+<body>
+<div class="progress-bar" id="progress"></div>
+<main>
+<header>
+<h1>iMachining 的設計哲學：把切削物理轉成 CAM 演算法</h1>
+<div class="bluf">
+<span class="label">BLUF</span>
+<p>為什麼這套技術能省 70% 加工時間、延長 5 倍刀具壽命？答案在七個專利機制的協作。</p>
+<p>形變螺旋路徑把刀具負載從動態鎖成靜態、軸向接觸點 (ACP) 用整數共振穩定切深、Technology Wizard 用三條物理約束聯立解推估 5 個切削參數。</p>
+<p>本文拆解這套設計的物理底層與工程取捨。</p>
+</div>
+</header>
+
+<article>
+
+<h2>iMachining 想解決什麼問題？</h2>
+
+<p>傳統 CAM 軟體用等距偏移路徑（offset toolpath）規劃口袋與輪廓加工。在轉角處，刀具的徑向接觸角會瞬間暴衝，切削力可達直線段的 3 到 5 倍。</p>
+
+<p>這是斷刀與刀刃微崩的主要來源。</p>
+
+<p>iMachining 由 SolidCAM 開發、2010 年代初獲得專利。它鎖定的是更基本的物理量：切屑厚度的瞬時恆定。</p>
+
+<p>傳統 CAM 追求恆定切削力屬於間接量，切屑厚度才直接決定刀刃機械疲勞與熱負荷。</p>
+
+<p>官方主張：週期時間省 70% 以上、刀具壽命延長 5 倍以上。</p>
+
+<h2>七大專利機制怎麼運作？</h2>
+
+<p>iMachining 由七個機制組成，缺一不可。</p>
+
+<h3>形變螺旋路徑 (Morphing Spiral)</h3>
+<p>路徑會「形變」貼合特徵幾何，最大化刀具與料的接觸時間。轉角從力學突變點變成連續曲線。</p>
+
+<h3>護城河技術 (Moating)</h3>
+<p>自動把大區域去料切成可控的子區，每個子區跑各自的形變螺旋，避免單一螺旋失控。</p>
+
+<h3>技術精靈 (Technology Wizard)</h3>
+<p>根據材料、刀具、機台、夾具四類輸入，產出 5 個同步綁定的切削參數。</p>
+
+<h3>受控步距 (Controlled Step Over)</h3>
+<p>連續變動徑向接觸角（10° 到 80° 範圍）與進給率，鎖住每刃恆定切屑厚度。接觸角大時自動降進給率，接觸角小時自動升進給率。</p>
+
+<h3>八段剛性滑桿 (Level Slider)</h3>
+<p>處理主軸剛性、夾治具剛性、刀具懸伸 deflection 三類現場變數。</p>
+
+<p>當理論值在實際機台會震刀或共振，把 Level 往下調（保守），系統自動重算 5 個參數。</p>
+
+<h3>iMachining 2D vs 3D 分工</h3>
+<p>2D 處理 2.5D prismatic 幾何（口袋、槽、島、輪廓），用 Machinable Feature Recognition 單擊面即辨識。</p>
+
+<p>3D 處理真 3D 曲面，用 scallop-based 殘料追蹤規劃下一刀路徑。</p>
+
+<h3>與傳統 HSM Trochoidal 的差異</h3>
+<p>HSM Trochoidal 用擺線（圓弧迴圈疊進）維持恆定切削力，但 MRR 較低且必有空跑段。</p>
+
+<p>iMachining 用「螺旋為主、擺線為輔」混合策略，在能用螺旋的場景保留高 MRR，只在 narrow passages 退化成擺線。</p>
+
+<h2>ACP 紅綠燈：為什麼整數切深特別穩？</h2>
+
+<p>iMachining Wizard 在輸入軸向切深 (ap) 時會顯示綠／黃／紅燈。</p>
+
+<p>這個判定的底層是 ACP（Axial Contact Points，軸向接觸點）。</p>
+
+<p>公式如下：</p>
+
+<pre><code>螺旋導程 Lead = π × D / tan(β)
+有效節距 Fine Pitch = Lead / N
+ACP = ap / Fine Pitch</code></pre>
+
+<p>其中 D 是刀具直徑、β 是螺旋角、N 是刃數。</p>
+
+<h3>為什麼整數 ACP 振動最低？</h3>
+
+<p>立銑刀的螺旋刃繞著刀具軸旋轉，沿軸向看是一條斜螺旋。當刀具旋轉時，同一條刃會在不同軸向高度依序進入材料，可視為「沿軸向滑動的接觸點」。</p>
+
+<p>當 ACP 是整數，在任何瞬間都有完整數量的接觸點咬合工件。當第 1 點離開頂端瞬間，第 2 點剛好從底端進入。接觸是連續的、切削力沿時間軸守恆、零波動。</p>
+
+<p>當 ACP 是半整數（如 1.5），接觸點數會在 1 與 2 之間交替發生，產生「咬→不咬→咬」的週期性間隙。</p>
+
+<p>每個間隙是一次衝擊性的力變化，激發刀具與主軸的固有頻率，造成顫振 (chatter)。</p>
+
+<div class="callout tip">
+<p><strong>SolidCAM 預設容差為 ±20%</strong>：實際綠燈區是 ACP ∈ [N×0.8, N×1.2]。</p>
+<p>這是把實際刀具製造公差與機台跳動 (runout) 納入後的安全餘量。</p>
+</div>
+
+<h3>D6 / 45° 螺旋 / 4 刃刀具的綠燈地圖</h3>
+
+<table>
+<thead>
+<tr><th>ACP</th><th>中心 ap (mm)</th><th>綠燈區間 (mm)</th></tr>
+</thead>
+<tbody>
+<tr><td>1.0</td><td>4.71</td><td>3.77 – 5.65</td></tr>
+<tr><td>2.0</td><td>9.42</td><td>8.49 – 11.30</td></tr>
+<tr><td>3.0</td><td>14.14</td><td>13.21 – 16.96</td></tr>
+<tr><td>4.0</td><td>18.85</td><td>多受切削刃長限制</td></tr>
+</tbody>
+</table>
+
+<p>中間的 6、7、8、12、13 mm 都落在紅燈隔離帶。這就是為什麼「直覺取整數 mm」反而會撞紅燈。</p>
+
+<div class="callout tip">
+<p><strong>學術佐證</strong>：Niță 等人於 2020 年發表的 Springer Nature 論文，在鈦合金端銑實驗中驗證——</p>
+<p>當 ap = 11.3 mm（ACP=1）與 22.6 mm（ACP=2）時振動最低、表面粗糙度最佳。</p>
+</div>
+
+<h2>開槽四工法：抬刀差異從哪裡來？</h2>
+
+<p>iMachining 提供 4 種開槽工法（Cutting direction styles）：</p>
+
+<table>
+<thead>
+<tr><th>工法</th><th>開放區域</th><th>窄通道區段</th></tr>
+</thead>
+<tbody>
+<tr><td>Climb（順銑，預設）</td><td>Morphing spiral 順銑</td><td>Trochoidal-like 單向，段間抬刀</td></tr>
+<tr><td>Climb-Zigzag（順銑雙向）</td><td>Morphing spiral 順銑</td><td>Zigzag 連接，含 climb + conventional</td></tr>
+<tr><td>Conventional（逆銑）</td><td>Morphing spiral 逆銑</td><td>Trochoidal-like 單向逆銑</td></tr>
+<tr><td>Conventional-Zigzag</td><td>Morphing spiral 逆銑</td><td>Zigzag 連接</td></tr>
+</tbody>
+</table>
+
+<h3>Climb 單向必須抬刀的物理原因</h3>
+<p>完成一段切削後若不抬刀直接反向走，刀具旋轉方向不變而進給方向反轉，咬入點關係從順銑變成逆銑。</p>
+
+<p>要維持全程順銑的承諾，唯一解是「升 Z → rapid 回起點 → plunge 下刀」三段非切削動作。</p>
+
+<h3>Climb-Zigzag 不抬刀的代價</h3>
+<p>SolidCAM 2016 官方文件明文記載 Zigzag 模式的行為：</p>
+<blockquote><p>containing both climb and conventional movements</p></blockquote>
+
+<p>意思是在 narrow passages 區段，往復走刀必然會引入逆銑成份，約 50% 切削段為逆銑。</p>
+
+<div class="callout warn">
+<p>這是「省抬刀時間」與「全程順銑承諾」之間的工程取捨。</p>
+<p>Climb-Zigzag 的命名看起來像「全程順銑且雙向不抬刀」。</p>
+<p>實際是「開放區用 spiral 全順銑、narrow passages 改用 zigzag 連接、含逆銑段」。</p>
+</div>
+
+<h3>選擇判據</h3>
+
+<table>
+<thead>
+<tr><th>場景</th><th>建議工法</th><th>理由</th></tr>
+</thead>
+<tbody>
+<tr><td>開槽 + 壁面品質嚴</td><td>Climb 單向</td><td>全程順銑，犧牲時間換品質</td></tr>
+<tr><td>開槽 + 週期時間最短</td><td>Climb-Zigzag</td><td>不抬刀，接受 50% 段為逆銑</td></tr>
+<tr><td>薄壁件</td><td>Climb 單向</td><td>雙向反向力會推工件來回擺</td></tr>
+<tr><td>難切材（鈦、Inconel）</td><td>Climb 單向</td><td>逆銑加速刀具磨耗</td></tr>
+<tr><td>鋁合金粗加工</td><td>Climb-Zigzag</td><td>鋁不挑方向，省時間是淨賺</td></tr>
+</tbody>
+</table>
+
+<h2>Technology Wizard 的 4 輸入與 5 輸出</h2>
+
+<h3>4 類輸入</h3>
+
+<table>
+<thead>
+<tr><th>類別</th><th>內容</th></tr>
+</thead>
+<tbody>
+<tr><td>工件材料</td><td>機械性質（UTS 抗拉強度、硬度、熱導率等）</td></tr>
+<tr><td>刀具</td><td>材質、塗層、幾何、夾持懸伸</td></tr>
+<tr><td>機台</td><td>主軸功率、最大轉速、加減速能力</td></tr>
+<tr><td>夾具</td><td>剛性（用 8 段 Level Slider 替代精確數值）</td></tr>
+</tbody>
+</table>
+
+<h3>5 個同步輸出（綁定，動一個全部重算）</h3>
+
+<ol>
+<li>進給率 (feed rate, vf)</li>
+<li>主軸轉速 (spindle speed, n)</li>
+<li>軸向切深 (axial depth of cut, ap)</li>
+<li>切削接觸角 (cutting angle，對應徑向接觸角 ae 等效角)</li>
+<li>切屑厚度 (chip thickness, hex)</li>
+</ol>
+
+<h3>為什麼這 5 個輸出是綁定的？</h3>
+
+<p>SolidCAM 從未公開內部演算法，但從公開學術文獻可重建至少三條物理約束的聯立解。</p>
+
+<h3>Kienzle 切削力方程</h3>
+
+<pre><code>Fc = ks1.1 × b × h^(1 - mc)</code></pre>
+
+<p>ks1.1 是材料比切削力（單位 N/mm²）：</p>
+
+<ul>
+<li>鋁約 700–900</li>
+<li>碳鋼約 1800–2200</li>
+<li>不鏽鋼約 2200–2500</li>
+<li>鈦約 1600–2000</li>
+<li>Inconel 約 2500–3000</li>
+</ul>
+
+<p>mc 是材料指數。切削力 Fc 不能超過機台允許值，反推 ap × ae 邊界。</p>
+
+<h3>Trigger–Chao 切削熱模型</h3>
+
+<pre><code>T_cut ∝ (σ_shear × vc × h / k_thermal)^0.5</code></pre>
+
+<p>剪切強度與工件熱導率決定刀刃溫度，溫度不能超過刀具材質上限（硬質合金約 900°C）。</p>
+
+<p>反推切削速度 vc 上限。</p>
+
+<h3>Taylor 刀具壽命方程</h3>
+
+<pre><code>vc × T^n = C</code></pre>
+
+<p>C 是材料常數、n 是刀具壽命指數（硬質合金 0.2–0.4）。Wizard 內部設定目標壽命 T_target（推測 60–120 分鐘），反推 vc 上限。</p>
+
+<h3>徑向切屑減薄補償 (RCT)</h3>
+<p>當徑向接觸 ae 從 50% 縮到 10%，要維持切屑厚度 h 恆定，進給率 fz 必須增加約 1.7 倍；ae 縮到 5% 時 fz 增加 2.3 倍。</p>
+
+<p>這四條約束聯立後，5 個輸出就被綁定，動一個變數整組重算。</p>
+
+<h2>UTS 下降為什麼會自動拉高轉速？</h2>
+
+<p>在 iMachining Wizard 中輸入材料 UTS 下降，建議的主軸轉速 n 會自動上升。</p>
+
+<p>這個現象看似是 Wizard 內部一條經驗規則，背後其實有三條獨立物理路徑同時鬆綁切削速度上限。</p>
+
+<h3>路徑 1：Kienzle 功率守恆</h3>
+<p>UTS 與 ks 的經驗關係約 ks ≈ 4 × UTS（依材料 ±30%）。UTS 下降，ks 下降，Fc 下降。</p>
+
+<p>若維持原機台功率預算 P = Fc × vc / 60，Fc 下降必須 vc 上升補償。</p>
+
+<h3>路徑 2：Trigger–Chao 熱模型</h3>
+<p>剪切強度 σ_shear ≈ 0.577 × UTS（Von Mises 推導）。UTS 下降，σ_shear 下降。</p>
+
+<p>同 vc 下刀刃溫度下降，可再拉高 vc 直到溫度撞刀具上限。</p>
+
+<h3>路徑 3：Taylor 壽命方程</h3>
+<p>Taylor C 與 UTS 經驗關係 C ≈ k_taylor / UTS^α（α 約 0.8 到 1.2）。</p>
+
+<p>UTS 下降，C 上升，同目標壽命 T_target 下，vc = C / T^n 上升。</p>
+
+<div class="callout tip">
+<p><strong>三路徑對齊有物理必然性</strong>：Kienzle 力學、Trigger–Chao 熱學、Taylor 磨耗三者都把「材料強度」當作分母／阻力項。</p>
+<p>從第一性原理看，材料強度是「切斷材料的力」「切削產生的熱」「磨耗速率」共同的源頭，所以三條路徑同向、強化。</p>
+</div>
+
+<h3>量化估算（D6 / 4 刃 / ap=9.42 mm / ae=1 mm / fz=0.05）</h3>
+
+<table>
+<thead>
+<tr><th>材料</th><th>UTS (MPa)</th><th>推估 vc (m/min)</th><th>對應 n (rpm)</th></tr>
+</thead>
+<tbody>
+<tr><td>Inconel 718</td><td>1100</td><td>50</td><td>2,653</td></tr>
+<tr><td>Ti-6Al-4V</td><td>950</td><td>75</td><td>3,979</td></tr>
+<tr><td>304 不鏽鋼</td><td>620</td><td>100</td><td>5,305</td></tr>
+<tr><td>碳鋼 S45C</td><td>570</td><td>180</td><td>9,549</td></tr>
+<tr><td>鋁 6061-T6</td><td>310</td><td>400</td><td>21,221</td></tr>
+</tbody>
+</table>
+
+<p>UTS 從 1100 降到 310（降 72%），vc 上升到 8 倍。</p>
+
+<p>這個非線性放大是 √路徑（Trigger–Chao）與 ^(1/n) 路徑（Taylor）疊加的結果。</p>
+
+<h3>規律失效場景</h3>
+
+<ul>
+<li>純鋁、純銅：UTS 很低但有 built-up edge（積屑刀刃）問題</li>
+<li>鈦合金：化學親和性主導 vc 上限</li>
+<li>Al-SiC MMC：SiC 顆粒磨粒磨耗主導</li>
+<li>薄壁件：顫振穩定區主導</li>
+<li>主軸 N_max 撞上限：機台 cap 鎖死</li>
+</ul>
+
+<h2>學術文獻參考</h2>
+
+<p>iMachining 的內部演算法是封閉專利系統，SolidCAM 從未公開實際方程式。但理解其運作邏輯可參考以下公開學術文獻。</p>
+
+<h3>核心切削力與壽命模型</h3>
+
+<ul class="ref-list">
+<li>Kienzle, O. (1952). <em>Die Bestimmung von Kräften und Leistungen an spanenden Werkzeugen und Werkzeugmaschinen</em>. VDI-Z 94.</li>
+<li>Altintas, Y. (2012). <em>Manufacturing Automation: Metal Cutting Mechanics, Machine Tool Vibrations, and CNC Design</em> (2nd ed.). Cambridge University Press.</li>
+<li>Taylor, F.W. (1907). <em>On the Art of Cutting Metals</em>.</li>
+<li>Trigger, K.J. &amp; Chao, B.T. (1951). 切削熱與工件熱平衡模型</li>
+</ul>
+
+<h3>ACP 軸向接觸點研究</h3>
+
+<ul class="ref-list">
+<li>Niță, P. et al. (2020). <em>Study of the Axial Contact Points Method Applied When End-Milling Titanium Alloys</em>. Springer Nature.</li>
+<li>Pîrjan, A. (2020). <em>Axial contact points method for improving end-milling productivity</em>. ScienceDirect.</li>
+</ul>
+
+<h3>難切材機制</h3>
+
+<ul class="ref-list">
+<li>Ezugwu, E.O. &amp; Wang, Z.M. (1997). <em>Titanium alloys and their machinability</em>. J. Materials Processing Technology, 68(3).</li>
+<li>Trent, E.M. &amp; Wright, P.K. (2000). <em>Metal Cutting</em> (4th ed.). Butterworth-Heinemann.</li>
+<li>Sun, S., Brandt, M., Dargusch, M.S. (2009). 鈦合金鋸齒切屑與切削力振盪研究</li>
+</ul>
+
+<h3>SolidCAM 官方資源</h3>
+
+<ul class="ref-list">
+<li><a href="https://solidcam.com/imachining/imachining-overview/">iMachining Overview</a></li>
+<li><a href="https://solidcam.com/imachining/imachining-technology-wizard/">iMachining Technology Wizard</a></li>
+<li><a href="https://solidcam.help/2021/milling/iMachining_Wizard_page_ACP.htm">iMachining ACP page</a></li>
+</ul>
+
+</article>
+
+<footer>
+<p style="color: var(--muted); font-size: var(--fs-meta); margin-top: 4rem; padding-top: 1.5rem; border-top: 1px solid var(--border);">
+製作於 2026-05-12｜內容綜整自 SolidCAM 官方文件、學術文獻、實機驗證觀察。
+</p>
+<p style="color: var(--muted); font-size: var(--fs-meta);">
+本文中所有「推估」「推測」段落皆基於公開學術理論重建，SolidCAM 未公開實際演算法。
+</p>
+</footer>
+</main>
+<script>
+  const bar = document.getElementById('progress');
+  window.addEventListener('scroll', () => {
+    const h = document.documentElement;
+    const pct = (h.scrollTop / (h.scrollHeight - h.clientHeight)) * 100;
+    bar.style.width = pct + '%';
+  });
+</script>
+</body>
+</html>
