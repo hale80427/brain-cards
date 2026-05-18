@@ -1,0 +1,445 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>正修科大李政男教授拜訪情報｜五軸加工 / 智慧製造 / 產學落地</title>
+<meta name="description" content="李政男教授為正修科大機械系教授兼工程研究科技中心主任。專長五軸加工、CAD/CAM、智慧製造、積層製造；產學案密集於航太、半導體設備件、精密零組件。本文整理人物速覽、研究主軸、設備資源、拜訪問題清單與交集判斷。">
+<style>
+  :root {
+    --bg: #fafaf7;
+    --fg: #1a1a1a;
+    --accent: #c0392b;
+    --muted: #666;
+    --border: #e5e5e0;
+    --callout-tip: #e8f4f0;
+    --callout-warn: #fdf3e7;
+    --callout-info: #eef2f7;
+    --fs-meta: 0.85rem;
+    --fs-body: 1rem;
+    --fs-h2:   clamp(1.3rem, 3vw, 1.5rem);
+    --fs-h1:   clamp(1.75rem, 4vw, 2.25rem);
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #1a1a1a;
+      --fg: #f0f0e8;
+      --accent: #e87c6e;
+      --muted: #999;
+      --border: #333;
+      --callout-tip: #1f3530;
+      --callout-warn: #3a2d1c;
+      --callout-info: #21283a;
+    }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
+  }
+  * { box-sizing: border-box; }
+  body {
+    font-family: "Noto Serif TC", Georgia, serif;
+    background: var(--bg);
+    color: var(--fg);
+    line-height: 1.8;
+    margin: 0;
+    padding: 0;
+    -webkit-font-smoothing: antialiased;
+  }
+  .progress-bar {
+    position: fixed; top: 0; left: 0; height: 3px;
+    background: var(--accent); width: 0%; z-index: 100;
+    transition: width 0.1s;
+  }
+  main {
+    max-width: 680px;
+    margin: 0 auto;
+    padding: clamp(2rem, 5vw, 4rem) clamp(1.5rem, 4vw, 2rem);
+  }
+  h1 { font-size: var(--fs-h1); line-height: 1.3; margin: 0 0 1rem; }
+  h2 { font-size: var(--fs-h2); line-height: 1.4; margin: 2.5rem 0 0.75rem; padding-bottom: 0.5rem; border-bottom: 1px solid var(--border); }
+  h3 { font-size: var(--fs-body); font-weight: 700; line-height: 1.4; margin: 1.75rem 0 0.5rem; color: var(--accent); }
+  p { margin: 0 0 1.25rem; }
+  ul, ol { margin: 0 0 1.25rem; padding-left: 1.5rem; }
+  li { margin-bottom: 0.4rem; }
+  a { color: var(--accent); text-underline-offset: 3px; }
+  a:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+  .bluf { background: var(--callout-tip); border-left: 3px solid var(--accent); padding: 1.25rem 1.5rem; margin: 1.5rem 0 2rem; border-radius: 4px; }
+  .bluf strong { display: block; font-size: var(--fs-meta); letter-spacing: 0.05em; color: var(--accent); margin-bottom: 0.5rem; text-transform: uppercase; }
+  .callout { padding: 1rem 1.25rem; margin: 1.5rem 0; border-radius: 4px; border-left: 3px solid var(--muted); }
+  .callout.tip { background: var(--callout-tip); border-left-color: var(--accent); }
+  .callout.warn { background: var(--callout-warn); border-left-color: #d97706; }
+  .callout.info { background: var(--callout-info); border-left-color: #4a6fa5; }
+  .callout p:last-child { margin-bottom: 0; }
+  .meta-table { font-size: var(--fs-body); }
+  table { border-collapse: collapse; width: 100%; margin: 1.5rem 0; font-size: var(--fs-body); }
+  th, td { padding: 0.6rem 0.8rem; border: 1px solid var(--border); text-align: left; vertical-align: top; }
+  th { background: var(--callout-tip); font-weight: 600; }
+  code { font-family: "JetBrains Mono", monospace; background: var(--callout-tip); padding: 0.1em 0.4em; border-radius: 3px; font-size: var(--fs-body); }
+  hr { border: none; border-top: 1px solid var(--border); margin: 3rem 0; }
+  @media print {
+    .progress-bar { display: none; }
+    body { font-size: 11pt; line-height: 1.6; }
+    main { max-width: 100%; padding: 1cm; }
+  }
+</style>
+</head>
+<body>
+<div class="progress-bar" id="progress"></div>
+<main>
+<header>
+<h1>正修科大李政男教授拜訪情報</h1>
+<div class="bluf">
+<strong>BLUF（結論先行）</strong>
+<p>李政男教授任正修科技大學機械工程系專任教授、兼工程研究科技中心主任。</p>
+<p>定位非常偏「五軸／多軸加工、CAD/CAM（電腦輔助設計／製造）、智慧製造、積層製造、航太／半導體／精密零組件製程開發」的產學型教授。</p>
+<p>若拜訪目標涉及精密加工、製程優化、五軸加工、航太件、半導體設備件、智慧刀把或 AI 製程優化，交集很高。</p>
+</div>
+</header>
+
+<article>
+
+<h2>一、第二大腦查詢結果與補充面向</h2>
+
+<p>先查了第二大腦：</p>
+
+<ul>
+<li>「教授拜訪」：無命中</li>
+<li>「產學合作」：無命中</li>
+<li>「訪談提綱」：有 3 筆，皆為過去澤米科技拜訪訪談提綱相關紀錄</li>
+</ul>
+
+<p>因此這次先不能沿用一份完整的教授拜訪框架，但可從「技術痛點 → 產能價值 → 合作落地」這條線設計拜訪問題。</p>
+
+<p>原本想到的查核面向：生涯履歷、學經歷、教學、研究、產業經驗、產學合作。建議再補：</p>
+
+<ul>
+<li><strong>實驗室／設備資源</strong>：他掌握哪些可實作的加工、量測、驗證平台</li>
+<li><strong>政府計畫經驗</strong>：是否熟悉教育部、科技部／國科會、經濟部類型計畫</li>
+<li><strong>可交易技術／專利</strong>：判斷他是純學術型，還是技術移轉／產業服務型</li>
+<li><strong>近年產學案題目分布</strong>：看主軸是否仍在五軸、航太、半導體、精密零組件</li>
+<li><strong>校內行政位置</strong>：是否能調動中心、場域、設備、學生與跨系資源</li>
+<li><strong>與拜訪目的的交集</strong>：談 CNC（電腦數值控制）、製程開發、五軸加工、難削材、AI 製程優化交集強；若談材料本體配方或熱傳設計，需再確認他的角色是否偏加工端而非材料端</li>
+</ul>
+
+<h2>二、人物速覽</h2>
+
+<h3>基本身份</h3>
+
+<table class="meta-table">
+<tr><th>姓名</th><td>李政男</td></tr>
+<tr><th>任職</th><td>正修科技大學機械工程系專任教授</td></tr>
+<tr><th>兼任</th><td>工程研究科技中心主任</td></tr>
+<tr><th>研究室位置</th><td>工程研究科技中心</td></tr>
+<tr><th>電話</th><td>(07)7358800 #3328</td></tr>
+<tr><th>Email</th><td>0493@gcloud.csu.edu.tw、jengnan@gcloud.csu.edu.tw</td></tr>
+</table>
+
+<h3>學歷</h3>
+<ul><li>國立成功大學機械工程學系博士</li></ul>
+
+<h3>經歷</h3>
+<ul><li>正修科技大學機械工程系教授</li></ul>
+
+<p style="font-size: var(--fs-meta); color: var(--muted);">資料來源：正修科技大學機械工程系教師頁｜李政男</p>
+
+<h2>三、專長與研究主軸</h2>
+
+<h3>官方列出的專長</h3>
+<ul>
+<li>CAD/CAM（電腦輔助設計與製造）</li>
+<li>五軸數控加工</li>
+<li>智慧製造技術</li>
+<li>積層製造技術（Additive Manufacturing）</li>
+</ul>
+
+<div class="callout info">
+<p><strong>研究主軸研判</strong>：從近年論文與產學案看，李教授不是只做教學或一般機械設計，而是偏向以下方向：</p>
+<ul>
+<li>五軸加工路徑、製程參數、切削效率</li>
+<li>航太葉盤／葉輪／BLISK（整體葉盤，整片葉片與盤體一體成形件）等複雜曲面零件加工</li>
+<li>Inconel 718（鎳基高溫合金）、Ti6Al4V（鈦合金）、SUS304（不鏽鋼）等難削材加工</li>
+<li>AI／神經網路應用於表面粗糙度、加工精度或製程預測</li>
+<li>半導體設備零件、真空泵轉子、精密模具、醫材與航太件的製程開發與導量產</li>
+</ul>
+</div>
+
+<h2>四、研究成果重點</h2>
+
+<h3>近年代表性論文</h3>
+
+<p>官方教師頁列出的期刊論文中，近年集中在五軸加工、航太件、難削材、智慧製造與積層製造：</p>
+
+<ul>
+<li><strong>2025</strong>：BLISK with Inconel 718 milling characteristics</li>
+<li><strong>2024</strong>：Inconel 718 粉末積層製造參數決定</li>
+<li><strong>2024</strong>：Inconel 718 monolithic BLISK 五軸精銑</li>
+<li><strong>2023</strong>：渦輪分子泵轉子多軸加工 NC 程式研究</li>
+<li><strong>2023</strong>：用神經網路預測 SUS304 銑削表面粗糙度與加工精度</li>
+<li><strong>2022</strong>：航太 BLISK 五軸加工效率改善</li>
+</ul>
+
+<div class="callout info">
+<p><strong>研究能力輪廓研判</strong>：他比較像「高階加工製程開發＋產業落地」型教授，而不是只做理論模擬。</p>
+<p>重點不只是發 paper，而是把五軸、CAD/CAM、智慧製造與設備平台串成產學案。</p>
+</div>
+
+<h2>五、產學合作與產業經驗</h2>
+
+<h3>產學案數量與密度</h3>
+
+<p>從官方教師頁解析到產學／其他計畫共約 221 筆。近年密度很高：</p>
+
+<table>
+<thead><tr><th>年度</th><th>筆數</th></tr></thead>
+<tbody>
+<tr><td>2026</td><td>4</td></tr>
+<tr><td>2025</td><td>21</td></tr>
+<tr><td>2024</td><td>19</td></tr>
+<tr><td>2023</td><td>12</td></tr>
+<tr><td>2022</td><td>16</td></tr>
+<tr><td>2021</td><td>27</td></tr>
+<tr><td>2020</td><td>18</td></tr>
+<tr><td>2019</td><td>20</td></tr>
+<tr><td>2018</td><td>16</td></tr>
+</tbody>
+</table>
+
+<h3>2026 年產學案例子</h3>
+<ul>
+<li>五軸複合數控加工產學合作計畫案</li>
+<li>預力混凝土用鋼絞線材料分析研究產學合作計畫案</li>
+<li>大發／鳳山園區產業智慧科技加值創新輔導計畫</li>
+<li>AI 技術應用於航太元件之製程優化產學合作計畫案</li>
+</ul>
+
+<h3>2025 年產學案主題例子</h3>
+<ul>
+<li>雷射模組製程開發與導量產</li>
+<li>五軸複合數控加工模擬與試製</li>
+<li>低軌衛星與接收器製程技術研發與優化</li>
+<li>智慧刀把技術開發專業人才培育暨專題研究</li>
+<li>運輸關鍵機構加工、壓縮機關鍵機構加工研製</li>
+<li>精密模具開發與試製</li>
+<li>通訊外殼組件製程開發與導量產</li>
+<li>碳化矽微鑽專業人才培育暨專題研究</li>
+<li>光學模具加工、綠色工具機切削指引</li>
+<li>艦艇推進器五軸加工技術開發</li>
+<li>真空泵轉子製程開發與導量產</li>
+<li>醫材及器械製程開發與導量產</li>
+<li>DED（指向性能量沉積，Directed Energy Deposition）加工系統軟體模擬及航空元件製程驗證分析</li>
+</ul>
+
+<div class="callout info">
+<p><strong>產業連結重點研判</strong>：產學範圍很廣，但主線清楚——</p>
+<ul>
+<li>主軸 1：五軸／多軸加工</li>
+<li>主軸 2：航太、艦艇、低軌衛星、半導體設備、精密機械</li>
+<li>主軸 3：製程開發、模擬、試製、導量產</li>
+<li>主軸 4：人才培育、智慧製造、AI 製程優化</li>
+<li>主軸 5：材料分析與機械性質驗證也有，但多半搭配工程研究科技中心平台</li>
+</ul>
+</div>
+
+<h2>六、實驗室與設備資源</h2>
+
+<h3>工程研究科技中心定位</h3>
+
+<p>正修工程研究科技中心宗旨是服務業界、促進工業升級，從事產品研究、設計、分析、製造、檢驗等技術，同時培育人才。</p>
+
+<h3>中心實驗室配置</h3>
+
+<ul>
+<li>微機械性質實驗室、鬆弛潛變實驗室</li>
+<li>材料實驗室（TAF 認可，符合 ISO/IEC 17025 實驗室能力國際標準）</li>
+<li>電子顯微鏡實驗室、環境因子評估實驗室</li>
+<li>逆向工程實驗室</li>
+<li>五軸加工實驗室、密封材料測試實驗室</li>
+<li>電腦輔助製造實驗室</li>
+</ul>
+
+<p style="font-size: var(--fs-meta); color: var(--muted);">TAF＝財團法人全國認證基金會，認證機構通過國際對等的實驗室能力標準。</p>
+
+<h3>多軸加工實驗室設備</h3>
+
+<ul>
+<li>TongTai TB-20Y 車銑複合機</li>
+<li>TongTai HONOR MDV-551-5AX 五軸加工機</li>
+<li>TMV-850A 四軸加工機</li>
+<li>MDV-508 四軸加工機</li>
+<li>TMV-1100HSC 三軸加工機</li>
+<li>VU-5 五軸超音波加工機</li>
+</ul>
+
+<h3>五軸切削技術人才培育基地</h3>
+
+<p>此基地聚焦國防及戰略產業、半導體材料及製程設備之智慧自動化五軸複合切削技術。</p>
+<p>目標培育先進材料複合製程技術與自動化製程能力人才。</p>
+<p>基地設備可應用於航太零組件、真空腔體、發動機零件、半導體製程設備、精密定位、鏡面加工等。</p>
+
+<h2>七、可交易技術與專利線索</h2>
+
+<h3>中心可交易技術</h3>
+
+<ul>
+<li>CAD/CAM 系統應用於 5 軸加工技術</li>
+<li>空間凸輪 5 軸加工技術</li>
+<li>齒輪設計分析技術</li>
+<li>水刀加工技術</li>
+<li>電動車差速器設計分析技術</li>
+<li>車用空調壓縮機控制閥測試機台</li>
+<li>超冷處理技術</li>
+<li>密封墊片材料選用技術</li>
+</ul>
+
+<h3>李教授參與的部分專利</h3>
+
+<ul>
+<li>用於製備金屬粉末之霧化器的結構改良</li>
+<li>圓織機凸輪滾動機構</li>
+<li>耐磨耗機負載穩定機構</li>
+<li>差速器模組</li>
+<li>車用空調壓縮機之控制閥測試機台</li>
+<li>車用空調壓縮機性能試驗機</li>
+<li>車用空調壓縮機耐久性測試機台</li>
+</ul>
+
+<div class="callout info">
+<p><strong>專利輪廓研判</strong>：早期專利偏機構、測試機台、壓縮機、差速器、加工／製造裝置。</p>
+<p>近年論文與產學案則更偏五軸加工、航太、半導體設備、AI 製程優化。</p>
+<p>這代表他的職涯可能從機械設計／機構與測試平台，逐步擴展到高階製造與智慧加工。</p>
+</div>
+
+<h2>八、拜訪前判斷：他可能重視什麼</h2>
+
+<h3>高機率重視</h3>
+
+<ul>
+<li>明確的產業痛點，不是泛泛談合作</li>
+<li>具體零件、材料、加工難點、精度要求、表面粗糙度、良率、工時、刀具耗損</li>
+<li>是否有可形成產學案的題目：試製、導量產、製程優化、參數建立、AI 預測、設備驗證</li>
+<li>是否可連到學生培育、專題、實習、產業人才扎根</li>
+<li>是否能使用中心設備與 TAF／量測／材料分析資源做驗證</li>
+</ul>
+
+<h3>適合的開場主軸</h3>
+
+<div class="callout tip">
+<p>如果拜訪者代表企業或技術需求方，建議不要從「想認識教授」開場，而是從：</p>
+<blockquote style="border-left: 3px solid var(--accent); padding-left: 1rem; margin: 1rem 0; color: var(--fg);">「我們想請教李教授，某類精密零組件在加工、量測、製程穩定性或導量產上，是否有機會設計成一個小型產學驗證題目。」</blockquote>
+<p>這比較符合他的產學案履歷。</p>
+</div>
+
+<h2>九、建議拜訪問題清單</h2>
+
+<h3>A. 快速建立共同語言</h3>
+<ol>
+<li>「教授近年五軸／多軸加工案子很多，您目前最常遇到企業端的瓶頸是加工路徑、刀具、機台剛性、量測，還是製程參數穩定性？」</li>
+<li>「如果企業要把一個高精度零件從試製推到導量產，您通常會先看哪三個指標？」</li>
+<li>「您目前中心比較擅長承接的是製程開發、試製、量測驗證，還是人才培訓？」</li>
+</ol>
+
+<h3>B. 對精密加工／CNC 的問題</h3>
+<ol>
+<li>「五軸加工複雜曲面件時，您會如何拆解加工效率、表面品質與刀具壽命之間的取捨？」</li>
+<li>「若材料是難削材或複合材料，您會先從刀具、路徑、冷卻潤滑，還是機台動態誤差切入？」</li>
+<li>「中心是否能做小批量試製與製程參數 DOE（實驗設計法）？」</li>
+</ol>
+
+<h3>C. 對 AI 製程優化的問題</h3>
+<ol>
+<li>「您近期有 AI 技術應用於航太元件製程優化的產學案，實務上資料量不足時，模型怎麼設計才不會變成展示性質？」</li>
+<li>「加工現場資料通常很髒，您會建議先收哪些訊號：主軸負載、振動、聲音、刀把感測、表面粗糙度，還是尺寸量測？」</li>
+<li>「AI 在 CNC 製程中比較適合做參數推薦、異常偵測、品質預測，還是刀具壽命預測？」</li>
+</ol>
+
+<h3>D. 對可能合作的問題</h3>
+<ol>
+<li>「如果我們只先做 3 個月小案，您會建議用什麼題目驗證雙方合作？」</li>
+<li>「產學案的最小可行交付物通常怎麼定義？例如報告、加工件、參數表、量測數據、軟體模型、學生專題？」</li>
+<li>「如果未來要申請政府計畫，您會建議先累積哪些前期資料？」</li>
+</ol>
+
+<h2>十、與我們可能的交集判斷</h2>
+
+<h3>如果要談 CNC 精密加工：交集很高</h3>
+
+<p>原因：</p>
+<ul>
+<li>具備五軸、多軸、CAD/CAM、智慧製造專長</li>
+<li>產學案大量集中在精密機械零組件、航太零組件、半導體設備零件、真空泵轉子、模具、通訊外殼等</li>
+<li>中心具備多軸加工、五軸超音波加工、材料／量測相關實驗室</li>
+</ul>
+
+<h3>如果要談 Al-SiC / Mg-SiC 散熱蓋：交集要拆開看</h3>
+
+<table>
+<thead><tr><th>面向</th><th>交集評估</th></tr></thead>
+<tbody>
+<tr><td>加工端</td><td>可能有交集，尤其是難加工材料、脆硬材料、複合材料、精密平面／曲面加工、刀具耗損、表面品質</td></tr>
+<tr><td>材料配方端</td><td>目前公開資料沒有顯示他主軸是金屬基複合材料配方或熱傳材料設計</td></tr>
+<tr><td>驗證端</td><td>中心有材料實驗室、電子顯微鏡、微機械性質、環境因子等平台，可能可做材料／加工後品質驗證，但需現場確認能力邊界</td></tr>
+<tr><td>製程量產端</td><td>他的「製程開發與導量產」產學案很多，這是強交集</td></tr>
+</tbody>
+</table>
+
+<h2>十一、拜訪前需查證點</h2>
+
+<div class="callout warn">
+<ul>
+<li>他目前是否仍直接主持工程研究科技中心日常案源，或主要由團隊成員執行</li>
+<li>中心設備可否承接外部企業委託試製，包含保密與樣品管理流程</li>
+<li>材料實驗室 TAF 認可項目具體涵蓋哪些測試，不要只看「TAF」兩字就假設所有材料測試都能做</li>
+<li>五軸加工設備是否可加工目標材料，例如 Al-SiC／Mg-SiC、陶瓷、碳化矽相關材料</li>
+<li>若牽涉未公開技術參數，第一次拜訪不宜帶完整配方或關鍵製程條件；先用抽象化痛點描述</li>
+</ul>
+</div>
+
+<h2>十二、最強反論</h2>
+
+<div class="callout warn">
+<p>公開資料顯示李教授非常強在「五軸加工、製程開發、智慧製造、產學案」。</p>
+<p>但如果這次拜訪目的其實是找「材料配方、熱傳材料、界面反應、粉末冶金、複合材料燒結」專家，他未必是最直接對口。</p>
+</div>
+
+<p>因此拜訪策略應該是：</p>
+<ul>
+<li>不要把他當「材料本體機理」教授</li>
+<li>應把他當「高階製造、加工製程、產學落地、設備平台、試製驗證」教授</li>
+<li>若材料問題是核心，現場可請他推薦正修或外部更偏材料端的合作對象</li>
+</ul>
+
+<h2>十三、資料來源總表</h2>
+
+<ul>
+<li>正修科技大學機械工程系教師頁｜李政男</li>
+<li>工程研究科技中心｜宗旨及目標</li>
+<li>工程研究科技中心｜實驗室簡介</li>
+<li>工程研究科技中心｜多軸加工實驗室</li>
+<li>工程研究科技中心｜中心可交易技術</li>
+<li>工程研究科技中心｜中心專利項目</li>
+<li>五軸切削人才培育計畫｜關於本計畫</li>
+<li>五軸切削人才培育計畫｜基地設備介紹</li>
+<li>Crossref：Inconel 718 Additive Manufacturing</li>
+<li>Crossref：Turbomolecular Pump Rotor Multi-Axis Machining</li>
+<li>Crossref：Neural Network Prediction in SUS304 Milling</li>
+<li>Crossref：Five-axis Machining of Aerospace Blisks</li>
+</ul>
+
+</article>
+
+<footer>
+<p style="color: var(--muted); font-size: var(--fs-meta); margin-top: 4rem; padding-top: 1.5rem; border-top: 1px solid var(--border);">
+本文為拜訪前情報整理。事實資料來源為李教授官方教師頁、正修工程研究科技中心官網與 Crossref；研判段落為依公開資料推估，請拜訪當下再次驗證。
+</p>
+</footer>
+</main>
+<script>
+  const bar = document.getElementById('progress');
+  window.addEventListener('scroll', () => {
+    const h = document.documentElement;
+    const pct = (h.scrollTop / (h.scrollHeight - h.clientHeight)) * 100;
+    bar.style.width = pct + '%';
+  });
+</script>
+</body>
+</html>
