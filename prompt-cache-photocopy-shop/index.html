@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>為什麼跟 Claude 講話會越用越便宜——影印店常客資料夾的比喻｜彥皓 brain-cards</title>
+<meta name="description" content="用影印店比喻講解 Prompt Cache，並用 19 天實測數據說明為什麼「不亂動設定」比「優化技巧」更省錢。">
+
+<!-- Canonical & 作者 -->
+<link rel="canonical" href="https://hale80427.github.io/brain-cards/prompt-cache-photocopy-shop/">
+<meta name="author" content="彥皓">
+
+<!-- Open Graph -->
+<meta property="og:type" content="article">
+<meta property="og:title" content="為什麼跟 Claude 講話會越用越便宜——影印店常客資料夾的比喻">
+<meta property="og:description" content="用影印店比喻講解 Prompt Cache，並用 19 天實測數據說明為什麼「不亂動設定」比「優化技巧」更省錢。">
+<meta property="og:url" content="https://hale80427.github.io/brain-cards/prompt-cache-photocopy-shop/">
+<meta property="og:image" content="https://hale80427.github.io/brain-cards/og-default.jpg">
+<meta property="og:locale" content="zh_TW">
+
+<!-- Twitter / X Card -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="為什麼跟 Claude 講話會越用越便宜——影印店常客資料夾的比喻">
+<meta name="twitter:description" content="用影印店比喻講解 Prompt Cache，並用 19 天實測數據說明為什麼「不亂動設定」比「優化技巧」更省錢。">
+<meta name="twitter:image" content="https://hale80427.github.io/brain-cards/og-default.jpg">
+
+<!-- 結構化資料（JSON-LD，提升 AI 與搜尋引擎理解）-->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "為什麼跟 Claude 講話會越用越便宜——影印店常客資料夾的比喻",
+  "description": "用影印店比喻講解 Prompt Cache，並用 19 天實測數據說明為什麼「不亂動設定」比「優化技巧」更省錢。",
+  "datePublished": "2026-05-19",
+  "dateModified": "2026-05-19",
+  "author": { "@type": "Person", "name": "彥皓" },
+  "url": "https://hale80427.github.io/brain-cards/prompt-cache-photocopy-shop/",
+  "inLanguage": "zh-TW",
+  "license": "https://creativecommons.org/licenses/by/4.0/"
+}
+</script>
+
+<style>
+:root {
+  --bg: #fafaf7;
+  --fg: #1a1a1a;
+  --accent: #c0392b;
+  --muted: #666;
+  --border: #e5e5e0;
+  --callout-tip: #e8f4f0;
+  --callout-warn: #fdf3e7;
+  --fs-meta: 0.85rem;
+  --fs-body: 1rem;
+  --fs-h2:   clamp(1.3rem, 3vw, 1.5rem);
+  --fs-h1:   clamp(1.75rem, 4vw, 2.25rem);
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #1a1a1a;
+    --fg: #f0f0e8;
+    --accent: #e87c6e;
+    --muted: #999;
+    --border: #333;
+    --callout-tip: #1f3530;
+    --callout-warn: #3a2d1c;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
+}
+* { box-sizing: border-box; }
+body {
+  font-family: "Noto Serif TC", Georgia, serif;
+  background: var(--bg);
+  color: var(--fg);
+  line-height: 1.8;
+  margin: 0;
+  padding: 0;
+  -webkit-font-smoothing: antialiased;
+}
+.progress-bar {
+  position: fixed; top: 0; left: 0; height: 3px;
+  background: var(--accent); width: 0%; z-index: 100;
+  transition: width 0.1s;
+}
+main {
+  max-width: 680px;
+  margin: 0 auto;
+  padding: clamp(2rem, 5vw, 4rem) clamp(1.5rem, 4vw, 2rem);
+}
+h1 { font-size: var(--fs-h1); line-height: 1.3; margin: 0 0 1rem; }
+h2 { font-size: var(--fs-h2); line-height: 1.4; margin: 2.5rem 0 0.75rem; padding-bottom: 0.5rem; border-bottom: 1px solid var(--border); }
+h3 { font-size: var(--fs-body); font-weight: 700; line-height: 1.4; margin: 1.75rem 0 0.5rem; color: var(--accent); }
+p { margin: 0 0 1.25rem; }
+a { color: var(--accent); text-underline-offset: 3px; }
+a:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+.bluf { background: var(--callout-tip); border-left: 3px solid var(--accent); padding: 1.25rem 1.5rem; margin: 1.5rem 0 2rem; border-radius: 4px; }
+.bluf strong { display: block; font-size: var(--fs-meta); letter-spacing: 0.05em; color: var(--accent); margin-bottom: 0.5rem; text-transform: uppercase; }
+.bluf p { margin: 0 0 0.75rem; }
+.bluf p:last-child { margin-bottom: 0; }
+.callout { padding: 1rem 1.25rem; margin: 1.5rem 0; border-radius: 4px; border-left: 3px solid var(--muted); }
+.callout.tip { background: var(--callout-tip); border-left-color: var(--accent); }
+.callout.warn { background: var(--callout-warn); border-left-color: #d97706; }
+.callout p:last-child { margin-bottom: 0; }
+table { border-collapse: collapse; width: 100%; margin: 1.5rem 0; font-size: var(--fs-body); }
+th, td { padding: 0.6rem 0.8rem; border: 1px solid var(--border); text-align: left; vertical-align: top; }
+th { background: var(--callout-tip); font-weight: 600; }
+code { font-family: "JetBrains Mono", monospace; background: var(--callout-tip); padding: 0.1em 0.4em; border-radius: 3px; font-size: var(--fs-body); }
+ul, ol { margin: 0 0 1.25rem; padding-left: 1.5rem; }
+li { margin: 0.35rem 0; }
+footer p { color: var(--muted); font-size: var(--fs-meta); margin-top: 4rem; padding-top: 1.5rem; border-top: 1px solid var(--border); }
+@media print {
+  .progress-bar { display: none; }
+  body { font-size: 11pt; line-height: 1.6; }
+  main { max-width: 100%; padding: 1cm; }
+}
+</style>
+</head>
+<body>
+<div class="progress-bar" id="progress"></div>
+<main>
+<header>
+<h1>為什麼跟 Claude 講話會越用越便宜——影印店常客資料夾的比喻</h1>
+<div class="bluf">
+<strong>BLUF</strong>
+<p>跟 AI 對話時，系統會把「不變的部分」存進類似「影印店常客資料夾」的快取（cache）。第一次建檔貴一點，之後每次只要付 1/10 的影印費。</p>
+<p>我過去 19 天的快取命中率（hit rate）是 93.74%，每月省約 3,000 美元。</p>
+<p>而這個省下來的錢不是因為我有什麼厲害的技巧——是因為我「不亂動設定」。</p>
+</div>
+</header>
+<article>
+<!-- narrative: 物件,細節,矛盾 -->
+
+<h2>一、把 Prompt Cache 翻成人話</h2>
+<p>想像你常跑同一家影印店。每次去都帶一疊資料：</p>
+<ul>
+<li><strong>常客資料夾</strong>：公司簡介、規格表、報價單（內容大部分不變）</li>
+<li><strong>今天要印的新文件</strong>（這次的問題）</li>
+</ul>
+<p>系統設定（system prompt）、<code>~/.claude/CLAUDE.md</code>、Skills 描述、歷史對話，都是「常客資料夾」。當次提問才是「新文件」。</p>
+
+<table>
+<thead>
+<tr><th>技術名詞</th><th>翻譯</th><th>收費</th></tr>
+</thead>
+<tbody>
+<tr><td>Cache write（建檔）</td><td>第一次帶資料去店裡、店員幫你影印留底</td><td>比正常價貴一點</td></tr>
+<tr><td>Cache read（翻檔）</td><td>之後每次來、店員只看資料夾 + 新文件</td><td>前 99 頁費用降到 1/10</td></tr>
+<tr><td>Uncached input</td><td>完全沒進資料夾、每次重算</td><td>最貴</td></tr>
+</tbody>
+</table>
+
+<p>Hit rate 命中率 = 翻檔次數佔總輸入的比例。Anthropic 文件建議 ≥ 70% 算健康。</p>
+
+<h2>二、實測數字長什麼樣？</h2>
+<p>直接看我過去 19 天的數字：</p>
+<ul>
+<li><code>cache_read_input_tokens</code>（從常客資料夾讀的）：7.72 億 tokens</li>
+<li><code>cache_creation_input_tokens</code>（第一次建檔費）：5,150 萬 tokens</li>
+<li><code>input_tokens</code> uncached（沒進資料夾、每次重算）：7.2 萬 tokens</li>
+</ul>
+<p>「從資料夾讀的」佔了 93.74%。</p>
+<div class="callout tip">
+<p>註：token 是模型計費的最小單位，約等於 0.75 個中文字或 1 個英文音節。</p>
+</div>
+
+<h2>三、為什麼我可以打到 93.74%？</h2>
+<p>四個結構性原因，都不是技巧、是紀律：</p>
+<ol>
+<li><code>~/.claude/CLAUDE.md</code> 寫得短而穩定——150 行、沒事不改 → 快取一直命中</li>
+<li>Skills 的觸發詞與描述不亂動——載入 skill 表也吃快取</li>
+<li>每段對話（session）都很長——前 100–900 條訊息的快取累積效益巨大</li>
+<li>不在對話中途切模型（沒有 mid-session Sonnet → Opus 的習慣）→ 快取結構穩定</li>
+</ol>
+
+<h2>四、如果做反方向會怎樣？</h2>
+<table>
+<thead>
+<tr><th>動作</th><th>後果</th></tr>
+</thead>
+<tbody>
+<tr><td>每天改 CLAUDE.md 幾行</td><td>cache_creation 變主流、貴 2 倍</td></tr>
+<tr><td>每件小事開新 session 講 2 句就 /clear</td><td>快取永遠在重建、吃不到便宜</td></tr>
+<tr><td>對話中途切換模型</td><td>快取全失效、從零開始</td></tr>
+</tbody>
+</table>
+<p>這三個動作都是「為了更好」做的——更新規則、保持乾淨、選用更強模型。但每一個都會打掉快取。穩定本身就是一種優化。</p>
+
+<h2>五、月省金額換算</h2>
+<p>過去 19 天 8.22 億 input tokens：</p>
+<ul>
+<li>實付：<strong>$540 USD</strong></li>
+<li>若無 cache：<strong>$2,471 USD</strong></li>
+<li>省下：<strong>$1,930 USD（78%）</strong></li>
+</ul>
+<p>按比例外推 → <strong>每月省約 $3,000 USD</strong>（若維持當前用量）。</p>
+
+<h2>六、我要做什麼？</h2>
+<p>簡單三條：</p>
+<ol>
+<li>維持現狀——不為了多 5% 改結構</li>
+<li><code>~/.claude/scripts/measure-cache.sh</code> 每月跑一次當體檢</li>
+<li>體檢門檻設 80%（而非文件建議的 70%）——掉到 80% 才需追根因</li>
+</ol>
+<div class="callout tip">
+<p>為什麼門檻不用文件預設的 70%？因為我的基準是 93.74%。掉到 80% 已經是「相對自身基準的明顯衰退」，不是「最低及格」。</p>
+<p>監控指標的閾值應該以自身歷史基準正負偏移設定，而非套用通用建議值。這條延伸到所有監控（延遲、錯誤率、留存率）都適用。</p>
+</div>
+
+<h2>三個關鍵洞見</h2>
+
+<h3>Cache 是「穩定性的紅利」</h3>
+<p>你越不亂動 <code>CLAUDE.md</code> / Skills / 模型選擇，cache 越省。我現有架構穩定到讓 cache 接近理論上限（93.74%）。</p>
+<p>這是「克制 + 不過度優化」的回饋，不是技術技巧的回饋。</p>
+
+<h3>影印店比喻可重用</h3>
+<p>「影印店常客資料夾」適合解釋給任何不熟 LLM 內部結構的人聽（家人、客戶、同事）。</p>
+<p>比直接講 cache_read / cache_write 容易理解 10 倍。</p>
+<p>且不犧牲技術正確性——build 真的是貴 2 倍、read 真的是便宜 1/10。</p>
+
+<h3>不要為了多 5% 改結構</h3>
+<p>當主要指標已接近上限，任何結構變動都是「邊際收益 vs 破壞穩定」的賭注，預設答案應為「不動」。</p>
+<p><strong>架構優化的盡頭是穩定性，不是技術新潮。</strong></p>
+
+</article>
+<footer>
+<p>最後更新：2026-05-19 · CC BY 4.0 · 引用請保留來源連結 · 作者：彥皓</p>
+</footer>
+</main>
+<script>
+  const bar = document.getElementById('progress');
+  window.addEventListener('scroll', () => {
+    const h = document.documentElement;
+    const pct = (h.scrollTop / (h.scrollHeight - h.clientHeight)) * 100;
+    bar.style.width = pct + '%';
+  });
+</script>
+</body>
+</html>
