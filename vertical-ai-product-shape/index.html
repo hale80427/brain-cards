@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>垂直 AI 產品的形狀——從 Anthropic SMB 公告拆解到漢鼎超音波加工 Agent 設計</title>
+<meta name="description" content="Anthropic Claude for Small Business 公告拆解出的 6 條垂直 AI 產品結構性原則，附對漢鼎超音波輔助加工 Plugin / AI Agent 的 v1.0 設計參考。">
+
+<link rel="canonical" href="https://hale80427.github.io/brain-cards/vertical-ai-product-shape/">
+<meta name="author" content="彥皓">
+
+<meta property="og:type" content="article">
+<meta property="og:title" content="垂直 AI 產品的形狀——從 Anthropic SMB 公告拆解到漢鼎超音波加工 Agent 設計">
+<meta property="og:description" content="Anthropic Claude for Small Business 公告拆解出的 6 條垂直 AI 產品結構性原則，附對漢鼎超音波輔助加工 Plugin / AI Agent 的 v1.0 設計參考。">
+<meta property="og:url" content="https://hale80427.github.io/brain-cards/vertical-ai-product-shape/">
+<meta property="og:image" content="https://hale80427.github.io/brain-cards/og-default.jpg">
+<meta property="og:locale" content="zh_TW">
+
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="垂直 AI 產品的形狀——從 Anthropic SMB 公告拆解到漢鼎超音波加工 Agent 設計">
+<meta name="twitter:description" content="Anthropic Claude for Small Business 公告拆解出的 6 條垂直 AI 產品結構性原則，附對漢鼎超音波輔助加工 Plugin / AI Agent 的 v1.0 設計參考。">
+<meta name="twitter:image" content="https://hale80427.github.io/brain-cards/og-default.jpg">
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "垂直 AI 產品的形狀——從 Anthropic SMB 公告拆解到漢鼎超音波加工 Agent 設計",
+  "description": "Anthropic Claude for Small Business 公告拆解出的 6 條垂直 AI 產品結構性原則，附對漢鼎超音波輔助加工 Plugin / AI Agent 的 v1.0 設計參考。",
+  "datePublished": "2026-05-20",
+  "dateModified": "2026-05-20",
+  "author": { "@type": "Person", "name": "彥皓" },
+  "url": "https://hale80427.github.io/brain-cards/vertical-ai-product-shape/",
+  "inLanguage": "zh-TW",
+  "license": "https://creativecommons.org/licenses/by/4.0/"
+}
+</script>
+
+<style>
+  :root {
+    --bg: #fafaf7;
+    --fg: #1a1a1a;
+    --accent: #c0392b;
+    --muted: #666;
+    --border: #e5e5e0;
+    --callout-tip: #e8f4f0;
+    --callout-warn: #fdf3e7;
+    --fs-meta: 0.85rem;
+    --fs-body: 1rem;
+    --fs-h2:   clamp(1.3rem, 3vw, 1.5rem);
+    --fs-h1:   clamp(1.75rem, 4vw, 2.25rem);
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #1a1a1a;
+      --fg: #f0f0e8;
+      --accent: #e87c6e;
+      --muted: #999;
+      --border: #333;
+      --callout-tip: #1f3530;
+      --callout-warn: #3a2d1c;
+    }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
+  }
+  * { box-sizing: border-box; }
+  body {
+    font-family: "Noto Serif TC", Georgia, serif;
+    background: var(--bg);
+    color: var(--fg);
+    line-height: 1.8;
+    margin: 0;
+    padding: 0;
+    -webkit-font-smoothing: antialiased;
+  }
+  .progress-bar {
+    position: fixed; top: 0; left: 0; height: 3px;
+    background: var(--accent); width: 0%; z-index: 100;
+    transition: width 0.1s;
+  }
+  main {
+    max-width: 680px;
+    margin: 0 auto;
+    padding: clamp(2rem, 5vw, 4rem) clamp(1.5rem, 4vw, 2rem);
+  }
+  h1 { font-size: var(--fs-h1); line-height: 1.3; margin: 0 0 1rem; }
+  .subtitle { font-size: var(--fs-meta); color: var(--muted); margin: 0 0 1.5rem; letter-spacing: 0.02em; }
+  h2 { font-size: var(--fs-h2); line-height: 1.4; margin: 2.5rem 0 0.75rem; padding-bottom: 0.5rem; border-bottom: 1px solid var(--border); }
+  h3 { font-size: var(--fs-body); font-weight: 700; line-height: 1.4; margin: 1.75rem 0 0.5rem; color: var(--accent); }
+  p { margin: 0 0 1.25rem; }
+  ul, ol { margin: 0 0 1.25rem; padding-left: 1.5rem; }
+  li { margin-bottom: 0.4rem; }
+  a { color: var(--accent); text-underline-offset: 3px; }
+  a:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+  .bluf { background: var(--callout-tip); border-left: 3px solid var(--accent); padding: 1.25rem 1.5rem; margin: 1.5rem 0 2rem; border-radius: 4px; }
+  .bluf strong { display: block; font-size: var(--fs-meta); letter-spacing: 0.05em; color: var(--accent); margin-bottom: 0.5rem; text-transform: uppercase; }
+  .callout { padding: 1rem 1.25rem; margin: 1.5rem 0; border-radius: 4px; border-left: 3px solid var(--muted); }
+  .callout.tip { background: var(--callout-tip); border-left-color: var(--accent); }
+  .callout.warn { background: var(--callout-warn); border-left-color: #d97706; }
+  .lede { font-style: italic; color: var(--muted); margin: 0 0 1rem; font-size: var(--fs-body); }
+  table { border-collapse: collapse; width: 100%; margin: 1.5rem 0; font-size: var(--fs-body); }
+  th, td { padding: 0.6rem 0.8rem; border: 1px solid var(--border); text-align: left; vertical-align: top; }
+  th { background: var(--callout-tip); font-weight: 600; }
+  code { font-family: "JetBrains Mono", monospace; background: var(--callout-tip); padding: 0.1em 0.4em; border-radius: 3px; font-size: var(--fs-body); }
+  blockquote { margin: 1.5rem 0; padding: 0.5rem 1.25rem; border-left: 3px solid var(--border); color: var(--muted); }
+  @media print {
+    .progress-bar { display: none; }
+    body { font-size: 11pt; line-height: 1.6; }
+    main { max-width: 100%; padding: 1cm; }
+  }
+</style>
+</head>
+<body>
+<div class="progress-bar" id="progress"></div>
+<main>
+<header>
+<h1>垂直 AI 產品的形狀</h1>
+<p class="subtitle">從 Anthropic SMB 公告拆解到漢鼎超音波加工 Agent 設計｜6 條結構性原則 + v1.0 設計含意</p>
+<div class="bluf">
+<strong>BLUF</strong>
+<p>Anthropic 2026 年 5 月推出 Claude for Small Business，把通用 Claude 包裝成中小企業專用的垂直產品。本文不討論產品本身好不好用，而是拆解它的設計骨架——共 6 條結構性原則。每條原則都附對漢鼎自建超音波輔助加工 Plugin / AI Agent 的設計含意。</p>
+<p style="margin-bottom: 0;"><strong>結論</strong>：v1.0 不需要訓練新模型、不需要做開放 SDK；先盤點漢鼎內部過去 1–2 年的 Top 10 高頻加工場景，按「ready-to-run workflow + 可重複動作 skill + 業務鏈關鍵接口 integration」這三層組合來設計。</p>
+</div>
+</header>
+<article>
+<!-- narrative: 物件,細節,矛盾 -->
+
+<h2>為什麼拆這個？</h2>
+<p>當模型能力越來越像公共基礎設施（GPT-4、Claude、Gemini 之間的差距收斂到 10% 以內），下一輪 AI 產品的差異化價值會放哪？Anthropic 對中小企業（Small Business，SMB）的這套打包提供一個正在進行的實證。</p>
+<p>我們不關心這個產品在美國的銷售表現，而是它的設計骨架——因為這套骨架可以被遷移到漢鼎自建的「超音波輔助加工 AI Agent」場景，作為設計參考依據。</p>
+<p>本文範圍：討論「形狀」（產品該長什麼樣），不討論「該不該做」（商業可行性、投資報酬率等決策層問題）。</p>
+
+<h2>原則 1：差異化在組合層，不在模型層</h2>
+<p class="lede">別想著訓練新模型，把「預配劇本 + 可重複動作 + 領域接口」這三層組合做好。</p>
+
+<h3>為什麼是這樣？</h3>
+<p>Anthropic 推出 Claude for Small Business 時，底層用的還是原本的 Claude（公告完全沒提任何新模型），組合結構是「15 個立即可用的劇本（workflow）+ 15 個重複動作（skill）+ 7 個業務整合（integration）+ 新平台 Claude Cowork」。</p>
+<p>這個事實本身就是訊號——當中小企業採用 AI 的真正瓶頸是「通用工具沒有為他們的工作方式客製」（Anthropic 自己的論述），垂直化的價值就必然從模型層位移到組合層。</p>
+
+<h3>對漢鼎的設計含意</h3>
+<p>未來自建超音波加工 Plugin 不需要重新訓練模型，應該設計三層：</p>
+<ul>
+<li><strong>多步劇本（workflow）</strong>：N 個典型加工場景的整套流程（例如 Al-SiC 蓋板從粗加工到精磨的全流程）</li>
+<li><strong>重複動作（skill）</strong>：Y 個經常觸發的單步技能（例如給定材料硬度與目標粗糙度計算超音波振幅與進給量、振動頻譜異常分類、刀具磨耗補償）</li>
+<li><strong>業務接口（integration）</strong>：Z 個製造業關鍵整合（CAM 軟體輸出、機台 OPC-UA 協定、振動感測器 API、品質管理系統記錄回寫）</li>
+</ul>
+<p>差異化價值不來自「比 ChatGPT 更會回答機械工程問題」，而來自這三層的縫合品質。</p>
+
+<h2>原則 2：批准閘門設在「動作即將產生不可逆後果」之前</h2>
+<p class="lede">別把人工確認設在任務做完才看（風險都放掉了），也別每句話都問（會把使用者卡死）；設在「東西即將寄出 / 發佈 / 付款 / 動機台」這個顆粒度。</p>
+
+<h3>為什麼是這樣？</h3>
+<p>Anthropic 在公告把這條紀律寫得很直接：每個任務都由使用者啟動；可以先批准計畫，或在熟悉後一鍵跑完；Claude 做事，但任何「寄出、發佈、付款」之前都要使用者批准。</p>
+<p>關鍵在「寄出、發佈、付款」這三個動詞——共通結構是「動作完成後狀態無法回收」。批准閘門（approval gate）設在這個顆粒度同時承擔兩個獨立功能：</p>
+<ul>
+<li><strong>風險過濾</strong>：避免 agent 失誤造成外部損失</li>
+<li><strong>責任邊界</strong>：讓人類保有最後決策權，避免法律與信任問題</li>
+</ul>
+
+<h3>對漢鼎的設計含意</h3>
+<p>超音波加工有強烈的物理不可逆性，閘門顆粒度必須比 SMB 場景更嚴格：</p>
+<table>
+<thead>
+<tr><th>動作類別</th><th>不可逆性</th><th>批准顆粒度</th></tr>
+</thead>
+<tbody>
+<tr><td>製程參數計算、報表草稿、分析摘要</td><td>低（純內部運算）</td><td>end-to-end 可（一鍵跑完）</td></tr>
+<tr><td>工件加工程式輸出、夾具參數修改</td><td>中（送出到 CAM/CAD 即生效）</td><td>必須批准計畫</td></tr>
+<tr><td>機台執行指令、刀具退刀路徑、振幅調整</td><td>高（直接控制物理動作、機械破壞風險）</td><td>必須逐筆批准 + PLC 硬迴路兜底</td></tr>
+</tbody>
+</table>
+
+<h2>原則 3：Workflow 與 Skill 是劇本與技能的關係</h2>
+<p class="lede">劇本管「多步業務流程怎麼一條一條接起來」，技能管「單步動作怎麼穩定做到」；同一個技能可以被多個劇本共用。</p>
+
+<h3>為什麼是這樣？</h3>
+<p>Anthropic 在公告把這條職責切分寫得很清楚：15 個「立即可用的多步劇本」加上 15 個「以重複動作為基礎的技能」。兩個關鍵形容詞揭露結構——workflow 是多步、有編排、可一鍵啟動，skill 是單步、可重複、是動作而非流程。</p>
+<p>為什麼要切兩層？若全部做成 workflow，產品變成 N 條無法組合的長劇本，每個新需求都要新建一條；若全部做成 skill，使用者必須自己編排步驟順序，等於把縫合成本退回給客戶。</p>
+<p>兩層結構讓供應商承擔「業務流程怎麼跑」的設計責任（這是垂直化的核心價值），同時讓客戶能在 workflow 之外用 skill 處理零散需求。</p>
+
+<h3>對漢鼎的設計含意</h3>
+<table>
+<thead>
+<tr><th>層級</th><th>範例</th></tr>
+</thead>
+<tbody>
+<tr><td>Workflow（多步劇本）</td><td>「新訂單→製程設計→參數計算→刀具規劃→試切驗證→量產執行→品質回饋」全流程</td></tr>
+<tr><td>Skill（單步可重複動作）</td><td>「給定材料硬度與目標粗糙度計算振幅與進給量」、「振動頻譜異常分類」、「刀具磨耗補償」、「批次良率歸因」</td></tr>
+</tbody>
+</table>
+<p>同一個 skill「計算振幅與進給量」可以被「新製程開發 workflow」、「客戶投訴歸因 workflow」、「品質改善 workflow」三條不同劇本共用。Skill 設計時追求單一動作的職責純度（純函數性質：相同輸入產生相同輸出），workflow 設計時追求業務流程的完整覆蓋。</p>
+
+<h2>原則 4：整合按業務動詞選，不按客戶現有 SaaS 選</h2>
+<p class="lede">別追求「客戶用什麼工具我都接」（會把整合成本擴散到無限長尾），追求「業務鏈的關鍵動作各被覆蓋到一個」。</p>
+
+<h3>為什麼是這樣？</h3>
+<p>Anthropic 在 Claude for Small Business 只選了 7 個整合，每個都直接對應業務鏈的關鍵動詞，沒有整合 Salesforce、Slack、Shopify、Stripe、Notion 等其他常見 SMB SaaS。這個取捨揭露了選擇邏輯——</p>
+<table>
+<thead>
+<tr><th>整合</th><th>業務動詞</th></tr>
+</thead>
+<tbody>
+<tr><td>QuickBooks</td><td>記帳（薪資、月結、現金流、稅季）</td></tr>
+<tr><td>PayPal</td><td>收款（結算、發票、爭議、退款）</td></tr>
+<tr><td>HubSpot</td><td>行銷銷售（線索分流、客戶脈動、活動歸因）</td></tr>
+<tr><td>Canva</td><td>內容生產（多通路內容、發佈、追蹤）</td></tr>
+<tr><td>Docusign</td><td>合約簽署（送簽、追蹤、歸檔）</td></tr>
+<tr><td>Google Workspace / Microsoft 365</td><td>基礎協作（文件與通訊）</td></tr>
+</tbody>
+</table>
+<p>7 個整合分別佔據了 SMB 業務鏈的 6 個關鍵動作節點，每個節點選最大覆蓋率的工具。整合的真正價值不是「客戶不用切換工具」，而是「業務動作可以被 AI 跨工具串成 workflow」——例如薪資 skill 同時用 QuickBooks 與 PayPal 兩個整合。</p>
+
+<h3>對漢鼎的設計含意</h3>
+<p>應按精密加工的業務鏈盤關鍵動作節點：</p>
+<table>
+<thead>
+<tr><th>業務動詞</th><th>候選整合</th></tr>
+</thead>
+<tbody>
+<tr><td>製程設計</td><td>CAM 軟體（Mastercam / NX CAM 擇一最大覆蓋）</td></tr>
+<tr><td>參數計算</td><td>內部技能庫 + 振動感測器即時數據 API</td></tr>
+<tr><td>機台執行</td><td>OPC-UA / MTConnect（標準協定優先於品牌 API）</td></tr>
+<tr><td>品質回饋</td><td>QMS（漢鼎內部系統優先於第三方）</td></tr>
+<tr><td>記錄與追溯</td><td>ERP（鼎新 / SAP 擇一）</td></tr>
+<tr><td>客戶溝通</td><td>Email / LINE（基礎協作）</td></tr>
+</tbody>
+</table>
+<p>v1.0 不應追求「整合全部客戶現有工具」，而應每個動詞節點選一個最大覆蓋率的接口。若某客戶用的工具不在預設清單，提供「資料匯入/匯出 CSV」這條退一步接口即可。</p>
+
+<h2>原則 5：市場敘事的三段論母骨架</h2>
+<p class="lede">對外論述用「客群規模大 + AI 採用落後 + 通用工具沒為他們客製」這三段，每段補另兩段的弱點，形成自洽閉環。</p>
+
+<h3>為什麼是這樣？</h3>
+<p>Anthropic 在公告把這條三段論寫得非常工整：中小企業佔美國 GDP 的 44%、雇用近半的私部門勞動力；但他們採用 AI 的速度落後於大型企業；因為工具和訓練很少為小企業的工作方式客製。</p>
+<p>逐段拆——</p>
+<ul>
+<li><strong>規模證明</strong>（44% GDP + 雇用近半勞動力）：先建立「這個客群值得單獨服務」的前提</li>
+<li><strong>落後證明</strong>（採用落後大型企業）：把客群放在「需要被解救」的位置</li>
+<li><strong>歸因</strong>（工具未為他們客製）：把落後原因歸到供給方沒做，而非客群自己不行——這條歸因方向關鍵在於它同時保留客群尊嚴並創造供給方的進場理由</li>
+</ul>
+<p>三段合在一起每段補另兩段的弱點：若只有規模證明會被質疑「為什麼現在才做」、只有落後證明會被質疑「是不是客群本身有問題」、只有歸因會被質疑「真的有市場嗎」。</p>
+
+<h3>對漢鼎的設計含意</h3>
+<p>可套用這個敘事骨架建立進場論述：</p>
+<table>
+<thead>
+<tr><th>段</th><th>候選論據</th></tr>
+</thead>
+<tbody>
+<tr><td>規模證明</td><td>「精密加工佔台灣製造業 GDP X%、雇用 Y 萬名工程師與技師」<br><em>具體數字需查經濟部統計處 / 工研院 IEK</em></td></tr>
+<tr><td>落後證明</td><td>「中小型精密加工廠 AI 採用率遠低於半導體大廠 / 電子代工大廠」<br><em>需查工研院 AI 採用調查</em></td></tr>
+<tr><td>歸因</td><td>「通用 AI 工具的訓練資料不含小批量精密加工的隱性 know-how、CAM 操作邏輯與機台特性，無法直接解決機械工程師的日常問題」</td></tr>
+</tbody>
+</table>
+<div class="callout warn">
+<strong>注意</strong>：具體數字必須查證後填入，不能直接套用 Anthropic 的 44%。
+</div>
+
+<h2>原則 6：MVP 階段給足預設模板，不開放高度自訂</h2>
+<p class="lede">對非技術型使用者，「選擇成本」本身是進入障礙；給 30 個立即可用的模板，比給 SDK 讓他們自己組更能跨過冷啟動。</p>
+
+<h3>為什麼是這樣？</h3>
+<p>Anthropic 在 Claude for Small Business 完全沒提 customization、extend、build your own、custom workflow、SDK 任何字眼，只強調 15 個 ready-to-run workflow 加上 15 個 skill 這兩個固定數字。</p>
+<p>這個事實本身就是設計取捨的物質證據——MVP 階段選擇「給足預設」而非「開放自訂」。</p>
+<p>為什麼這樣選？對中小企業主而言「選擇成本」本身是進入障礙。SMB 業主每天面對的決策遠超過注意力預算（接單、人事、財務、客戶），任何需要他們「先選好、再學會、再組裝」的工具會被優先放棄。</p>
+<p>若 Anthropic 一開始就推「Claude Cowork SDK，自己組 workflow」，需要的使用者素養是「能定義自己的業務流程 + 能用 prompt 描述步驟 + 能 debug」——這套素養門檻會把 99% 的目標客群擋在門外。</p>
+<p>反過來，給 30 個 ready-to-run 模板讓使用者「選一個按下去」，需要的素養只有「能辨認哪個模板貼近自己的場景」，門檻接近零。</p>
+
+<h3>對漢鼎的設計含意</h3>
+<p>v1.0 不應做「框架式」（讓機械工程師自己組裝振幅、進給量、刀具補償的計算流程），而應預配 N 個典型加工場景的整套流程：</p>
+<table>
+<thead>
+<tr><th>預設場景候選</th><th>整套流程</th></tr>
+</thead>
+<tbody>
+<tr><td>Al-SiC 蓋板粗加工</td><td>材料識別 → 振幅範圍 → 刀具選擇 → 進給量 → 試切驗證 → 量產參數</td></tr>
+<tr><td>碳化鎢精磨</td><td>砂輪選擇 → 振幅 → 進給速度 → 表面粗糙度檢測 → 補償循環</td></tr>
+<tr><td>鋁合金薄壁件</td><td>變形預測 → 切削策略 → 振幅 → 夾持方案 → 量測點規劃</td></tr>
+<tr><td>客戶投訴歸因</td><td>取樣 → 振動譜分析 → 參數回溯 → 製程問題定位 → 改善建議</td></tr>
+</tbody>
+</table>
+<p>預設場景的選法：盤點漢鼎內部過去 1–2 年實際接過的訂單，找出 Top 10 重複出現的場景。覆蓋率 80% 即可，剩下 20% 留給「自由提問」這條退一步接口。</p>
+
+<h2>結論：漢鼎超音波加工 Plugin v1.0 的設計路徑</h2>
+<p>把 6 條原則合在一起，會浮現一條更上位的設計骨架——垂直 AI 產品的完整形狀由三組權衡構成：</p>
+<ul>
+<li><strong>組合層 vs 模型層</strong>（差異化價值放哪）</li>
+<li><strong>Workflow 與 Skill 的職責切分 vs 單層平鋪</strong>（內部結構長怎樣）</li>
+<li><strong>預設模板覆蓋率 vs 客製化彈性</strong>（起步門檻擺哪）</li>
+</ul>
+<p>三組權衡都偏向「組合 + 兩層切分 + 預設多」這個方向是有原因的——這個組合最能在「目標客群是非技術型使用者」這個前提下同時達成最低起步門檻與最高縫合密度。</p>
+
+<div class="callout tip">
+<strong>對漢鼎超音波加工 Plugin v1.0 的具體含意：</strong>
+<ol style="margin-bottom: 0;">
+<li>不需要訓練專用模型、不需要做框架式 SDK</li>
+<li>先盤點漢鼎內部過去 1–2 年實際接過的 Top 10 高頻加工場景</li>
+<li>把每個場景的整套流程預配成 ready-to-run workflow</li>
+<li>把流程內的重複動作（振幅計算、刀具補償、頻譜分類）抽成 skill</li>
+<li>整合層按「製程設計→執行→品質→記錄」這條業務鏈各覆蓋一個接口</li>
+<li>批准閘門設在「動作即將產生不可逆物理後果」這個顆粒度</li>
+</ol>
+</div>
+
+<p>三層做好了，差異化價值會自然發生在組合層。這條路徑與 Anthropic 在 SMB 市場走的路徑同構，只是領域從財會、行銷、合約位移到製程、機台、品質。</p>
+
+<h2>附錄：原始素材路徑</h2>
+<p>內部追溯用——本文 6 條原則的萃取依據存於 Vault：</p>
+<ul>
+<li><strong>Source</strong>：<code>2 Sources/2026-05 Claude for Small Business 結構拆解 (Anthropic 官網公告).md</code></li>
+<li><strong>Cards</strong>：<code>1 Cards/</code> 下 6 張命題式標題卡</li>
+<li><strong>MOC</strong>：<code>0 Atlas/MOC AI Agent 工程與架構.md</code> →「垂直 AI 產品的形狀與起步門檻」段</li>
+<li><strong>公告原文</strong>：<a href="https://www.anthropic.com/news/claude-for-small-business" target="_blank" rel="noopener">anthropic.com/news/claude-for-small-business</a></li>
+</ul>
+
+</article>
+<footer>
+<p style="color: var(--muted); font-size: 0.85rem; margin-top: 4rem; padding-top: 1.5rem; border-top: 1px solid var(--border);">
+最後更新：2026-05-20 · 漢鼎內部白皮書 · CC BY 4.0 · 引用請標來源
+</p>
+</footer>
+</main>
+<script>
+  const bar = document.getElementById('progress');
+  window.addEventListener('scroll', () => {
+    const h = document.documentElement;
+    const pct = (h.scrollTop / (h.scrollHeight - h.clientHeight)) * 100;
+    bar.style.width = pct + '%';
+  });
+</script>
+</body>
+</html>
