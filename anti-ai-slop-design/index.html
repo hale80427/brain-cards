@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>教 AI 不要做出「一看就 AI 做的」網頁</title>
+<meta name="description" content="AI 寫出來的網頁有種共同氣味——紫色漸層、Inter 字體、置中大標、三欄 feature 卡。我接入了一個叫 hallmark 的工具來擋這套樣板，把規則下沉到模板，讓 Claude Code 主流程跟 Telegram 機器人雙邊受惠。">
+
+<link rel="canonical" href="https://hale80427.github.io/brain-cards/anti-ai-slop-design/">
+<meta name="author" content="彥皓">
+
+<meta property="og:type" content="article">
+<meta property="og:title" content="教 AI 不要做出「一看就 AI 做的」網頁">
+<meta property="og:description" content="AI 寫出來的網頁有種共同氣味——紫色漸層、Inter 字體、置中大標、三欄 feature 卡。我接入了一個叫 hallmark 的工具來擋這套樣板。">
+<meta property="og:url" content="https://hale80427.github.io/brain-cards/anti-ai-slop-design/">
+<meta property="og:image" content="https://hale80427.github.io/brain-cards/og-default.jpg">
+<meta property="og:locale" content="zh_TW">
+
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="教 AI 不要做出「一看就 AI 做的」網頁">
+<meta name="twitter:description" content="AI 寫出來的網頁有種共同氣味——紫色漸層、Inter 字體、置中大標、三欄 feature 卡。我接入了一個叫 hallmark 的工具來擋這套樣板。">
+<meta name="twitter:image" content="https://hale80427.github.io/brain-cards/og-default.jpg">
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "教 AI 不要做出「一看就 AI 做的」網頁",
+  "description": "AI 寫出來的網頁有種共同氣味——紫色漸層、Inter 字體、置中大標、三欄 feature 卡。我接入了一個叫 hallmark 的工具來擋這套樣板。",
+  "datePublished": "2026-05-23",
+  "dateModified": "2026-05-23",
+  "author": { "@type": "Person", "name": "彥皓" },
+  "url": "https://hale80427.github.io/brain-cards/anti-ai-slop-design/",
+  "inLanguage": "zh-TW",
+  "license": "https://creativecommons.org/licenses/by/4.0/"
+}
+</script>
+
+<style>
+  :root {
+    --bg: #fafaf7;
+    --fg: #1a1a1a;
+    --accent: #c0392b;
+    --muted: #666;
+    --border: #e5e5e0;
+    --callout-tip: #e8f4f0;
+    --callout-warn: #fdf3e7;
+    --fs-meta: 0.85rem;
+    --fs-body: 1rem;
+    --fs-h2:   clamp(1.3rem, 3vw, 1.5rem);
+    --fs-h1:   clamp(1.75rem, 4vw, 2.25rem);
+    --font-serif: "Noto Serif TC", Georgia, serif;
+    --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+    --ease-linear: linear;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #1a1a1a;
+      --fg: #f0f0e8;
+      --accent: #e87c6e;
+      --muted: #999;
+      --border: #333;
+      --callout-tip: #1f3530;
+      --callout-warn: #3a2d1c;
+    }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
+  }
+  * { box-sizing: border-box; }
+  body {
+    font-family: var(--font-serif);
+    background: var(--bg);
+    color: var(--fg);
+    line-height: 1.8;
+    margin: 0;
+    padding: 0;
+    -webkit-font-smoothing: antialiased;
+  }
+  .progress-bar {
+    position: fixed; top: 0; left: 0; height: 3px; width: 100%;
+    background: var(--accent); z-index: 100;
+    transform: scaleX(0); transform-origin: left;
+    transition: transform 0.1s var(--ease-linear);
+  }
+  main {
+    max-width: 680px;
+    margin: 0 auto;
+    padding: clamp(2rem, 5vw, 4rem) clamp(1.5rem, 4vw, 2rem);
+  }
+  h1 { font-size: var(--fs-h1); line-height: 1.3; margin: 0 0 1rem; }
+  h2 { font-size: var(--fs-h2); line-height: 1.4; margin: 2.5rem 0 0.75rem; padding-bottom: 0.5rem; border-bottom: 1px solid var(--border); }
+  h3 { font-size: var(--fs-body); font-weight: 700; line-height: 1.4; margin: 1.75rem 0 0.5rem; color: var(--accent); }
+  p { margin: 0 0 1.25rem; }
+  a { color: var(--accent); text-underline-offset: 3px; }
+  a:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+  .bluf { background: var(--callout-tip); border-left: 3px solid var(--accent); padding: 1.25rem 1.5rem; margin: 1.5rem 0 2rem; border-radius: 4px; }
+  .bluf strong { display: block; font-size: var(--fs-meta); letter-spacing: 0.05em; color: var(--accent); margin-bottom: 0.5rem; text-transform: uppercase; }
+  .callout { padding: 1rem 1.25rem; margin: 1.5rem 0; border-radius: 4px; border-left: 3px solid var(--muted); }
+  .callout.tip { background: var(--callout-tip); border-left-color: var(--accent); }
+  .callout.warn { background: var(--callout-warn); border-left-color: #d97706; }
+  ul, ol { margin: 0 0 1.25rem; padding-left: 1.5em; }
+  ul li, ol li { margin-bottom: 0.4rem; }
+  table { border-collapse: collapse; width: 100%; margin: 1.5rem 0; font-size: var(--fs-body); }
+  th, td { padding: 0.6rem 0.8rem; border: 1px solid var(--border); text-align: left; vertical-align: top; }
+  th { background: var(--callout-tip); font-weight: 600; }
+  code { font-family: var(--font-mono); background: var(--callout-tip); padding: 0.1em 0.4em; border-radius: 3px; font-size: var(--fs-body); }
+  @media print {
+    .progress-bar { display: none; }
+    body { font-size: 11pt; line-height: 1.6; }
+    main { max-width: 100%; padding: 1cm; }
+  }
+</style>
+</head>
+<body>
+<div class="progress-bar" id="progress"></div>
+<main>
+<header>
+<h1>教 AI 不要做出「一看就 AI 做的」網頁</h1>
+<div class="bluf">
+<strong>BLUF</strong>
+<p>AI 寫出來的網頁有種共同氣味——紫色漸層當背景、Inter 字體當 hero 標題、滿版置中的大字、底下三欄 feature 卡。我今天接入了一個叫 hallmark（品質印記）的工具來擋這套樣板，把它編進我的 HTML 輸出流程，再把規則下沉到模板裡——讓 Claude Code 主流程跟 Telegram 機器人兩條通路一次受惠。</p>
+</div>
+</header>
+<article>
+<!-- narrative: 物件,細節,矛盾 -->
+
+<h2>為什麼 AI 做的網頁長得都一樣？</h2>
+
+<p>讓 AI 寫網頁這件事已經很常見。但只要看多了會發現，它們的長相有點像。</p>
+
+<p>背景常常是紫色漸層。標題字體永遠選 Inter（一種設計師常用的英文字體）。Hero（網頁頂端的大圖區）必定置中。下面接三欄 feature 卡，每欄一個 icon 加一句話。</p>
+
+<p>這不是巧合。AI 在訓練時看過幾百萬個網站，它學到的「網頁應該長什麼樣子」就是這些最常見的版型。所以你叫它做任何主題的網頁，它都會無意識地朝這套版型回去。</p>
+
+<p>設計圈把這個現象叫做 AI slop（AI 黏液）——AI 默認生產的、看起來毫無個性的視覺糊狀物。</p>
+
+<h2>我接入了一個「AI 味檢測器」</h2>
+
+<p>最近 Together AI 發布了一個工具叫 hallmark，它就是專門當 AI slop 的對抗劑。它做的事很單純：列出 69 道「AI 味閘門」（gate），任何網頁設計只要踩到一條就被點名。</p>
+
+<p>例子：</p>
+
+<ul>
+<li>用紫色漸層 hero → 點名</li>
+<li>字體選 Inter 又當 display 又當 body → 點名</li>
+<li>三欄等寬 feature 卡 → 點名</li>
+<li>重繪假的瀏覽器框 / 假的手機殼裝飾 → 點名</li>
+<li>動畫用瀏覽器預設的 ease 曲線而不命名 → 點名</li>
+</ul>
+
+<p>它的核心立場是：<strong>結構多樣性比視覺多樣性更重要</strong>。兩個網頁就算配色不同，但結構都是「大標 + 三欄 + CTA」這套，那就是同一張模板換顏色而已。它要求你動結構，不是動色票。</p>
+
+<h2>整合姿勢：事前提醒 + 事後檢查</h2>
+
+<p>我把 hallmark 接進我自己的 <code>/output-html</code> 流程。<code>/output-html</code> 是一個會把我的筆記寫成可分享 HTML 頁面的工作流。整合姿勢是「雙閘門」。</p>
+
+<p><strong>事前提醒</strong>——當流程要呼叫另一個 UI 工具（叫 ui-ux-pro-max，一個內建 67 種設計樣式可選的 UI 助理）幫我寫程式時，我會在指令裡塞一段約束：「所有顏色、字體都要透過 CSS 變數使用，不准寫死；不准重繪假的瀏覽器框；不准編造數字。」這條叫 token discipline（樣式變數紀律），目的是讓上游一開始就不要違規。</p>
+
+<p><strong>事後檢查</strong>——流程跑完、HTML 寫出來後，再呼叫 hallmark 跑一次 audit（掃描）。它會掃 HTML、列出所有踩到 gate 的點。如果掃到嚴重（critical）或重要（major）違規，流程會自動嘗試修兩輪；只剩小違規（minor）就附在輸出後不擋部署。</p>
+
+<p>兩道閘門互補：事前約束讓上游不犯規，事後檢查抓漏網之魚。</p>
+
+<h2>中途踩到的坑</h2>
+
+<p>整合到一半我以為 hallmark 的 audit 模式會回傳「六軸分數」（哲學、層級、執行、特異性、克制、多樣性各打 0-5 分）。我照這個假設把驗收規則寫進模板，期望「任一軸 &lt; 3 就視為失敗」。</p>
+
+<p>寫完之後我才仔細讀 hallmark 的 verb（功能模式）規格文件。</p>
+
+<p>它的 audit 模式<strong>不</strong>執行六軸打分。六軸打分只在它「主動生成新設計」時跑，叫 pre-emit critique（送出前自評）。audit 是純診斷工具，只列違規清單、不打分。</p>
+
+<p>這個錯位的根因是我看主檔的描述就動手。主檔說它有六軸打分能力，但能力是綁在生成模式上，不是 audit 模式。教訓：整合外部工具前要讀清楚對方各個功能模式的規格，不能憑主檔印象。</p>
+
+<h2>真正划算的做法是修「模板」</h2>
+
+<p>整合做到第二天我注意到一件事。我的 HTML 輸出有兩條通路：</p>
+
+<ol>
+<li>我自己在 Claude Code 跑 <code>/output-html</code>（主流程）</li>
+<li>我從 Telegram 透過一個叫 Hermes 的機器人觸發（旁路）</li>
+</ol>
+
+<p>Hermes 那條因為設計選擇，刻意繞過完整 skill 流程——它只讓 Claude 做翻譯加結構化，其他全用 Python 確定性處理。我剛剛改的 skill 流程，Hermes 完全不會經過。</p>
+
+<p>但兩條通路都用同一份 HTML 模板（叫 KB-02）。我 audit 一個既有頁面後，發現模板本身踩了三條 minor：字體沒透過 CSS 變數、進度條動畫改變 width 而不是用 transform、沒命名 easing 的轉場曲線。</p>
+
+<p>結論很明顯：與其在 Hermes 那條另外加 audit（會增加延遲、跑一個 LLM subprocess、破壞它的確定性），不如直接修模板。</p>
+
+<p>模板修一次，兩條通路下次產出的 HTML 自動就是 hallmark-clean。</p>
+
+<p>這是「上游精度優於下游檢驗」這條精密機械工程的老原則，在這裡再次驗證——修源頭永遠比加檢查網划算。後來我又用同樣邏輯修了另一份簡報模板（KB-05）的四個 minor。</p>
+
+<h2>結語</h2>
+
+<p>hallmark 跟我原本用的 ui-ux-pro-max 之間，常有人以為它們在競爭。其實不是。前者是「擋掉什麼」（69 道閘門），後者是「能做什麼」（67 種樣式選單）。最佳姿勢是兩個一起用：ui-ux-pro-max 選你想要的風格，hallmark 把 AI 味擋下來。</p>
+
+<p>放大來看，這條邏輯適用於任何 AI 協作場景：很多 AI 的價值不在於它能生產什麼，而在於它能不能識別並拒絕自己的預設輸出。能拒絕自己的 AI，才能跟人類產生真正的合作。只會堆疊預設的 AI，只是更快版本的 stackoverflow。</p>
+
+</article>
+<footer>
+<p style="color: var(--muted); font-size: 0.85rem; margin-top: 4rem; padding-top: 1.5rem; border-top: 1px solid var(--border);">
+最後更新：2026-05-23 · 彥皓 · <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a> · 引用請標來源
+</p>
+</footer>
+</main>
+<script>
+  const bar = document.getElementById('progress');
+  window.addEventListener('scroll', () => {
+    const h = document.documentElement;
+    const max = h.scrollHeight - h.clientHeight;
+    const ratio = max > 0 ? h.scrollTop / max : 0;
+    bar.style.transform = 'scaleX(' + ratio + ')';
+  }, { passive: true });
+</script>
+</body>
+</html>

@@ -15,6 +15,7 @@
 - 中文與英文 / 數字之間使用半形空格
 
 ## Cards
+- [anti-ai-slop-design](https://hale80427.github.io/brain-cards/anti-ai-slop-design/)：教 AI 不要做出「一看就 AI 做的」網頁 — 把 hallmark anti-AI-slop 設計工具接進 /output-html 工作流（事前 token discipline 約束 + 事後 audit gate），再下沉到 KB-02 / KB-05 模板，雙通路（Claude Code 主流程 + Hermes Telegram bridge）一次受惠；附「修源頭比加檢查網划算」的精密機械工程同源判讀
 - [vertical-ai-product-shape](https://hale80427.github.io/brain-cards/vertical-ai-product-shape/)：垂直 AI 產品的形狀——從 Anthropic SMB 公告拆解到漢鼎超音波加工 Agent 設計 — 6 條結構性原則（組合層差異化 / 批准閘門顆粒度 / Workflow vs Skill / 整合按業務動詞 / 三段論敘事 / MVP 預設多）+ 對自建工程 AI Agent 的 v1.0 設計含意
 - [prompt-cache-photocopy-shop](https://hale80427.github.io/brain-cards/prompt-cache-photocopy-shop/)：為什麼跟 Claude 講話會越用越便宜——影印店常客資料夾的比喻 — 用影印店比喻講解 Prompt Cache，並用 19 天實測數據說明為什麼「不亂動設定」比「優化技巧」更省錢
 - [phd-decision-mentor-reply](https://hale80427.github.io/brain-cards/phd-decision-mentor-reply/)：前輩回覆的真實訊息與機制拆解 — 把一位前輩關於「該不該讀博士」的回覆拆成 5 個層次：領域 ≠ 工作、應用導向 vs 博士訓練本質的結構性矛盾、傳統製造領域博士題目稀缺、博士帽子的雙面性、機會
