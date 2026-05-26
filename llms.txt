@@ -15,6 +15,7 @@
 - 中文與英文 / 數字之間使用半形空格
 
 ## Cards
+- [today-2026-05-26](https://hale80427.github.io/brain-cards/today-2026-05-26/)：2026-05-26 工作日誌（給朋友看的淺顯易懂版）。把 YouTube 提示詞影片歸檔 + 用影片洞察「指令不會增加能力」反向升級 /evaluate skill v3.2.1，加 Python deterministic pre-filter 8 類規則
 - [dalab-decision-for-her](https://hale80427.github.io/brain-cards/dalab-decision-for-her/)：清華大學 DALab（簡禎富教授）── 決策評估文件 — 給決策當事人的博士入學評估手冊：5/24 工程一館現場訪查 + 招募文 + 牆面媒體 + 公開資料整合。分區包含客觀事實（雙 chair、14 件產學案、dyad 結構、招募 SOP）、正面訊號 5 條、需親自評估訊號 6 條、紅旗 5 條、面談必問 6 題、面談現場筆記空白格、決策階梯 7 步、個人紅線預留區。可閱讀 + 可印帶到面談現場 + 邊聽邊填
 - [trust-position-rails](https://hale80427.github.io/brain-cards/trust-position-rails/)：信任的部位學《下》：替未來的自己架好欄杆 — 分享閱讀。第三層成熟是承認未來的自己可能不可靠，在還清醒時用配額制（核心池 60–70% / 探索池 20% / 被動池 10%）與三道欄杆（機會密度錨點、可回復性紅線、識別非對稱分割）替未來的自己架好結構性保護；剖析事前設定規則為何困難的三筆心理稅（謙卑稅 / 身分降級稅 / 預演拒絕稅）
 - [anti-ai-slop-design](https://hale80427.github.io/brain-cards/anti-ai-slop-design/)：教 AI 不要做出「一看就 AI 做的」網頁 — 把 hallmark anti-AI-slop 設計工具接進 /output-html 工作流（事前 token discipline 約束 + 事後 audit gate），再下沉到 KB-02 / KB-05 模板，雙通路（Claude Code 主流程 + Hermes Telegram bridge）一次受惠；附「修源頭比加檢查網划算」的精密機械工程同源判讀
