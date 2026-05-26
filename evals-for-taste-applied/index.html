@@ -1,0 +1,506 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>今天 evaluate skill 升了三次，做對的事比做多的事重要</title>
+<meta name="description" content="把 Anthropic 一支講 AI agent eval 工程化的影片，當天就應用到自己的 evaluate skill 上。三個版本升級 + 一次失敗 rollback + 一次 git 災難復原，一天工作軌跡。">
+
+<link rel="canonical" href="https://hale80427.github.io/brain-cards/evals-for-taste-applied/">
+<meta name="author" content="彥皓">
+<meta name="robots" content="noindex, nofollow">
+
+<meta property="og:type" content="article">
+<meta property="og:title" content="今天 evaluate skill 升了三次，做對的事比做多的事重要">
+<meta property="og:description" content="三個版本升級 + 一次失敗 rollback + 一次 git 災難復原，一天工作軌跡。">
+<meta property="og:url" content="https://hale80427.github.io/brain-cards/evals-for-taste-applied/">
+<meta property="og:image" content="https://hale80427.github.io/brain-cards/og-default.jpg">
+<meta property="og:locale" content="zh_TW">
+
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="今天 evaluate skill 升了三次，做對的事比做多的事重要">
+<meta name="twitter:description" content="三個版本升級 + 一次失敗 rollback + 一次 git 災難復原，一天工作軌跡。">
+<meta name="twitter:image" content="https://hale80427.github.io/brain-cards/og-default.jpg">
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "今天 evaluate skill 升了三次，做對的事比做多的事重要",
+  "description": "把 Anthropic 一支講 AI agent eval 工程化的影片，當天就應用到自己的 evaluate skill 上。三個版本升級 + 一次失敗 rollback + 一次 git 災難復原，一天工作軌跡。",
+  "datePublished": "2026-05-26",
+  "dateModified": "2026-05-26",
+  "author": { "@type": "Person", "name": "彥皓" },
+  "url": "https://hale80427.github.io/brain-cards/evals-for-taste-applied/",
+  "inLanguage": "zh-TW",
+  "license": "https://creativecommons.org/licenses/by/4.0/"
+}
+</script>
+
+<style>
+  :root {
+    --bg: #fafaf7;
+    --fg: #1a1a1a;
+    --accent: #c0392b;
+    --muted: #666;
+    --border: #e5e5e0;
+    --callout-tip: #e8f4f0;
+    --callout-warn: #fdf3e7;
+    --fs-meta: 0.85rem;
+    --fs-body: 1rem;
+    --fs-h2:   clamp(1.3rem, 3vw, 1.5rem);
+    --fs-h1:   clamp(1.75rem, 4vw, 2.25rem);
+    --font-serif: "Noto Serif TC", Georgia, serif;
+    --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+    --ease-linear: linear;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #1a1a1a;
+      --fg: #f0f0e8;
+      --accent: #e87c6e;
+      --muted: #999;
+      --border: #333;
+      --callout-tip: #1f3530;
+      --callout-warn: #3a2d1c;
+    }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
+  }
+  * { box-sizing: border-box; }
+  body {
+    font-family: var(--font-serif);
+    background: var(--bg);
+    color: var(--fg);
+    line-height: 1.8;
+    margin: 0;
+    padding: 0;
+    -webkit-font-smoothing: antialiased;
+  }
+  .progress-bar {
+    position: fixed; top: 0; left: 0; height: 3px; width: 100%;
+    background: var(--accent); z-index: 100;
+    transform: scaleX(0); transform-origin: left;
+    transition: transform 0.1s var(--ease-linear);
+  }
+  main {
+    max-width: 680px;
+    margin: 0 auto;
+    padding: clamp(2rem, 5vw, 4rem) clamp(1.5rem, 4vw, 2rem);
+  }
+  h1 { font-size: var(--fs-h1); line-height: 1.3; margin: 0 0 1rem; }
+  h2 { font-size: var(--fs-h2); line-height: 1.4; margin: 2.5rem 0 0.75rem; padding-bottom: 0.5rem; border-bottom: 1px solid var(--border); }
+  h3 { font-size: var(--fs-body); font-weight: 700; line-height: 1.4; margin: 1.75rem 0 0.5rem; color: var(--accent); }
+  p { margin: 0 0 1.25rem; }
+  ul, ol { margin: 0 0 1.25rem; padding-left: 1.5rem; }
+  li { margin-bottom: 0.5rem; }
+  blockquote { margin: 1.5rem 0; padding: 0.5rem 1.25rem; border-left: 3px solid var(--muted); color: var(--muted); font-style: italic; font-size: var(--fs-body); }
+  a { color: var(--accent); text-underline-offset: 3px; }
+  a:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+  .bluf { background: var(--callout-tip); border-left: 3px solid var(--accent); padding: 1.25rem 1.5rem; margin: 1.5rem 0 2rem; border-radius: 4px; }
+  .bluf strong { display: block; font-size: var(--fs-meta); letter-spacing: 0.05em; color: var(--accent); margin-bottom: 0.5rem; text-transform: uppercase; }
+  .bluf p:last-child { margin-bottom: 0; }
+  .callout { padding: 1rem 1.25rem; margin: 1.5rem 0; border-radius: 4px; border-left: 3px solid var(--muted); }
+  .callout.tip { background: var(--callout-tip); border-left-color: var(--accent); }
+  .callout.warn { background: var(--callout-warn); border-left-color: #d97706; }
+  .callout p:last-child { margin-bottom: 0; }
+  table { border-collapse: collapse; width: 100%; margin: 1.5rem 0; font-size: var(--fs-body); }
+  th, td { padding: 0.6rem 0.8rem; border: 1px solid var(--border); text-align: left; vertical-align: top; }
+  th { background: var(--callout-tip); font-weight: 600; }
+  code { font-family: var(--font-mono); background: var(--callout-tip); padding: 0.1em 0.4em; border-radius: 3px; font-size: var(--fs-body); }
+  pre { background: var(--callout-tip); padding: 1rem 1.25rem; border-radius: 4px; overflow-x: auto; margin: 1.5rem 0; font-size: var(--fs-body); }
+  pre code { background: transparent; padding: 0; }
+  hr { border: none; border-top: 1px solid var(--border); margin: 3rem 0; }
+  @media print {
+    .progress-bar { display: none; }
+    body { font-size: 11pt; line-height: 1.6; }
+    main { max-width: 100%; padding: 1cm; }
+  }
+</style>
+</head>
+<body>
+<div class="progress-bar" id="progress"></div>
+<main>
+<!-- narrative: 矛盾,物件,直接引語,場景,細節（5/5 全命中）-->
+<header>
+<h1>今天 evaluate skill 升了三次，做對的事比做多的事重要</h1>
+<div class="bluf">
+<strong>BLUF</strong>
+<p>今天升了三個版本（v3.2.2、v3.3、v3.4-b）。中途試了一個 v3.4-a 失敗，rollback。過程中還遇到 git 異常刪 317 個檔案的災難。</p>
+<p><strong>重點不是「做了多少」，而是「保留下來的全部都是經得起 baseline 驗證的」</strong>。</p>
+</div>
+</header>
+
+<article>
+
+<h2>起點：一支 39 分鐘的影片</h2>
+
+<p>早上看了 Anthropic 一支 YouTube 講座，題為《Evals for taste: Hill-climbing a slide-generation agent》。講者用「投影片生成 agent」當示範。一整套「為什麼要做 evals，怎麼設計，怎麼校準」的工程紀律。</p>
+
+<p>影片的核心句很簡單：</p>
+
+<blockquote>
+Evals 是把「感覺好像變好」轉成「可行動訊號」的工具。沒有 evals，你只能在 production 失敗後手動 debug。
+</blockquote>
+
+<p>對照我手上的 evaluate skill（v3.2.1），我盤點出幾個影片有教、但我的 skill 還沒做到的事。然後就一條一條改。</p>
+
+<p>下面講三個改動。每個改動都對應影片一個明確的教導。</p>
+
+<hr>
+
+<h2>改動一：先講理由，再給分</h2>
+
+<p class="callout tip">對應影片 36:30–37:30 段「reason-first ordering」</p>
+
+<h3>影片教什麼</h3>
+
+<p>LLM 有個內建特性叫「自迴歸生成」——簡單講就是<strong>它寫下一個字會被前面寫的字影響</strong>。</p>
+
+<p>如果你叫一個 model judge 評分，<strong>它先寫出「總體 7/10」之後</strong>，後面寫推理時會不自覺地「合理化這個 7 分」。即使這份文件其實只值 4 分。</p>
+
+<p>直覺類比：考試時老師如果先看到「答案是 B」，再看你的推導過程，他會傾向找理由支持 B。如果先看推導再看答案，他比較容易發現答案錯了。</p>
+
+<h3>我原本的問題</h3>
+
+<p>我的 evaluate 報告模板，<strong>總體評分表放在報告最開頭</strong>。LLM 寫到後面層次時，已經被自己寫下的分數鎖住了。</p>
+
+<h3>修法</h3>
+
+<p>把總體評分表從報告開頭，<strong>搬到最末尾</strong>。新模板強制走這個順序：</p>
+
+<pre><code>第 1 層命中 → 第 2 層機制 → 第 3 層盲點
+  → 五維 sanity check → 綜合建議的優點/問題
+    → 最後才填總體評分表</code></pre>
+
+<p>並在模板開頭加生成紀律提示，避免 judge 偷跑：</p>
+
+<blockquote>
+寫到第 6 步前不得在報告任何位置出現「總體 X/10」結論。
+</blockquote>
+
+<p>這就是 v3.2.2 的 reason-first ordering。對應 commit <code>09bee50</code>。</p>
+
+<hr>
+
+<h2>改動二：給 judge 看「好 / 壞長什麼樣」</h2>
+
+<p class="callout tip">對應影片 33:30–36:30 段「judge needs anchored examples」</p>
+
+<h3>影片教什麼</h3>
+
+<p>講者展示一個荒謬例子：一份投影片<strong>沒有任何圖片</strong>，但 image judge 給了 5 分。</p>
+
+<p>為什麼？因為 prompt 只寫「給 0 到 5 分」，<strong>沒給 judge 看「0 分長什麼樣 / 5 分長什麼樣」的具體範例</strong>。</p>
+
+<p>直覺類比：請新進員工評酒。如果你只說「給 0 到 10 分」，他會亂給。如果你給他喝兩瓶——「這瓶 6 分、這瓶 9 分」——他評分就會穩定。</p>
+
+<p>這叫 <strong>anchored scoring</strong>，給 judge 一個「錨點」對照。</p>
+
+<h3>我原本的問題</h3>
+
+<p>我的 evaluate skill 模板裡，只有描述性的 anchor：</p>
+
+<pre><code>10–8 分：高度可信
+7–5 分：需要驗證
+4–2 分：重大缺陷</code></pre>
+
+<p>這是<strong>講分數區間的意思</strong>，不是<strong>給 judge 看分數區間的範例</strong>。</p>
+
+<h3>修法</h3>
+
+<p>新增一份檔案 <code>AI評估_分數錨點_v1.md</code>。把我手上的校準集（calibration fixtures Q1/Q3/Q4）三個案例的<strong>特徵抽取</strong>，嵌進 prompt 流程。</p>
+
+<p>例如「機制分 9 分長什麼樣」段：</p>
+
+<blockquote>
+命題式標題 + 「核心主張 / 推導邏輯 / 具體案例 / 跨域同構」四段論結構 + 多重約束第一性原理推導 + 跨域同構案例 + 邊界條件
+</blockquote>
+
+<p>「機制分 3–4 分長什麼樣」段：</p>
+
+<blockquote>
+BLUF 結構 + N 個結論編號 + 每個結論末固定加「為什麼重要：[一句話]」 + 大量元標記（DIRECT / INDIRECT / UNKNOWN）+ 大段事實列舉後接結論 + 形式重於機制
+</blockquote>
+
+<p>每次 judge 評分前，<strong>必須先讀這份檔案，把待評估文字跟特徵錨點逐欄比對</strong>，找最接近的描述對應的分數區間。</p>
+
+<p>這是 v3.3 的 anchored scoring。對應 commit <code>21c4b24</code>。</p>
+
+<hr>
+
+<h2>中場：跑全套 baseline 對照</h2>
+
+<p class="callout tip">對應影片 Step 7「重跑 eval，檢查改善與 regression」</p>
+
+<p>兩個改動上線後，影片明確要求一件事：<strong>跑全套校準集對照，看新版有沒有把舊版搞壞</strong>。</p>
+
+<p>我跑了三個 fixture：Q1（理想範例）、Q3（典型 AI 報告）、Q4（混合）。再加一份實戰素材（早上看的那支影片的 YouTube 摘要本身）。總共四份報告。</p>
+
+<p>結果：</p>
+
+<table>
+<thead>
+<tr><th>Fixture</th><th>機制分</th><th>語言積分</th><th>對照 ground truth</th></tr>
+</thead>
+<tbody>
+<tr><td>Q1</td><td>9 ✅</td><td>2 ✅</td><td>全符合</td></tr>
+<tr><td>Q3</td><td>3 ✅</td><td><strong>19</strong></td><td>機制對，語言<strong>低估</strong>了（應該 22–32）</td></tr>
+<tr><td>Q4</td><td>9 ✅</td><td>20 ✅</td><td>全符合</td></tr>
+</tbody>
+</table>
+
+<p>Q3 語言分系統性低估了 3 到 13 分。</p>
+
+<p>回頭找原因。<strong>Q3 是典型的 AI agent DeepSearch 報告風格</strong>。充滿 BLUF、編號清單、DIRECT/INDIRECT 證據等級標記。每個結論末固定加「為什麼重要：」句構。這些是<strong>結構層</strong>的 AI 味。但我的規則庫只覆蓋詞彙層（D 詞彙癌）跟句法層（G 翻譯腔）。<strong>沒有規則抓結構層</strong>。</p>
+
+<p>這個發現很有價值，但也意味著要再升一版。我把規劃寫成 v3.4 的四個方向（v3.4-a / b / c / d），按 ROI × 改動量排序，準備一個一個動。</p>
+
+<p>對應 commit <code>70feca9</code>，五份 baseline 報告共 512 行。</p>
+
+<hr>
+
+<h2>改動三的失敗版：v3.4-a 嘗試補「不是 X 而是 Y」變體（後來 rollback）</h2>
+
+<h3>動機</h3>
+
+<p>baseline Q4 報告發現一個漏抓。Q4 fixture 裡有句「<strong>不是</strong>某一家公司的策略選擇，<strong>而是</strong> AI 原廠面對結構缺口必然演化出的四模塊」。這明顯是 C 類「二元對比洞察錯覺」句構，但 prefilter 沒抓到。</p>
+
+<p>查正則表發現：C 類規則覆蓋三個變體——「<strong>這</strong>不是 X 而是 Y」「<strong>從來</strong>不是 X 而是 Y」「<strong>並非</strong> X 而是 Y」。<strong>漏了最常見的無前綴版本</strong>。</p>
+
+<h3>嘗試的修法</h3>
+
+<p>加一條正則用「負向後查」排除已覆蓋的前綴：</p>
+
+<pre><code>r"(?&lt;![這從並])不是.{1,25}而是"</code></pre>
+
+<p>技術上完全正確。改完跑全套 baseline 驗收。</p>
+
+<h3>結果：抓到 regression</h3>
+
+<table>
+<thead>
+<tr><th>Fixture</th><th>預期</th><th>實測</th></tr>
+</thead>
+<tbody>
+<tr><td>Q4</td><td>+2（修漏抓）</td><td>+2 ✅</td></tr>
+<tr><td>Q1</td><td>0（不變）</td><td><strong>+6（3 句誤抓）</strong> 🚨</td></tr>
+<tr><td>Q3</td><td>0（不變）</td><td>0 ✅</td></tr>
+<tr><td>YouTube</td><td>0（不變）</td><td><strong>+8（4 句誤抓）</strong> 🚨</td></tr>
+</tbody>
+</table>
+
+<p>Q1 誤抓的句子（全部是合法的事實澄清）：</p>
+
+<ul>
+<li>「AI 應用的上線複雜度<strong>不是</strong>傳統軟體的線性延伸，<strong>而是</strong>多了一整層獨有問題」</li>
+<li>「它的成本<strong>不是</strong>一次性購買<strong>而是</strong>按 token 計費」</li>
+<li>「<strong>不是</strong>寫碼層多了幾個函式，<strong>而是</strong>在工程之上多了一層」</li>
+</ul>
+
+<p>YouTube 誤抓（全部是合法的重新聚焦）：</p>
+
+<ul>
+<li>「真正重點<strong>不是</strong>投影片，<strong>而是</strong> agent engineering 的控制迴路」</li>
+<li>「<strong>不是</strong>調 prompt，<strong>而是</strong>換模型」</li>
+</ul>
+
+<h3>為什麼這些是 false positive？</h3>
+
+<p><strong>因為 C 類二元對比的 AI 味，本質是語義層，不是句構層。</strong></p>
+
+<table>
+<thead>
+<tr><th>真 AI 味</th><th>合法對比</th></tr>
+</thead>
+<tbody>
+<tr>
+<td>「未來<strong>不是</strong> AI 取代人，<strong>而是</strong> AI 增強人」（廉價二分法，製造「有見地」假象）</td>
+<td>「成本<strong>不是</strong>一次性購買<strong>而是</strong>按 token 計費」（純事實澄清）</td>
+</tr>
+<tr>
+<td>「這<strong>不是</strong>技術問題，<strong>而是</strong>文化問題」（用二元簡化掩蓋多因素互動）</td>
+<td>「真正重點<strong>不是</strong>投影片，<strong>而是</strong> agent engineering」（重新聚焦讀者注意力）</td>
+</tr>
+</tbody>
+</table>
+
+<p>判別點是<strong>對比的兩端是不是被強行對立</strong>，這需要語境理解，<strong>純正則無法區分</strong>。</p>
+
+<h3>決策：rollback</h3>
+
+<p>依影片 Step 7 紀律：</p>
+
+<blockquote>
+抓到 regression → rollback，不 push through。
+</blockquote>
+
+<p>修一個 +2 引入 +14 的 noise，ROI 顯著為負。把這次嘗試標為 ABORTED，rollback 規則，但<strong>保留試誤註解在程式碼裡</strong>，避免未來重蹈覆轍。</p>
+
+<p>對應 commit <code>67f7766</code>。</p>
+
+<h3>關鍵 lesson</h3>
+
+<p>如果 v3.4-a / v3.4-b / v3.4-c 三個改動 bundle 進一個 commit，會怎樣？我<strong>永遠無法定位 Q1/YouTube regression 是哪個改動造成的</strong>。</p>
+
+<blockquote>
+one-lever-at-a-time 紀律的真正價值，不在於 commit 訊息漂亮。而在於拉錯方向時，可以乾淨 rollback 一個 lever，不影響其他改動。
+</blockquote>
+
+<hr>
+
+<h2>改動三的正版：v3.4-b 擴 I 類覆蓋 agent 報告免責語</h2>
+
+<h3>設計思路（學了 v3.4-a 教訓）</h3>
+
+<p>v3.4-a 失敗根因是「人類也大量用此句構做合法澄清」。</p>
+
+<p>v3.4-b 採對策：<strong>刻意只抓 AI agent 研究報告專屬的格式特徵</strong>。避開人類撰寫的決策文件、學術論文也會用的句構。</p>
+
+<h3>新增 4 條規則</h3>
+
+<table>
+<thead>
+<tr><th>規則</th><th>為什麼這樣設計</th></tr>
+</thead>
+<tbody>
+<tr><td><code>研究截止[：:]</code></td><td>限定後接冒號 → 與學術論文「研究截止日期是 XX」嵌入完整句的用法區分</td></tr>
+<tr><td><code>資料來源.{0,5}以.{1,30}?為主</code></td><td>非貪婪（<code>?</code>），避免 over-match；典型 agent 鋪墊「資料來源以 X、Y、Z 為主」</td></tr>
+<tr><td><code>公開資訊不足以確認</code></td><td>精確字串，AI agent 在無可靠來源時的標準免責句，人類極少使用</td></tr>
+<tr><td><code>無可靠公開來源</code></td><td>同上，罕見句構</td></tr>
+</tbody>
+</table>
+
+<h3>驗收結果</h3>
+
+<table>
+<thead>
+<tr><th>Fixture</th><th>I 類前</th><th>I 類後</th><th>加權總分前 → 後</th><th>regression？</th></tr>
+</thead>
+<tbody>
+<tr><td>Q1</td><td>0</td><td>0</td><td>9 → 9</td><td>✅ 無</td></tr>
+<tr><td><strong>Q3</strong></td><td><strong>0</strong></td><td><strong>+4</strong></td><td><strong>8 → 12</strong></td><td>✅ 預期增加</td></tr>
+<tr><td>Q4</td><td>0</td><td>0</td><td>10 → 10</td><td>✅ 無</td></tr>
+<tr><td>YouTube</td><td>0</td><td>0</td><td>14 → 14</td><td>✅ 無</td></tr>
+</tbody>
+</table>
+
+<p>0 regression，Q3 精準命中 4 處。對應 commit <code>fe0bef2</code>。</p>
+
+<h3>v3.4-a vs v3.4-b 設計哲學對照</h3>
+
+<table>
+<thead>
+<tr><th>維度</th><th>v3.4-a（失敗）</th><th>v3.4-b（成功）</th></tr>
+</thead>
+<tbody>
+<tr><td>規則範圍</td><td>通用句構（「不是 X 而是 Y」）</td><td>agent 報告專屬格式特徵</td></tr>
+<tr><td>邊界 anchor</td><td>無前綴 → 任何語境都命中</td><td>限定冒號 / 「為主」結尾 / 精確字串</td></tr>
+<tr><td>人類常用此句構？</td><td>大量合法用法</td><td>罕見，agent 專屬</td></tr>
+<tr><td>全套 baseline</td><td>Q1 +6 / YouTube +8 regression</td><td>0 regression</td></tr>
+</tbody>
+</table>
+
+<div class="callout warn">
+<p><strong>內化的設計原則</strong>：設計新規則時，先問自己「人類也會這樣寫嗎？」如果答案是「會」，就不該規則化，留給 LLM judge 用語境判斷。</p>
+</div>
+
+<hr>
+
+<h2>插曲：git 災難復原</h2>
+
+<p>中間還遇到一個怪事。commit <code>6a30b76</code> 我只 <code>git add</code> 了三個檔案，pre-commit 用 <code>git diff --cached --stat</code> 確認也是三個檔案。但 commit 完跑出來顯示「317 files changed, 51280 deletions(-)」。它把整個 repo 的 git index 全清空了。</p>
+
+<p>幸好 <strong>working tree 完整未動</strong>。檢查 <code>.git/hooks/</code> 沒有任何 hook，git config 也沒有相關設定。原因至今不明，可能是 OS 或 git 在某種 race condition 下的異常。</p>
+
+<p>修復流程：</p>
+
+<pre><code>git reset HEAD~1    # 把災難 commit undo（HEAD 退一步，working tree 不動）
+# 重新 stage 三個檔案
+# 採三段驗證流程：
+git diff --cached --name-only    # 確認 staged 範圍
+git ls-files --stage | wc -l     # 確認 index 檔案總數合理
+git commit -m "..."              # commit
+git show --stat HEAD | tail -10  # 立即驗證 commit stat 正常</code></pre>
+
+<p>第二次 commit 成功，3 files changed, 159 insertions(+)，tracked 檔案數從 319 → 320，正常。</p>
+
+<p>從這次之後，<strong>每次 commit 後都跑這個三段驗證流程</strong>。</p>
+
+<hr>
+
+<h2>整體啟發</h2>
+
+<h3>1. 紀律的真正價值會在「事情出錯時」才顯現</h3>
+
+<p>平常 one-lever-at-a-time 看起來像形式主義。為什麼不直接 bundle 三個改動一個 commit？</p>
+
+<p>直到 v3.4-a 出事，才驗證它的真正價值——<strong>一個改動失敗了，可以乾淨 rollback，其他改動不受影響</strong>。</p>
+
+<p>baseline 對照也一樣。平常跑來看似冗餘紀錄，直到 v3.4-a 規則 false positive 才驗證它是 <strong>regression 唯一防線</strong>。</p>
+
+<h3>2. 設計新規則時，先問「人類也用此句構嗎？」</h3>
+
+<p>v3.4-a 失敗，v3.4-b 成功，差別不在「正則寫得多漂亮」，而在「規則覆蓋的句構在人類文本中有多稀有」。</p>
+
+<ul>
+<li>v3.4-a 的「不是 X 而是 Y」是人類大量使用的合法句構 → 一抓就誤抓</li>
+<li>v3.4-b 的「研究截止：」「公開資訊不足以確認」是 AI agent 專屬 → 精準命中</li>
+</ul>
+
+<p>寫規則時，先去看一份典型的人類撰寫文件（不是 AI 生成的）裡有沒有這個句構。如果有，就不該規則化。</p>
+
+<h3>3. 影片 Step 7「重跑 eval」是工程的，而非儀式的</h3>
+
+<p>我以前以為「跑 baseline」是好習慣但不是強制。今天親身驗證——<strong>沒它，v3.4-a 的 regression 會悄悄漏網，最後在某次評估真實文件時才被發現</strong>。到時要 debug「為什麼判錯」就會繞遠路。</p>
+
+<p>baseline 對照不是「驗收 checklist 的某一項」，是「升版完成的前置條件」。</p>
+
+<hr>
+
+<h2>下次起點</h2>
+
+<p>今天累積到 v3.4-b，下次開新 session 可以接著動：</p>
+
+<ol>
+<li><strong>v3.4-c（最高 ROI）</strong>：新增 J 類「結構性 AI 味」規則庫，4 個維度——子標題密度、清單覆蓋率、證據等級元標記、自定義固定模板偵測。預期完成後 Q3 加權總分從 12 → 22+，落入 ground truth 區間。<strong>這是修 Q3 系統性低估的根因動作</strong>。</li>
+<li><strong>v3.4-d</strong>：新增中英混雜術語密度規則（Probability Mass / Brownfield 等專業詞中英並列密度過高即為 AI 味痕跡）。讓 Q4 的中英混雜部分從 LLM judge 手算變 prefilter 自動偵測。</li>
+<li><strong>B1 新建 Q5 fixture</strong>：YouTube 摘要本身可作為標準素材（「中等機制 + 乾淨語言 + 結構性 AI 味」），補 anchor 表中間區間。</li>
+</ol>
+
+<p>v3.4-c 涉及新類別架構（不只是規則擴展），複雜度遠高於 v3.4-b，建議單獨開 session 處理。</p>
+
+<hr>
+
+<h2>今天的 commit 軌跡</h2>
+
+<pre><code>09bee50  v3.2.2  reason-first ordering + bug hunt adversarial framing
+21c4b24  v3.3    anchored scoring 特徵錨點
+70feca9          v3.3 calibration baseline 5 份報告 + v3.4 規劃揭露
+67f7766  v3.4-a  ABORTED + lesson learned
+fe0bef2  v3.4-b  擴 I 類覆蓋 agent 免責語（0 regression）</code></pre>
+
+<p>5 個 commit，2 次成功升版，1 次成功 rollback，1 次 git 災難復原。一天的工作量。</p>
+
+<p><strong>保留下來的全部都是經得起 baseline 驗證的</strong>。這比「做了多少」更重要。</p>
+
+</article>
+
+<footer>
+<p style="color: var(--muted); font-size: var(--fs-meta); margin-top: 4rem; padding-top: 1.5rem; border-top: 1px solid var(--border);">
+最後更新：2026-05-26 · CC BY 4.0 · 引用請標來源
+</p>
+</footer>
+</main>
+<script>
+  const bar = document.getElementById('progress');
+  window.addEventListener('scroll', () => {
+    const h = document.documentElement;
+    const max = h.scrollHeight - h.clientHeight;
+    const ratio = max > 0 ? h.scrollTop / max : 0;
+    bar.style.transform = 'scaleX(' + ratio + ')';
+  }, { passive: true });
+</script>
+</body>
+</html>
