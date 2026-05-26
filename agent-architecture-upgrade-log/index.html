@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>我幫 AI 助理動了一次架構大手術｜彥皓</title>
+<meta name="description" content="看完 45 分鐘的 Anthropic 工作坊影片，一個下午轉成 5 條協議、4 個 commits、1 套品質校準器。順便踩到一個 sub-agent 失敗模式，把它變成永久規則。">
+
+<link rel="canonical" href="https://hale80427.github.io/brain-cards/agent-architecture-upgrade-log/">
+<meta name="author" content="彥皓">
+
+<meta property="og:type" content="article">
+<meta property="og:title" content="我幫 AI 助理動了一次架構大手術">
+<meta property="og:description" content="看完 45 分鐘的 Anthropic 工作坊影片，一個下午轉成 5 條協議、4 個 commits、1 套品質校準器。">
+<meta property="og:url" content="https://hale80427.github.io/brain-cards/agent-architecture-upgrade-log/">
+<meta property="og:image" content="https://hale80427.github.io/brain-cards/og-default.jpg">
+<meta property="og:locale" content="zh_TW">
+
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="我幫 AI 助理動了一次架構大手術">
+<meta name="twitter:description" content="看完 45 分鐘的 Anthropic 工作坊影片，一個下午轉成 5 條協議、4 個 commits、1 套品質校準器。">
+<meta name="twitter:image" content="https://hale80427.github.io/brain-cards/og-default.jpg">
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "我幫 AI 助理動了一次架構大手術",
+  "description": "看完 45 分鐘的 Anthropic 工作坊影片，一個下午轉成 5 條協議、4 個 commits、1 套品質校準器。順便踩到一個 sub-agent 失敗模式，把它變成永久規則。",
+  "datePublished": "2026-05-26",
+  "dateModified": "2026-05-26",
+  "author": { "@type": "Person", "name": "彥皓" },
+  "url": "https://hale80427.github.io/brain-cards/agent-architecture-upgrade-log/",
+  "inLanguage": "zh-TW",
+  "license": "https://creativecommons.org/licenses/by/4.0/"
+}
+</script>
+
+<style>
+  :root {
+    --bg: #fafaf7;
+    --fg: #1a1a1a;
+    --accent: #c0392b;
+    --muted: #666;
+    --border: #e5e5e0;
+    --callout-tip: #e8f4f0;
+    --callout-warn: #fdf3e7;
+    --fs-meta: 0.85rem;
+    --fs-body: 1rem;
+    --fs-h2:   clamp(1.3rem, 3vw, 1.5rem);
+    --fs-h1:   clamp(1.75rem, 4vw, 2.25rem);
+    --font-serif: "Noto Serif TC", Georgia, serif;
+    --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+    --ease-linear: linear;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #1a1a1a;
+      --fg: #f0f0e8;
+      --accent: #e87c6e;
+      --muted: #999;
+      --border: #333;
+      --callout-tip: #1f3530;
+      --callout-warn: #3a2d1c;
+    }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
+  }
+  * { box-sizing: border-box; }
+  body {
+    font-family: var(--font-serif);
+    background: var(--bg);
+    color: var(--fg);
+    line-height: 1.8;
+    margin: 0;
+    padding: 0;
+    -webkit-font-smoothing: antialiased;
+  }
+  .progress-bar {
+    position: fixed; top: 0; left: 0; height: 3px; width: 100%;
+    background: var(--accent); z-index: 100;
+    transform: scaleX(0); transform-origin: left;
+    transition: transform 0.1s var(--ease-linear);
+  }
+  main {
+    max-width: 680px;
+    margin: 0 auto;
+    padding: clamp(2rem, 5vw, 4rem) clamp(1.5rem, 4vw, 2rem);
+  }
+  h1 { font-size: var(--fs-h1); line-height: 1.3; margin: 0 0 0.5rem; }
+  .subtitle { font-size: var(--fs-body); color: var(--muted); margin: 0 0 1.5rem; font-style: italic; }
+  h2 { font-size: var(--fs-h2); line-height: 1.4; margin: 2.5rem 0 0.75rem; padding-bottom: 0.5rem; border-bottom: 1px solid var(--border); }
+  h3 { font-size: var(--fs-body); font-weight: 700; line-height: 1.4; margin: 1.75rem 0 0.5rem; color: var(--accent); }
+  p { margin: 0 0 1.25rem; }
+  a { color: var(--accent); text-underline-offset: 3px; }
+  a:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+  ul, ol { margin: 0 0 1.25rem; padding-left: 1.5rem; }
+  li { margin-bottom: 0.4rem; }
+  blockquote {
+    margin: 1.5rem 0;
+    padding: 0.75rem 1.25rem;
+    border-left: 3px solid var(--accent);
+    background: var(--callout-tip);
+    color: var(--fg);
+    font-style: italic;
+    border-radius: 4px;
+  }
+  blockquote p { margin: 0; }
+  .bluf { background: var(--callout-tip); border-left: 3px solid var(--accent); padding: 1.25rem 1.5rem; margin: 1.5rem 0 2rem; border-radius: 4px; }
+  .bluf strong { display: block; font-size: var(--fs-meta); letter-spacing: 0.05em; color: var(--accent); margin-bottom: 0.5rem; text-transform: uppercase; }
+  .callout { padding: 1rem 1.25rem; margin: 1.5rem 0; border-radius: 4px; border-left: 3px solid var(--muted); }
+  .callout.tip { background: var(--callout-tip); border-left-color: var(--accent); }
+  .callout.warn { background: var(--callout-warn); border-left-color: #d97706; }
+  table { border-collapse: collapse; width: 100%; margin: 1.5rem 0; font-size: var(--fs-body); }
+  th, td { padding: 0.6rem 0.8rem; border: 1px solid var(--border); text-align: left; vertical-align: top; }
+  th { background: var(--callout-tip); font-weight: 600; }
+  code { font-family: var(--font-mono); background: var(--callout-tip); padding: 0.1em 0.4em; border-radius: 3px; font-size: var(--fs-body); }
+  hr { border: 0; border-top: 1px solid var(--border); margin: 2rem 0; }
+  @media print {
+    .progress-bar { display: none; }
+    body { line-height: 1.6; }
+    main { max-width: 100%; padding: 1cm; }
+  }
+</style>
+</head>
+<body>
+<div class="progress-bar" id="progress"></div>
+<main>
+<header>
+<h1>我幫 AI 助理動了一次架構大手術</h1>
+<p class="subtitle">從「加新功能就疊一條規則」到「有量化證據才升級」</p>
+<div class="bluf">
+<strong>一句話總結</strong>
+<p>影片在講一件事：AI 助理（agent）功能越疊越多會退化。改善的方法不是繼續加功能，而是看數據、拆架構、用對工具。我這輪把這套思維套到自己的 11 個 skill 工具鏈，做了 4 個改動加 1 個校準器。中間踩到一個坑，順手把它變成規則記下來。</p>
+</div>
+</header>
+<!-- narrative: 矛盾,物件,直接引語,場景,細節 -->
+<article>
+
+<h2>為什麼開始這件事</h2>
+
+<p>我手上有 11 個自己寫的 skill（你可以想成 AI 助理的內建技能，每個負責一種工作流）。其中一支叫 <code>hit-doc</code>，420 行——一個檔案，把公司範本選擇邏輯、Word 細節編輯、PPT 細節編輯全塞在一起。每次叫用都要載入全部內容。</p>
+
+<p>這正是 Anthropic 工作坊裡 Will 講的失敗模式：</p>
+
+<blockquote><p>「不是模型不夠聰明，是模型周圍的資訊與工具設計變差了。」</p></blockquote>
+
+<p>他用一個叫 Stock Pilot 的範例 agent 示範。原本一個 400 行 prompt 加 12 個 tools，評估只剩 62% 通過率。經過架構治理，拉到 92%。</p>
+
+<p>看完影片我意識到自己也在累積同樣的債。決定當天就動手。</p>
+
+<h2>影片的三個核心建議</h2>
+
+<h3>建議一：把任務特定的規則拆出去</h3>
+
+<p>主檔（影片叫 system prompt，我的對應是 <code>SKILL.md</code>）只放「每次都用得到的事」。「某些任務才用得到的事」拆成可按需載入的分頁。Claude 真正需要時才把它叫進來看。</p>
+
+<h3>建議二：用 sub-agent 處理需要乾淨腦袋的事</h3>
+
+<p>主對話有時候會「想 push」——已經寫了東西就傾向通過自己的審查。這時派一個獨立的 sub-agent 用乾淨脈絡來看，比較不會被偏見污染。</p>
+
+<h3>建議三：用評估數據做 hill climbing（持續往上爬）</h3>
+
+<p>每次改架構都要有可量化的對比。不能只靠「感覺好像更好了」。沒有評估數據，你不知道改版是進步還是退化。</p>
+
+<h2>我這輪做了什麼</h2>
+
+<h3>一、修了一週前的舊帳：KB sync drift 對齊</h3>
+
+<p>第二大腦系統有一份「規格主檔」（叫 <code>SPEC_LITE.md</code>），下面有幾份「執行包裝」KB 檔案。週前更新了主檔，但底下 KB-02 和 KB-03 還停在舊版日期，內容沒對齊。更糟的是，KB-02 引用了「主檔 §7.1—§7.4」，但主檔 §7 根本沒有這些子節。</p>
+
+<p>這個錯位拖一週越拖越亂。這輪先收拾。</p>
+
+<p>方向：選「KB 跟主檔對齊」（移除引用不存在的子節），而不是「主檔追上 KB」。理由：規格主檔是權威源，不該為了 KB 的方便去長章節。KB 是執行包裝，允許比主檔細，但要標清楚「這是 skill 內部擴展」而不是引用主檔。</p>
+
+<h3>二、hit-doc 大瘦身：420 行拆成 92 行加 3 個分頁</h3>
+
+<p>主檔現在只留：</p>
+
+<ul>
+<li>環境路徑</li>
+<li>6 個範本選擇邏輯</li>
+<li>入口流程</li>
+<li>兩階段 QA 概要</li>
+<li>6 條永遠生效的關鍵原則</li>
+</ul>
+
+<p>詳細的執行步驟拆成三個分頁，每次 invoke skill 只載 92 行主檔。需要走 Word 流程才載 <code>word-pipeline</code> 那個分頁。token 用量降到原本的五分之一。</p>
+
+<h3>三、寫了「sub-agent 該怎麼用」協議進全域規則</h3>
+
+<p>影片教 sub-agent 的兩個正當用途：</p>
+
+<ul>
+<li>平行探索（一次派 10 個 Claude 跑不同方向搜尋）</li>
+<li>乾淨腦袋（不希望主對話脈絡污染判斷的審查任務）</li>
+</ul>
+
+<p>我把這套寫進全域協作規則（<code>CLAUDE.md</code>）加上自己的補強。</p>
+
+<p>派出前要附三件事：任務脈絡、輸出格式 spec、驗收 checklist。收到結果要做三件事：對 checklist、不全盤信任摘要、不靜默吞失敗。</p>
+
+<p>這條協議寫完幾分鐘後就被自己踩到。下一段講。</p>
+
+<h3>四、給 evaluate 加上「校準器」</h3>
+
+<p><code>evaluate</code> 是我自己寫的一個 skill，用來檢查 AI 輸出的品質——機制深度（有沒有講出底層原因）+ 語言純度（有沒有 AI 味）。問題：這個 skill 自己升過 v2 → v3 → v3.1，每次都是定性判讀「感覺更準」。沒有量化基線，不知道改版是不是真的進步。</p>
+
+<p>這輪幫它建了第一套校準器（calibration set）。設計原則三條：</p>
+
+<ol>
+<li><strong>必須是真實案例</strong>——不能由 AI 假造（AI 寫的 AI 味重範例會帶 AI 的盲點）</li>
+<li><strong>每條配一句 ground truth</strong>——我預期這個應該被判成什麼</li>
+<li><strong>不追求大樣本</strong>——4 條覆蓋四個象限的邊界就夠</li>
+</ol>
+
+<p>四個象限：</p>
+
+<table>
+<thead><tr><th>象限</th><th>內容狀態</th><th>意義</th></tr></thead>
+<tbody>
+<tr><td>Q1</td><td>機制深 + 語言乾淨</td><td>理想狀態</td></tr>
+<tr><td>Q2</td><td>機制淺 + 語言乾淨</td><td>最高風險組合（語言誘人但內容空）</td></tr>
+<tr><td>Q3</td><td>機制淺 + 語言髒</td><td>顯而易見的爛，容易判</td></tr>
+<tr><td>Q4</td><td>機制深 + 語言髒</td><td>混合狀態，要拆開處理</td></tr>
+</tbody>
+</table>
+
+<p>從第二大腦挑 3 條真實 Card / Source 進 Q1、Q3、Q4 三象限。Q2 找不到合適案例，原因有意思：我自己的寫作紀律（命題式標題 + 三段論推導）天然就反 Q2，找不到候選不是 bug，是寫作紀律真的生效的證據。</p>
+
+<p>跑完 v3.1 baseline 三象限對 ground truth 高度一致。未來升到 v3.2、v3.3 重跑同一套校準器看差異，才能判斷是真的改善還是退化。</p>
+
+<h2>沒按腳本走的踩坑</h2>
+
+<p>派出 3 個 sub-agent 並行跑 calibration baseline。Q1 和 Q4 都按規格做。Q3 出狀況——它跑完了 evaluate（內容品質很好，還挑出我自己沒想到的盲點），但忘了最後一步把報告寫進磁碟。它回報「success」，但檔案根本沒存。</p>
+
+<div class="callout warn">
+<p>這正是我前一個小時剛寫的協議的真實案例。它的注意力顧到核心任務（評估），衰減到最後一步（存檔）就跳過了。</p>
+</div>
+
+<p>補救方法：sub-agent 回報的內容已經在我的訊息歷史裡，直接抽出來寫進磁碟，不重派。然後做一件影片真正在講的事：把這個失敗模式 encode 回協議。</p>
+
+<p>回到全域規則加兩條。</p>
+
+<p><strong>第一條：檔案 side-effect 必親自 ls 驗證。</strong> 派 sub-agent 寫檔案的任務，收到回報後要自己跑 <code>ls</code> 確認檔案真的存在，不要信「我寫了」回報。</p>
+
+<p><strong>第二條：回報缺 side-effect 時的補救規則。</strong> 如果 <code>ls</code> 發現沒寫成、但內容已在訊息歷史，主對話直接寫入較省，但要在檔案中標清楚「這是補救寫入」的 deviation 註記。</p>
+
+<div class="callout tip">
+<p>這個閉環是 hill climbing 真正的價值：失敗模式不只是被解掉，是被永久記下來變成下次自動防到的規則。</p>
+</div>
+
+<h2>沒做的事，與為什麼不做</h2>
+
+<ul>
+<li><strong>沒動規格主檔（<code>SPEC_LITE.md</code>）。</strong> 那是權威源，不該為了 KB 的方便去擴大章節。</li>
+<li><strong>沒重構 <code>ui-ux-pro-max</code>（377 行）和 <code>hallmark</code>（552 行）。</strong> 評估後確認這兩個是「天生需要長主檔」——一個是查詢式設計資料庫，一個是含完整 verb 路由加 4 條普遍原則的設計指南。不是所有 skill 都要拆，「長」不等於「該拆」。</li>
+<li><strong>Q2 校準象限永久缺。</strong> 我的寫作紀律本身就反 Q2，找不到候選是 feature 不是 bug。</li>
+</ul>
+
+<h2>下一步起點</h2>
+
+<p>最低成本的事：等 evaluate v3.2 完整 commit 穩定後，跑 Q1 / Q3 / Q4 三個 fixture，覆蓋過渡期 baseline 為純 v3.2 版本。</p>
+
+<p>次優先：下次有真實 INGEST 任務時，實際跑一次新的 sub-agent dispatch 寫作品質 audit，看 punch list 輸出好不好用、prompt 模板要不要再調。</p>
+
+<p>第三優先：自然遇到 sub-agent dispatch 任務時，觀察「檔案 side-effect 必 <code>ls</code> 驗證」這條新規則是否真的記得執行。第一次踩坑記憶猶新時容易記住，三個月後可能忘——這也是規則寫進協議的價值。</p>
+
+<h2>結</h2>
+
+<p>這套東西的本質不是「累積更多 skill」，是「治理已有 skill」。隨時間推移工具會自然累積，但治理紀律不會自己長出來——要主動建。</p>
+
+<p>沒有量化證據的升級只是定性判讀。失敗模式才是最值錢的東西，要記在規則裡，而不是只 debug 完拍拍灰。</p>
+
+</article>
+<footer>
+<p style="color: var(--muted); font-size: var(--fs-meta); margin-top: 4rem; padding-top: 1.5rem; border-top: 1px solid var(--border);">
+最後更新：2026-05-26 · <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a> · 引用請標來源（彥皓 / hale80427.github.io/brain-cards）
+</p>
+</footer>
+</main>
+<script>
+  const bar = document.getElementById('progress');
+  window.addEventListener('scroll', () => {
+    const h = document.documentElement;
+    const max = h.scrollHeight - h.clientHeight;
+    const ratio = max > 0 ? h.scrollTop / max : 0;
+    bar.style.transform = 'scaleX(' + ratio + ')';
+  }, { passive: true });
+</script>
+</body>
+</html>
