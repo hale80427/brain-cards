@@ -1,0 +1,409 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>我問了我的第二大腦一個問題：以前的工作流還需要嗎？</title>
+<meta name="description" content="累積 14 個月建了 Claude Code 個人作業系統後，那套手寫 Prompt 的老習慣還需要嗎？第二大腦的回答有兩條結構性命題：成熟訊號是手動動作消失，而介面層升級會把前一段動作內建為子程序。">
+
+<link rel="canonical" href="https://hale80427.github.io/brain-cards/os-maturity-sub-routine/">
+<meta name="author" content="彥皓">
+<meta name="robots" content="noindex">
+
+<meta property="og:type" content="article">
+<meta property="og:title" content="我問了我的第二大腦一個問題：以前的工作流還需要嗎？">
+<meta property="og:description" content="累積 14 個月建了 Claude Code 個人作業系統後，那套手寫 Prompt 的老習慣還需要嗎？兩條結構性命題的回答。">
+<meta property="og:url" content="https://hale80427.github.io/brain-cards/os-maturity-sub-routine/">
+<meta property="og:image" content="https://hale80427.github.io/brain-cards/og-default.jpg">
+<meta property="og:locale" content="zh_TW">
+
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="我問了我的第二大腦一個問題：以前的工作流還需要嗎？">
+<meta name="twitter:description" content="累積 14 個月建了 Claude Code 個人作業系統後，那套手寫 Prompt 的老習慣還需要嗎？兩條結構性命題的回答。">
+<meta name="twitter:image" content="https://hale80427.github.io/brain-cards/og-default.jpg">
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "我問了我的第二大腦一個問題：以前的工作流還需要嗎？",
+  "description": "累積 14 個月建了 Claude Code 個人作業系統後，那套手寫 Prompt 的老習慣還需要嗎？第二大腦的回答有兩條結構性命題。",
+  "datePublished": "2026-05-27",
+  "dateModified": "2026-05-27",
+  "author": { "@type": "Person", "name": "彥皓" },
+  "url": "https://hale80427.github.io/brain-cards/os-maturity-sub-routine/",
+  "inLanguage": "zh-TW",
+  "license": "https://creativecommons.org/licenses/by/4.0/"
+}
+</script>
+
+<style>
+/* output-html · KB-02 base + KB-06 direction C (對話日記風)
+ * accent: warm-orange #c97a3f · paper: cream #faf5ec
+ * font: Noto Serif TC + system mono · genre: editorial / Substack-adjacent
+ */
+  :root {
+    --bg: #faf5ec;
+    --fg: #3a2f24;
+    --accent: #c97a3f;
+    --accent-warn: #b87333;
+    --muted: #7a6a55;
+    --border: #e6dcc8;
+    --callout-tip: rgba(201, 122, 63, 0.08);
+    --callout-warn: #f4e6d0;
+    --fs-meta: 0.875rem;
+    --fs-body: 1.0625rem;
+    --fs-h2:   clamp(1.3rem, 3vw, 1.5rem);
+    --fs-h1:   clamp(1.75rem, 4vw, 2.25rem);
+    --font-serif: "Noto Serif TC", "EB Garamond", Georgia, "Songti TC", serif;
+    --font-mono: ui-monospace, SFMono-Regular, Menlo, monospace;
+    --ease-linear: linear;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #2a2419;
+      --fg: #f0e8d8;
+      --accent: #e0a070;
+      --muted: #b0a088;
+      --border: #4a3d2c;
+      --callout-tip: rgba(224, 160, 112, 0.1);
+      --callout-warn: #3a2d1c;
+    }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
+  }
+  * { box-sizing: border-box; }
+  body {
+    font-family: var(--font-serif);
+    background: var(--bg);
+    color: var(--fg);
+    line-height: 1.95;
+    margin: 0;
+    padding: 0;
+    -webkit-font-smoothing: antialiased;
+  }
+  .progress-bar {
+    position: fixed; top: 0; left: 0; height: 3px; width: 100%;
+    background: var(--accent); z-index: 100;
+    transform: scaleX(0); transform-origin: left;
+    transition: transform 0.1s var(--ease-linear);
+  }
+  main {
+    max-width: 58ch;
+    margin: 0 auto;
+    padding: clamp(2.5rem, 6vw, 5rem) clamp(1.25rem, 5vw, 3rem);
+  }
+  .date-mark {
+    font-size: var(--fs-meta);
+    color: var(--muted);
+    font-style: italic;
+    margin-bottom: 1rem;
+    letter-spacing: 0.02em;
+  }
+  .date-mark::before { content: "— "; }
+  h1 {
+    font-size: var(--fs-h1);
+    line-height: 1.35;
+    margin: 0 0 1.5rem;
+    font-weight: 600;
+  }
+  h2 {
+    font-size: var(--fs-h2);
+    line-height: 1.45;
+    font-weight: 600;
+    margin: 3rem 0 1rem;
+    color: var(--accent);
+    position: relative;
+    padding-left: 1.5rem;
+  }
+  h2::before {
+    content: "§";
+    position: absolute;
+    left: 0;
+    top: 0;
+    color: var(--accent);
+    font-style: italic;
+    opacity: 0.65;
+  }
+  h3 {
+    font-size: var(--fs-body);
+    font-weight: 700;
+    line-height: 1.5;
+    margin: 1.75rem 0 0.5rem;
+    color: var(--accent);
+  }
+  p { margin: 0 0 1.25rem; }
+  a {
+    color: var(--accent);
+    text-underline-offset: 3px;
+  }
+  a:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 3px;
+  }
+  .bluf {
+    background: var(--callout-tip);
+    border-left: 3px solid var(--accent);
+    padding: 1.25rem 1.5rem;
+    margin: 1.5rem 0 2.5rem;
+    border-radius: 0 4px 4px 0;
+  }
+  .bluf strong {
+    display: block;
+    font-size: var(--fs-meta);
+    letter-spacing: 0.08em;
+    color: var(--accent);
+    margin-bottom: 0.5rem;
+    text-transform: uppercase;
+    font-weight: 700;
+  }
+  .bluf p { margin: 0; }
+  blockquote {
+    border-left: 3px solid var(--accent);
+    background: var(--callout-tip);
+    padding: 1.2rem 1.5rem;
+    margin: 2rem -0.5rem;
+    color: var(--fg);
+    font-style: italic;
+    border-radius: 0 4px 4px 0;
+  }
+  blockquote p { margin: 0; }
+  .callout {
+    padding: 1rem 1.25rem;
+    margin: 1.5rem 0;
+    border-radius: 0 4px 4px 0;
+    border-left: 3px solid var(--muted);
+  }
+  .callout.tip {
+    background: var(--callout-tip);
+    border-left-color: var(--accent);
+  }
+  .callout.warn {
+    background: var(--callout-warn);
+    border-left-color: var(--accent-warn);
+  }
+  table {
+    border-collapse: collapse;
+    width: 100%;
+    margin: 1.5rem 0;
+    font-size: var(--fs-body);
+  }
+  th, td {
+    padding: 0.7rem 0.9rem;
+    border: 1px solid var(--border);
+    text-align: left;
+    vertical-align: top;
+    line-height: 1.55;
+  }
+  th {
+    background: var(--callout-tip);
+    font-weight: 700;
+    color: var(--fg);
+  }
+  code {
+    font-family: var(--font-mono);
+    background: var(--callout-tip);
+    padding: 0.1em 0.4em;
+    border-radius: 3px;
+    font-size: var(--fs-body);
+  }
+  ul { padding-left: 1.5rem; margin: 0 0 1.5rem; }
+  li { margin-bottom: 0.5rem; }
+  hr {
+    border: none;
+    border-top: 1px dashed var(--border);
+    margin: 3rem auto;
+    width: 50%;
+  }
+  footer {
+    color: var(--muted);
+    font-size: var(--fs-meta);
+    margin-top: 4rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--border);
+    font-style: italic;
+    text-align: center;
+  }
+  @media print {
+    .progress-bar { display: none; }
+    body { line-height: 1.6; background: white; color: black; }
+    main { max-width: 100%; padding: 1cm; }
+  }
+</style>
+</head>
+<body>
+<div class="progress-bar" id="progress"></div>
+<main>
+
+<header>
+  <div class="date-mark">2026 年 5 月 27 日 · 一個關於工作習慣的問題</div>
+  <h1>我問了我的第二大腦一個問題：以前的工作流還需要嗎？</h1>
+  <div class="bluf">
+    <strong>一句話結論</strong>
+    <p>我那套跟了好幾年、手動寫 Prompt 的老工作流，不該繼續當預設流程——但它也沒有消失。它被升級成了我個人作業系統內部的子程序。第二大腦給出兩條結構性命題，順便指出下一波介面層躍升該往哪裡看。</p>
+  </div>
+</header>
+
+<article>
+<!-- narrative: 物件,細節,矛盾,場景,直接引語（5/5 命中）-->
+
+<h2>一個跟了我好幾年的老習慣</h2>
+
+<p>有一個習慣我跟了好幾年。每次想用 AI 做點正經事，我會先跟它討論一輪——這個任務的目標是什麼、什麼算做完、哪些雷不能踩、要用什麼結構輸出。</p>
+
+<p>討論完，我把這些條件壓成一段「Prompt」（給 AI 的開場指令），然後開一個新對話視窗，把那段 Prompt 貼進去，正式開工。</p>
+
+<p>這套習慣在 2024 年還很合理。當時 AI 助手沒有記憶、沒有預先設好的工作模板、沒有跨對話的協作機制。你不替它做這些準備，它就會把每件事做得很差。</p>
+
+<p>但今天，我自己花了 14 個月在 Claude Code 上面建了一整套個人作業系統。</p>
+
+<p>有負責找資料的，有負責檢查 AI 味的，有負責做 HTML 的，有負責跨領域對照的，有負責記住前幾次對話的。光是最近兩天，我才跑完一輪 AI 評估工具的三次升級，加上整套子代理人協作協議的補強。</p>
+
+<p>那這套老習慣，還需要嗎？</p>
+
+<h2>我的第二大腦回答：兩條結構性命題</h2>
+
+<p>我把問題丟給自己的第二大腦，請它從累積的 900 多張命題卡片裡找答案。它沒有停在「該不該繼續」這層，而是把問題翻成兩條更深的觀察。</p>
+
+<h2>母線 A：成熟的訊號是「手動動作消失」，不是「功能變多」</h2>
+
+<p>第一條命題是這樣的：你要判斷自己的個人 AI 操作系統有沒有成熟，真正能用的標準不是 skill 的數量、不是記憶的容量、不是條目的多寡。</p>
+
+<p>是<strong>原本要自己手動做的準備工作，是不是已經被系統自動完成了</strong>。</p>
+
+<p>這些表面數字都會誤導人。真正的骨架訊號是：「我還在哪些動作上自己手動準備？」那些動作，就是系統還缺對應 skill 的位置。</p>
+
+<h3>換個直覺類比</h3>
+
+<p>判斷一個程式函式庫成不成熟，不是看它有多少函式、文件多厚，是看你寫程式時還要重複貼幾次套版程式碼。套版還沒消失，那個位置就是函式庫沒覆蓋到。</p>
+
+<p>判斷一個工廠製程穩不穩，不是看廠房多新、設備多貴，是看現場師傅每批還要不要手動微調機器。手動還在發生，那個位置就是製程窗口沒鎖好。</p>
+
+<p>判斷一個團隊成不成熟，不是看 SOP 寫多厚，是看跨部門協調動作有沒有消失。協調還在大量發生，那個位置就是平台沒做出來。</p>
+
+<p>骨架是一樣的——成熟度看的是手動動作有沒有消失，不是看擁有多少功能。</p>
+
+<h3>回到我自己的工作流</h3>
+
+<p>我把舊工作流的四個動作對應到 OS 已內建的功能：</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>我以前手動做的</th>
+      <th>OS 已經幫我做了</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>外面跟 AI 討論目標</td>
+      <td>second-brain skill 的查詢與 brainstorming 流程</td>
+    </tr>
+    <tr>
+      <td>列出驗收標準</td>
+      <td>每個 skill 開頭預先寫好的觸發條件與檢查清單</td>
+    </tr>
+    <tr>
+      <td>寫 Prompt 指令</td>
+      <td>skill 本體 + 子代理人協議三件套</td>
+    </tr>
+    <tr>
+      <td>開新對話視窗執行</td>
+      <td>子代理人的乾淨脈絡隔離</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>四個動作都已經內建。我繼續手動跑一遍，等於是在已經有洗碗機的廚房堅持用手洗。</p>
+
+<h3>反過來說——什麼時候該手動？</h3>
+
+<p>如果某個任務不在我現有 skill 任何一個的觸發範圍裡，那個任務值得手動準備一次。但那次手動準備的目的，不是「再做一次」。</p>
+
+<p>而是<strong>把這次的手動動作寫成新的 skill 然後存進去</strong>，下次同類任務就不用再手動了。</p>
+
+<p>這也是我這兩天做的事。AI 評估工具升了三版、子代理人協議補了兩條實戰規則——本質都是把「我手動踩過的坑」變成系統會自動避開的規則。失敗模式被記下變成規則，比 debug 完拍拍灰更有價值。</p>
+
+<h2>母線 B：介面層升級的三段定律</h2>
+
+<p>第二條命題更底層一點。第二大腦把它寫成一句短話：</p>
+
+<blockquote>
+  <p>介面層每升一段，前一段的手動動作就會被內建為子程序。</p>
+</blockquote>
+
+<p>什麼叫「介面層」？把人類跟 AI 互動的歷史拆成三段就清楚了。</p>
+
+<h3>第一段：指令層（2022 – 2024）</h3>
+
+<p>這是 Prompt Engineering 時代。人類手動構築對話脈絡、定義目標、寫好指令、檢查輸出。每個任務都是一次性。我那套老工作流就是這層的典型例子。</p>
+
+<h3>第二段：外骨骼層（2024 – 2025）</h3>
+
+<p>這是 Harness Engineering 時代。Cursor、Aider、LangChain 這些工具出現，把「每次都要重寫一遍指令」這個手動動作打包成可重複的工作流。第一段的手動準備被內建成函式呼叫鏈。</p>
+
+<p>但這層仍有手動成分——使用者要決定用哪個 harness、要手動切換工具、要自己管理多個工作流之間的脈絡。</p>
+
+<h3>第三段：作業系統層（2025 – 2026 的現在）</h3>
+
+<p>這是 Claude Code 的 skill 系統，加上記憶系統、加上子代理人協議組成的層。它把「手動挑哪個外骨骼工具」這個動作也內建。</p>
+
+<p>我說「請讀取我的第二大腦」這句話，系統就會自動進入查詢模式、自動載入 Vault 控制層、自動準備工作環境。我已經不需要決定「現在該用哪個工作流」。</p>
+
+<h3>規律是什麼？</h3>
+
+<p><strong>每升一段，前一段的手動動作就會被新層當作子程序自動執行。</strong></p>
+
+<p>注意「自動執行」這幾個字——舊動作沒有消失，只是執行位置從使用者轉移到系統。</p>
+
+<p>Prompt Engineering 不會過時，它只是從「使用者技能」變成「系統設計者技能」。掌握底層的人，在每一波介面層升級裡會繼續享有優勢。</p>
+
+<h3>這條規律能用來預測下一波</h3>
+
+<p>下一波躍升何時來、會躍到哪去，我們可以從「現在 OS 層還剩哪些手動動作」推測。目前我在 OS 層還在手動做的事情：</p>
+
+<ul>
+  <li>我還在打 <code>/second-brain</code> 觸發 skill。下一代可能變成自動偵測語言訊號直接跑</li>
+  <li>我還在手動決定要不要切 worktree、要不要 dispatch sub-agent。下一代可能變成 OS 自動判斷任務隔離需求</li>
+  <li>我還在手動跨 OS 做工作分流（Claude Code 配 ChatGPT 配 Codex 配 Hermes）。下一代可能是組織級的代理人協作層</li>
+</ul>
+
+<div class="callout tip">
+  <p>哪些動作還沒消失，那裡就是下一波介面升級的待開發空間。</p>
+</div>
+
+<h2>兩條母線合起來說了什麼？</h2>
+
+<p>它們<strong>沒有</strong>說「以後可以不寫 Prompt」。指令工程不會消失，只是被升級了使用者。</p>
+
+<p>它們<strong>沒有</strong>說「OS 越多 skill 越好」。成熟度的指標是「哪些動作消失」，不是「擁有多少」。一個 skill 數量不多但精準覆蓋日常準備動作的 OS，比一堆 skill 但仍需手動切換的 OS 更成熟。</p>
+
+<p>它們<strong>真正</strong>給的，是一條很實用的判準：<strong>仔細觀察自己最近一週還在哪些動作上做手動準備，那就是下一張 skill 該蓋的地方。</strong></p>
+
+<p>至於我自己那套跟了好幾年的老工作流——它沒有消失。它被升級成了我 OS 內部的子程序。它仍在跑，只是不再由我手動執行。</p>
+
+<hr>
+
+<p style="color: var(--muted); font-size: var(--fs-meta);">附註：這兩條命題已寫成 evergreen Card 收進第二大腦 Vault，掛在「MOC AI 工作流條件設計與收斂控制」之下。</p>
+
+<p style="color: var(--muted); font-size: var(--fs-meta);">寫卡過程本身就是這條規律的小型示範——SYNTHESIZE 對話把「跨多卡的同構觀察」這個動作，從手動推導內建為 skill 路由的自動產出。</p>
+
+</article>
+
+<footer>
+最後更新：2026-05-27 · 彥皓 · CC BY 4.0 · 引用請標來源
+</footer>
+
+</main>
+<script>
+  const bar = document.getElementById('progress');
+  window.addEventListener('scroll', () => {
+    const h = document.documentElement;
+    const max = h.scrollHeight - h.clientHeight;
+    const ratio = max > 0 ? h.scrollTop / max : 0;
+    bar.style.transform = 'scaleX(' + ratio + ')';
+  }, { passive: true });
+</script>
+</body>
+</html>
