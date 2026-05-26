@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>跟 AI 看完一支影片之後，我做了什麼？</title>
+<meta name="description" content="一支 Anthropic 官方影片觸發的一日紀錄：影片洞見、對映自己工具鏈、動手做最容易的一件事，到順手清掉技術債。AI 從工具變成共同改造工具的夥伴。">
+
+<link rel="canonical" href="https://hale80427.github.io/brain-cards/claude-code-upgrade-log/">
+<meta name="author" content="彥皓">
+
+<meta property="og:type" content="article">
+<meta property="og:title" content="跟 AI 看完一支影片之後，我做了什麼？">
+<meta property="og:description" content="一支 Anthropic 官方影片觸發的一日紀錄：影片洞見、對映自己工具鏈、動手做最容易的一件事，到順手清掉技術債。">
+<meta property="og:url" content="https://hale80427.github.io/brain-cards/claude-code-upgrade-log/">
+<meta property="og:image" content="https://hale80427.github.io/brain-cards/og-default.jpg">
+<meta property="og:locale" content="zh_TW">
+
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="跟 AI 看完一支影片之後，我做了什麼？">
+<meta name="twitter:description" content="一支 Anthropic 官方影片觸發的一日紀錄：影片洞見、對映自己工具鏈、動手做最容易的一件事。">
+<meta name="twitter:image" content="https://hale80427.github.io/brain-cards/og-default.jpg">
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "跟 AI 看完一支影片之後，我做了什麼？",
+  "description": "一支 Anthropic 官方影片觸發的一日紀錄：影片洞見、對映自己工具鏈、動手做最容易的一件事，到順手清掉技術債。",
+  "datePublished": "2026-05-26",
+  "dateModified": "2026-05-26",
+  "author": { "@type": "Person", "name": "彥皓" },
+  "url": "https://hale80427.github.io/brain-cards/claude-code-upgrade-log/",
+  "inLanguage": "zh-TW",
+  "license": "https://creativecommons.org/licenses/by/4.0/"
+}
+</script>
+
+<style>
+  :root {
+    --bg: #fafaf6;
+    --fg: #1a1a1a;
+    --accent: #8B0000;
+    --muted: #6b5d4f;
+    --border: #e5e0d6;
+    --callout-tip: #f3ece0;
+    --callout-warn: #f5e6d3;
+    --fs-meta: 0.85rem;
+    --fs-body: 1.05rem;
+    --fs-h2: clamp(1.5rem, 3.5vw, 1.75rem);
+    --fs-h1: clamp(2rem, 5vw, 2.75rem);
+    --font-display: "Iowan Old Style", "Apple Garamond", "Baskerville", Georgia, "Times New Roman", "Noto Serif TC", serif;
+    --font-serif: Georgia, "Noto Serif TC", "Songti TC", serif;
+    --font-mono: ui-monospace, SFMono-Regular, "JetBrains Mono", Menlo, monospace;
+    --ease-linear: linear;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #1c1a16;
+      --fg: #f0ebe0;
+      --accent: #e87c6e;
+      --muted: #a8998a;
+      --border: #3a3530;
+      --callout-tip: #2a2520;
+      --callout-warn: #3a2d1c;
+    }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
+  }
+  * { box-sizing: border-box; }
+  body {
+    font-family: var(--font-serif);
+    background: var(--bg);
+    color: var(--fg);
+    line-height: 1.85;
+    margin: 0;
+    padding: 0;
+    -webkit-font-smoothing: antialiased;
+  }
+  .progress-bar {
+    position: fixed; top: 0; left: 0; height: 3px; width: 100%;
+    background: var(--accent); z-index: 100;
+    transform: scaleX(0); transform-origin: left;
+    transition: transform 0.1s var(--ease-linear);
+  }
+  main {
+    max-width: 65ch;
+    margin: 0 auto;
+    padding: clamp(2.5rem, 6vw, 4.5rem) clamp(1.5rem, 4vw, 2rem);
+  }
+  header.hero { margin-bottom: 2rem; }
+  .kicker {
+    font-family: var(--font-serif);
+    font-size: var(--fs-meta);
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin: 0 0 1rem;
+    font-weight: 700;
+  }
+  h1 {
+    font-family: var(--font-display);
+    font-size: var(--fs-h1);
+    line-height: 1.15;
+    margin: 0 0 1.5rem;
+    font-weight: 700;
+    letter-spacing: -0.01em;
+  }
+  h2 {
+    font-family: var(--font-display);
+    font-size: var(--fs-h2);
+    line-height: 1.3;
+    margin: 3rem 0 1.25rem;
+    font-weight: 700;
+    padding-bottom: 0.5rem;
+    border-bottom: 1px solid var(--border);
+  }
+  h3 {
+    font-family: var(--font-display);
+    font-size: var(--fs-body);
+    font-weight: 700;
+    color: var(--accent);
+    line-height: 1.4;
+    margin: 1.75rem 0 0.5rem;
+    letter-spacing: 0.02em;
+  }
+  p { margin: 0 0 1.25rem; }
+  p.dropcap::first-letter {
+    font-family: var(--font-display);
+    font-size: var(--fs-h1);
+    line-height: 0.9;
+    float: left;
+    padding: 0.25rem 0.6rem 0 0;
+    color: var(--accent);
+    font-weight: 900;
+  }
+  .bluf {
+    background: var(--callout-tip);
+    border-left: 3px solid var(--accent);
+    padding: 1.25rem 1.5rem;
+    margin: 1.5rem 0 2.5rem;
+    border-radius: 4px;
+    font-family: var(--font-display);
+    font-style: italic;
+    line-height: 1.7;
+  }
+  .bluf strong {
+    display: block;
+    font-family: var(--font-serif);
+    font-size: var(--fs-meta);
+    letter-spacing: 0.12em;
+    color: var(--accent);
+    margin-bottom: 0.5rem;
+    text-transform: uppercase;
+    font-style: normal;
+    font-weight: 700;
+  }
+  blockquote {
+    font-family: var(--font-display);
+    font-size: var(--fs-body);
+    font-style: italic;
+    border-left: 3px solid var(--accent);
+    margin: 2rem 0;
+    padding: 0.5rem 0 0.5rem 1.5rem;
+    color: var(--fg);
+    line-height: 1.7;
+  }
+  .callout {
+    padding: 1rem 1.25rem;
+    margin: 1.75rem 0;
+    border-radius: 4px;
+    border-left: 3px solid var(--muted);
+    background: var(--callout-tip);
+  }
+  .callout.tip { border-left-color: var(--accent); }
+  .callout.warn { background: var(--callout-warn); border-left-color: #b86e1a; }
+  .callout .label {
+    font-family: var(--font-serif);
+    font-size: var(--fs-meta);
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    font-weight: 700;
+    color: var(--accent);
+    margin-bottom: 0.4rem;
+    display: block;
+  }
+  ol, ul { padding-left: 1.5rem; margin: 0 0 1.25rem; }
+  li { margin-bottom: 0.5rem; line-height: 1.75; }
+  a {
+    color: var(--accent);
+    text-underline-offset: 3px;
+    text-decoration-thickness: 1px;
+  }
+  a:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+  code {
+    font-family: var(--font-mono);
+    background: var(--callout-tip);
+    padding: 0.12em 0.4em;
+    border-radius: 3px;
+    font-size: var(--fs-body);
+    color: var(--accent);
+  }
+  strong { font-weight: 700; color: var(--fg); }
+  hr {
+    border: 0;
+    border-top: 1px solid var(--border);
+    margin: 3rem auto;
+    width: 30%;
+  }
+  footer.meta {
+    margin-top: 4rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--border);
+    font-family: var(--font-serif);
+    font-size: var(--fs-meta);
+    color: var(--muted);
+    text-align: center;
+    letter-spacing: 0.05em;
+  }
+  @media print {
+    .progress-bar { display: none; }
+    body { font-size: var(--fs-body); line-height: 1.6; }
+    main { max-width: 100%; padding: 1cm; }
+  }
+</style>
+</head>
+<body>
+<div class="progress-bar" id="progress"></div>
+<main>
+<header class="hero">
+  <p class="kicker">2026-05-26 · 工作日誌 · 對外白話版</p>
+  <h1>跟 AI 看完一支影片之後，我做了什麼？</h1>
+  <div class="bluf">
+    <strong>BLUF</strong>
+    早上看到 Anthropic 的官方影片「內部怎麼用 Claude Code」，我順手請 AI 反思我自己的用法。接下來幾小時發生的事，讓我覺得「AI 共同改造工具」這件事值得寫下來。
+  </div>
+</header>
+
+<article>
+<!-- narrative: 物件,細節,場景,矛盾,直接引語 (5/5) -->
+
+<p class="dropcap">今天我做了一件事，覺得有意思想分享。早上我在 Anthropic（做出 Claude 這個 AI 助理的公司）的 YouTube 頻道，看到一支官方影片，主題是「Anthropic 自己內部怎麼用 Claude Code」。</p>
+
+<p>Claude Code 是 Claude 的命令列版本——簡單說就是讓 AI 直接幫你動手做事的工具，不只是回答問題，而是真的幫你修改檔案、執行任務、跑流程。</p>
+
+<p>我看完影片，順手跟 AI 說一句：</p>
+
+<blockquote>幫我讀這支影片，反思我過往的用法。</blockquote>
+
+<p>接下來幾個小時發生的事，我覺得值得寫下來。因為這已經不是「我用 AI 寫文字」，而是「我跟 AI 一起改進我們協作的方式」——AI 變成共同改造工具的夥伴，不只是聽指令的工具。</p>
+
+<h2>影片講了什麼？</h2>
+
+<p>那位 Anthropic 的工程師花了 30 分鐘講三件事。</p>
+
+<p><strong>第一，不要一次寫死需求。</strong> 傳統做法是先寫一份規格書再叫 AI 做。新做法是讓 AI 訪談你——AI 主動問你問題，把你心裡那些「我也說不太清楚、但看到會知道對不對」的東西，一步步抽出來。</p>
+
+<p><strong>第二，用 HTML 取代過長的文字規格。</strong> 一份超過 200 行的文字規格，沒人會看完，連同事都不會。但如果是 HTML 的視覺示範，你打開就能看見、能截圖、能直接給意見。</p>
+
+<p><strong>第三，把驗證焊進產品本身。</strong> 不是事後跑測試，而是讓產品自己主動「告訴」AI 它的狀態。這樣 AI 不用猜，AI 跟人讀的是同一份合約。</p>
+
+<p>聽起來都很技術。但三件事的底層是同一個想法：</p>
+
+<blockquote>AI 能力夠強了，我們要改變我們配合它的方式，不要再用對待笨工具的方式去對待它。</blockquote>
+
+<h2>AI 給我自己挑了三個改進機會</h2>
+
+<p>我看完影片，把它丟給 AI 說：「對映我自己的用法，哪些地方需要調整？」</p>
+
+<p>AI 列了三條：</p>
+
+<ol>
+  <li>「多個視覺方向」這招我還沒用。我目前都是讓 AI 一次產一個版本，反覆改。影片主張：對重要的對外文章，先讓 AI 產 3 個不同視覺風格的方向，我選一個再進完整版。這樣不會「全文做完才發現方向不對」。</li>
+  <li>產品自我描述的合約還沒做。我的工具雖然會自動驗證輸出對不對，但驗證方式是「掃描畫面找關鍵字」。影片主張更進一步：讓產品自己「告訴」AI 它的狀態，而不是讓 AI 自己看畫面猜。</li>
+  <li>缺一個給我自己看的儀表板。我目前有 AI 自動驗證、有一鍵跑全部測試，但缺一塊「給人看的圖形化結果」。</li>
+</ol>
+
+<p>三條當中，第一條最容易立刻動手做。第二條結構性較深，需要先有幾個案例累積後再啟動。第三條中期再說。</p>
+
+<p><strong>動手做第一條。</strong></p>
+
+<h2>我加了什麼？</h2>
+
+<p>我有一個叫 <code>/output-html</code> 的小工具。在 AI 圈這種東西叫 skill——你可以理解為「一條我事先設定好的工作流程，喊一聲就自動跑」。它的工作是把我跟 AI 共同產出的內容變成可以發布的網頁文章。</p>
+
+<p>原本流程是七步：判斷讀者是誰、把術語翻成白話、檢查 AI 味、排版、寫成 HTML 檔、驗證、部署到網路上。</p>
+
+<p>我在「檢查 AI 味」跟「排版」中間，插了一個新步驟：<strong>先讓 AI 產 3 個視覺風格的縮影</strong>讓我選。</p>
+
+<p>三個風格錨點是：</p>
+
+<ul>
+  <li><strong>A 編輯雜誌風</strong>：像《經濟學人》或《Wired》長文，襯線字體、大字級、暖色高對比</li>
+  <li><strong>B 工程文檔風</strong>：像 Stripe 或 GitHub 的技術文件，無襯線高密度、單色清爽、左側有導覽</li>
+  <li><strong>C 對話日記風</strong>：像 Substack 上的個人 newsletter，行距寬、邊距大、暖色</li>
+</ul>
+
+<p>每個方向都只產出文章的「首屏縮影」——標題加開頭一段加一個小節範例，不產全文。我看完縮影選一個方向，再進完整排版。</p>
+
+<h2>為什麼這件事值得做？</h2>
+
+<p>關鍵在<strong>早期錨定</strong>。</p>
+
+<p>「文章寫完才覺得方向不對」是個典型陷阱——東西做出來了你不忍心丟，會將就改一改硬上。但如果在很前面就讓你選方向，沒有沉沒成本，你會真的選你要的。</p>
+
+<p>而且這件事<strong>只有 AI 在場才划算</strong>。如果是人類設計師花時間做 3 個方向的縮影才給你選，成本太高你會打消念頭。但 AI 做 3 個縮影成本只比 1 個多 30%–40%，多花的這部分長期被「省下整篇重排」攤平。</p>
+
+<p>這就是影片主講人想傳達的核心：模型能力上來了，要重新校準你跟它配合的方式。</p>
+
+<h2>自我指涉的趣味</h2>
+
+<p>你現在讀的這篇文章，就是用我剛改好的 <code>/output-html</code> 寫出來的。</p>
+
+<p>而且它符合新加步驟的啟用條件：對外發表、文章型、超過 1500 字、同一篇文章第一次跑——所以這篇文章的排版方向，是我從三個縮影裡選出來的（我選了 A 編輯雜誌風）。</p>
+
+<div class="callout tip">
+  <span class="label">dogfood</span>
+  軟體圈有個詞叫 dogfood，字面意思是「自家狗食自家吃」——自己做的工具自己先用，第一個發現 bug 的就是自己。今天這篇就是這個邏輯的具體實踐。
+</div>
+
+<h2>順手清掉技術債</h2>
+
+<p>中午做完上面那波，下午做了第二件事：<strong>把累積的待整理檔案清乾淨</strong>。</p>
+
+<p>我有一個 GitHub 倉庫，你可以把它想成一個雲端的版本控制夾子，裡面記錄我所有工具的每一次修改。</p>
+
+<p>倉庫上面有 14 筆改動我一直忘記同步到雲端。再加上幾個我新建好但還沒納入版本控制的工具檔——加總起來，本機跟雲端之間累積了 19 筆待同步。</p>
+
+<p>這就是工程圈說的「技術債」——當下沒處理、之後處理成本越滾越高的小事堆積。</p>
+
+<p>清的時候遇到一個意外：第一筆改動裡有 9 個影片檔總共 17 MB，雲端用 HTTPS 接收大檔的設定不夠用，整個同步流程斷在中途。</p>
+
+<p>原本最直覺的修法是「永久放寬本機設定」，但這違反我給 AI 的紀律——不要主動改全域設定。所以 AI 改用一個「<strong>只對這一次有效</strong>」的指令參數，順利推完。</p>
+
+<p>這個小細節讓我覺得：</p>
+
+<blockquote>紀律比偷懶值錢。每次有「破例放寬就好」的誘惑時，往往有更乾淨的替代解法，只是要多想一秒鐘。</blockquote>
+
+<p>清完之後本機跟雲端 100% 同步。5 個工具（含我今天剛改的）正式對外可見：</p>
+
+<ul>
+  <li><code>second-brain</code>：我的第二大腦工作流，把所有筆記、知識卡片、思考連成一個可查詢的系統</li>
+  <li><code>book-mirror</code>：把一本書映射到我自己脈絡的工具，讀書時把書的命題對映到我經手過的具體案例</li>
+  <li><code>output-slide</code>：做投影片用的</li>
+  <li><code>parse-doc</code>：把 PDF、PPT、圖片這類文件解構成文字結構，讓 AI 能讀</li>
+  <li><code>output-html</code>：今天剛升級的這個</li>
+</ul>
+
+<h2>整天的紀律</h2>
+
+<p>回頭看一整天，其實只在做一件事——影片裡叫 hill climbing on evals。字面意思是「在評估指標上爬山」，不是字面爬山，是「沿著評估指標一小步一小步往上爬」。</p>
+
+<p>具體節奏是這樣：</p>
+
+<ol>
+  <li><strong>觀察</strong>：讀影片、抽出三個核心命題</li>
+  <li><strong>反思</strong>：對映自己工具鏈現況，找差距</li>
+  <li><strong>動手</strong>：選最容易拿成果的一個改動</li>
+  <li><strong>驗證</strong>：用真實案例（這篇文章）跑一次新功能</li>
+  <li><strong>記錄</strong>：把過程寫下來，下次回看才知道改了什麼、為什麼改</li>
+</ol>
+
+<p>每一步都不大。但合起來，是「跟 AI 一起改進我們合作方式」這件事的具體模樣。</p>
+
+<h2>想說的</h2>
+
+<p>兩年前我以為 AI 工具就是「我下指令、它做事」。現在越來越覺得，AI 工具最有意思的階段，是它變成你共同改進工具本身的夥伴——你跟它一起讀別人的方法、一起反思、一起決定下一步動手做什麼。</p>
+
+<p>這篇文章是這種協作的一個切片。</p>
+
+<p>如果你也在用 Claude 或 ChatGPT 這類工具，下次看到工具相關的文章或影片，不妨直接丟給 AI 問一句：</p>
+
+<blockquote>對映我自己的用法，哪裡可以改進？</blockquote>
+
+<p>它的答案可能會比你預期的具體。</p>
+
+</article>
+
+<hr>
+
+<footer class="meta">
+  最後更新：2026-05-26 · CC BY 4.0 · 引用請標來源
+</footer>
+</main>
+<script>
+  const bar = document.getElementById('progress');
+  window.addEventListener('scroll', () => {
+    const h = document.documentElement;
+    const max = h.scrollHeight - h.clientHeight;
+    const ratio = max > 0 ? h.scrollTop / max : 0;
+    bar.style.transform = 'scaleX(' + ratio + ')';
+  }, { passive: true });
+</script>
+</body>
+</html>
