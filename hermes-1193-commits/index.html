@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>我家 AI 助理今晚一口氣吞了 1193 個更新</title>
+<meta name="description" content="一個 Telegram bot、10 天累積、6 萬多行程式碼變化——從使用者角度看『個人 AI 代理』這條路長什麼樣。">
+
+<link rel="canonical" href="https://hale80427.github.io/brain-cards/hermes-1193-commits/">
+<meta name="author" content="彥皓">
+
+<meta property="og:type" content="article">
+<meta property="og:title" content="我家 AI 助理今晚一口氣吞了 1193 個更新">
+<meta property="og:description" content="一個 Telegram bot、10 天累積、6 萬多行程式碼變化——從使用者角度看『個人 AI 代理』這條路長什麼樣。">
+<meta property="og:url" content="https://hale80427.github.io/brain-cards/hermes-1193-commits/">
+<meta property="og:image" content="https://hale80427.github.io/brain-cards/og-default.jpg">
+<meta property="og:locale" content="zh_TW">
+
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="我家 AI 助理今晚一口氣吞了 1193 個更新">
+<meta name="twitter:description" content="一個 Telegram bot、10 天累積、6 萬多行程式碼變化——從使用者角度看『個人 AI 代理』這條路長什麼樣。">
+<meta name="twitter:image" content="https://hale80427.github.io/brain-cards/og-default.jpg">
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "我家 AI 助理今晚一口氣吞了 1193 個更新",
+  "description": "一個 Telegram bot、10 天累積、6 萬多行程式碼變化——從使用者角度看『個人 AI 代理』這條路長什麼樣。",
+  "datePublished": "2026-05-27",
+  "dateModified": "2026-05-27",
+  "author": { "@type": "Person", "name": "彥皓" },
+  "url": "https://hale80427.github.io/brain-cards/hermes-1193-commits/",
+  "inLanguage": "zh-TW",
+  "license": "https://creativecommons.org/licenses/by/4.0/"
+}
+</script>
+
+<style>
+  :root {
+    --bg: #fafaf6;
+    --fg: #1a1a1a;
+    --accent: #8B0000;
+    --muted: #6a6a6a;
+    --border: #e8e2d4;
+    --callout-tip: #f4ede0;
+    --callout-warn: #fdf3e7;
+    --accent-soft: rgba(139, 0, 0, 0.08);
+    --callout-warn-border: #d97706;
+    --fs-meta: 0.8125rem;
+    --fs-body: 0.9375rem;
+    --fs-h2:   clamp(1.5rem, 3.5vw, 1.75rem);
+    --fs-h1:   clamp(2rem, 5vw, 2.75rem);
+    --font-display: "Playfair Display", "Noto Serif TC", Georgia, serif;
+    --font-body: "Inter", -apple-system, BlinkMacSystemFont, "Helvetica Neue", "Noto Sans TC", system-ui, sans-serif;
+    --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+    --ease-linear: linear;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #1a1a1a;
+      --fg: #f0f0e8;
+      --accent: #e87c6e;
+      --muted: #999;
+      --border: #333;
+      --callout-tip: #2a2620;
+      --callout-warn: #3a2d1c;
+      --accent-soft: rgba(232, 124, 110, 0.12);
+    }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
+  }
+  * { box-sizing: border-box; }
+  html, body { overflow-x: clip; }
+  body {
+    font-family: var(--font-body);
+    font-size: var(--fs-body);
+    background: var(--bg);
+    color: var(--fg);
+    line-height: 1.7;
+    margin: 0;
+    padding: 0;
+    -webkit-font-smoothing: antialiased;
+  }
+  .progress-bar {
+    position: fixed; top: 0; left: 0; height: 3px; width: 100%;
+    background: var(--accent); z-index: 100;
+    transform: scaleX(0); transform-origin: left;
+    transition: transform 0.1s var(--ease-linear);
+  }
+  main {
+    max-width: 75ch;
+    margin: 0 auto;
+    padding: clamp(2rem, 5vw, 4rem) clamp(1.5rem, 4vw, 2rem);
+  }
+  h1 { font-family: var(--font-display); font-size: var(--fs-h1); line-height: 1.2; margin: 0 0 1rem; font-weight: 700; letter-spacing: -0.01em; }
+  h2 { font-family: var(--font-display); font-size: var(--fs-h2); line-height: 1.3; margin: 3rem 0 1rem; padding-bottom: 0.5rem; border-bottom: 1px solid var(--border); font-weight: 600; }
+  h3 { font-size: var(--fs-body); font-weight: 700; line-height: 1.4; margin: 1.75rem 0 0.5rem; color: var(--accent); }
+  p { margin: 0 0 1.1rem; }
+  ul, ol { margin: 0 0 1.1rem; padding-left: 1.5rem; }
+  li { margin-bottom: 0.4rem; }
+  a { color: var(--accent); text-underline-offset: 3px; }
+  a:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+  strong { font-weight: 600; }
+  .bluf { background: var(--callout-tip); border-left: 3px solid var(--accent); padding: 1.25rem 1.5rem; margin: 1.5rem 0 2.5rem; border-radius: 4px; }
+  .bluf strong { display: block; font-size: var(--fs-meta); letter-spacing: 0.05em; color: var(--accent); margin-bottom: 0.5rem; text-transform: uppercase; font-weight: 700; }
+  .bluf p:last-child { margin-bottom: 0; }
+  .lead-paragraph::first-letter { font-family: var(--font-display); float: left; font-size: var(--fs-h1); line-height: 0.85; padding: 0.1em 0.1em 0 0; color: var(--accent); font-weight: 700; }
+  .callout { padding: 1rem 1.25rem; margin: 1.5rem 0; border-radius: 4px; border-left: 3px solid var(--muted); }
+  .callout p:last-child { margin-bottom: 0; }
+  .callout.tip { background: var(--callout-tip); border-left-color: var(--accent); }
+  .callout.warn { background: var(--callout-warn); border-left-color: var(--callout-warn-border); }
+  blockquote { margin: 1.5rem 0; padding: 0.75rem 0 0.75rem 1.25rem; border-left: 3px solid var(--accent); color: var(--fg); font-style: italic; background: var(--accent-soft); border-radius: 0 4px 4px 0; }
+  blockquote p:last-child { margin-bottom: 0; }
+  table { border-collapse: collapse; width: 100%; margin: 1.5rem 0; font-size: var(--fs-body); }
+  th, td { padding: 0.55rem 0.75rem; border: 1px solid var(--border); text-align: left; vertical-align: top; }
+  th { background: var(--callout-tip); font-weight: 600; }
+  code { font-family: var(--font-mono); background: var(--accent-soft); color: var(--accent); padding: 0.1em 0.4em; border-radius: 3px; font-size: var(--fs-body); }
+  footer p { color: var(--muted); font-size: var(--fs-meta); margin-top: 4rem; padding-top: 1.5rem; border-top: 1px solid var(--border); }
+  @media print {
+    :root { --fs-body: 11pt; }
+    .progress-bar { display: none; }
+    body { line-height: 1.6; }
+    main { max-width: 100%; padding: 1cm; }
+  }
+</style>
+</head>
+<body>
+<div class="progress-bar" id="progress"></div>
+<main>
+<header>
+<h1>我家 AI 助理今晚一口氣吞了 1193 個更新</h1>
+<p style="color: var(--muted); font-size: var(--fs-meta); margin: 0 0 1.5rem;">一個 Telegram bot、10 天累積、6 萬多行程式碼變化——從使用者角度看「個人 AI 代理」這條路長什麼樣</p>
+<div class="bluf">
+<strong>BLUF</strong>
+<p>我手機 Telegram 上有一個 bot，叫 Hermes。</p>
+<p>它跑在我家 Mac mini 上，是個 AI 助理——可以幫我查筆記庫、發訊息給 Claude Code、做投影片、彙整 YouTube 影片。</p>
+<p>它的「大腦」可以選 OpenAI 的 GPT-5.5 或 xAI 的 Grok 4.3。</p>
+<p>今晚我跑了一次 <code>hermes update</code>，一次吞下 1193 個累積更新。上次更新停在 5/17，今天 5/27 一口氣補完。</p>
+<p>這次更新刪了一萬多行舊程式、改寫了主對話流程的核心、修了我上週開始遇到的一個怪故障、還送了 3 個新功能。</p>
+<p style="margin-bottom: 0;">這篇用「使用者會感受到什麼變化」的角度，記一下這次大跳版帶來的差別。</p>
+</div>
+</header>
+<!-- narrative: 物件,細節,場景,矛盾 (4/5 命中) -->
+<article>
+
+<h2>為什麼今晚會去更新？因為它先壞了</h2>
+<p class="lead-paragraph">上週開始我發現一件怪事。對 Hermes 用 GPT-5.5 講話，它都會回我一個錯誤訊息 <code>'NoneType' object is not iterable</code>。</p>
+
+<p>換成 Grok 4.3 就正常。我以為是 OpenAI 那邊餘額有問題，去他們網站確認帳戶配額其實還很多。</p>
+
+<p>真正的原因比想像中有趣。OpenAI 在上週某個時間點偷偷改了 API 規格（API 是「程式跟程式之間溝通的接口」）。</p>
+
+<p>他們的 ChatGPT Codex 後端回應結構有個欄位，從「會給內容」改成「可能是空的」。</p>
+
+<p>問題是 Hermes 用的 OpenAI 程式套件（SDK，「別人寫好的工具包」）拿到「空的」就當「有清單」去走訪，直接炸。</p>
+<p>這就是 NoneType 訊息的來源。</p>
+
+<p>換成 Grok 4.3 沒事，是因為它走完全不同的網路路徑，跟 OpenAI 那條故障路線沒重疊。</p>
+
+<div class="callout warn">
+<p><strong>「平台級事件」的特性</strong>：你的環境沒變、餘額沒少、設定沒動，但你的某個工具突然就壞掉。原因永遠在外面、永遠在公告之外、永遠來不及反應。</p>
+</div>
+
+<h2>這次官方修法很妙：與其修 bug，不如不走那條路</h2>
+<p>如果你是 Hermes 開發團隊，你會怎麼修這個 bug？最直覺的做法是：</p>
+
+<blockquote>
+<p>「OpenAI 那個欄位有時候是空的，我加一個檢查，空的就跳過。」</p>
+</blockquote>
+
+<p>但 Hermes 的選擇更聰明：放棄 OpenAI 程式套件提供的「串流回應解析助手」，改成自己直接讀原始事件流。</p>
+
+<p>原始事件流是 SSE（Server-Sent Events），伺服器主動推送訊息的方式。為什麼這個選擇更好？</p>
+
+<ul>
+<li>OpenAI 程式套件是別人寫的，下次再出 bug 你還是被綁架</li>
+<li>自己讀原始事件流等於你掌握每一步發生什麼事</li>
+<li>一勞永逸——以後 OpenAI 再改規格，你只要對應自己的解析邏輯就好</li>
+</ul>
+
+<p>這個哲學蠻像「自己種菜不買菜」——前期多花力氣，但獨立性換到手了。</p>
+
+<p>下次菜市場斷貨也不會影響餐桌。</p>
+<p>順帶這次更新還加了相關的「靜默卡死偵測」、「串流啟動計時警告」、「逾時設定」等近 10 條強化，把整個 OpenAI 鏈路重新加固一次。</p>
+
+<h2>你在 Telegram 端會感受到的 3 個變化</h2>
+
+<h3>變化 1｜開機變快</h3>
+<ul>
+<li>指令列工具啟動快了 63%——這是 update 訊息裡寫的數字</li>
+<li>對我來說：日常開機後 Hermes 服務啟動更快、定時排程觸發的對話延遲更低</li>
+</ul>
+
+<h3>變化 2｜對話穩定性提升</h3>
+<ul>
+<li>Telegram「打字中⋯」心跳變更穩——以前偶爾 Telegram 那邊顯示對方還在打字、其實 Hermes 已經卡住沒回應</li>
+<li>現在心跳會就地更新而不是不斷重發訊息</li>
+<li>對應的：bot 在跑長任務時的中間說明訊息持續開啟，會持續告訴你進度</li>
+</ul>
+
+<h3>變化 3｜切換模型更安全</h3>
+<ul>
+<li>以前我用 <code>/switch_model grok-4.3</code> 切換模型時，如果重新登入失敗，會話狀態（session，「同一段對話的脈絡記憶」）會卡在半新半舊</li>
+<li>這次新增：切換失敗會自動退回原本的模型，不會留下殘破狀態，可以直接重試</li>
+</ul>
+
+<h2>新增 3 個內建工具 + 8 個現有工具更新</h2>
+<p>Hermes 的設計哲學是「核心薄、技能多」——核心程式碼少、能力靠各種獨立的「skill」擴展。這次內建 3 個新 skill：</p>
+
+<table>
+<thead>
+<tr><th>名字</th><th>用途</th></tr>
+</thead>
+<tbody>
+<tr>
+<td><code>s6-container-supervision</code></td>
+<td>容器服務監看。Container 是把程式包成「可攜帶獨立環境」的技術，s6 是其中一個監看工具。這個 skill 讓你從 Telegram 監看容器健康狀態</td>
+</tr>
+<tr>
+<td><code>baoyu-article-illustrator</code></td>
+<td>文章配圖。給文字段落、它自動生對應插圖。對我來說很有用——之前寫部落格都自己找配圖很費時</td>
+</tr>
+<tr>
+<td><code>kanban-codex-lane</code></td>
+<td>看板與 Codex 的整合。Kanban 是任務看板，Codex 是 OpenAI 的程式代理工具。這 skill 讓任務丟進看板、Codex 自動處理</td>
+</tr>
+</tbody>
+</table>
+
+<p>另外 8 個既有 skill 也大幅更新：</p>
+
+<ul>
+<li><code>polymarket</code>（預測市場資料）</li>
+<li><code>arxiv</code>（學術論文搜尋）</li>
+<li><code>xurl</code>（X / Twitter 連結處理）</li>
+<li><code>kanban-worker</code></li>
+<li><code>comfyui</code>（圖像生成工具）</li>
+<li><code>maps</code></li>
+<li><code>google-workspace</code></li>
+<li><code>ocr-and-documents</code>（文件文字辨識）</li>
+</ul>
+
+<p>我自己改過的 4 個 skill 在這次更新中全部被保留。</p>
+
+<p>這是 Hermes 設計上有趣的地方——它區分「上游內建版本」與「使用者覆寫版本」，不會無腦覆蓋。</p>
+
+<h2>其他值得知道的變化</h2>
+
+<h3>新出網頁端 Dashboard 認證</h3>
+<p>以前 Hermes 主要透過 Telegram 跟指令列操作，網頁端不完整。這次新加完整的認證系統（共 15 個相關修改）——對團隊使用場景應該蠻關鍵。</p>
+
+<h3>Kanban 大幅進化</h3>
+<p>看板功能加了 68 個修改（45 個故障修正 + 23 個新功能）。</p>
+
+<p>顯然這次版本的主推重點之一是把 Kanban 推到「可作為主力工作流」的程度。</p>
+
+<h3>Grok / xAI 也順手強化</h3>
+<p>Grok 4.3 的 OAuth（網頁授權登入機制）跟 slash command（斜線指令）也順手修了 12 條。雖然我這條鏈路沒壞，但跟著穩定一波也好。</p>
+
+<h3>安全強化</h3>
+<p>跟安全相關的修改有 23 條。具體訊息沒列細項，但顯然官方在持續加固。</p>
+
+<h2>這條「個人 AI 代理」路給我的 3 個反思</h2>
+<p>跑完今晚這次 update（外加為自己的客製功能補做手動整合，這部分明天再說），我有 3 個感受。</p>
+
+<h3>反思 1：開源 + 個人化 = 享受社群迭代速度 + 自己掌控資料</h3>
+<p>1193 個 commits（commit 是「一次程式修改紀錄」）是 NousResearch 這家公司的開源團隊 + 社群在 10 天內的累積貢獻。</p>
+
+<p>如果我自己從零寫一個 AI bot，這 10 天會少掉幾百個別人已經寫好的功能。</p>
+
+<p>但若我用商業 SaaS bot（例如直接用 ChatGPT app），我又沒辦法改它的系統提示詞、自己加擴充功能、整合自家工具。</p>
+
+<p>「開源 + 跑在自己機器」是這兩個極端的中間選項——它把「社群迭代速度」跟「資料自主」這兩件原本互斥的事兼顧起來。</p>
+
+<h3>反思 2：但代價是要懂得保護自己的客製化</h3>
+<p>今晚我發現我 5/17 寫了一個叫 Phase 7.3 的功能一直沒進到 git。</p>
+<p>這個功能讓某類安全攔截訊息能原文 forward 給用戶，不被 AI 改寫成自己的話。</p>
+
+<p>如果裸跑 <code>hermes update</code>，那個改動會被 1193 個 commits 沖掉。</p>
+
+<p>所以實際走「建專屬分支 + 提交保護 + update + 手動整合回主線」是個一小時左右的活。</p>
+
+<div class="callout tip">
+<p><strong>「封版 ≠ 已進 git」</strong>——這個教訓正是我今晚補成永久備忘的原因。下次同情境就不會再踩。</p>
+</div>
+
+<h3>反思 3：平台級故障在外面、你的工具壞了但你沒做錯任何事</h3>
+<p>這次 NoneType bug 教會我一個排錯紀律。</p>
+<p>遇到平台 / 工具庫 / 雲端服務層的突發故障，先 5 分鐘搜社群（GitHub issues / Reddit / Twitter）驗證是不是大規模事件。</p>
+<p>再決定要不要本機深挖。</p>
+
+<p>我本機花 15 分鐘 6 步追到 SDK 那行 bug 觸發點。</p>
+
+<p>後來才知道 Hermes 共同創辦人 Teknium 一早就在 Twitter 公告：</p>
+
+<blockquote>
+<p>「OpenAI 改規格，跑 <code>hermes update</code> 就好」</p>
+</blockquote>
+
+<p>本機深挖有獨家洞察價值（我追的過程順便發現「為什麼 Grok 沒事」的細節），但作為解 bug 的 step 1 ROI 不高。</p>
+
+<h2>收尾</h2>
+<p>如果 1193 個 commits 是 10 天的累積，那這條「個人 AI 代理」養成的路其實是：每天有一群人持續在改你身邊的工具，你要學會跟它共生。</p>
+
+<p>差別在於——你選擇被動接收（商業 SaaS），還是主動參與（開源 + 個人化）。</p>
+
+<p>後者麻煩、需要一點工程肌肉、偶爾要花一晚 debug；但回報是你的 AI 真的是「你的」。</p>
+
+<p>今晚這次 update 是我第一次明確感受到這個 trade-off 的重量。值不值得？對我來說是。</p>
+
+</article>
+<footer>
+<p>最後更新：2026-05-27 · CC BY 4.0 · 引用請標來源</p>
+</footer>
+</main>
+<script>
+  const bar = document.getElementById('progress');
+  window.addEventListener('scroll', () => {
+    const h = document.documentElement;
+    const max = h.scrollHeight - h.clientHeight;
+    const ratio = max > 0 ? h.scrollTop / max : 0;
+    bar.style.transform = 'scaleX(' + ratio + ')';
+  }, { passive: true });
+</script>
+</body>
+</html>
