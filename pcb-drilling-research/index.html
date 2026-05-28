@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>PCB 鑽孔研究：AI 伺服器的供應鏈瓶頸，藏在一支 0.1mm 鑽針裡</title>
+<meta name="description" content="AI 伺服器讓單支鑽針從打 3000+ 孔掉到 200 孔，Union Tool 與 M9 板材重新定義整條高階供應鏈。">
+
+<link rel="canonical" href="https://hale80427.github.io/brain-cards/pcb-drilling-research/">
+<meta name="author" content="彥皓">
+
+<meta property="og:type" content="article">
+<meta property="og:title" content="PCB 鑽孔研究：AI 伺服器的供應鏈瓶頸，藏在一支 0.1mm 鑽針裡">
+<meta property="og:description" content="AI 伺服器讓單支鑽針從打 3000+ 孔掉到 200 孔，Union Tool 與 M9 板材重新定義整條高階供應鏈。">
+<meta property="og:url" content="https://hale80427.github.io/brain-cards/pcb-drilling-research/">
+<meta property="og:image" content="https://hale80427.github.io/brain-cards/og-default.jpg">
+<meta property="og:locale" content="zh_TW">
+
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="PCB 鑽孔研究：AI 伺服器的供應鏈瓶頸，藏在一支 0.1mm 鑽針裡">
+<meta name="twitter:description" content="AI 伺服器讓單支鑽針從打 3000+ 孔掉到 200 孔，Union Tool 與 M9 板材重新定義整條高階供應鏈。">
+<meta name="twitter:image" content="https://hale80427.github.io/brain-cards/og-default.jpg">
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "PCB 鑽孔研究：AI 伺服器的供應鏈瓶頸，藏在一支 0.1mm 鑽針裡",
+  "description": "AI 伺服器讓單支鑽針從打 3000+ 孔掉到 200 孔，Union Tool 與 M9 板材重新定義整條高階供應鏈。",
+  "datePublished": "2026-05-28",
+  "dateModified": "2026-05-28",
+  "author": { "@type": "Person", "name": "彥皓" },
+  "url": "https://hale80427.github.io/brain-cards/pcb-drilling-research/",
+  "inLanguage": "zh-TW",
+  "license": "https://creativecommons.org/licenses/by/4.0/"
+}
+</script>
+
+<style>
+  :root {
+    --bg: oklch(98.4% 0.004 106.5);
+    --fg: oklch(21.8% 0 0);
+    --accent: oklch(54.3% 0.174 29.7);
+    --accent-warn: oklch(66.6% 0.157 58.3);
+    --muted: oklch(51.0% 0 0);
+    --border: oklch(92.1% 0.007 106.5);
+    --callout-tip: oklch(95.7% 0.014 174.2);
+    --callout-warn: oklch(96.9% 0.019 72.6);
+    --fs-meta: 0.85rem;
+    --fs-body: 1rem;
+    --fs-h2:   clamp(1.3rem, 3vw, 1.5rem);
+    --fs-h1:   clamp(1.75rem, 4vw, 2.25rem);
+    --font-serif: "Noto Serif TC", Georgia, serif;
+    --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+    --ease-linear: linear;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: oklch(21.8% 0 0);
+      --fg: oklch(95.3% 0.011 106.6);
+      --accent: oklch(70.4% 0.136 28.7);
+      --accent-warn: oklch(76.9% 0.165 70.1);
+      --muted: oklch(68.3% 0 0);
+      --border: oklch(32.1% 0 0);
+      --callout-tip: oklch(30.9% 0.029 178.3);
+      --callout-warn: oklch(30.7% 0.034 73.5);
+    }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
+  }
+  * { box-sizing: border-box; }
+  body {
+    font-family: var(--font-serif);
+    background: var(--bg);
+    color: var(--fg);
+    line-height: 1.8;
+    margin: 0;
+    padding: 0;
+    -webkit-font-smoothing: antialiased;
+  }
+  .progress-bar {
+    position: fixed; top: 0; left: 0; height: 3px; width: 100%;
+    background: var(--accent); z-index: 100;
+    transform: scaleX(0); transform-origin: left;
+    transition: transform 0.1s var(--ease-linear);
+  }
+  main {
+    max-width: 680px;
+    margin: 0 auto;
+    padding: clamp(2rem, 5vw, 4rem) clamp(1.5rem, 4vw, 2rem);
+  }
+  h1 { font-size: var(--fs-h1); line-height: 1.3; margin: 0 0 1rem; }
+  h2 { font-size: var(--fs-h2); line-height: 1.4; margin: 2.5rem 0 0.75rem; padding-bottom: 0.5rem; border-bottom: 1px solid var(--border); }
+  h3 { font-size: var(--fs-body); font-weight: 700; line-height: 1.4; margin: 1.75rem 0 0.5rem; color: var(--accent); }
+  p { margin: 0 0 1.25rem; }
+  ul, ol { margin: 0 0 1.25rem; padding-left: 1.5rem; }
+  li { margin-bottom: 0.4rem; }
+  a { color: var(--accent); text-underline-offset: 3px; }
+  a:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+  .bluf { background: var(--callout-tip); border-left: 3px solid var(--accent); padding: 1.25rem 1.5rem; margin: 1.5rem 0 2rem; border-radius: 4px; }
+  .bluf strong { display: block; font-size: var(--fs-meta); letter-spacing: 0.05em; color: var(--accent); margin-bottom: 0.5rem; text-transform: uppercase; }
+  .bluf ul { margin: 0; }
+  .callout { padding: 1rem 1.25rem; margin: 1.5rem 0; border-radius: 4px; border-left: 3px solid var(--muted); }
+  .callout.tip { background: var(--callout-tip); border-left-color: var(--accent); }
+  .callout.warn { background: var(--callout-warn); border-left-color: var(--accent-warn); }
+  table { border-collapse: collapse; width: 100%; margin: 1.5rem 0; font-size: var(--fs-body); display: block; overflow-x: auto; }
+  th, td { padding: 0.6rem 0.8rem; border: 1px solid var(--border); text-align: left; vertical-align: top; }
+  th { background: var(--callout-tip); font-weight: 600; }
+  code { font-family: var(--font-mono); background: var(--callout-tip); padding: 0.1em 0.4em; border-radius: 3px; font-size: var(--fs-body); }
+  .meta { color: var(--muted); font-size: var(--fs-meta); margin: 0 0 2rem; }
+  .footer-note { color: var(--muted); font-size: var(--fs-meta); margin-top: 4rem; padding-top: 1.5rem; border-top: 1px solid var(--border); }
+  @media print {
+    .progress-bar { display: none; }
+    body { font-size: 11pt; line-height: 1.6; }
+    main { max-width: 100%; padding: 1cm; }
+  }
+</style>
+</head>
+<body>
+<div class="progress-bar" id="progress"></div>
+<main>
+<header>
+<h1>PCB 鑽孔研究：AI 伺服器的供應鏈瓶頸，藏在一支 0.1mm 鑽針裡</h1>
+<p class="meta">2026-05-28 · 投資分析筆記</p>
+<div class="bluf">
+<strong>BLUF</strong>
+<ul>
+<li>AI 伺服器讓單支鑽針打孔數從 3000+ 孔掉到約 200 孔，高階鍍膜鑽針嚴重供不應求</li>
+<li>龍頭仍是日本 Union Tool（佑能工具）——自製設備、塗層技術（ULF 潤滑膜）與 0.08mm 以下超微徑製程</li>
+<li>真正卡關不是「鑽得多深」，是 M9 板材 + 多層板 + 機械鑽孔三件事疊在一起的物理極限</li>
+</ul>
+</div>
+</header>
+<article>
+<!-- narrative: 物件,細節,矛盾 -->
+
+<h2>為什麼 Union Tool 一直是龍頭</h2>
+
+<p>目前 PCB 鑽孔領域（尤其是微型鑽頭），技術與整體實力最強的仍是日本的 Union Tool（佑能工具）。它的護城河有兩層：</p>
+
+<ul>
+<li>自製設備 + 極高製程穩定性：在超微徑（0.08mm 以下）、高深寬比、高階 HDI / IC 載板應用上，品質與壽命仍是業界標竿</li>
+<li>塗層與幾何設計：例如 ULF 潤滑膜（Ultra-Low-Friction）這類專屬塗層，加上精密刃口設計，扛得住 AI 伺服器、高層數（28–46 層以上）、硬質板材的嚴苛鑽孔需求</li>
+</ul>
+
+<p>AI 伺服器帶來結構性變化：板層數暴增、板材更硬更厚。</p>
+
+<p><strong>單支鑽針打孔數從過去 3000+ 孔掉到 600 孔左右，最高階板甚至只剩 200 孔。</strong></p>
+
+<p>高階鍍膜鑽針嚴重供不應求，原本就強的高階玩家（Union Tool + 台灣的尖點 Topoint）更吃香。</p>
+
+<div class="callout tip">
+<strong>結論</strong>：0.1mm 以下或高難度板材優先選 Union Tool。資料來源：<a href="https://www.digitimes.com/news/a20260309PD233/pcb-topoint-2026-high-end-sales.html" target="_blank" rel="noopener">Digitimes 2026-03-09 報導</a>。
+</div>
+
+<h2>三種板子的差別</h2>
+
+<p>普通 PCB、HDI、IC 載板常被混為一談，但它們解決的問題完全不同。</p>
+
+<table>
+<thead>
+<tr><th>類別</th><th>比喻</th><th>技術核心</th></tr>
+</thead>
+<tbody>
+<tr><td>普通 PCB</td><td>一般電線把家電接起來</td><td>線粗、空間大，夠用但塞不下太多東西</td></tr>
+<tr><td>HDI（高密度互連）</td><td>極細的線 + 立體高架橋</td><td>微盲孔（Microvia）、埋孔（Buried Via），孔可只打到某層，不貫穿整塊板</td></tr>
+<tr><td>IC 載板</td><td>晶片與外面世界的精密轉接器</td><td>ABF 增層膜（Build-up Film）一層一層疊上</td></tr>
+</tbody>
+</table>
+
+<ul>
+<li>HDI 讓手機、平板、穿戴又薄又強。同樣大小可以塞進更多零件、走更多路</li>
+<li>IC 載板直接把 CPU、GPU、記憶體晶片「黏」上去。晶片本身只有指甲蓋大小，腳位卻多到幾千個，間距極小，必須極度精準、散熱好、訊號傳輸快</li>
+</ul>
+
+<h2>什麼叫「高階板」</h2>
+
+<p>四個條件同時成立才叫高階：</p>
+<ul>
+<li>層數更多（常 10 層以上，甚至 20–40 層）</li>
+<li>線路更細</li>
+<li>孔更小（多數小於 0.1mm）</li>
+<li>材料更硬更貴</li>
+</ul>
+
+<p>主要用在 AI 伺服器、旗艦手機、高階筆電、車用電子、5G 基地台。加工難在兩件事：</p>
+
+<ul>
+<li>孔超小、超多：一支板可能要打幾萬甚至十幾萬個極小的孔，孔要非常圓、位置要非常準，否則整塊板報廢</li>
+<li>板子又厚又硬：層數多、材料高階（含玻璃纖維、特殊樹脂），普通鑽頭打幾百個孔就磨損或斷掉</li>
+</ul>
+
+<h2>M9 是什麼？為什麼這麼難打孔</h2>
+
+<p>M9 不是「板子種類」，而是銅箔基板（CCL）材料的最高階規格（對標 Mitsubishi 的 M9 系列，或台 / 中系廠商同級材料）。它由三種高階材料組成：</p>
+
+<ul>
+<li>Q 布（石英玻璃纖維布）：比普通玻璃布更純、更低損耗</li>
+<li>超低損耗樹脂（Df 通常 &lt; 0.0013）</li>
+<li>極低輪廓銅箔（HVLP，Hyper Very Low Profile）</li>
+</ul>
+
+<p>用在 NVIDIA Rubin 架構、GB200 後續高階 AI 伺服器、1.6T 交換器，目的是 224Gbps 以上的極高速傳輸減少訊號損失。</p>
+
+<table>
+<thead>
+<tr><th>等級</th><th>比喻</th></tr>
+</thead>
+<tbody>
+<tr><td>普通 PCB 材料</td><td>一般馬路</td></tr>
+<tr><td>M8</td><td>高速公路</td></tr>
+<tr><td>M9</td><td>磁浮列車專用軌道——極致低損耗，但貴很多、加工極難</td></tr>
+</tbody>
+</table>
+
+<p>AI 伺服器需要同時傳超多高速訊號，普通 10–20 層不夠用，現在常做到 22–40 層以上（傳聞更高），搭 M9 才能維持訊號品質。</p>
+
+<h3>為什麼鑽針磨損這麼快</h3>
+
+<table>
+<thead>
+<tr><th>板材類型</th><th>單支鑽針孔數</th><th>加工難度</th><th>原因</th></tr>
+</thead>
+<tbody>
+<tr><td>傳統普通多層板</td><td>8,000–10,000 孔</td><td>低</td><td>材料軟、板薄</td></tr>
+<tr><td>一般 HDI</td><td>約 2,000 孔</td><td>中</td><td>孔徑小</td></tr>
+<tr><td>M9 高階厚板</td><td><strong>僅約 200 孔</strong></td><td>極高</td><td>石英布硬 + 板厚 + 精度要求高</td></tr>
+</tbody>
+</table>
+
+<p>四個原因疊在一起：</p>
+
+<ol>
+<li>石英布很硬，像在硬石頭上打洞，會快速磨損鑽針的刃口和側面</li>
+<li>板子又厚又多層，一次穿過很多層，熱量累積更多，鑽針承受的軸向力更大</li>
+<li>孔徑要求精密，誤差容忍極小，容易產生孔壁粗糙、樹脂沾黏（smear）或鑽針偏斜</li>
+<li>結果是鑽針磨損極快、容易斷</li>
+</ol>
+
+<p>這就是為什麼業界特別強調「高階鍍膜鑽針」需求大增。</p>
+
+<h2>M9 vs HDI vs IC 載板：三件事互補不重複</h2>
+
+<p>很多人會把這三個名詞混在一起，但它們其實是不同維度的事：</p>
+
+<table>
+<thead>
+<tr><th>項目</th><th>M9</th><th>高階 HDI</th><th>IC 載板</th></tr>
+</thead>
+<tbody>
+<tr><td>本質</td><td>材料（CCL 銅箔基板等級）</td><td>製程技術（微孔結構）</td><td>產品類型（晶片專用小板）</td></tr>
+<tr><td>主要用途</td><td>AI 伺服器高層數大板</td><td>增加連接密度、縮小板子尺寸</td><td>直接承載 CPU / GPU 等裸晶片</td></tr>
+<tr><td>層數</td><td>常 20–40 層以上</td><td>可應用在高層數板上</td><td>通常 4–12 層（但極細）</td></tr>
+<tr><td>孔特色</td><td>搭配微盲孔使用</td><td>大量使用微盲孔、堆疊孔</td><td>極細微孔 + 增層結構</td></tr>
+<tr><td>材料硬度</td><td>很硬（含石英 Q 布）</td><td>看基材而定</td><td>多用 ABF 膜材</td></tr>
+<tr><td>在系統位置</td><td>主機板、交換器板、背板</td><td>應用在 M9 大板上</td><td>晶片封裝內部</td></tr>
+</tbody>
+</table>
+
+<p>關係：<strong>晶片 → IC 載板 → M9 大板</strong>。三者互補，不互相取代。</p>
+
+<h2>AI 伺服器的三層結構</h2>
+
+<p>以 NVIDIA Rubin 架構為例，從晶片往外推像一棟大樓的三層結構：</p>
+
+<table>
+<thead>
+<tr><th>層</th><th>位置</th><th>比喻</th><th>技術</th></tr>
+</thead>
+<tbody>
+<tr><td>1</td><td>最裡面（最靠晶片）</td><td>頂樓的精密電梯間</td><td>IC 載板：ABF 膜，特徵極細</td></tr>
+<tr><td>2</td><td>中間層</td><td>大樓裡的快速電梯系統</td><td>高階 HDI：微盲孔、堆疊微孔讓訊號上下層快速連接</td></tr>
+<tr><td>3</td><td>最外面（大板）</td><td>整棟大樓的鋼骨 + 高級建材</td><td>M9 多層板：層數非常多，搭 HDI 微孔，鑽孔難度極高</td></tr>
+</tbody>
+</table>
+
+<p>為什麼這三個一起出現？因為 AI 伺服器同時需要三件事：</p>
+<ul>
+<li>極高速傳輸 → 需要 M9 這種超低損耗材料</li>
+<li>極高連接密度 → 需要高階 HDI 的微孔技術</li>
+<li>晶片直接封裝 → 需要 IC 載板</li>
+</ul>
+
+<h2>微盲孔不是一次打完，是一層一層做出來的</h2>
+
+<p>堆疊微盲孔（Stacked Microvias）和交錯微盲孔（Staggered Microvias）採用循序增層製程。</p>
+
+<p>英文叫 Sequential Build-Up / Any-Layer HDI。不是一次把所有孔打完，是一層一層做出來。以 6 層板為例：</p>
+
+<ol>
+<li>先做內層核心（Core）：通常是 2 或 4 層的傳統板。用機械鑽孔打傳統通孔（Through Hole），然後電鍍</li>
+<li>第一次增層（Build-up Layer 1）：上下兩面各壓合一層 Prepreg（半固化片）+ 銅箔。用雷射鑽孔（Laser Drilling）打微盲孔（只打到下一層，不穿透整塊板）。化學沉銅 + 電鍍，內壁鍍銅讓它導通</li>
+<li>第二次增層（Build-up Layer 2）：再壓合新一層 Prepreg + 銅箔。雷射直接打在之前已鍍好的微盲孔正上方 → 堆疊微盲孔；若打在旁邊 → 交錯微盲孔</li>
+<li>重複以上，直到達到所需層數</li>
+</ol>
+
+<div class="callout tip">
+關鍵：每增加一層就要「壓合 → 雷射打微盲孔 → 電鍍」一次。電鍍是在每層打完孔後立刻做，不會被後面壓上的板子蓋住。
+</div>
+
+<h2>為什麼 M9 還是要用機械鑽，不能全部用雷射</h2>
+
+<p>高階 M9 板通常採用混合結構（Hybrid Construction），不是純 Any-Layer HDI。所以機械鑽孔還是會切到 M9：</p>
+
+<table>
+<thead>
+<tr><th>情境</th><th>為什麼還是要機械鑽</th></tr>
+</thead>
+<tbody>
+<tr><td>多核心壓合（Multi-Core）</td><td>多塊較厚的 M9 Core 各自先做機械通孔，再疊起來壓合；壓合後仍要打貫穿多個 Core 的大通孔（電源、接地、低阻抗孔），這時機械鑽頭一次切多層 M9</td></tr>
+<tr><td>最後階段的機械通孔</td><td>連接器孔、安裝孔、測試孔、關鍵訊號孔——這些孔要貫穿整塊已含大量 M9 的厚板</td></tr>
+<tr><td>高深寬比通孔</td><td>AI 伺服器板很厚，某些通孔的深寬比很高；雷射打不了那麼深或那麼大的孔，必須用機械鑽頭從頭打到底</td></tr>
+</tbody>
+</table>
+
+<h2>後段瓶頸：疊板數下降 + 孔壁品質</h2>
+
+<h3>疊板數量大幅減少</h3>
+
+<p>普通板可以一次疊 3–4 片甚至更多一起鑽。M9 因為材料硬 + 孔徑小（尤其微孔）+ 精度要求高，通常只能單片或極少量疊板。結果是：</p>
+
+<ul>
+<li>機台稼動率下降</li>
+<li>整體產能受限</li>
+<li>單位成本上升</li>
+</ul>
+
+<h3>孔壁品質要求極高</h3>
+
+<p>AI 高速傳輸對孔壁非常敏感：</p>
+<ul>
+<li>孔壁必須光滑</li>
+<li>不能有樹脂沾黏</li>
+<li>後續電鍍要附著良好</li>
+</ul>
+
+<p>M9 材料硬，切削時容易產生較多熱和纖維斷裂，孔壁品質控制難度比一般板高很多。</p>
+
+<h2>收束：投資角度的三條觀察線</h2>
+
+<ol>
+<li><strong>高階鍍膜鑽針是 AI 伺服器產能瓶頸的「隱藏節點」</strong>——產能擴張遠慢於下游 AI 伺服器需求成長</li>
+<li><strong>Union Tool + 台灣尖點（Topoint）</strong> 是少數能在 M9 板材上維持壽命與良率的供應商</li>
+<li><strong>M9 + HDI + IC 載板三件事互補不取代</strong>——誰都不會被誰擠掉，需求一起被推高</li>
+</ol>
+
+</article>
+<footer>
+<p class="footer-note">
+最後更新：2026-05-28 · CC BY 4.0 · 引用請標來源 · 作者：彥皓
+</p>
+</footer>
+</main>
+<script>
+  const bar = document.getElementById('progress');
+  window.addEventListener('scroll', () => {
+    const h = document.documentElement;
+    const max = h.scrollHeight - h.clientHeight;
+    const ratio = max > 0 ? h.scrollTop / max : 0;
+    bar.style.transform = 'scaleX(' + ratio + ')';
+  }, { passive: true });
+</script>
+</body>
+</html>
