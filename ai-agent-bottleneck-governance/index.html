@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AI agent 真正的瓶頸不在模型——從個人開發者到 $200B 對沖基金的同一張圖</title>
+<meta name="description" content="2026 上半年三場 Anthropic talk 從個人、團隊、企業三個尺度，指向同一個結論：AI 應用擴大的瓶頸不是模型能力，而是 context 與 governance 的供給。">
+
+<link rel="canonical" href="https://hale80427.github.io/brain-cards/ai-agent-bottleneck-governance/">
+<meta name="author" content="彥皓">
+
+<meta property="og:type" content="article">
+<meta property="og:title" content="AI agent 真正的瓶頸不在模型——從個人開發者到 $200B 對沖基金的同一張圖">
+<meta property="og:description" content="2026 上半年三場 Anthropic talk 從個人、團隊、企業三個尺度，指向同一個結論：AI 應用擴大的瓶頸不是模型能力，而是 context 與 governance 的供給。">
+<meta property="og:url" content="https://hale80427.github.io/brain-cards/ai-agent-bottleneck-governance/">
+<meta property="og:image" content="https://hale80427.github.io/brain-cards/og-default.jpg">
+<meta property="og:locale" content="zh_TW">
+
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="AI agent 真正的瓶頸不在模型——從個人開發者到 $200B 對沖基金的同一張圖">
+<meta name="twitter:description" content="2026 上半年三場 Anthropic talk 從個人、團隊、企業三個尺度，指向同一個結論：AI 應用擴大的瓶頸不是模型能力，而是 context 與 governance 的供給。">
+<meta name="twitter:image" content="https://hale80427.github.io/brain-cards/og-default.jpg">
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "AI agent 真正的瓶頸不在模型——從個人開發者到 $200B 對沖基金的同一張圖",
+  "description": "2026 上半年三場 Anthropic talk 從個人、團隊、企業三個尺度，指向同一個結論：AI 應用擴大的瓶頸不是模型能力，而是 context 與 governance 的供給。",
+  "datePublished": "2026-05-29",
+  "dateModified": "2026-05-29",
+  "author": { "@type": "Person", "name": "彥皓" },
+  "url": "https://hale80427.github.io/brain-cards/ai-agent-bottleneck-governance/",
+  "inLanguage": "zh-TW",
+  "license": "https://creativecommons.org/licenses/by/4.0/"
+}
+</script>
+
+<style>
+  :root {
+    --bg: oklch(98.4% 0.004 106.5);
+    --fg: oklch(21.8% 0 0);
+    --accent: oklch(54.3% 0.174 29.7);
+    --accent-warn: oklch(66.6% 0.157 58.3);
+    --muted: oklch(51.0% 0 0);
+    --border: oklch(92.1% 0.007 106.5);
+    --callout-tip: oklch(95.7% 0.014 174.2);
+    --callout-warn: oklch(96.9% 0.019 72.6);
+    --fs-meta: 0.85rem;
+    --fs-body: 1rem;
+    --fs-h2:   clamp(1.3rem, 3vw, 1.5rem);
+    --fs-h1:   clamp(1.75rem, 4vw, 2.25rem);
+    --font-serif: "Noto Serif TC", Georgia, serif;
+    --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+    --ease-linear: linear;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: oklch(21.8% 0 0);
+      --fg: oklch(95.3% 0.011 106.6);
+      --accent: oklch(70.4% 0.136 28.7);
+      --accent-warn: oklch(76.9% 0.165 70.1);
+      --muted: oklch(68.3% 0 0);
+      --border: oklch(32.1% 0 0);
+      --callout-tip: oklch(30.9% 0.029 178.3);
+      --callout-warn: oklch(30.7% 0.034 73.5);
+    }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
+  }
+  * { box-sizing: border-box; }
+  body {
+    font-family: var(--font-serif);
+    background: var(--bg);
+    color: var(--fg);
+    line-height: 1.8;
+    margin: 0;
+    padding: 0;
+    -webkit-font-smoothing: antialiased;
+  }
+  .progress-bar {
+    position: fixed; top: 0; left: 0; height: 3px; width: 100%;
+    background: var(--accent); z-index: 100;
+    transform: scaleX(0); transform-origin: left;
+    transition: transform 0.1s var(--ease-linear);
+  }
+  main {
+    max-width: 680px;
+    margin: 0 auto;
+    padding: clamp(2rem, 5vw, 4rem) clamp(1.5rem, 4vw, 2rem);
+  }
+  h1 { font-size: var(--fs-h1); line-height: 1.3; margin: 0 0 1rem; }
+  h2 { font-size: var(--fs-h2); line-height: 1.4; margin: 2.5rem 0 0.75rem; padding-bottom: 0.5rem; border-bottom: 1px solid var(--border); }
+  h3 { font-size: var(--fs-body); font-weight: 700; line-height: 1.4; margin: 1.75rem 0 0.5rem; color: var(--accent); }
+  p { margin: 0 0 1.25rem; }
+  a { color: var(--accent); text-underline-offset: 3px; }
+  a:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+  .bluf { background: var(--callout-tip); border-left: 3px solid var(--accent); padding: 1.25rem 1.5rem; margin: 1.5rem 0 2rem; border-radius: 4px; }
+  .bluf strong { display: block; font-size: var(--fs-meta); letter-spacing: 0.05em; color: var(--accent); margin-bottom: 0.5rem; text-transform: uppercase; }
+  .callout { padding: 1rem 1.25rem; margin: 1.5rem 0; border-radius: 4px; border-left: 3px solid var(--muted); }
+  .callout.tip { background: var(--callout-tip); border-left-color: var(--accent); }
+  .callout.warn { background: var(--callout-warn); border-left-color: var(--accent-warn); }
+  blockquote { margin: 1.5rem 0; padding: 0.5rem 1.25rem; border-left: 3px solid var(--accent); color: var(--muted); font-style: italic; }
+  blockquote p { margin: 0.5rem 0; }
+  hr { border: 0; border-top: 1px solid var(--border); margin: 2.5rem 0; }
+  ul, ol { padding-left: 1.5rem; margin: 0 0 1.25rem; }
+  li { margin-bottom: 0.4rem; }
+  strong { font-weight: 700; }
+  @media print {
+    .progress-bar { display: none; }
+    body { font-size: 11pt; line-height: 1.6; }
+    main { max-width: 100%; padding: 1cm; }
+  }
+</style>
+</head>
+<body>
+<div class="progress-bar" id="progress"></div>
+<main>
+<header>
+<h1>AI agent 真正的瓶頸不在模型——從個人開發者到 $200B 對沖基金的同一張圖</h1>
+<div class="bluf">
+<strong>BLUF</strong>
+過去三年我們以為 AI 進展的瓶頸是模型本身（更大的模型、更長的 context、更好的 reasoning），但 2026 上半年看下來，真正卡住企業與個人擴大 AI 應用的瓶頸是治理——讓 AI 知道「在你的脈絡裡，這個任務到底指什麼、邊界在哪、誰負責、出錯怎麼回滾」。模型能力與治理機制之間，治理才是現在更稀缺的那一邊。
+</div>
+</header>
+<article>
+<!-- narrative: 矛盾,物件,直接引語,細節 -->
+
+<blockquote>
+<p>26 分鐘的 blobotomy、10 週的小團隊、$200B 規模的 skill marketplace。三場看似不相干的 talk，講的是同一件事。</p>
+</blockquote>
+
+<p>本文整理三場 Anthropic 圈最近的 talk，分別來自個人開發者、小團隊、與企業三個尺度。三個尺度的結論一致到令人不舒服。</p>
+
+<hr>
+
+<h2>個人尺度：Omni CTO 的「blobotomy」</h2>
+
+<p>Omni 是一家 AI analytics 公司，CTO 在 Anthropic 場合分享了他們做 agentic analytics harness 的迭代史。整場 talk 的核心詞叫 <strong>blobotomy</strong>，指的是把表面看起來像「LLM 不穩定」的問題，拆解成可以動手術修的架構錯誤。</p>
+
+<p>他們的演化分三階段。</p>
+
+<p>第一階段是補語意層——加 AI context、sample queries、欄位值說明，把資料在這家公司的真正含義局部化到 schema 旁邊。光是這層就解決了一大半「same question, different answer」的尷尬。</p>
+
+<p>第二階段是 agentic loop。重點不是讓模型更會推理，是讓模型在錯誤發生時知道怎麼回復——告訴它怎麼從錯誤恢復、給它 retry budget、認真投資 descriptive error message。這階段他們把模型從 Haiku 升到 Sonnet，但講者強調升模型只是其次，主要還是 harness 架構。</p>
+
+<p>第三階段也就是 blobotomy 本身。CEO 在某次 review 拒絕了團隊「LLM 不穩定」的回答，逼著大家去看 trace。看了 trace 才發現核心問題：outer agent 知道完整任務，但被切出去的 query-generation sub-agent 只知道自己一次能產一條 query。於是 outer agent 派出「同時跨 GitHub PR 與 support data，並 summarize」這種任務時，sub-agent 只能回「我做不到」。這在外部看就是「同類問題隨機失敗」，看 trace 才知道是兩層 agent 的知識邊界切錯了。</p>
+
+<p>他們的解法叫 <strong>consolidate the brain</strong>——把工具收回 outer harness 同一層 agent 持有。複雜 eval 因此大幅改善。</p>
+
+<p>這場 talk 給個人開發者的可移植教訓有三條。</p>
+
+<p>第一，sub-agent 不是越多越好。當任務拆解依賴對工具能力邊界的認知，把 planning 與 execution 切到不同 agent 上會放大失敗。Sub-agent 適合做「乾淨腦袋類」（如 code review）或「平行探索類」（如多檔搜尋），不適合做「任務拆解本身就要看工具邊界」的場景。</p>
+
+<p>第二，interface 配模型強項，比設計新格式重要。他們早期讓 agent 輸出自家 JSON query format，遇到複雜跨資料集問題要 retry 三、四次。後來工程師把封存多年的 SQL parser 重接上，讓 agent 直接寫 SQL（Claude 特別擅長 CTE），parser 處理可接受子集。同樣的問題變成 one-shot，token 消耗也大幅下降。判準不是「哪個格式更整齊」，是「模型訓練分布裡哪個語言密度高」。</p>
+
+<p>第三，eval 的價值在 raw trace observability，不在 judge score。講者明說最喜歡 eval 的不是分數，是能逐筆回看 bad session 內部 trace 的能力——分數告訴你壞了多少，trace 告訴你為什麼壞，缺後者時「LLM 不穩」會被當成不可拆解的答案，蓋住可修的架構問題。</p>
+
+<hr>
+
+<h2>團隊尺度：Anthropic Labs 用 3 個人 10 週做出 Claude Design</h2>
+
+<p>Dan Carey 在另一場 talk 分享了他帶 3 人團隊、用 10 週做出 Claude Design 的過程。整場 talk 反覆出現一個動作：<strong>ship → watch → learn</strong>，他們 10 週內跑了 50 到 100 次這個循環。</p>
+
+<p>最值得抄的不是設計細節，是兩條工作原則。</p>
+
+<blockquote>
+<p>Documents are imprecise. Prototypes are more concrete, more visceral.</p>
+</blockquote>
+
+<p>對話辯論是成本最高、訊息密度最低的決策方式——打字成本、推導成本、讀推導成本、決策成本加起來，通常大過「給我三版並陳，我挑」。且對話討論不出來的細節（某段論證實際展開後是不是無聊、某張表實際長出來是不是讀得下去），只有 prototype 暴露得出來。</p>
+
+<blockquote>
+<p>Build the thing that almost works.</p>
+</blockquote>
+
+<p>不要把已經能用的工具再 polish 到完美，要去做「快要能用但還沒打通」的那一塊。前者修不修無關緊要，後者一打通就解鎖整條 pipeline。對映過來：對個人開發者，每次想再加一個 hook、再瘦身一個 prompt 前，先問「這個東西本來就能用嗎？」——如果是，那真正缺的東西在別處。</p>
+
+<p>Speed 在這套方法論裡不是 vanity metric，是工程資產。原因很簡單：<strong>speed reduces cost of being wrong</strong>。對外發布迴圈不存在的時候，你只有想像的 trace、沒有外部的真實反應，judgment 無法被測試。</p>
+
+<hr>
+
+<h2>企業尺度：Man Group 的 skill marketplace</h2>
+
+<p>Tashara Fernando 是 Man Group 的 Head of Data and AI。Man Group 管 2,000 億美元資產，客戶是退休基金、主權財富基金與大型機構——AI 出錯不是玩具問題，是真實資金。</p>
+
+<p>她開場給的數字很硬：Man Group 已經有正在 production 跑、用真實資本交易的 trading signals，其中 idea、資料取得、回測、策略提案、productionization 都由 AI 參與完成，人類審核輸出是否合理。</p>
+
+<p>但她整場 talk 不講策略細節（那是 IP），講的是支撐這件事的 foundation——skill governance。</p>
+
+<h3>一個失敗案例</h3>
+
+<p>他們一開始用 workshop、hackathon、blog、show-and-tell 全力推廣 skills，採用率漂亮，但很快看到裂縫：寫 skill 的多半是 power user，不是 workflow owner。最具體的例子是某位常出差的員工寫了 expense report skill，把自己的 cost center code hardcoded 進去。對他和他的 team 有效。然後 expense approver 跑來問為什麼一堆別部門的 expense report 都送到他這——因為大家裝了那個 skill，cost center 永遠是寫 skill 那個人的。</p>
+
+<p>這個錯誤很小，卻暴露了企業級 AI 的根本問題：<strong>未治理的 skill 會把局部做法放大成組織錯誤。</strong></p>
+
+<h3>他們的解法</h3>
+
+<p>建立共同 skill marketplace。每個 skill 可見、可標籤、經 eval 測試，有明確 workflow owner、review、usage tracking、life cycle。</p>
+
+<p>層級上分成：</p>
+
+<ul>
+<li><strong>Managed skills</strong>：經審核、可進正式流程，有 owner、evals、versioning、retirement plan。</li>
+<li><strong>Community skills</strong>：可探索、可分享，但不能直接進高風險流程。</li>
+<li><strong>Plugins</strong>：把常一起用的 skills、資料權限、工具權限打包成工作組。</li>
+</ul>
+
+<p>Skill owner 的指定原則是：不是最會寫 prompt 的人，是 <strong>workflow owner</strong>。power user 可以發現痛點，但不一定知道流程的責任邊界、例外處理與稽核要求。</p>
+
+<h3>給所有人的金句</h3>
+
+<blockquote>
+<p>Treat those skills like production code, because that's what they will become.</p>
+</blockquote>
+
+<blockquote>
+<p>Firstly, focus on that organizational context. That is your IP. It's your moat. It's one of the few safe spaces left in AI. The frontier labs are not going to solve context for you.</p>
+</blockquote>
+
+<p>她的核心主張是：模型廠商不會替你解決 context 問題，因為它不在公開網路上。企業已經累積了數十年的制度知識，工作是暴露、封裝、治理，不是重造。</p>
+
+<p>而 adoption 不是 licensing 問題，是 people 問題。平台建好之後，還要訓練與引導員工重新思考 workflow。Man Group 大約 1,700 人中已有 750 人在用 Claude Code，跨開發、quant、人資、財務各部門；累計 100+ governed skills 加上至少同量級的 community skills。</p>
+
+<hr>
+
+<h2>三個尺度合起來說什麼</h2>
+
+<p>把三場 talk 疊在一起，會發現它們在說同一件事，只是尺度不同。</p>
+
+<p>個人尺度（Omni）：你寫 prompt / 切 sub-agent / 設計 tool interface 的方式，決定了你能不能讓 Claude 處理真正複雜的任務。瓶頸不是「Claude 不夠聰明」，是「你的 harness 切錯」。</p>
+
+<p>團隊尺度（Dan Carey）：你能不能快速 ship → watch → learn 的 cycle time，決定了你的 judgment 能不能被外部訊號修正。瓶頸不是「需要更好的 spec」，是「對話辯論取代了 prototype」。</p>
+
+<p>企業尺度（Man Group）：你能不能把組織數十年的制度知識封裝成可治理的 skill，決定了 AI 能不能在你的高風險流程裡擴大。瓶頸不是「需要更強的模型」，是「skill 沒人 own、沒 eval、沒 life cycle」。</p>
+
+<div class="callout tip">
+<p>三個尺度的共同骨架：<strong>真正卡住 AI 應用擴大的，不是模型能力的上限，是 context 與 governance 的供給。</strong></p>
+<p>模型公司會繼續發更大的模型——但你的工作 context 不會自動進去。</p>
+</div>
+
+<hr>
+
+<h2>你能拿來用的具體動作</h2>
+
+<p>依角色不同，可以從不同層級切入。</p>
+
+<h3>個人開發者</h3>
+
+<ul>
+<li>下次寫 skill 前先問「這個任務主 session 自己能做嗎？」——如果能，少切 sub-agent</li>
+<li>設計 tool interface 時，優先用模型訓練分布密度高的語言（SQL、Python、shell command、Markdown），少發明專有 JSON schema</li>
+<li>跑 eval 時，把 trace 當第一公民、judge score 當摘要層</li>
+</ul>
+
+<h3>團隊 lead</h3>
+
+<ul>
+<li>把任何超過兩輪對話的設計辯論，強制改成「三版 prototype 並陳」</li>
+<li>識別出團隊已經能用的工具，停止 polish；找出「快要能用但還沒打通」的那一塊去打通</li>
+<li>把 ship → watch → learn 的 cycle time 當成第一級工程指標</li>
+</ul>
+
+<h3>企業 IT / 平台負責人</h3>
+
+<ul>
+<li>第一個 skill 上線前，先想清楚 owner / review / retirement / testing</li>
+<li>Skill marketplace 至少分 managed 與 community 兩層，不要混在一起</li>
+<li>skill owner 指定給 workflow owner，不要指定給最會寫 prompt 的人</li>
+<li>Adoption 不是 licensing 問題，是 people 問題——平台之外要有訓練與引導</li>
+</ul>
+
+<hr>
+
+<h2>收束</h2>
+
+<p>Man Group 那位 Head of Data and AI 在最後說了一句很值得記下來的話：</p>
+
+<blockquote>
+<p>In the not too distant future, I can see us having swarms of agents leveraging those skills to look for new investment opportunities.</p>
+</blockquote>
+
+<p>值得注意的是：她不是說「等更強的模型出來」，是說「等 skill 治理夠成熟」。</p>
+
+<p>如果這個觀察是對的——而從三個尺度的證據看來確實是——那麼 2026 之後 AI 競爭力的差距，會更多體現在誰把組織 context 治理得比較好，而不是誰拿到了下一代模型的 early access。</p>
+
+<div class="callout warn">
+<p>模型會繼續變強，這是免費贈品。</p>
+<p>Context 與治理是付費題，沒人會替你寫。</p>
+</div>
+
+<hr>
+
+<h3>參考資料</h3>
+
+<ul>
+<li>Omni CTO Colin Zima, "Building the best agentic analytics harness: Powered by Claude, built with Claude Code"</li>
+<li>Anthropic Labs Dan Carey, "Designing with Claude: From prompt to production"</li>
+<li>Man Group Head of Data and AI Tashara Fernando, "Building signals that trade themselves"</li>
+</ul>
+
+<p style="color: var(--muted); font-size: var(--fs-meta);">三場 talk 皆由 Anthropic YouTube 頻道發布。本文所有 quote 來自影片字幕，引用前建議回原片核對音訊。</p>
+
+</article>
+<footer>
+<p style="color: var(--muted); font-size: var(--fs-meta); margin-top: 4rem; padding-top: 1.5rem; border-top: 1px solid var(--border);">
+最後更新：2026-05-29 · CC BY 4.0 · 引用請標來源
+</p>
+</footer>
+</main>
+<script>
+  const bar = document.getElementById('progress');
+  window.addEventListener('scroll', () => {
+    const h = document.documentElement;
+    const max = h.scrollHeight - h.clientHeight;
+    const ratio = max > 0 ? h.scrollTop / max : 0;
+    bar.style.transform = 'scaleX(' + ratio + ')';
+  }, { passive: true });
+</script>
+</body>
+</html>
