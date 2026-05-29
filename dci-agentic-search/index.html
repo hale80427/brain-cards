@@ -4,6 +4,32 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>當代理夠強，檢索器反而成了瓶頸 — 一篇用 grep 打贏 RAG 的論文</title>
+<link rel="canonical" href="https://hale80427.github.io/brain-cards/dci-agentic-search/">
+<meta name="author" content="彥皓">
+<meta property="og:type" content="article">
+<meta property="og:title" content="當代理夠強，檢索器反而成了瓶頸 — 一篇用 grep 打贏 RAG 的論文">
+<meta property="og:description" content="DCI 論文（arXiv 2605.05242）解讀：當 LLM agent 夠強時，直接讓它用 grep / bash 操作原始語料，比傳統 embedding retriever 更準、更便宜、不用建索引。">
+<meta property="og:url" content="https://hale80427.github.io/brain-cards/dci-agentic-search/">
+<meta property="og:image" content="https://hale80427.github.io/brain-cards/og-default.jpg">
+<meta property="og:locale" content="zh_TW">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="當代理夠強，檢索器反而成了瓶頸 — 一篇用 grep 打贏 RAG 的論文">
+<meta name="twitter:description" content="DCI 論文（arXiv 2605.05242）解讀：當 LLM agent 夠強時，直接讓它用 grep / bash 操作原始語料，比傳統 embedding retriever 更準、更便宜、不用建索引。">
+<meta name="twitter:image" content="https://hale80427.github.io/brain-cards/og-default.jpg">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "當代理夠強，檢索器反而成了瓶頸 — 一篇用 grep 打贏 RAG 的論文",
+  "description": "DCI 論文（arXiv 2605.05242）解讀：當 LLM agent 夠強時，直接讓它用 grep / bash 操作原始語料，比傳統 embedding retriever 更準、更便宜、不用建索引。",
+  "datePublished": "2026-05-03",
+  "dateModified": "2026-05-03",
+  "author": { "@type": "Person", "name": "彥皓" },
+  "url": "https://hale80427.github.io/brain-cards/dci-agentic-search/",
+  "inLanguage": "zh-TW",
+  "license": "https://creativecommons.org/licenses/by/4.0/"
+}
+</script>
 <meta name="description" content="DCI 論文（arXiv 2605.05242）解讀：當 LLM agent 夠強時，直接讓它用 grep / bash 操作原始語料，比傳統 embedding retriever 更準、更便宜、不用建索引。">
 <style>
   :root {
