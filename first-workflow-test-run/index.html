@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>我第一次成功跑了一個會自己分身的 AI 工作流</title>
+<meta name="description" content="我給 AI 一個指令，它拆成 36 個分身同時檢查我 36 張公開筆記，三分半交卷。記錄第一次失敗、第二次成功，以及它揪出的 4 個假警報。">
+
+<!-- Canonical & 作者 -->
+<link rel="canonical" href="https://hale80427.github.io/brain-cards/first-workflow-test-run/">
+<meta name="author" content="彥皓">
+
+<!-- Open Graph -->
+<meta property="og:type" content="article">
+<meta property="og:title" content="我第一次成功跑了一個會自己分身的 AI 工作流">
+<meta property="og:description" content="我給 AI 一個指令，它拆成 36 個分身同時檢查我 36 張公開筆記，三分半交卷。記錄第一次失敗、第二次成功，以及它揪出的 4 個假警報。">
+<meta property="og:url" content="https://hale80427.github.io/brain-cards/first-workflow-test-run/">
+<meta property="og:image" content="https://hale80427.github.io/brain-cards/og-default.jpg">
+<meta property="og:locale" content="zh_TW">
+
+<!-- Twitter / X Card -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="我第一次成功跑了一個會自己分身的 AI 工作流">
+<meta name="twitter:description" content="我給 AI 一個指令，它拆成 36 個分身同時檢查我 36 張公開筆記，三分半交卷。記錄第一次失敗、第二次成功，以及它揪出的 4 個假警報。">
+<meta name="twitter:image" content="https://hale80427.github.io/brain-cards/og-default.jpg">
+
+<!-- 結構化資料 JSON-LD -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "我第一次成功跑了一個會自己分身的 AI 工作流",
+  "description": "我給 AI 一個指令，它拆成 36 個分身同時檢查我 36 張公開筆記，三分半交卷。記錄第一次失敗、第二次成功，以及它揪出的 4 個假警報。",
+  "datePublished": "2026-05-30",
+  "dateModified": "2026-05-30",
+  "author": { "@type": "Person", "name": "彥皓" },
+  "url": "https://hale80427.github.io/brain-cards/first-workflow-test-run/",
+  "inLanguage": "zh-TW",
+  "license": "https://creativecommons.org/licenses/by/4.0/"
+}
+</script>
+
+<style>
+  :root {
+    /* B 工程文檔風 token（GH Docs 配色；token 在 :root，元素一律 var() 引用，不 inline） */
+    --bg: #ffffff;
+    --fg: #24292f;
+    --muted: #57606a;
+    --accent: #0969da;            /* 主強調：GH 藍 */
+    --accent-warn: #bc4c00;       /* 警示強調：GH 橘 */
+    --border: #d0d7de;
+    --callout-tip: #ddf4ff;       /* 淺藍 info/tip */
+    --callout-warn: #fff1e5;      /* 淺橘 warn */
+    --code-bg: #eff2f5;
+    --fs-meta: 0.85rem;
+    --fs-body: 1rem;                          /* 16px 下限：守 KB-04「正文 ≥16px」 */
+    --fs-h2: clamp(1.15rem, 2.5vw, 1.375rem);
+    --fs-h1: clamp(1.5rem, 3.5vw, 1.875rem);
+    --font-sans: "Inter", system-ui, "Noto Sans TC", -apple-system, sans-serif;
+    --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+    --ease-linear: linear;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #0d1117;
+      --fg: #e6edf3;
+      --muted: #8b949e;
+      --accent: #58a6ff;
+      --accent-warn: #db6d28;
+      --border: #30363d;
+      --callout-tip: #11243b;
+      --callout-warn: #2d1e10;
+      --code-bg: #1b222b;
+    }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
+  }
+  * { box-sizing: border-box; }
+  body {
+    font-family: var(--font-sans);
+    background: var(--bg);
+    color: var(--fg);
+    line-height: 1.75;
+    margin: 0;
+    padding: 0;
+    -webkit-font-smoothing: antialiased;
+  }
+  .progress-bar {
+    position: fixed; top: 0; left: 0; height: 3px; width: 100%;
+    background: var(--accent); z-index: 100;
+    transform: scaleX(0); transform-origin: left;
+    transition: transform 0.1s var(--ease-linear);
+  }
+  .meta-bar {
+    position: sticky; top: 0; z-index: 50;
+    background: var(--bg); border-bottom: 1px solid var(--border);
+    font-size: var(--fs-meta); color: var(--muted);
+    padding: 0.6rem clamp(1.25rem, 4vw, 2rem);
+  }
+  main {
+    max-width: 46rem;
+    margin: 0 auto;
+    padding: clamp(2rem, 5vw, 3.5rem) clamp(1.25rem, 4vw, 2rem);
+  }
+  /* 字級階梯：嚴格 4 級，font-size 一律引用 --fs-*，差異化用 weight + color */
+  h1 { font-size: var(--fs-h1); line-height: 1.25; margin: 0 0 1rem; letter-spacing: -0.01em; }
+  h2 { font-size: var(--fs-h2); line-height: 1.35; margin: 2.5rem 0 0.75rem; padding-left: 0.6rem; border-left: 3px solid var(--accent); }
+  h3 { font-size: var(--fs-body); font-weight: 700; line-height: 1.4; margin: 1.5rem 0 0.5rem; color: var(--accent); }
+  p { margin: 0 0 1.1rem; }
+  ul { margin: 0 0 1.1rem; padding-left: 1.25rem; }
+  li { margin: 0 0 0.5rem; }
+  a { color: var(--accent); text-underline-offset: 3px; }
+  a:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+  strong { font-weight: 700; }
+  .bluf { background: var(--callout-tip); border: 1px solid var(--border); padding: 1.1rem 1.4rem; margin: 1.5rem 0 2rem; border-radius: 8px; }
+  .bluf strong { display: block; font-size: var(--fs-meta); letter-spacing: 0.05em; color: var(--accent); margin-bottom: 0.4rem; text-transform: uppercase; }
+  .callout { padding: 0.9rem 1.2rem; margin: 1.5rem 0; border-radius: 0 6px 6px 0; border-left: 4px solid var(--muted); font-size: var(--fs-body); }
+  .callout.tip { background: var(--callout-tip); border-left-color: var(--accent); }
+  .callout.warn { background: var(--callout-warn); border-left-color: var(--accent-warn); }
+  table { border-collapse: collapse; width: 100%; margin: 1.5rem 0; font-size: var(--fs-body); }
+  th, td { padding: 0.55rem 0.8rem; border: 1px solid var(--border); text-align: left; vertical-align: top; }
+  th { background: var(--callout-tip); font-weight: 600; }
+  code { font-family: var(--font-mono); background: var(--code-bg); color: var(--accent); padding: 0.12em 0.4em; border-radius: 4px; font-size: var(--fs-body); }
+  footer p { color: var(--muted); font-size: var(--fs-meta); margin-top: 3.5rem; padding-top: 1.25rem; border-top: 1px solid var(--border); }
+  @media print {
+    .progress-bar, .meta-bar { display: none; }
+    body { font-size: 11pt; line-height: 1.55; color: #000; background: #fff; }
+    main { max-width: 100%; padding: 1cm; }
+  }
+</style>
+</head>
+<body>
+<div class="progress-bar" id="progress"></div>
+<div class="meta-bar">workflow 試跑記錄 · 2026-05-30 · 閱讀約 4 分</div>
+<main>
+<header>
+<h1>我第一次成功跑了一個會自己分身的 AI 工作流</h1>
+<div class="bluf">
+<strong>結論先講</strong>
+我給 AI 一個指令，它把這個指令拆成 36 個分身，同時去檢查我 36 張公開筆記，三分半鐘後一起交卷。這篇記錄這次實驗的過程——包含它第一次當場失敗、改一個小地方後第二次成功。
+</div>
+</header>
+<article>
+<!-- narrative: 物件,細節,矛盾,場景,直接引語 -->
+
+<h2>先說，什麼是「工作流」？</h2>
+<p>平常我跟 AI 對話，是一問一答：我問一句、它答一句，再問下一句。一次只有一個 AI 在做事。</p>
+<p>工作流（<code>workflow</code>）不一樣。它比較像一條工廠生產線：我寫好一份腳本，說明「要做的事」「分成幾個步驟」「每一步派幾個人」，然後按下啟動。</p>
+<p>接下來 AI 會照腳本，自己生出一批「分身」去做事，不用我盯著一個一個問。每一個分身有個名字叫 <code>agent</code>，可以想成「AI 小幫手」。</p>
+<p>重點是：這些小幫手可以<strong>同時開工</strong>，不是排隊輪流。36 件事一件一件做要很久，36 個小幫手一起做就快得多。</p>
+
+<h2>這次我叫它做什麼？</h2>
+<p>我有一批公開在網路上的筆記卡片，叫 <code>brain-cards</code>，總共 36 張，內容從切削加工、投資決策到 AI 工程都有。我想一次體檢全部，每張都檢查兩件事。</p>
+<h3>第一件：抓漏網</h3>
+<p>我本來有一個機械式的自動檢查程式，會用關鍵字比對去找「這張卡片是不是少了某些東西」，例如分享到社群時該有的標題、版權標註。但這種機械比對很笨，只認死字眼。</p>
+<p>所以我要每個小幫手親自打開卡片的網頁，用眼睛確認：機器說「缺」的地方，到底是真的缺，還是機器看走眼了？</p>
+<h3>第二件：聞 AI 味</h3>
+<p>我要小幫手讀每張卡片的文字，判斷讀起來像不像「AI 隨便生的」——那種空話開場、堆砌轉折詞、假裝平衡的句子。</p>
+<p>我請它打一個 0 到 10 分：0 分是「明顯是人寫的」，10 分是「滿滿 AI 味」。</p>
+<p>我把這兩件事寫成一份腳本，一張卡片配一個小幫手，36 張就是 36 個小幫手並行。</p>
+
+<h2>過程：第一次當場摔了</h2>
+<p>第一次按下啟動，它<strong>立刻失敗</strong>，連一個小幫手都沒生出來，0 秒結束。</p>
+<p>錯誤訊息是一行程式話：「找不到 <code>slugs</code> 這個東西的長度」。翻成白話就是：我傳給腳本的「要檢查哪幾張卡片」這份清單，腳本沒讀到。</p>
+<p>所以它一開始算「總共幾張」就當場卡住。問題出在我把清單包進去的方式，腳本拆不開。</p>
+<p>這其實是好事——它在還沒花任何力氣前就停下來報錯，而不是跑到一半才出包。我改掉清單的傳遞方式，重按一次。</p>
+
+<h2>過程：第二次，36 個分身一起動工</h2>
+<p>第二次成功了。畫面上 36 個小幫手幾乎同時點亮，各自去開自己那張卡片的網頁、讀內容、做判斷。</p>
+<table>
+<thead>
+<tr><th>項目</th><th>第一次</th><th>第二次</th></tr>
+</thead>
+<tbody>
+<tr><td>結果</td><td>當場失敗</td><td>全部完成</td></tr>
+<tr><td>派出的小幫手</td><td>0 個</td><td>36 個</td></tr>
+<tr><td>檢查完的卡片</td><td>0 張</td><td>36 張</td></tr>
+<tr><td>花的時間</td><td>0 秒（開頭就停）</td><td>約 216 秒（3 分半）</td></tr>
+</tbody>
+</table>
+<p>幾個實際數字：如果一張一張慢慢做，這個量級要拖到大半天；這次三分半就收齊。</p>
+<p>整趟它一共讀寫了大約 <strong>112 萬個字數單位</strong>（可以粗略想成「它總共讀和寫了多少字」）。過程中動用了 90 次工具操作，像是開網頁、讀檔這類動作。</p>
+
+<h2>它到底抓到了什麼？</h2>
+<h3>機器看走眼的，被小幫手揪出來了</h3>
+<p>機械比對總共標了一堆「疑似缺漏」，小幫手逐項親自核對後確認：其中 130 項是真的缺，但有 <strong>4 項是機器誤報</strong>。</p>
+<p>例如有幾張卡片，機器說「找不到日期」，小幫手打開一看——日期其實寫在封面那塊，只是不在機器死盯的位置。這種「機器以為錯、其實沒錯」的假警報，正是我要它人工複查的原因。</p>
+<h3>AI 味普遍很低</h3>
+<p>36 張卡片的 AI 味平均只有 1.44 分（滿分 10），而且每一張的結構都過關，有清楚的開頭結論、敘事連貫。</p>
+<p>最高的一張是 5 分，一篇講台積電領導風格的卡片。小幫手指出它「不是 X 而是 Y」這種對仗句型疊太多，有中等的「AI 編輯味」。不過它引用了真實人物素材撐著，還不到要打掉重寫。</p>
+<p>其餘大多是 1 到 2 分，被判定「人寫感強」。</p>
+<div class="callout tip">
+這趟體檢同時做到兩件事：幫我把機器的誤判篩掉（省得我去補根本不缺的東西），也幫我確認這批對外卡片的文字品質站得住。
+</div>
+
+<h2>為什麼這件事值得記一筆？</h2>
+<p>最直接的差別是<strong>規模</strong>。同樣一份「幫我檢查」的需求，過去我得自己一張一張問、一張一張等。這次我寫一次腳本，按一次啟動，36 個判斷同時發生，三分半收齊。</p>
+<p>但更關鍵的是它的<strong>誠實</strong>。我特別要求每個小幫手用對抗的角度去查——不是順著機器說「對對對都缺」，而是主動去推翻它、找出機器哪裡看錯。結果它真的揪出 4 個假警報。</p>
+<p>一個會幫你挑出「你原本的工具其實判斷錯了」的助手，比一個只會附和的助手有用得多。</p>
+<div class="callout warn">
+這次也讓我學到：第一次失敗反而是好的失敗——它在花成本之前就喊停，而不是跑完才發現方向錯了。
+</div>
+<p>下一步，我想把這套體檢變成固定流程，定期幫我巡一遍所有對外的卡片。</p>
+</article>
+<footer>
+<p>最後更新：2026-05-30 · CC BY 4.0 · 引用請標來源 · 作者：彥皓</p>
+</footer>
+</main>
+<script>
+  const bar = document.getElementById('progress');
+  window.addEventListener('scroll', () => {
+    const h = document.documentElement;
+    const max = h.scrollHeight - h.clientHeight;
+    const ratio = max > 0 ? h.scrollTop / max : 0;
+    bar.style.transform = 'scaleX(' + ratio + ')';
+  }, { passive: true });
+</script>
+</body>
+</html>
