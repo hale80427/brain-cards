@@ -46,11 +46,9 @@
     --bg: #ffffff;
     --fg: #24292f;
     --muted: #57606a;
-    --accent: #0969da;            /* 主強調：GH 藍 */
-    --accent-warn: #bc4c00;       /* 警示強調：GH 橘 */
+    --accent: #0969da;            /* 單一強調：GH 藍 */
     --border: #d0d7de;
-    --callout-tip: #ddf4ff;       /* 淺藍 info/tip */
-    --callout-warn: #fff1e5;      /* 淺橘 warn */
+    --callout-tip: #ddf4ff;       /* 淺藍 tip */
     --code-bg: #eff2f5;
     --fs-meta: 0.85rem;
     --fs-body: 1rem;                          /* 16px 下限：守 KB-04「正文 ≥16px」 */
@@ -66,10 +64,8 @@
       --fg: #e6edf3;
       --muted: #8b949e;
       --accent: #58a6ff;
-      --accent-warn: #db6d28;
       --border: #30363d;
       --callout-tip: #11243b;
-      --callout-warn: #2d1e10;
       --code-bg: #1b222b;
     }
   }
@@ -117,7 +113,6 @@
   .bluf strong { display: block; font-size: var(--fs-meta); letter-spacing: 0.05em; color: var(--accent); margin-bottom: 0.4rem; text-transform: uppercase; }
   .callout { padding: 0.9rem 1.2rem; margin: 1.5rem 0; border-radius: 0 6px 6px 0; border-left: 4px solid var(--muted); font-size: var(--fs-body); }
   .callout.tip { background: var(--callout-tip); border-left-color: var(--accent); }
-  .callout.warn { background: var(--callout-warn); border-left-color: var(--accent-warn); }
   table { border-collapse: collapse; width: 100%; margin: 1.5rem 0; font-size: var(--fs-body); }
   th, td { padding: 0.55rem 0.8rem; border: 1px solid var(--border); text-align: left; vertical-align: top; }
   th { background: var(--callout-tip); font-weight: 600; }
@@ -132,7 +127,7 @@
 </head>
 <body>
 <div class="progress-bar" id="progress"></div>
-<div class="meta-bar">workflow 試跑記錄 · 2026-05-30 · 閱讀約 4 分</div>
+<div class="meta-bar">workflow 試跑記錄 · 閱讀約 4 分</div>
 <main>
 <header>
 <h1>我第一次成功跑了一個會自己分身的 AI 工作流</h1>
@@ -198,7 +193,7 @@
 <p>最直接的差別是<strong>規模</strong>。同樣一份「幫我檢查」的需求，過去我得自己一張一張問、一張一張等。這次我寫一次腳本，按一次啟動，36 個判斷同時發生，三分半收齊。</p>
 <p>但更關鍵的是它的<strong>誠實</strong>。我特別要求每個小幫手用對抗的角度去查——不是順著機器說「對對對都缺」，而是主動去推翻它、找出機器哪裡看錯。結果它真的揪出 4 個假警報。</p>
 <p>一個會幫你挑出「你原本的工具其實判斷錯了」的助手，比一個只會附和的助手有用得多。</p>
-<div class="callout warn">
+<div class="callout tip">
 這次也讓我學到：第一次失敗反而是好的失敗——它在花成本之前就喊停，而不是跑完才發現方向錯了。
 </div>
 <p>下一步，我想把這套體檢變成固定流程，定期幫我巡一遍所有對外的卡片。</p>
