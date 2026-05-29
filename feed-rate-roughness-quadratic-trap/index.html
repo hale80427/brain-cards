@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>進給減半、粗糙度降四倍——但繼續壓進給有反效果</title>
+<meta name="description" content="進給與表面粗糙度是平方關係，而非直覺上的線性；進給太低時積屑瘤、磨耗、振動三個非幾何因素接管，盲目壓進給反而適得其反。">
+
+<link rel="canonical" href="https://hale80427.github.io/brain-cards/feed-rate-roughness-quadratic-trap/">
+<meta name="author" content="彥皓">
+
+<meta property="og:type" content="article">
+<meta property="og:title" content="進給減半、粗糙度降四倍——但繼續壓進給有反效果">
+<meta property="og:description" content="進給與表面粗糙度是平方關係，而非直覺上的線性；進給太低時積屑瘤、磨耗、振動三個非幾何因素接管，盲目壓進給反而適得其反。">
+<meta property="og:url" content="https://hale80427.github.io/brain-cards/feed-rate-roughness-quadratic-trap/">
+<meta property="og:image" content="https://hale80427.github.io/brain-cards/og-default.jpg">
+<meta property="og:locale" content="zh_TW">
+
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="進給減半、粗糙度降四倍——但繼續壓進給有反效果">
+<meta name="twitter:description" content="進給與表面粗糙度是平方關係，而非直覺上的線性；進給太低時積屑瘤、磨耗、振動三個非幾何因素接管，盲目壓進給反而適得其反。">
+<meta name="twitter:image" content="https://hale80427.github.io/brain-cards/og-default.jpg">
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "進給減半、粗糙度降四倍——但繼續壓進給有反效果",
+  "description": "進給與表面粗糙度是平方關係，而非直覺上的線性；進給太低時積屑瘤、磨耗、振動三個非幾何因素接管，盲目壓進給反而適得其反。",
+  "datePublished": "2026-05-29",
+  "dateModified": "2026-05-29",
+  "author": { "@type": "Person", "name": "彥皓" },
+  "url": "https://hale80427.github.io/brain-cards/feed-rate-roughness-quadratic-trap/",
+  "inLanguage": "zh-TW",
+  "license": "https://creativecommons.org/licenses/by/4.0/"
+}
+</script>
+
+<style>
+  :root {
+    --bg: #fafaf7;
+    --fg: #1a1a1a;
+    --accent: #c0392b;
+    --muted: #666;
+    --border: #e5e5e0;
+    --callout-tip: #e8f4f0;
+    --callout-warn: #fdf3e7;
+    --fs-meta: 0.85rem;
+    --fs-body: 1rem;
+    --fs-h2:   clamp(1.3rem, 3vw, 1.5rem);
+    --fs-h1:   clamp(1.75rem, 4vw, 2.25rem);
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #1a1a1a;
+      --fg: #f0f0e8;
+      --accent: #e87c6e;
+      --muted: #999;
+      --border: #333;
+      --callout-tip: #1f3530;
+      --callout-warn: #3a2d1c;
+    }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
+  }
+  * { box-sizing: border-box; }
+  body {
+    font-family: "Noto Serif TC", Georgia, serif;
+    background: var(--bg);
+    color: var(--fg);
+    line-height: 1.8;
+    margin: 0;
+    padding: 0;
+    -webkit-font-smoothing: antialiased;
+  }
+  .progress-bar {
+    position: fixed; top: 0; left: 0; height: 3px;
+    background: var(--accent); width: 0%; z-index: 100;
+    transition: width 0.1s;
+  }
+  main {
+    max-width: 680px;
+    margin: 0 auto;
+    padding: clamp(2rem, 5vw, 4rem) clamp(1.5rem, 4vw, 2rem);
+  }
+  h1 { font-size: var(--fs-h1); line-height: 1.3; margin: 0 0 1rem; }
+  h2 { font-size: var(--fs-h2); line-height: 1.4; margin: 2.5rem 0 0.75rem; padding-bottom: 0.5rem; border-bottom: 1px solid var(--border); }
+  h3 { font-size: var(--fs-body); font-weight: 700; line-height: 1.4; margin: 1.75rem 0 0.5rem; color: var(--accent); }
+  p { margin: 0 0 1.25rem; }
+  ul, ol { margin: 0 0 1.25rem; padding-left: 1.5rem; }
+  li { margin: 0.4rem 0; }
+  a { color: var(--accent); text-underline-offset: 3px; }
+  a:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+  blockquote {
+    margin: 1.25rem 0;
+    padding: 0.75rem 1.25rem;
+    border-left: 3px solid var(--muted);
+    color: var(--muted);
+    font-style: normal;
+    background: var(--callout-tip);
+    border-radius: 0 4px 4px 0;
+    font-size: var(--fs-body);
+  }
+  blockquote p { margin: 0; }
+  .bluf { background: var(--callout-tip); border-left: 3px solid var(--accent); padding: 1.25rem 1.5rem; margin: 1.5rem 0 2rem; border-radius: 4px; }
+  .bluf strong { display: block; font-size: var(--fs-meta); letter-spacing: 0.05em; color: var(--accent); margin-bottom: 0.5rem; text-transform: uppercase; }
+  .callout { padding: 1rem 1.25rem; margin: 1.5rem 0; border-radius: 4px; border-left: 3px solid var(--muted); }
+  .callout.tip { background: var(--callout-tip); border-left-color: var(--accent); }
+  .callout.warn { background: var(--callout-warn); border-left-color: #d97706; }
+  .callout strong { color: var(--accent); }
+  code { font-family: "JetBrains Mono", monospace; background: var(--callout-tip); padding: 0.1em 0.4em; border-radius: 3px; font-size: var(--fs-body); }
+  @media print {
+    .progress-bar { display: none; }
+    body { font-size: 11pt; line-height: 1.6; }
+    main { max-width: 100%; padding: 1cm; }
+  }
+</style>
+</head>
+<body>
+<div class="progress-bar" id="progress"></div>
+<main>
+<header>
+<h1>進給減半、粗糙度降四倍——但繼續壓進給有反效果</h1>
+<div class="bluf">
+<strong>BLUF</strong>
+加工時常誤以為進給降一半、表面粗糙度也少一半。實際上是平方關係——進給減半，理論粗糙度降到四分之一。但進給已經很低時，積屑瘤、刀具磨耗、振動三個非幾何因素接管，繼續壓進給只拉長工時，還可能引發顫振讓表面更差。
+</div>
+</header>
+<article>
+<!-- narrative: 矛盾,物件,細節 -->
+<h2>進給與粗糙度的關係，不是你想的那樣</h2>
+<p>很多人直覺認為：進給（feed rate，刀具每轉移動的距離）降一半，表面粗糙度也跟著少一半。這個直覺是錯的。</p>
+<h3>殘留高度公式——平方關係</h3>
+<p>理論上，刀具在工件表面留下的殘留高度 h，跟進給量 f 的平方成正比：</p>
+<blockquote><p>h ≈ f² / 8r（r 為刀尖圓弧半徑，tool nose radius）</p></blockquote>
+<p>進給減半，h 變成原來的 1/4。不是少一半，是降到四分之一。在對的條件下，稍微降進給，表面會明顯光很多。</p>
+<h3>真實表面還疊加三個非幾何來源</h3>
+<p>上面的公式是純幾何計算，只考慮刀尖弧度刻出的紋路形狀。真實工件的表面還疊加了：</p>
+<ul>
+<li><strong>積屑瘤</strong>（built-up edge）：切屑黏附在刀口，不定時崩落並刮傷表面</li>
+<li><strong>刀具磨耗</strong>（tool wear）：刀口鈍化後切削品質持續劣化</li>
+<li><strong>振動</strong>（vibration）：機台或刀具震動在表面留下波紋</li>
+</ul>
+<h3>進給太低，反而有反效果</h3>
+<p>當進給已經壓得很低，幾何項（f² 那一項）本來就小，繼續降進給對粗糙度的改善愈來愈有限。</p>
+<p>更麻煩的是：切削厚度太薄，刀具不是在「切」，而是在「刮」。</p>
+<p>這容易引發顫振（chatter，刀具與工件之間的自激振動）。一旦發生，表面紋路反而更差，工時也白拉長了。</p>
+<div class="callout tip"><strong>實務原則</strong>：先找到積屑瘤與磨耗都在控制範圍內的進給區間，再在這個區間內用平方關係微調；盲目把進給壓到最低不是好策略。</div>
+</article>
+<footer>
+<p style="color: var(--muted); font-size: var(--fs-meta); margin-top: 4rem; padding-top: 1.5rem; border-top: 1px solid var(--border);">
+最後更新：2026-05-29 · CC BY 4.0 · 引用請標來源
+</p>
+</footer>
+</main>
+<script>
+  const bar = document.getElementById('progress');
+  window.addEventListener('scroll', () => {
+    const h = document.documentElement;
+    const pct = (h.scrollTop / (h.scrollHeight - h.clientHeight)) * 100;
+    bar.style.width = pct + '%';
+  });
+</script>
+</body>
+</html>
