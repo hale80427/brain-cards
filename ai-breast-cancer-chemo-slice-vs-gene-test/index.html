@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AI 看一張切片，能取代 3500 美元的乳癌基因檢測嗎？</title>
+<meta name="description" content="以色列 Technion 團隊在頂級期刊發表研究：AI 用 1 美元病理切片預測乳癌化療必要性，精準度比肩 3500 美元基因檢測，跨六國驗證穩定，並解決醫院間校準難題。">
+
+<link rel="canonical" href="https://hale80427.github.io/brain-cards/ai-breast-cancer-chemo-slice-vs-gene-test/">
+<meta name="author" content="彥皓">
+
+<meta property="og:type" content="article">
+<meta property="og:title" content="AI 看一張切片，能取代 3500 美元的乳癌基因檢測嗎？">
+<meta property="og:description" content="以色列 Technion 團隊在頂級期刊發表研究：AI 用 1 美元病理切片預測乳癌化療必要性，精準度比肩 3500 美元基因檢測，跨六國驗證穩定，並解決醫院間校準難題。">
+<meta property="og:url" content="https://hale80427.github.io/brain-cards/ai-breast-cancer-chemo-slice-vs-gene-test/">
+<meta property="og:image" content="https://hale80427.github.io/brain-cards/og-default.jpg">
+<meta property="og:locale" content="zh_TW">
+
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="AI 看一張切片，能取代 3500 美元的乳癌基因檢測嗎？">
+<meta name="twitter:description" content="以色列 Technion 團隊在頂級期刊發表研究：AI 用 1 美元病理切片預測乳癌化療必要性，精準度比肩 3500 美元基因檢測，跨六國驗證穩定，並解決醫院間校準難題。">
+<meta name="twitter:image" content="https://hale80427.github.io/brain-cards/og-default.jpg">
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "AI 看一張切片，能取代 3500 美元的乳癌基因檢測嗎？",
+  "description": "以色列 Technion 團隊在頂級期刊發表研究：AI 用 1 美元病理切片預測乳癌化療必要性，精準度比肩 3500 美元基因檢測，跨六國驗證穩定，並解決醫院間校準難題。",
+  "datePublished": "2026-05-31",
+  "dateModified": "2026-05-31",
+  "author": { "@type": "Person", "name": "彥皓" },
+  "url": "https://hale80427.github.io/brain-cards/ai-breast-cancer-chemo-slice-vs-gene-test/",
+  "inLanguage": "zh-TW",
+  "license": "https://creativecommons.org/licenses/by/4.0/"
+}
+</script>
+
+<style>
+  :root {
+    --bg: #fafaf7;
+    --fg: #1a1a1a;
+    --accent: #c0392b;
+    --muted: #666;
+    --border: #e5e5e0;
+    --callout-tip: #e8f4f0;
+    --callout-warn: #fdf3e7;
+    --fs-meta: 0.85rem;
+    --fs-body: 1rem;
+    --fs-h2:   clamp(1.3rem, 3vw, 1.5rem);
+    --fs-h1:   clamp(1.75rem, 4vw, 2.25rem);
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #1a1a1a;
+      --fg: #f0f0e8;
+      --accent: #e87c6e;
+      --muted: #999;
+      --border: #333;
+      --callout-tip: #1f3530;
+      --callout-warn: #3a2d1c;
+    }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
+  }
+  * { box-sizing: border-box; }
+  body {
+    font-family: "Noto Serif TC", Georgia, serif;
+    background: var(--bg);
+    color: var(--fg);
+    line-height: 1.8;
+    margin: 0;
+    padding: 0;
+    -webkit-font-smoothing: antialiased;
+  }
+  .progress-bar {
+    position: fixed; top: 0; left: 0; height: 3px;
+    background: var(--accent); width: 0%; z-index: 100;
+    transition: width 0.1s;
+  }
+  main {
+    max-width: 680px;
+    margin: 0 auto;
+    padding: clamp(2rem, 5vw, 4rem) clamp(1.5rem, 4vw, 2rem);
+  }
+  h1 { font-size: var(--fs-h1); line-height: 1.3; margin: 0 0 1rem; }
+  h2 { font-size: var(--fs-h2); line-height: 1.4; margin: 2.5rem 0 0.75rem; padding-bottom: 0.5rem; border-bottom: 1px solid var(--border); }
+  h3 { font-size: var(--fs-body); font-weight: 700; line-height: 1.4; margin: 1.75rem 0 0.5rem; color: var(--accent); }
+  p { margin: 0 0 1.25rem; }
+  ul, ol { margin: 0 0 1.25rem; padding-left: 1.5rem; }
+  li { margin: 0.4rem 0; }
+  a { color: var(--accent); text-underline-offset: 3px; }
+  a:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+  blockquote {
+    margin: 1.25rem 0;
+    padding: 0.75rem 1.25rem;
+    border-left: 3px solid var(--muted);
+    color: var(--muted);
+    font-style: normal;
+    background: var(--callout-tip);
+    border-radius: 0 4px 4px 0;
+    font-size: var(--fs-body);
+  }
+  blockquote p { margin: 0; }
+  .bluf { background: var(--callout-tip); border-left: 3px solid var(--accent); padding: 1.25rem 1.5rem; margin: 1.5rem 0 2rem; border-radius: 4px; }
+  .bluf strong { display: block; font-size: var(--fs-meta); letter-spacing: 0.05em; color: var(--accent); margin-bottom: 0.5rem; text-transform: uppercase; }
+  .callout { padding: 1rem 1.25rem; margin: 1.5rem 0; border-radius: 4px; border-left: 3px solid var(--muted); }
+  .callout.tip { background: var(--callout-tip); border-left-color: var(--accent); }
+  .callout.warn { background: var(--callout-warn); border-left-color: #d97706; }
+  .callout strong { color: var(--accent); }
+  code { font-family: "JetBrains Mono", monospace; background: var(--callout-tip); padding: 0.1em 0.4em; border-radius: 3px; font-size: var(--fs-body); }
+  @media print {
+    .progress-bar { display: none; }
+    body { font-size: 11pt; line-height: 1.6; }
+    main { max-width: 100%; padding: 1cm; }
+  }
+</style>
+</head>
+<body>
+<div class="progress-bar" id="progress"></div>
+<main>
+<header>
+<h1>AI 看一張切片，能取代 3500 美元的乳癌基因檢測嗎？</h1>
+<div class="bluf">
+<strong>BLUF</strong>
+2026 年 3 月，《The Lancet Oncology》刊出以色列 Technion 團隊的研究：AI 只需一張不到 1 美元的 H&E 病理切片，就能預測原本要花 3500 美元基因檢測才能判斷的化療必要性。跨六國近 5500 人驗證，AUC 穩定在 0.858–0.903，且附帶解決「換醫院就失效」的校準難題。核心數據與論文高度吻合，是一篇可靠的科學解讀。
+</div>
+</header>
+<article>
+<!-- narrative: 矛盾,物件,細節,場景 -->
+<p>2026 年 3 月，頂級醫學期刊《The Lancet Oncology》刊出一篇以色列研究，核心問題只有一個：</p>
+
+<p>一張不到 1 美元的普通病理切片，能不能取代一套 3500 美元的基因檢測？</p>
+
+<h2>背景：一個很多病人付不起的檢測</h2>
+
+<p>HR+/HER2- 早期乳癌（荷爾蒙受體陽性、HER2 陰性的早期乳癌類型）的病人，想確認需不需要打化療，目前最準確的工具叫做 Oncotype DX（ODX）——一套 21 基因檢測。</p>
+
+<p>費用約 3500 美元，還得把檢體寄到國外。對中低收入國家的病人來說，這個門檻根本過不了。</p>
+
+<p>結果很多人只好保守處理，「寧可多打也別漏掉」，反而承受了不必要的化療副作用。</p>
+
+<h2>這個 AI 做了什麼？</h2>
+
+<p>以色列 Technion 的 Gil Shamai 團隊開發了一個 AI 模型，輸入只需要兩樣東西：</p>
+
+<ul>
+  <li>一張 H&amp;E 染色（蘇木精伊紅染色，最基礎的病理切片，成本不到 1 美元）的切片影像</li>
+  <li>年齡、腫瘤大小等基本臨床資料</li>
+</ul>
+
+<p>輸出是類似 ODX 的「復發風險分數」，直接告訴你：這個病人打化療有沒有意義。</p>
+
+<h2>為什麼值得注意？</h2>
+
+<h3>用大型 RCT 訓練，不只是「預測復發」</h3>
+
+<p>過去很多 AI 只能預測「病人未來會不會復發」，沒辦法直接告訴你「打化療有沒有幫助」。</p>
+
+<p>這篇研究用了 TAILORx——超過 8000 人的大型 RCT（隨機對照試驗，醫學界評估治療效果最嚴格的研究設計）——來訓練，讓 AI 預測直接繼承因果證據，而不只是統計相關。</p>
+
+<h3>跨六國、近 5500 人外部驗證</h3>
+
+<p>在以色列、美國、澳洲等六個獨立資料庫，用不同醫院與掃描儀測試，共約 5497 人。</p>
+
+<p>AUC（曲線下面積，準確度指標，最高為 1.0）穩定維持在 0.858 到 0.903 之間，沒有明顯下滑。</p>
+
+<h3>解決「換醫院就失效」的問題</h3>
+
+<p>AI 模型有個常見的實務困境：在 A 醫院訓練好的模型，換到 B 醫院可能就失準，因為染色條件與掃描機器不同。這叫「領域偏移」（domain shift）。</p>
+
+<p>研究團隊發明了「單一參數線性縮放校準」方法，只要約 100 名病人的資料，就能把模型校準好，不需要花錢重新訓練整個模型。</p>
+
+<h2>具體數字</h2>
+
+<ul>
+  <li>預測「高風險（ODX 分數 ≥ 26）」的 AUC 達 0.898</li>
+  <li>AI 判為高風險的停經前婦女，化療確實有效（HR 0.63，低於 1 代表有益）</li>
+  <li>AI 判為低風險的停經後婦女，化療幾乎無額外好處（HR 0.94）</li>
+  <li>31.3% 原本被臨床判為高風險的停經後婦女，被 AI 安全降級，可避免不必要的化療</li>
+  <li>約 5% 原本被判低風險的停經前婦女，被 AI 升級為高風險，及時接受治療</li>
+</ul>
+
+<h2>這篇解讀可靠嗎？</h2>
+
+<p>核心數據幾乎完全正確：GigaPath 預訓練規模、MIL（多實例學習，處理整張切片影像的 AI 架構）、外部驗證人數、31.3% 降級比例，全部與原論文吻合。</p>
+
+<p>解讀角度也務實，沒有過度神化 AI，對中低收入國家的意義、RCT 驗證為何比只看存活率重要、領域偏移問題，都講得清楚。</p>
+
+<div class="callout warn"><strong>論文自認的限制</strong>：模型主要在淋巴結陰性病人上訓練；屬回溯性研究，需前瞻性驗證；在資源匱乏地區，若受體檢測本身不準確，AI 的基礎也會受影響。</div>
+
+<h2>總結</h2>
+
+<p>這篇研究在「方法學創新」「大規模 RCT 驗證」「實務落地校準」三個維度同時做到，在乳癌精準醫療領域屬於難得的組合。</p>
+
+<p>如果後續前瞻性試驗通過，過去因付不起 3500 美元而只能保守治療的病人，未來可能只需要一張普通切片，就能得到同樣準確的治療建議。</p>
+</article>
+<footer>
+<p style="color: var(--muted); font-size: var(--fs-meta); margin-top: 4rem; padding-top: 1.5rem; border-top: 1px solid var(--border);">
+最後更新：2026-05-31 · CC BY 4.0 · 引用請標來源
+</p>
+</footer>
+</main>
+<script>
+  const bar = document.getElementById('progress');
+  window.addEventListener('scroll', () => {
+    const h = document.documentElement;
+    const pct = (h.scrollTop / (h.scrollHeight - h.clientHeight)) * 100;
+    bar.style.width = pct + '%';
+  });
+</script>
+</body>
+</html>
