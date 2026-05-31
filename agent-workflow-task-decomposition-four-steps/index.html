@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>把任務拆成 Agent 工作流的四步框架</title>
+<meta name="description" content="四步把 Human SOP 轉成 Agentic Workflow：格式標準化、任務拆解串 Artifact、雙向迭代補默會知識、整合工具加人工確認節點。你學的不是怎麼用 AI，而是怎麼設計給 AI 用的工作流。">
+
+<link rel="canonical" href="https://hale80427.github.io/brain-cards/agent-workflow-task-decomposition-four-steps/">
+<meta name="author" content="彥皓">
+
+<meta property="og:type" content="article">
+<meta property="og:title" content="把任務拆成 Agent 工作流的四步框架">
+<meta property="og:description" content="四步把 Human SOP 轉成 Agentic Workflow：格式標準化、任務拆解串 Artifact、雙向迭代補默會知識、整合工具加人工確認節點。你學的不是怎麼用 AI，而是怎麼設計給 AI 用的工作流。">
+<meta property="og:url" content="https://hale80427.github.io/brain-cards/agent-workflow-task-decomposition-four-steps/">
+<meta property="og:image" content="https://hale80427.github.io/brain-cards/og-default.jpg">
+<meta property="og:locale" content="zh_TW">
+
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="把任務拆成 Agent 工作流的四步框架">
+<meta name="twitter:description" content="四步把 Human SOP 轉成 Agentic Workflow：格式標準化、任務拆解串 Artifact、雙向迭代補默會知識、整合工具加人工確認節點。你學的不是怎麼用 AI，而是怎麼設計給 AI 用的工作流。">
+<meta name="twitter:image" content="https://hale80427.github.io/brain-cards/og-default.jpg">
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "把任務拆成 Agent 工作流的四步框架",
+  "description": "四步把 Human SOP 轉成 Agentic Workflow：格式標準化、任務拆解串 Artifact、雙向迭代補默會知識、整合工具加人工確認節點。你學的不是怎麼用 AI，而是怎麼設計給 AI 用的工作流。",
+  "datePublished": "2026-05-31",
+  "dateModified": "2026-05-31",
+  "author": { "@type": "Person", "name": "彥皓" },
+  "url": "https://hale80427.github.io/brain-cards/agent-workflow-task-decomposition-four-steps/",
+  "inLanguage": "zh-TW",
+  "license": "https://creativecommons.org/licenses/by/4.0/"
+}
+</script>
+
+<style>
+  :root {
+    --bg: #fafaf7;
+    --fg: #1a1a1a;
+    --accent: #c0392b;
+    --muted: #666;
+    --border: #e5e5e0;
+    --callout-tip: #e8f4f0;
+    --callout-warn: #fdf3e7;
+    --fs-meta: 0.85rem;
+    --fs-body: 1rem;
+    --fs-h2:   clamp(1.3rem, 3vw, 1.5rem);
+    --fs-h1:   clamp(1.75rem, 4vw, 2.25rem);
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #1a1a1a;
+      --fg: #f0f0e8;
+      --accent: #e87c6e;
+      --muted: #999;
+      --border: #333;
+      --callout-tip: #1f3530;
+      --callout-warn: #3a2d1c;
+    }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
+  }
+  * { box-sizing: border-box; }
+  body {
+    font-family: "Noto Serif TC", Georgia, serif;
+    background: var(--bg);
+    color: var(--fg);
+    line-height: 1.8;
+    margin: 0;
+    padding: 0;
+    -webkit-font-smoothing: antialiased;
+  }
+  .progress-bar {
+    position: fixed; top: 0; left: 0; height: 3px;
+    background: var(--accent); width: 0%; z-index: 100;
+    transition: width 0.1s;
+  }
+  main {
+    max-width: 680px;
+    margin: 0 auto;
+    padding: clamp(2rem, 5vw, 4rem) clamp(1.5rem, 4vw, 2rem);
+  }
+  h1 { font-size: var(--fs-h1); line-height: 1.3; margin: 0 0 1rem; }
+  h2 { font-size: var(--fs-h2); line-height: 1.4; margin: 2.5rem 0 0.75rem; padding-bottom: 0.5rem; border-bottom: 1px solid var(--border); }
+  h3 { font-size: var(--fs-body); font-weight: 700; line-height: 1.4; margin: 1.75rem 0 0.5rem; color: var(--accent); }
+  p { margin: 0 0 1.25rem; }
+  ul, ol { margin: 0 0 1.25rem; padding-left: 1.5rem; }
+  li { margin: 0.4rem 0; }
+  a { color: var(--accent); text-underline-offset: 3px; }
+  a:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+  blockquote {
+    margin: 1.25rem 0;
+    padding: 0.75rem 1.25rem;
+    border-left: 3px solid var(--muted);
+    color: var(--muted);
+    font-style: normal;
+    background: var(--callout-tip);
+    border-radius: 0 4px 4px 0;
+    font-size: var(--fs-body);
+  }
+  blockquote p { margin: 0; }
+  .bluf { background: var(--callout-tip); border-left: 3px solid var(--accent); padding: 1.25rem 1.5rem; margin: 1.5rem 0 2rem; border-radius: 4px; }
+  .bluf strong { display: block; font-size: var(--fs-meta); letter-spacing: 0.05em; color: var(--accent); margin-bottom: 0.5rem; text-transform: uppercase; }
+  .callout { padding: 1rem 1.25rem; margin: 1.5rem 0; border-radius: 4px; border-left: 3px solid var(--muted); }
+  .callout.tip { background: var(--callout-tip); border-left-color: var(--accent); }
+  .callout.warn { background: var(--callout-warn); border-left-color: #d97706; }
+  .callout strong { color: var(--accent); }
+  code { font-family: "JetBrains Mono", monospace; background: var(--callout-tip); padding: 0.1em 0.4em; border-radius: 3px; font-size: var(--fs-body); }
+  @media print {
+    .progress-bar { display: none; }
+    body { font-size: 11pt; line-height: 1.6; }
+    main { max-width: 100%; padding: 1cm; }
+  }
+</style>
+</head>
+<body>
+<div class="progress-bar" id="progress"></div>
+<main>
+<header>
+<h1>把任務拆成 Agent 工作流的四步框架</h1>
+<div class="bluf">
+<strong>BLUF</strong>
+這支影片的核心不是多寫 prompt，而是一套四步方法論：把腦中的 Human SOP 拆成 agent 可跑、可觀察、可修復的 workflow。從格式標準化、任務拆解、雙向迭代，到工具整合與人工確認節點。
+</div>
+</header>
+<article>
+<!-- narrative: 矛盾,物件,直接引語,場景,細節 -->
+<h2>影片的核心問題</h2>
+<p>大多數人用 AI 都卡在同一個地方：task 太大、太模糊，agent 跑起來像黑箱，出錯了不知道從哪修。</p>
+<p>這支影片的答案不是「換更強的模型」，而是把你腦中的 Human SOP（標準作業程序）拆成 agent 可跑、可觀察、可修復的 workflow（工作流）。</p>
+<h2>Mega Agent 的三個死穴</h2>
+<p>講者用比喻說明：請人打掃，就算幫手很聰明，沒定義「乾淨」是什麼，他也不知道你在意地板不黏還是水槽不能有碗。</p>
+<p>問題不在智力，而是「隱含標準沒有外顯」。Mega agent（大型全能代理）短期 demo 看起來不錯，但上線有三個死穴：</p>
+<ul>
+  <li><strong>不可觀測</strong>：不知道中間發生了什麼。</li>
+  <li><strong>不可修復</strong>：出錯只能整包重寫。</li>
+  <li><strong>不可控</strong>：高風險動作可能被自動執行。</li>
+</ul>
+<h2>四步框架：把 Human SOP 轉成 Agentic Workflow</h2>
+<h3>Step 1：格式標準化</h3>
+<p>把散文式 SOP 轉成 agent 能讀的規格，三個重點：</p>
+<ul>
+  <li>參數化：不寫死固定值，改用 mode、temperature 等參數讓 SOP 變成模板。</li>
+  <li>規則強度分級：用 RFC 2119 的 MUST、SHOULD、MAY 區分硬規定、建議、可選。</li>
+  <li>結構化格式：用 Markdown 拆 Parameters、Steps、Error Handling 區塊，人與 agent 都能讀。</li>
+</ul>
+<h3>Step 2：任務拆解與 Artifact 串接</h3>
+<p>把大任務拆成 pipeline（流水線）步驟。每個節點都要有 input（輸入）、output（輸出）、成功標準，能獨立執行與 debug。</p>
+<p>節點之間靠 artifact（中介資料）串接。例如分類 agent 輸出 JSON，列出白色衣物、深色衣物、精緻衣物。</p>
+<p>下一個 agent 讀這份 JSON，決定洗衣模式。這不是心電感應，而是清楚定義的資料格式。</p>
+<h3>Step 3：雙向開發，把默會知識翻出來</h3>
+<p>講者說這一步最重要。SOP 的本質是把默會知識（Tacit Knowledge）轉成文字規則——那些藏在人腦與習慣裡、平常說不清楚的判斷標準。</p>
+<p>直到 agent 跑錯，你才會發現自己漏寫了判斷標準。所以先跑粗糙版，觀察錯誤，再補規則。</p>
+<p>agent 把含棉衣物高溫烘乾縮水了，就補「含棉量超過 80% 不可高溫烘乾」的規則。</p>
+<p>幾輪後常見情境趨穩，edge case 才交人工確認。</p>
+<blockquote><p>「速度的關鍵不是寫得多完美，而是迭代得有多快。」</p></blockquote>
+<h3>Step 4：整合工具與設人工確認節點</h3>
+<p>SOP 寫得再漂亮，沒接到真實工具就只是文件。要對接公司內部系統、資料庫、API、ticketing system 等。</p>
+<p>MCP（Model Context Protocol，模型上下文協定）像 AI 世界的 USB-C，讓不同 agent 主機用同一套介面調用工具與資料。</p>
+<p>最後在高風險節點設 human-in-the-loop checkpoint（人工確認點），agent 必須停下來等人確認再繼續。</p>
+<blockquote><p>「不是一台失控的機器，而是一個人類掌舵、agent 執行的系統。」</p></blockquote>
+<h2>實際案例：公司內部請求分類</h2>
+<p>公司每天從 Slack、Email、表單收到雜事：權限申請、發票報帳、新人 onboard（入職流程）。原本靠人工掃描、判斷、指派。</p>
+<p>轉成 agentic workflow 後，拆成兩個 skill（技能單元）：</p>
+<ul>
+  <li>internal request triage（請求分類）：輸出 JSON，含類型、優先級、負責部門、指派對象。</li>
+  <li>internal request reply drafting（回覆草稿）：讀 JSON，產出回覆草稿。</li>
+</ul>
+<p>跑幾輪後，修正 priority 全判 Medium、assignee 指到離職員工等問題。</p>
+<p>涉及超過五千塊財務或 admin 權限變更時，設人工確認節點強制暫停。</p>
+<h2>一句話帶走</h2>
+<blockquote><p>「你不是在學怎麼用 AI，而是在學怎麼設計給 AI 用的工作流。前者很快會過時，後者越來越值錢。」</p></blockquote>
+<h2>好 Workflow 的七個判準</h2>
+<ul>
+  <li>input 明確。</li>
+  <li>output 明確。</li>
+  <li>artifact 格式明確。</li>
+  <li>單一節點只做一件事。</li>
+  <li>出錯時能定位是哪個節點壞掉。</li>
+  <li>修改一個節點不牽動整條流程。</li>
+  <li>高風險動作前停下來問人。</li>
+</ul>
+<div class="callout tip"><strong>需查證</strong>：影片提到 MCP 已捐給 Linux Foundation 旗下 Agentic AI Foundation；若要引用到正式文章，請另查官方來源。</div>
+</article>
+<footer>
+<p style="color: var(--muted); font-size: var(--fs-meta); margin-top: 4rem; padding-top: 1.5rem; border-top: 1px solid var(--border);">
+最後更新：2026-05-31 · CC BY 4.0 · 引用請標來源
+</p>
+</footer>
+</main>
+<script>
+  const bar = document.getElementById('progress');
+  window.addEventListener('scroll', () => {
+    const h = document.documentElement;
+    const pct = (h.scrollTop / (h.scrollHeight - h.clientHeight)) * 100;
+    bar.style.width = pct + '%';
+  });
+</script>
+</body>
+</html>
