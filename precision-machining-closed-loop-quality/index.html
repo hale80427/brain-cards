@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>精密加工的閉環品質迴圈</title>
+<meta name="description" content="傳統加工量測太晚，超差只能報廢；閉環做法把量測拉進切削中途，四步在同一次裝夾內閉合迴圈，良率因此顯著提升。">
+
+<link rel="canonical" href="https://hale80427.github.io/brain-cards/precision-machining-closed-loop-quality/">
+<meta name="author" content="彥皓">
+
+<meta property="og:type" content="article">
+<meta property="og:title" content="精密加工的閉環品質迴圈">
+<meta property="og:description" content="傳統加工量測太晚，超差只能報廢；閉環做法把量測拉進切削中途，四步在同一次裝夾內閉合迴圈，良率因此顯著提升。">
+<meta property="og:url" content="https://hale80427.github.io/brain-cards/precision-machining-closed-loop-quality/">
+<meta property="og:image" content="https://hale80427.github.io/brain-cards/og-default.jpg">
+<meta property="og:locale" content="zh_TW">
+
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="精密加工的閉環品質迴圈">
+<meta name="twitter:description" content="傳統加工量測太晚，超差只能報廢；閉環做法把量測拉進切削中途，四步在同一次裝夾內閉合迴圈，良率因此顯著提升。">
+<meta name="twitter:image" content="https://hale80427.github.io/brain-cards/og-default.jpg">
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "精密加工的閉環品質迴圈",
+  "description": "傳統加工量測太晚，超差只能報廢；閉環做法把量測拉進切削中途，四步在同一次裝夾內閉合迴圈，良率因此顯著提升。",
+  "datePublished": "2026-06-05",
+  "dateModified": "2026-06-05",
+  "author": { "@type": "Person", "name": "彥皓" },
+  "url": "https://hale80427.github.io/brain-cards/precision-machining-closed-loop-quality/",
+  "inLanguage": "zh-TW",
+  "license": "https://creativecommons.org/licenses/by/4.0/"
+}
+</script>
+
+<style>
+  :root {
+    --bg: #fafaf7;
+    --fg: #1a1a1a;
+    --accent: #c0392b;
+    --muted: #666;
+    --border: #e5e5e0;
+    --callout-tip: #e8f4f0;
+    --callout-warn: #fdf3e7;
+    --fs-meta: 0.85rem;
+    --fs-body: 1rem;
+    --fs-h2:   clamp(1.3rem, 3vw, 1.5rem);
+    --fs-h1:   clamp(1.75rem, 4vw, 2.25rem);
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #1a1a1a;
+      --fg: #f0f0e8;
+      --accent: #e87c6e;
+      --muted: #999;
+      --border: #333;
+      --callout-tip: #1f3530;
+      --callout-warn: #3a2d1c;
+    }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
+  }
+  * { box-sizing: border-box; }
+  body {
+    font-family: "Noto Serif TC", Georgia, serif;
+    background: var(--bg);
+    color: var(--fg);
+    line-height: 1.8;
+    margin: 0;
+    padding: 0;
+    -webkit-font-smoothing: antialiased;
+  }
+  .progress-bar {
+    position: fixed; top: 0; left: 0; height: 3px;
+    background: var(--accent); width: 0%; z-index: 100;
+    transition: width 0.1s;
+  }
+  main {
+    max-width: 680px;
+    margin: 0 auto;
+    padding: clamp(2rem, 5vw, 4rem) clamp(1.5rem, 4vw, 2rem);
+  }
+  h1 { font-size: var(--fs-h1); line-height: 1.3; margin: 0 0 1rem; }
+  h2 { font-size: var(--fs-h2); line-height: 1.4; margin: 2.5rem 0 0.75rem; padding-bottom: 0.5rem; border-bottom: 1px solid var(--border); }
+  h3 { font-size: var(--fs-body); font-weight: 700; line-height: 1.4; margin: 1.75rem 0 0.5rem; color: var(--accent); }
+  p { margin: 0 0 1.25rem; }
+  ul, ol { margin: 0 0 1.25rem; padding-left: 1.5rem; }
+  li { margin: 0.4rem 0; }
+  a { color: var(--accent); text-underline-offset: 3px; }
+  a:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+  blockquote {
+    margin: 1.25rem 0;
+    padding: 0.75rem 1.25rem;
+    border-left: 3px solid var(--muted);
+    color: var(--muted);
+    font-style: normal;
+    background: var(--callout-tip);
+    border-radius: 0 4px 4px 0;
+    font-size: var(--fs-body);
+  }
+  blockquote p { margin: 0; }
+  .bluf { background: var(--callout-tip); border-left: 3px solid var(--accent); padding: 1.25rem 1.5rem; margin: 1.5rem 0 2rem; border-radius: 4px; }
+  .bluf strong { display: block; font-size: var(--fs-meta); letter-spacing: 0.05em; color: var(--accent); margin-bottom: 0.5rem; text-transform: uppercase; }
+  .callout { padding: 1rem 1.25rem; margin: 1.5rem 0; border-radius: 4px; border-left: 3px solid var(--muted); }
+  .callout.tip { background: var(--callout-tip); border-left-color: var(--accent); }
+  .callout.warn { background: var(--callout-warn); border-left-color: #d97706; }
+  .callout strong { color: var(--accent); }
+  code { font-family: "JetBrains Mono", monospace; background: var(--callout-tip); padding: 0.1em 0.4em; border-radius: 3px; font-size: var(--fs-body); }
+  figure { margin: 2rem 0; text-align: center; }
+  figure svg { max-width: 100%; height: auto; }
+  figcaption { font-size: var(--fs-meta); color: var(--muted); margin-top: 0.5rem; }
+  table { width: 100%; border-collapse: collapse; margin: 1.5rem 0; font-size: var(--fs-body); }
+  th, td { border: 1px solid var(--border); padding: 0.5rem 0.75rem; text-align: left; }
+  th { background: var(--callout-tip); font-weight: 700; }
+  @media print {
+    .progress-bar { display: none; }
+    body { font-size: 11pt; line-height: 1.6; }
+    main { max-width: 100%; padding: 1cm; }
+  }
+</style>
+</head>
+<body>
+<div class="progress-bar" id="progress"></div>
+<main>
+<header>
+<h1>精密加工的閉環品質迴圈</h1>
+<div class="bluf">
+<strong>BLUF</strong>
+傳統精密加工量測太晚，超差只能報廢。閉環做法把量測拉進切削中途，用四步完成即時補償——在機量測、比對偏差、推算修正、下一刀直接吃掉誤差——整個迴圈在同一次裝夾內閉合，良率因此顯著提升。
+</div>
+</header>
+<article>
+<!-- narrative: 矛盾,物件,細節 -->
+<h2>傳統加工的死穴：量測太晚了</h2><p>傳統精密加工是一個「開環」系統（open-loop system，意指沒有即時回饋的控制流程）：設定好切削參數、開始加工、完成後取下工件量測。</p><p>問題就出在「加工完才量」這件事。刀具在切削過程中持續磨損，機台因摩擦生熱也會產生熱變形（thermal deformation，機台受熱後微小膨脹，直接影響加工尺寸精度）。</p><p>這些誤差在整個切削過程中不斷累積，等到量測發現超差，工件已經切完——報廢是唯一出路。</p><h2>閉環做法：四步把誤差壓在單刀循環裡</h2><p>閉環品質迴圈（closed-loop quality control）的邏輯很直白：不要等加工完再量，在切削中途就量、就補正。核心流程只有四步：</p><figure><svg viewBox="0 0 400 300" role="img"><title>閉環加工四步迴圈示意圖</title><defs><marker id="arr" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto"><polygon points="0 0, 8 3, 0 6" fill="currentColor"/></marker></defs><rect x="20" y="30" width="140" height="60" rx="6" fill="none" stroke="currentColor" stroke-width="1.5"/><text x="90" y="55" text-anchor="middle" font-size="13" fill="currentColor">① 在機量測</text><text x="90" y="75" text-anchor="middle" font-size="11" fill="currentColor">探頭抓取即時尺寸</text><rect x="240" y="30" width="140" height="60" rx="6" fill="none" stroke="currentColor" stroke-width="1.5"/><text x="310" y="55" text-anchor="middle" font-size="13" fill="currentColor">② 比對偏差</text><text x="310" y="75" text-anchor="middle" font-size="11" fill="currentColor">計算離公差多遠</text><rect x="240" y="210" width="140" height="60" rx="6" fill="none" stroke="currentColor" stroke-width="1.5"/><text x="310" y="235" text-anchor="middle" font-size="13" fill="currentColor">③ 補償推算</text><text x="310" y="255" text-anchor="middle" font-size="11" fill="currentColor">反推刀具路徑修正</text><rect x="20" y="210" width="140" height="60" rx="6" fill="none" stroke="currentColor" stroke-width="1.5"/><text x="90" y="235" text-anchor="middle" font-size="13" fill="currentColor">④ 修正切削</text><text x="90" y="255" text-anchor="middle" font-size="11" fill="currentColor">下一刀吃掉累積誤差</text><line x1="162" y1="60" x2="238" y2="60" stroke="currentColor" stroke-width="1.5" marker-end="url(#arr)"/><line x1="310" y1="92" x2="310" y2="208" stroke="currentColor" stroke-width="1.5" marker-end="url(#arr)"/><line x1="238" y1="240" x2="162" y2="240" stroke="currentColor" stroke-width="1.5" marker-end="url(#arr)"/><line x1="90" y1="208" x2="90" y2="92" stroke="currentColor" stroke-width="1.5" marker-end="url(#arr)"/><text x="200" y="148" text-anchor="middle" font-size="12" fill="currentColor">閉環迴圈</text><text x="200" y="165" text-anchor="middle" font-size="10" fill="currentColor">同一次裝夾內完成</text></svg><figcaption>閉環加工的四步迴圈，整個回饋過程在同一次裝夾內閉合</figcaption></figure><ul><li><strong>在機量測</strong>：切削暫停後，機台上的探頭直接抓取工件當前尺寸，不需拆下。</li><li><strong>比對偏差</strong>：把量到的尺寸和目標公差相比，算出現在偏了多少。</li><li><strong>補償推算</strong>：補償器（compensator）根據偏差值，反推刀具路徑需要調整的量。</li><li><strong>修正切削</strong>：修正後的路徑立刻執行，這一刀直接把累積誤差吃掉。</li></ul><h2>為什麼有效：同一次裝夾內閉合</h2><p>閉環最大的優勢不只是「量得快」，而是整個迴圈發生在同一次裝夾（clamping，工件固定在機台上的狀態）裡——不用拆下工件、不用重新對刀，累積誤差就被壓縮在單刀循環的尺度內。</p><p>因果鏈很清楚：量測延遲越短，加工中的變因累積越少；變因越少，補償器的修正量越準；修正越準，加工良率就越高。</p>
+</article>
+<footer>
+<p style="color: var(--muted); font-size: var(--fs-meta); margin-top: 4rem; padding-top: 1.5rem; border-top: 1px solid var(--border);">
+最後更新：2026-06-05 · CC BY 4.0 · 引用請標來源
+</p>
+</footer>
+</main>
+<script>
+  const bar = document.getElementById('progress');
+  window.addEventListener('scroll', () => {
+    const h = document.documentElement;
+    const pct = (h.scrollTop / (h.scrollHeight - h.clientHeight)) * 100;
+    bar.style.width = pct + '%';
+  });
+</script>
+</body>
+</html>
