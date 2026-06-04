@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AI 真的能讓工廠的機器自己越做越聰明嗎？2026 的真相盤點</title>
+<meta name="description" content="盤點 2026 精密加工 AI 製程優化的真相：最誘人的效益掛在最不成熟的技術上，全自動閉環是幻覺，可靠的好處樸實但不性感。">
+
+<link rel="canonical" href="https://hale80427.github.io/brain-cards/cnc-ai-truth-2026/">
+<meta name="author" content="彥皓">
+
+<meta property="og:type" content="article">
+<meta property="og:title" content="AI 真的能讓工廠的機器自己越做越聰明嗎？2026 的真相盤點">
+<meta property="og:description" content="最誘人的效益掛在最不成熟的技術上，全自動閉環是幻覺，可靠的好處樸實但不性感。">
+<meta property="og:url" content="https://hale80427.github.io/brain-cards/cnc-ai-truth-2026/">
+<meta property="og:image" content="https://hale80427.github.io/brain-cards/og-default.jpg">
+<meta property="og:locale" content="zh_TW">
+
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="AI 真的能讓工廠的機器自己越做越聰明嗎？2026 的真相盤點">
+<meta name="twitter:description" content="最誘人的效益掛在最不成熟的技術上，全自動閉環是幻覺，可靠的好處樸實但不性感。">
+<meta name="twitter:image" content="https://hale80427.github.io/brain-cards/og-default.jpg">
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "AI 真的能讓工廠的機器自己越做越聰明嗎？2026 的真相盤點",
+  "description": "盤點 2026 精密加工 AI 製程優化的真相：最誘人的效益掛在最不成熟的技術上，全自動閉環是幻覺，可靠的好處樸實但不性感。",
+  "datePublished": "2026-06-04",
+  "dateModified": "2026-06-04",
+  "author": { "@type": "Person", "name": "彥皓" },
+  "url": "https://hale80427.github.io/brain-cards/cnc-ai-truth-2026/",
+  "inLanguage": "zh-TW",
+  "license": "https://creativecommons.org/licenses/by/4.0/"
+}
+</script>
+
+<style>
+  :root {
+    /* === A 編輯雜誌風 token（KB-06）— color 走 OKLCH，禁 inline hex/rgb/font-family === */
+    --bg: oklch(98.3% 0.004 95);                 /* 暖白 was #fafaf6 */
+    --fg: oklch(21.8% 0 0);                       /* 近黑 was #1a1a1a */
+    --accent: oklch(37.8% 0.142 29.3);           /* 深紅 was #8B0000 */
+    --accent-warn: oklch(58.5% 0.13 55);         /* 暖橘 warn 強調 */
+    --muted: oklch(53% 0.006 95);                /* 暖中灰 */
+    --border: oklch(89.5% 0.008 95);             /* 淺暖灰 */
+    --callout-tip: oklch(95.2% 0.012 95);        /* 暖米薄底 */
+    --callout-warn: oklch(95.5% 0.024 70);       /* 淺暖橘底 */
+    --diagram-bg: oklch(96.8% 0.006 95);         /* diagram 面板底 */
+    /* === 字級嚴格 4 級（A 方向：14 / 16.8 / 28 / 44px 對應）=== */
+    --fs-meta: 0.875rem;
+    --fs-body: 1.05rem;
+    --fs-h2: clamp(1.5rem, 3.5vw, 1.75rem);
+    --fs-h1: clamp(2rem, 5vw, 2.75rem);
+    /* === 字體：單一 serif 家族 + mono；display/body 用 weight 區分 === */
+    --font-serif: "Noto Serif TC", Georgia, "Times New Roman", serif;
+    --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+    --ease-linear: linear;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: oklch(20.5% 0.006 95);
+      --fg: oklch(94.5% 0.01 95);
+      --accent: oklch(72% 0.13 30);              /* 亮珊瑚紅，暗底對比 */
+      --accent-warn: oklch(77% 0.15 70);
+      --muted: oklch(67% 0.008 95);
+      --border: oklch(31% 0.006 95);
+      --callout-tip: oklch(28% 0.012 95);
+      --callout-warn: oklch(30% 0.03 70);
+      --diagram-bg: oklch(25% 0.006 95);
+    }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
+  }
+  * { box-sizing: border-box; }
+  body {
+    font-family: var(--font-serif);
+    background: var(--bg);
+    color: var(--fg);
+    line-height: 1.85;
+    font-size: var(--fs-body);
+    margin: 0; padding: 0;
+    -webkit-font-smoothing: antialiased;
+  }
+  .progress-bar {
+    position: fixed; top: 0; left: 0; height: 3px; width: 100%;
+    background: var(--accent); z-index: 100;
+    transform: scaleX(0); transform-origin: left;
+    transition: transform 0.1s var(--ease-linear);
+  }
+  main {
+    max-width: 65ch;
+    margin: 0 auto;
+    padding: clamp(2.5rem, 6vw, 4.5rem) clamp(1.4rem, 4vw, 2rem);
+  }
+  .kicker {
+    font-size: var(--fs-meta); letter-spacing: 0.18em; text-transform: uppercase;
+    color: var(--accent); font-variant: small-caps; margin: 0 0 0.8rem; font-weight: 600;
+  }
+  /* === 字級階梯嚴格 4 級；差異用 weight + color === */
+  h1 { font-size: var(--fs-h1); line-height: 1.18; margin: 0 0 1.1rem; font-weight: 700; letter-spacing: -0.01em; }
+  h2 { font-size: var(--fs-h2); line-height: 1.35; margin: 2.8rem 0 0.9rem; padding-bottom: 0.45rem; border-bottom: 1px solid var(--border); font-weight: 700; }
+  h3 { font-size: var(--fs-body); font-weight: 700; line-height: 1.4; margin: 1.6rem 0 0.5rem; color: var(--accent); }
+  p { margin: 0 0 1.25rem; }
+  ul, ol { margin: 0 0 1.25rem; padding-left: 1.4rem; }
+  li { margin: 0 0 0.5rem; }
+  a { color: var(--accent); text-underline-offset: 3px; }
+  a:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+  .lead { font-size: var(--fs-body); color: var(--muted); margin: 0 0 1.5rem; }
+  .bluf { background: var(--callout-tip); border-left: 3px solid var(--accent); padding: 1.25rem 1.5rem; margin: 1.5rem 0 2.5rem; border-radius: 4px; }
+  .bluf strong { display: block; font-size: var(--fs-meta); letter-spacing: 0.05em; color: var(--accent); margin-bottom: 0.5rem; text-transform: uppercase; }
+  /* drop cap — ::first-letter 不在 KB-04 font_levels 掃描範圍 */
+  .dropcap::first-letter {
+    font-size: 3.4em; float: left; line-height: 0.8; padding: 0.04em 0.1em 0 0;
+    color: var(--accent); font-weight: 700;
+  }
+  .callout { padding: 1rem 1.25rem; margin: 1.6rem 0; border-radius: 4px; border-left: 3px solid var(--muted); }
+  .callout.tip { background: var(--callout-tip); border-left-color: var(--accent); }
+  .callout.warn { background: var(--callout-warn); border-left-color: var(--accent-warn); }
+  blockquote { margin: 2rem 0; padding: 0.2rem 0 0.2rem 1.4rem; border-left: 3px solid var(--accent); font-style: italic; color: var(--fg); }
+  code { font-family: var(--font-mono); background: var(--callout-tip); padding: 0.1em 0.4em; border-radius: 3px; font-size: var(--fs-body); }
+  /* === figure / diagram（KB-07）=== */
+  figure { margin: 2rem 0; padding: 1.1rem 1.1rem 0.6rem; background: var(--diagram-bg); border: 1px solid var(--border); border-radius: 6px; }
+  figure svg { width: 100%; height: auto; display: block; }
+  figcaption { font-size: var(--fs-meta); color: var(--muted); margin-top: 0.7rem; text-align: center; line-height: 1.5; }
+  /* SVG 共用 class（顏色走 token，不寫死） */
+  .dg-box { fill: var(--callout-tip); stroke: var(--accent); stroke-width: 1.5; }
+  .dg-box-muted { fill: var(--diagram-bg); stroke: var(--muted); stroke-width: 1.5; stroke-dasharray: 5 4; }
+  .dg-line { stroke: var(--accent); stroke-width: 2; fill: none; }
+  .dg-line-muted { stroke: var(--muted); stroke-width: 2; stroke-dasharray: 5 4; fill: none; }
+  .dg-label { fill: var(--fg); font-family: var(--font-serif); }
+  .dg-accent { fill: var(--accent); font-family: var(--font-serif); font-weight: 700; }
+  .dg-muted { fill: var(--muted); font-family: var(--font-serif); }
+  footer { margin-top: 3.5rem; }
+  @media print {
+    .progress-bar { display: none; }
+    body { font-size: 11pt; line-height: 1.6; }
+    main { max-width: 100%; padding: 1cm; }
+    figure { break-inside: avoid; }
+  }
+</style>
+</head>
+<body>
+<div class="progress-bar" id="progress"></div>
+<main>
+<!-- narrative: 矛盾,物件,細節 -->
+<header>
+<p class="kicker">精密加工 · 2026 真相盤點</p>
+<h1>AI 真的能讓工廠的機器自己越做越聰明嗎？</h1>
+<p class="lead">如果你最近聽到「AI 製造」「智慧工廠」這類詞，大概會以為工廠裡的機器已經能自己感測、自己學習、把加工越做越好。</p>
+<div class="bluf">
+<strong>一句話結論</strong>
+能買到的最大好處，掛在最不成熟的技術上；真正可靠的好處，樸實但不性感。在精密加工這種錯不起的場合，跟著「能不能驗證」走，比跟著「數字多漂亮」走，安全得多。
+</div>
+</header>
+<article>
+
+<h2>先說結論</h2>
+<p class="dropcap">實際盤點 2026 年的精密加工現場，真相和廣告差很遠。值得先記住三件事。</p>
+<ul>
+<li>真正能買、能用、能上量產線的 AI 優化，效果樸實但可靠（例如幫機台補償發熱造成的變形）。</li>
+<li>廣告打最兇、數字最漂亮的那些（刀具壽命五倍、工時省七成），剛好掛在最不成熟、最像在賭的技術上。</li>
+<li>「機器全自動自己優化」這件事，2026 年沒有開箱即用的現貨。市面上的「閉環」其實是人手工拼出來的。</li>
+</ul>
+<p>換句話說：最誘人的好處，和最可靠的好處，不是同一件事。</p>
+
+<h2>先搞懂我們在講什麼</h2>
+<p>CNC，講白話就是「電腦控制的金屬切削機台」。你手機的鋁合金邊框、引擎裡的精密零件，都是這種機器一刀一刀削出來的。</p>
+<p>AI 製程優化，理論上是讓 AI 幫忙決定「要削多快、轉多快、削多深」這些參數，而且邊做邊學，越做越好。</p>
+<p>聽起來很美。問題在「邊做邊學、越做越好」這幾個字，藏了非常多廣告和現實的落差。</p>
+
+<figure>
+<svg viewBox="0 0 560 150" role="img" xmlns="http://www.w3.org/2000/svg">
+<title>理想的加工自我優化迴圈，以及 2026 現實尚未打通的環節</title>
+<defs>
+<marker id="arw" markerWidth="9" markerHeight="9" refX="6" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6" fill="var(--accent)"/></marker>
+<marker id="arw-m" markerWidth="9" markerHeight="9" refX="6" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6" fill="var(--muted)"/></marker>
+</defs>
+<rect class="dg-box" x="8" y="50" width="110" height="44" rx="6"/>
+<text class="dg-label" x="63" y="69" text-anchor="middle" font-size="15">感測</text>
+<text class="dg-muted" x="63" y="87" text-anchor="middle" font-size="11">機台訊號</text>
+<rect class="dg-box-muted" x="160" y="50" width="110" height="44" rx="6"/>
+<text class="dg-muted" x="215" y="69" text-anchor="middle" font-size="15">AI 分析</text>
+<text class="dg-muted" x="215" y="87" text-anchor="middle" font-size="11">自主重算</text>
+<rect class="dg-box-muted" x="312" y="50" width="110" height="44" rx="6"/>
+<text class="dg-muted" x="367" y="69" text-anchor="middle" font-size="15">自動調整</text>
+<text class="dg-muted" x="367" y="87" text-anchor="middle" font-size="11">改寫加工</text>
+<rect class="dg-box" x="442" y="50" width="110" height="44" rx="6"/>
+<text class="dg-label" x="497" y="69" text-anchor="middle" font-size="15">加工</text>
+<text class="dg-muted" x="497" y="87" text-anchor="middle" font-size="11">削出零件</text>
+<line class="dg-line" x1="118" y1="72" x2="156" y2="72" marker-end="url(#arw)"/>
+<line class="dg-line-muted" x1="270" y1="72" x2="308" y2="72" marker-end="url(#arw-m)"/>
+<line class="dg-line-muted" x1="422" y1="72" x2="438" y2="72" marker-end="url(#arw-m)"/>
+<path class="dg-line" d="M497 94 L497 122 L63 122 L63 96" marker-end="url(#arw)"/>
+<text class="dg-accent" x="135" y="30" text-anchor="middle" font-size="12">實線＝已打通</text>
+<text class="dg-muted" x="291" y="30" text-anchor="middle" font-size="12">虛線＝2026 尚未打通（中間兩段）</text>
+</svg>
+<figcaption>圖 1 · 理想的「感測 → 分析 → 調整 → 加工」自我優化迴圈，標出 2026 現實已打通（實線）與未打通（虛線）的環節 · 作者自繪</figcaption>
+</figure>
+
+<h2>真相一：最誘人的好處，掛在最不成熟的技術上</h2>
+<p>技術圈有把衡量成熟度的尺，叫 TRL（技術成熟度，Technology Readiness Level），從 1（剛有想法）到 9（已經穩定量產）。</p>
+<p>把市面上的 AI 加工功能放上這把尺，會看到一個很刺眼的現象。</p>
+<ul>
+<li>幫機台補償熱變形（機器運轉會發熱、發熱會讓尺寸跑掉，AI 幫你預測並修正）——成熟度高（TRL 7–9），效果可以用儀器直接量、騙不了人。但好處範圍比較窄。</li>
+<li>直接讓 AI 自己優化「怎麼切」——這才是廣告主打、數字最漂亮的，但成熟度低（TRL 3–6），大多還停在實驗室和展示影片。</li>
+</ul>
+<p>廠商最愛秀的數字——刀具壽命五倍、工時省七成——幾乎都來自展示案例（demo，廠商挑出來的最佳示範），不是真正量產線上跑出來的穩定值。</p>
+
+<figure>
+<svg viewBox="0 0 560 240" role="img" xmlns="http://www.w3.org/2000/svg">
+<title>技術成熟度與廣告效益的倒掛關係</title>
+<line class="dg-line" x1="60" y1="200" x2="540" y2="200"/>
+<line class="dg-line" x1="60" y1="200" x2="60" y2="24"/>
+<text class="dg-muted" x="300" y="230" text-anchor="middle" font-size="13">技術成熟度（TRL）低 → 高 →</text>
+<text class="dg-muted" x="22" y="115" text-anchor="middle" font-size="13" transform="rotate(-90 22 115)">廣告效益喊得多大</text>
+<path class="dg-line-muted" d="M95 55 Q300 140 515 185"/>
+<circle cx="110" cy="62" r="8" fill="var(--accent)"/>
+<text class="dg-accent" x="125" y="56" font-size="13">改切削參數自優化</text>
+<text class="dg-muted" x="125" y="73" font-size="11">TRL 3–6 · 效益喊到 5×／省 70%</text>
+<circle cx="505" cy="182" r="8" fill="none" stroke="var(--accent)" stroke-width="2"/>
+<text class="dg-label" x="498" y="170" text-anchor="end" font-size="13">熱變形補償</text>
+<text class="dg-muted" x="498" y="155" text-anchor="end" font-size="11">TRL 7–9 · 效益窄但可量測</text>
+</svg>
+<figcaption>圖 2 · 成熟度與廣告效益倒掛：喊最大的效益落在成熟度最低處，可靠的好處落在成熟卻樸實處 · 作者自繪（數據源自本研究三線整合）</figcaption>
+</figure>
+
+<p>有個數字很能說明問題：真正導入後回報「確實有改善」的工廠，大約只有四成；而有調查說，高達九成五的 AI 試點專案，找不到實際反映在財報上的效益。</p>
+<p>廠商秀的是最好的那一個案例（分子），但真正成功用起來的比率（分母）才是真相。分子很大，分母很小。</p>
+
+<h2>真相二：「機器全自動自己優化」是個幻覺</h2>
+<p>廣告最愛畫的願景，是一個機器會自己進化的閉環：感測 → AI 分析 → 自動重新計算 → 自動改寫加工 → 越做越好。</p>
+<p>但實際上，這個閉環在 2026 年沒有任何一家能開箱即用地賣給你。</p>
+<p>為什麼？因為負責「即時穩定」的機台控制器，和負責「事先算好怎麼切」的編程軟體，這兩層到今天還沒真正打通。能拿出來的「全自動閉環」案例，幾乎清一色是廠商自己的展示。</p>
+
+<figure>
+<svg viewBox="0 0 560 250" role="img" xmlns="http://www.w3.org/2000/svg">
+<title>廣告的全自動閉環 vs 現實人工拼裝的三段式</title>
+<defs>
+<marker id="arw2" markerWidth="9" markerHeight="9" refX="6" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6" fill="var(--accent)"/></marker>
+</defs>
+<text class="dg-muted" x="20" y="30" font-size="13">廣告版：機器自己會的閉環</text>
+<rect class="dg-box-muted" x="40" y="44" width="480" height="46" rx="23"/>
+<text class="dg-muted" x="280" y="72" text-anchor="middle" font-size="14">感測 → AI → 重算 → 改寫 → 自己越做越好（順順一圈）</text>
+<line x1="60" y1="110" x2="500" y2="110" stroke="var(--border)" stroke-width="1"/>
+<text class="dg-accent" x="20" y="138" font-size="13">現實版：人工拼裝的三段</text>
+<rect class="dg-box" x="30" y="155" width="140" height="58" rx="6"/>
+<text class="dg-label" x="100" y="180" text-anchor="middle" font-size="13">編程軟體</text>
+<text class="dg-muted" x="100" y="198" text-anchor="middle" font-size="11">先算基準路徑</text>
+<rect class="dg-box" x="210" y="155" width="140" height="58" rx="6"/>
+<text class="dg-label" x="280" y="180" text-anchor="middle" font-size="13">機台控制器</text>
+<text class="dg-muted" x="280" y="198" text-anchor="middle" font-size="11">即時兜底修正</text>
+<rect class="dg-box" x="390" y="155" width="140" height="58" rx="6"/>
+<text class="dg-label" x="460" y="180" text-anchor="middle" font-size="13">第三方監控</text>
+<text class="dg-muted" x="460" y="198" text-anchor="middle" font-size="11">在旁盯著</text>
+<text class="dg-accent" x="190" y="190" text-anchor="middle" font-size="20">＋</text>
+<text class="dg-accent" x="370" y="190" text-anchor="middle" font-size="20">＋</text>
+<text class="dg-accent" x="280" y="238" text-anchor="middle" font-size="12">↑ 是人在中間當膠水，不是機器自己會</text>
+</svg>
+<figcaption>圖 3 · 廣告畫的全自動閉環，現實裡是人工把三段獨立工具拼起來 · 作者自繪</figcaption>
+</figure>
+
+<h2>真相三：越「AI」的功能，反而越脆</h2>
+<p>這裡有個反直覺的規律。越成熟、越穩的功能，AI 含量其實越低——例如「自適應進給」聽起來很智慧，骨子裡是 1980 年代就有的負載控制。</p>
+<p>越標榜「AI」的功能，反而越脆——例如用 AI 預測刀具還能用多久，在標準測試資料上準確率號稱九成八，一換機台、換材料就崩。</p>
+<div class="callout warn">
+行銷話術常把兩件事故意混在一起：一件是「AI 幫你寫程式寫快一點」（這真的有用），另一件是「AI 自己閉環優化」（這還沒成熟）。聽的人以為買到的是後者，其實拿到的是前者。
+</div>
+
+<h2>那到底該怎麼辦：別讓 AI 自說自話</h2>
+<p>如果你真的要把這套用在精密加工上，最重要的一條原則是：不要讓 AI 關起門來自己推理、自己證明自己對。</p>
+<p>做精密加工的人發展出一套叫「雙錨」的做法——AI 給的任何建議，都要用兩個錨點校驗：真實機台的量測訊號（機器實際上發生了什麼），以及廠商官方文件（設計上本來該怎樣）。</p>
+<p>為什麼非這樣不可？因為 AI 從基本原理推導，常常會違反廠商實際的工程取捨。廠商的演算法解的是「能商業化的次佳解」，不是課本上的最佳解。</p>
+<p>真實案例：AI 推導加工公式時漏算了刀具的刃數；又有一次 AI 的模型直接被廠商官方截圖打臉。</p>
+
+<figure>
+<svg viewBox="0 0 560 210" role="img" xmlns="http://www.w3.org/2000/svg">
+<title>雙錨可得、第三錨封閉原廠拿不到，本土廠商是唯一可能補上的路徑</title>
+<rect class="dg-box" x="30" y="40" width="150" height="64" rx="6"/>
+<text class="dg-accent" x="105" y="66" text-anchor="middle" font-size="14">錨一 ✓</text>
+<text class="dg-label" x="105" y="86" text-anchor="middle" font-size="12">實機量測訊號</text>
+<rect class="dg-box" x="205" y="40" width="150" height="64" rx="6"/>
+<text class="dg-accent" x="280" y="66" text-anchor="middle" font-size="14">錨二 ✓</text>
+<text class="dg-label" x="280" y="86" text-anchor="middle" font-size="12">廠商官方文件</text>
+<rect class="dg-box-muted" x="380" y="40" width="150" height="64" rx="6"/>
+<text class="dg-muted" x="455" y="66" text-anchor="middle" font-size="14">錨三 ✗</text>
+<text class="dg-muted" x="455" y="86" text-anchor="middle" font-size="12">演算法內部邏輯</text>
+<text class="dg-muted" x="455" y="124" text-anchor="middle" font-size="11">封閉原廠永遠不給</text>
+<path class="dg-line-muted" d="M400 150 Q455 130 510 150"/>
+<rect class="dg-box" x="340" y="150" width="190" height="44" rx="6"/>
+<text class="dg-label" x="435" y="172" text-anchor="middle" font-size="12">願揭露、可二次開發的</text>
+<text class="dg-accent" x="435" y="188" text-anchor="middle" font-size="12">本土廠商 ＝ 唯一可能補上錨三</text>
+</svg>
+<figcaption>圖 4 · 雙錨可得、第三錨（演算法內部邏輯）封閉原廠拿不到，本土廠商是唯一可能補上的路徑 · 作者自繪</figcaption>
+</figure>
+
+<h2>給朋友的一句話</h2>
+<p>下次再聽到「AI 讓工廠自動優化、效率翻倍」，可以記住這句：</p>
+<blockquote>能買到的最大好處，掛在最不成熟的技術上；真正可靠的好處，樸實但不性感。</blockquote>
+<p>在精密加工這種錯不起的場合，跟著「能不能驗證」走，比跟著「數字多漂亮」走，安全得多。</p>
+
+</article>
+<footer>
+<p style="color: var(--muted); font-size: var(--fs-meta); margin-top: 1rem; padding-top: 1.5rem; border-top: 1px solid var(--border);">
+最後更新：2026-06-04 · CC BY 4.0 · 引用請標來源 · 數據源自作者「2026 精密 CNC 導入 AI 製程優化」三線整合研究
+</p>
+</footer>
+</main>
+<script>
+  const bar = document.getElementById('progress');
+  window.addEventListener('scroll', () => {
+    const h = document.documentElement;
+    const max = h.scrollHeight - h.clientHeight;
+    const ratio = max > 0 ? h.scrollTop / max : 0;
+    bar.style.transform = 'scaleX(' + ratio + ')';
+  }, { passive: true });
+</script>
+</body>
+</html>
