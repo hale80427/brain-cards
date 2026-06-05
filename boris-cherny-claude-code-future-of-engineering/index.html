@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Boris Cherny 談 Claude Code：工程師的下一個抽象層</title>
+<meta name="description" content="Boris Cherny 談 Claude Code 的起源：工程師從寫程式轉向設計 agent loop（自動化任務循環），組織從分工走向少人力、多 token 的 generalist 模式。">
+
+<link rel="canonical" href="https://hale80427.github.io/brain-cards/boris-cherny-claude-code-future-of-engineering/">
+<meta name="author" content="彥皓">
+
+<meta property="og:type" content="article">
+<meta property="og:title" content="Boris Cherny 談 Claude Code：工程師的下一個抽象層">
+<meta property="og:description" content="Boris Cherny 談 Claude Code 的起源：工程師從寫程式轉向設計 agent loop（自動化任務循環），組織從分工走向少人力、多 token 的 generalist 模式。">
+<meta property="og:url" content="https://hale80427.github.io/brain-cards/boris-cherny-claude-code-future-of-engineering/">
+<meta property="og:image" content="https://hale80427.github.io/brain-cards/og-default.jpg">
+<meta property="og:locale" content="zh_TW">
+
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Boris Cherny 談 Claude Code：工程師的下一個抽象層">
+<meta name="twitter:description" content="Boris Cherny 談 Claude Code 的起源：工程師從寫程式轉向設計 agent loop（自動化任務循環），組織從分工走向少人力、多 token 的 generalist 模式。">
+<meta name="twitter:image" content="https://hale80427.github.io/brain-cards/og-default.jpg">
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "Boris Cherny 談 Claude Code：工程師的下一個抽象層",
+  "description": "Boris Cherny 談 Claude Code 的起源：工程師從寫程式轉向設計 agent loop（自動化任務循環），組織從分工走向少人力、多 token 的 generalist 模式。",
+  "datePublished": "2026-06-06",
+  "dateModified": "2026-06-06",
+  "author": { "@type": "Person", "name": "彥皓" },
+  "url": "https://hale80427.github.io/brain-cards/boris-cherny-claude-code-future-of-engineering/",
+  "inLanguage": "zh-TW",
+  "license": "https://creativecommons.org/licenses/by/4.0/"
+}
+</script>
+
+<style>
+  :root {
+    --bg: #fafaf7;
+    --fg: #1a1a1a;
+    --accent: #c0392b;
+    --muted: #666;
+    --border: #e5e5e0;
+    --callout-tip: #e8f4f0;
+    --callout-warn: #fdf3e7;
+    --fs-meta: 0.85rem;
+    --fs-body: 1rem;
+    --fs-h2:   clamp(1.3rem, 3vw, 1.5rem);
+    --fs-h1:   clamp(1.75rem, 4vw, 2.25rem);
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #1a1a1a;
+      --fg: #f0f0e8;
+      --accent: #e87c6e;
+      --muted: #999;
+      --border: #333;
+      --callout-tip: #1f3530;
+      --callout-warn: #3a2d1c;
+    }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
+  }
+  * { box-sizing: border-box; }
+  body {
+    font-family: "Noto Serif TC", Georgia, serif;
+    background: var(--bg);
+    color: var(--fg);
+    line-height: 1.8;
+    margin: 0;
+    padding: 0;
+    -webkit-font-smoothing: antialiased;
+  }
+  .progress-bar {
+    position: fixed; top: 0; left: 0; height: 3px;
+    background: var(--accent); width: 0%; z-index: 100;
+    transition: width 0.1s;
+  }
+  main {
+    max-width: 680px;
+    margin: 0 auto;
+    padding: clamp(2rem, 5vw, 4rem) clamp(1.5rem, 4vw, 2rem);
+  }
+  h1 { font-size: var(--fs-h1); line-height: 1.3; margin: 0 0 1rem; }
+  h2 { font-size: var(--fs-h2); line-height: 1.4; margin: 2.5rem 0 0.75rem; padding-bottom: 0.5rem; border-bottom: 1px solid var(--border); }
+  h3 { font-size: var(--fs-body); font-weight: 700; line-height: 1.4; margin: 1.75rem 0 0.5rem; color: var(--accent); }
+  p { margin: 0 0 1.25rem; }
+  ul, ol { margin: 0 0 1.25rem; padding-left: 1.5rem; }
+  li { margin: 0.4rem 0; }
+  a { color: var(--accent); text-underline-offset: 3px; }
+  a:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+  blockquote {
+    margin: 1.25rem 0;
+    padding: 0.75rem 1.25rem;
+    border-left: 3px solid var(--muted);
+    color: var(--muted);
+    font-style: normal;
+    background: var(--callout-tip);
+    border-radius: 0 4px 4px 0;
+    font-size: var(--fs-body);
+  }
+  blockquote p { margin: 0; }
+  .bluf { background: var(--callout-tip); border-left: 3px solid var(--accent); padding: 1.25rem 1.5rem; margin: 1.5rem 0 2rem; border-radius: 4px; }
+  .bluf strong { display: block; font-size: var(--fs-meta); letter-spacing: 0.05em; color: var(--accent); margin-bottom: 0.5rem; text-transform: uppercase; }
+  .callout { padding: 1rem 1.25rem; margin: 1.5rem 0; border-radius: 4px; border-left: 3px solid var(--muted); }
+  .callout.tip { background: var(--callout-tip); border-left-color: var(--accent); }
+  .callout.warn { background: var(--callout-warn); border-left-color: #d97706; }
+  .callout strong { color: var(--accent); }
+  code { font-family: "JetBrains Mono", monospace; background: var(--callout-tip); padding: 0.1em 0.4em; border-radius: 3px; font-size: var(--fs-body); }
+  figure { margin: 2rem 0; text-align: center; }
+  figure svg { max-width: 100%; height: auto; }
+  figcaption { font-size: var(--fs-meta); color: var(--muted); margin-top: 0.5rem; }
+  table { width: 100%; border-collapse: collapse; margin: 1.5rem 0; font-size: var(--fs-body); }
+  th, td { border: 1px solid var(--border); padding: 0.5rem 0.75rem; text-align: left; }
+  th { background: var(--callout-tip); font-weight: 700; }
+  @media print {
+    .progress-bar { display: none; }
+    body { font-size: 11pt; line-height: 1.6; }
+    main { max-width: 100%; padding: 1cm; }
+  }
+</style>
+</head>
+<body>
+<div class="progress-bar" id="progress"></div>
+<main>
+<header>
+<h1>Boris Cherny 談 Claude Code：工程師的下一個抽象層</h1>
+<div class="bluf">
+<strong>BLUF</strong>
+Claude Code 不只是「寫程式更快」的工具。Anthropic 的 Boris Cherny 在這支訪談中說：工程師的工作正往更高一層的抽象跳——從自己寫程式，到讓 AI 替你跑 agent loop（自動化任務循環）。組織也該跟著變：少配人手、多給每人 token 預算，逼出自動化。工程師的核心能力，會從「會寫程式」轉向「能設計可持續運轉的流程」。
+</div>
+</header>
+<article>
+<!-- narrative: 矛盾,物件,直接引語,場景,細節 -->
+<figure>
+<img src="https://i.ytimg.com/vi/RkQQ7WEor7w/hqdefault.jpg" alt="Boris Cherny 談 Claude Code 與工程師的未來">
+<figcaption>影片縮圖：Boris Cherny 談 Claude Code 與工程師的未來。來源：WorkOS YouTube 頻道</figcaption>
+</figure>
+<p>這是 <strong>Boris Cherny</strong> 在 WorkOS 主辦的 Acquired Unplugged 節目中的訪談。Boris 是 Claude Code 的主要創造者，任職於 Anthropic（研發 Claude AI 的公司）。</p>
+<p>影片連結：<a href="https://www.youtube.com/watch?v=RkQQ7WEor7w" target="_blank" rel="noopener">YouTube — Boris Cherny: Claude Code &amp; the Future of Engineering</a></p>
+<h2>用一段話說清楚</h2>
+<p>Claude Code（讓 AI 替你自動寫程式的工具）背後藏著一個更大的觀點。</p>
+<p>Boris 說：工程師的工作正往更高一層的抽象跳。從自己打每一行 code，到讓 AI 替你管理 AI，再到寫能自動跑的 agent loop（自動化任務循環）。</p>
+<p>組織形態也跟著改變——不再只靠增加人手，而是給每個人更多 token（AI 的計算資源），讓重複的事自動化。</p>
+<h2>工程師的工作怎麼一直在變？</h2>
+<p>Boris 把工程歷史看成一條「愈來愈少親手動工」的路。每個時代，工程師都往更高一層的抽象跳。</p>
+<figure>
+<svg viewBox="0 0 700 170" role="img" xmlns="http://www.w3.org/2000/svg">
+<title>工程師抽象層演化：從打孔卡到 agent loop</title>
+<line x1="30" y1="140" x2="685" y2="140" stroke="currentColor" stroke-width="1.5"/>
+<polygon points="685,136 695,140 685,144" fill="currentColor"/>
+<line x1="60" y1="140" x2="60" y2="118" stroke="currentColor" stroke-width="1" stroke-dasharray="3,2"/>
+<circle cx="60" cy="118" r="5" fill="currentColor"/>
+<text x="60" y="110" text-anchor="middle" font-size="10" fill="currentColor">打孔卡</text>
+<line x1="155" y1="140" x2="155" y2="106" stroke="currentColor" stroke-width="1" stroke-dasharray="3,2"/>
+<circle cx="155" cy="106" r="5" fill="currentColor"/>
+<text x="155" y="98" text-anchor="middle" font-size="10" fill="currentColor">組合語言</text>
+<line x1="255" y1="140" x2="255" y2="93" stroke="currentColor" stroke-width="1" stroke-dasharray="3,2"/>
+<circle cx="255" cy="93" r="5" fill="currentColor"/>
+<text x="255" y="85" text-anchor="middle" font-size="10" fill="currentColor">高階語言</text>
+<line x1="365" y1="140" x2="365" y2="79" stroke="currentColor" stroke-width="1" stroke-dasharray="3,2"/>
+<circle cx="365" cy="79" r="5" fill="currentColor"/>
+<text x="365" y="71" text-anchor="middle" font-size="10" fill="currentColor">IDE 補全</text>
+<line x1="467" y1="140" x2="467" y2="63" stroke="currentColor" stroke-width="1" stroke-dasharray="3,2"/>
+<circle cx="467" cy="63" r="7" fill="none" stroke="currentColor" stroke-width="2"/>
+<circle cx="467" cy="63" r="3" fill="currentColor"/>
+<text x="467" y="53" text-anchor="middle" font-size="10" fill="currentColor">Claude Code</text>
+<line x1="570" y1="140" x2="570" y2="46" stroke="currentColor" stroke-width="1" stroke-dasharray="3,2"/>
+<circle cx="570" cy="46" r="7" fill="none" stroke="currentColor" stroke-width="2"/>
+<circle cx="570" cy="46" r="3" fill="currentColor"/>
+<text x="570" y="36" text-anchor="middle" font-size="10" fill="currentColor">多 agent</text>
+<line x1="650" y1="140" x2="650" y2="28" stroke="currentColor" stroke-width="1" stroke-dasharray="3,2"/>
+<circle cx="650" cy="28" r="8" fill="none" stroke="currentColor" stroke-width="2.5"/>
+<circle cx="650" cy="28" r="3.5" fill="currentColor"/>
+<text x="650" y="17" text-anchor="middle" font-size="10" fill="currentColor">Agent loops</text>
+<text x="30" y="158" font-size="9" fill="currentColor">← 早期</text>
+<text x="620" y="158" font-size="9" fill="currentColor">現在 →</text>
+</svg>
+<figcaption>工程師抽象層演化：從親手設定每個 bit，到讓 AI 自動管理 AI。每一步，工程師少做一層底層工作，多做一層設計。</figcaption>
+</figure>
+<p>Boris 說，他現在不再主要靠自己 prompt（下指令給）Claude 寫程式。他在寫 loop——讓 loop 自己去問 Claude、判斷下一步要做什麼。</p>
+<h2>Claude Code 怎麼來的？</h2>
+<p>Claude Code 源自 Anthropic 的 Labs 原型團隊，任務是找「下一個大產品」，也要把模型能力推到真實使用場景。</p>
+<p>為什麼從 coding（寫程式）切入？因為程式有明確的對錯訊號：能跑就是能跑，會報錯就是報錯。這讓 AI 安全研究者可以在「真實使用」中觀察模型行為，比在實驗室裡測試更有意義。</p>
+<h2>Anthropic 內部的變化</h2>
+<p>Boris 說，Anthropic 曾公開表示「每位工程師的程式產出約增加 3 倍」，但他說那已過時，現在更高。</p>
+<p>更有趣的是新人入職的改變。以前要花好幾週熟悉 codebase（程式庫）。現在的做法是直接在程式庫裡問 Claude，甚至有人做了能直接查資料庫的 skill（功能模組）。</p>
+<blockquote><p>「新人入職，ramp-up（熟悉上手）時間大概只要兩天。」— Boris Cherny</p></blockquote>
+<h2>什麼是 generalist builder？</h2>
+<p>Claude Code 的招聘偏好 generalist（通才型建造者）。Boris 描述的日常是：一個人可能同一天談使用者需求、規劃範疇、設計介面、拉資料、建 dashboard（儀表板）。</p>
+<p>這不是「什麼都會一點」的意思。而是 AI 工具把中間的執行成本壓低，讓一個人能從問題一路走到驗證，端到端負責。</p>
+<blockquote><p>「我們開始看到所有角色融合，慢慢變成一種 builder（建造者）。」— Boris Cherny</p></blockquote>
+<h2>給公司的建議：多 tokens、少人力</h2>
+<p>Boris 的建議很直接：給每個員工足夠多的 token（AI 計算資源）讓他們實驗，然後故意少配人手。</p>
+<p>邏輯是：人手少了，團隊就被迫把重複工作寫成工具或 loop，讓 AI 自動跑。前期建置成本可能較高，但後續每次執行同樣任務的成本持續下降。</p>
+<table>
+<thead>
+<tr><th>做法</th><th>人力配置</th><th>Token 預算</th><th>預期效果</th></tr>
+</thead>
+<tbody>
+<tr><td>傳統方式</td><td>按需配足人手</td><td>少量或無</td><td>穩定，但擴展成本高</td></tr>
+<tr><td>Boris 建議</td><td>刻意少配</td><td>給每人充足預算</td><td>前期高，重複任務越做越便宜</td></tr>
+</tbody>
+</table>
+<div class="callout warn"><strong>注意</strong>：這個建議不適用所有場景。法務、醫療、財務決策等高風險領域，不能直接套「少人 + 多 tokens」的邏輯。版本控制、測試和審核機制是必要配套。</div>
+<h2>品味也會被 AI 吃掉？</h2>
+<p>Boris 用自己舉例：他偏好 functional programming（函數式寫法），不想在 codebase 裡看到 class（物件導向的基本結構單位）。</p>
+<p>後來模型開始寫 class，商業結果更快達成，程式品質也不差。他就承認，那只是個人偏好，不是普世真理。</p>
+<p>他進一步說：如果 AI 能讀 Twitter 回饋、GitHub issues、Slack 訊息並提出產品方向，那人類對「product taste（產品品味）」的優勢，半衰期可能也不長。</p>
+<blockquote><p>「我們最後要教模型的，可能是 values（價值觀）——就像教孩子成為好人一樣。」— Boris Cherny</p></blockquote>
+<h2>可以馬上試的 5 件事</h2>
+<ul>
+<li>找一個重複任務，要求負責人不只交付結果，還要交付可重跑的 script（腳本）或 loop。</li>
+<li>對新人入職做 A/B 測試：傳統文件 vs. 直接問 AI，量測到第一次有效 PR（程式提交）的時間。</li>
+<li>設計 token budget（AI 使用預算），記錄「這次 token 換掉了哪段人力工時」。</li>
+<li>把職能交界的任務交給小型通才團隊，不走一關一關傳遞的流程。</li>
+<li>對 agent loop 加入 review gate（審核關卡）：測試、diff（差異比對）、rollback（回滾）機制。</li>
+</ul>
+<div class="callout tip"><strong>註</strong>：影片中 code per engineer 3x 是 Anthropic 的舊公開數字，Boris 說最新數據「已更高」但未給量化。Key Quotes 均有 timestamp（時間戳記），可回原影片核實。完整逐字稿（352 段）已保存於原始 checkpoint，本文為快速閱讀版。</div>
+</article>
+<footer>
+<p style="color: var(--muted); font-size: var(--fs-meta); margin-top: 4rem; padding-top: 1.5rem; border-top: 1px solid var(--border);">
+最後更新：2026-06-06 · CC BY 4.0 · 引用請標來源
+</p>
+</footer>
+</main>
+<script>
+  const bar = document.getElementById('progress');
+  window.addEventListener('scroll', () => {
+    const h = document.documentElement;
+    const pct = (h.scrollTop / (h.scrollHeight - h.clientHeight)) * 100;
+    bar.style.width = pct + '%';
+  });
+</script>
+</body>
+</html>
