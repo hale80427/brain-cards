@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Cat Wu：AI PM 的工作變成縮短想法到使用者的距離</title>
+<meta name="description" content="從 Lenny 訪談看 Anthropic 產品團隊如何高速出貨，以及 PM 角色為何改變。">
+
+<!-- Canonical & 作者 -->
+<link rel="canonical" href="https://hale80427.github.io/brain-cards/cat-wu-anthropic-ai-pm/">
+<meta name="author" content="彥皓">
+
+<!-- Open Graph（FB / LINE / Slack / Discord 連結預覽）-->
+<meta property="og:type" content="article">
+<meta property="og:title" content="Cat Wu：AI PM 的工作變成縮短想法到使用者的距離">
+<meta property="og:description" content="從 Lenny 訪談看 Anthropic 產品團隊如何高速出貨，以及 PM 角色為何改變。">
+<meta property="og:url" content="https://hale80427.github.io/brain-cards/cat-wu-anthropic-ai-pm/">
+<meta property="og:image" content="https://hale80427.github.io/brain-cards/og-default.jpg">
+<meta property="og:locale" content="zh_TW">
+
+<!-- Twitter / X Card -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Cat Wu：AI PM 的工作變成縮短想法到使用者的距離">
+<meta name="twitter:description" content="從 Lenny 訪談看 Anthropic 產品團隊如何高速出貨，以及 PM 角色為何改變。">
+<meta name="twitter:image" content="https://hale80427.github.io/brain-cards/og-default.jpg">
+
+<!-- 結構化資料（JSON-LD，提升 AI 與搜尋引擎理解）-->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "Cat Wu\uff1aAI PM \u7684\u5de5\u4f5c\u8b8a\u6210\u7e2e\u77ed\u60f3\u6cd5\u5230\u4f7f\u7528\u8005\u7684\u8ddd\u96e2",
+  "description": "\u5f9e Lenny \u8a2a\u8ac7\u770b Anthropic \u7522\u54c1\u5718\u968a\u5982\u4f55\u9ad8\u901f\u51fa\u8ca8\uff0c\u4ee5\u53ca PM \u89d2\u8272\u70ba\u4f55\u6539\u8b8a\u3002",
+  "datePublished": "2026-06-09",
+  "dateModified": "2026-06-09",
+  "author": { "@type": "Person", "name": "彥皓" },
+  "url": "https://hale80427.github.io/brain-cards/cat-wu-anthropic-ai-pm/",
+  "inLanguage": "zh-TW",
+  "license": "https://creativecommons.org/licenses/by/4.0/"
+}
+</script>
+
+<style>
+  :root {
+    /* color tokens — OKLCH (hallmark token discipline；禁止 inline hex / rgb / oklch / font-family；
+       hex 註解保留為設計者原意溯源，色彩值以 OKLCH 為事實源) */
+    --bg: oklch(98.4% 0.004 106.5);              /* 暖白（was #fafaf7） */
+    --fg: oklch(21.8% 0 0);                       /* 近黑（was #1a1a1a） */
+    --accent: oklch(54.3% 0.174 29.7);            /* 暖紅（was #c0392b） */
+    --accent-warn: oklch(66.6% 0.157 58.3);       /* 橘黃 callout warn 強調（was #d97706 inline，lift 進 token） */
+    --muted: oklch(51.0% 0 0);                    /* 中灰（was #666） */
+    --border: oklch(92.1% 0.007 106.5);           /* 淺暖灰（was #e5e5e0） */
+    --callout-tip: oklch(95.7% 0.014 174.2);      /* 淺薄荷（was #e8f4f0） */
+    --callout-warn: oklch(96.9% 0.019 72.6);      /* 淺暖米（was #fdf3e7） */
+    --fs-meta: 0.85rem;                          /* metadata / footer / .bluf 標籤 */
+    --fs-body: 1rem;                              /* p / li / td / blockquote / h3 / code / table */
+    --fs-h2:   clamp(1.3rem, 3vw, 1.5rem);      /* h2 段標題 */
+    --fs-h1:   clamp(1.75rem, 4vw, 2.25rem);    /* h1 主標題 */
+    /* font tokens（hallmark token discipline；禁止 inline font-family） */
+    --font-serif: "Noto Serif TC", Georgia, serif;
+    --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+    /* easing tokens（hallmark：禁止 unnamed easing） */
+    --ease-linear: linear;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: oklch(21.8% 0 0);                     /* was #1a1a1a */
+      --fg: oklch(95.3% 0.011 106.6);             /* 米白（was #f0f0e8） */
+      --accent: oklch(70.4% 0.136 28.7);          /* 亮珊瑚（was #e87c6e） */
+      --accent-warn: oklch(76.9% 0.165 70.1);     /* dark mode 等對等亮版 warn 強調 */
+      --muted: oklch(68.3% 0 0);                  /* was #999 */
+      --border: oklch(32.1% 0 0);                 /* was #333 */
+      --callout-tip: oklch(30.9% 0.029 178.3);    /* 深綠青（was #1f3530） */
+      --callout-warn: oklch(30.7% 0.034 73.5);    /* 深棕（was #3a2d1c） */
+    }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
+  }
+  * { box-sizing: border-box; }
+  body {
+    font-family: var(--font-serif);
+    background: var(--bg);
+    color: var(--fg);
+    line-height: 1.8;
+    margin: 0;
+    padding: 0;
+    -webkit-font-smoothing: antialiased;
+  }
+  .progress-bar {
+    /* hallmark：只動 transform / opacity，不動 layout property（避免 reflow + 對齊微互動紀律） */
+    position: fixed; top: 0; left: 0; height: 3px; width: 100%;
+    background: var(--accent); z-index: 100;
+    transform: scaleX(0); transform-origin: left;
+    transition: transform 0.1s var(--ease-linear);
+  }
+  main {
+    max-width: 680px;
+    margin: 0 auto;
+    padding: clamp(2rem, 5vw, 4rem) clamp(1.5rem, 4vw, 2rem);
+  }
+  /* === 字級階梯：嚴格 4 級。所有 font-size 必須引用以下 4 個變數之一 === */
+  /* === 違反 → KB-04 機械驗證會擋（font_levels > 4）=== */
+  /* === h3 / blockquote / code / table 等「想要不一樣」用 weight + color，不開新字級 === */
+  h1 { font-size: var(--fs-h1); line-height: 1.3; margin: 0 0 1rem; }
+  h2 { font-size: var(--fs-h2); line-height: 1.4; margin: 2.5rem 0 0.75rem; padding-bottom: 0.5rem; border-bottom: 1px solid var(--border); }
+  h3 { font-size: var(--fs-body); font-weight: 700; line-height: 1.4; margin: 1.75rem 0 0.5rem; color: var(--accent); }
+  p { margin: 0 0 1.25rem; }
+  a { color: var(--accent); text-underline-offset: 3px; }
+  a:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+  .bluf { background: var(--callout-tip); border-left: 3px solid var(--accent); padding: 1.25rem 1.5rem; margin: 1.5rem 0 2rem; border-radius: 4px; }
+  .bluf strong { display: block; font-size: var(--fs-meta); letter-spacing: 0.05em; color: var(--accent); margin-bottom: 0.5rem; text-transform: uppercase; }
+  .callout { padding: 1rem 1.25rem; margin: 1.5rem 0; border-radius: 4px; border-left: 3px solid var(--muted); }
+  .callout.tip { background: var(--callout-tip); border-left-color: var(--accent); }
+  .callout.warn { background: var(--callout-warn); border-left-color: var(--accent-warn); }
+  .callout.info { background: var(--callout-tip); border-left-color: var(--muted); }
+  .callout.quote { background: transparent; border-left-color: var(--accent); font-style: italic; }
+  table { border-collapse: collapse; width: 100%; margin: 1.5rem 0; font-size: var(--fs-body); }
+  th, td { padding: 0.6rem 0.8rem; border: 1px solid var(--border); text-align: left; vertical-align: top; }
+  th { background: var(--callout-tip); font-weight: 600; }
+  code { font-family: var(--font-mono); background: var(--callout-tip); padding: 0.1em 0.4em; border-radius: 3px; font-size: var(--fs-body); }
+  /* === 圖片 / 圖說（圖表規則見 KB-07）：figcaption 用既有 --fs-meta，不開新字級 === */
+  figure { margin: 1.5rem 0; }
+  figure img { width: 100%; height: auto; border-radius: 4px; display: block; }
+  figure svg { width: 100%; height: auto; display: block; }
+  figcaption { font-size: var(--fs-meta); color: var(--muted); margin-top: 0.5rem; text-align: center; }
+  @media print {
+    .progress-bar { display: none; }
+    body { font-size: 11pt; line-height: 1.6; }
+    main { max-width: 100%; padding: 1cm; }
+  }
+</style>
+</head>
+<body>
+<div class="progress-bar" id="progress"></div>
+<main>
+<header>
+<h1>Cat Wu：AI PM 的工作變成縮短想法到使用者的距離</h1>
+<div class="bluf">
+<strong>BLUF</strong>
+<p>AI PM 的核心是壓短想法到使用者手上的週期，並用目標、流程與 evals 控住速度的代價。</p>
+</div>
+</header>
+<article>
+<!-- narrative: Anthropic 的產品時程從六到十二個月縮到一個月、一週，甚至一天。, Cat Wu 把 PM 的工作拆成三件事：目標清楚、流程可重複、跨職能摩擦低。, 當 code 變便宜，真正稀缺的是決定該寫什麼。, Research Preview 是 Anthropic 降低承諾成本、換取迭代速度的制度設計。 -->
+<h2>一句話先講</h2>
+<p>這篇訪談真正有用的地方，在於它把「Anthropic 很快」拆成可操作的機制：核心使用者要清楚、出貨路徑要固定、跨職能介面要提前約好，然後用 Research Preview 把一次上線的承諾成本降下來。</p>
+<div class="callout tip">條件：模型能力快速變動，工程成本下降。機制：PM 不再用多季 roadmap 管控一切，改設計低摩擦的出貨系統。結果：功能能在一週甚至一天內交到使用者手上。驗證：看功能是否真的被使用者試到、是否拿到回饋、是否能在下一版修正。</div>
+<h2>Cat Wu 眼中的 AI PM：少管長期表格，多縮短交付距離</h2>
+<p>Cat Wu 是 Anthropic Claude Code 與 Cowork 的產品負責人。她在訪談裡反覆講一個判準：好的 AI PM，要能縮短「有想法」到「使用者真的拿到產品」之間的距離。這個判準跟傳統 PM 不完全一樣。以前 code 貴、技術變慢，所以 PM 花很多力氣對齊六到十二個月 roadmap。現在模型能力幾個月就跳一次，工程被 AI 加速，產品團隊不能還用同一套節奏。</p>
+<blockquote>「我們很多產品功能的時程已經從六個月降到一個月，有時候一週、甚至一天。」</blockquote>
+<p>這句話的重點在於管理方法必須換掉。當一個功能能在一週內做出來，PM 如果還把主要精力放在跨多季排程，那就會卡住團隊。新的工作重心變成：這週能不能讓一個想法被真實使用者碰到？如果不能，是目標不清楚、流程太重，還是跨職能協作太晚進場？</p>
+<h2>Anthropic 的速度靠三個槓桿，不只靠模型</h2>
+<ol><li>目標清楚：誰是核心使用者、要解哪個問題、成功長什麼樣，必須講到能排除一堆不該做的事。</li><li>流程可重複：工程師把已 dogfood 的功能貼到固定的 launch room，文件、PMM、DevRel 隔天就能接上。</li><li>承諾成本低：大量用 Research Preview 推出，明講這是早期想法、要收回饋、不保證永久支援。</li></ol>
+<p>這三個槓桿合在一起，才讓速度可管理。清楚目標把搜尋空間縮小；固定流程減少每次上線都重新協調；Research Preview 降低「一推出就背永久維護責任」的壓力。快要靠系統設計，把每次出貨的交易成本降到很低。</p>
+<div class="callout tip">對一般團隊的啟示：如果你想提高 AI 產品迭代速度，先別急著買更多工具。先問三件事：核心使用者是否明確？功能進入使用者手上的流程是否固定？早期功能是否有一個低承諾、可回收的發布格式？</div>
+<h2>PRD 沒死，但它只該出現在模糊或長週期專案</h2>
+<p>Cat Wu 沒有說 Anthropic 不寫 PRD。她的說法更細：團隊平常靠嚴謹指標、每週 metrics readout，以及一份明確的團隊原則運作。這些東西讓工程師知道公司重視什麼、能自己做取捨，不必每一步都等 PM 批。</p>
+<p>PRD 還是有位置，但位置變窄了。當功能特別模糊、需要寫清楚目標、驚喜用例與失效模式，或專案需要大量基礎建設、會跑好幾個月，PRD 才值得寫。換句話說，PRD 從常規流程變成處理高不確定性時的工具。</p>
+<h2>當 code 變便宜，產品味變貴</h2>
+<p>這集最值得保留的一句，是 Cat Wu 對 PM 長期價值的判斷：當寫 code 變便宜很多，更有價值的事情變成「決定要寫什麼」。這句話很具體。Claude Code 團隊收到成千上萬個 GitHub issue，每個需求看起來都有道理，但真正困難的是判斷哪些值得做、用什麼 UX 做、怎樣才會讓使用者覺得順。</p>
+<p>因此 Anthropic 招 PM 時很看重「有產品味的工程師」。角色邊界正在混在一起：PM 會寫 code，工程師會做產品判斷，設計師也會 land code。背景不是重點，能否在混亂中看出該補哪個洞，才是重點。</p>
+<ul><li>工程背景的短期價值：更能判斷某件事到底難不難，排序時不會完全憑感覺。</li><li>產品味的長期價值：能從大量回饋裡挑出真的該做的方向。</li><li>低 ego 的組織價值：不執著職稱邊界，哪裡缺人就補哪裡。</li></ul>
+<h2>AI 原生產品的難題：榨出當前模型的能力</h2>
+<p>Cat Wu 說，為一個超強 AGI 模型設計產品其實容易：給一個文字框，模型聰明到自己會問問題、找工具、完成任務。真正難的是現在。現在的模型有能力，但有邊界；會做很多事，但不一定知道什麼時候該驗證、什麼時候該問人、什麼時候該停下來。</p>
+<p>好的 AI PM 要做的是設計 golden path：把使用者引到模型強項上，同時用 harness、提示、UI、流程補掉弱點。這也是為什麼 evals 變重要。Cat Wu 認為，不需要幾百個 eval 才有價值；十個品質好的 eval，就能讓團隊知道目標是什麼、進度在哪裡、缺口還剩什麼。</p>
+<div class="callout tip">這裡的機制很像製程開發：設備規格只是起點，材料、治具、路徑、檢測點要一起設計，現有能力才會穩定產出。AI 產品的 harness，就是模型能力進入產品現場前的治具與檢具。</div>
+<h2>Claude Code、桌面版與 Cowork 的分工</h2>
+<p>Cat Wu 對工具分工的說法很直接。產出是 code，就用 Claude Code；產出是文件、簡報、會議準備或收件匣處理，就用 Cowork。CLI 是最早的介面，新功能通常最先進來，所以它最強。桌面版適合需要前端 preview 或不習慣 terminal 的使用者。手機與 web 則適合在外面啟動任務。</p>
+<p>Cowork 的位置比較像非程式碼工作代理：清 Slack、清 inbox、做客戶會議前簡報、寫功能目標文件、做投影片。她舉的例子是 Code with Claude 大會投影片：把 Google Drive、Slack、PMM 草稿、既有設計系統接進去，Cowork 先做提案大綱，再做出二十頁草稿。人最後決定敘事與 demo，排版與初稿交給 Cowork。</p>
+<h2>速度的代價：一致性會下降，教育成本會上升</h2>
+<p>Anthropic 有明確代價。Cat Wu 很直接地說，他們犧牲的是產品一致性。以前 code 貴，每個使用情境通常只有一個產品入口；現在要測很多想法，功能與形態會重疊，新使用者反而不知道完成某件事的最佳路徑是什麼。</p>
+<p>這也是為什麼 Claude Code 需要像 `/power up` 這種 onboarding。早期他們可能希望產品直覺到不需要教學，但功能太多之後，使用者需要有人告訴他：這一百個能力裡，真正必用的是哪十個。速度把產品推進前方，也把教育責任拉回團隊身上。</p>
+<h2>給個人工作者的實用建議：不要只做 95% 自動化</h2>
+<p>訪談最後給個人的建議很實際：每次發現自己重複做某件手動任務，就想辦法用 Claude Code、Cowork 或其他 AI 工具自動化。但 Cat Wu 特別補了一個硬判準：如果自動化還不能 100% 依賴，它其實還不算自動化。</p>
+<p>很多人把流程做到 90% 或 95% 就停下來，結果還要一直檢查漏掉的 5%。這種狀態省不了心智負擔。最後 5% 到 10% 會比較難，可能還比自己做更慢，但一旦補上，那個流程才真的能交出去。</p>
+<ul><li>不要只做酷炫 demo，要做你每天真的會用的流程。</li><li>不要沉迷客製化 setup，工具設定本身不是產出。</li><li>選一個你最想完全交出去的重複任務，投入時間把它做到可依賴。</li><li>讓 AI 學你的偏好，持續回饋，直到它不再犯同一類錯。</li></ul>
+<h2>我的 takeaway</h2>
+<p>這篇對我最有價值的，是一個組織設計原則：當底層技術變快，管理系統也要變輕。PM 的任務不該把不確定性塞進更厚的文件，而是把團隊推向更快的回饋迴路。</p>
+<p>但快不能只靠熱血。它需要清楚目標、固定出貨流程、可撤回的早期發布格式、少量但好的 evals，以及一群願意跨角色補洞的人。少一個，速度就會變成混亂。</p>
+<ul><li>原文筆記：Roger&#x27;s Letter，20260501 Lenny&#x27;s Podcast Cat Wu Anthropic Product Team Moves Faster。</li><li>Podcast：Lenny&#x27;s Podcast 訪談 Anthropic Cat Wu。</li></ul>
+
+</article>
+<footer>
+<p style="color: var(--muted); font-size: 0.85rem; margin-top: 4rem; padding-top: 1.5rem; border-top: 1px solid var(--border);">
+整理自 Roger&#x27;s Letter 對 Lenny&#x27;s Podcast 訪談 Cat Wu 的筆記。
+</p>
+</footer>
+</main>
+<script>
+  const bar = document.getElementById('progress');
+  window.addEventListener('scroll', () => {
+    const h = document.documentElement;
+    const max = h.scrollHeight - h.clientHeight;
+    const ratio = max > 0 ? h.scrollTop / max : 0;
+    bar.style.transform = 'scaleX(' + ratio + ')';
+  }, { passive: true });
+</script>
+</body>
+</html>
