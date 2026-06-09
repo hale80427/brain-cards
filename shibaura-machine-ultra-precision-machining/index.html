@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Shibaura Machine 超精密加工的三條線索</title>
+<meta name="description" content="從 USM-20B(H)、田中克敏技術觀與 Moore 併購，看精密加工的產品與資本邏輯。">
+
+<!-- Canonical & 作者 -->
+<link rel="canonical" href="https://hale80427.github.io/brain-cards/shibaura-machine-ultra-precision-machining/">
+<meta name="author" content="彥皓">
+
+<!-- Open Graph（FB / LINE / Slack / Discord 連結預覽）-->
+<meta property="og:type" content="article">
+<meta property="og:title" content="Shibaura Machine 超精密加工的三條線索">
+<meta property="og:description" content="從 USM-20B(H)、田中克敏技術觀與 Moore 併購，看精密加工的產品與資本邏輯。">
+<meta property="og:url" content="https://hale80427.github.io/brain-cards/shibaura-machine-ultra-precision-machining/">
+<meta property="og:image" content="https://hale80427.github.io/brain-cards/og-default.jpg">
+<meta property="og:locale" content="zh_TW">
+
+<!-- Twitter / X Card -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Shibaura Machine 超精密加工的三條線索">
+<meta name="twitter:description" content="從 USM-20B(H)、田中克敏技術觀與 Moore 併購，看精密加工的產品與資本邏輯。">
+<meta name="twitter:image" content="https://hale80427.github.io/brain-cards/og-default.jpg">
+
+<!-- 結構化資料（JSON-LD，提升 AI 與搜尋引擎理解）-->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "Shibaura Machine \u8d85\u7cbe\u5bc6\u52a0\u5de5\u7684\u4e09\u689d\u7dda\u7d22",
+  "description": "\u5f9e USM-20B(H)\u3001\u7530\u4e2d\u514b\u654f\u6280\u8853\u89c0\u8207 Moore \u4f75\u8cfc\uff0c\u770b\u7cbe\u5bc6\u52a0\u5de5\u7684\u7522\u54c1\u8207\u8cc7\u672c\u908f\u8f2f\u3002",
+  "datePublished": "2026-06-09",
+  "dateModified": "2026-06-09",
+  "author": { "@type": "Person", "name": "彥皓" },
+  "url": "https://hale80427.github.io/brain-cards/shibaura-machine-ultra-precision-machining/",
+  "inLanguage": "zh-TW",
+  "license": "https://creativecommons.org/licenses/by/4.0/"
+}
+</script>
+
+<style>
+  :root {
+    /* color tokens — OKLCH (hallmark token discipline；禁止 inline hex / rgb / oklch / font-family；
+       hex 註解保留為設計者原意溯源，色彩值以 OKLCH 為事實源) */
+    --bg: oklch(98.4% 0.004 106.5);              /* 暖白（was #fafaf7） */
+    --fg: oklch(21.8% 0 0);                       /* 近黑（was #1a1a1a） */
+    --accent: oklch(54.3% 0.174 29.7);            /* 暖紅（was #c0392b） */
+    --accent-warn: oklch(66.6% 0.157 58.3);       /* 橘黃 callout warn 強調（was #d97706 inline，lift 進 token） */
+    --muted: oklch(51.0% 0 0);                    /* 中灰（was #666） */
+    --border: oklch(92.1% 0.007 106.5);           /* 淺暖灰（was #e5e5e0） */
+    --callout-tip: oklch(95.7% 0.014 174.2);      /* 淺薄荷（was #e8f4f0） */
+    --callout-warn: oklch(96.9% 0.019 72.6);      /* 淺暖米（was #fdf3e7） */
+    --fs-meta: 0.85rem;                          /* metadata / footer / .bluf 標籤 */
+    --fs-body: 1rem;                              /* p / li / td / blockquote / h3 / code / table */
+    --fs-h2:   clamp(1.3rem, 3vw, 1.5rem);      /* h2 段標題 */
+    --fs-h1:   clamp(1.75rem, 4vw, 2.25rem);    /* h1 主標題 */
+    /* font tokens（hallmark token discipline；禁止 inline font-family） */
+    --font-serif: "Noto Serif TC", Georgia, serif;
+    --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+    /* easing tokens（hallmark：禁止 unnamed easing） */
+    --ease-linear: linear;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: oklch(21.8% 0 0);                     /* was #1a1a1a */
+      --fg: oklch(95.3% 0.011 106.6);             /* 米白（was #f0f0e8） */
+      --accent: oklch(70.4% 0.136 28.7);          /* 亮珊瑚（was #e87c6e） */
+      --accent-warn: oklch(76.9% 0.165 70.1);     /* dark mode 等對等亮版 warn 強調 */
+      --muted: oklch(68.3% 0 0);                  /* was #999 */
+      --border: oklch(32.1% 0 0);                 /* was #333 */
+      --callout-tip: oklch(30.9% 0.029 178.3);    /* 深綠青（was #1f3530） */
+      --callout-warn: oklch(30.7% 0.034 73.5);    /* 深棕（was #3a2d1c） */
+    }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
+  }
+  * { box-sizing: border-box; }
+  body {
+    font-family: var(--font-serif);
+    background: var(--bg);
+    color: var(--fg);
+    line-height: 1.8;
+    margin: 0;
+    padding: 0;
+    -webkit-font-smoothing: antialiased;
+  }
+  .progress-bar {
+    /* hallmark：只動 transform / opacity，不動 layout property（避免 reflow + 對齊微互動紀律） */
+    position: fixed; top: 0; left: 0; height: 3px; width: 100%;
+    background: var(--accent); z-index: 100;
+    transform: scaleX(0); transform-origin: left;
+    transition: transform 0.1s var(--ease-linear);
+  }
+  main {
+    max-width: 680px;
+    margin: 0 auto;
+    padding: clamp(2rem, 5vw, 4rem) clamp(1.5rem, 4vw, 2rem);
+  }
+  /* === 字級階梯：嚴格 4 級。所有 font-size 必須引用以下 4 個變數之一 === */
+  /* === 違反 → KB-04 機械驗證會擋（font_levels > 4）=== */
+  /* === h3 / blockquote / code / table 等「想要不一樣」用 weight + color，不開新字級 === */
+  h1 { font-size: var(--fs-h1); line-height: 1.3; margin: 0 0 1rem; }
+  h2 { font-size: var(--fs-h2); line-height: 1.4; margin: 2.5rem 0 0.75rem; padding-bottom: 0.5rem; border-bottom: 1px solid var(--border); }
+  h3 { font-size: var(--fs-body); font-weight: 700; line-height: 1.4; margin: 1.75rem 0 0.5rem; color: var(--accent); }
+  p { margin: 0 0 1.25rem; }
+  a { color: var(--accent); text-underline-offset: 3px; }
+  a:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+  .bluf { background: var(--callout-tip); border-left: 3px solid var(--accent); padding: 1.25rem 1.5rem; margin: 1.5rem 0 2rem; border-radius: 4px; }
+  .bluf strong { display: block; font-size: var(--fs-meta); letter-spacing: 0.05em; color: var(--accent); margin-bottom: 0.5rem; text-transform: uppercase; }
+  .callout { padding: 1rem 1.25rem; margin: 1.5rem 0; border-radius: 4px; border-left: 3px solid var(--muted); }
+  .callout.tip { background: var(--callout-tip); border-left-color: var(--accent); }
+  .callout.warn { background: var(--callout-warn); border-left-color: var(--accent-warn); }
+  .callout.info { background: var(--callout-tip); border-left-color: var(--muted); }
+  .callout.quote { background: transparent; border-left-color: var(--accent); font-style: italic; }
+  table { border-collapse: collapse; width: 100%; margin: 1.5rem 0; font-size: var(--fs-body); }
+  th, td { padding: 0.6rem 0.8rem; border: 1px solid var(--border); text-align: left; vertical-align: top; }
+  th { background: var(--callout-tip); font-weight: 600; }
+  code { font-family: var(--font-mono); background: var(--callout-tip); padding: 0.1em 0.4em; border-radius: 3px; font-size: var(--fs-body); }
+  /* === 圖片 / 圖說（圖表規則見 KB-07）：figcaption 用既有 --fs-meta，不開新字級 === */
+  figure { margin: 1.5rem 0; }
+  figure img { width: 100%; height: auto; border-radius: 4px; display: block; }
+  figure svg { width: 100%; height: auto; display: block; }
+  figcaption { font-size: var(--fs-meta); color: var(--muted); margin-top: 0.5rem; text-align: center; }
+  @media print {
+    .progress-bar { display: none; }
+    body { font-size: 11pt; line-height: 1.6; }
+    main { max-width: 100%; padding: 1cm; }
+  }
+</style>
+</head>
+<body>
+<div class="progress-bar" id="progress"></div>
+<main>
+<header>
+<h1>Shibaura Machine 超精密加工的三條線索</h1>
+<div class="bluf">
+<strong>BLUF</strong>
+<p>Shibaura Machine 的超精密加工路線，可拆成三件事：把微細溝槽加工做成穩定設備，把現場經驗沉澱成工程判斷，再用 Moore Nanotechnology 補上光學與醫療市場的通路、製程與品牌。</p>
+</div>
+</header>
+<article>
+<!-- narrative: USM-20B(H) 針對光纖、醫療、自動車、噴墨印刷等高精度微細加工需求。, 田中克敏的文章把技術者養成放在現場、圖面、設備、登山與長期觀察的交叉點。, Moore Nanotechnology 併購簡報把財務效益、銷售網、開發資源與共通零件量產連在一起。 -->
+<h2>這組文件的共同問題</h2>
+<p>四份附件其實指向同一個問題：超精密加工公司要如何把微米以下的加工能力，變成穩定產品、可培養的人才，以及可擴張的市場。USM-20B(H) 是產品端，田中克敏的〈夢をかなえる〉是技術者養成端，Moore Nanotechnology 的併購簡報是資本與市場端。</p>
+<figure><img src="assets/doc_91e8a42be620_Shibaura Machine 三份文件收錄.pdf.png" alt="三份 Shibaura Machine 超精密加工文件彙編首頁。" width="1236" height="1600"><figcaption>彙編頁把三類材料放在一起：產品、技術者哲學、M&amp;A 效益。</figcaption></figure>
+<div class="callout info">閱讀這批材料時，不宜只看單一機台規格。真正的主線是：需求變小、材料變難加工、精度要求變高，所以機台、工程師訓練與併購策略必須一起看。</div>
+<h2>產品線索：USM-20B(H) 把微細 V 溝加工做成設備能力</h2>
+<p>USM-20B(H) 的開發背景來自幾個需求源：光纖連接器、醫療用 X 光 CT、自動化汽車零件、商業噴墨印刷機，以及 scintillator、power 半導體、piezo 等難削材陶瓷。這些零件的共同點是尺寸小、位置誤差容忍低，且需求量上升後，單靠熟練工手感無法支撐產能。</p>
+<figure><img src="assets/doc_b53c3b637912_Shibaura_Machine_高精度溝入れ切断加工機_USM_20B_H_の紹介_2022年_P64_P65.pdf.png" alt="USM-20B(H) 介紹頁，含機台外觀與 V 溝加工前後比較。" width="1131" height="1600"><figcaption>USM-20B(H) 頁面同時呈現機台外觀與放電ツルーイング前後的 V 溝形狀。</figcaption></figure>
+<ul><li>X 軸工件送給採用 V-V 型動壓案內，重點是讓長期直線運動保持滑順與真直度。</li><li>Y 軸砥石位置決定改用リニアモータ與低ウェービングリニアガイド；文件可見解析度由傳統 2 nm 提升到 1 nm。</li><li>主軸搭載自社開發的高剛性空氣靜壓軸受スピンドル，並對 2、3、4 inch 砥石直徑準備 3 種主軸選項。</li><li>床身採用鑄物，目的在提高剛性並讓長時間加工穩定。</li><li>操作面改為タッチパネル，保留必要按鈕，降低加工者在顯微鏡畫面與程式選擇之間的負擔。</li><li>放電ツルーイング可在機上修正砥石形狀，文件中的 0.1 mm 比例影像顯示，修整後 V 溝輪廓更尖銳、磨耗痕跡更受控。</li></ul>
+<figure><svg viewBox="0 0 792 120" role="img" xmlns="http://www.w3.org/2000/svg"><title>Shibaura 超精密加工的條件、機制與結果</title><rect x="12" y="32" width="150" height="56" rx="6" fill="var(--callout-tip)" stroke="var(--accent)" stroke-width="1.5"/><text x="87" y="65" text-anchor="middle" font-size="15" fill="var(--fg)">條件</text><line x1="162" y1="60" x2="210" y2="60" stroke="var(--accent)" stroke-width="1.5"/><polygon points="210,55 218,60 210,65" fill="var(--accent)"/><rect x="218" y="32" width="150" height="56" rx="6" fill="var(--callout-tip)" stroke="var(--accent)" stroke-width="1.5"/><text x="293" y="65" text-anchor="middle" font-size="15" fill="var(--fg)">機制</text><line x1="368" y1="60" x2="416" y2="60" stroke="var(--accent)" stroke-width="1.5"/><polygon points="416,55 424,60 416,65" fill="var(--accent)"/><rect x="424" y="32" width="150" height="56" rx="6" fill="var(--callout-tip)" stroke="var(--accent)" stroke-width="1.5"/><text x="499" y="65" text-anchor="middle" font-size="15" fill="var(--fg)">結果</text><line x1="574" y1="60" x2="622" y2="60" stroke="var(--accent)" stroke-width="1.5"/><polygon points="622,55 630,60 622,65" fill="var(--accent)"/><rect x="630" y="32" width="150" height="56" rx="6" fill="var(--callout-tip)" stroke="var(--accent)" stroke-width="1.5"/><text x="705" y="65" text-anchor="middle" font-size="15" fill="var(--fg)">驗證</text></svg><figcaption>把產品規格放回條件、機制、結果、驗證鏈，才看得出這台機器的設計邏輯。</figcaption></figure>
+<h2>技術者線索：田中克敏把能力來源放在現場</h2>
+<p>田中克敏在〈若手技術者へ贈る言葉：夢をかなえる〉中回顧約 60 年的工作經驗。他先從工作機械メーカー的現場起步，經過機械加工、設計、組立、生產技術、生產管理與設備計畫，再投入超精密工作機械事業。這段經驗談的重點，是一個技術者如何建立判斷力。</p>
+<figure><img src="assets/doc_077cfb4d8ab1_若手技術者へ贈る言葉65-9_田中克敏.pdf.png" alt="田中克敏〈夢をかなえる〉頁面，說明年輕技術者與現場經驗。" width="1131" height="1600"><figcaption>田中克敏文章首頁：主題是「夢をかなえる」，核心是現場資訊密度與長期累積。</figcaption></figure>
+<blockquote>現場で得られる情報は視覚、聴覚、触覚、臭覚と圧倒的に多く、研修の場として現場に勝るものはない。<cite> — 田中克敏〈夢をかなえる〉</cite></blockquote>
+<p>這句話可以直接接到 USM-20B(H)。超精密設備需要透過機台振動、刀痕、砥石磨耗、案內面滑順度與操作負荷來回校正。田中提到一年畫 500 張以上圖面、處理設備修理改造與不良對策，這些經驗共同形成後來能判斷超精密加工環境的能力。</p>
+<h2>資本線索：Moore Nanotechnology 補上市場與開發資源</h2>
+<p>M&amp;A 簡報把 Moore Nanotechnology Systems 的併購放在財務與整合效果中看。頁面中的 Nanotech 單體売上高予測從 CY2025 約 50 多億円，走向 CY2026 約 90 億円，CY2027 與 CY2028 則以箭頭表示仍有上修空間。這是公司對成長路徑的方向性揭示。</p>
+<figure><img src="assets/doc_76f8d7d0d3bc_Shibaura Machine 併購 moore 預期效益.pdf.png" alt="Shibaura Machine 併購 Moore Nanotechnology 後對財務影響的簡報頁。" width="1600" height="1131"><figcaption>M&amp;A 簡報頁：Nanotech 單體銷售預測與主要整合措施。</figcaption></figure>
+<ul><li>雙方銷售網與銷售資源互用，讓商品進入更多客戶場景。</li><li>共同開拓自動車光學與醫療眼科等新成長市場。</li><li>開發資源共享，降低重複投入。</li><li>雙方共通基幹零件可集中生產，藉此降低原價。</li></ul>
+<p>這條資本線索與 USM-20B(H) 可以放在同一張地圖上。前者是微細溝槽與切斷加工的製程設備，後者補上超精密光學加工、市場入口與品牌能見度。若要判斷併購是否真的有效，後續應觀察三個指標：Nanotech 銷售是否按預測上升、共通零件集中生產是否反映在毛利，以及雙方是否能在眼科、光學與車用場景拿到新增訂單。</p>
+<h2>對 HIT 或精密加工研發的啟示</h2>
+<p>這批材料對精密加工研發的價值，來自一個可複用的判斷框架。需求端先定義尺寸、材料、穩定性與產能；設備端把定位、主軸、床身、修整與操作介面拆開驗證；組織端培養能讀懂現場訊號的人；資本端補足市場通路與關鍵能力缺口。</p>
+<table>
+<caption>三份文件合起來，是產品、人才與資本的同一條超精密加工主線。</caption>
+<thead><tr><th>面向</th><th>文件線索</th><th>可驗證問題</th></tr></thead>
+<tbody>
+<tr><td>產品</td><td>USM-20B(H) 的 V-V 案內、1 nm 解析度、空氣靜壓主軸、放電ツルーイング</td><td>加工後 V 溝輪廓、長時間穩定性與砥石耗損是否可量化</td></tr>
+<tr><td>人才</td><td>田中克敏強調現場資訊密度、圖面訓練與跨部門經驗</td><td>工程師是否能從設備聲音、振動、刀痕與不良模式回推原因</td></tr>
+<tr><td>市場</td><td>Moore 併購鎖定光學、醫療眼科、自動車光學與共通零件量產</td><td>新市場收入、毛利與共用零件效益是否在財報中出現</td></tr>
+</tbody>
+</table>
+<div class="callout tip">若後續要延伸成研發簡報，建議用「需求場景 → 誤差來源 → 設備設計 → 驗收指標 → 市場效益」五段式，避免只列機台規格。</div>
+
+</article>
+<footer>
+<p style="color: var(--muted); font-size: 0.85rem; margin-top: 4rem; padding-top: 1.5rem; border-top: 1px solid var(--border);">
+Sources: Shibaura Machine Engineering Review 2022 P63-P64；砥粒加工學會誌 Vol.65 No.9 2021 P485-P486；Shibaura Machine 中計 2026 M&amp;A 簡報。
+</p>
+</footer>
+</main>
+<script>
+  const bar = document.getElementById('progress');
+  window.addEventListener('scroll', () => {
+    const h = document.documentElement;
+    const max = h.scrollHeight - h.clientHeight;
+    const ratio = max > 0 ? h.scrollTop / max : 0;
+    bar.style.transform = 'scaleX(' + ratio + ')';
+  }, { passive: true });
+</script>
+</body>
+</html>
