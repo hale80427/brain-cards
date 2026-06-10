@@ -15,6 +15,7 @@
 - 中文與英文 / 數字之間使用半形空格
 
 ## Cards
+- [shibaura-nanotech-ultraprecision-chain](https://hale80427.github.io/brain-cards/shibaura-nanotech-ultraprecision-chain/)：用三份文件串起產品、技術傳承與市場併購的能力鏈。
 - [shibaura-machine-ultra-precision-machining](https://hale80427.github.io/brain-cards/shibaura-machine-ultra-precision-machining/)：從 USM-20B(H)、田中克敏技術觀與 Moore 併購，看精密加工的產品與資本邏輯。
 - [cat-wu-anthropic-ai-pm](https://hale80427.github.io/brain-cards/cat-wu-anthropic-ai-pm/)：從 Lenny 訪談看 Anthropic 產品團隊如何高速出貨，以及 PM 角色為何改變。
 - [cnc-ai-truth-2026](https://hale80427.github.io/brain-cards/cnc-ai-truth-2026/)：2026-06-04 精密工程 + AI 製程科普（給朋友看的淺顯易懂版）。盤點 2026 精密 CNC 導入 AI 製程優化的真相：邊角成熟、核心未熟。三條真相——(1) 最誘人的效益（刀具壽命五倍、工時省七成）掛在最不成熟的技術（TRL 3-6 的切削參數自優化）上，可靠的（熱變形補償 TRL 7-9）效益窄但可量測；僅約四成導入者回報 ROI 改善、九成五 AI pilot 無可量測 P&L 效益。(2) 全自動閉環在 2026 是幻覺——機台控制器（反應式）與 CAM（前饋）兩層未真正打通，能拿出的閉環案例幾乎全是 vendor demo，現實的閉環是人工拼裝。(3) 越標榜 AI 的功能越脆（刀具壽命預測換機台 / 換材料就崩），越成熟的功能 AI 含量越低（自適應進給其實是 1980 年代負載閉環）。解法是「雙錨」——實機量測訊號 + 廠商官方文件校驗，別讓 AI 關起門自證；第三錨（演算法內部邏輯）封閉原廠永遠拿不到，願揭露 + 可二次開發的本土廠商是唯一可能補上的路徑。含 4 張自繪 SVG 機制 diagram（加工迴圈 / 成熟度倒掛 / 閉環對比 / 三錨缺失）。Dogfood /output-html 7 步（Step 3.5 選 A 編輯雜誌風 / Step 3.7 圖文配置全自繪 diagram 智慧降級不打斷 / evaluate 深度 A 9 分通過 / Layer 1 機械驗收全 PASS / Layer 4 hallmark audit 0c/0M/3m）。
