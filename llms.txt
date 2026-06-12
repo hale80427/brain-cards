@@ -15,6 +15,7 @@
 - 中文與英文 / 數字之間使用半形空格
 
 ## Cards
+- [sun-yi-lei-first-win-youtube-summary](https://hale80427.github.io/brain-cards/sun-yi-lei-first-win-youtube-summary/)：從 Pacific League TV 影片整理孫易磊初勝利的投球機制與訪問重點。
 - [shibaura-nanotech-ultraprecision-chain](https://hale80427.github.io/brain-cards/shibaura-nanotech-ultraprecision-chain/)：用三份文件串起產品、技術傳承與市場併購的能力鏈。
 - [shibaura-machine-ultra-precision-machining](https://hale80427.github.io/brain-cards/shibaura-machine-ultra-precision-machining/)：從 USM-20B(H)、田中克敏技術觀與 Moore 併購，看精密加工的產品與資本邏輯。
 - [cat-wu-anthropic-ai-pm](https://hale80427.github.io/brain-cards/cat-wu-anthropic-ai-pm/)：從 Lenny 訪談看 Anthropic 產品團隊如何高速出貨，以及 PM 角色為何改變。
