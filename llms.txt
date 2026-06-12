@@ -15,6 +15,7 @@
 - 中文與英文 / 數字之間使用半形空格
 
 ## Cards
+- [usm-deltap-method](https://hale80427.github.io/brain-cards/usm-deltap-method/)：用 UD7 驅動器既有電性記錄在線監測微鑽孔刀況——追頻鎖共振帶 + ΔP／ΔR 同孔相減指標。
 - [bitturing-x-fact-check-starship-f12](https://hale80427.github.io/brain-cards/bitturing-x-fact-check-starship-f12/)：拆解病毒式 Musk 軼事、Starship 日期錯誤與可驗證來源強度。
 - [sun-yi-lei-first-win-youtube-summary](https://hale80427.github.io/brain-cards/sun-yi-lei-first-win-youtube-summary/)：從 Pacific League TV 影片整理孫易磊初勝利的投球機制與訪問重點。
 - [shibaura-nanotech-ultraprecision-chain](https://hale80427.github.io/brain-cards/shibaura-nanotech-ultraprecision-chain/)：用三份文件串起產品、技術傳承與市場併購的能力鏈。

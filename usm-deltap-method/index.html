@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>超音波微鑽孔的刀況電性監測：從追頻參數到 ΔP／ΔR 的完整方法鏈</title>
+<meta name="description" content="不加感測器，用 UD7 驅動器既有電性記錄在線監測微鑽孔刀況：追頻參數鎖共振帶是前提，ΔP／ΔR 同孔相減是指標，88–210 孔實測驗證。">
+<link rel="canonical" href="https://hale80427.github.io/brain-cards/usm-deltap-method/">
+<meta name="author" content="彥皓">
+<meta property="og:type" content="article">
+<meta property="og:title" content="超音波微鑽孔的刀況電性監測：從追頻參數到 ΔP／ΔR 的完整方法鏈">
+<meta property="og:description" content="不加感測器，用 UD7 驅動器既有電性記錄在線監測微鑽孔刀況：追頻參數鎖共振帶是前提，ΔP／ΔR 同孔相減是指標，88–210 孔實測驗證。">
+<meta property="og:url" content="https://hale80427.github.io/brain-cards/usm-deltap-method/">
+<meta property="og:image" content="https://hale80427.github.io/brain-cards/usm-deltap-method/assets/fig1-trend-88-210.png">
+<meta property="og:locale" content="zh_TW">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="超音波微鑽孔的刀況電性監測：從追頻參數到 ΔP／ΔR 的完整方法鏈">
+<meta name="twitter:description" content="不加感測器，用 UD7 驅動器既有電性記錄在線監測微鑽孔刀況。">
+<meta name="twitter:image" content="https://hale80427.github.io/brain-cards/usm-deltap-method/assets/fig1-trend-88-210.png">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "超音波微鑽孔的刀況電性監測：從追頻參數到 ΔP／ΔR 的完整方法鏈",
+  "description": "不加感測器，用 UD7 驅動器既有電性記錄在線監測微鑽孔刀況：追頻參數鎖共振帶是前提，ΔP／ΔR 同孔相減是指標，88–210 孔實測驗證。",
+  "datePublished": "2026-06-12",
+  "dateModified": "2026-06-12",
+  "author": { "@type": "Person", "name": "彥皓" },
+  "url": "https://hale80427.github.io/brain-cards/usm-deltap-method/",
+  "inLanguage": "zh-TW",
+  "license": "https://creativecommons.org/licenses/by/4.0/"
+}
+</script>
+<style>
+  :root {
+    /* direction B 工程文檔風 tokens — OKLCH（hex 註解為設計溯源） */
+    --bg: oklch(100% 0 0);                        /* #ffffff */
+    --fg: oklch(30.4% 0.02 264);                  /* #24292f */
+    --accent: oklch(55.2% 0.16 254);              /* #0969da GH 藍 */
+    --accent-warn: oklch(66.6% 0.157 58.3);       /* #d97706 */
+    --muted: oklch(50.5% 0.02 252);               /* #57606a */
+    --border: oklch(88.7% 0.01 252);              /* #d0d7de */
+    --callout-tip: oklch(97.6% 0.004 252);        /* #f6f8fa */
+    --callout-warn: oklch(96.9% 0.019 72.6);      /* #fdf3e7 */
+    --fs-meta: 0.85rem;
+    --fs-body: 1rem;
+    --fs-h2: clamp(1.15rem, 2.5vw, 1.375rem);
+    --fs-h1: clamp(1.5rem, 3.5vw, 1.875rem);
+    --font-sans: "Inter", "Noto Sans TC", system-ui, -apple-system, sans-serif;
+    --font-mono: ui-monospace, SFMono-Regular, Menlo, monospace;
+    --ease-linear: linear;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: oklch(17.6% 0.013 264);               /* #0d1117 */
+      --fg: oklch(92.8% 0.008 252);               /* #e6edf3 */
+      --accent: oklch(70.1% 0.124 250);           /* #58a6ff */
+      --accent-warn: oklch(76.9% 0.165 70.1);
+      --muted: oklch(66% 0.015 252);              /* #8b949e */
+      --border: oklch(32.5% 0.015 252);           /* #30363d */
+      --callout-tip: oklch(24.5% 0.012 258);      /* #161b22 */
+      --callout-warn: oklch(30.7% 0.034 73.5);
+    }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
+  }
+  * { box-sizing: border-box; }
+  body {
+    font-family: var(--font-sans);
+    background: var(--bg);
+    color: var(--fg);
+    line-height: 1.7;
+    margin: 0;
+    padding: 0;
+    -webkit-font-smoothing: antialiased;
+  }
+  .progress-bar {
+    position: fixed; top: 0; left: 0; height: 3px; width: 100%;
+    background: var(--accent); z-index: 100;
+    transform: scaleX(0); transform-origin: left;
+    transition: transform 0.1s var(--ease-linear);
+  }
+  main {
+    max-width: 680px;
+    margin: 0 auto;
+    padding: clamp(2rem, 5vw, 3.5rem) clamp(1.25rem, 4vw, 2rem);
+  }
+  h1 { font-size: var(--fs-h1); line-height: 1.35; margin: 0.5rem 0 1rem; letter-spacing: -0.01em; }
+  h2 { font-size: var(--fs-h2); line-height: 1.4; margin: 2.5rem 0 0.75rem; padding-bottom: 0.4rem; border-bottom: 1px solid var(--border); }
+  h3 { font-size: var(--fs-body); font-weight: 700; line-height: 1.4; margin: 1.6rem 0 0.5rem; color: var(--accent); }
+  p { margin: 0 0 1.15rem; }
+  ul, ol { margin: 0 0 1.15rem; padding-left: 1.4em; }
+  li { margin-bottom: 0.4em; }
+  a { color: var(--accent); text-underline-offset: 3px; }
+  a:hover { text-decoration-thickness: 2px; }
+  a:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+  .meta-line { font-size: var(--fs-meta); color: var(--muted); border-bottom: 1px solid var(--border); padding-bottom: 0.7rem; }
+  .bluf { background: var(--callout-tip); border-left: 3px solid var(--accent); padding: 1.1rem 1.3rem; margin: 1.4rem 0 1.8rem; border-radius: 4px; }
+  .bluf strong { display: block; font-size: var(--fs-meta); letter-spacing: 0.05em; color: var(--accent); margin-bottom: 0.4rem; text-transform: uppercase; }
+  nav.toc { background: var(--callout-tip); border: 1px solid var(--border); border-radius: 4px; padding: 0.9rem 1.2rem; font-size: var(--fs-meta); margin-bottom: 2rem; }
+  nav.toc ol { margin: 0.3rem 0 0; padding-left: 1.3em; }
+  nav.toc li { margin-bottom: 0.15em; }
+  .callout { padding: 0.9rem 1.2rem; margin: 1.4rem 0; border-radius: 4px; border-left: 3px solid var(--muted); background: var(--callout-tip); }
+  .callout.warn { background: var(--callout-warn); border-left-color: var(--accent-warn); }
+  .callout strong:first-child { color: var(--accent); }
+  .callout.warn strong:first-child { color: var(--accent-warn); }
+  .table-wrap { overflow-x: auto; margin: 1.4rem 0; max-width: 100%; }
+  table { border-collapse: collapse; width: 100%; font-size: var(--fs-body); }
+  th, td { padding: 0.5rem 0.7rem; border: 1px solid var(--border); text-align: left; vertical-align: top; }
+  th { background: var(--callout-tip); font-weight: 600; }
+  code { font-family: var(--font-mono); background: var(--callout-tip); padding: 0.1em 0.4em; border-radius: 3px; font-size: var(--fs-body); }
+  figure { margin: 1.6rem 0; }
+  figure img { width: 100%; height: auto; border: 1px solid var(--border); border-radius: 4px; display: block; }
+  figure svg { width: 100%; height: auto; display: block; }
+  figcaption { font-size: var(--fs-meta); color: var(--muted); margin-top: 0.5rem; text-align: center; }
+  .formula { font-family: var(--font-mono); background: var(--callout-tip); border: 1px solid var(--border); border-radius: 4px; padding: 0.8rem 1.1rem; margin: 1.2rem 0; overflow-x: auto; }
+  footer p { color: var(--muted); font-size: var(--fs-meta); margin-top: 3.5rem; padding-top: 1.2rem; border-top: 1px solid var(--border); }
+  @media print {
+    .progress-bar { display: none; }
+    body { font-size: 11pt; line-height: 1.6; }
+    main { max-width: 100%; padding: 1cm; }
+  }
+</style>
+</head>
+<body>
+<div class="progress-bar" id="progress"></div>
+<main>
+<header>
+<p class="meta-line">USM 刀況監測 · 方法鏈文檔 · 2026-06-12 · 孔 88–210 定稿（210–300 孔進行中）</p>
+<h1>超音波微鑽孔的刀況電性監測：從追頻參數到 ΔP／ΔR 的完整方法鏈</h1>
+<div class="bluf">
+<strong>BLUF</strong>
+不加任何感測器，用 UD7 驅動器既有的電性記錄，就能在線監測微鑽孔的刀況。前提是追頻參數先把驅動頻率鎖在共振帶；指標核心是「同孔內切削相減空切相」。主指標 ΔP（切削增量功率）在 88–210 孔實測中隨刀具使用顯著上升；升級版 ΔR（等效阻尼電阻差）訊噪比更佳，驗證期中。
+</div>
+</header>
+<nav class="toc" aria-label="目錄">
+<strong>目錄</strong>
+<ol>
+<li><a href="#arch">軟硬體架構：訊號從哪裡來</a></li>
+<li><a href="#prequel">前傳：追頻參數調整</a></li>
+<li><a href="#data">數據：88–210 孔重建結果</a></li>
+<li><a href="#indicators">指標體系：為什麼是 ΔP 與 ΔR</a></li>
+<li><a href="#methodology">方法論：可複用規則</a></li>
+<li><a href="#next">未解問題與下一步</a></li>
+</ol>
+</nav>
+<article>
+<!-- narrative: 物件,細節,矛盾 -->
+
+<h2 id="arch">1. 軟硬體架構：訊號從哪裡來</h2>
+<p>UD7 驅動器內的三個關鍵元件構成一條控制鏈。<code>ADC</code>（類比數位轉換器）是感官，把振幅、電流等類比回授轉成數字——記錄檔裡的 IFB 已確認是 RMS 值（均方根，交流波形的等效幅值），不是瞬時取樣。</p>
+<p><code>MCU</code>（微控制器）是大腦，跑追頻與振幅兩個即時迴路；FREQ 欄的鋸齒就是追頻迴路的足跡。<code>Buck</code>（降壓轉換器）是功率閥門，負責直流端供電。</p>
+<p>一個被資料推翻的假設：實測 Buck 電壓全程恆定約 250，功率變化全部反映在 Buck 電流上。「振幅控制靠調 Buck 電壓」不成立，實際執行端待研發部確認。</p>
+<figure>
+<svg viewBox="0 0 880 400" role="img" xmlns="http://www.w3.org/2000/svg">
+<title>UD7 控制鏈：DC 電源經 Buck 與功率級驅動換能器，回授經 ADC 進 MCU；負載資訊只在控制環外可見</title>
+<defs><marker id="ar" markerWidth="9" markerHeight="9" refX="7" refY="3.5" orient="auto"><path d="M0,0 L7,3.5 L0,7" fill="var(--accent)"/></marker>
+<marker id="arm" markerWidth="9" markerHeight="9" refX="7" refY="3.5" orient="auto"><path d="M0,0 L7,3.5 L0,7" fill="var(--muted)"/></marker></defs>
+<!-- 功率鏈 -->
+<rect x="15" y="60" width="95" height="46" rx="5" fill="var(--callout-tip)" stroke="var(--muted)"/>
+<text x="62" y="88" text-anchor="middle" font-size="14" fill="var(--fg)">DC 電源</text>
+<line x1="110" y1="83" x2="155" y2="83" stroke="var(--accent)" stroke-width="1.5" marker-end="url(#ar)"/>
+<rect x="158" y="60" width="130" height="46" rx="5" fill="var(--callout-tip)" stroke="var(--accent)" stroke-width="1.5"/>
+<text x="223" y="80" text-anchor="middle" font-size="14" fill="var(--fg)">Buck 降壓</text>
+<text x="223" y="98" text-anchor="middle" font-size="11" fill="var(--muted)">VO 恆定 ≈ 250</text>
+<line x1="288" y1="83" x2="333" y2="83" stroke="var(--accent)" stroke-width="1.5" marker-end="url(#ar)"/>
+<rect x="336" y="60" width="100" height="46" rx="5" fill="var(--callout-tip)" stroke="var(--muted)"/>
+<text x="386" y="88" text-anchor="middle" font-size="14" fill="var(--fg)">功率級</text>
+<line x1="436" y1="83" x2="481" y2="83" stroke="var(--accent)" stroke-width="1.5" marker-end="url(#ar)"/>
+<rect x="484" y="60" width="150" height="46" rx="5" fill="var(--callout-tip)" stroke="var(--muted)"/>
+<text x="559" y="80" text-anchor="middle" font-size="14" fill="var(--fg)">匹配＋換能器</text>
+<text x="559" y="98" text-anchor="middle" font-size="11" fill="var(--muted)">共振 ≈ 28.6 kHz</text>
+<line x1="634" y1="83" x2="679" y2="83" stroke="var(--accent)" stroke-width="1.5" marker-end="url(#ar)"/>
+<rect x="682" y="60" width="180" height="46" rx="5" fill="var(--callout-tip)" stroke="var(--muted)"/>
+<text x="772" y="80" text-anchor="middle" font-size="14" fill="var(--fg)">刀具＋工件</text>
+<text x="772" y="98" text-anchor="middle" font-size="11" fill="var(--muted)">G83 啄鑽 · 切削阻尼</text>
+<!-- ΔP 量測點 -->
+<rect x="128" y="140" width="190" height="40" rx="5" fill="none" stroke="var(--accent)" stroke-dasharray="5 3"/>
+<text x="223" y="157" text-anchor="middle" font-size="12" fill="var(--accent)">量測點：P = Buck_VO × Buck_IO</text>
+<text x="223" y="173" text-anchor="middle" font-size="12" fill="var(--accent)">直流實功 → ΔP、ΔR（環外）</text>
+<line x1="223" y1="140" x2="223" y2="110" stroke="var(--accent)" stroke-dasharray="5 3"/>
+<!-- 回授鏈 -->
+<rect x="682" y="250" width="180" height="46" rx="5" fill="var(--callout-tip)" stroke="var(--muted)"/>
+<text x="772" y="270" text-anchor="middle" font-size="14" fill="var(--fg)">電流感測</text>
+<text x="772" y="288" text-anchor="middle" font-size="11" fill="var(--muted)">IFB（RMS，環外）</text>
+<line x1="772" y1="110" x2="772" y2="246" stroke="var(--muted)" stroke-width="1.5" marker-end="url(#arm)"/>
+<rect x="520" y="250" width="100" height="46" rx="5" fill="var(--callout-tip)" stroke="var(--muted)"/>
+<text x="570" y="278" text-anchor="middle" font-size="14" fill="var(--fg)">ADC</text>
+<line x1="682" y1="273" x2="624" y2="273" stroke="var(--muted)" stroke-width="1.5" marker-end="url(#arm)"/>
+<rect x="300" y="240" width="160" height="66" rx="5" fill="var(--callout-tip)" stroke="var(--accent)" stroke-width="1.5"/>
+<text x="380" y="262" text-anchor="middle" font-size="14" fill="var(--fg)">MCU</text>
+<text x="380" y="280" text-anchor="middle" font-size="11" fill="var(--muted)">追頻迴路（鎖共振）</text>
+<text x="380" y="296" text-anchor="middle" font-size="11" fill="var(--muted)">振幅迴路（鎖振幅）</text>
+<line x1="520" y1="273" x2="464" y2="273" stroke="var(--muted)" stroke-width="1.5" marker-end="url(#arm)"/>
+<line x1="386" y1="240" x2="386" y2="110" stroke="var(--accent)" stroke-width="1.5" marker-end="url(#ar)"/>
+<text x="394" y="190" font-size="12" fill="var(--muted)">頻率／驅動指令</text>
+<!-- 環內註記 -->
+<text x="20" y="340" font-size="13" fill="var(--fg)">環內：振幅（VFB 為設定值）——被迴路鎖住，讀不到負載</text>
+<text x="20" y="362" font-size="13" fill="var(--accent)">環外：IFB、Buck 實功、相位——負載資訊全部在這裡</text>
+</svg>
+<figcaption>圖 1 · UD7 驅動器控制鏈與量測點：環內訊號被迴路抹平，負載資訊只在環外 · 作者自繪</figcaption>
+</figure>
+<p>這條鏈決定了哪裡有資訊、哪裡沒有。被控制迴路鎖住的量（振幅）讀不到負載；負載資訊只存在於迴路外的量——電流、直流端實功、相位。</p>
+
+<h2 id="prequel">2. 前傳：沒有這次調參，後面什麼都看不到</h2>
+<p>長程收資料前一天（6/10），啄鑽過程的 IFB 完全看不出負載變化：75–89 mA 的無結構雜訊。當天下午調了四個追頻參數，IFB 變成與 G83 啄鑽同步的雙相位方波。</p>
+<div class="table-wrap"><table>
+<thead><tr><th>參數</th><th>改前</th><th>改後</th><th>語意</th></tr></thead>
+<tbody>
+<tr><td><code>ETH_TrackRange_Value</code></td><td>1000</td><td>100</td><td>追頻活動範圍——主因</td></tr>
+<tr><td><code>TrackPrecision</code></td><td>2</td><td>1</td><td>追頻步進精度</td></tr>
+<tr><td><code>Judg_Value</code></td><td>18</td><td>15</td><td>掃頻判共振的電流差門檻（mA）</td></tr>
+<tr><td><code>EXT_Scan_Vpp</code></td><td>40</td><td>20</td><td>掃頻激勵電壓</td></tr>
+</tbody>
+</table></div>
+<figure>
+<img src="assets/fig2-before-after-ifb.png" alt="調參前後 IFB 電流對比：改前為無結構雜訊，改後出現與啄鑽同步的雙相位方波" width="1560" height="845" loading="lazy">
+<figcaption>圖 2 · 6/10 調參前後的 IFB 電流：無結構雜訊 → 與 G83 啄鑽同步的雙相位方波 · UD7 記錄、analyze_usm 管線繪製</figcaption>
+</figure>
+<h3>為什麼漂離共振 255 Hz 就看不到負載？</h3>
+<p>改前的關鍵證據：驅動器自己判定共振在 28520 Hz，操作頻率卻漂到 28265 Hz。追頻器在 ±1000 的活動範圍內走失了，不是掃頻找錯峰。</p>
+<p>偏共振操作有兩層殺傷：</p>
+<ul>
+<li><strong>靈敏度坍塌</strong>：共振點上，換能器阻抗由運動支路的電阻項主導，切削阻尼直接轉成電流變化；偏離後，電抗項以平方率稀釋阻尼的影響，IFB 對機械負載趨近於盲。</li>
+<li><strong>頻率雜訊注入</strong>：偏共振的坡上，電流對頻率的斜率陡。追頻器漫遊時，每一步頻率調整都轉成電流抖動，把殘存的負載訊號也蓋掉。</li>
+</ul>
+<p>調整後操作頻率被釘在判定共振點 ±50 Hz 內。同樣的振幅設定下，Buck 實功從 1994 升到 3127（+57%）、IFB 總電流 81→87 mA。</p>
+<p>機制：共振帶上運動支路導納放大，同樣的驅動設定吸入更多實功、振動更強，負載印記同步顯影。</p>
+<h3>掃頻的隱藏陷阱：共振點會隨激勵移動</h3>
+<figure>
+<img src="assets/fig3-sweep-softening.png" alt="三檔掃頻電流曲線顯示共振峰隨激勵增大向低頻偏移約 160 Hz" width="1560" height="715" loading="lazy">
+<figcaption>圖 3 · 三檔掃頻曲線：共振峰隨激勵軟化下移約 160 Hz · 10%／50%／100% 掃頻記錄</figcaption>
+</figure>
+<p>三檔掃頻顯示，共振峰從 28500 → 28480 → 28340 Hz 軟化下移（大振幅下等效剛性下降）。掃頻電壓決定你找到哪個激勵版本的共振點。</p>
+<div class="table-wrap"><table>
+<thead><tr><th>掃頻檔位</th><th>工作帶峰位置</th><th>峰谷差</th><th>過 Judg=18</th><th>過 Judg=15</th></tr></thead>
+<tbody>
+<tr><td>10%</td><td>28500 Hz</td><td>11 mA</td><td>✗</td><td>✗</td></tr>
+<tr><td>50%</td><td>28480 Hz</td><td>51 mA</td><td>✓</td><td>✓</td></tr>
+<tr><td>100%</td><td>28340 Hz</td><td>81 mA</td><td>✓</td><td>✓</td></tr>
+</tbody>
+</table></div>
+<div class="callout warn">
+<strong>操作邊界</strong>｜掃頻激勵與判定門檻必須配套。10% 激勵下峰的突出量只有 11 mA，低於兩版門檻——掃太輕，驅動器會直接判不到共振。
+</div>
+
+<h2 id="data">3. 數據：88–210 孔重建結果</h2>
+<p>123 孔、3,759 啄，四段記錄正確標定後全段重建。過程中修正了一次孔號編碼錯誤，三個歸因結論因此改寫——教訓收進第 5 節。</p>
+<figure>
+<img src="assets/fig1-trend-88-210.png" alt="88 至 210 孔的 ΔP、ΔR、ΔI 逐孔趨勢圖，ΔP 與 ΔR 在 121 至 180 段顯著上升，ΔI 全程平穩" width="1560" height="1170" loading="lazy">
+<figcaption>圖 4 · 88–210 孔逐孔 ΔP／ΔR／ΔI 趨勢（虛線＝檔案邊界）· analyze_usm.py v2 輸出</figcaption>
+</figure>
+<ul>
+<li><strong>121–180 段（同刀、同進給、同儀測鏈）：ΔP 自 247 升至 387，+2.11／孔（p=0.003）</strong>——切削負載隨孔數累積的主證據。</li>
+<li>91–120 段 ΔP 回落（350→178），與後段合成 V 形，谷底約在孔 116–125。ΔR 視角下此回落不顯著，暗示部分來自電流水位變動而非阻尼；成因待現場確認。</li>
+<li>206–210 的「驟降警訊」在中位數聚合下不成立（p=0.27）——HMI 記錄鏈雜訊偽造的刀況事件，已撤回。</li>
+<li>ΔI 全程平穩（9.58±0.37 mA），對負載不敏感。</li>
+</ul>
+
+<h2 id="indicators">4. 指標體系：為什麼是 ΔP 與 ΔR</h2>
+<p>四個候選指標的命運分歧，根源都在「相位資訊在不在」。負載讓換能器「每安培做的功」變多（相位角變化），而不是讓電流或電壓幅值本身變化。</p>
+<div class="table-wrap"><table>
+<thead><tr><th>指標</th><th>定義</th><th>實測結果</th><th>機制</th></tr></thead>
+<tbody>
+<tr><td>ΔI</td><td>電流兩相之差</td><td>不敏感</td><td>幅值被振幅迴路鎖住</td></tr>
+<tr><td>ΔS</td><td>VFB×IFB 兩相之差</td><td>與 ΔP 零相關（r=0.06）</td><td>視在功率，丟掉 cos φ</td></tr>
+<tr><td><strong>ΔP</strong></td><td>Buck 功率兩相之差</td><td>+2.11／孔（p=0.003）</td><td>直流實功自帶 cos φ</td></tr>
+<tr><td><strong>ΔR</strong></td><td>P／I²rms 兩相之差</td><td>同源（r=0.905）更乾淨</td><td>等於阻抗實部 Re(Z)</td></tr>
+</tbody>
+</table></div>
+<p>ΔP 成立的根源是能量守恆：虛功只在電抗間來回振盪、不從電源拿能量，從直流軌被抽走的每一瓦都是實功。Buck 端不需要量相位，卻自動「結算」了交流端的 V·I·cos φ。</p>
+<div class="formula">P / I²rms ＝ (V·I·cos φ) / I² ＝ |Z|·cos φ ＝ Re(Z)　→　ΔR ＝ Re(Z)切削 − Re(Z)空切</div>
+<p>ΔR 把功率換算成阻抗實部——切削阻尼物理上就落在這一項。除以 I² 同時把電流水位的孔間波動歸一掉，所以主趨勢段的變異係數從 0.35 降到 0.12，顯著性提升一個量級（p=0.0003）。</p>
+<p>ΔR 成立的前提是 IFB 為真 RMS 值，這正是研發部確認的事實。</p>
+<div class="callout">
+<strong>驗證期</strong>｜ΔR 目前蹲驗證期：等 210–300 孔新資料復現訊噪優勢後，才升格為正式主指標。趨勢監看以 ΔR 為主、ΔP 為輔。
+</div>
+
+<h2 id="methodology">5. 方法論：這次學到的可複用規則</h2>
+<ul>
+<li><strong>量測系統的參數狀態先於訊號解讀</strong>。追頻參數錯了，收一整天也是白雜訊。換刀具、換能器或重調參數後，先驗證 IFB 雙相位方波存在，再開始長程收資料。</li>
+<li><strong>同孔（同啄）配對相減是設計核心</strong>，它扣掉電源軌漂移與換能器自熱。反例實測：對 6/10 的記錄用全段池化算 ΔP 得 −287，同啄局部配對得 +292——尾段空轉的自熱漂移污染了空切基準，局部配對不受影響。</li>
+<li><strong>逐孔聚合用中位數</strong>。孔 109 有一啄的功率讀值達正常值約 30 倍（單取樣突波），均值聚合會被拉爆成假事件。</li>
+<li><strong>孔號標定是單點故障</strong>。同一批波形換一套孔號對應，三個歸因全數改寫。啄計數能可靠切分孔次，但「檔案對應到哪些孔」必須由現場確認。</li>
+<li><strong>雜訊大的儀測鏈會偽造趨勢</strong>。HMI 匯出（0.59 秒不規則取樣）上的單調驟降，換 robust 聚合後只是交替散布。跨儀測鏈的絕對值不可直接比較。</li>
+</ul>
+
+<h2 id="next">6. 未解問題與下一步</h2>
+<p><strong>進行中</strong>：機上續鑽 210–300 孔，結果將用同一管線分析。檢核重點：ΔP 趨勢延續性、ΔR 訊噪優勢是否復現、V 形左臂行為。</p>
+<p><strong>待問研發部（五題）</strong>：</p>
+<ul>
+<li>RMS 轉換器的時間常數與頻寬</li>
+<li>韌體能否輸出實測振幅回授，驗證切削時的振幅下垂</li>
+<li>振幅控制的實際執行端（Buck 電壓恆定的條件下）</li>
+<li>有效操作帶（28.55–28.65 kHz）高於小訊號掃頻峰，與軟化方向相反——何者主導</li>
+<li>Judg_Value 與掃頻電壓的建議配套表</li>
+</ul>
+<p><strong>更遠的路</strong>：驅動器若能輸出相位差或阻抗，是比 ΔP 更上游的負載量。ΔP／ΔR 與實體孔品質（孔徑、出口毛邊）對刀後，可建立換刀門檻值。</p>
+</article>
+<footer>
+<p>最後更新：2026-06-12 · CC BY 4.0 · 引用請標來源 · 資料源：UD7 驅動器記錄（孔 88–210）＋ analyze_usm.py v2 管線 · 作者：彥皓</p>
+</footer>
+</main>
+<script>
+  const bar = document.getElementById('progress');
+  window.addEventListener('scroll', () => {
+    const h = document.documentElement;
+    const max = h.scrollHeight - h.clientHeight;
+    const ratio = max > 0 ? h.scrollTop / max : 0;
+    bar.style.transform = 'scaleX(' + ratio + ')';
+  }, { passive: true });
+</script>
+</body>
+</html>
