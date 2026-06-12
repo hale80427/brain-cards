@@ -4,25 +4,25 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>超音波微鑽孔的刀況電性監測：從追頻參數到 ΔP／ΔR 的完整方法鏈</title>
-<meta name="description" content="不加感測器，用 UD7 驅動器既有電性記錄在線監測微鑽孔刀況：追頻參數鎖共振帶是前提，ΔP／ΔR 同孔相減是指標，88–210 孔實測驗證。">
+<meta name="description" content="不加感測器，用 UD7 驅動器既有電性記錄在線監測微鑽孔刀況：追頻參數鎖共振帶是前提，ΔP／ΔR 同孔相減是指標，88–300 孔實測驗證。">
 <link rel="canonical" href="https://hale80427.github.io/brain-cards/usm-deltap-method/">
 <meta name="author" content="彥皓">
 <meta property="og:type" content="article">
 <meta property="og:title" content="超音波微鑽孔的刀況電性監測：從追頻參數到 ΔP／ΔR 的完整方法鏈">
-<meta property="og:description" content="不加感測器，用 UD7 驅動器既有電性記錄在線監測微鑽孔刀況：追頻參數鎖共振帶是前提，ΔP／ΔR 同孔相減是指標，88–210 孔實測驗證。">
+<meta property="og:description" content="不加感測器，用 UD7 驅動器既有電性記錄在線監測微鑽孔刀況：追頻參數鎖共振帶是前提，ΔP／ΔR 同孔相減是指標，88–300 孔實測驗證。">
 <meta property="og:url" content="https://hale80427.github.io/brain-cards/usm-deltap-method/">
-<meta property="og:image" content="https://hale80427.github.io/brain-cards/usm-deltap-method/assets/fig1-trend-88-210.png">
+<meta property="og:image" content="https://hale80427.github.io/brain-cards/usm-deltap-method/assets/fig4-trend-88-300.png">
 <meta property="og:locale" content="zh_TW">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="超音波微鑽孔的刀況電性監測：從追頻參數到 ΔP／ΔR 的完整方法鏈">
 <meta name="twitter:description" content="不加感測器，用 UD7 驅動器既有電性記錄在線監測微鑽孔刀況。">
-<meta name="twitter:image" content="https://hale80427.github.io/brain-cards/usm-deltap-method/assets/fig1-trend-88-210.png">
+<meta name="twitter:image" content="https://hale80427.github.io/brain-cards/usm-deltap-method/assets/fig4-trend-88-300.png">
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
   "@type": "Article",
   "headline": "超音波微鑽孔的刀況電性監測：從追頻參數到 ΔP／ΔR 的完整方法鏈",
-  "description": "不加感測器，用 UD7 驅動器既有電性記錄在線監測微鑽孔刀況：追頻參數鎖共振帶是前提，ΔP／ΔR 同孔相減是指標，88–210 孔實測驗證。",
+  "description": "不加感測器，用 UD7 驅動器既有電性記錄在線監測微鑽孔刀況：追頻參數鎖共振帶是前提，ΔP／ΔR 同孔相減是指標，88–300 孔實測驗證。",
   "datePublished": "2026-06-12",
   "dateModified": "2026-06-12",
   "author": { "@type": "Person", "name": "彥皓" },
@@ -127,11 +127,11 @@
 <div class="progress-bar" id="progress"></div>
 <main>
 <header>
-<p class="meta-line">USM 刀況監測 · 方法鏈文檔 · 2026-06-12 · 孔 88–210 定稿（210–300 孔進行中）</p>
+<p class="meta-line">USM 刀況監測 · 方法鏈文檔 · 2026-06-12 · 孔 88–300 全程（213 孔，含 211–300 增補）</p>
 <h1>超音波微鑽孔的刀況電性監測：從追頻參數到 ΔP／ΔR 的完整方法鏈</h1>
 <div class="bluf">
 <strong>BLUF</strong>
-不加任何感測器，用 UD7 驅動器既有的電性記錄，就能在線監測微鑽孔的刀況。前提是追頻參數先把驅動頻率鎖在共振帶；指標核心是「同孔內切削相減空切相」。主指標 ΔP（切削增量功率）在 88–210 孔實測中隨刀具使用顯著上升；升級版 ΔR（等效阻尼電阻差）訊噪比更佳，驗證期中。
+不加任何感測器，用 UD7 驅動器既有的電性記錄，就能在線監測微鑽孔的刀況。前提是追頻參數先把驅動頻率鎖在共振帶；指標核心是「同孔內切削相減空切相」。主指標 ΔP（切削增量功率）在 88–300 孔、213 孔實測中隨刀具使用持續上升；升級版 ΔR（等效阻尼電阻差）訊噪優勢經兩輪資料復現，已升格為趨勢監看主指標。
 </div>
 </header>
 <nav class="toc" aria-label="目錄">
@@ -139,7 +139,7 @@
 <ol>
 <li><a href="#arch">軟硬體架構：訊號從哪裡來</a></li>
 <li><a href="#prequel">前傳：追頻參數調整</a></li>
-<li><a href="#data">數據：88–210 孔重建結果</a></li>
+<li><a href="#data">數據：88–300 孔結果</a></li>
 <li><a href="#indicators">指標體系：為什麼是 ΔP 與 ΔR</a></li>
 <li><a href="#methodology">方法論：可複用規則</a></li>
 <li><a href="#next">未解問題與下一步</a></li>
@@ -245,17 +245,19 @@
 <strong>操作邊界</strong>｜掃頻激勵與判定門檻必須配套。10% 激勵下峰的突出量只有 11 mA，低於兩版門檻——掃太輕，驅動器會直接判不到共振。
 </div>
 
-<h2 id="data">3. 數據：88–210 孔重建結果</h2>
-<p>123 孔、3,759 啄，四段記錄正確標定後全段重建。過程中修正了一次孔號編碼錯誤，三個歸因結論因此改寫——教訓收進第 5 節。</p>
+<h2 id="data">3. 數據：88–300 孔結果</h2>
+<p>88–210 為 123 孔、3,759 啄的四段重建（過程中修正了一次孔號編碼錯誤，三個歸因結論因此改寫——教訓收進第 5 節）；6/12 再併入 211–300 共 90 孔、2,781 啄，全程 213 孔。</p>
 <figure>
-<img src="assets/fig1-trend-88-210.png" alt="88 至 210 孔的 ΔP、ΔR、ΔI 逐孔趨勢圖，ΔP 與 ΔR 在 121 至 180 段顯著上升，ΔI 全程平穩" width="1560" height="1170" loading="lazy">
-<figcaption>圖 4 · 88–210 孔逐孔 ΔP／ΔR／ΔI 趨勢（虛線＝檔案邊界）· analyze_usm.py v2 輸出</figcaption>
+<img src="assets/fig4-trend-88-300.png" alt="88 至 300 孔的 ΔP、ΔR、ΔI 逐孔趨勢圖：ΔP 與 ΔR 跨段持續上升，211 至 300 段散布放大，ΔI 全程平穩" width="1600" height="1169" loading="lazy">
+<figcaption>圖 4 · 88–300 孔逐孔 ΔP／ΔR／ΔI 趨勢（虛線＝檔案邊界）· analyze_usm.py v2 輸出</figcaption>
 </figure>
 <ul>
-<li><strong>121–180 段（同刀、同進給、同儀測鏈）：ΔP 自 247 升至 387，+2.11／孔（p=0.003）</strong>——切削負載隨孔數累積的主證據。</li>
-<li>91–120 段 ΔP 回落（350→178），與後段合成 V 形，谷底約在孔 116–125。ΔR 視角下此回落不顯著，暗示部分來自電流水位變動而非阻尼；成因待現場確認。</li>
+<li><strong>121–180 段（同刀、同進給、同儀測鏈）</strong>：ΔP 自 247 升至 387，+2.11／孔（p=0.003）——切削負載隨孔數累積的主證據。</li>
+<li><strong>211–300 段（6/12 續鑽，同儀測鏈）</strong>：段均 ΔP 自 277 續升至 396（+43%），段內 +1.58／孔（p=0.036）——刀具到 300 孔，負載仍在累積。</li>
+<li>91–120 段 ΔP 回落（350→178），與後段合成 V 形。ΔR 視角下此回落不顯著；且 210→211 同等 17 小時隔夜重啟後無回落（p=0.80）——「單純重啟暫態」解釋已排除，嫌疑收斂到 90→91 同步發生的進給變更或單次事件。</li>
 <li>206–210 的「驟降警訊」在中位數聚合下不成立（p=0.27）——HMI 記錄鏈雜訊偽造的刀況事件，已撤回。</li>
-<li>ΔI 全程平穩（9.58±0.37 mA），對負載不敏感。</li>
+<li>ΔI 全程平穩（9.6±0.4 mA），對負載不敏感。</li>
+<li><strong>新警訊候選</strong>：211–300 段散布放大——ΔP 標準差 98→186、逐孔劇烈交替（101↔622）、ΔR 變異係數 0.12→0.18。水位上升加波動放大是磨耗後段常見的不穩定特徵，但與製程變異尚未區分，列為孔品質比對的最優先區間。</li>
 </ul>
 
 <h2 id="indicators">4. 指標體系：為什麼是 ΔP 與 ΔR</h2>
@@ -266,7 +268,7 @@
 <tr><td>ΔI</td><td>電流兩相之差</td><td>不敏感</td><td>幅值被振幅迴路鎖住</td></tr>
 <tr><td>ΔS</td><td>VFB×IFB 兩相之差</td><td>與 ΔP 零相關（r=0.06）</td><td>視在功率，丟掉 cos φ</td></tr>
 <tr><td><strong>ΔP</strong></td><td>Buck 功率兩相之差</td><td>+2.11／孔（p=0.003）</td><td>直流實功自帶 cos φ</td></tr>
-<tr><td><strong>ΔR</strong></td><td>P／I²rms 兩相之差</td><td>同源（r=0.905）更乾淨</td><td>等於阻抗實部 Re(Z)</td></tr>
+<tr><td><strong>ΔR</strong></td><td>P／I²rms 兩相之差</td><td>訊噪優勢兩輪復現</td><td>等於阻抗實部 Re(Z)</td></tr>
 </tbody>
 </table></div>
 <p>ΔP 成立的根源是能量守恆：虛功只在電抗間來回振盪、不從電源拿能量，從直流軌被抽走的每一瓦都是實功。Buck 端不需要量相位，卻自動「結算」了交流端的 V·I·cos φ。</p>
@@ -274,7 +276,7 @@
 <p>ΔR 把功率換算成阻抗實部——切削阻尼物理上就落在這一項。除以 I² 同時把電流水位的孔間波動歸一掉，所以主趨勢段的變異係數從 0.35 降到 0.12，顯著性提升一個量級（p=0.0003）。</p>
 <p>ΔR 成立的前提是 IFB 為真 RMS 值，這正是研發部確認的事實。</p>
 <div class="callout">
-<strong>驗證期</strong>｜ΔR 目前蹲驗證期：等 210–300 孔新資料復現訊噪優勢後，才升格為正式主指標。趨勢監看以 ΔR 為主、ΔP 為輔。
+<strong>升格記錄</strong>｜ΔR 已於 2026-06-12 升格為趨勢監看主指標：211–300 新資料復現訊噪優勢（變異係數 0.18 vs ΔP 的 0.47，與 121–180 段的 0.12 vs 0.35 一致），且與 ΔP 同源（r=0.905）。ΔP 降為輔助對照。
 </div>
 
 <h2 id="methodology">5. 方法論：這次學到的可複用規則</h2>
@@ -287,7 +289,7 @@
 </ul>
 
 <h2 id="next">6. 未解問題與下一步</h2>
-<p><strong>進行中</strong>：機上續鑽 210–300 孔，結果將用同一管線分析。檢核重點：ΔP 趨勢延續性、ΔR 訊噪優勢是否復現、V 形左臂行為。</p>
+<p><strong>211–300 檢核結果（6/12 收）</strong>：ΔP 趨勢延續（段均 +43%）；ΔR 訊噪優勢復現並升格；V 形左臂的重啟暫態假說被同等條件重複實驗排除。新開的觀察項是 211–300 的散布放大，等待實體孔品質比對歸因。</p>
 <p><strong>待問研發部（五題）</strong>：</p>
 <ul>
 <li>RMS 轉換器的時間常數與頻寬</li>
@@ -296,10 +298,15 @@
 <li>有效操作帶（28.55–28.65 kHz）高於小訊號掃頻峰，與軟化方向相反——何者主導</li>
 <li>Judg_Value 與掃頻電壓的建議配套表</li>
 </ul>
+<p><strong>待現場確認</strong>：</p>
+<ul>
+<li>孔 90→91 隔夜重啟時，除進給 80→90 nm 外還動了什麼（重夾刀？驅動功率設定？）——歸因 V 形左臂</li>
+<li>211–300 段實體孔品質（孔徑、出口毛邊）——歸因散布放大，並為 ΔP／ΔR 換刀門檻對刀</li>
+</ul>
 <p><strong>更遠的路</strong>：驅動器若能輸出相位差或阻抗，是比 ΔP 更上游的負載量。ΔP／ΔR 與實體孔品質（孔徑、出口毛邊）對刀後，可建立換刀門檻值。</p>
 </article>
 <footer>
-<p>最後更新：2026-06-12 · CC BY 4.0 · 引用請標來源 · 資料源：UD7 驅動器記錄（孔 88–210）＋ analyze_usm.py v2 管線 · 作者：彥皓</p>
+<p>最後更新：2026-06-12 · CC BY 4.0 · 引用請標來源 · 資料源：UD7 驅動器記錄（孔 88–300）＋ analyze_usm.py v2 管線 · 作者：彥皓</p>
 </footer>
 </main>
 <script>
