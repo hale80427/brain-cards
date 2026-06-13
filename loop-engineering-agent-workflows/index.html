@@ -138,24 +138,35 @@
 <h1>迴路工程：讓 AI 代理人自己推進任務</h1>
 <div class="bluf">
 <strong>BLUF</strong>
-<p>迴路工程的核心，是把人類反覆下提示的工作，改成一套會排程、分工、檢查、記錄、再決定下一步的小系統。</p>
+<p>迴路工程的核心，是把人類反覆下提示的工作，改成一套會排程、分工、檢查、記錄、再決定下一步的小系統；真正的難點，是維持驗證、理解與工程判斷。</p>
 </div>
 </header>
 <article>
-<!-- narrative: 從手動提示，轉成設計會自我迭代的工作迴路。, 五個元件撐起迴路：自動化、worktree、skill、外掛連接、子代理。, 真正的限制不只在工具，而在人類 review 頻寬與品質閘門。 -->
+<!-- narrative: 從手動提示，轉成設計會自我迭代的工作迴路。, 五個元件撐起迴路：自動化、worktree、skill、外掛連接、子代理。, 真正的限制不只在工具，而在人類 review 頻寬、理解深度與品質閘門。 -->
 <h2>一句話先講清楚</h2>
 <p>過去使用 AI 寫程式，常見做法是人類一輪一輪下提示：你給上下文，AI 回答，你讀完後再補下一句。迴路工程把這件事往上抽一層：人類開始設計一個會反覆運作的系統。它會找工作、分派任務、檢查結果、記錄狀態，然後再決定下一步。</p>
 <div class="callout info">白話說：你從開車的人，變成設計物流線的人。這條線會自己派車、檢查路況、回報結果。</div>
 <figure><svg viewBox="0 0 998 120" role="img" xmlns="http://www.w3.org/2000/svg"><title>互動模式的轉換</title><rect x="12" y="32" width="150" height="56" rx="6" fill="var(--callout-tip)" stroke="var(--accent)" stroke-width="1.5"/><text x="87" y="65" text-anchor="middle" font-size="15" fill="var(--fg)">手動提示</text><line x1="162" y1="60" x2="210" y2="60" stroke="var(--accent)" stroke-width="1.5"/><polygon points="210,55 218,60 210,65" fill="var(--accent)"/><rect x="218" y="32" width="150" height="56" rx="6" fill="var(--callout-tip)" stroke="var(--accent)" stroke-width="1.5"/><text x="293" y="65" text-anchor="middle" font-size="15" fill="var(--fg)">系統排程</text><line x1="368" y1="60" x2="416" y2="60" stroke="var(--accent)" stroke-width="1.5"/><polygon points="416,55 424,60 416,65" fill="var(--accent)"/><rect x="424" y="32" width="150" height="56" rx="6" fill="var(--callout-tip)" stroke="var(--accent)" stroke-width="1.5"/><text x="499" y="65" text-anchor="middle" font-size="15" fill="var(--fg)">代理人執行</text><line x1="574" y1="60" x2="622" y2="60" stroke="var(--accent)" stroke-width="1.5"/><polygon points="622,55 630,60 622,65" fill="var(--accent)"/><rect x="630" y="32" width="150" height="56" rx="6" fill="var(--callout-tip)" stroke="var(--accent)" stroke-width="1.5"/><text x="705" y="65" text-anchor="middle" font-size="15" fill="var(--fg)">獨立驗證</text><line x1="780" y1="60" x2="828" y2="60" stroke="var(--accent)" stroke-width="1.5"/><polygon points="828,55 836,60 828,65" fill="var(--accent)"/><rect x="836" y="32" width="150" height="56" rx="6" fill="var(--callout-tip)" stroke="var(--accent)" stroke-width="1.5"/><text x="911" y="65" text-anchor="middle" font-size="15" fill="var(--fg)">記憶沉澱</text></svg><figcaption>從「人類反覆提示」改成「系統反覆推進」。</figcaption></figure>
 <h2>為什麼這件事現在浮出水面</h2>
 <p>Addy Osmani 把迴路工程視為代理 harness 工程的延伸。Harness 是讓單一代理人能穩定執行任務的環境；迴路則在 harness 上面再加一層節奏與治理。它讓代理人被放進一個會持續運轉的工作流，而非只被叫來做一件事。</p>
-<p>這個概念之所以變得實用，是因為 Claude Code 與 Codex 這類工具已經把許多原語放進產品裡。以前要靠 bash 腳本、cron、臨時資料夾與人工維護；現在，排程、目標迭代、子代理、worktree、skill 都開始成為工具本身的一部分。</p>
+<p>這個概念開始變得實用，是因為 Claude Code 與 Codex 這類工具已經把許多原語放進產品裡。以前要靠 bash 腳本、cron、臨時資料夾與人工維護；現在，排程、目標迭代、子代理、worktree、skill 都開始成為工具本身的一部分。</p>
 <blockquote>你不應該再提示程式碼代理人了。你應該設計能提示你的代理人的迴路。<cite> — @steipete，Addy Osmani 貼文中引用</cite></blockquote>
 <blockquote>我不再提示 Claude 了。我有正在運行的迴路在提示 Claude 並決定該做什麼。我的工作就是撰寫這些迴路。<cite> — @bcherny，Addy Osmani 貼文中引用</cite></blockquote>
 <h2>一個迴路需要的五個元件</h2>
 <figure><svg viewBox="0 0 800 520" role="img" xmlns="http://www.w3.org/2000/svg"><title>迴路工程的基礎層</title><polygon points="350.0,16.0 450.0,16.0 516.0,113.6 284.0,113.6" fill="var(--callout-tip)" stroke="var(--accent)" stroke-width="1.5"/><text x="400" y="59" text-anchor="middle" font-size="18" font-weight="700" fill="var(--fg)">子代理</text><text x="400" y="87" text-anchor="middle" font-size="13" fill="var(--muted)">不同角色交叉檢查</text><polygon points="284.0,113.6 516.0,113.6 582.0,211.2 218.0,211.2" fill="var(--callout-tip)" stroke="var(--accent)" stroke-width="1.5"/><text x="400" y="156" text-anchor="middle" font-size="18" font-weight="700" fill="var(--fg)">外掛與連接器</text><text x="400" y="184" text-anchor="middle" font-size="13" fill="var(--muted)">接入現有工具</text><polygon points="218.0,211.2 582.0,211.2 648.0,308.8 152.0,308.8" fill="var(--callout-tip)" stroke="var(--accent)" stroke-width="1.5"/><text x="400" y="254" text-anchor="middle" font-size="18" font-weight="700" fill="var(--fg)">技能</text><text x="400" y="282" text-anchor="middle" font-size="13" fill="var(--muted)">保存專案知識</text><polygon points="152.0,308.8 648.0,308.8 714.0,406.4 86.0,406.4" fill="var(--callout-tip)" stroke="var(--accent)" stroke-width="1.5"/><text x="400" y="352" text-anchor="middle" font-size="18" font-weight="700" fill="var(--fg)">工作樹</text><text x="400" y="380" text-anchor="middle" font-size="13" fill="var(--muted)">隔離平行作業</text><polygon points="86.0,406.4 714.0,406.4 780.0,504.0 20.0,504.0" fill="var(--callout-tip)" stroke="var(--accent)" stroke-width="1.5"/><text x="400" y="449" text-anchor="middle" font-size="18" font-weight="700" fill="var(--fg)">自動化與記憶</text><text x="400" y="477" text-anchor="middle" font-size="13" fill="var(--muted)">心跳與長期狀態</text></svg><figcaption>五個元件加上記憶，構成可長時間運行的代理迴路。</figcaption></figure>
 <ol><li>自動化：像心跳一樣定期觸發，讓系統自己找出待處理工作。</li><li>工作樹：讓多個代理人各自有獨立 checkout，避免改到同一批檔案。</li><li>技能：把專案知識寫成可重用的指令與參考資料，代理人不用每次重猜。</li><li>外掛與連接器：讓代理人能接上 issue tracker、CI、文件、repo 與其他工具。</li><li>子代理：一個代理人提出解法，另一個代理人檢查，降低自評失準。</li></ol>
 <div class="callout tip">第六個元件是記憶。它可以是 Markdown、Linear 看板或 repo 內的狀態檔。重點是：狀態要留在單次對話之外，否則模型下一輪就會忘。</div>
+<h2>技能：把意圖寫到對話之外</h2>
+<p>技能是讓意圖不必每次重付成本的地方。代理人每次 session 都像冷啟動，它會用自信的猜測補上你沒有明講的部分。技能把意圖寫到外部檔案裡：專案慣例、建置步驟、踩過的坑、團隊不採用某種做法的原因。寫一次，之後每次運行都讀取。</p>
+<div class="callout tip">沒有技能，迴路每次循環都要重新推導整個專案。有技能，意圖會開始累積。它有點像複利：每次沉澱一點規則，下一輪代理人就少猜一點。</div>
+<p>技能是撰寫格式，外掛程式是出貨方式。當你想把多個技能跨 repo 分享，或把技能和連接器一起交給同事使用，就會把它們打包成外掛程式。Codex 和 Claude Code 的方向相近。</p>
+<h2>外掛與連接器：讓迴路接上真實工具</h2>
+<p>只看檔案系統的迴路，能做的事很有限。連接器通常建在 MCP 上，讓代理人能讀 issue tracker、查資料庫、呼叫 staging API，甚至在 Slack 裡發訊息。外掛程式則把技能與連接器綁在一起，讓團隊能安裝同一套工作環境。</p>
+<div class="callout warn">這會改變迴路的行動半徑。代理人不只回覆「這裡是修正」，它可以開 PR、連結 Linear ticket，並在 CI 綠燈時通知頻道。當然，這也意味著權限、審計與安全邊界要先設好。</div>
+<h2>子代理：讓撰寫者遠離檢查者</h2>
+<p>迴路裡最重要的結構之一，是把撰寫者和檢查者分開。寫程式的模型批改自己時，容易放寬標準。第二個代理人帶著不同指令，甚至使用不同模型，會比較容易抓出第一個代理人說服自己接受的問題。</p>
+<ul><li>Explorer：先讀 repo、找線索、界定問題。</li><li>Implementer：根據清楚範圍修改程式或文件。</li><li>Verifier：依照 spec、測試與專案技能檢查結果。</li></ul>
+<p>這會消耗更多 token，所以不該濫用。適合花在高風險修改、模糊需求、跨檔案變更，或需要第二意見的地方。Claude Code 的 /goal 也把這個原則用在停止條件上：做事的模型與判斷完成的模型分開。</p>
 <h2>元件怎麼接成迴路</h2>
 <p>迴路需要清楚的接線方式。排程先喚醒系統，系統用 skill 讀懂專案規則，再把工作丟進隔離的 worktree。代理人做完後，子代理或測試條件檢查結果。通過就記錄；沒通過就回到下一輪。</p>
 <figure><svg viewBox="0 0 1100 1100" role="img" xmlns="http://www.w3.org/2000/svg"><title>最小可用迴路</title><path d="M 637.5 169.9 A 390.0 390.0 0 0 1 884.4 349.4" fill="none" stroke="var(--accent)" stroke-width="5" stroke-linecap="round" stroke-dasharray="1000" stroke-dashoffset="0"/><polygon points="884.4,349.4 858.0,332.6 882.0,318.2" fill="var(--accent)"/><path d="M 938.5 515.7 A 390.0 390.0 0 0 1 844.2 806.1" fill="none" stroke="var(--accent)" stroke-width="5" stroke-linecap="round" stroke-dasharray="1000" stroke-dashoffset="0"/><polygon points="844.2,806.1 852.0,775.8 873.1,794.1" fill="var(--accent)"/><path d="M 702.6 908.9 A 390.0 390.0 0 0 1 397.4 908.9" fill="none" stroke="var(--accent)" stroke-width="5" stroke-linecap="round" stroke-dasharray="1000" stroke-dashoffset="0"/><polygon points="397.4,908.9 428.6,907.0 417.7,932.7" fill="var(--accent)"/><path d="M 255.8 806.1 A 390.0 390.0 0 0 1 161.5 515.7" fill="none" stroke="var(--accent)" stroke-width="5" stroke-linecap="round" stroke-dasharray="1000" stroke-dashoffset="0"/><polygon points="161.5,515.7 173.0,544.9 145.1,542.4" fill="var(--accent)"/><path d="M 215.6 349.4 A 390.0 390.0 0 0 1 462.5 169.9" fill="none" stroke="var(--accent)" stroke-width="5" stroke-linecap="round" stroke-dasharray="1000" stroke-dashoffset="0"/><polygon points="462.5,169.9 438.4,189.9 432.1,162.6" fill="var(--accent)"/><rect x="470.0" y="206.0" width="160.0" height="88.0" rx="16" fill="var(--callout-tip)" stroke="var(--accent)" stroke-width="2"/><text x="550.0" y="250.0" text-anchor="middle" font-size="28" font-weight="700" fill="var(--fg)">發現</text><text x="550.0" y="280.0" text-anchor="middle" font-size="18" fill="var(--muted)">找出待處理工作</text><rect x="755.3" y="413.3" width="160.0" height="88.0" rx="16" fill="var(--callout-tip)" stroke="var(--accent)" stroke-width="2"/><text x="835.3" y="457.3" text-anchor="middle" font-size="28" font-weight="700" fill="var(--fg)">分派</text><text x="835.3" y="487.3" text-anchor="middle" font-size="18" fill="var(--muted)">開 worktree，載入 skill</text><rect x="646.3" y="748.7" width="160.0" height="88.0" rx="16" fill="var(--callout-tip)" stroke="var(--accent)" stroke-width="2"/><text x="726.3" y="792.7" text-anchor="middle" font-size="28" font-weight="700" fill="var(--fg)">執行</text><text x="726.3" y="822.7" text-anchor="middle" font-size="18" fill="var(--muted)">代理人完成小任務</text><rect x="293.7" y="748.7" width="160.0" height="88.0" rx="16" fill="var(--callout-tip)" stroke="var(--accent)" stroke-width="2"/><text x="373.7" y="792.7" text-anchor="middle" font-size="28" font-weight="700" fill="var(--fg)">驗證</text><text x="373.7" y="822.7" text-anchor="middle" font-size="18" fill="var(--muted)">測試或子代理檢查</text><rect x="184.7" y="413.3" width="160.0" height="88.0" rx="16" fill="var(--callout-tip)" stroke="var(--accent)" stroke-width="2"/><text x="264.7" y="457.3" text-anchor="middle" font-size="28" font-weight="700" fill="var(--fg)">記錄</text><text x="264.7" y="487.3" text-anchor="middle" font-size="18" fill="var(--muted)">寫下結果與下一步</text></svg><figcaption>一個最小可用迴路：發現、執行、驗證、記錄、再排下一步。</figcaption></figure>
@@ -169,14 +180,46 @@
 <tr><td>記錄</td><td>寫下完成事項與下一步</td><td>狀態是否留在對話之外</td></tr>
 </tbody>
 </table>
+<h2>一個真實迴路長什麼樣子</h2>
+<p>一個常見形狀是：每天早上，自動化在 repo 上運行。它呼叫 triage 技能，讀取昨天的 CI 失敗、開啟中的 issues、最近 commits，然後把發現寫到 Markdown 或 Linear 看板。</p>
+<p>對於值得處理的發現，迴路開一個隔離 worktree，派一個子代理起草修正，再派另一個子代理依專案技能與現有測試審查。連接器負責開 PR、更新 ticket。無法處理的項目進入 triage 收件匣，交回人類判斷。</p>
+<div class="callout info">狀態檔案是整個系統的脊椎。它記住試過什麼、什麼通過、什麼仍然開著。明天早上的運行，就能從今天停止的地方繼續。</div>
 <h2>真正的風險：成本、品質與理解負債</h2>
 <p>Addy Osmani 在原文中保留態度，這點很重要。迴路看起來會提高速度，但速度也會放大錯誤。如果 token 很充足，代理人可能跑得很遠；如果 token 不足，它可能偷省步驟。成本與品質會一起變成系統設計問題。</p>
-<ul><li>Token 成本：迴路會反覆呼叫模型，成本曲線可能比單次提示陡很多。</li><li>品質下滑：如果驗證條件太弱，系統會產生看似完成但其實粗糙的輸出。</li><li>編排稅：多個代理人平行工作後，人類 review 變成瓶頸。</li><li>意圖負債：迴路跑久後，系統可能開始偏離原本想達成的事。</li><li>理解負債：人類若只看結果，不看推進過程，最後會失去判斷力。</li></ul>
+<ul><li>Token 成本：迴路會反覆呼叫模型，成本曲線可能比單次提示陡很多。</li><li>品質下滑：如果驗證條件太弱，系統會產生看似完成但其實粗糙的輸出。</li><li>編排稅：多個代理人平行工作後，人類 review 變成瓶頸。</li><li>意圖債務：缺少 skill 時，代理人會自行補上你沒有明講的意圖。</li><li>理解債務：人類若只看結果，不看推進過程，最後會失去判斷力。</li></ul>
 <div class="callout warn">這篇貼文的證據強度屬 Tier 2：高經驗權重，但缺少可獨立驗證的量化對照。它適合當作實務框架，不適合直接當成已確立事實。</div>
+<h2>迴路無法替你負責的三件事</h2>
+<figure><svg viewBox="0 0 998 120" role="img" xmlns="http://www.w3.org/2000/svg"><title>無人監看時的風險鏈</title><rect x="12" y="32" width="150" height="56" rx="6" fill="var(--callout-tip)" stroke="var(--accent)" stroke-width="1.5"/><text x="87" y="65" text-anchor="middle" font-size="15" fill="var(--fg)">迴路加速</text><line x1="162" y1="60" x2="210" y2="60" stroke="var(--accent)" stroke-width="1.5"/><polygon points="210,55 218,60 210,65" fill="var(--accent)"/><rect x="218" y="32" width="150" height="56" rx="6" fill="var(--callout-tip)" stroke="var(--accent)" stroke-width="1.5"/><text x="293" y="65" text-anchor="middle" font-size="15" fill="var(--fg)">人類少看過程</text><line x1="368" y1="60" x2="416" y2="60" stroke="var(--accent)" stroke-width="1.5"/><polygon points="416,55 424,60 416,65" fill="var(--accent)"/><rect x="424" y="32" width="150" height="56" rx="6" fill="var(--callout-tip)" stroke="var(--accent)" stroke-width="1.5"/><text x="499" y="65" text-anchor="middle" font-size="15" fill="var(--fg)">理解落差擴大</text><line x1="574" y1="60" x2="622" y2="60" stroke="var(--accent)" stroke-width="1.5"/><polygon points="622,55 630,60 622,65" fill="var(--accent)"/><rect x="630" y="32" width="150" height="56" rx="6" fill="var(--callout-tip)" stroke="var(--accent)" stroke-width="1.5"/><text x="705" y="65" text-anchor="middle" font-size="15" fill="var(--fg)">判斷力外包</text><line x1="780" y1="60" x2="828" y2="60" stroke="var(--accent)" stroke-width="1.5"/><polygon points="828,55 836,60 828,65" fill="var(--accent)"/><rect x="836" y="32" width="150" height="56" rx="6" fill="var(--callout-tip)" stroke="var(--accent)" stroke-width="1.5"/><text x="911" y="65" text-anchor="middle" font-size="15" fill="var(--fg)">品質下滑</text></svg><figcaption>迴路越順，理解與判斷越需要刻意保留。</figcaption></figure>
+<p>迴路改變工作方式，但沒有把工程師移出系統。無人值守運行的迴路，也可能無人值守地犯錯。驗證子代理可以改善這件事，但「完成」仍然只是一個主張，還需要測試、review 或可追溯證據。</p>
+<p>第二個問題是 comprehension debt。迴路出貨你沒有親自寫的程式越快，系統存在的東西和你真正理解的東西，差距就越大。若你不讀它產出的內容，理解會慢慢腐爛。</p>
+<p>第三個問題是 cognitive surrender。當迴路自己跑起來，人很容易停止持有意見，只接受它吐回來的結果。迴路設計在有判斷力時是槓桿；用來逃避思考時，它會加速問題。</p>
 <h2>如果要實作，先從小迴路開始</h2>
 <p>最安全的起點，是挑低風險、可驗證、可回滾的工作。例子包括每日 issue 分類、CI 失敗摘要、文件同步、測試覆蓋缺口掃描，或小型 refactor 候選清單。</p>
 <ol><li>先定義停止條件：例如測試通過、lint 乾淨、只產出候選清單。</li><li>把專案規則寫成 skill：避免代理人每次靠猜。</li><li>用 worktree 隔離修改：讓失敗成本可控。</li><li>加一個獨立檢查者：測試、子代理或人工 review 都可以。</li><li>把狀態寫到 repo 或看板：避免每次從空白上下文重來。</li></ol>
 <div class="callout info">判準很簡單：如果某個任務沒有清楚的驗證方式，就不要先放進自動迴路。</div>
+<h2>關鍵概念對照表</h2>
+<table>
+<thead><tr><th>英文原詞</th><th>建議中文譯法</th><th>簡要說明</th></tr></thead>
+<tbody>
+<tr><td>Loop engineering</td><td>迴路工程</td><td>設計自動化系統，讓代理人持續迭代完成目標</td></tr>
+<tr><td>Agent harness engineering</td><td>代理 harness 工程</td><td>建置單一代理人穩定運行的環境</td></tr>
+<tr><td>Worktree</td><td>工作樹</td><td>用 git worktree 隔離平行代理人的檔案變更</td></tr>
+<tr><td>Skill</td><td>技能</td><td>以 SKILL.md 保存專案知識與指示</td></tr>
+<tr><td>Sub-agent</td><td>子代理</td><td>不同角色的獨立代理人，例如探索、實作、驗證</td></tr>
+<tr><td>Automation</td><td>自動化</td><td>定時觸發的發現、分類或巡檢任務</td></tr>
+<tr><td>Connector</td><td>連接器</td><td>基於 MCP 的工具整合，例如 issue tracker、Slack、資料庫</td></tr>
+<tr><td>Plugin</td><td>外掛程式</td><td>打包技能與連接器的分享單位</td></tr>
+<tr><td>Memory</td><td>記憶</td><td>Markdown、看板或狀態檔等外部持久化儲存</td></tr>
+<tr><td>/goal</td><td>/goal 指令</td><td>持續迭代，直到可驗證停止條件成立</td></tr>
+<tr><td>Orchestration tax</td><td>編排稅</td><td>管理多代理人協作產生的隱藏人力與認知成本</td></tr>
+<tr><td>Intent debt</td><td>意圖債務</td><td>代理人缺少上下文時，自行填補意圖漏洞所造成的累積問題</td></tr>
+<tr><td>Comprehension debt</td><td>理解債務</td><td>快速接受未親自撰寫的輸出後，理解差距逐步擴大</td></tr>
+<tr><td>Cognitive surrender</td><td>認知投降</td><td>過度依賴迴路後，停止持有個人判斷與意見</td></tr>
+</tbody>
+</table>
+<h2>最後的判斷</h2>
+<p>這篇文章最有價值的提醒，不是「把所有事情交給迴路」。更精準的讀法是：槓桿點移動了。以前工程師主要寫提示；現在工程師開始設計讓提示、執行、檢查、記錄能連續發生的系統。</p>
+<div class="callout quote">建立迴路，但要像一個打算繼續當工程師的人那樣建立它。你仍然要審查、理解、保留判斷，並且知道什麼時候該停下來。</div>
 
 </article>
 <footer>
