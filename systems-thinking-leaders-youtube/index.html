@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Systems Thinking for Leaders：把線性解法改成回饋設計</title>
+<meta name="description" content="John Sterman 談 policy resistance、因果圖與管理模擬器。">
+
+<!-- Canonical & 作者 -->
+<link rel="canonical" href="https://hale80427.github.io/brain-cards/systems-thinking-leaders-youtube/">
+<meta name="author" content="彥皓">
+
+<!-- Open Graph（FB / LINE / Slack / Discord 連結預覽）-->
+<meta property="og:type" content="article">
+<meta property="og:title" content="Systems Thinking for Leaders：把線性解法改成回饋設計">
+<meta property="og:description" content="John Sterman 談 policy resistance、因果圖與管理模擬器。">
+<meta property="og:url" content="https://hale80427.github.io/brain-cards/systems-thinking-leaders-youtube/">
+<meta property="og:image" content="https://hale80427.github.io/brain-cards/og-default.jpg">
+<meta property="og:locale" content="zh_TW">
+
+<!-- Twitter / X Card -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Systems Thinking for Leaders：把線性解法改成回饋設計">
+<meta name="twitter:description" content="John Sterman 談 policy resistance、因果圖與管理模擬器。">
+<meta name="twitter:image" content="https://hale80427.github.io/brain-cards/og-default.jpg">
+
+<!-- 結構化資料（JSON-LD，提升 AI 與搜尋引擎理解）-->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "Systems Thinking for Leaders\uff1a\u628a\u7dda\u6027\u89e3\u6cd5\u6539\u6210\u56de\u994b\u8a2d\u8a08",
+  "description": "John Sterman \u8ac7 policy resistance\u3001\u56e0\u679c\u5716\u8207\u7ba1\u7406\u6a21\u64ec\u5668\u3002",
+  "datePublished": "2026-06-14",
+  "dateModified": "2026-06-14",
+  "author": { "@type": "Person", "name": "彥皓" },
+  "url": "https://hale80427.github.io/brain-cards/systems-thinking-leaders-youtube/",
+  "inLanguage": "zh-TW",
+  "license": "https://creativecommons.org/licenses/by/4.0/"
+}
+</script>
+
+<style>
+  :root {
+    /* color tokens — OKLCH (hallmark token discipline；禁止 inline hex / rgb / oklch / font-family；
+       hex 註解保留為設計者原意溯源，色彩值以 OKLCH 為事實源) */
+    --bg: oklch(98.4% 0.004 106.5);              /* 暖白（was #fafaf7） */
+    --fg: oklch(21.8% 0 0);                       /* 近黑（was #1a1a1a） */
+    --accent: oklch(54.3% 0.174 29.7);            /* 暖紅（was #c0392b） */
+    --accent-warn: oklch(66.6% 0.157 58.3);       /* 橘黃 callout warn 強調（was #d97706 inline，lift 進 token） */
+    --muted: oklch(51.0% 0 0);                    /* 中灰（was #666） */
+    --border: oklch(92.1% 0.007 106.5);           /* 淺暖灰（was #e5e5e0） */
+    --callout-tip: oklch(95.7% 0.014 174.2);      /* 淺薄荷（was #e8f4f0） */
+    --callout-warn: oklch(96.9% 0.019 72.6);      /* 淺暖米（was #fdf3e7） */
+    --fs-meta: 0.85rem;                          /* metadata / footer / .bluf 標籤 */
+    --fs-body: 1rem;                              /* p / li / td / blockquote / h3 / code / table */
+    --fs-h2:   clamp(1.3rem, 3vw, 1.5rem);      /* h2 段標題 */
+    --fs-h1:   clamp(1.75rem, 4vw, 2.25rem);    /* h1 主標題 */
+    /* font tokens（hallmark token discipline；禁止 inline font-family） */
+    --font-serif: "Noto Serif TC", Georgia, serif;
+    --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+    /* easing tokens（hallmark：禁止 unnamed easing） */
+    --ease-linear: linear;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: oklch(21.8% 0 0);                     /* was #1a1a1a */
+      --fg: oklch(95.3% 0.011 106.6);             /* 米白（was #f0f0e8） */
+      --accent: oklch(70.4% 0.136 28.7);          /* 亮珊瑚（was #e87c6e） */
+      --accent-warn: oklch(76.9% 0.165 70.1);     /* dark mode 等對等亮版 warn 強調 */
+      --muted: oklch(68.3% 0 0);                  /* was #999 */
+      --border: oklch(32.1% 0 0);                 /* was #333 */
+      --callout-tip: oklch(30.9% 0.029 178.3);    /* 深綠青（was #1f3530） */
+      --callout-warn: oklch(30.7% 0.034 73.5);    /* 深棕（was #3a2d1c） */
+    }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
+  }
+  * { box-sizing: border-box; }
+  body {
+    font-family: var(--font-serif);
+    background: var(--bg);
+    color: var(--fg);
+    line-height: 1.8;
+    margin: 0;
+    padding: 0;
+    -webkit-font-smoothing: antialiased;
+  }
+  .progress-bar {
+    /* hallmark：只動 transform / opacity，不動 layout property（避免 reflow + 對齊微互動紀律） */
+    position: fixed; top: 0; left: 0; height: 3px; width: 100%;
+    background: var(--accent); z-index: 100;
+    transform: scaleX(0); transform-origin: left;
+    transition: transform 0.1s var(--ease-linear);
+  }
+  main {
+    max-width: 680px;
+    margin: 0 auto;
+    padding: clamp(2rem, 5vw, 4rem) clamp(1.5rem, 4vw, 2rem);
+  }
+  /* === 字級階梯：嚴格 4 級。所有 font-size 必須引用以下 4 個變數之一 === */
+  /* === 違反 → KB-04 機械驗證會擋（font_levels > 4）=== */
+  /* === h3 / blockquote / code / table 等「想要不一樣」用 weight + color，不開新字級 === */
+  h1 { font-size: var(--fs-h1); line-height: 1.3; margin: 0 0 1rem; }
+  h2 { font-size: var(--fs-h2); line-height: 1.4; margin: 2.5rem 0 0.75rem; padding-bottom: 0.5rem; border-bottom: 1px solid var(--border); }
+  h3 { font-size: var(--fs-body); font-weight: 700; line-height: 1.4; margin: 1.75rem 0 0.5rem; color: var(--accent); }
+  p { margin: 0 0 1.25rem; }
+  a { color: var(--accent); text-underline-offset: 3px; }
+  a:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+  .bluf { background: var(--callout-tip); border-left: 3px solid var(--accent); padding: 1.25rem 1.5rem; margin: 1.5rem 0 2rem; border-radius: 4px; }
+  .bluf strong { display: block; font-size: var(--fs-meta); letter-spacing: 0.05em; color: var(--accent); margin-bottom: 0.5rem; text-transform: uppercase; }
+  .callout { padding: 1rem 1.25rem; margin: 1.5rem 0; border-radius: 4px; border-left: 3px solid var(--muted); }
+  .callout.tip { background: var(--callout-tip); border-left-color: var(--accent); }
+  .callout.warn { background: var(--callout-warn); border-left-color: var(--accent-warn); }
+  .callout.info { background: var(--callout-tip); border-left-color: var(--muted); }
+  .callout.quote { background: transparent; border-left-color: var(--accent); font-style: italic; }
+  table { border-collapse: collapse; width: 100%; margin: 1.5rem 0; font-size: var(--fs-body); }
+  th, td { padding: 0.6rem 0.8rem; border: 1px solid var(--border); text-align: left; vertical-align: top; }
+  th { background: var(--callout-tip); font-weight: 600; }
+  code { font-family: var(--font-mono); background: var(--callout-tip); padding: 0.1em 0.4em; border-radius: 3px; font-size: var(--fs-body); }
+  /* === 圖片 / 圖說（圖表規則見 KB-07）：figcaption 用既有 --fs-meta，不開新字級 === */
+  figure { margin: 1.5rem 0; }
+  figure img { width: 100%; height: auto; border-radius: 4px; display: block; }
+  figure svg { width: 100%; height: auto; display: block; }
+  figcaption { font-size: var(--fs-meta); color: var(--muted); margin-top: 0.5rem; text-align: center; }
+  @media print {
+    .progress-bar { display: none; }
+    body { font-size: 11pt; line-height: 1.6; }
+    main { max-width: 100%; padding: 1cm; }
+  }
+</style>
+</head>
+<body>
+<div class="progress-bar" id="progress"></div>
+<main>
+<header>
+<h1>Systems Thinking for Leaders：把線性解法改成回饋設計</h1>
+<div class="bluf">
+<strong>BLUF</strong>
+<p>領導者要處理的核心問題，是政策進入系統後會觸發哪些回饋、延遲與反作用。John Sterman 用醫療控費與專案管理兩個案例，示範如何把線性解法改成可檢驗的回饋設計。</p>
+</div>
+</header>
+<article>
+<!-- narrative: 政策短期有效，長期可能把問題推到別處。, 所謂 side effect，通常是模型邊界漏掉的 effect。, 管理 simulator 的價值，是讓人先在安全空間裡看見自己的錯誤直覺。 -->
+<h2>這支影片在講什麼</h2>
+<p>John Sterman 的主張很直接：複雜系統不會照線性流程回應管理者。你推出政策，系統會改變；系統改變後產生新的資訊、誘因與反應，下一輪決策也被改寫。Systems thinking 的價值，是把這些回饋路徑攤開，讓領導者在下決策前先看見可能的反作用。</p>
+<figure><img src="assets/title-frame-af3b7966.png" alt="YouTube video title frame showing Systems Thinking for Leaders and the speakers." width="931" height="1600"><figcaption>影片封面與講者畫面。這場講座聚焦 systems thinking 如何幫領導者設計可運作的解法。</figcaption></figure>
+<div class="callout info">文章依據先前抽取的 YouTube transcript 與影片截圖整理；截圖用於說明關鍵段落，不取代原影片。</div>
+<h2>Policy resistance：政策有效，問題稍後回來</h2>
+<p>Sterman 把 systems thinking 從口號拉回工具。他承認「世界很複雜」是真的，但這句話對決策幫助有限。真正要抓的是 policy resistance：一個方案短期改善指標，之後透過延遲回饋讓問題回到其他位置，甚至比原本更嚴重。</p>
+<blockquote>then it either doesn&#x27;t work or more commonly and insidiously it works in the near term over here, but the problem comes back a little later over there<cite> — John Sterman, 03:52–04:08</cite></blockquote>
+<ul><li>交通壅塞時加蓋道路，短期降低壅塞，長期吸引更多開車需求。</li><li>醫療控費限制昂貴程序，短期壓低單位成本，長期可能增加急診、住院與行政成本。</li><li>專案落後時加壓與加班，短期拉高產出，長期增加疲勞、缺陷與重工。</li></ul>
+<h2>Open-loop mental model 會漏掉系統回應</h2>
+<p>常見管理流程把問題切成線性步驟：定義問題、蒐集資料、評估方案、選擇最佳選項、執行。Sterman 說，真實專案很少這樣運作。人會在過程中發現問題定義錯了、資料不足、假設失準，於是重回前一步。</p>
+<figure><svg viewBox="0 0 1100 1100" role="img" xmlns="http://www.w3.org/2000/svg"><title>Decision Feedback Cycle</title><path d="M 658.8 175.5 A 390.0 390.0 0 0 1 924.5 441.2" fill="none" stroke="var(--accent)" stroke-width="5" stroke-linecap="round" stroke-dasharray="1000" stroke-dashoffset="0"/><polygon points="924.5,441.2 903.3,418.2 930.1,410.4" fill="var(--accent)"/><path d="M 924.5 658.8 A 390.0 390.0 0 0 1 658.8 924.5" fill="none" stroke="var(--accent)" stroke-width="5" stroke-linecap="round" stroke-dasharray="1000" stroke-dashoffset="0"/><polygon points="658.8,924.5 681.8,903.3 689.6,930.1" fill="var(--accent)"/><path d="M 441.2 924.5 A 390.0 390.0 0 0 1 175.5 658.8" fill="none" stroke="var(--accent)" stroke-width="5" stroke-linecap="round" stroke-dasharray="1000" stroke-dashoffset="0"/><polygon points="175.5,658.8 196.7,681.8 169.9,689.6" fill="var(--accent)"/><path d="M 175.5 441.2 A 390.0 390.0 0 0 1 441.2 175.5" fill="none" stroke="var(--accent)" stroke-width="5" stroke-linecap="round" stroke-dasharray="1000" stroke-dashoffset="0"/><polygon points="441.2,175.5 418.2,196.7 410.4,169.9" fill="var(--accent)"/><rect x="470.0" y="206.0" width="160.0" height="88.0" rx="16" fill="var(--callout-tip)" stroke="var(--accent)" stroke-width="2"/><text x="550.0" y="250.0" text-anchor="middle" font-size="28" font-weight="700" fill="var(--fg)">決策</text><text x="550.0" y="280.0" text-anchor="middle" font-size="18" fill="var(--muted)">政策、資源、流程調整</text><rect x="718.0" y="506.0" width="264.0" height="88.0" rx="16" fill="var(--callout-tip)" stroke="var(--accent)" stroke-width="2"/><text x="850.0" y="550.0" text-anchor="middle" font-size="28" font-weight="700" fill="var(--fg)">系統狀態改變</text><text x="850.0" y="580.0" text-anchor="middle" font-size="18" fill="var(--muted)">成本、品質、行為、誘因</text><rect x="436.0" y="806.0" width="228.0" height="88.0" rx="16" fill="var(--callout-tip)" stroke="var(--accent)" stroke-width="2"/><text x="550.0" y="850.0" text-anchor="middle" font-size="28" font-weight="700" fill="var(--fg)">新資訊出現</text><text x="550.0" y="880.0" text-anchor="middle" font-size="18" fill="var(--muted)">指標、抱怨、延遲訊號</text><rect x="136.0" y="506.0" width="228.0" height="88.0" rx="16" fill="var(--callout-tip)" stroke="var(--accent)" stroke-width="2"/><text x="250.0" y="550.0" text-anchor="middle" font-size="28" font-weight="700" fill="var(--fg)">下一輪決策</text><text x="250.0" y="580.0" text-anchor="middle" font-size="18" fill="var(--muted)">加碼、修正或停止</text></svg><figcaption>決策改變系統，系統的回饋再改變下一輪決策。</figcaption></figure>
+<p>他用騎腳踏車說明 feedback：你要知道自己偏左或偏右，才知道該怎麼轉把手。企業與公共政策更難，因為系統中有員工、客戶、供應商、資本市場、社群與監管者，各自有目標，也會回應你的決策。</p>
+<h2>醫療控費案例：prior approval 的反噬路徑</h2>
+<p>美國醫療保險常用 prior approval、preferred drug lists、step therapy 控制昂貴藥物、檢查與程序。表面模型很合理：成本上升帶來控費壓力，保險方收緊審批，單位成本下降，總成本也該下降。這是水面上的 balancing loop。</p>
+<figure><img src="assets/prior-approval-loop-bdd3a8c3.png" alt="Healthcare causal diagram showing pressure to cut costs, prior approval, unit cost, total costs and revenue." width="928" height="1600"><figcaption>影片中的 healthcare causal diagram。圖中先呈現保險方看到的控費 loop：壓力、prior approval、單位成本與總成本。</figcaption></figure>
+<p>問題在水面下。照護延遲或不適切會讓病情惡化，病人回診、急診、住院與再入院增加；醫師 appeal 增加行政成本；病人不滿可能降低續保與收入。這些 reinforcing loops 會把成本推回來，還讓管理者更想加強原本的限制。</p>
+<h2>專案 simulator：趕工迴圈如何毀掉品質</h2>
+<p>第二個案例是 project management simulator。Sterman 示範一個硬體開發專案：前期縮人力、接受 scope creep、重疊設計階段；落後後再加壓、加班、晚期補人、要求更多 overlap。這些動作符合許多組織的直覺反應。</p>
+<figure><img src="assets/project-simulator-select-9840132f.png" alt="Project management simulator project selection screen inside the YouTube video." width="919" height="1600"><figcaption>影片展示 MIT project management simulator。管理者可在安全環境中選專案、調人力、時程與 scope。</figcaption></figure>
+<figure><img src="assets/project-simulator-results-b05ebb28.png" alt="Project management simulator results popup showing cost, completion time, delivered defects and project NPV." width="919" height="1600"><figcaption>simulator 結果畫面：專案超支、延期、缺陷率遠高於目標，NPV 損失約 5,000 萬美元。</figcaption></figure>
+<table>
+<caption>專案失控常由合理動作堆出來。多個延遲回饋互相放大，最後壓垮時程、成本與品質。</caption>
+<thead><tr><th>管理反應</th><th>短期效果</th><th>延遲反作用</th></tr></thead>
+<tbody>
+<tr><td>加班與進度壓力</td><td>可見產出上升</td><td>疲勞、錯誤、重工增加</td></tr>
+<tr><td>晚期補人</td><td>人力數字上升</td><td>溝通成本與 onboarding 負荷上升</td></tr>
+<tr><td>接受 scope creep</td><td>市場想像值提高</td><td>設計複雜度與變更傳播增加</td></tr>
+<tr><td>重疊工作</td><td>時程看似縮短</td><td>前置假設錯誤時，後段重工擴大</td></tr>
+</tbody>
+</table>
+<h2>管理 simulator 的學習機制</h2>
+<p>Sterman 不主張 simulator 直接告訴管理者最佳答案。原因很現實：錯誤 mental model 通常被日常經驗強化，外部專家直接給答案，只會讓人反駁模型太簡單、太複雜、太黑箱，或不了解現場。</p>
+<blockquote>you can&#x27;t tell people they have to learn it by doing it in the safe space that the simulator provides<cite> — John Sterman, 47:02–47:13</cite></blockquote>
+<p>管理 simulator 的價值，是把失敗成本轉移到安全環境。人可以在模擬中破產、延誤、品質崩壞，再回頭檢查哪個假設造成反噬。這和飛行模擬器類似：飛行員要先練引擎故障、鳥擊、儀表失效，不能等真實事故發生才學。</p>
+<h2>不用正式 simulator，也能先做 causal mapping</h2>
+<p>Sterman 強調，很多問題不必先建正式 simulation model。Qualitative causal mapping 就能創造價值：把 actor、誘因、資訊、延遲、反作用畫出來，再讓系統中的人一起檢查。</p>
+<figure><svg viewBox="0 0 792 120" role="img" xmlns="http://www.w3.org/2000/svg"><title>Put the System in the Room</title><rect x="12" y="32" width="150" height="56" rx="6" fill="var(--callout-tip)" stroke="var(--accent)" stroke-width="1.5"/><text x="87" y="65" text-anchor="middle" font-size="15" fill="var(--fg)">核心團隊</text><line x1="162" y1="60" x2="210" y2="60" stroke="var(--accent)" stroke-width="1.5"/><polygon points="210,55 218,60 210,65" fill="var(--accent)"/><rect x="218" y="32" width="150" height="56" rx="6" fill="var(--callout-tip)" stroke="var(--accent)" stroke-width="1.5"/><text x="293" y="65" text-anchor="middle" font-size="15" fill="var(--fg)">前線與檢驗</text><line x1="368" y1="60" x2="416" y2="60" stroke="var(--accent)" stroke-width="1.5"/><polygon points="416,55 424,60 416,65" fill="var(--accent)"/><rect x="424" y="32" width="150" height="56" rx="6" fill="var(--callout-tip)" stroke="var(--accent)" stroke-width="1.5"/><text x="499" y="65" text-anchor="middle" font-size="15" fill="var(--fg)">供應鏈與客戶</text><line x1="574" y1="60" x2="622" y2="60" stroke="var(--accent)" stroke-width="1.5"/><polygon points="622,55 630,60 622,65" fill="var(--accent)"/><rect x="630" y="32" width="150" height="56" rx="6" fill="var(--callout-tip)" stroke="var(--accent)" stroke-width="1.5"/><text x="705" y="65" text-anchor="middle" font-size="15" fill="var(--fg)">共同 causal map</text></svg><figcaption>Group modeling process 的原則：把系統中的關鍵角色放進同一個房間。</figcaption></figure>
+<blockquote>you want the system in the room<cite> — John Sterman, 52:50–52:55</cite></blockquote>
+<p>這對研發與製程導入很實用。若只讓決策核心圈討論，很容易漏掉檢驗、供應商、機台條件、客戶現場、治具磨耗、規格變更與重工路徑。把這些 actor 放進 causal map，能比單純甘特圖更早看見風險。</p>
+<h2>給研發管理的操作清單</h2>
+<ol><li>先寫出方案的 intended effect，避免只用抽象目標描述。</li><li>列出至少兩條 delayed feedback path：成本、品質、工時、重工、客訴、供應鏈。</li><li>找出短期會美化指標、長期會反噬的行為，例如加班、晚期補人、壓縮驗證。</li><li>把受影響 actor 放進建模流程，包含前線、檢驗、供應商、客戶現場與反對者。</li><li>高 stakes 決策先用 simulator、小批量試驗或可逆 pilot 驗證。</li></ol>
+<div class="callout warn">若團隊把失敗歸因為「沒人能預料」，先檢查模型邊界。很多反作用不是不可預測，只是被排除在決策圖之外。</div>
+
+</article>
+<footer>
+<p style="color: var(--muted); font-size: 0.85rem; margin-top: 4rem; padding-top: 1.5rem; border-top: 1px solid var(--border);">
+Source: YouTube video wSuQQYv-E64, MIT Sloan Executive Education. Screenshots captured from the video page for context.
+</p>
+</footer>
+</main>
+<script>
+  const bar = document.getElementById('progress');
+  window.addEventListener('scroll', () => {
+    const h = document.documentElement;
+    const max = h.scrollHeight - h.clientHeight;
+    const ratio = max > 0 ? h.scrollTop / max : 0;
+    bar.style.transform = 'scaleX(' + ratio + ')';
+  }, { passive: true });
+</script>
+</body>
+</html>
