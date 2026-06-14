@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>D0.4 mm PCD 石英微鑽孔的 Z 軸伺服風險分析</title>
+<meta name="description" content="用 NC Analyzer 截圖判讀 Z 軸位置偏差，建立週一現場 A/B 測試重點。">
+
+<!-- Canonical & 作者 -->
+<link rel="canonical" href="https://hale80427.github.io/brain-cards/cnc-micro-drilling-servo-analysis-20260614/">
+<meta name="author" content="彥皓">
+
+<!-- Open Graph（FB / LINE / Slack / Discord 連結預覽）-->
+<meta property="og:type" content="article">
+<meta property="og:title" content="D0.4 mm PCD 石英微鑽孔的 Z 軸伺服風險分析">
+<meta property="og:description" content="用 NC Analyzer 截圖判讀 Z 軸位置偏差，建立週一現場 A/B 測試重點。">
+<meta property="og:url" content="https://hale80427.github.io/brain-cards/cnc-micro-drilling-servo-analysis-20260614/">
+<meta property="og:image" content="https://hale80427.github.io/brain-cards/og-default.jpg">
+<meta property="og:locale" content="zh_TW">
+
+<!-- Twitter / X Card -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="D0.4 mm PCD 石英微鑽孔的 Z 軸伺服風險分析">
+<meta name="twitter:description" content="用 NC Analyzer 截圖判讀 Z 軸位置偏差，建立週一現場 A/B 測試重點。">
+<meta name="twitter:image" content="https://hale80427.github.io/brain-cards/og-default.jpg">
+
+<!-- 結構化資料（JSON-LD，提升 AI 與搜尋引擎理解）-->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "D0.4 mm PCD \u77f3\u82f1\u5fae\u947d\u5b54\u7684 Z \u8ef8\u4f3a\u670d\u98a8\u96aa\u5206\u6790",
+  "description": "\u7528 NC Analyzer \u622a\u5716\u5224\u8b80 Z \u8ef8\u4f4d\u7f6e\u504f\u5dee\uff0c\u5efa\u7acb\u9031\u4e00\u73fe\u5834 A/B \u6e2c\u8a66\u91cd\u9ede\u3002",
+  "datePublished": "2026-06-14",
+  "dateModified": "2026-06-14",
+  "author": { "@type": "Person", "name": "彥皓" },
+  "url": "https://hale80427.github.io/brain-cards/cnc-micro-drilling-servo-analysis-20260614/",
+  "inLanguage": "zh-TW",
+  "license": "https://creativecommons.org/licenses/by/4.0/"
+}
+</script>
+
+<style>
+  :root {
+    /* color tokens — OKLCH (hallmark token discipline；禁止 inline hex / rgb / oklch / font-family；
+       hex 註解保留為設計者原意溯源，色彩值以 OKLCH 為事實源) */
+    --bg: oklch(98.4% 0.004 106.5);              /* 暖白（was #fafaf7） */
+    --fg: oklch(21.8% 0 0);                       /* 近黑（was #1a1a1a） */
+    --accent: oklch(54.3% 0.174 29.7);            /* 暖紅（was #c0392b） */
+    --accent-warn: oklch(66.6% 0.157 58.3);       /* 橘黃 callout warn 強調（was #d97706 inline，lift 進 token） */
+    --muted: oklch(51.0% 0 0);                    /* 中灰（was #666） */
+    --border: oklch(92.1% 0.007 106.5);           /* 淺暖灰（was #e5e5e0） */
+    --callout-tip: oklch(95.7% 0.014 174.2);      /* 淺薄荷（was #e8f4f0） */
+    --callout-warn: oklch(96.9% 0.019 72.6);      /* 淺暖米（was #fdf3e7） */
+    --fs-meta: 0.85rem;                          /* metadata / footer / .bluf 標籤 */
+    --fs-body: 1rem;                              /* p / li / td / blockquote / h3 / code / table */
+    --fs-h2:   clamp(1.3rem, 3vw, 1.5rem);      /* h2 段標題 */
+    --fs-h1:   clamp(1.75rem, 4vw, 2.25rem);    /* h1 主標題 */
+    /* font tokens（hallmark token discipline；禁止 inline font-family） */
+    --font-serif: "Noto Serif TC", Georgia, serif;
+    --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+    /* easing tokens（hallmark：禁止 unnamed easing） */
+    --ease-linear: linear;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: oklch(21.8% 0 0);                     /* was #1a1a1a */
+      --fg: oklch(95.3% 0.011 106.6);             /* 米白（was #f0f0e8） */
+      --accent: oklch(70.4% 0.136 28.7);          /* 亮珊瑚（was #e87c6e） */
+      --accent-warn: oklch(76.9% 0.165 70.1);     /* dark mode 等對等亮版 warn 強調 */
+      --muted: oklch(68.3% 0 0);                  /* was #999 */
+      --border: oklch(32.1% 0 0);                 /* was #333 */
+      --callout-tip: oklch(30.9% 0.029 178.3);    /* 深綠青（was #1f3530） */
+      --callout-warn: oklch(30.7% 0.034 73.5);    /* 深棕（was #3a2d1c） */
+    }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
+  }
+  * { box-sizing: border-box; }
+  body {
+    font-family: var(--font-serif);
+    background: var(--bg);
+    color: var(--fg);
+    line-height: 1.8;
+    margin: 0;
+    padding: 0;
+    -webkit-font-smoothing: antialiased;
+  }
+  .progress-bar {
+    /* hallmark：只動 transform / opacity，不動 layout property（避免 reflow + 對齊微互動紀律） */
+    position: fixed; top: 0; left: 0; height: 3px; width: 100%;
+    background: var(--accent); z-index: 100;
+    transform: scaleX(0); transform-origin: left;
+    transition: transform 0.1s var(--ease-linear);
+  }
+  main {
+    max-width: 680px;
+    margin: 0 auto;
+    padding: clamp(2rem, 5vw, 4rem) clamp(1.5rem, 4vw, 2rem);
+  }
+  /* === 字級階梯：嚴格 4 級。所有 font-size 必須引用以下 4 個變數之一 === */
+  /* === 違反 → KB-04 機械驗證會擋（font_levels > 4）=== */
+  /* === h3 / blockquote / code / table 等「想要不一樣」用 weight + color，不開新字級 === */
+  h1 { font-size: var(--fs-h1); line-height: 1.3; margin: 0 0 1rem; }
+  h2 { font-size: var(--fs-h2); line-height: 1.4; margin: 2.5rem 0 0.75rem; padding-bottom: 0.5rem; border-bottom: 1px solid var(--border); }
+  h3 { font-size: var(--fs-body); font-weight: 700; line-height: 1.4; margin: 1.75rem 0 0.5rem; color: var(--accent); }
+  p { margin: 0 0 1.25rem; }
+  a { color: var(--accent); text-underline-offset: 3px; }
+  a:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+  .bluf { background: var(--callout-tip); border-left: 3px solid var(--accent); padding: 1.25rem 1.5rem; margin: 1.5rem 0 2rem; border-radius: 4px; }
+  .bluf strong { display: block; font-size: var(--fs-meta); letter-spacing: 0.05em; color: var(--accent); margin-bottom: 0.5rem; text-transform: uppercase; }
+  .callout { padding: 1rem 1.25rem; margin: 1.5rem 0; border-radius: 4px; border-left: 3px solid var(--muted); }
+  .callout.tip { background: var(--callout-tip); border-left-color: var(--accent); }
+  .callout.warn { background: var(--callout-warn); border-left-color: var(--accent-warn); }
+  .callout.info { background: var(--callout-tip); border-left-color: var(--muted); }
+  .callout.quote { background: transparent; border-left-color: var(--accent); font-style: italic; }
+  table { border-collapse: collapse; width: 100%; margin: 1.5rem 0; font-size: var(--fs-body); }
+  th, td { padding: 0.6rem 0.8rem; border: 1px solid var(--border); text-align: left; vertical-align: top; }
+  th { background: var(--callout-tip); font-weight: 600; }
+  code { font-family: var(--font-mono); background: var(--callout-tip); padding: 0.1em 0.4em; border-radius: 3px; font-size: var(--fs-body); }
+  /* === 圖片 / 圖說（圖表規則見 KB-07）：figcaption 用既有 --fs-meta，不開新字級 === */
+  figure { margin: 1.5rem 0; }
+  figure img { width: 100%; height: auto; border-radius: 4px; display: block; }
+  figure svg { width: 100%; height: auto; display: block; }
+  figcaption { font-size: var(--fs-meta); color: var(--muted); margin-top: 0.5rem; text-align: center; }
+  @media print {
+    .progress-bar { display: none; }
+    body { font-size: 11pt; line-height: 1.6; }
+    main { max-width: 100%; padding: 1cm; }
+  }
+</style>
+</head>
+<body>
+<div class="progress-bar" id="progress"></div>
+<main>
+<header>
+<h1>D0.4 mm PCD 石英微鑽孔的 Z 軸伺服風險分析</h1>
+<div class="bluf">
+<strong>BLUF</strong>
+<p>D0.4 mm PCD 鑽頭加工石英時，G83 的反覆加減速會放大 Z 軸追隨誤差；截圖中的 ±50 μm 位置偏差已達刀徑約 12.5%，若發生在接觸材料期間，足以成為崩刃與壽命驟降的高風險因子。</p>
+</div>
+</header>
+<article>
+<!-- narrative: 刀具壽命由約 1000 孔降到約 60 孔，差距超過 16 倍。, 綠色通道確認為 Z 軸位置偏差，Max +49.87 μm、Min -49.74 μm。, 下一步要用同程式、同刀具條件的 A/B 測試，把伺服訊號與孔品質、刀具形貌對齊。 -->
+<h2>判斷重點</h2>
+<p>這份資料的重點是量級。D0.4 mm 鑽頭直徑只有 400 μm；綠色 Z 軸位置偏差的單向極值接近 50 μm，約等於刀徑 12.5%。</p>
+<p>偏差若落在空跑段，風險有限；若落在刀尖接觸石英、接近孔底或再入刀段，控制器看到的是位置差，刀尖承受的是軸向衝擊。</p>
+<figure><img src="assets/img-7767-channel-legend-zoom-996bc870.png" alt="NC Analyzer 通道圖例放大圖，顯示速度回授、電流回授與位置偏差的單位與極值。" width="738" height="1600"><figcaption>通道圖例確認三件事：紅色是 Z 軸速度回授，黃色是 Z 軸電流回授，綠色是 Z 軸位置偏差；綠色通道 Max +49.87 μm、Min -49.74 μm。</figcaption></figure>
+<div class="callout warn">目前可把伺服動態列為高優先驗證主因。仍要排除刀具批次、主軸 runout、夾持、石英批次、排屑、超音波狀態與對刀誤差。</div>
+<h2>截圖怎麼讀</h2>
+<figure><img src="assets/img-7765-nc-analyzer-overview-317639fa.jpg" alt="NC Analyzer 整體波形截圖，紅色為 Z 軸速度回授，黃色為 Z 軸電流回授，綠色為 Z 軸位置偏差。" width="1600" height="1200"><figcaption>NC Analyzer 整體波形：紅色速度回授用來切分 G83 段落，黃色電流回授反映馬達出力與負載，綠色位置偏差是本案最關鍵訊號。</figcaption></figure>
+<ul><li>紅色曲線：Z 軸速度回授，單位 mm/min。可用來判斷快速接近、切削進給、孔底停止、退刀等段落。</li><li>黃色曲線：Z 軸電流回授，單位 A。若與位置偏差尖峰同步，代表該段可能有高補償或負載突變。</li><li>綠色曲線：Z 軸位置偏差，單位 μm。它描述命令位置與實際位置的差距，是判斷刀尖是否受衝擊的第一指標。</li></ul>
+<figure><img src="assets/img-7766-nc-analyzer-marked-b1e5fe57.jpg" alt="NC Analyzer 標記圖，紅圈標出綠色 Z 軸位置偏差的尖峰與抖動區段。" width="1600" height="1200"><figcaption>紅圈標出的綠色尖峰與抖動區段，是週一 A/B 測試要逐段對齊的事件。重點是判斷尖峰發生時刀尖是否正在接觸材料。</figcaption></figure>
+<h2>條件 → 機制 → 結果 → 驗證</h2>
+<figure><svg viewBox="0 0 998 120" role="img" xmlns="http://www.w3.org/2000/svg"><title>從伺服追隨誤差到刀具失效</title><rect x="12" y="32" width="150" height="56" rx="6" fill="var(--callout-tip)" stroke="var(--accent)" stroke-width="1.5"/><text x="87" y="65" text-anchor="middle" font-size="15" fill="var(--fg)">G83 反覆加減速</text><line x1="162" y1="60" x2="210" y2="60" stroke="var(--accent)" stroke-width="1.5"/><polygon points="210,55 218,60 210,65" fill="var(--accent)"/><rect x="218" y="32" width="150" height="56" rx="6" fill="var(--callout-tip)" stroke="var(--accent)" stroke-width="1.5"/><text x="293" y="65" text-anchor="middle" font-size="15" fill="var(--fg)">Z 軸位置偏差尖峰</text><line x1="368" y1="60" x2="416" y2="60" stroke="var(--accent)" stroke-width="1.5"/><polygon points="416,55 424,60 416,65" fill="var(--accent)"/><rect x="424" y="32" width="150" height="56" rx="6" fill="var(--callout-tip)" stroke="var(--accent)" stroke-width="1.5"/><text x="499" y="65" text-anchor="middle" font-size="15" fill="var(--fg)">刀尖接觸期間轉成衝擊</text><line x1="574" y1="60" x2="622" y2="60" stroke="var(--accent)" stroke-width="1.5"/><polygon points="622,55 630,60 622,65" fill="var(--accent)"/><rect x="630" y="32" width="150" height="56" rx="6" fill="var(--callout-tip)" stroke="var(--accent)" stroke-width="1.5"/><text x="705" y="65" text-anchor="middle" font-size="15" fill="var(--fg)">PCD 刃口微裂或崩裂</text><line x1="780" y1="60" x2="828" y2="60" stroke="var(--accent)" stroke-width="1.5"/><polygon points="828,55 836,60 828,65" fill="var(--accent)"/><rect x="836" y="32" width="150" height="56" rx="6" fill="var(--callout-tip)" stroke="var(--accent)" stroke-width="1.5"/><text x="911" y="65" text-anchor="middle" font-size="15" fill="var(--fg)">壽命快速下降</text></svg><figcaption>失效鏈條：G83 造成頻繁動態事件，伺服追隨誤差若出現在接觸段，會把位置偏差轉成刀尖衝擊。</figcaption></figure>
+<ul><li>條件：D0.4 mm PCD 鑽頭、石英、G83 啄鑽，壽命約 1000 孔與 60 孔的差異。</li><li>機制：±50 μm Z 軸位置偏差可能在再入刀或孔底段轉成軸向衝擊。</li><li>結果：PCD 刃口微裂、鑽尖崩裂、孔壁品質變差，後續負載升高。</li><li>驗證：壽命差參數若有更大位置偏差與電流尖峰，伺服因果可信度上升。</li></ul>
+<ul><li>同批刀具、同伸出量、同石英批次與同排屑條件。</li><li>位置偏差正負方向、取樣率、G83 各段時間戳記。</li><li>顯微鏡下的刀具破損形貌與孔品質紀錄。</li><li>切回壽命好參數後，峰值下降且孔品質改善。</li></ul>
+<h2>週一現場優先看什麼</h2>
+<ol><li>先備份目前參數、壽命好參數與壽命差參數，確認 rollback 方式。沒有 rollback，就不要切削石英。</li><li>先空跑，不裝刀；再裝刀空跑；最後才做少量石英孔。每一步都看 Z 軸位置偏差峰值、RMS、settling time 與電流尖峰。</li><li>把 G83 的快速接近、切削進給、孔底停止、退刀啟動逐段標時間戳記。尖峰若固定落在接觸段，風險才真正成立。</li><li>每 5 或 10 孔看刀尖與刃口形貌。若第一孔就崩刃，停止測試，回到伺服與夾持條件排查。</li></ol>
+<div class="callout info">現場要問機台廠四件事：位置偏差正負方向、取樣率、波形是否濾波、壽命好／差兩組伺服參數差異。這四件事決定後續資料能不能形成強證據。</div>
+<h2>結論</h2>
+<p>目前證據已經足以把 Z 軸伺服動態列為週一第一優先驗證項。關鍵是用 A/B 測試確認三條線：壽命差參數是否帶來更大的位置偏差與電流尖峰；壽命好參數是否能讓尖峰下降；孔品質與刀具形貌是否跟著改善。</p>
+<p>只要三條線同步成立，伺服主因的可信度就會大幅上升。若其中一條不成立，就要回頭檢查刀具、runout、材料、排屑、超音波與對刀。</p>
+
+</article>
+<footer>
+<p style="color: var(--muted); font-size: 0.85rem; margin-top: 4rem; padding-top: 1.5rem; border-top: 1px solid var(--border);">
+Source: 2026-06-14 CNC micro drilling servo analysis package；圖片來自包內 NC Analyzer 截圖。
+</p>
+</footer>
+</main>
+<script>
+  const bar = document.getElementById('progress');
+  window.addEventListener('scroll', () => {
+    const h = document.documentElement;
+    const max = h.scrollHeight - h.clientHeight;
+    const ratio = max > 0 ? h.scrollTop / max : 0;
+    bar.style.transform = 'scaleX(' + ratio + ')';
+  }, { passive: true });
+</script>
+</body>
+</html>
