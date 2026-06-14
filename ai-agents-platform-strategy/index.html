@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AI Agents 進入平台後，平台策略要重寫哪些規則</title>
+<meta name="description" content="MIT Sloan 講座重點：平台、資料網路效應、agent 治理與定價">
+
+<!-- Canonical & 作者 -->
+<link rel="canonical" href="https://hale80427.github.io/brain-cards/ai-agents-platform-strategy/">
+<meta name="author" content="彥皓">
+
+<!-- Open Graph（FB / LINE / Slack / Discord 連結預覽）-->
+<meta property="og:type" content="article">
+<meta property="og:title" content="AI Agents 進入平台後，平台策略要重寫哪些規則">
+<meta property="og:description" content="MIT Sloan 講座重點：平台、資料網路效應、agent 治理與定價">
+<meta property="og:url" content="https://hale80427.github.io/brain-cards/ai-agents-platform-strategy/">
+<meta property="og:image" content="https://hale80427.github.io/brain-cards/og-default.jpg">
+<meta property="og:locale" content="zh_TW">
+
+<!-- Twitter / X Card -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="AI Agents 進入平台後，平台策略要重寫哪些規則">
+<meta name="twitter:description" content="MIT Sloan 講座重點：平台、資料網路效應、agent 治理與定價">
+<meta name="twitter:image" content="https://hale80427.github.io/brain-cards/og-default.jpg">
+
+<!-- 結構化資料（JSON-LD，提升 AI 與搜尋引擎理解）-->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "AI Agents \u9032\u5165\u5e73\u53f0\u5f8c\uff0c\u5e73\u53f0\u7b56\u7565\u8981\u91cd\u5beb\u54ea\u4e9b\u898f\u5247",
+  "description": "MIT Sloan \u8b1b\u5ea7\u91cd\u9ede\uff1a\u5e73\u53f0\u3001\u8cc7\u6599\u7db2\u8def\u6548\u61c9\u3001agent \u6cbb\u7406\u8207\u5b9a\u50f9",
+  "datePublished": "2026-06-14",
+  "dateModified": "2026-06-14",
+  "author": { "@type": "Person", "name": "彥皓" },
+  "url": "https://hale80427.github.io/brain-cards/ai-agents-platform-strategy/",
+  "inLanguage": "zh-TW",
+  "license": "https://creativecommons.org/licenses/by/4.0/"
+}
+</script>
+
+<style>
+  :root {
+    /* color tokens — OKLCH (hallmark token discipline；禁止 inline hex / rgb / oklch / font-family；
+       hex 註解保留為設計者原意溯源，色彩值以 OKLCH 為事實源) */
+    --bg: oklch(98.4% 0.004 106.5);              /* 暖白（was #fafaf7） */
+    --fg: oklch(21.8% 0 0);                       /* 近黑（was #1a1a1a） */
+    --accent: oklch(54.3% 0.174 29.7);            /* 暖紅（was #c0392b） */
+    --accent-warn: oklch(66.6% 0.157 58.3);       /* 橘黃 callout warn 強調（was #d97706 inline，lift 進 token） */
+    --muted: oklch(51.0% 0 0);                    /* 中灰（was #666） */
+    --border: oklch(92.1% 0.007 106.5);           /* 淺暖灰（was #e5e5e0） */
+    --callout-tip: oklch(95.7% 0.014 174.2);      /* 淺薄荷（was #e8f4f0） */
+    --callout-warn: oklch(96.9% 0.019 72.6);      /* 淺暖米（was #fdf3e7） */
+    --fs-meta: 0.85rem;                          /* metadata / footer / .bluf 標籤 */
+    --fs-body: 1rem;                              /* p / li / td / blockquote / h3 / code / table */
+    --fs-h2:   clamp(1.3rem, 3vw, 1.5rem);      /* h2 段標題 */
+    --fs-h1:   clamp(1.75rem, 4vw, 2.25rem);    /* h1 主標題 */
+    /* font tokens（hallmark token discipline；禁止 inline font-family） */
+    --font-serif: "Noto Serif TC", Georgia, serif;
+    --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+    /* easing tokens（hallmark：禁止 unnamed easing） */
+    --ease-linear: linear;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: oklch(21.8% 0 0);                     /* was #1a1a1a */
+      --fg: oklch(95.3% 0.011 106.6);             /* 米白（was #f0f0e8） */
+      --accent: oklch(70.4% 0.136 28.7);          /* 亮珊瑚（was #e87c6e） */
+      --accent-warn: oklch(76.9% 0.165 70.1);     /* dark mode 等對等亮版 warn 強調 */
+      --muted: oklch(68.3% 0 0);                  /* was #999 */
+      --border: oklch(32.1% 0 0);                 /* was #333 */
+      --callout-tip: oklch(30.9% 0.029 178.3);    /* 深綠青（was #1f3530） */
+      --callout-warn: oklch(30.7% 0.034 73.5);    /* 深棕（was #3a2d1c） */
+    }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
+  }
+  * { box-sizing: border-box; }
+  body {
+    font-family: var(--font-serif);
+    background: var(--bg);
+    color: var(--fg);
+    line-height: 1.8;
+    margin: 0;
+    padding: 0;
+    -webkit-font-smoothing: antialiased;
+  }
+  .progress-bar {
+    /* hallmark：只動 transform / opacity，不動 layout property（避免 reflow + 對齊微互動紀律） */
+    position: fixed; top: 0; left: 0; height: 3px; width: 100%;
+    background: var(--accent); z-index: 100;
+    transform: scaleX(0); transform-origin: left;
+    transition: transform 0.1s var(--ease-linear);
+  }
+  main {
+    max-width: 680px;
+    margin: 0 auto;
+    padding: clamp(2rem, 5vw, 4rem) clamp(1.5rem, 4vw, 2rem);
+  }
+  /* === 字級階梯：嚴格 4 級。所有 font-size 必須引用以下 4 個變數之一 === */
+  /* === 違反 → KB-04 機械驗證會擋（font_levels > 4）=== */
+  /* === h3 / blockquote / code / table 等「想要不一樣」用 weight + color，不開新字級 === */
+  h1 { font-size: var(--fs-h1); line-height: 1.3; margin: 0 0 1rem; }
+  h2 { font-size: var(--fs-h2); line-height: 1.4; margin: 2.5rem 0 0.75rem; padding-bottom: 0.5rem; border-bottom: 1px solid var(--border); }
+  h3 { font-size: var(--fs-body); font-weight: 700; line-height: 1.4; margin: 1.75rem 0 0.5rem; color: var(--accent); }
+  p { margin: 0 0 1.25rem; }
+  a { color: var(--accent); text-underline-offset: 3px; }
+  a:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+  .bluf { background: var(--callout-tip); border-left: 3px solid var(--accent); padding: 1.25rem 1.5rem; margin: 1.5rem 0 2rem; border-radius: 4px; }
+  .bluf strong { display: block; font-size: var(--fs-meta); letter-spacing: 0.05em; color: var(--accent); margin-bottom: 0.5rem; text-transform: uppercase; }
+  .callout { padding: 1rem 1.25rem; margin: 1.5rem 0; border-radius: 4px; border-left: 3px solid var(--muted); }
+  .callout.tip { background: var(--callout-tip); border-left-color: var(--accent); }
+  .callout.warn { background: var(--callout-warn); border-left-color: var(--accent-warn); }
+  .callout.info { background: var(--callout-tip); border-left-color: var(--muted); }
+  .callout.quote { background: transparent; border-left-color: var(--accent); font-style: italic; }
+  table { border-collapse: collapse; width: 100%; margin: 1.5rem 0; font-size: var(--fs-body); }
+  th, td { padding: 0.6rem 0.8rem; border: 1px solid var(--border); text-align: left; vertical-align: top; }
+  th { background: var(--callout-tip); font-weight: 600; }
+  code { font-family: var(--font-mono); background: var(--callout-tip); padding: 0.1em 0.4em; border-radius: 3px; font-size: var(--fs-body); }
+  /* === 圖片 / 圖說（圖表規則見 KB-07）：figcaption 用既有 --fs-meta，不開新字級 === */
+  figure { margin: 1.5rem 0; }
+  figure img { width: 100%; height: auto; border-radius: 4px; display: block; }
+  figure svg { width: 100%; height: auto; display: block; }
+  figcaption { font-size: var(--fs-meta); color: var(--muted); margin-top: 0.5rem; text-align: center; }
+  @media print {
+    .progress-bar { display: none; }
+    body { font-size: 11pt; line-height: 1.6; }
+    main { max-width: 100%; padding: 1cm; }
+  }
+</style>
+</head>
+<body>
+<div class="progress-bar" id="progress"></div>
+<main>
+<header>
+<h1>AI Agents 進入平台後，平台策略要重寫哪些規則</h1>
+<div class="bluf">
+<strong>BLUF</strong>
+<p>AI agent 沒有推翻平台策略；它把平台原本要處理的搜尋、交易、治理、定價與資料護城河問題推到更尖銳的位置。真正的工作是重新設計 sides、core、agent access、identity、liability 與可信訊號。</p>
+</div>
+</header>
+<article>
+<!-- narrative: 平台的本質是技術架構加市場中介，不能只看是否有網路效應。, AI 會重排 search costs 與 transaction costs，方向取決於具體市場。, 真正的 data network effect 要有即時互動貢獻；Waze 比 ChatGPT 更接近這個定義。, Agent access、identity、liability 屬於 coring decision，上線後很難反悔。 -->
+<h2>這支影片在講什麼</h2>
+<figure><img src="assets/video-intro-3cf23cc7.png" alt="MIT Sloan YouTube video page showing the webinar title and speaker around 08:21" width="926" height="1600"><figcaption>影片主題頁：AI agents 進入平台後，策略、定價與治理會一起被重新檢查。</figcaption></figure>
+<p>MIT Sloan 的 Pierre Azoulay 用一場 57 分鐘 webinar，把 AI agents 放回平台經濟學的框架裡看。這個角度有用，因為它避開了單純討論工具功能的路徑，直接問平台經營者最難逃的問題：誰在平台上互動？平台降低了哪些摩擦？平台要管到什麼程度？</p>
+<p>他的核心判斷很清楚。AI 沒有讓平台策略失效；AI 讓原本就難的決策更早出現、更難修改，且更容易引發 sides 之間的利益衝突。</p>
+<h2>平台的判斷：先命名 sides</h2>
+<p>Azoulay 不把平台定義成已經產生網路效應的東西。那會把成功結果誤當成結構。比較好的定義是兩層：一層是 technology architecture，提供共用基礎與標準介面；另一層是 market intermediation，降低陌生參與者互動前後的摩擦。</p>
+<div class="callout info">最短的判斷題：你能不能清楚命名 sides？如果說不出誰跟誰互動，這個東西大概率只是產品、服務，或內部技術架構。</div>
+<p>車廠常說自己的底盤是 platform，但那多半只滿足技術架構。真正的平台還要組織外部互動，讓一側的參與者能與另一側交易、比較、信任、協調。這也是 Local Motors 這類概念和傳統車廠共用底盤之間的差異。</p>
+<h2>AI 重排兩種摩擦</h2>
+<p>平台中介的工作可拆成兩類摩擦。Search costs 是配對前的搜尋、比較、判斷成本；transaction costs 是配對後的付款、合約、排程、信任、爭端與協調成本。</p>
+<p>常見直覺是 AI 會降低搜尋成本、增加交易成本。Azoulay 認為這個結論太整齊。AI 可能讓候選名單變長，讓評估更難；也可能讓付款、託管、跨語言交易、爭端初篩更便宜。每個平台要做的診斷是：在自己的市場裡，哪一種摩擦下降，哪一種摩擦上升，背後機制是什麼。</p>
+<ul><li>條件：AI 讓產生內容、產生申請、產生候選名單的成本下降。</li><li>機制：原本可用的聲譽訊號被大量 AI 修飾內容稀釋，平台需要新的驗證與排序機制。</li><li>結果：搜尋看似變快，但評估成本與防詐成本可能上升。</li><li>驗證：觀察候選品質、交易爭端率、人機驗證成本、reputation system 被攻擊的頻率。</li></ul>
+<h2>資料護城河：Waze 和 ChatGPT 差在哪</h2>
+<figure><img src="assets/data-network-effect-poll-bad3b16c.png" alt="YouTube screenshot of poll asking which option is a genuine data network effect, including Waze and ChatGPT options" width="919" height="1600"><figcaption>講座中的投票題：Waze、Netflix、Spotify、ChatGPT 哪一個有真正的 data network effect？</figcaption></figure>
+<p>影片裡最值得抓出來的一段，是 data network effect 的定義。Azoulay 的判準是：我的效益是否依賴其他使用者此刻正在貢獻資料。Waze 或 Google Maps 符合這個條件，因為路線品質取決於其他司機現在是否帶著 app 在路上移動並回傳訊號。</p>
+<p>Netflix、Spotify、ChatGPT 的資料也有價值，但比較接近 scale effect。更多歷史資料改善集中式模型，模型再服務使用者。若明天停止新增資料，Waze 的體驗會在幾分鐘內變差；推薦系統或語言模型可能還能維持很久。這個差異對投資分析很重要，因為它會影響護城河持久性。</p>
+<div class="callout warn">看到 AI 公司說自己有 data moat，要追問三件事：資料是否即時互動產生？競爭者是否可合法取得或用 synthetic data 近似？真正稀缺的是資料本身，還是清理、標註、結構化 pipeline？</div>
+<h2>Coring：平台上線前就要做的難決策</h2>
+<p>Coring 是在第一個參與者加入前，就先決定平台的架構、規則、接入點與控制機制。這和一般產品迭代差很多。產品可以先做小功能再修，平台的 core 一旦讓 sides 形成預期，後面改規則就會傷到某一側。</p>
+<figure><svg viewBox="0 0 800 512" role="img" xmlns="http://www.w3.org/2000/svg"><title>Platform coring decisions</title><rect x="0" y="10" width="800" height="72" rx="12" fill="var(--callout-tip)" stroke="var(--border)" stroke-width="1"/><rect x="0" y="10" width="8" height="72" rx="4" fill="var(--accent)"/><text x="30" y="44" font-size="18" font-weight="700" fill="var(--fg)">Liability</text><text x="30" y="68" font-size="14" fill="var(--muted)">agent 出錯後誰承擔</text><rect x="0" y="94" width="800" height="72" rx="12" fill="var(--callout-tip)" stroke="var(--border)" stroke-width="1"/><rect x="0" y="94" width="8" height="72" rx="4" fill="var(--accent)"/><text x="30" y="128" font-size="18" font-weight="700" fill="var(--fg)">Agent identity</text><text x="30" y="152" font-size="14" fill="var(--muted)">驗證、reputation、持續性</text><rect x="0" y="178" width="800" height="72" rx="12" fill="var(--callout-tip)" stroke="var(--border)" stroke-width="1"/><rect x="0" y="178" width="8" height="72" rx="4" fill="var(--accent)"/><text x="30" y="212" font-size="18" font-weight="700" fill="var(--fg)">Agent access</text><text x="30" y="236" font-size="14" fill="var(--muted)">BYO、平台自家、hybrid</text><rect x="0" y="262" width="800" height="72" rx="12" fill="var(--callout-tip)" stroke="var(--border)" stroke-width="1"/><rect x="0" y="262" width="8" height="72" rx="4" fill="var(--accent)"/><text x="30" y="296" font-size="18" font-weight="700" fill="var(--fg)">Governance</text><text x="30" y="320" font-size="14" fill="var(--muted)">規則、爭端、處罰</text><rect x="0" y="346" width="800" height="72" rx="12" fill="var(--callout-tip)" stroke="var(--border)" stroke-width="1"/><rect x="0" y="346" width="8" height="72" rx="4" fill="var(--accent)"/><text x="30" y="380" font-size="18" font-weight="700" fill="var(--fg)">Market intermediation</text><text x="30" y="404" font-size="14" fill="var(--muted)">search costs + transaction costs</text><rect x="0" y="430" width="800" height="72" rx="12" fill="var(--callout-tip)" stroke="var(--border)" stroke-width="1"/><rect x="0" y="430" width="8" height="72" rx="4" fill="var(--accent)"/><text x="30" y="464" font-size="18" font-weight="700" fill="var(--fg)">Technology architecture</text><text x="30" y="488" font-size="14" fill="var(--muted)">介面、core、complementors</text></svg><figcaption>平台 core 是一組會互相鎖住的規則。</figcaption></figure>
+<p>Uber tipping 是影片中的例子。Uber 起初沒有 tipping，這讓乘客形成一種完整交易體驗：上車、下車、付款自動結束。2017 年加入 tipping 後，乘客把它感受成價格上升，也多了一層心理判斷。關鍵不在 tip 的道德正當性，而在平台多年後改變了早期交易預期。</p>
+<h2>AI agents 帶來的新 coring 題目</h2>
+<p>AI agents 讓 coring 多出三個必答題。第一是 agent access：使用者能帶自己的 agent 進平台，還是只能用平台提供的 agent？第二是 agent identity：agent 是否要驗證、累積 reputation、跨 session 存在？第三是 liability：agent 參與交易後出錯，責任落在使用者、開發者，還是平台？</p>
+<table>
+<thead><tr><th>決策</th><th>要回答的問題</th><th>錯誤代價</th></tr></thead>
+<tbody>
+<tr><td>Agent access</td><td>BYO agent、平台自家 agent，或 hybrid？</td><td>太開可能被外部 agent 重新控制互動；太封閉可能失去外部創新速度。</td></tr>
+<tr><td>Agent identity</td><td>agent 是否可驗證、追蹤、累積 reputation？</td><td>沒有身份就難以追責；身份過重又可能提高進入門檻。</td></tr>
+<tr><td>Liability</td><td>交易出錯時誰負責？</td><td>法律還沒完全定型，平台仍需先有契約立場。</td></tr>
+<tr><td>Fairness</td><td>沒有 agent 的一側如何被保護？</td><td>弱勢側若覺得被壓制，會退出平台，傷害網路效應。</td></tr>
+</tbody>
+</table>
+<p>這些決策會形成 sticky bundle。若一開始允許使用者帶自己的 agent，後面要收回會很痛；若一開始只允許平台自家 agent，可能又限制了外部創新。</p>
+<h2>平台治理是主功能</h2>
+<p>Azoulay 提醒，平台經營者其實在管理一個小型經濟體。平台要當法官、監管者與警察，處理 sides 之間的外部性、爭端與系統性投資。</p>
+<p>Google Ads 不讓廣告任意放大圖片，是為了平衡廣告主與搜尋者。Intel 推動 USB、PCI，是平台方主導全系統投資。eBay Resolution Center 則處理交易爭端，避免市場被未解決糾紛拖垮。</p>
+<blockquote>If you are going to be a platform entrepreneur or intrapreneur, you have to accept that you are going to be responsible for a little sub-economy.<cite> — Pierre Azoulay, around 28:18</cite></blockquote>
+<h2>給 AI 產品與投資分析的檢查表</h2>
+<h3>產品公司</h3>
+<ul><li>先判斷 sides，再判斷是否真的要 platformize。</li><li>AI demo 只證明功能，不證明市場中介。</li><li>在上線前寫清楚 agent access、identity、liability。</li><li>檢查每一項 core change 是否讓一側得利、另一側受損。</li></ul>
+<h3>投資分析</h3>
+<ul><li>問 data moat 來自即時互動、合法排他，還是 pipeline know-how。</li><li>區分 data network effect 與 scale effect。</li><li>檢查平台是否有治理能力，而非只靠流量成長。</li><li>觀察 agent 進入後，search costs 與 transaction costs 的實際方向。</li></ul>
+<h3>平台治理</h3>
+<ul><li>是否能辨識 human、agent、human-with-agent？</li><li>是否讓沒有 agent 的一側保持公平？</li><li>是否能處理 synthetic activity 偽造 critical mass？</li><li>是否有爭端處理與責任分配規則？</li></ul>
+<h2>我的整理結論</h2>
+<p>這支影片的價值在於把 AI agent 的討論拉回平台策略。AI agent 不只是自動化客服或搜尋助手；它會進入平台互動本身，改變 sides 的權力、訊號成本、評估成本與責任分配。</p>
+<p>如果要把這套框架用在自己的產品或投資標的上，第一步應該問三題：誰跟誰互動？平台降低哪種摩擦？哪個 core decision 上線後不能輕易改？這三題答不清楚，AI 再強也只是功能；答得清楚，才有機會形成平台。</p>
+
+</article>
+<footer>
+<p style="color: var(--muted); font-size: 0.85rem; margin-top: 4rem; padding-top: 1.5rem; border-top: 1px solid var(--border);">
+Source: YouTube video GVN7G-wFf3Q, MIT Sloan Executive Education. Images are browser screenshots from the source video around 08:21 and 35:00.
+</p>
+</footer>
+</main>
+<script>
+  const bar = document.getElementById('progress');
+  window.addEventListener('scroll', () => {
+    const h = document.documentElement;
+    const max = h.scrollHeight - h.clientHeight;
+    const ratio = max > 0 ? h.scrollTop / max : 0;
+    bar.style.transform = 'scaleX(' + ratio + ')';
+  }, { passive: true });
+</script>
+</body>
+</html>

@@ -15,6 +15,7 @@
 - 中文與英文 / 數字之間使用半形空格
 
 ## Cards
+- [ai-agents-platform-strategy](https://hale80427.github.io/brain-cards/ai-agents-platform-strategy/)：MIT Sloan 講座重點：平台、資料網路效應、agent 治理與定價
 - [systems-thinking-leaders-youtube](https://hale80427.github.io/brain-cards/systems-thinking-leaders-youtube/)：John Sterman 談 policy resistance、因果圖與管理模擬器。
 - [loop-engineering-agent-workflows](https://hale80427.github.io/brain-cards/loop-engineering-agent-workflows/)：用白話拆解 Addy Osmani 的 Loop Engineering 實務框架。
 - [usm-online-monitoring](https://hale80427.github.io/brain-cards/usm-online-monitoring/)：客戶展示版——電性訊號回推加工節奏與進給變更、等效切削阻抗 × 孔品質對照。
