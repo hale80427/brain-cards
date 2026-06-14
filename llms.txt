@@ -15,6 +15,7 @@
 - 中文與英文 / 數字之間使用半形空格
 
 ## Cards
+- [youtube-effective-negotiation-stanford-gsb](https://hale80427.github.io/brain-cards/youtube-effective-negotiation-stanford-gsb/)：Stanford GSB 談判課摘要：替代方案、信任、冷靜與可持續協議。
 - [ai-agents-platform-strategy](https://hale80427.github.io/brain-cards/ai-agents-platform-strategy/)：MIT Sloan 講座重點：平台、資料網路效應、agent 治理與定價
 - [systems-thinking-leaders-youtube](https://hale80427.github.io/brain-cards/systems-thinking-leaders-youtube/)：John Sterman 談 policy resistance、因果圖與管理模擬器。
 - [loop-engineering-agent-workflows](https://hale80427.github.io/brain-cards/loop-engineering-agent-workflows/)：用白話拆解 Addy Osmani 的 Loop Engineering 實務框架。

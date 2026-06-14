@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>有效談判：從 BATNA 到信任品牌</title>
+<meta name="description" content="Stanford GSB 談判課摘要：替代方案、信任、冷靜與可持續協議。">
+
+<!-- Canonical & 作者 -->
+<link rel="canonical" href="https://hale80427.github.io/brain-cards/youtube-effective-negotiation-stanford-gsb/">
+<meta name="author" content="彥皓">
+
+<!-- Open Graph（FB / LINE / Slack / Discord 連結預覽）-->
+<meta property="og:type" content="article">
+<meta property="og:title" content="有效談判：從 BATNA 到信任品牌">
+<meta property="og:description" content="Stanford GSB 談判課摘要：替代方案、信任、冷靜與可持續協議。">
+<meta property="og:url" content="https://hale80427.github.io/brain-cards/youtube-effective-negotiation-stanford-gsb/">
+<meta property="og:image" content="https://hale80427.github.io/brain-cards/og-default.jpg">
+<meta property="og:locale" content="zh_TW">
+
+<!-- Twitter / X Card -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="有效談判：從 BATNA 到信任品牌">
+<meta name="twitter:description" content="Stanford GSB 談判課摘要：替代方案、信任、冷靜與可持續協議。">
+<meta name="twitter:image" content="https://hale80427.github.io/brain-cards/og-default.jpg">
+
+<!-- 結構化資料（JSON-LD，提升 AI 與搜尋引擎理解）-->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "\u6709\u6548\u8ac7\u5224\uff1a\u5f9e BATNA \u5230\u4fe1\u4efb\u54c1\u724c",
+  "description": "Stanford GSB \u8ac7\u5224\u8ab2\u6458\u8981\uff1a\u66ff\u4ee3\u65b9\u6848\u3001\u4fe1\u4efb\u3001\u51b7\u975c\u8207\u53ef\u6301\u7e8c\u5354\u8b70\u3002",
+  "datePublished": "2026-06-14",
+  "dateModified": "2026-06-14",
+  "author": { "@type": "Person", "name": "彥皓" },
+  "url": "https://hale80427.github.io/brain-cards/youtube-effective-negotiation-stanford-gsb/",
+  "inLanguage": "zh-TW",
+  "license": "https://creativecommons.org/licenses/by/4.0/"
+}
+</script>
+
+<style>
+  :root {
+    /* color tokens — OKLCH (hallmark token discipline；禁止 inline hex / rgb / oklch / font-family；
+       hex 註解保留為設計者原意溯源，色彩值以 OKLCH 為事實源) */
+    --bg: oklch(98.4% 0.004 106.5);              /* 暖白（was #fafaf7） */
+    --fg: oklch(21.8% 0 0);                       /* 近黑（was #1a1a1a） */
+    --accent: oklch(54.3% 0.174 29.7);            /* 暖紅（was #c0392b） */
+    --accent-warn: oklch(66.6% 0.157 58.3);       /* 橘黃 callout warn 強調（was #d97706 inline，lift 進 token） */
+    --muted: oklch(51.0% 0 0);                    /* 中灰（was #666） */
+    --border: oklch(92.1% 0.007 106.5);           /* 淺暖灰（was #e5e5e0） */
+    --callout-tip: oklch(95.7% 0.014 174.2);      /* 淺薄荷（was #e8f4f0） */
+    --callout-warn: oklch(96.9% 0.019 72.6);      /* 淺暖米（was #fdf3e7） */
+    --fs-meta: 0.85rem;                          /* metadata / footer / .bluf 標籤 */
+    --fs-body: 1rem;                              /* p / li / td / blockquote / h3 / code / table */
+    --fs-h2:   clamp(1.3rem, 3vw, 1.5rem);      /* h2 段標題 */
+    --fs-h1:   clamp(1.75rem, 4vw, 2.25rem);    /* h1 主標題 */
+    /* font tokens（hallmark token discipline；禁止 inline font-family） */
+    --font-serif: "Noto Serif TC", Georgia, serif;
+    --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+    /* easing tokens（hallmark：禁止 unnamed easing） */
+    --ease-linear: linear;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: oklch(21.8% 0 0);                     /* was #1a1a1a */
+      --fg: oklch(95.3% 0.011 106.6);             /* 米白（was #f0f0e8） */
+      --accent: oklch(70.4% 0.136 28.7);          /* 亮珊瑚（was #e87c6e） */
+      --accent-warn: oklch(76.9% 0.165 70.1);     /* dark mode 等對等亮版 warn 強調 */
+      --muted: oklch(68.3% 0 0);                  /* was #999 */
+      --border: oklch(32.1% 0 0);                 /* was #333 */
+      --callout-tip: oklch(30.9% 0.029 178.3);    /* 深綠青（was #1f3530） */
+      --callout-warn: oklch(30.7% 0.034 73.5);    /* 深棕（was #3a2d1c） */
+    }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
+  }
+  * { box-sizing: border-box; }
+  body {
+    font-family: var(--font-serif);
+    background: var(--bg);
+    color: var(--fg);
+    line-height: 1.8;
+    margin: 0;
+    padding: 0;
+    -webkit-font-smoothing: antialiased;
+  }
+  .progress-bar {
+    /* hallmark：只動 transform / opacity，不動 layout property（避免 reflow + 對齊微互動紀律） */
+    position: fixed; top: 0; left: 0; height: 3px; width: 100%;
+    background: var(--accent); z-index: 100;
+    transform: scaleX(0); transform-origin: left;
+    transition: transform 0.1s var(--ease-linear);
+  }
+  main {
+    max-width: 680px;
+    margin: 0 auto;
+    padding: clamp(2rem, 5vw, 4rem) clamp(1.5rem, 4vw, 2rem);
+  }
+  /* === 字級階梯：嚴格 4 級。所有 font-size 必須引用以下 4 個變數之一 === */
+  /* === 違反 → KB-04 機械驗證會擋（font_levels > 4）=== */
+  /* === h3 / blockquote / code / table 等「想要不一樣」用 weight + color，不開新字級 === */
+  h1 { font-size: var(--fs-h1); line-height: 1.3; margin: 0 0 1rem; }
+  h2 { font-size: var(--fs-h2); line-height: 1.4; margin: 2.5rem 0 0.75rem; padding-bottom: 0.5rem; border-bottom: 1px solid var(--border); }
+  h3 { font-size: var(--fs-body); font-weight: 700; line-height: 1.4; margin: 1.75rem 0 0.5rem; color: var(--accent); }
+  p { margin: 0 0 1.25rem; }
+  a { color: var(--accent); text-underline-offset: 3px; }
+  a:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+  .bluf { background: var(--callout-tip); border-left: 3px solid var(--accent); padding: 1.25rem 1.5rem; margin: 1.5rem 0 2rem; border-radius: 4px; }
+  .bluf strong { display: block; font-size: var(--fs-meta); letter-spacing: 0.05em; color: var(--accent); margin-bottom: 0.5rem; text-transform: uppercase; }
+  .callout { padding: 1rem 1.25rem; margin: 1.5rem 0; border-radius: 4px; border-left: 3px solid var(--muted); }
+  .callout.tip { background: var(--callout-tip); border-left-color: var(--accent); }
+  .callout.warn { background: var(--callout-warn); border-left-color: var(--accent-warn); }
+  .callout.info { background: var(--callout-tip); border-left-color: var(--muted); }
+  .callout.quote { background: transparent; border-left-color: var(--accent); font-style: italic; }
+  table { border-collapse: collapse; width: 100%; margin: 1.5rem 0; font-size: var(--fs-body); }
+  th, td { padding: 0.6rem 0.8rem; border: 1px solid var(--border); text-align: left; vertical-align: top; }
+  th { background: var(--callout-tip); font-weight: 600; }
+  code { font-family: var(--font-mono); background: var(--callout-tip); padding: 0.1em 0.4em; border-radius: 3px; font-size: var(--fs-body); }
+  /* === 圖片 / 圖說（圖表規則見 KB-07）：figcaption 用既有 --fs-meta，不開新字級 === */
+  figure { margin: 1.5rem 0; }
+  figure img { width: 100%; height: auto; border-radius: 4px; display: block; }
+  figure svg { width: 100%; height: auto; display: block; }
+  figcaption { font-size: var(--fs-meta); color: var(--muted); margin-top: 0.5rem; text-align: center; }
+  @media print {
+    .progress-bar { display: none; }
+    body { font-size: 11pt; line-height: 1.6; }
+    main { max-width: 100%; padding: 1cm; }
+  }
+</style>
+</head>
+<body>
+<div class="progress-bar" id="progress"></div>
+<main>
+<header>
+<h1>有效談判：從 BATNA 到信任品牌</h1>
+<div class="bluf">
+<strong>BLUF</strong>
+<p>談判力來自替代方案、授權、資訊與可信任的長期品牌；壓迫技巧能逼出成交，卻常破壞協議耐久度。</p>
+</div>
+</header>
+<article>
+<!-- narrative: 一開始先避開壞位置：不要讓自己變成非成交不可。, 短期壓迫技巧可能成交，但會留下怨恨與執行風險。, 真正的談判品牌，靠信任、冷靜與一致行為累積。 -->
+<h2>影片與核心問題</h2>
+<figure><img src="data:image/jpeg;base64,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" alt="Conducting Effective Negotiations YouTube thumbnail" width="480" height="360"><figcaption>影片來源：Stanford Graduate School of Business，Conducting Effective Negotiations。</figcaption></figure>
+<p>這支 Stanford GSB 影片長 1 小時 8 分，主題是有效談判。講者先把問題拉回談判前：如果你已經非成交不可，談判位置通常已經失衡。真正要管理的，是替代方案、授權、資訊、時間彈性與長期聲譽。</p>
+<div class="callout info">一句話：先讓自己有選項，再上談判桌。沒有選項時，技巧很快會變成補破網。</div>
+<h2>壓迫技巧會帶來短期成交，也帶來長期成本</h2>
+<p>講者列出許多常見手法：拖延到對方趕飛機、最後一刻補條件、提高音量、假裝不懂、製造身體不適、用律師或代理人擋在前面。這些做法的共同點，是把對方推到不舒服的位置。</p>
+<p>問題在後段出現。對方通常知道自己正在被操作；即使簽了，也容易留下怨恨，讓協議變得僵硬、脆弱，甚至在幾個月後變成訴訟。講者稱這些為 anti-successful agreement techniques，因為它們破壞可持續協議需要的信任。</p>
+<blockquote>“You may get a deal done. But you&#x27;re unlikely to get a deal that is lasting, enduring, flexible, where you build relationships.”<cite> — 14:37–14:45</cite></blockquote>
+<h2>面對壓迫：點破行為，用問題降溫</h2>
+<p>當對方提高音量、站起來或貼近你時，講者建議不要跟著升溫。更有效的方式，是平靜把行為說出來，接著問問題。問題能降低音量，也能把壓迫行為轉成可觀察資訊。</p>
+<blockquote>“Why are you raising your voice? What makes you shout about that question?”<cite> — 19:40–19:47</cite></blockquote>
+<ul><li>把行為說出來：讓對方知道你看見了。</li><li>用問題代替反擊：先降低情緒，再取得資訊。</li><li>讓對方的手法失效：不要照著對方設計的劇本走。</li><li>保留時間彈性：不要讓趕飛機、截止日、會議結束時間變成勒索點。</li></ul>
+<h2>BATNA、CCP 與談判基本盤</h2>
+<figure><svg viewBox="0 0 800 520" role="img" xmlns="http://www.w3.org/2000/svg"><title>談判品牌的三層基礎</title><polygon points="350.0,16.0 450.0,16.0 560.0,178.7 240.0,178.7" fill="var(--callout-tip)" stroke="var(--accent)" stroke-width="1.5"/><text x="400" y="91" text-anchor="middle" font-size="18" font-weight="700" fill="var(--fg)">可信任</text><text x="400" y="119" text-anchor="middle" font-size="13" fill="var(--muted)">說到做到，不虛張聲勢</text><polygon points="240.0,178.7 560.0,178.7 670.0,341.3 130.0,341.3" fill="var(--callout-tip)" stroke="var(--accent)" stroke-width="1.5"/><text x="400" y="254" text-anchor="middle" font-size="18" font-weight="700" fill="var(--fg)">有能力</text><text x="400" y="282" text-anchor="middle" font-size="13" fill="var(--muted)">懂交易、懂條件、懂風險</text><polygon points="130.0,341.3 670.0,341.3 780.0,504.0 20.0,504.0" fill="var(--callout-tip)" stroke="var(--accent)" stroke-width="1.5"/><text x="400" y="417" text-anchor="middle" font-size="18" font-weight="700" fill="var(--fg)">有授權</text><text x="400" y="445" text-anchor="middle" font-size="13" fill="var(--muted)">能決定，也找得到能決定的人</text></svg><figcaption>可信談判者的基礎：品格、能力、授權。</figcaption></figure>
+<p>講者把成功談判拆成幾個基本條件。第一，找對人：對方要有決策權。第二，讓自己成為可信談判者；可信來自 character、competence、power / empowerment。第三，知道自己的 BATNA，也推估對方的 BATNA。</p>
+<table>
+<thead><tr><th>概念</th><th>問題</th><th>用途</th></tr></thead>
+<tbody>
+<tr><td>BATNA</td><td>談不成後，我最好的替代方案是什麼？</td><td>避免把單一交易看成生死問題。</td></tr>
+<tr><td>對方 BATNA</td><td>對方如果不和我成交，還能去哪裡？</td><td>估計對方壓力與讓步空間。</td></tr>
+<tr><td>CCP</td><td>我是否有品格、能力、授權？</td><td>建立可信談判者形象。</td></tr>
+<tr><td>大象與螞蟻</td><td>哪些點真重要，哪些只是小輸贏？</td><td>避免每個條件都硬打。</td></tr>
+</tbody>
+</table>
+<h2>心態會改變交易品質</h2>
+<p>講者在 Stanford 房地產課程做過三方談判練習。當指令是玩得開心、發揮創意、學習，學生更快達成交易，文件也更容易整理。當指令改成目標是贏，成交變少，時間拉長，條件更複雜，人際關係也變差。</p>
+<p>這個案例說明：談判的初始框架會改變人的行為。若一開始把對方視為要擊敗的人，大家會藏資訊、爭每個小點，最後讓交易本身變差。</p>
+<h2>連續談判：每次互動都在累積品牌</h2>
+<p>講者提醒，沒有真正孤立的一次性談判。你以為只談這一場，對方卻會把經驗告訴同事、律師、投資人或下一個交易對手。談判品牌會在小圈子裡流動，之後別人會用這個印象預測你。</p>
+<blockquote>“There are no episodic negotiations.”<cite> — 39:17–39:21</cite></blockquote>
+<p>如果會與同一個人長期交易，講者建議建立 rules of the road。規則不一定正式寫下，但雙方知道如何開價、如何讓步、哪些話不能說，談判就少一點摩擦，多一點可預期性。</p>
+<h2>機制圖：從條件到可持續協議</h2>
+<figure><svg viewBox="0 0 792 120" role="img" xmlns="http://www.w3.org/2000/svg"><title>有效談判的機制鏈</title><rect x="12" y="32" width="150" height="56" rx="6" fill="var(--callout-tip)" stroke="var(--accent)" stroke-width="1.5"/><text x="87" y="65" text-anchor="middle" font-size="15" fill="var(--fg)">條件</text><line x1="162" y1="60" x2="210" y2="60" stroke="var(--accent)" stroke-width="1.5"/><polygon points="210,55 218,60 210,65" fill="var(--accent)"/><rect x="218" y="32" width="150" height="56" rx="6" fill="var(--callout-tip)" stroke="var(--accent)" stroke-width="1.5"/><text x="293" y="65" text-anchor="middle" font-size="15" fill="var(--fg)">機制</text><line x1="368" y1="60" x2="416" y2="60" stroke="var(--accent)" stroke-width="1.5"/><polygon points="416,55 424,60 416,65" fill="var(--accent)"/><rect x="424" y="32" width="150" height="56" rx="6" fill="var(--callout-tip)" stroke="var(--accent)" stroke-width="1.5"/><text x="499" y="65" text-anchor="middle" font-size="15" fill="var(--fg)">結果</text><line x1="574" y1="60" x2="622" y2="60" stroke="var(--accent)" stroke-width="1.5"/><polygon points="622,55 630,60 622,65" fill="var(--accent)"/><rect x="630" y="32" width="150" height="56" rx="6" fill="var(--callout-tip)" stroke="var(--accent)" stroke-width="1.5"/><text x="705" y="65" text-anchor="middle" font-size="15" fill="var(--fg)">驗證</text></svg><figcaption>條件 → 機制 → 結果 → 驗證。協議的品質要在時間中檢查。</figcaption></figure>
+<p>這套框架的驗證點很實際：協議簽完六個月後，雙方是否還能坐下來談？如果每次問題都只能翻合約、找律師、進調解，代表前面的利益、信任或彈性沒有處理好。</p>
+<h2>Fisher and Ury 的四個動作</h2>
+<ol><li>把人和問題分開：問題很難，不代表提出問題的人該被討厭。</li><li>聚焦利益，不只看立場：立場是表面句子，利益才是可交換的核心。</li><li>共同發明互利選項：一起設計可能方案，別太早鎖死在價格。</li><li>堅持客觀標準：用市場、案例、成本、風險或可驗證標準判斷交易品質。</li></ol>
+<blockquote>“Separate the people from the problem.”<cite> — 01:05:12–01:05:15</cite></blockquote>
+<h2>可直接使用的談判檢查清單</h2>
+<h3>談判前</h3>
+<ul><li>寫下自己的 BATNA。</li><li>推估對方 BATNA。</li><li>確認對方有決策權。</li><li>確認自己有授權。</li><li>分清大象與螞蟻。</li><li>準備時間彈性，避免被最後期限壓住。</li></ul>
+<h3>談判中</h3>
+<ul><li>用問題降溫。</li><li>不虛張聲勢。</li><li>避免會快速升高情緒的字眼。</li><li>願意輸掉小戰，保留大局。</li><li>聚焦利益，少陷在立場口號。</li><li>用客觀標準檢查交易。</li></ul>
+<h3>談判後</h3>
+<ul><li>檢查協議是否能長期運作。</li><li>確認對方是否仍願意支持協議。</li><li>回看自己在這場談判中留下的品牌。</li><li>如果下次還會遇到同一對象，整理雙方的 rules of the road。</li></ul>
+<h2>資料限制</h2>
+<div class="callout warn">本文根據 YouTube caption transcript 與已建立的 checkpoint 撰寫。逐字稿可能有自動字幕錯字，例如片尾附近 BATNA 被轉成 “bartner”。若要對外引用原文，建議回到影片時間點再聽一次。</div>
+<p>原始影片連結：https://youtu.be/rCmvMDrCWjs</p>
+
+</article>
+<footer>
+<p style="color: var(--muted); font-size: 0.85rem; margin-top: 4rem; padding-top: 1.5rem; border-top: 1px solid var(--border);">
+Source: YouTube, Conducting Effective Negotiations, Stanford Graduate School of Business. Transcript checkpoint: youtube_rCmvMDrCWjs.
+</p>
+</footer>
+</main>
+<script>
+  const bar = document.getElementById('progress');
+  window.addEventListener('scroll', () => {
+    const h = document.documentElement;
+    const max = h.scrollHeight - h.clientHeight;
+    const ratio = max > 0 ? h.scrollTop / max : 0;
+    bar.style.transform = 'scaleX(' + ratio + ')';
+  }, { passive: true });
+</script>
+</body>
+</html>
