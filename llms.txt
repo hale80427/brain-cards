@@ -15,6 +15,7 @@
 - 中文與英文 / 數字之間使用半形空格
 
 ## Cards
+- [ai-10x-founder-survival-playbook](https://hale80427.github.io/brain-cards/ai-10x-founder-survival-playbook/)：用白話拆解 10x 創辦人、Token 稀缺、AI 轉譯與個人護城河。
 - [future-of-work-agentic-ai-fuller-2026](https://hale80427.github.io/brain-cards/future-of-work-agentic-ai-fuller-2026/)：白話整理 Joseph Fuller 對 Agentic AI、職涯與企業組織的演講重點。
 - [future-of-work-agentic-ai-hbs-2026](https://hale80427.github.io/brain-cards/future-of-work-agentic-ai-hbs-2026/)：用白話拆解 Joseph Fuller 對 AI、職涯與企業組織的判斷。
 - [layered-disclosure-discipline](https://hale80427.github.io/brain-cards/layered-disclosure-discipline/)：用專利、論文與營業秘密分工，避免把可藏的參數免費送出去。

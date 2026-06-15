@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AI 時代的十倍速生存法則：10x 創辦人的工作框架</title>
+<meta name="description" content="用白話拆解 10x 創辦人、Token 稀缺、AI 轉譯與個人護城河。">
+
+<!-- Canonical & 作者 -->
+<link rel="canonical" href="https://hale80427.github.io/brain-cards/ai-10x-founder-survival-playbook/">
+<meta name="author" content="彥皓">
+
+<!-- Open Graph（FB / LINE / Slack / Discord 連結預覽）-->
+<meta property="og:type" content="article">
+<meta property="og:title" content="AI 時代的十倍速生存法則：10x 創辦人的工作框架">
+<meta property="og:description" content="用白話拆解 10x 創辦人、Token 稀缺、AI 轉譯與個人護城河。">
+<meta property="og:url" content="https://hale80427.github.io/brain-cards/ai-10x-founder-survival-playbook/">
+<meta property="og:image" content="https://hale80427.github.io/brain-cards/og-default.jpg">
+<meta property="og:locale" content="zh_TW">
+
+<!-- Twitter / X Card -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="AI 時代的十倍速生存法則：10x 創辦人的工作框架">
+<meta name="twitter:description" content="用白話拆解 10x 創辦人、Token 稀缺、AI 轉譯與個人護城河。">
+<meta name="twitter:image" content="https://hale80427.github.io/brain-cards/og-default.jpg">
+
+<!-- 結構化資料（JSON-LD，提升 AI 與搜尋引擎理解）-->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "AI \u6642\u4ee3\u7684\u5341\u500d\u901f\u751f\u5b58\u6cd5\u5247\uff1a10x \u5275\u8fa6\u4eba\u7684\u5de5\u4f5c\u6846\u67b6",
+  "description": "\u7528\u767d\u8a71\u62c6\u89e3 10x \u5275\u8fa6\u4eba\u3001Token \u7a00\u7f3a\u3001AI \u8f49\u8b6f\u8207\u500b\u4eba\u8b77\u57ce\u6cb3\u3002",
+  "datePublished": "2026-06-16",
+  "dateModified": "2026-06-16",
+  "author": { "@type": "Person", "name": "彥皓" },
+  "url": "https://hale80427.github.io/brain-cards/ai-10x-founder-survival-playbook/",
+  "inLanguage": "zh-TW",
+  "license": "https://creativecommons.org/licenses/by/4.0/"
+}
+</script>
+
+<style>
+  :root {
+    /* color tokens — OKLCH (hallmark token discipline；禁止 inline hex / rgb / oklch / font-family；
+       hex 註解保留為設計者原意溯源，色彩值以 OKLCH 為事實源) */
+    --bg: oklch(98.4% 0.004 106.5);              /* 暖白（was #fafaf7） */
+    --fg: oklch(21.8% 0 0);                       /* 近黑（was #1a1a1a） */
+    --accent: oklch(54.3% 0.174 29.7);            /* 暖紅（was #c0392b） */
+    --accent-warn: oklch(66.6% 0.157 58.3);       /* 橘黃 callout warn 強調（was #d97706 inline，lift 進 token） */
+    --muted: oklch(51.0% 0 0);                    /* 中灰（was #666） */
+    --border: oklch(92.1% 0.007 106.5);           /* 淺暖灰（was #e5e5e0） */
+    --callout-tip: oklch(95.7% 0.014 174.2);      /* 淺薄荷（was #e8f4f0） */
+    --callout-warn: oklch(96.9% 0.019 72.6);      /* 淺暖米（was #fdf3e7） */
+    --fs-meta: 0.85rem;                          /* metadata / footer / .bluf 標籤 */
+    --fs-body: 1rem;                              /* p / li / td / blockquote / h3 / code / table */
+    --fs-h2:   clamp(1.3rem, 3vw, 1.5rem);      /* h2 段標題 */
+    --fs-h1:   clamp(1.75rem, 4vw, 2.25rem);    /* h1 主標題 */
+    /* font tokens（hallmark token discipline；禁止 inline font-family） */
+    --font-serif: "Noto Serif TC", Georgia, serif;
+    --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+    /* easing tokens（hallmark：禁止 unnamed easing） */
+    --ease-linear: linear;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: oklch(21.8% 0 0);                     /* was #1a1a1a */
+      --fg: oklch(95.3% 0.011 106.6);             /* 米白（was #f0f0e8） */
+      --accent: oklch(70.4% 0.136 28.7);          /* 亮珊瑚（was #e87c6e） */
+      --accent-warn: oklch(76.9% 0.165 70.1);     /* dark mode 等對等亮版 warn 強調 */
+      --muted: oklch(68.3% 0 0);                  /* was #999 */
+      --border: oklch(32.1% 0 0);                 /* was #333 */
+      --callout-tip: oklch(30.9% 0.029 178.3);    /* 深綠青（was #1f3530） */
+      --callout-warn: oklch(30.7% 0.034 73.5);    /* 深棕（was #3a2d1c） */
+    }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
+  }
+  * { box-sizing: border-box; }
+  body {
+    font-family: var(--font-serif);
+    background: var(--bg);
+    color: var(--fg);
+    line-height: 1.8;
+    margin: 0;
+    padding: 0;
+    -webkit-font-smoothing: antialiased;
+  }
+  .progress-bar {
+    /* hallmark：只動 transform / opacity，不動 layout property（避免 reflow + 對齊微互動紀律） */
+    position: fixed; top: 0; left: 0; height: 3px; width: 100%;
+    background: var(--accent); z-index: 100;
+    transform: scaleX(0); transform-origin: left;
+    transition: transform 0.1s var(--ease-linear);
+  }
+  main {
+    max-width: 680px;
+    margin: 0 auto;
+    padding: clamp(2rem, 5vw, 4rem) clamp(1.5rem, 4vw, 2rem);
+  }
+  /* === 字級階梯：嚴格 4 級。所有 font-size 必須引用以下 4 個變數之一 === */
+  /* === 違反 → KB-04 機械驗證會擋（font_levels > 4）=== */
+  /* === h3 / blockquote / code / table 等「想要不一樣」用 weight + color，不開新字級 === */
+  h1 { font-size: var(--fs-h1); line-height: 1.3; margin: 0 0 1rem; }
+  h2 { font-size: var(--fs-h2); line-height: 1.4; margin: 2.5rem 0 0.75rem; padding-bottom: 0.5rem; border-bottom: 1px solid var(--border); }
+  h3 { font-size: var(--fs-body); font-weight: 700; line-height: 1.4; margin: 1.75rem 0 0.5rem; color: var(--accent); }
+  p { margin: 0 0 1.25rem; }
+  a { color: var(--accent); text-underline-offset: 3px; }
+  a:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+  .bluf { background: var(--callout-tip); border-left: 3px solid var(--accent); padding: 1.25rem 1.5rem; margin: 1.5rem 0 2rem; border-radius: 4px; }
+  .bluf strong { display: block; font-size: var(--fs-meta); letter-spacing: 0.05em; color: var(--accent); margin-bottom: 0.5rem; text-transform: uppercase; }
+  .callout { padding: 1rem 1.25rem; margin: 1.5rem 0; border-radius: 4px; border-left: 3px solid var(--muted); }
+  .callout.tip { background: var(--callout-tip); border-left-color: var(--accent); }
+  .callout.warn { background: var(--callout-warn); border-left-color: var(--accent-warn); }
+  .callout.info { background: var(--callout-tip); border-left-color: var(--muted); }
+  .callout.quote { background: transparent; border-left-color: var(--accent); font-style: italic; }
+  table { border-collapse: collapse; width: 100%; margin: 1.5rem 0; font-size: var(--fs-body); }
+  th, td { padding: 0.6rem 0.8rem; border: 1px solid var(--border); text-align: left; vertical-align: top; }
+  th { background: var(--callout-tip); font-weight: 600; }
+  code { font-family: var(--font-mono); background: var(--callout-tip); padding: 0.1em 0.4em; border-radius: 3px; font-size: var(--fs-body); }
+  /* === 圖片 / 圖說（圖表規則見 KB-07）：figcaption 用既有 --fs-meta，不開新字級 === */
+  figure { margin: 1.5rem 0; }
+  figure img { width: 100%; height: auto; border-radius: 4px; display: block; }
+  figure svg { width: 100%; height: auto; display: block; }
+  figcaption { font-size: var(--fs-meta); color: var(--muted); margin-top: 0.5rem; text-align: center; }
+  @media print {
+    .progress-bar { display: none; }
+    body { font-size: 11pt; line-height: 1.6; }
+    main { max-width: 100%; padding: 1cm; }
+  }
+</style>
+</head>
+<body>
+<div class="progress-bar" id="progress"></div>
+<main>
+<header>
+<h1>AI 時代的十倍速生存法則：10x 創辦人的工作框架</h1>
+<div class="bluf">
+<strong>BLUF</strong>
+<p>AI 讓做事成本快速下降，真正稀缺的會變成判斷力、資料、場景理解與把 AI 接進真實工作流的能力。</p>
+</div>
+</header>
+<article>
+<!-- narrative: 從算力、Token、應用層到組織邊界，AI 正在重排知識工作的成本結構。, 10x 創辦人的核心是更快找到問題、驗證解法、調整商業模式。, 個人要把 AI 當成代理團隊管理，不要只當聊天工具使用。 -->
+<h2>先講結論：10x 是週期壓縮能力</h2>
+<p>這份筆記談的是 Jeffrey Bussgang 在哈佛商學院 Reunion Weekend 分享的「The 10x Founder」。白話說，10x 創辦人的關鍵不靠天分標籤，也不靠工時競賽。核心能力，是把「發現問題、做出原型、接觸市場、修正方向」這一圈跑得比別人快很多。</p>
+<p>AI 時代的變化在於，許多原本需要團隊完成的中間步驟，現在可以交給代理 AI。寫草稿、查資料、整理競品、產生程式碼、做測試，這些任務都能被切成小工作，再由 AI 反覆執行。人類留下來的價值，會集中在問題選擇、驗證設計、商業判斷與信任關係。</p>
+<div class="callout info">一句白話版：未來差距來自兩件事，你會不會用 AI，以及你能不能把 AI 編成一套可靠的工作系統。</div>
+<h2>為什麼這波 AI 比想像中更像基礎建設重排</h2>
+<p>講者用「沒有閒置的 GPU」來說明這波 AI 浪潮和達康泡沫的差別。達康時代有大量暗光纖，基礎設施蓋太快、用量跟不上；現在的 AI 算力則長期緊繃，GPU、資料中心與電力都成了瓶頸。</p>
+<ul><li>2025 年前 9 個月，AI 相關基礎設施與投資據稱占美國實質 GDP 增長的 39%。</li><li>2026 年，超大規模雲端服務商在 AI 資料中心與算力上的資本支出預估達 7,000 億美元。</li><li>美國資料中心用電需求，從 2025 年的 31 GW，預估到 2027 年升至 66 GW。</li></ul>
+<figure><svg viewBox="0 0 998 120" role="img" xmlns="http://www.w3.org/2000/svg"><title>AI 基礎建設的因果鏈</title><rect x="12" y="32" width="150" height="56" rx="6" fill="var(--callout-tip)" stroke="var(--accent)" stroke-width="1.5"/><text x="87" y="65" text-anchor="middle" font-size="15" fill="var(--fg)">模型能力提升</text><line x1="162" y1="60" x2="210" y2="60" stroke="var(--accent)" stroke-width="1.5"/><polygon points="210,55 218,60 210,65" fill="var(--accent)"/><rect x="218" y="32" width="150" height="56" rx="6" fill="var(--callout-tip)" stroke="var(--accent)" stroke-width="1.5"/><text x="293" y="65" text-anchor="middle" font-size="15" fill="var(--fg)">Token 需求上升</text><line x1="368" y1="60" x2="416" y2="60" stroke="var(--accent)" stroke-width="1.5"/><polygon points="416,55 424,60 416,65" fill="var(--accent)"/><rect x="424" y="32" width="150" height="56" rx="6" fill="var(--callout-tip)" stroke="var(--accent)" stroke-width="1.5"/><text x="499" y="65" text-anchor="middle" font-size="15" fill="var(--fg)">GPU 與資料中心擴張</text><line x1="574" y1="60" x2="622" y2="60" stroke="var(--accent)" stroke-width="1.5"/><polygon points="622,55 630,60 622,65" fill="var(--accent)"/><rect x="630" y="32" width="150" height="56" rx="6" fill="var(--callout-tip)" stroke="var(--accent)" stroke-width="1.5"/><text x="705" y="65" text-anchor="middle" font-size="15" fill="var(--fg)">電力與供應鏈成為瓶頸</text><line x1="780" y1="60" x2="828" y2="60" stroke="var(--accent)" stroke-width="1.5"/><polygon points="828,55 836,60 828,65" fill="var(--accent)"/><rect x="836" y="32" width="150" height="56" rx="6" fill="var(--callout-tip)" stroke="var(--accent)" stroke-width="1.5"/><text x="911" y="65" text-anchor="middle" font-size="15" fill="var(--fg)">應用層重新分配價值</text></svg><figcaption>AI 浪潮的第一層限制來自算力、電力與資本。</figcaption></figure>
+<p>這代表 AI 已經從科技新聞變成總體經濟問題。對大多數創業者與工作者來說，直接挑戰底層模型很不合理；更好的位置，是站在巨頭鋪好的算力和模型之上，做出貼近產業現場的應用。</p>
+<h2>Token 稀缺：代理 AI 為什麼會吃掉更多算力</h2>
+<p>Token 可以理解成 AI 世界裡的運算單位。過去我們常把 AI 想成一個對話框：問一次，答一次。代理 AI 則不同，它會拆任務、查資料、比較資料、修正答案，再輸出結果。這些後台步驟都會消耗 Token。</p>
+<ol><li>使用者提出任務：例如「寫一份競品分析」。</li><li>代理 AI 拆解任務，列出要查的公司、產品、定價與市場線索。</li><li>它讀取資料、摘要、互相比對，發現不足時再補查。</li><li>最後整理成報告，甚至接著產出簡報、郵件或任務清單。</li></ol>
+<figure><svg viewBox="0 0 1100 1100" role="img" xmlns="http://www.w3.org/2000/svg"><title>代理 AI 的任務循環</title><path d="M 637.5 169.9 A 390.0 390.0 0 0 1 884.4 349.4" fill="none" stroke="var(--accent)" stroke-width="5" stroke-linecap="round" stroke-dasharray="1000" stroke-dashoffset="0"/><polygon points="884.4,349.4 858.0,332.6 882.0,318.2" fill="var(--accent)"/><path d="M 938.5 515.7 A 390.0 390.0 0 0 1 844.2 806.1" fill="none" stroke="var(--accent)" stroke-width="5" stroke-linecap="round" stroke-dasharray="1000" stroke-dashoffset="0"/><polygon points="844.2,806.1 852.0,775.8 873.1,794.1" fill="var(--accent)"/><path d="M 702.6 908.9 A 390.0 390.0 0 0 1 397.4 908.9" fill="none" stroke="var(--accent)" stroke-width="5" stroke-linecap="round" stroke-dasharray="1000" stroke-dashoffset="0"/><polygon points="397.4,908.9 428.6,907.0 417.7,932.7" fill="var(--accent)"/><path d="M 255.8 806.1 A 390.0 390.0 0 0 1 161.5 515.7" fill="none" stroke="var(--accent)" stroke-width="5" stroke-linecap="round" stroke-dasharray="1000" stroke-dashoffset="0"/><polygon points="161.5,515.7 173.0,544.9 145.1,542.4" fill="var(--accent)"/><path d="M 215.6 349.4 A 390.0 390.0 0 0 1 462.5 169.9" fill="none" stroke="var(--accent)" stroke-width="5" stroke-linecap="round" stroke-dasharray="1000" stroke-dashoffset="0"/><polygon points="462.5,169.9 438.4,189.9 432.1,162.6" fill="var(--accent)"/><rect x="454.0" y="206.0" width="192.0" height="88.0" rx="16" fill="var(--callout-tip)" stroke="var(--accent)" stroke-width="2"/><text x="550.0" y="250.0" text-anchor="middle" font-size="28" font-weight="700" fill="var(--fg)">拆解任務</text><text x="550.0" y="280.0" text-anchor="middle" font-size="18" fill="var(--muted)">把目標切成可執行步驟</text><rect x="739.3" y="413.3" width="192.0" height="88.0" rx="16" fill="var(--callout-tip)" stroke="var(--accent)" stroke-width="2"/><text x="835.3" y="457.3" text-anchor="middle" font-size="28" font-weight="700" fill="var(--fg)">讀取資料</text><text x="835.3" y="487.3" text-anchor="middle" font-size="18" fill="var(--muted)">搜尋、擷取、整理來源</text><rect x="630.3" y="748.7" width="192.0" height="88.0" rx="16" fill="var(--callout-tip)" stroke="var(--accent)" stroke-width="2"/><text x="726.3" y="792.7" text-anchor="middle" font-size="28" font-weight="700" fill="var(--fg)">自我檢查</text><text x="726.3" y="822.7" text-anchor="middle" font-size="18" fill="var(--muted)">找缺口、辨識矛盾</text><rect x="277.7" y="748.7" width="192.0" height="88.0" rx="16" fill="var(--callout-tip)" stroke="var(--accent)" stroke-width="2"/><text x="373.7" y="792.7" text-anchor="middle" font-size="28" font-weight="700" fill="var(--fg)">修正輸出</text><text x="373.7" y="822.7" text-anchor="middle" font-size="18" fill="var(--muted)">重寫、補證據、調整格式</text><rect x="168.7" y="413.3" width="192.0" height="88.0" rx="16" fill="var(--callout-tip)" stroke="var(--accent)" stroke-width="2"/><text x="264.7" y="457.3" text-anchor="middle" font-size="28" font-weight="700" fill="var(--fg)">交付結果</text><text x="264.7" y="487.3" text-anchor="middle" font-size="18" fill="var(--muted)">報告、程式、簡報或任務清單</text></svg><figcaption>代理 AI 會跑多輪任務循環，因此 Token 消耗會快速放大。</figcaption></figure>
+<div class="callout tip">個人的能力槓桿會從「我能做多少事」轉成「我能設計多少個可靠代理流程」。</div>
+<h2>真正的機會在應用層：把模型接到具體工作現場</h2>
+<p>AI 技術棧可以粗分成三層：底層是 GPU、雲端與基礎模型；中層是資料平台、開發工具與微調模型；頂層是各種垂直與水平應用。底層由巨頭競爭，門檻極高。多數人的機會在頂層，尤其是理解特定產業流程的人。</p>
+<ul><li>底層：NVIDIA、Google、Microsoft、OpenAI、Anthropic 等，競爭核心是資本、算力與人才密度。</li><li>中層：資料平台、開發工具、模型管理與企業資料治理，價值在降低使用門檻。</li><li>頂層：法律、醫療、製造、金融、人資、銷售等場景中的實際工作流，靠產業理解與採用設計取勝。</li></ul>
+<figure><svg viewBox="0 0 800 520" role="img" xmlns="http://www.w3.org/2000/svg"><title>AI 技術棧與可進入位置</title><polygon points="350.0,16.0 450.0,16.0 532.5,138.0 267.5,138.0" fill="var(--callout-tip)" stroke="var(--accent)" stroke-width="1.5"/><text x="400" y="71" text-anchor="middle" font-size="18" font-weight="700" fill="var(--fg)">應用層</text><text x="400" y="99" text-anchor="middle" font-size="13" fill="var(--muted)">垂直場景、工作流、商業模式</text><polygon points="267.5,138.0 532.5,138.0 615.0,260.0 185.0,260.0" fill="var(--callout-tip)" stroke="var(--accent)" stroke-width="1.5"/><text x="400" y="193" text-anchor="middle" font-size="18" font-weight="700" fill="var(--fg)">工具與資料層</text><text x="400" y="221" text-anchor="middle" font-size="13" fill="var(--muted)">RAG、資料平台、開發工具、模型管理</text><polygon points="185.0,260.0 615.0,260.0 697.5,382.0 102.5,382.0" fill="var(--callout-tip)" stroke="var(--accent)" stroke-width="1.5"/><text x="400" y="315" text-anchor="middle" font-size="18" font-weight="700" fill="var(--fg)">基礎模型層</text><text x="400" y="343" text-anchor="middle" font-size="13" fill="var(--muted)">大型模型實驗室與雲端平台</text><polygon points="102.5,382.0 697.5,382.0 780.0,504.0 20.0,504.0" fill="var(--callout-tip)" stroke="var(--accent)" stroke-width="1.5"/><text x="400" y="437" text-anchor="middle" font-size="18" font-weight="700" fill="var(--fg)">算力與能源層</text><text x="400" y="465" text-anchor="middle" font-size="13" fill="var(--muted)">GPU、資料中心、電力、資本</text></svg><figcaption>越靠近使用者工作現場，越需要領域知識、流程理解與信任關係。</figcaption></figure>
+<p>這也是「AI 轉譯」的核心。模型能力提升很快，但人和組織吸收新工具的速度慢很多。誰能把模型能力翻成簡單、可信、能衡量的流程，誰就能取得位置。</p>
+<h2>護城河焦慮：當人人都能開發，什麼還有價值</h2>
+<p>如果每個產品經理都能寫後端邏輯，設計師能產生前端，工程師能讓 AI 起草規格，那組織角色會變得模糊。這會帶來效率，也會帶來混亂：誰定義問題、誰驗證體驗、誰承擔結果，都要重新劃分。</p>
+<p>單純包一層好看的介面，接上大模型，很容易被下一次模型更新吃掉。長期可守的位置，需要建立在模型買不到、複製不快的東西上。</p>
+<ul><li>專有資料：內部歷史紀錄、交易資料、工法知識、客戶行為資料。</li><li>領域判斷：知道哪些問題值得解、哪些限制不能碰、哪些指標才算有效。</li><li>進入市場能力：能進到客戶組織，取得信任，讓流程真的被使用。</li><li>驗證速度：能用很小的成本快速測出需求是否成立。</li></ul>
+<div class="callout warn">AI 降低了做產品的門檻，也同步壓低了普通產品的防線。護城河會從技術展示，移到資料、流程、信任與判斷。</div>
+<h2>10x 工作者的五步判斷循環</h2>
+<p>講者反駁「創業無法被教」這個說法。他主張用框架訓練判斷，避免把創業理解成按表操作。這套循環也適用於企業內部的 AI 專案。</p>
+<ol><li>掌握浪潮與時機：看清楚算力、資本、法規、使用者習慣目前走到哪裡。</li><li>選對問題：先確認問題有沒有高價值、是否頻繁發生、現有流程為何做不好。</li><li>選對工具：不一定要用最貴的模型，很多任務用輕量模型、RAG 或既有 SaaS 就足夠。</li><li>做對解法：把 AI 放進使用者原本的工作習慣，不要要求對方重學一套複雜流程。</li><li>設計商業模式：當 AI 取代部分人工作時，單純按座位收費會變弱，按成效或工作量收費會更重要。</li></ol>
+<figure><svg viewBox="0 0 1100 1100" role="img" xmlns="http://www.w3.org/2000/svg"><title>10x 工作者的判斷循環</title><path d="M 637.5 169.9 A 390.0 390.0 0 0 1 884.4 349.4" fill="none" stroke="var(--accent)" stroke-width="5" stroke-linecap="round" stroke-dasharray="1000" stroke-dashoffset="0"/><polygon points="884.4,349.4 858.0,332.6 882.0,318.2" fill="var(--accent)"/><path d="M 938.5 515.7 A 390.0 390.0 0 0 1 844.2 806.1" fill="none" stroke="var(--accent)" stroke-width="5" stroke-linecap="round" stroke-dasharray="1000" stroke-dashoffset="0"/><polygon points="844.2,806.1 852.0,775.8 873.1,794.1" fill="var(--accent)"/><path d="M 702.6 908.9 A 390.0 390.0 0 0 1 397.4 908.9" fill="none" stroke="var(--accent)" stroke-width="5" stroke-linecap="round" stroke-dasharray="1000" stroke-dashoffset="0"/><polygon points="397.4,908.9 428.6,907.0 417.7,932.7" fill="var(--accent)"/><path d="M 255.8 806.1 A 390.0 390.0 0 0 1 161.5 515.7" fill="none" stroke="var(--accent)" stroke-width="5" stroke-linecap="round" stroke-dasharray="1000" stroke-dashoffset="0"/><polygon points="161.5,515.7 173.0,544.9 145.1,542.4" fill="var(--accent)"/><path d="M 215.6 349.4 A 390.0 390.0 0 0 1 462.5 169.9" fill="none" stroke="var(--accent)" stroke-width="5" stroke-linecap="round" stroke-dasharray="1000" stroke-dashoffset="0"/><polygon points="462.5,169.9 438.4,189.9 432.1,162.6" fill="var(--accent)"/><rect x="470.0" y="206.0" width="160.0" height="88.0" rx="16" fill="var(--callout-tip)" stroke="var(--accent)" stroke-width="2"/><text x="550.0" y="250.0" text-anchor="middle" font-size="28" font-weight="700" fill="var(--fg)">看浪潮</text><text x="550.0" y="280.0" text-anchor="middle" font-size="18" fill="var(--muted)">時機與限制</text><rect x="755.3" y="413.3" width="160.0" height="88.0" rx="16" fill="var(--callout-tip)" stroke="var(--accent)" stroke-width="2"/><text x="835.3" y="457.3" text-anchor="middle" font-size="28" font-weight="700" fill="var(--fg)">選問題</text><text x="835.3" y="487.3" text-anchor="middle" font-size="18" fill="var(--muted)">高價值、高頻率、可驗證</text><rect x="646.3" y="748.7" width="160.0" height="88.0" rx="16" fill="var(--callout-tip)" stroke="var(--accent)" stroke-width="2"/><text x="726.3" y="792.7" text-anchor="middle" font-size="28" font-weight="700" fill="var(--fg)">選工具</text><text x="726.3" y="822.7" text-anchor="middle" font-size="18" fill="var(--muted)">模型、RAG、SaaS、人工流程</text><rect x="293.7" y="748.7" width="160.0" height="88.0" rx="16" fill="var(--callout-tip)" stroke="var(--accent)" stroke-width="2"/><text x="373.7" y="792.7" text-anchor="middle" font-size="28" font-weight="700" fill="var(--fg)">做解法</text><text x="373.7" y="822.7" text-anchor="middle" font-size="18" fill="var(--muted)">貼近現有工作習慣</text><rect x="184.7" y="413.3" width="160.0" height="88.0" rx="16" fill="var(--callout-tip)" stroke="var(--accent)" stroke-width="2"/><text x="264.7" y="457.3" text-anchor="middle" font-size="28" font-weight="700" fill="var(--fg)">改模式</text><text x="264.7" y="487.3" text-anchor="middle" font-size="18" fill="var(--muted)">從座位收費走向成效與工作量</text></svg><figcaption>10x 的重點是讓判斷循環變短，越快得到市場回饋，越快避開錯誤方向。</figcaption></figure>
+<h2>給個人的行動清單</h2>
+<p>這篇筆記最實用的地方，是把 AI 從抽象趨勢拉回每天的工作。你不需要立刻訓練模型，也不需要追逐所有工具。先把自己的工作拆成可委派、可檢查、可重複的任務，然後逐步交給 AI 代理處理。</p>
+<ul><li>列出自己每週重複做的 5 件事，挑一件交給 AI 產出初稿。</li><li>把工作流程寫成 SOP，讓 AI 能照步驟執行，也讓你能檢查結果。</li><li>保留人類判斷點：需求定義、資料可靠性、重要決策、對外溝通。</li><li>累積自己的資料庫：案例、客戶語言、決策紀錄、常見錯誤，這些會成為個人護城河。</li><li>每週固定回顧一次：哪些任務被壓縮了時間，哪些任務仍需要你親自判斷。</li></ul>
+<blockquote>速度的用法，是用更短循環驗證更重要的假設。<cite> — 本文整理</cite></blockquote>
+<h2>推薦資源：用少量固定來源維持判斷力</h2>
+<p>資訊更新很快，不必把所有 AI 新聞都吃下來。比較好的做法，是選少量高品質來源，固定追蹤，並用自己的產業場景重新解讀。</p>
+<ul><li>Acquired：理解大型科技公司的長期策略，特別是 Google AI 相關集數。</li><li>Lenny&#x27;s Podcast：觀察產品、增長與 AI 產品工藝。</li><li>The AI Daily Brief：用短時間掌握每日 AI 產業變化。</li><li>How I AI with Claire Vo：看前線工作者如何把 AI 放進真實工作流程。</li><li>Stratechery、Tomasz Tunguz、Money Stuff、Elad Gil：分別補足科技策略、SaaS 數據、金融視角與新創成長判斷。</li></ul>
+
+</article>
+<footer>
+<p style="color: var(--muted); font-size: 0.85rem; margin-top: 4rem; padding-top: 1.5rem; border-top: 1px solid var(--border);">
+來源：根據使用者提供的 2026 HBS Reunion Weekend 演講筆記整理；原始 slides 未附。
+</p>
+</footer>
+</main>
+<script>
+  const bar = document.getElementById('progress');
+  window.addEventListener('scroll', () => {
+    const h = document.documentElement;
+    const max = h.scrollHeight - h.clientHeight;
+    const ratio = max > 0 ? h.scrollTop / max : 0;
+    bar.style.transform = 'scaleX(' + ratio + ')';
+  }, { passive: true });
+</script>
+</body>
+</html>
