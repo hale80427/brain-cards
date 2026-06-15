@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Agentic AI 時代，團隊結構要怎麼重排</title>
+<meta name="description" content="AWS 演講整理：經濟、人才、結構、治理四條主線。">
+
+<!-- Canonical & 作者 -->
+<link rel="canonical" href="https://hale80427.github.io/brain-cards/agentic-ai-team-structures-aws-events/">
+<meta name="author" content="彥皓">
+
+<!-- Open Graph（FB / LINE / Slack / Discord 連結預覽）-->
+<meta property="og:type" content="article">
+<meta property="og:title" content="Agentic AI 時代，團隊結構要怎麼重排">
+<meta property="og:description" content="AWS 演講整理：經濟、人才、結構、治理四條主線。">
+<meta property="og:url" content="https://hale80427.github.io/brain-cards/agentic-ai-team-structures-aws-events/">
+<meta property="og:image" content="https://hale80427.github.io/brain-cards/og-default.jpg">
+<meta property="og:locale" content="zh_TW">
+
+<!-- Twitter / X Card -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Agentic AI 時代，團隊結構要怎麼重排">
+<meta name="twitter:description" content="AWS 演講整理：經濟、人才、結構、治理四條主線。">
+<meta name="twitter:image" content="https://hale80427.github.io/brain-cards/og-default.jpg">
+
+<!-- 結構化資料（JSON-LD，提升 AI 與搜尋引擎理解）-->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "Agentic AI \u6642\u4ee3\uff0c\u5718\u968a\u7d50\u69cb\u8981\u600e\u9ebc\u91cd\u6392",
+  "description": "AWS \u6f14\u8b1b\u6574\u7406\uff1a\u7d93\u6fdf\u3001\u4eba\u624d\u3001\u7d50\u69cb\u3001\u6cbb\u7406\u56db\u689d\u4e3b\u7dda\u3002",
+  "datePublished": "2026-06-15",
+  "dateModified": "2026-06-15",
+  "author": { "@type": "Person", "name": "彥皓" },
+  "url": "https://hale80427.github.io/brain-cards/agentic-ai-team-structures-aws-events/",
+  "inLanguage": "zh-TW",
+  "license": "https://creativecommons.org/licenses/by/4.0/"
+}
+</script>
+
+<style>
+  :root {
+    /* color tokens — OKLCH (hallmark token discipline；禁止 inline hex / rgb / oklch / font-family；
+       hex 註解保留為設計者原意溯源，色彩值以 OKLCH 為事實源) */
+    --bg: oklch(98.4% 0.004 106.5);              /* 暖白（was #fafaf7） */
+    --fg: oklch(21.8% 0 0);                       /* 近黑（was #1a1a1a） */
+    --accent: oklch(54.3% 0.174 29.7);            /* 暖紅（was #c0392b） */
+    --accent-warn: oklch(66.6% 0.157 58.3);       /* 橘黃 callout warn 強調（was #d97706 inline，lift 進 token） */
+    --muted: oklch(51.0% 0 0);                    /* 中灰（was #666） */
+    --border: oklch(92.1% 0.007 106.5);           /* 淺暖灰（was #e5e5e0） */
+    --callout-tip: oklch(95.7% 0.014 174.2);      /* 淺薄荷（was #e8f4f0） */
+    --callout-warn: oklch(96.9% 0.019 72.6);      /* 淺暖米（was #fdf3e7） */
+    --fs-meta: 0.85rem;                          /* metadata / footer / .bluf 標籤 */
+    --fs-body: 1rem;                              /* p / li / td / blockquote / h3 / code / table */
+    --fs-h2:   clamp(1.3rem, 3vw, 1.5rem);      /* h2 段標題 */
+    --fs-h1:   clamp(1.75rem, 4vw, 2.25rem);    /* h1 主標題 */
+    /* font tokens（hallmark token discipline；禁止 inline font-family） */
+    --font-serif: "Noto Serif TC", Georgia, serif;
+    --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+    /* easing tokens（hallmark：禁止 unnamed easing） */
+    --ease-linear: linear;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: oklch(21.8% 0 0);                     /* was #1a1a1a */
+      --fg: oklch(95.3% 0.011 106.6);             /* 米白（was #f0f0e8） */
+      --accent: oklch(70.4% 0.136 28.7);          /* 亮珊瑚（was #e87c6e） */
+      --accent-warn: oklch(76.9% 0.165 70.1);     /* dark mode 等對等亮版 warn 強調 */
+      --muted: oklch(68.3% 0 0);                  /* was #999 */
+      --border: oklch(32.1% 0 0);                 /* was #333 */
+      --callout-tip: oklch(30.9% 0.029 178.3);    /* 深綠青（was #1f3530） */
+      --callout-warn: oklch(30.7% 0.034 73.5);    /* 深棕（was #3a2d1c） */
+    }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
+  }
+  * { box-sizing: border-box; }
+  body {
+    font-family: var(--font-serif);
+    background: var(--bg);
+    color: var(--fg);
+    line-height: 1.8;
+    margin: 0;
+    padding: 0;
+    -webkit-font-smoothing: antialiased;
+  }
+  .progress-bar {
+    /* hallmark：只動 transform / opacity，不動 layout property（避免 reflow + 對齊微互動紀律） */
+    position: fixed; top: 0; left: 0; height: 3px; width: 100%;
+    background: var(--accent); z-index: 100;
+    transform: scaleX(0); transform-origin: left;
+    transition: transform 0.1s var(--ease-linear);
+  }
+  main {
+    max-width: 680px;
+    margin: 0 auto;
+    padding: clamp(2rem, 5vw, 4rem) clamp(1.5rem, 4vw, 2rem);
+  }
+  /* === 字級階梯：嚴格 4 級。所有 font-size 必須引用以下 4 個變數之一 === */
+  /* === 違反 → KB-04 機械驗證會擋（font_levels > 4）=== */
+  /* === h3 / blockquote / code / table 等「想要不一樣」用 weight + color，不開新字級 === */
+  h1 { font-size: var(--fs-h1); line-height: 1.3; margin: 0 0 1rem; }
+  h2 { font-size: var(--fs-h2); line-height: 1.4; margin: 2.5rem 0 0.75rem; padding-bottom: 0.5rem; border-bottom: 1px solid var(--border); }
+  h3 { font-size: var(--fs-body); font-weight: 700; line-height: 1.4; margin: 1.75rem 0 0.5rem; color: var(--accent); }
+  p { margin: 0 0 1.25rem; }
+  a { color: var(--accent); text-underline-offset: 3px; }
+  a:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+  .bluf { background: var(--callout-tip); border-left: 3px solid var(--accent); padding: 1.25rem 1.5rem; margin: 1.5rem 0 2rem; border-radius: 4px; }
+  .bluf strong { display: block; font-size: var(--fs-meta); letter-spacing: 0.05em; color: var(--accent); margin-bottom: 0.5rem; text-transform: uppercase; }
+  .callout { padding: 1rem 1.25rem; margin: 1.5rem 0; border-radius: 4px; border-left: 3px solid var(--muted); }
+  .callout.tip { background: var(--callout-tip); border-left-color: var(--accent); }
+  .callout.warn { background: var(--callout-warn); border-left-color: var(--accent-warn); }
+  .callout.info { background: var(--callout-tip); border-left-color: var(--muted); }
+  .callout.quote { background: transparent; border-left-color: var(--accent); font-style: italic; }
+  table { border-collapse: collapse; width: 100%; margin: 1.5rem 0; font-size: var(--fs-body); }
+  th, td { padding: 0.6rem 0.8rem; border: 1px solid var(--border); text-align: left; vertical-align: top; }
+  th { background: var(--callout-tip); font-weight: 600; }
+  code { font-family: var(--font-mono); background: var(--callout-tip); padding: 0.1em 0.4em; border-radius: 3px; font-size: var(--fs-body); }
+  /* === 圖片 / 圖說（圖表規則見 KB-07）：figcaption 用既有 --fs-meta，不開新字級 === */
+  figure { margin: 1.5rem 0; }
+  figure img { width: 100%; height: auto; border-radius: 4px; display: block; }
+  figure svg { width: 100%; height: auto; display: block; }
+  figcaption { font-size: var(--fs-meta); color: var(--muted); margin-top: 0.5rem; text-align: center; }
+  @media print {
+    .progress-bar { display: none; }
+    body { font-size: 11pt; line-height: 1.6; }
+    main { max-width: 100%; padding: 1cm; }
+  }
+</style>
+</head>
+<body>
+<div class="progress-bar" id="progress"></div>
+<main>
+<header>
+<h1>Agentic AI 時代，團隊結構要怎麼重排</h1>
+<div class="bluf">
+<strong>BLUF</strong>
+<p>這場 AWS 演講的重點很直接：企業導入 Agentic AI 時，瓶頸通常不在模型，而在 workflow 經濟性、人才管線、pod 結構與治理基礎設施。</p>
+</div>
+</header>
+<article>
+<!-- narrative: AI 的競爭會先改變工作分工與 hiring，而非立刻造成全職群大量失業。, 每個 workflow 都要單獨判斷 use、compose、build，不能一開始就把公司推進自建模型。, Senior pod 能加速執行，但公司層級仍要保留 junior pipeline。, Agent governance 應該寫成 runtime policy、identity、observability、audit，而非只停在文件。 -->
+<h2>先看結論：模型只是變數之一</h2>
+<figure><img src="assets/title-frame-af3b7966.png" alt="AWS Sydney Summit 2026 演講標題頁" width="912" height="1600"><figcaption>演講主題是 advanced team structures。它談的是企業 operating model，而非單一 AI 工具。</figcaption></figure>
+<p>Stephen Brozovich 在 AWS Events 這場演講中，把 Agentic AI 的組織問題拆成四條線：economics、talent、structure、governance。這個拆法有用，因為它把「要不要導入 AI」轉成可操作的問題：哪一條 workflow 值得用 AI，誰能負責，組織怎麼承接，風險怎麼被約束。</p>
+<div class="callout info">讀這場演講時，我會把它當成 CIO / 技術主管的 operating model memo。它真正關心的是：當 agent 能自己找路，組織如何定義河岸。</div>
+<h2>AI 先改變人才市場的入口</h2>
+<p>演講先處理一個常見誤判：AI 的衝擊不一定先表現為大規模失業。講者引用 Anthropic 的研究，區分 theoretical exposure 與 observed exposure。很多任務理論上可以交給 LLM，但企業實際使用的範圍還小很多。</p>
+<p>真正已經發生的變化，是 entry-level hiring 放緩。這代表企業短期看見 AI ROI 時，最容易先砍 junior pipeline。這個動作短期看起來合理，長期會把 senior 的生成路徑切斷。</p>
+<blockquote>If you stop training your juniors, where do your seniors come from?<cite> — 影片約 18:27–19:11</cite></blockquote>
+<ul><li>Fact：影片說最受 AI exposure 的職群沒有出現系統性失業上升。</li><li>Inference：企業的第一個風險是 junior learning path 被壓縮，而非全部職位瞬間消失。</li><li>Need-verify：影片引用的 14% junior hiring slowdown 等數字，若要對外引用，需要回查原研究。</li></ul>
+<h2>Economics：每條 workflow 各自判斷</h2>
+<figure><img src="assets/economics-frame-1c0af287.png" alt="講者站在 AWS 投影片前，討論 packaged SaaS 與經濟決策" width="914" height="1600"><figcaption>影片中段開始談 AI economics。畫面顯示講者以 SaaS / workflow 的角度說明成本與差異化。</figcaption></figure>
+<p>講者把 AI 採用路徑拆成三種：use、compose、build。Use 是買端到端方案，速度快、差異化低。Compose 是串接 frontier API 與企業自己的 context，速度與差異化折中。Build 是訓練或 fine-tune 自己的模型，控制高，但成本與速度壓力最大。</p>
+<figure><svg viewBox="0 0 792 120" role="img" xmlns="http://www.w3.org/2000/svg"><title>Workflow 決策鏈</title><rect x="12" y="32" width="150" height="56" rx="6" fill="var(--callout-tip)" stroke="var(--accent)" stroke-width="1.5"/><text x="87" y="65" text-anchor="middle" font-size="15" fill="var(--fg)">Workflow</text><line x1="162" y1="60" x2="210" y2="60" stroke="var(--accent)" stroke-width="1.5"/><polygon points="210,55 218,60 210,65" fill="var(--accent)"/><rect x="218" y="32" width="150" height="56" rx="6" fill="var(--callout-tip)" stroke="var(--accent)" stroke-width="1.5"/><text x="293" y="65" text-anchor="middle" font-size="15" fill="var(--fg)">Economics</text><line x1="368" y1="60" x2="416" y2="60" stroke="var(--accent)" stroke-width="1.5"/><polygon points="416,55 424,60 416,65" fill="var(--accent)"/><rect x="424" y="32" width="150" height="56" rx="6" fill="var(--callout-tip)" stroke="var(--accent)" stroke-width="1.5"/><text x="499" y="65" text-anchor="middle" font-size="15" fill="var(--fg)">Use / Compose / Build</text><line x1="574" y1="60" x2="622" y2="60" stroke="var(--accent)" stroke-width="1.5"/><polygon points="622,55 630,60 622,65" fill="var(--accent)"/><rect x="630" y="32" width="150" height="56" rx="6" fill="var(--callout-tip)" stroke="var(--accent)" stroke-width="1.5"/><text x="705" y="65" text-anchor="middle" font-size="15" fill="var(--fg)">Operating Model</text></svg><figcaption>先選 workflow，再看成本、速度與差異化，最後決定 use、compose 或 build。</figcaption></figure>
+<ul><li>低差異化、急著驗證：先 use。</li><li>流程 context 很重要、但模型本身未形成護城河：compose。</li><li>高頻、高差異化、經濟性已被驗證：才進 build。</li><li>還講不清楚 workflow economics：先不要把公司定位成 build shop。</li></ul>
+<div class="callout warn">最危險的路徑，是領導者在 day one 就宣布公司要自建模型，卻還沒搞清楚哪條 workflow 真的需要 build。</div>
+<h2>Talent：domain expert 加 agent，會壓過只會寫 code 的優勢</h2>
+<p>演講的第二條線是人才。過去技術人的價值常被定義成能寫 code、設 schema、ship feature。Agentic AI 之後，稀缺能力會轉向 orchestrate：定義問題、安排 agent、評估輸出、修正方向、必要時推翻 AI。</p>
+<p>影片用 Anthropic Build with Claude hackathon 當例子：前三名來自律師、醫生等 domain expert，而非職業 developer。這個例子提醒我們，domain judgment 加上 AI 建構能力，會重新排序人才市場；工程能力仍然重要，但它需要和產品、法規、客戶脈絡接上。</p>
+<ul><li>工程師的價值會往系統設計、驗證、架構邊界移動。</li><li>Domain expert 的價值會上升，因為他們掌握客戶、法規、產品細節。</li><li>Recruiting 應該看 curiosity、first principles、customer focus、跨域協作，年度框架名稱只能當輔助訊號。</li></ul>
+<h2>Team shape：pod 可以小，公司不能斷層</h2>
+<figure><img src="assets/team-shapes-frame-30428017.png" alt="Four Shapes 投影片，顯示 Pyramid team structure" width="912" height="1600"><figcaption>影片在 16 分多開始比較 pyramid、diamond、inverted pyramid、hourglass。這張截圖顯示傳統 pyramid。</figcaption></figure>
+<p>講者把團隊形狀分成四種。Pyramid 是傳統大量 junior、少量 senior。Diamond 是砍掉 junior、堆中層 oversight，講者視為陷阱。Inverted pyramid 是 3–5 位 senior engineer 搭配 AI 執行，適合新工作 pod。Hourglass 是公司層級仍保留 junior pipeline，讓未來 senior 能長出來。</p>
+<div class="callout info">合理的組織設計可能是雙層：pod 層級用 senior-heavy inverted pyramid；公司層級維持 hourglass，保留 apprenticeship 與 judgment 的生成路徑。</div>
+<ul><li>條件：AI 讓 senior pod 執行速度大幅提高。</li><li>機制：handoff 變少，agent 補部分 specialist depth。</li><li>結果：new work 的小隊會更小、更 senior-heavy。</li><li>驗證：觀察 review bottleneck、incident ownership、junior learning outcomes，而不是只看 code 產量。</li></ul>
+<h2>Structure：Model A 要退出，B 與 C 要配合</h2>
+<p>傳統 IT ops 的 Model A 把 build 與 run 分開，靠 ticket、runbook、SLA 維持秩序。講者判斷這套在 agentic world 會失效。原因是 agent 的行為帶有變異，且 security、architecture、foundation services 會進入 runtime policy 與 platform 設計。</p>
+<p>Model B 是 embedded pod：同一組人 build、run、debug agent。它適合小規模，因為 context gap 小。Model C 是 pods + platform：platform 提供 runtime、memory、identity、observability 與 guardrails，pod 保留 workflow 與模型選擇自主權。</p>
+<ul><li>小規模：先讓 2–3 個 pod 用 Model B 跑出責任鏈。</li><li>中大型：補 Model C，避免每個 pod 各自重造 auth、logging、policy、cost controls。</li><li>核心判準：platform 要提供路，不要把 pod綁死。</li></ul>
+<h2>Governance：把政策寫成基礎設施</h2>
+<figure><img src="assets/governance-frame-2cf79d66.png" alt="講者說明 agent governance 與 multi-agent failure 風險" width="919" height="1600"><figcaption>治理段落談 agent identity、multi-agent risk、failure taxonomy。截圖顯示講者正在說明多 agent 風險。</figcaption></figure>
+<p>治理是最後一條線。影片引用 Singapore Model AI Governance Framework for Agentic AI，重點包括 risk assessment、human accountability chain、technical guardrails、end-user transparency。這些原則要進入系統設計，不能只留在政策文件。</p>
+<figure><svg viewBox="0 0 800 428" role="img" xmlns="http://www.w3.org/2000/svg"><title>Agent Governance Stack</title><rect x="0" y="10" width="800" height="72" rx="12" fill="var(--callout-tip)" stroke="var(--border)" stroke-width="1"/><rect x="0" y="10" width="8" height="72" rx="4" fill="var(--accent)"/><text x="30" y="44" font-size="18" font-weight="700" fill="var(--fg)">Outcome</text><text x="30" y="68" font-size="14" fill="var(--muted)">結果可量測</text><rect x="0" y="94" width="800" height="72" rx="12" fill="var(--callout-tip)" stroke="var(--border)" stroke-width="1"/><rect x="0" y="94" width="8" height="72" rx="4" fill="var(--accent)"/><text x="30" y="128" font-size="18" font-weight="700" fill="var(--fg)">Policy Gateway</text><text x="30" y="152" font-size="14" fill="var(--muted)">LLM 外部攔截與授權</text><rect x="0" y="178" width="800" height="72" rx="12" fill="var(--callout-tip)" stroke="var(--border)" stroke-width="1"/><rect x="0" y="178" width="8" height="72" rx="4" fill="var(--accent)"/><text x="30" y="212" font-size="18" font-weight="700" fill="var(--fg)">Identity / Authorization</text><text x="30" y="236" font-size="14" fill="var(--muted)">agent 身分與權限</text><rect x="0" y="262" width="800" height="72" rx="12" fill="var(--callout-tip)" stroke="var(--border)" stroke-width="1"/><rect x="0" y="262" width="8" height="72" rx="4" fill="var(--accent)"/><text x="30" y="296" font-size="18" font-weight="700" fill="var(--fg)">Observability / Audit</text><text x="30" y="320" font-size="14" fill="var(--muted)">行為紀錄與追溯</text><rect x="0" y="346" width="800" height="72" rx="12" fill="var(--callout-tip)" stroke="var(--border)" stroke-width="1"/><rect x="0" y="346" width="8" height="72" rx="4" fill="var(--accent)"/><text x="30" y="380" font-size="18" font-weight="700" fill="var(--fg)">Human Accountability</text><text x="30" y="404" font-size="14" fill="var(--muted)">每個動作能追到責任人</text></svg><figcaption>Agent 上線前要定義結果、政策閘門、身分權限、可觀測性與人類責任鏈。</figcaption></figure>
+<ol><li>Who is the agent? Who authorized it?</li><li>What is the agent allowed to do?</li><li>Is the agent performing as expected?</li><li>Can we audit what it did?</li></ol>
+<p>最重要的架構點，是 policy enforcement 應放在 LLM loop 外部。安全團隊定義 policy，工程團隊寫 agent；gateway 在 request 進模型前先做身分、授權、權限、稽核約束。</p>
+<h2>Monday morning：六步驟</h2>
+<ol><li>選一條 workflow，判斷 use、compose、build。</li><li>決定 pod 成員，3–5 位 senior engineer 為上限。</li><li>誠實判斷現在是 Model A、B 或 C。若還是 A，先規劃退出。</li><li>建立 governance：identity、authorization、observability、audit。</li><li>投資 senior domain expert，因為客戶、法規、產品細節壓不掉。</li><li>保護 junior pipeline，別用短期 ROI 切斷 2034 年的 senior 來源。</li></ol>
+<div class="callout warn">Transcript 來自 YouTube captions，可能有拼字誤差。本文的數字與研究名依字幕整理；若要對外發表或引用，應回查原影片與原始研究。</div>
+<p>原影片：https://youtu.be/O7u6myBRsns</p>
+
+</article>
+<footer>
+<p style="color: var(--muted); font-size: 0.85rem; margin-top: 4rem; padding-top: 1.5rem; border-top: 1px solid var(--border);">
+Source: YouTube / AWS Events / O7u6myBRsns。本文依影片字幕與截圖整理。
+</p>
+</footer>
+</main>
+<script>
+  const bar = document.getElementById('progress');
+  window.addEventListener('scroll', () => {
+    const h = document.documentElement;
+    const max = h.scrollHeight - h.clientHeight;
+    const ratio = max > 0 ? h.scrollTop / max : 0;
+    bar.style.transform = 'scaleX(' + ratio + ')';
+  }, { passive: true });
+</script>
+</body>
+</html>
