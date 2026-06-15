@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>分層揭露紀律：把可申請的公開，把最值錢的藏住</title>
+<meta name="description" content="用專利、論文與營業秘密分工，避免把可藏的參數免費送出去。">
+
+<!-- Canonical & 作者 -->
+<link rel="canonical" href="https://hale80427.github.io/brain-cards/layered-disclosure-discipline/">
+<meta name="author" content="彥皓">
+
+<!-- Open Graph（FB / LINE / Slack / Discord 連結預覽）-->
+<meta property="og:type" content="article">
+<meta property="og:title" content="分層揭露紀律：把可申請的公開，把最值錢的藏住">
+<meta property="og:description" content="用專利、論文與營業秘密分工，避免把可藏的參數免費送出去。">
+<meta property="og:url" content="https://hale80427.github.io/brain-cards/layered-disclosure-discipline/">
+<meta property="og:image" content="https://hale80427.github.io/brain-cards/og-default.jpg">
+<meta property="og:locale" content="zh_TW">
+
+<!-- Twitter / X Card -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="分層揭露紀律：把可申請的公開，把最值錢的藏住">
+<meta name="twitter:description" content="用專利、論文與營業秘密分工，避免把可藏的參數免費送出去。">
+<meta name="twitter:image" content="https://hale80427.github.io/brain-cards/og-default.jpg">
+
+<!-- 結構化資料（JSON-LD，提升 AI 與搜尋引擎理解）-->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "\u5206\u5c64\u63ed\u9732\u7d00\u5f8b\uff1a\u628a\u53ef\u7533\u8acb\u7684\u516c\u958b\uff0c\u628a\u6700\u503c\u9322\u7684\u85cf\u4f4f",
+  "description": "\u7528\u5c08\u5229\u3001\u8ad6\u6587\u8207\u71df\u696d\u79d8\u5bc6\u5206\u5de5\uff0c\u907f\u514d\u628a\u53ef\u85cf\u7684\u53c3\u6578\u514d\u8cbb\u9001\u51fa\u53bb\u3002",
+  "datePublished": "2026-06-15",
+  "dateModified": "2026-06-15",
+  "author": { "@type": "Person", "name": "彥皓" },
+  "url": "https://hale80427.github.io/brain-cards/layered-disclosure-discipline/",
+  "inLanguage": "zh-TW",
+  "license": "https://creativecommons.org/licenses/by/4.0/"
+}
+</script>
+
+<style>
+  :root {
+    /* color tokens — OKLCH (hallmark token discipline；禁止 inline hex / rgb / oklch / font-family；
+       hex 註解保留為設計者原意溯源，色彩值以 OKLCH 為事實源) */
+    --bg: oklch(98.4% 0.004 106.5);              /* 暖白（was #fafaf7） */
+    --fg: oklch(21.8% 0 0);                       /* 近黑（was #1a1a1a） */
+    --accent: oklch(54.3% 0.174 29.7);            /* 暖紅（was #c0392b） */
+    --accent-warn: oklch(66.6% 0.157 58.3);       /* 橘黃 callout warn 強調（was #d97706 inline，lift 進 token） */
+    --muted: oklch(51.0% 0 0);                    /* 中灰（was #666） */
+    --border: oklch(92.1% 0.007 106.5);           /* 淺暖灰（was #e5e5e0） */
+    --callout-tip: oklch(95.7% 0.014 174.2);      /* 淺薄荷（was #e8f4f0） */
+    --callout-warn: oklch(96.9% 0.019 72.6);      /* 淺暖米（was #fdf3e7） */
+    --fs-meta: 0.85rem;                          /* metadata / footer / .bluf 標籤 */
+    --fs-body: 1rem;                              /* p / li / td / blockquote / h3 / code / table */
+    --fs-h2:   clamp(1.3rem, 3vw, 1.5rem);      /* h2 段標題 */
+    --fs-h1:   clamp(1.75rem, 4vw, 2.25rem);    /* h1 主標題 */
+    /* font tokens（hallmark token discipline；禁止 inline font-family） */
+    --font-serif: "Noto Serif TC", Georgia, serif;
+    --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+    /* easing tokens（hallmark：禁止 unnamed easing） */
+    --ease-linear: linear;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: oklch(21.8% 0 0);                     /* was #1a1a1a */
+      --fg: oklch(95.3% 0.011 106.6);             /* 米白（was #f0f0e8） */
+      --accent: oklch(70.4% 0.136 28.7);          /* 亮珊瑚（was #e87c6e） */
+      --accent-warn: oklch(76.9% 0.165 70.1);     /* dark mode 等對等亮版 warn 強調 */
+      --muted: oklch(68.3% 0 0);                  /* was #999 */
+      --border: oklch(32.1% 0 0);                 /* was #333 */
+      --callout-tip: oklch(30.9% 0.029 178.3);    /* 深綠青（was #1f3530） */
+      --callout-warn: oklch(30.7% 0.034 73.5);    /* 深棕（was #3a2d1c） */
+    }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
+  }
+  * { box-sizing: border-box; }
+  body {
+    font-family: var(--font-serif);
+    background: var(--bg);
+    color: var(--fg);
+    line-height: 1.8;
+    margin: 0;
+    padding: 0;
+    -webkit-font-smoothing: antialiased;
+  }
+  .progress-bar {
+    /* hallmark：只動 transform / opacity，不動 layout property（避免 reflow + 對齊微互動紀律） */
+    position: fixed; top: 0; left: 0; height: 3px; width: 100%;
+    background: var(--accent); z-index: 100;
+    transform: scaleX(0); transform-origin: left;
+    transition: transform 0.1s var(--ease-linear);
+  }
+  main {
+    max-width: 680px;
+    margin: 0 auto;
+    padding: clamp(2rem, 5vw, 4rem) clamp(1.5rem, 4vw, 2rem);
+  }
+  /* === 字級階梯：嚴格 4 級。所有 font-size 必須引用以下 4 個變數之一 === */
+  /* === 違反 → KB-04 機械驗證會擋（font_levels > 4）=== */
+  /* === h3 / blockquote / code / table 等「想要不一樣」用 weight + color，不開新字級 === */
+  h1 { font-size: var(--fs-h1); line-height: 1.3; margin: 0 0 1rem; }
+  h2 { font-size: var(--fs-h2); line-height: 1.4; margin: 2.5rem 0 0.75rem; padding-bottom: 0.5rem; border-bottom: 1px solid var(--border); }
+  h3 { font-size: var(--fs-body); font-weight: 700; line-height: 1.4; margin: 1.75rem 0 0.5rem; color: var(--accent); }
+  p { margin: 0 0 1.25rem; }
+  a { color: var(--accent); text-underline-offset: 3px; }
+  a:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+  .bluf { background: var(--callout-tip); border-left: 3px solid var(--accent); padding: 1.25rem 1.5rem; margin: 1.5rem 0 2rem; border-radius: 4px; }
+  .bluf strong { display: block; font-size: var(--fs-meta); letter-spacing: 0.05em; color: var(--accent); margin-bottom: 0.5rem; text-transform: uppercase; }
+  .callout { padding: 1rem 1.25rem; margin: 1.5rem 0; border-radius: 4px; border-left: 3px solid var(--muted); }
+  .callout.tip { background: var(--callout-tip); border-left-color: var(--accent); }
+  .callout.warn { background: var(--callout-warn); border-left-color: var(--accent-warn); }
+  .callout.info { background: var(--callout-tip); border-left-color: var(--muted); }
+  .callout.quote { background: transparent; border-left-color: var(--accent); font-style: italic; }
+  table { border-collapse: collapse; width: 100%; margin: 1.5rem 0; font-size: var(--fs-body); }
+  th, td { padding: 0.6rem 0.8rem; border: 1px solid var(--border); text-align: left; vertical-align: top; }
+  th { background: var(--callout-tip); font-weight: 600; }
+  code { font-family: var(--font-mono); background: var(--callout-tip); padding: 0.1em 0.4em; border-radius: 3px; font-size: var(--fs-body); }
+  /* === 圖片 / 圖說（圖表規則見 KB-07）：figcaption 用既有 --fs-meta，不開新字級 === */
+  figure { margin: 1.5rem 0; }
+  figure img { width: 100%; height: auto; border-radius: 4px; display: block; }
+  figure svg { width: 100%; height: auto; display: block; }
+  figcaption { font-size: var(--fs-meta); color: var(--muted); margin-top: 0.5rem; text-align: center; }
+  @media print {
+    .progress-bar { display: none; }
+    body { font-size: 11pt; line-height: 1.6; }
+    main { max-width: 100%; padding: 1cm; }
+  }
+</style>
+</head>
+<body>
+<div class="progress-bar" id="progress"></div>
+<main>
+<header>
+<h1>分層揭露紀律：把可申請的公開，把最值錢的藏住</h1>
+<div class="bluf">
+<strong>BLUF</strong>
+<p>專利與論文揭露到「可實施」即可；能被反推的架構先圈權，產線級參數留作營業秘密。</p>
+</div>
+</header>
+<article>
+<!-- narrative: 揭露的目標不是交出最佳答案，而是滿足可實施門檻並建立權利邊界。, 方法架構藏不久，適合專利化；最佳參數藏得住，應留在內部。, Paper 的風險不在公開本身，而在公開了沒有申請、又原本能藏住的 know-how。 -->
+<h2>一句話規則</h2>
+<div class="callout info">公開「別人遲早看得出來、且需要權利保護」的部分；保留「別人看不出來、但商業上最值錢」的部分。</div>
+<figure><svg viewBox="0 0 800 260" role="img" xmlns="http://www.w3.org/2000/svg"><title>兩層揭露分工</title><rect x="0" y="10" width="800" height="72" rx="12" fill="var(--callout-tip)" stroke="var(--border)" stroke-width="1"/><rect x="0" y="10" width="8" height="72" rx="4" fill="var(--accent)"/><text x="30" y="44" font-size="18" font-weight="700" fill="var(--fg)">論文／專利說明書</text><text x="30" y="68" font-size="14" fill="var(--muted)">方法骨架、一組可運作設定、可被實施的描述</text><rect x="0" y="94" width="800" height="72" rx="12" fill="var(--callout-tip)" stroke="var(--border)" stroke-width="1"/><rect x="0" y="94" width="8" height="72" rx="4" fill="var(--accent)"/><text x="30" y="128" font-size="18" font-weight="700" fill="var(--fg)">公開後仍有價值的權利邊界</text><text x="30" y="152" font-size="14" fill="var(--muted)">把容易被模仿的概念架構圈進專利範圍</text><rect x="0" y="178" width="800" height="72" rx="12" fill="var(--callout-tip)" stroke="var(--border)" stroke-width="1"/><rect x="0" y="178" width="8" height="72" rx="4" fill="var(--accent)"/><text x="30" y="212" font-size="18" font-weight="700" fill="var(--fg)">營業秘密</text><text x="30" y="236" font-size="14" fill="var(--muted)">最佳超參數、製程窗口、訓練細節、商業調校 know-how</text></svg><figcaption>上層交給論文與專利，下層留給內部調校；兩者不是同一份揭露清單。</figcaption></figure>
+<h2>公開層：揭露到可實施</h2>
+<p>論文與專利說明書要讓讀者或審查者知道方法怎麼做，至少要有一組能 work 的設定。這裡的重點是 enablement：描述足以讓技術人員照著實施，而不是把產線上最準、最穩、成本最低的版本全部交出去。</p>
+<ul><li>講方法骨架：物理資訊如何接進模型，多模態訊號如何融合。</li><li>給可運作實施例：一組能跑、能驗證的設定。</li><li>留下權利範圍：讓容易被模仿的架構被專利邊界包住。</li></ul>
+<div class="callout warn">事實邊界：不同國家的 best mode、enablement 與充分揭露規則不同。正式送件前要讓專利律師按目標市場逐項查證。</div>
+<h2>保密層：留下真正的調校價值</h2>
+<p>競爭優勢常藏在細節：哪組超參數在碳化矽微鑽孔上最準、哪段製程窗口最穩、訓練資料怎麼切、異常樣本怎麼補。這些若從產品外觀、公開論文或專利文本看不出來，就不該主動寫出去。</p>
+<ul><li>最佳超參數：只在內部 SOP、實驗記錄與版本控管中保存。</li><li>製程窗口具體值：論文可給範圍或示例，避免交出最佳點。</li><li>訓練細節：保留資料清理、標註規則、失敗樣本處理方式。</li><li>商業調校 know-how：保留能把可運作版本推到量產穩定的那段路。</li></ul>
+<h2>套到她的題目</h2>
+<figure><svg viewBox="0 0 792 120" role="img" xmlns="http://www.w3.org/2000/svg"><title>揭露決策鏈</title><rect x="12" y="32" width="150" height="56" rx="6" fill="var(--callout-tip)" stroke="var(--accent)" stroke-width="1.5"/><text x="87" y="65" text-anchor="middle" font-size="15" fill="var(--fg)">條件</text><line x1="162" y1="60" x2="210" y2="60" stroke="var(--accent)" stroke-width="1.5"/><polygon points="210,55 218,60 210,65" fill="var(--accent)"/><rect x="218" y="32" width="150" height="56" rx="6" fill="var(--callout-tip)" stroke="var(--accent)" stroke-width="1.5"/><text x="293" y="65" text-anchor="middle" font-size="15" fill="var(--fg)">機制</text><line x1="368" y1="60" x2="416" y2="60" stroke="var(--accent)" stroke-width="1.5"/><polygon points="416,55 424,60 416,65" fill="var(--accent)"/><rect x="424" y="32" width="150" height="56" rx="6" fill="var(--callout-tip)" stroke="var(--accent)" stroke-width="1.5"/><text x="499" y="65" text-anchor="middle" font-size="15" fill="var(--fg)">結果</text><line x1="574" y1="60" x2="622" y2="60" stroke="var(--accent)" stroke-width="1.5"/><polygon points="622,55 630,60 622,65" fill="var(--accent)"/><rect x="630" y="32" width="150" height="56" rx="6" fill="var(--callout-tip)" stroke="var(--accent)" stroke-width="1.5"/><text x="705" y="65" text-anchor="middle" font-size="15" fill="var(--fg)">驗證</text></svg><figcaption>先判斷能否藏住，再決定放進專利、論文或營業秘密。</figcaption></figure>
+<ul><li>物理資訊加多模態融合的概念架構：容易被論文與產品揭露後模仿，適合先申請專利。</li><li>碳化矽微鑽孔任務上的最佳設定：若外部無法從產品反推出來，應留作營業秘密。</li><li>論文內容：只放進專利範圍已涵蓋、且足以說明方法有效的版本。</li><li>專利內容：寫到能被實施，不主動公開產線級最佳參數。</li></ul>
+<h2>最容易出錯的洞</h2>
+<p>Paper 公開不一定是損失。若要申請專利，申請案通常也會在一段時間後公開；只要論文內容落在專利範圍內，邊際損失有限。真正危險的是在論文中寫出沒有申請、外部原本也看不見的秘方參數。</p>
+<ol><li>先列出所有可能公開的資訊：架構、流程、參數、資料處理、驗證結果。</li><li>逐項標記三類：藏不住、藏得住但不值錢、藏得住且值錢。</li><li>藏不住的核心架構先專利化；藏得住且值錢的細節留營業秘密。</li><li>送論文前比對專利草案：確認論文沒有超出專利保護範圍，也沒有洩漏保密層。</li></ol>
+<div class="callout tip">守住分層揭露，論文可以支持學術與商業信用；專利負責圈權；最值錢的調校參數繼續留在內部。</div>
+
+</article>
+<footer>
+<p style="color: var(--muted); font-size: 0.85rem; margin-top: 4rem; padding-top: 1.5rem; border-top: 1px solid var(--border);">
+法律細節需依國別查證；best mode、enablement 與營業秘密保護規則可能不同。
+</p>
+</footer>
+</main>
+<script>
+  const bar = document.getElementById('progress');
+  window.addEventListener('scroll', () => {
+    const h = document.documentElement;
+    const max = h.scrollHeight - h.clientHeight;
+    const ratio = max > 0 ? h.scrollTop / max : 0;
+    bar.style.transform = 'scaleX(' + ratio + ')';
+  }, { passive: true });
+</script>
+</body>
+</html>
