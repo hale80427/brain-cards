@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AI 時代的勞動力市場大未來：工作、學歷與組織的重排</title>
+<meta name="description" content="白話整理 Joseph Fuller 對 Agentic AI、職涯與企業組織的演講重點。">
+
+<!-- Canonical & 作者 -->
+<link rel="canonical" href="https://hale80427.github.io/brain-cards/future-of-work-agentic-ai-fuller-2026/">
+<meta name="author" content="彥皓">
+
+<!-- Open Graph（FB / LINE / Slack / Discord 連結預覽）-->
+<meta property="og:type" content="article">
+<meta property="og:title" content="AI 時代的勞動力市場大未來：工作、學歷與組織的重排">
+<meta property="og:description" content="白話整理 Joseph Fuller 對 Agentic AI、職涯與企業組織的演講重點。">
+<meta property="og:url" content="https://hale80427.github.io/brain-cards/future-of-work-agentic-ai-fuller-2026/">
+<meta property="og:image" content="https://hale80427.github.io/brain-cards/og-default.jpg">
+<meta property="og:locale" content="zh_TW">
+
+<!-- Twitter / X Card -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="AI 時代的勞動力市場大未來：工作、學歷與組織的重排">
+<meta name="twitter:description" content="白話整理 Joseph Fuller 對 Agentic AI、職涯與企業組織的演講重點。">
+<meta name="twitter:image" content="https://hale80427.github.io/brain-cards/og-default.jpg">
+
+<!-- 結構化資料（JSON-LD，提升 AI 與搜尋引擎理解）-->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "AI \u6642\u4ee3\u7684\u52de\u52d5\u529b\u5e02\u5834\u5927\u672a\u4f86\uff1a\u5de5\u4f5c\u3001\u5b78\u6b77\u8207\u7d44\u7e54\u7684\u91cd\u6392",
+  "description": "\u767d\u8a71\u6574\u7406 Joseph Fuller \u5c0d Agentic AI\u3001\u8077\u6daf\u8207\u4f01\u696d\u7d44\u7e54\u7684\u6f14\u8b1b\u91cd\u9ede\u3002",
+  "datePublished": "2026-06-16",
+  "dateModified": "2026-06-16",
+  "author": { "@type": "Person", "name": "彥皓" },
+  "url": "https://hale80427.github.io/brain-cards/future-of-work-agentic-ai-fuller-2026/",
+  "inLanguage": "zh-TW",
+  "license": "https://creativecommons.org/licenses/by/4.0/"
+}
+</script>
+
+<style>
+  :root {
+    /* color tokens — OKLCH (hallmark token discipline；禁止 inline hex / rgb / oklch / font-family；
+       hex 註解保留為設計者原意溯源，色彩值以 OKLCH 為事實源) */
+    --bg: oklch(98.4% 0.004 106.5);              /* 暖白（was #fafaf7） */
+    --fg: oklch(21.8% 0 0);                       /* 近黑（was #1a1a1a） */
+    --accent: oklch(54.3% 0.174 29.7);            /* 暖紅（was #c0392b） */
+    --accent-warn: oklch(66.6% 0.157 58.3);       /* 橘黃 callout warn 強調（was #d97706 inline，lift 進 token） */
+    --muted: oklch(51.0% 0 0);                    /* 中灰（was #666） */
+    --border: oklch(92.1% 0.007 106.5);           /* 淺暖灰（was #e5e5e0） */
+    --callout-tip: oklch(95.7% 0.014 174.2);      /* 淺薄荷（was #e8f4f0） */
+    --callout-warn: oklch(96.9% 0.019 72.6);      /* 淺暖米（was #fdf3e7） */
+    --fs-meta: 0.85rem;                          /* metadata / footer / .bluf 標籤 */
+    --fs-body: 1rem;                              /* p / li / td / blockquote / h3 / code / table */
+    --fs-h2:   clamp(1.3rem, 3vw, 1.5rem);      /* h2 段標題 */
+    --fs-h1:   clamp(1.75rem, 4vw, 2.25rem);    /* h1 主標題 */
+    /* font tokens（hallmark token discipline；禁止 inline font-family） */
+    --font-serif: "Noto Serif TC", Georgia, serif;
+    --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+    /* easing tokens（hallmark：禁止 unnamed easing） */
+    --ease-linear: linear;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: oklch(21.8% 0 0);                     /* was #1a1a1a */
+      --fg: oklch(95.3% 0.011 106.6);             /* 米白（was #f0f0e8） */
+      --accent: oklch(70.4% 0.136 28.7);          /* 亮珊瑚（was #e87c6e） */
+      --accent-warn: oklch(76.9% 0.165 70.1);     /* dark mode 等對等亮版 warn 強調 */
+      --muted: oklch(68.3% 0 0);                  /* was #999 */
+      --border: oklch(32.1% 0 0);                 /* was #333 */
+      --callout-tip: oklch(30.9% 0.029 178.3);    /* 深綠青（was #1f3530） */
+      --callout-warn: oklch(30.7% 0.034 73.5);    /* 深棕（was #3a2d1c） */
+    }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
+  }
+  * { box-sizing: border-box; }
+  body {
+    font-family: var(--font-serif);
+    background: var(--bg);
+    color: var(--fg);
+    line-height: 1.8;
+    margin: 0;
+    padding: 0;
+    -webkit-font-smoothing: antialiased;
+  }
+  .progress-bar {
+    /* hallmark：只動 transform / opacity，不動 layout property（避免 reflow + 對齊微互動紀律） */
+    position: fixed; top: 0; left: 0; height: 3px; width: 100%;
+    background: var(--accent); z-index: 100;
+    transform: scaleX(0); transform-origin: left;
+    transition: transform 0.1s var(--ease-linear);
+  }
+  main {
+    max-width: 680px;
+    margin: 0 auto;
+    padding: clamp(2rem, 5vw, 4rem) clamp(1.5rem, 4vw, 2rem);
+  }
+  /* === 字級階梯：嚴格 4 級。所有 font-size 必須引用以下 4 個變數之一 === */
+  /* === 違反 → KB-04 機械驗證會擋（font_levels > 4）=== */
+  /* === h3 / blockquote / code / table 等「想要不一樣」用 weight + color，不開新字級 === */
+  h1 { font-size: var(--fs-h1); line-height: 1.3; margin: 0 0 1rem; }
+  h2 { font-size: var(--fs-h2); line-height: 1.4; margin: 2.5rem 0 0.75rem; padding-bottom: 0.5rem; border-bottom: 1px solid var(--border); }
+  h3 { font-size: var(--fs-body); font-weight: 700; line-height: 1.4; margin: 1.75rem 0 0.5rem; color: var(--accent); }
+  p { margin: 0 0 1.25rem; }
+  a { color: var(--accent); text-underline-offset: 3px; }
+  a:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+  .bluf { background: var(--callout-tip); border-left: 3px solid var(--accent); padding: 1.25rem 1.5rem; margin: 1.5rem 0 2rem; border-radius: 4px; }
+  .bluf strong { display: block; font-size: var(--fs-meta); letter-spacing: 0.05em; color: var(--accent); margin-bottom: 0.5rem; text-transform: uppercase; }
+  .callout { padding: 1rem 1.25rem; margin: 1.5rem 0; border-radius: 4px; border-left: 3px solid var(--muted); }
+  .callout.tip { background: var(--callout-tip); border-left-color: var(--accent); }
+  .callout.warn { background: var(--callout-warn); border-left-color: var(--accent-warn); }
+  .callout.info { background: var(--callout-tip); border-left-color: var(--muted); }
+  .callout.quote { background: transparent; border-left-color: var(--accent); font-style: italic; }
+  table { border-collapse: collapse; width: 100%; margin: 1.5rem 0; font-size: var(--fs-body); }
+  th, td { padding: 0.6rem 0.8rem; border: 1px solid var(--border); text-align: left; vertical-align: top; }
+  th { background: var(--callout-tip); font-weight: 600; }
+  code { font-family: var(--font-mono); background: var(--callout-tip); padding: 0.1em 0.4em; border-radius: 3px; font-size: var(--fs-body); }
+  /* === 圖片 / 圖說（圖表規則見 KB-07）：figcaption 用既有 --fs-meta，不開新字級 === */
+  figure { margin: 1.5rem 0; }
+  figure img { width: 100%; height: auto; border-radius: 4px; display: block; }
+  figure svg { width: 100%; height: auto; display: block; }
+  figcaption { font-size: var(--fs-meta); color: var(--muted); margin-top: 0.5rem; text-align: center; }
+  @media print {
+    .progress-bar { display: none; }
+    body { font-size: 11pt; line-height: 1.6; }
+    main { max-width: 100%; padding: 1cm; }
+  }
+</style>
+</head>
+<body>
+<div class="progress-bar" id="progress"></div>
+<main>
+<header>
+<h1>AI 時代的勞動力市場大未來：工作、學歷與組織的重排</h1>
+<div class="bluf">
+<strong>BLUF</strong>
+<p>AI 正在改寫工作的底層規則：學歷優勢變薄，入門職位被壓縮，企業若沒有資料治理與新人訓練機制，只會得到更多 Workslop。</p>
+</div>
+</header>
+<article>
+<!-- narrative: Joseph Fuller，HBS Managing the Future of Work 共同主持人, 2026 年 HBS Reunion Weekend 演講筆記整理, 主題：The Future of Work in the Age of Agentic AI -->
+<h2>先看結論：AI 改變的是工作系統</h2>
+<p>Joseph Fuller 的開場提醒很硬：許多企業正在用錯誤、過時或不完整的資料做 AI 決策。這句話點出問題核心。AI 的風險與價值，不只在模型能力，也在企業如何理解勞動市場、如何訓練新人、如何重寫流程。</p>
+<figure><svg viewBox="0 0 792 120" role="img" xmlns="http://www.w3.org/2000/svg"><title>AI 為何會改寫工作市場</title><rect x="12" y="32" width="150" height="56" rx="6" fill="var(--callout-tip)" stroke="var(--accent)" stroke-width="1.5"/><text x="87" y="65" text-anchor="middle" font-size="15" fill="var(--fg)">人口老化</text><line x1="162" y1="60" x2="210" y2="60" stroke="var(--accent)" stroke-width="1.5"/><polygon points="210,55 218,60 210,65" fill="var(--accent)"/><rect x="218" y="32" width="150" height="56" rx="6" fill="var(--callout-tip)" stroke="var(--accent)" stroke-width="1.5"/><text x="293" y="65" text-anchor="middle" font-size="15" fill="var(--fg)">生產力放慢</text><line x1="368" y1="60" x2="416" y2="60" stroke="var(--accent)" stroke-width="1.5"/><polygon points="416,55 424,60 416,65" fill="var(--accent)"/><rect x="424" y="32" width="150" height="56" rx="6" fill="var(--callout-tip)" stroke="var(--accent)" stroke-width="1.5"/><text x="499" y="65" text-anchor="middle" font-size="15" fill="var(--fg)">企業尋找替代能力</text><line x1="574" y1="60" x2="622" y2="60" stroke="var(--accent)" stroke-width="1.5"/><polygon points="622,55 630,60 622,65" fill="var(--accent)"/><rect x="630" y="32" width="150" height="56" rx="6" fill="var(--callout-tip)" stroke="var(--accent)" stroke-width="1.5"/><text x="705" y="65" text-anchor="middle" font-size="15" fill="var(--fg)">職位結構重排</text></svg><figcaption>AI 進入工作市場，是人口、效率與組織壓力一起推動的結果。</figcaption></figure>
+<div class="callout info">白話版：AI 會改變企業要雇誰、怎麼訓練人、哪些工作被保留、哪些工作被拆掉。</div>
+<h2>一、宏觀背景：生產力變慢，缺工變成常態</h2>
+<p>Fuller 先把問題放回長期經濟趨勢。主要已開發經濟體的勞動生產力成長率，從 1970 年代到 2010 年代一路走低。美國在 1991 至 2000 年的網路與個人電腦普及期，勞動生產力年成長率接近 2.0%；到 2011 至 2019 年降到約 0.75%。日本、義大利、英國、德國也出現類似放緩。</p>
+<p>另一條線更難逆轉：人口老化。全球許多已開發國家的 15 至 64 歲勞動年齡人口占比，已從高點往下走。企業面對的現實是，人變少，效率成長也變慢。</p>
+<ul><li>低社交、低數學或低邏輯需求的例行工作，長期承壓。</li><li>中階技能職位被擠壓，因為許多工作可被拆成標準流程。</li><li>高社交、高判斷、高邏輯工作的價值上升。</li><li>AI 因此從工具選項變成企業補生產力缺口的方法。</li></ul>
+<div class="callout tip">條件 → 機制 → 結果：勞動力少了，傳統效率工具也不夠用，企業自然會把 AI 推進更核心的位置。</div>
+<h2>二、學歷溢價變薄，入門職位被壓縮</h2>
+<p>演講中最刺眼的訊號，是年輕學士畢業生的就業優勢正在縮小。過去近二十年，16 至 34 歲只持有學士學位的年輕人，失業率通常比副學士低約 1.5 個百分點。到 2026 年，兩條曲線接近重疊：BA only 約 4.24%，Associate 約 4.14%。</p>
+<p>這屬於職涯入口被改寫的結構性變化。企業過去用初階工作訓練新人：寫樣板程式、整理報表、處理文件、查資料、修 bug。這些工作原本痛苦，卻能養成底層理解。GenAI 把許多初階認知任務變便宜，企業就少開一部分起步職缺。</p>
+<ul><li>22 至 25 歲早期職涯員工，在軟體開發與客服等職能上受到較大壓力。</li><li>資深員工人數相對穩定，因為他們能定義問題與審查結果。</li><li>企業若完全停止招募新人，會失去未來資深人才的培養管道。</li><li>新學徒制的重點，是讓新人提早學會拆任務、審 AI、理解產品與客戶。</li></ul>
+<div class="callout warn">入門工作消失的代價，不只落在年輕人身上，也落在企業未來的人才庫。沒有學徒期，就沒有下一代資深架構師。</div>
+<h2>三、新學徒制：PM、初階工程師與 AI 的新鐵三角</h2>
+<p>在新的工作模式下，初階工程師不再只是單純執行需求的人。他們需要在產品經理或資深同事帶領下，學會把商業問題拆成模型可處理的任務，再檢查 AI 產出的程式碼、設計或文件。</p>
+<ul><li>前置架構思維：新人要更早理解系統邊界、資料流與錯誤風險。</li><li>品味與商業直覺：AI 能產出看似完整的方案，但人要判斷它是否適合真實場景。</li><li>審查能力：程式碼能跑，仍可能不安全、不合規或不符合使用者需求。</li><li>協作能力：新人要和 PM、設計、工程、法務一起工作，而不是只躲在任務票裡。</li></ul>
+<p>這也解釋了為什麼未來的初階人才要求反而更高。企業少了讓新人慢慢摸索的空間，新人必須更早具備結構化思考。</p>
+<h2>四、企業導入 AI，會先掉進 J 曲線谷底</h2>
+<p>個人採用 AI 很快，但企業部署很慢。Fuller 提到，高比例成年人已在日常生活或工作中使用 GenAI；但企業把 POC 推進正式生產環境的比例仍低。許多組織做了大量實驗，真正嵌入日常營運的案例有限。</p>
+<figure><svg viewBox="0 0 792 120" role="img" xmlns="http://www.w3.org/2000/svg"><title>企業導入 AI 的 J 曲線</title><rect x="12" y="32" width="150" height="56" rx="6" fill="var(--callout-tip)" stroke="var(--accent)" stroke-width="1.5"/><text x="87" y="65" text-anchor="middle" font-size="15" fill="var(--fg)">採購工具</text><line x1="162" y1="60" x2="210" y2="60" stroke="var(--accent)" stroke-width="1.5"/><polygon points="210,55 218,60 210,65" fill="var(--accent)"/><rect x="218" y="32" width="150" height="56" rx="6" fill="var(--callout-tip)" stroke="var(--accent)" stroke-width="1.5"/><text x="293" y="65" text-anchor="middle" font-size="15" fill="var(--fg)">效率下跌</text><line x1="368" y1="60" x2="416" y2="60" stroke="var(--accent)" stroke-width="1.5"/><polygon points="416,55 424,60 416,65" fill="var(--accent)"/><rect x="424" y="32" width="150" height="56" rx="6" fill="var(--callout-tip)" stroke="var(--accent)" stroke-width="1.5"/><text x="499" y="65" text-anchor="middle" font-size="15" fill="var(--fg)">建立新規則</text><line x1="574" y1="60" x2="622" y2="60" stroke="var(--accent)" stroke-width="1.5"/><polygon points="622,55 630,60 622,65" fill="var(--accent)"/><rect x="630" y="32" width="150" height="56" rx="6" fill="var(--callout-tip)" stroke="var(--accent)" stroke-width="1.5"/><text x="705" y="65" text-anchor="middle" font-size="15" fill="var(--fg)">回報出現</text></svg><figcaption>AI 導入不是平滑上升。前期常會因學習、治理與流程重寫而變慢。</figcaption></figure>
+<ul><li>資料問題：公司資料分散在部門孤島，定義混亂，模型缺乏乾淨上下文。</li><li>人員問題：員工會打 prompt，卻不一定知道如何創造業務價值。</li><li>流程問題：審批、交接、權責與風險控制，沒有為 AI 工作流重新設計。</li></ul>
+<p>企業真正要過的關，是把資料、流程與人重新接起來。沒有這一步，模型越強，垃圾內容也越快。</p>
+<h2>五、複雜度天花板：AI 越靠近真實世界，效率越掉速</h2>
+<p>前沿模型在單一檔案、單一任務、摘要與改寫上很強。可是工作一旦進入完整產品、跨部門依賴、版本相容、客戶限制與法律責任，效率提升就會下降。演講中提到，AI 在單一檔案任務可帶來約 290% 的生產力增幅；到已發布產品層級，可能只剩約 30%。</p>
+<p>HBS 與 BCG 的研究也有類似結論。AI 在能力邊界內能讓顧問更快、更多、品質更好；一旦題目落到邊界外，錯誤率會上升。</p>
+<div class="callout info">重點是邊界感。懂 AI 的人知道哪些任務可以交給模型，哪些任務必須由人定義問題、驗證假設與承擔判斷。</div>
+<h2>六、技能平權：AI 幫弱者補框架，也放大專家的上限</h2>
+<p>BCG 實驗有一個有趣現象：即使同樣是頂尖名校背景的人，沒有 AI 時仍有明顯差距。這些差距常來自先備知識、微觀專案經驗、隱性知識，以及面對模糊問題時的決斷力。</p>
+<p>AI 對後半段表現者有幫助，因為它能快速提供框架、草稿與起手式，減少面對空白文件的恐懼。對真正的專家而言，AI 更像乘數。專家知道什麼是好答案，也知道模型哪裡可能胡說。</p>
+<ul><li>一般智力能保證學習速度，但無法替代領域經驗。</li><li>先備知識決定你能不能審查 AI，而不是只接收 AI。</li><li>模糊任務需要決斷力，不能永遠等更多資料。</li><li>學校聰明要轉成街頭聰明，才有職場價值。</li></ul>
+<h2>七、Workslop：AI 讓低品質內容也變便宜</h2>
+<p>Workslop 指的是外表完整、排版漂亮、語氣專業，但缺乏實質思考、不能推動任務的 AI 生成內容。演講引用的調查中，82% 的受訪者表示過去一個月收到過 Workslop，70% 承認自己也曾交出這類內容。</p>
+<figure><svg viewBox="0 0 1100 1100" role="img" xmlns="http://www.w3.org/2000/svg"><title>Workslop 餿水千層麵</title><path d="M 658.8 175.5 A 390.0 390.0 0 0 1 924.5 441.2" fill="none" stroke="var(--accent)" stroke-width="5" stroke-linecap="round" stroke-dasharray="1000" stroke-dashoffset="0"/><polygon points="924.5,441.2 903.3,418.2 930.1,410.4" fill="var(--accent)"/><path d="M 924.5 658.8 A 390.0 390.0 0 0 1 658.8 924.5" fill="none" stroke="var(--accent)" stroke-width="5" stroke-linecap="round" stroke-dasharray="1000" stroke-dashoffset="0"/><polygon points="658.8,924.5 681.8,903.3 689.6,930.1" fill="var(--accent)"/><path d="M 441.2 924.5 A 390.0 390.0 0 0 1 175.5 658.8" fill="none" stroke="var(--accent)" stroke-width="5" stroke-linecap="round" stroke-dasharray="1000" stroke-dashoffset="0"/><polygon points="175.5,658.8 196.7,681.8 169.9,689.6" fill="var(--accent)"/><path d="M 175.5 441.2 A 390.0 390.0 0 0 1 441.2 175.5" fill="none" stroke="var(--accent)" stroke-width="5" stroke-linecap="round" stroke-dasharray="1000" stroke-dashoffset="0"/><polygon points="441.2,175.5 418.2,196.7 410.4,169.9" fill="var(--accent)"/><rect x="427.0" y="206.0" width="246.0" height="88.0" rx="16" fill="var(--callout-tip)" stroke="var(--accent)" stroke-width="2"/><text x="550.0" y="250.0" text-anchor="middle" font-size="28" font-weight="700" fill="var(--fg)">AI 擴寫內容</text><text x="550.0" y="280.0" text-anchor="middle" font-size="18" fill="var(--muted)">一句話變成長報告</text><rect x="682.0" y="506.0" width="336.0" height="88.0" rx="16" fill="var(--callout-tip)" stroke="var(--accent)" stroke-width="2"/><text x="850.0" y="550.0" text-anchor="middle" font-size="28" font-weight="700" fill="var(--fg)">收件者用 AI 摘要</text><text x="850.0" y="580.0" text-anchor="middle" font-size="18" fill="var(--muted)">長報告又變成幾行字</text><rect x="454.0" y="806.0" width="192.0" height="88.0" rx="16" fill="var(--callout-tip)" stroke="var(--accent)" stroke-width="2"/><text x="550.0" y="850.0" text-anchor="middle" font-size="28" font-weight="700" fill="var(--fg)">信任下降</text><text x="550.0" y="880.0" text-anchor="middle" font-size="18" fill="var(--muted)">大家開始加倍校對</text><rect x="136.0" y="506.0" width="228.0" height="88.0" rx="16" fill="var(--callout-tip)" stroke="var(--accent)" stroke-width="2"/><text x="250.0" y="550.0" text-anchor="middle" font-size="28" font-weight="700" fill="var(--fg)">時間被吃掉</text><text x="250.0" y="580.0" text-anchor="middle" font-size="18" fill="var(--muted)">省下的時間流向更多雜事</text></svg><figcaption>Workslop 讓組織看起來更忙，實際上只是把更多時間花在低價值資訊上。</figcaption></figure>
+<p>這引出 AI Botsitting 問題。員工知道模型會出錯，所以花更多時間盯著 AI 產出。演講中提到，白領每週平均花約 6.4 小時校對 AI，另有約 2.0 小時在不同模型間切換與測試。</p>
+<div class="callout warn">AI 省下的時間，如果被更多會議、更多報告與更多低價值文件吃掉，企業總生產力就不會上升。</div>
+<h2>八、勞動力幾何：不同產業受到的衝擊不同</h2>
+<p>Fuller 用勞動力幾何學解釋產業差異。每個產業的人力配置形狀不同，AI 打中的部位也不同。</p>
+<figure><svg viewBox="0 0 800 260" role="img" xmlns="http://www.w3.org/2000/svg"><title>三種勞動力幾何</title><rect x="0" y="10" width="800" height="72" rx="12" fill="var(--callout-tip)" stroke="var(--border)" stroke-width="1"/><rect x="0" y="10" width="8" height="72" rx="4" fill="var(--accent)"/><text x="30" y="44" font-size="18" font-weight="700" fill="var(--fg)">菱形結構</text><text x="30" y="68" font-size="14" fill="var(--muted)">金融、軟體平台；中間層 IC 多，AI 衝擊直接</text><rect x="0" y="94" width="800" height="72" rx="12" fill="var(--callout-tip)" stroke="var(--border)" stroke-width="1"/><rect x="0" y="94" width="8" height="72" rx="4" fill="var(--accent)"/><text x="30" y="128" font-size="18" font-weight="700" fill="var(--fg)">金字塔結構</text><text x="30" y="152" font-size="14" fill="var(--muted)">零售、物流；基層多，物理任務仍重要</text><rect x="0" y="178" width="800" height="72" rx="12" fill="var(--callout-tip)" stroke="var(--border)" stroke-width="1"/><rect x="0" y="178" width="8" height="72" rx="4" fill="var(--accent)"/><text x="30" y="212" font-size="18" font-weight="700" fill="var(--fg)">十字形結構</text><text x="30" y="236" font-size="14" fill="var(--muted)">醫療、製造；專業一線多，非語言任務卡住模型</text></svg><figcaption>菱形、金字塔、十字形三種結構，決定 AI 衝擊的位置與速度。</figcaption></figure>
+<ul><li>菱形結構：金融、軟體平台。中間層個人貢獻者多，語言與資料任務密集，最容易被 AI 直接衝擊。</li><li>金字塔結構：零售、物流。大量工作仍需要物理接觸，短期較偏向人機配合。</li><li>十字形結構：醫療、汽車製造。一線專業任務多，牽涉臨床、裝配與安全責任，AI 滲透較慢。</li></ul>
+<p>這也解釋了資訊產業與專業服務的脫鉤。部分純資訊處理與初階編碼職缺縮小；另一方面，能把 AI 嵌入專業服務流程的公司，可能在就業人數不大幅增加的情況下拉高產值。</p>
+<h2>九、真正的護城河：先備知識與適應能力</h2>
+<p>職業風險不能只看 AI 曝險度，也要看適應能力。行政助理、文書、前台與收銀等職位，通常處於高曝險、低適應力區。軟體開發者、律師、法官與精算師也高曝險，但具備較高轉換能力，能把 AI 變成工具。</p>
+<p>演講中特別強調先備知識。具備高度領域知識的人，在學習新技能時速度與機會差距很大；單純快學習者與慢學習者的差距，反而沒有想像中大。</p>
+<div class="callout tip">AI 是乘數。底層知識厚的人，乘上 AI 後跑得更快；底層知識薄的人，可能只是更快產出平庸內容。</div>
+<h2>十、41% 衝擊：企業與個人的行動清單</h2>
+<p>Fuller 最後用中間派模型估計，生成式與代理型 AI 對整體勞動市場的綜合衝擊可達 41%。其中包含生產力提升、常規任務滲透，以及部分常規型勞工被替代。這個數字提醒企業與個人要提早重設策略。</p>
+<figure><svg viewBox="0 0 800 520" role="img" xmlns="http://www.w3.org/2000/svg"><title>未來工作者的能力堆疊</title><polygon points="350.0,16.0 450.0,16.0 532.5,138.0 267.5,138.0" fill="var(--callout-tip)" stroke="var(--accent)" stroke-width="1.5"/><text x="400" y="71" text-anchor="middle" font-size="18" font-weight="700" fill="var(--fg)">系統指揮官</text><text x="400" y="99" text-anchor="middle" font-size="13" fill="var(--muted)">能拆任務、審模型、做決策</text><polygon points="267.5,138.0 532.5,138.0 615.0,260.0 185.0,260.0" fill="var(--callout-tip)" stroke="var(--accent)" stroke-width="1.5"/><text x="400" y="193" text-anchor="middle" font-size="18" font-weight="700" fill="var(--fg)">先備知識</text><text x="400" y="221" text-anchor="middle" font-size="13" fill="var(--muted)">懂領域，才看得出 AI 哪裡錯</text><polygon points="185.0,260.0 615.0,260.0 697.5,382.0 102.5,382.0" fill="var(--callout-tip)" stroke="var(--accent)" stroke-width="1.5"/><text x="400" y="315" text-anchor="middle" font-size="18" font-weight="700" fill="var(--fg)">高社交技能</text><text x="400" y="343" text-anchor="middle" font-size="13" fill="var(--muted)">協調、談判、跨部門對齊</text><polygon points="102.5,382.0 697.5,382.0 780.0,504.0 20.0,504.0" fill="var(--callout-tip)" stroke="var(--accent)" stroke-width="1.5"/><text x="400" y="437" text-anchor="middle" font-size="18" font-weight="700" fill="var(--fg)">AI 操作能力</text><text x="400" y="465" text-anchor="middle" font-size="13" fill="var(--muted)">會用工具，但不把判斷交出去</text></svg><figcaption>未來的核心角色，是能把 AI 放進可信任工作系統的人。</figcaption></figure>
+<ul><li>企業領袖：先整理資料與流程，再談 AI 規模化。</li><li>企業領袖：建立反 Workslop 規則，要求每份 AI 產出都能說清楚證據與用途。</li><li>主管：把省下的時間導向策略、產品與客戶問題，不要讓待辦清單自動膨脹。</li><li>個人：累積領域先備知識，練習審查 AI，而不是只練生成速度。</li><li>新人：提早學會任務拆解、風險判斷與跨部門溝通。</li></ul>
+<p>最後的判斷很簡單：未來不會只獎勵會用 AI 的人，而會獎勵能指揮 AI、檢查 AI、把 AI 接進真實工作系統的人。這就是系統指揮官。</p>
+
+</article>
+<footer>
+<p style="color: var(--muted); font-size: 0.85rem; margin-top: 4rem; padding-top: 1.5rem; border-top: 1px solid var(--border);">
+資料來源：使用者提供的 2026 HBS Reunion Weekend 演講筆記與心得；本文為白話圖文整理版。
+</p>
+</footer>
+</main>
+<script>
+  const bar = document.getElementById('progress');
+  window.addEventListener('scroll', () => {
+    const h = document.documentElement;
+    const max = h.scrollHeight - h.clientHeight;
+    const ratio = max > 0 ? h.scrollTop / max : 0;
+    bar.style.transform = 'scaleX(' + ratio + ')';
+  }, { passive: true });
+</script>
+</body>
+</html>
