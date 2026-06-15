@@ -15,6 +15,7 @@
 - 中文與英文 / 數字之間使用半形空格
 
 ## Cards
+- [claude-fable-5-youtube-brief](https://hale80427.github.io/brain-cards/claude-fable-5-youtube-brief/)：從一支 YouTube 影片整理 Fable 5 能力、降級機制、價格與治理風險。
 - [cnc-micro-drilling-servo-analysis-20260614](https://hale80427.github.io/brain-cards/cnc-micro-drilling-servo-analysis-20260614/)：用 NC Analyzer 截圖判讀 Z 軸位置偏差，建立週一現場 A/B 測試重點。
 - [youtube-effective-negotiation-stanford-gsb](https://hale80427.github.io/brain-cards/youtube-effective-negotiation-stanford-gsb/)：Stanford GSB 談判課摘要：替代方案、信任、冷靜與可持續協議。
 - [ai-agents-platform-strategy](https://hale80427.github.io/brain-cards/ai-agents-platform-strategy/)：MIT Sloan 講座重點：平台、資料網路效應、agent 治理與定價
