@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>論文標題先收斂範圍，再追求好聽</title>
+<meta name="description" content="用白話判斷論文標題的材料、任務與物理框架是否守得住。">
+
+<!-- Canonical & 作者 -->
+<link rel="canonical" href="https://hale80427.github.io/brain-cards/thesis-title-scope-guide/">
+<meta name="author" content="彥皓">
+
+<!-- Open Graph（FB / LINE / Slack / Discord 連結預覽）-->
+<meta property="og:type" content="article">
+<meta property="og:title" content="論文標題先收斂範圍，再追求好聽">
+<meta property="og:description" content="用白話判斷論文標題的材料、任務與物理框架是否守得住。">
+<meta property="og:url" content="https://hale80427.github.io/brain-cards/thesis-title-scope-guide/">
+<meta property="og:image" content="https://hale80427.github.io/brain-cards/og-default.jpg">
+<meta property="og:locale" content="zh_TW">
+
+<!-- Twitter / X Card -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="論文標題先收斂範圍，再追求好聽">
+<meta name="twitter:description" content="用白話判斷論文標題的材料、任務與物理框架是否守得住。">
+<meta name="twitter:image" content="https://hale80427.github.io/brain-cards/og-default.jpg">
+
+<!-- 結構化資料（JSON-LD，提升 AI 與搜尋引擎理解）-->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "\u8ad6\u6587\u6a19\u984c\u5148\u6536\u6582\u7bc4\u570d\uff0c\u518d\u8ffd\u6c42\u597d\u807d",
+  "description": "\u7528\u767d\u8a71\u5224\u65b7\u8ad6\u6587\u6a19\u984c\u7684\u6750\u6599\u3001\u4efb\u52d9\u8207\u7269\u7406\u6846\u67b6\u662f\u5426\u5b88\u5f97\u4f4f\u3002",
+  "datePublished": "2026-06-15",
+  "dateModified": "2026-06-15",
+  "author": { "@type": "Person", "name": "彥皓" },
+  "url": "https://hale80427.github.io/brain-cards/thesis-title-scope-guide/",
+  "inLanguage": "zh-TW",
+  "license": "https://creativecommons.org/licenses/by/4.0/"
+}
+</script>
+
+<style>
+  :root {
+    /* color tokens — OKLCH (hallmark token discipline；禁止 inline hex / rgb / oklch / font-family；
+       hex 註解保留為設計者原意溯源，色彩值以 OKLCH 為事實源) */
+    --bg: oklch(98.4% 0.004 106.5);              /* 暖白（was #fafaf7） */
+    --fg: oklch(21.8% 0 0);                       /* 近黑（was #1a1a1a） */
+    --accent: oklch(54.3% 0.174 29.7);            /* 暖紅（was #c0392b） */
+    --accent-warn: oklch(66.6% 0.157 58.3);       /* 橘黃 callout warn 強調（was #d97706 inline，lift 進 token） */
+    --muted: oklch(51.0% 0 0);                    /* 中灰（was #666） */
+    --border: oklch(92.1% 0.007 106.5);           /* 淺暖灰（was #e5e5e0） */
+    --callout-tip: oklch(95.7% 0.014 174.2);      /* 淺薄荷（was #e8f4f0） */
+    --callout-warn: oklch(96.9% 0.019 72.6);      /* 淺暖米（was #fdf3e7） */
+    --fs-meta: 0.85rem;                          /* metadata / footer / .bluf 標籤 */
+    --fs-body: 1rem;                              /* p / li / td / blockquote / h3 / code / table */
+    --fs-h2:   clamp(1.3rem, 3vw, 1.5rem);      /* h2 段標題 */
+    --fs-h1:   clamp(1.75rem, 4vw, 2.25rem);    /* h1 主標題 */
+    /* font tokens（hallmark token discipline；禁止 inline font-family） */
+    --font-serif: "Noto Serif TC", Georgia, serif;
+    --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+    /* easing tokens（hallmark：禁止 unnamed easing） */
+    --ease-linear: linear;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: oklch(21.8% 0 0);                     /* was #1a1a1a */
+      --fg: oklch(95.3% 0.011 106.6);             /* 米白（was #f0f0e8） */
+      --accent: oklch(70.4% 0.136 28.7);          /* 亮珊瑚（was #e87c6e） */
+      --accent-warn: oklch(76.9% 0.165 70.1);     /* dark mode 等對等亮版 warn 強調 */
+      --muted: oklch(68.3% 0 0);                  /* was #999 */
+      --border: oklch(32.1% 0 0);                 /* was #333 */
+      --callout-tip: oklch(30.9% 0.029 178.3);    /* 深綠青（was #1f3530） */
+      --callout-warn: oklch(30.7% 0.034 73.5);    /* 深棕（was #3a2d1c） */
+    }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
+  }
+  * { box-sizing: border-box; }
+  body {
+    font-family: var(--font-serif);
+    background: var(--bg);
+    color: var(--fg);
+    line-height: 1.8;
+    margin: 0;
+    padding: 0;
+    -webkit-font-smoothing: antialiased;
+  }
+  .progress-bar {
+    /* hallmark：只動 transform / opacity，不動 layout property（避免 reflow + 對齊微互動紀律） */
+    position: fixed; top: 0; left: 0; height: 3px; width: 100%;
+    background: var(--accent); z-index: 100;
+    transform: scaleX(0); transform-origin: left;
+    transition: transform 0.1s var(--ease-linear);
+  }
+  main {
+    max-width: 680px;
+    margin: 0 auto;
+    padding: clamp(2rem, 5vw, 4rem) clamp(1.5rem, 4vw, 2rem);
+  }
+  /* === 字級階梯：嚴格 4 級。所有 font-size 必須引用以下 4 個變數之一 === */
+  /* === 違反 → KB-04 機械驗證會擋（font_levels > 4）=== */
+  /* === h3 / blockquote / code / table 等「想要不一樣」用 weight + color，不開新字級 === */
+  h1 { font-size: var(--fs-h1); line-height: 1.3; margin: 0 0 1rem; }
+  h2 { font-size: var(--fs-h2); line-height: 1.4; margin: 2.5rem 0 0.75rem; padding-bottom: 0.5rem; border-bottom: 1px solid var(--border); }
+  h3 { font-size: var(--fs-body); font-weight: 700; line-height: 1.4; margin: 1.75rem 0 0.5rem; color: var(--accent); }
+  p { margin: 0 0 1.25rem; }
+  a { color: var(--accent); text-underline-offset: 3px; }
+  a:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+  .bluf { background: var(--callout-tip); border-left: 3px solid var(--accent); padding: 1.25rem 1.5rem; margin: 1.5rem 0 2rem; border-radius: 4px; }
+  .bluf strong { display: block; font-size: var(--fs-meta); letter-spacing: 0.05em; color: var(--accent); margin-bottom: 0.5rem; text-transform: uppercase; }
+  .callout { padding: 1rem 1.25rem; margin: 1.5rem 0; border-radius: 4px; border-left: 3px solid var(--muted); }
+  .callout.tip { background: var(--callout-tip); border-left-color: var(--accent); }
+  .callout.warn { background: var(--callout-warn); border-left-color: var(--accent-warn); }
+  .callout.info { background: var(--callout-tip); border-left-color: var(--muted); }
+  .callout.quote { background: transparent; border-left-color: var(--accent); font-style: italic; }
+  table { border-collapse: collapse; width: 100%; margin: 1.5rem 0; font-size: var(--fs-body); }
+  th, td { padding: 0.6rem 0.8rem; border: 1px solid var(--border); text-align: left; vertical-align: top; }
+  th { background: var(--callout-tip); font-weight: 600; }
+  code { font-family: var(--font-mono); background: var(--callout-tip); padding: 0.1em 0.4em; border-radius: 3px; font-size: var(--fs-body); }
+  /* === 圖片 / 圖說（圖表規則見 KB-07）：figcaption 用既有 --fs-meta，不開新字級 === */
+  figure { margin: 1.5rem 0; }
+  figure img { width: 100%; height: auto; border-radius: 4px; display: block; }
+  figure svg { width: 100%; height: auto; display: block; }
+  figcaption { font-size: var(--fs-meta); color: var(--muted); margin-top: 0.5rem; text-align: center; }
+  @media print {
+    .progress-bar { display: none; }
+    body { font-size: 11pt; line-height: 1.6; }
+    main { max-width: 100%; padding: 1cm; }
+  }
+</style>
+</head>
+<body>
+<div class="progress-bar" id="progress"></div>
+<main>
+<header>
+<h1>論文標題先收斂範圍，再追求好聽</h1>
+<div class="bluf">
+<strong>BLUF</strong>
+<p>這三個標題的差異不只在文字；材料、任務、物理框架都變了。先決定研究真的做到哪裡，標題才會定下來。</p>
+</div>
+</header>
+<article>
+<!-- narrative: 標題的核心功能，是把研究的承諾邊界講清楚。, 材料、任務、物理框架三個欄位只要有一個沒定，標題就會飄。, 口委會抓的通常不是詞漂不漂亮，而是標題承諾能不能被資料驗證。 -->
+<h2>先看出真正的問題</h2>
+<p>這份標題討論的卡點，不在修辭。三個候選標題各自換了材料範圍、任務動詞與物理方法說法，所以它們對應到三組不同研究承諾。</p>
+<div class="callout warn">在命題收斂前，沒有哪個標題算對。標題越早寫寬，口試時越容易被要求拿出資料兌現。</div>
+<figure><svg viewBox="0 0 792 120" role="img" xmlns="http://www.w3.org/2000/svg"><title>標題三欄位</title><rect x="12" y="32" width="150" height="56" rx="6" fill="var(--callout-tip)" stroke="var(--accent)" stroke-width="1.5"/><text x="87" y="65" text-anchor="middle" font-size="15" fill="var(--fg)">材料範圍</text><line x1="162" y1="60" x2="210" y2="60" stroke="var(--accent)" stroke-width="1.5"/><polygon points="210,55 218,60 210,65" fill="var(--accent)"/><rect x="218" y="32" width="150" height="56" rx="6" fill="var(--callout-tip)" stroke="var(--accent)" stroke-width="1.5"/><text x="293" y="65" text-anchor="middle" font-size="15" fill="var(--fg)">任務動詞</text><line x1="368" y1="60" x2="416" y2="60" stroke="var(--accent)" stroke-width="1.5"/><polygon points="416,55 424,60 416,65" fill="var(--accent)"/><rect x="424" y="32" width="150" height="56" rx="6" fill="var(--callout-tip)" stroke="var(--accent)" stroke-width="1.5"/><text x="499" y="65" text-anchor="middle" font-size="15" fill="var(--fg)">物理框架</text><line x1="574" y1="60" x2="622" y2="60" stroke="var(--accent)" stroke-width="1.5"/><polygon points="622,55 630,60 622,65" fill="var(--accent)"/><rect x="630" y="32" width="150" height="56" rx="6" fill="var(--callout-tip)" stroke="var(--accent)" stroke-width="1.5"/><text x="705" y="65" text-anchor="middle" font-size="15" fill="var(--fg)">標題承諾</text></svg><figcaption>圖解：標題其實由三個欄位組成。任一欄位改變，研究承諾就跟著改變。</figcaption></figure>
+<h2>三個候選標題，各自卡在哪</h2>
+<ul><li>候選 A：物理資訊多模態、碳化矽微鑽孔、磨耗分類。範圍最窄，也最容易守住。問題是「分類預測」略重複，因為分類本來就要把狀態判出來。</li><li>候選 B：物理約束、時空特徵融合網路、微刀具磨耗監測。範圍中等，但「微刀具」太泛，聽不出材料與加工場景；「監測」也比較像動作，貢獻感不夠清楚。</li><li>候選 C：物理引導、硬脆陶瓷、刀具壽命預測。範圍最寬，也最危險。如果資料只有碳化矽微鑽孔，卻寫硬脆陶瓷壽命預測，口委很容易追問壽命模型與驗證方法。</li></ul>
+<figure><svg viewBox="0 0 800 520" role="img" xmlns="http://www.w3.org/2000/svg"><title>範圍與風險</title><polygon points="350.0,16.0 450.0,16.0 560.0,178.7 240.0,178.7" fill="var(--callout-tip)" stroke="var(--accent)" stroke-width="1.5"/><text x="400" y="91" text-anchor="middle" font-size="18" font-weight="700" fill="var(--fg)">硬脆陶瓷壽命預測</text><text x="400" y="119" text-anchor="middle" font-size="13" fill="var(--muted)">最寬，驗證要求最高</text><polygon points="240.0,178.7 560.0,178.7 670.0,341.3 130.0,341.3" fill="var(--callout-tip)" stroke="var(--accent)" stroke-width="1.5"/><text x="400" y="254" text-anchor="middle" font-size="18" font-weight="700" fill="var(--fg)">微刀具磨耗監測</text><text x="400" y="282" text-anchor="middle" font-size="13" fill="var(--muted)">中等，但場景仍需釐清</text><polygon points="130.0,341.3 670.0,341.3 780.0,504.0 20.0,504.0" fill="var(--callout-tip)" stroke="var(--accent)" stroke-width="1.5"/><text x="400" y="417" text-anchor="middle" font-size="18" font-weight="700" fill="var(--fg)">碳化矽微鑽孔磨耗分類</text><text x="400" y="445" text-anchor="middle" font-size="13" fill="var(--muted)">最窄，最容易用資料守住</text></svg><figcaption>圖解：標題越寬，聽起來越大；但能被資料守住的難度也跟著升高。</figcaption></figure>
+<h2>口委最容易切入的兩個破口</h2>
+<h3>破口一：任務動詞混在一起</h3>
+<p>「分類」「監測」「壽命預測」不是同義詞。分類是判斷現在磨耗到哪一級；監測是追蹤狀態變化；壽命預測是估剩餘可用時間，也就是 RUL。難度差很多。</p>
+<div class="callout info">如果實驗結果只做到磨耗等級分類，標題就不要寫壽命預測。標題的動詞，必須對上口試桌上拿得出的圖、表與模型。</div>
+<h3>破口二：物理方法說法沒有固定</h3>
+<p>物理資訊、物理約束、物理引導，在文獻語境裡不是同一件事。若把物理量放進輸入特徵或損失設計，用「物理資訊」比較穩。若物理規律是硬限制，用「物理約束」。若只是提供模型設計靈感，「物理引導」比較弱，標題上要慎用。</p>
+<figure><svg viewBox="0 0 586 120" role="img" xmlns="http://www.w3.org/2000/svg"><title>任務難度階梯</title><rect x="12" y="32" width="150" height="56" rx="6" fill="var(--callout-tip)" stroke="var(--accent)" stroke-width="1.5"/><text x="87" y="65" text-anchor="middle" font-size="15" fill="var(--fg)">分類</text><line x1="162" y1="60" x2="210" y2="60" stroke="var(--accent)" stroke-width="1.5"/><polygon points="210,55 218,60 210,65" fill="var(--accent)"/><rect x="218" y="32" width="150" height="56" rx="6" fill="var(--callout-tip)" stroke="var(--accent)" stroke-width="1.5"/><text x="293" y="65" text-anchor="middle" font-size="15" fill="var(--fg)">辨識或監測</text><line x1="368" y1="60" x2="416" y2="60" stroke="var(--accent)" stroke-width="1.5"/><polygon points="416,55 424,60 416,65" fill="var(--accent)"/><rect x="424" y="32" width="150" height="56" rx="6" fill="var(--callout-tip)" stroke="var(--accent)" stroke-width="1.5"/><text x="499" y="65" text-anchor="middle" font-size="15" fill="var(--fg)">壽命預測</text></svg><figcaption>圖解：從分類到壽命預測，驗證要求一階一階變重。</figcaption></figure>
+<h2>先回答兩題，標題就會收斂</h2>
+<ol><li>材料範圍：資料只來自碳化矽微鑽孔，還是真的涵蓋多種硬脆陶瓷？如果只有碳化矽，標題就寫碳化矽。</li><li>任務範圍：模型最後驗證的是磨耗等級分類、磨耗狀態辨識，還是剩餘壽命預測？做到哪裡，就寫到哪裡。</li><li>物理框架：物理資訊是輸入特徵、損失項、硬限制，還是模型設計靈感？挑一個詞，全文固定。</li></ol>
+<div class="callout tip">決策規則很簡單：資料做到哪，標題只能講到哪。聽起來保守，但這是口試最安全的寫法。</div>
+<h2>可直接挑用的三個版本</h2>
+<h3>A：最穩版本，適合碳化矽分類資料</h3>
+<blockquote>物理資訊多模態深度學習於碳化矽微鑽孔刀具磨耗分類之研究</blockquote>
+<p>這個版本範圍窄，材料明確，任務也清楚。若她的結果是磨耗等級分類，這個標題最容易守住。</p>
+<h3>B：中間版本，適合有時序退化資料</h3>
+<blockquote>物理資訊時空融合網路於碳化矽微鑽孔刀具磨耗辨識之研究</blockquote>
+<p>如果資料有時間序列，模型也真的用到時空特徵融合，這個版本比 A 更能說出方法特色。但「辨識」仍比「壽命預測」保守。</p>
+<h3>C：寬版本，只有完整壽命模型才適合</h3>
+<blockquote>物理資訊深度學習於硬脆陶瓷微鑽孔刀具壽命預測之研究</blockquote>
+<p>這個版本只有在兩個條件同時成立時才建議使用：資料真的涵蓋硬脆陶瓷範圍，且模型能預測剩餘壽命並完成驗證。缺一個條件，就會變成過度承諾。</p>
+<h2>給她的一句話</h2>
+<div class="callout quote">標題不要把方法堆得好聽。它要把「我用什麼方法、在哪個材料場景、真的做到了什麼」三件事講準。那個「真的做到了什麼」，要跟口試時拿得出的結果一模一樣。</div>
+
+</article>
+<footer>
+<p style="color: var(--muted); font-size: 0.85rem; margin-top: 4rem; padding-top: 1.5rem; border-top: 1px solid var(--border);">
+原始材料：使用者提供的論文標題診斷筆記。本文轉為白話版 HTML 文章。
+</p>
+</footer>
+</main>
+<script>
+  const bar = document.getElementById('progress');
+  window.addEventListener('scroll', () => {
+    const h = document.documentElement;
+    const max = h.scrollHeight - h.clientHeight;
+    const ratio = max > 0 ? h.scrollTop / max : 0;
+    bar.style.transform = 'scaleX(' + ratio + ')';
+  }, { passive: true });
+</script>
+</body>
+</html>

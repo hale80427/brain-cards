@@ -15,6 +15,7 @@
 - 中文與英文 / 數字之間使用半形空格
 
 ## Cards
+- [thesis-title-scope-guide](https://hale80427.github.io/brain-cards/thesis-title-scope-guide/)：用白話判斷論文標題的材料、任務與物理框架是否守得住。
 - [jensen-huang-vision-risk-gpu](https://hale80427.github.io/brain-cards/jensen-huang-vision-risk-gpu/)：從移民經驗、GPU 命題到 AI 應用層，整理 Jensen Huang 訪談的核心機制。
 - [agentic-ai-team-structures-aws-events](https://hale80427.github.io/brain-cards/agentic-ai-team-structures-aws-events/)：AWS 演講整理：經濟、人才、結構、治理四條主線。
 - [claude-fable-5-youtube-brief](https://hale80427.github.io/brain-cards/claude-fable-5-youtube-brief/)：從一支 YouTube 影片整理 Fable 5 能力、降級機制、價格與治理風險。
