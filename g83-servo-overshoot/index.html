@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>D0.4 PCD 微鑽 G83 伺服 Overshoot 量測與快速下刀點配置</title>
+<meta name="description" content="D0.4 PCD 微鑽 G83 啄鑽伺服 overshoot 量測判讀：問題在快速進給轉切削進給的暫態自激振盪，解法是把快速下刀點設為安全係數 × overshoot。">
+
+<link rel="canonical" href="https://hale80427.github.io/brain-cards/g83-servo-overshoot/">
+<meta name="author" content="彥皓">
+
+<meta property="og:type" content="article">
+<meta property="og:title" content="D0.4 PCD 微鑽 G83 伺服 Overshoot 量測與快速下刀點配置">
+<meta property="og:description" content="問題在快速進給轉切削進給的暫態自激振盪，解法是把快速下刀點設為安全係數 × overshoot。">
+<meta property="og:url" content="https://hale80427.github.io/brain-cards/g83-servo-overshoot/">
+<meta property="og:image" content="https://hale80427.github.io/brain-cards/og-default.jpg">
+<meta property="og:locale" content="zh_TW">
+
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="D0.4 PCD 微鑽 G83 伺服 Overshoot 量測與快速下刀點配置">
+<meta name="twitter:description" content="問題在快速進給轉切削進給的暫態自激振盪，解法是把快速下刀點設為安全係數 × overshoot。">
+<meta name="twitter:image" content="https://hale80427.github.io/brain-cards/og-default.jpg">
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "D0.4 PCD 微鑽 G83 伺服 Overshoot 量測與快速下刀點配置",
+  "description": "D0.4 PCD 微鑽 G83 啄鑽伺服 overshoot 量測判讀與快速下刀點配置決策。",
+  "datePublished": "2026-06-16",
+  "dateModified": "2026-06-16",
+  "author": { "@type": "Person", "name": "彥皓" },
+  "url": "https://hale80427.github.io/brain-cards/g83-servo-overshoot/",
+  "inLanguage": "zh-TW",
+  "license": "https://creativecommons.org/licenses/by/4.0/"
+}
+</script>
+
+<style>
+  :root {
+    --bg: oklch(98.4% 0.004 106.5);
+    --fg: oklch(21.8% 0 0);
+    --accent: oklch(54.3% 0.174 29.7);
+    --accent-warn: oklch(66.6% 0.157 58.3);
+    --muted: oklch(51.0% 0 0);
+    --border: oklch(92.1% 0.007 106.5);
+    --callout-tip: oklch(95.7% 0.014 174.2);
+    --callout-warn: oklch(96.9% 0.019 72.6);
+    --ok: oklch(72.0% 0.15 152);
+    --fs-meta: 0.85rem;
+    --fs-body: 1rem;
+    --fs-h2:   clamp(1.3rem, 3vw, 1.5rem);
+    --fs-h1:   clamp(1.75rem, 4vw, 2.25rem);
+    --font-serif: "Noto Serif TC", Georgia, serif;
+    --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+    --ease-linear: linear;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: oklch(21.8% 0 0);
+      --fg: oklch(95.3% 0.011 106.6);
+      --accent: oklch(70.4% 0.136 28.7);
+      --accent-warn: oklch(76.9% 0.165 70.1);
+      --muted: oklch(68.3% 0 0);
+      --border: oklch(32.1% 0 0);
+      --callout-tip: oklch(30.9% 0.029 178.3);
+      --callout-warn: oklch(30.7% 0.034 73.5);
+      --ok: oklch(68.0% 0.14 152);
+    }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
+  }
+  * { box-sizing: border-box; }
+  body {
+    font-family: var(--font-serif);
+    background: var(--bg);
+    color: var(--fg);
+    line-height: 1.8;
+    margin: 0; padding: 0;
+    -webkit-font-smoothing: antialiased;
+  }
+  .progress-bar {
+    position: fixed; top: 0; left: 0; height: 3px; width: 100%;
+    background: var(--accent); z-index: 100;
+    transform: scaleX(0); transform-origin: left;
+    transition: transform 0.1s var(--ease-linear);
+  }
+  main { max-width: 680px; margin: 0 auto; padding: clamp(2rem, 5vw, 4rem) clamp(1.5rem, 4vw, 2rem); }
+  h1 { font-size: var(--fs-h1); line-height: 1.3; margin: 0 0 1rem; }
+  h2 { font-size: var(--fs-h2); line-height: 1.4; margin: 2.5rem 0 0.75rem; padding-bottom: 0.5rem; border-bottom: 1px solid var(--border); }
+  h3 { font-size: var(--fs-body); font-weight: 700; line-height: 1.4; margin: 1.75rem 0 0.5rem; color: var(--accent); }
+  p { margin: 0 0 1.25rem; }
+  a { color: var(--accent); text-underline-offset: 3px; }
+  a:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+  .bluf { background: var(--callout-tip); border-left: 3px solid var(--accent); padding: 1.25rem 1.5rem; margin: 1.5rem 0 2rem; border-radius: 4px; }
+  .bluf strong { display: block; font-size: var(--fs-meta); letter-spacing: 0.05em; color: var(--accent); margin-bottom: 0.5rem; text-transform: uppercase; }
+  .callout { padding: 1rem 1.25rem; margin: 1.5rem 0; border-radius: 4px; border-left: 3px solid var(--muted); }
+  .callout.tip { background: var(--callout-tip); border-left-color: var(--accent); }
+  .callout.warn { background: var(--callout-warn); border-left-color: var(--accent-warn); }
+  table { border-collapse: collapse; width: 100%; margin: 1.5rem 0; font-size: var(--fs-body); }
+  th, td { padding: 0.6rem 0.8rem; border: 1px solid var(--border); text-align: left; vertical-align: top; }
+  th { background: var(--callout-tip); font-weight: 600; }
+  code { font-family: var(--font-mono); background: var(--callout-tip); padding: 0.1em 0.4em; border-radius: 3px; font-size: var(--fs-body); }
+  figure { margin: 2rem 0; }
+  figure img { width: 100%; height: auto; border-radius: 4px; display: block; }
+  figure svg { width: 100%; height: auto; display: block; background: var(--bg); border: 1px solid var(--border); border-radius: 4px; }
+  figcaption { font-size: var(--fs-meta); color: var(--muted); margin-top: 0.5rem; text-align: center; }
+  .tbl-scroll { overflow-x: auto; }
+  @media print {
+    .progress-bar { display: none; }
+    body { font-size: 11pt; line-height: 1.6; }
+    main { max-width: 100%; padding: 1cm; }
+  }
+</style>
+</head>
+<body>
+<div class="progress-bar" id="progress"></div>
+<main>
+<header>
+<h1>D0.4 PCD 微鑽 G83 伺服 Overshoot 量測與快速下刀點配置</h1>
+<p style="color: var(--muted); font-size: var(--fs-meta); margin: 0 0 1rem;">
+機台：Mitsubishi M80 控制器｜量測工具：NC Analyzer2｜對象：D0.4mm PCD 微鑽、石英深孔 G83 啄鑽｜2026-06-16｜現場量測 + 配置決策，待實驗驗證
+</p>
+<div class="bluf">
+<strong>BLUF</strong>
+伺服<strong>穩態表現很好</strong>（位置偏差只有 5µm），問題集中在「快速進給轉切削進給」那一瞬間的暫態——那一下產生 50µm 的衝過頭（overshoot）並伴隨高頻振盪。只要讓刀尖在這個暫態<strong>平息之後、才接觸孔底</strong>，就能在穩態下切削。做法就是把「快速下刀點」拉到離孔底夠遠，給暫態足夠的空間與時間消化掉。
+</div>
+</header>
+<article>
+<!-- narrative: 物件,細節,矛盾 -->
+
+<h2>一、量測結果（NC Analyzer2 波形）</h2>
+<p>下圖是 Z 軸快速移動（檔名 <code>Z_G0_196</code>）的伺服回授波形重現。原始波形有速度、電流、位置偏差三條線；此處聚焦主角「位置偏差」（紅）並疊上「速度」（灰）作為觸發對照，把現場翻拍的螢幕重繪成清晰版本。</p>
+
+<figure>
+<svg viewBox="0 0 820 510" role="img" xmlns="http://www.w3.org/2000/svg">
+  <title>Z_G0_196 伺服回授波形：穩態乾淨、暫態出現 ±50µm 高頻振盪、約 0.2 秒後回穩</title>
+  <!-- 背景暫態區陰影 -->
+  <rect x="344" y="40" width="227" height="390" fill="var(--callout-warn)" opacity="0.6"/>
+  <text x="457" y="58" text-anchor="middle" font-size="13" fill="var(--accent-warn)" font-weight="bold">暫態區（約 0.3 秒）</text>
+
+  <!-- Panel A：速度 -->
+  <text x="20" y="60" font-size="12" fill="var(--muted)">速度回授</text>
+  <text x="20" y="75" font-size="12" fill="var(--muted)">(mm/min)</text>
+  <line x1="80" y1="115" x2="760" y2="115" stroke="var(--border)" stroke-width="1" stroke-dasharray="3 3"/>
+  <text x="763" y="119" font-size="11" fill="var(--muted)">≈F15</text>
+  <path d="M80.0,117.8 L336.9,117.8 L344.4,115.0 L352.0,101.5 L359.6,88.9 L367.1,78.1 L374.7,69.8 L382.2,64.5 L389.8,62.8 L397.3,64.5 L404.9,69.8 L412.4,78.1 L420.0,88.9 L427.6,101.5 L435.1,115.0 L442.7,115.0 L450.2,127.8 L457.8,139.8 L465.3,150.0 L472.9,157.9 L480.4,162.8 L488.0,164.5 L495.6,162.8 L503.1,157.9 L510.7,150.0 L518.2,139.8 L525.8,127.8 L533.3,115.0 L548.4,117.8 L760.0,117.8"
+        fill="none" stroke="var(--muted)" stroke-width="1.6"/>
+  <text x="430" y="195" text-anchor="middle" font-size="11" fill="var(--muted)">速度突變（正峰→負谷）＝暫態的觸發源</text>
+
+  <!-- 分隔 -->
+  <line x1="80" y1="215" x2="760" y2="215" stroke="var(--border)" stroke-width="1"/>
+
+  <!-- Panel B：位置偏差 -->
+  <text x="20" y="240" font-size="12" fill="var(--accent)" font-weight="bold">位置偏差</text>
+  <text x="20" y="255" font-size="12" fill="var(--accent)" font-weight="bold">(µm)</text>
+  <!-- µm 格線 -->
+  <line x1="80" y1="245" x2="760" y2="245" stroke="var(--border)" stroke-width="1" stroke-dasharray="3 3"/>
+  <text x="73" y="249" text-anchor="end" font-size="11" fill="var(--muted)">+50</text>
+  <line x1="80" y1="320" x2="760" y2="320" stroke="var(--border)" stroke-width="1"/>
+  <text x="73" y="324" text-anchor="end" font-size="11" fill="var(--muted)">0</text>
+  <line x1="80" y1="395" x2="760" y2="395" stroke="var(--border)" stroke-width="1" stroke-dasharray="3 3"/>
+  <text x="73" y="399" text-anchor="end" font-size="11" fill="var(--muted)">−50</text>
+  <!-- 穩態 −5µm 註記 -->
+  <text x="160" y="343" text-anchor="middle" font-size="11" fill="var(--ok)" font-weight="bold">穩態 −5µm（P-P 0.1µm）乾淨</text>
+  <!-- 位置偏差波形 -->
+  <path d="M80.0,327.5 L336.9,327.5 L344.4,242.0 L351.1,262.8 L357.7,242.3 L364.3,262.5 L370.9,242.7 L377.5,262.2 L384.1,243.0 L390.7,261.9 L397.3,243.3 L403.9,261.5 L410.6,243.6 L417.2,261.2 L423.8,244.0 L430.4,260.9 L437.0,244.3 L443.6,260.5 L450.2,244.6 L457.8,320.0 L461.6,377.0 L467.9,397.8 L474.3,377.3 L480.7,397.5 L487.1,377.7 L493.4,397.2 L499.8,378.0 L506.2,396.9 L512.6,378.3 L518.9,396.5 L525.3,378.6 L531.7,396.2 L538.1,379.0 L544.4,395.9 L550.8,379.3 L557.2,395.5 L563.6,379.6 L578.7,327.5 L760.0,327.5"
+        fill="none" stroke="var(--accent)" stroke-width="1.8"/>
+  <!-- overshoot 標註 -->
+  <text x="400" y="233" text-anchor="middle" font-size="12" fill="var(--accent)" font-weight="bold">↑ 衝到 +50µm（自激振盪：高頻來回）</text>
+  <text x="512" y="415" text-anchor="middle" font-size="12" fill="var(--accent)" font-weight="bold">↓ 衝到 −50µm</text>
+
+  <!-- settling bracket -->
+  <line x1="344" y1="455" x2="571" y2="455" stroke="var(--fg)" stroke-width="1.4"/>
+  <line x1="344" y1="449" x2="344" y2="461" stroke="var(--fg)" stroke-width="1.4"/>
+  <line x1="571" y1="449" x2="571" y2="461" stroke="var(--fg)" stroke-width="1.4"/>
+  <text x="457" y="478" text-anchor="middle" font-size="13" fill="var(--fg)" font-weight="bold">安定時間（settling）≈ 0.2 秒</text>
+
+  <!-- 圖例 -->
+  <line x1="560" y1="495" x2="585" y2="495" stroke="var(--accent)" stroke-width="2"/>
+  <text x="590" y="499" font-size="11" fill="var(--muted)">位置偏差</text>
+  <line x1="670" y1="495" x2="695" y2="495" stroke="var(--muted)" stroke-width="2"/>
+  <text x="700" y="499" font-size="11" fill="var(--muted)">速度</text>
+</svg>
+<figcaption>圖 1 · 依現場量測 <code>Z_G0_196</code> 重繪：穩態位置偏差僅 −5µm（極乾淨），暫態衝到 ±50µm 並高頻振盪，約 0.2 秒後回穩 · 作者自繪</figcaption>
+</figure>
+
+<h3>穩態段（沒問題的部分）</h3>
+<div class="tbl-scroll">
+<table>
+<thead><tr><th>項目</th><th>數值</th><th>意義</th></tr></thead>
+<tbody>
+<tr><td>位置偏差</td><td>約 −5µm，峰對峰僅 0.1µm</td><td>跟隨極穩、極乾淨</td></tr>
+<tr><td>速度回授</td><td>平均 −14.93 mm/min</td><td>約等於 F15 切削進給，正常</td></tr>
+</tbody>
+</table>
+</div>
+<p>→ <strong>這台機的穩態性能無可挑剔。</strong></p>
+
+<h3>暫態段（問題所在）</h3>
+<div class="tbl-scroll">
+<table>
+<thead><tr><th>項目</th><th>數值</th><th>意義</th></tr></thead>
+<tbody>
+<tr><td>位置偏差衝過頭（overshoot）</td><td>約 ±50µm</td><td>衝過頭的幅度</td></tr>
+<tr><td>暫態形態</td><td>高頻振盪（不是平滑的一個峰）</td><td>位置偏差與電流同步劇烈抖動</td></tr>
+<tr><td>安定時間（settling）</td><td>約 0.2 秒</td><td>從暫態到回穩所需時間</td></tr>
+</tbody>
+</table>
+</div>
+
+<h2>二、判讀結果</h2>
+
+<h3>1. 自激振盪</h3>
+<p>位置偏差和電流同時高頻抖動，是伺服在暫態下進入自激振盪的典型訊號——馬達在「衝過頭→拉回→又過頭」來回。這比一次平滑的衝過頭嚴重，因為它衝很多次。</p>
+
+<h3>2. 兩條風險軸，沒有配置安全係數（以舊設定 60µm 計）</h3>
+<p style="color: var(--muted); font-size: var(--fs-meta);">（F15 = 250µm/s；緩衝 60µm 走完約 0.24 秒）</p>
+<div class="tbl-scroll">
+<table>
+<thead><tr><th>維度</th><th>暫態量測</th><th>可用窗口</th><th>安全係數</th></tr></thead>
+<tbody>
+<tr><td>空間（衝過頭幅度）</td><td>50µm</td><td>緩衝 60µm</td><td>1.2×</td></tr>
+<tr><td>時間（安定時間）</td><td>0.2 秒</td><td>緩衝走完 0.24 秒</td><td>1.2×</td></tr>
+</tbody>
+</table>
+</div>
+<p>→ 舊的 60µm 設定，餘裕只有 1.2 倍，等於沒有安全係數。</p>
+
+<h3>3. 一個尚未閉合的關鍵問題：振盪是「誰」觸發的？</h3>
+<div class="callout tip">
+<p style="margin:0;"><strong>若由「減速」觸發</strong>（高速轉低速那一下）→ 發生在接觸孔底之前，拉開下刀點就能讓它在空切時消化掉 → 延長下刀點有效。</p>
+</div>
+<p>目前的 <code>Z_G0_196</code> 是空跑波形（沒有切削），只證明「減速會激發振盪」，但還沒證明「接觸會不會再激發一次」。</p>
+
+<h2>三、建議配置（快速下刀點該設多少）</h2>
+<p><strong>原則：下刀點距離 = 安全係數 × 衝過頭幅度</strong>，臨界值就是 overshoot ≈ 50µm。下圖把三個方案的「危險區（overshoot 可及）」與「安全餘裕」畫在同一把尺上。</p>
+
+<figure>
+<svg viewBox="0 0 800 450" role="img" xmlns="http://www.w3.org/2000/svg">
+  <title>快速下刀點三方案比較：60µm 餘裕僅 10µm 危險、100µm 達 2 倍、150µm 達 3 倍安全係數</title>
+  <!-- µm 刻度軸 -->
+  <line x1="70" y1="360" x2="70" y2="150" stroke="var(--border)" stroke-width="1"/>
+  <line x1="66" y1="360" x2="740" y2="360" stroke="var(--fg)" stroke-width="1.5"/>
+  <text x="698" y="354" text-anchor="start" font-size="12" fill="var(--fg)" font-weight="bold">孔底</text>
+  <!-- 刻度 -->
+  <line x1="66" y1="360" x2="74" y2="360" stroke="var(--fg)"/><text x="60" y="364" text-anchor="end" font-size="11" fill="var(--muted)">0</text>
+  <line x1="66" y1="293" x2="74" y2="293" stroke="var(--fg)"/><text x="60" y="297" text-anchor="end" font-size="11" fill="var(--muted)">50</text>
+  <line x1="66" y1="227" x2="74" y2="227" stroke="var(--fg)"/><text x="60" y="231" text-anchor="end" font-size="11" fill="var(--muted)">100</text>
+  <line x1="66" y1="160" x2="74" y2="160" stroke="var(--fg)"/><text x="60" y="164" text-anchor="end" font-size="11" fill="var(--muted)">150</text>
+  <text x="42" y="255" text-anchor="middle" font-size="11" fill="var(--muted)" transform="rotate(-90 42 255)">距孔底（µm）</text>
+
+  <!-- 方案 1：60µm -->
+  <rect x="150" y="293.5" width="110" height="66.5" fill="var(--accent)" opacity="0.55"/>
+  <rect x="150" y="280" width="110" height="13.5" fill="var(--accent-warn)" opacity="0.55"/>
+  <line x1="150" y1="280" x2="260" y2="280" stroke="var(--fg)" stroke-width="1.5" stroke-dasharray="4 2"/>
+  <text x="205" y="375" text-anchor="middle" font-size="12" fill="var(--fg)" font-weight="bold">60µm（最早）</text>
+  <text x="205" y="272" text-anchor="middle" font-size="11" fill="var(--accent-warn)" font-weight="bold">餘裕僅 10µm</text>
+  <text x="205" y="405" text-anchor="middle" font-size="13" fill="var(--accent)" font-weight="bold">1.2× ⚠️</text>
+
+  <!-- 方案 2：100µm -->
+  <rect x="345" y="293.5" width="110" height="66.5" fill="var(--accent)" opacity="0.55"/>
+  <rect x="345" y="227" width="110" height="66.5" fill="var(--ok)" opacity="0.5"/>
+  <line x1="345" y1="227" x2="455" y2="227" stroke="var(--fg)" stroke-width="1.5" stroke-dasharray="4 2"/>
+  <text x="400" y="375" text-anchor="middle" font-size="12" fill="var(--fg)" font-weight="bold">100µm（現採用）</text>
+  <text x="400" y="262" text-anchor="middle" font-size="11" fill="var(--fg)" font-weight="bold">餘裕 50µm</text>
+  <text x="400" y="405" text-anchor="middle" font-size="13" fill="var(--ok)" font-weight="bold">2.0× ✅</text>
+
+  <!-- 方案 3：150µm -->
+  <rect x="540" y="293.5" width="110" height="66.5" fill="var(--accent)" opacity="0.55"/>
+  <rect x="540" y="160" width="110" height="133.5" fill="var(--ok)" opacity="0.5"/>
+  <line x1="540" y1="160" x2="650" y2="160" stroke="var(--fg)" stroke-width="1.5" stroke-dasharray="4 2"/>
+  <text x="595" y="375" text-anchor="middle" font-size="12" fill="var(--fg)" font-weight="bold">150µm（最穩）</text>
+  <text x="595" y="230" text-anchor="middle" font-size="11" fill="var(--fg)" font-weight="bold">餘裕 100µm</text>
+  <text x="595" y="405" text-anchor="middle" font-size="13" fill="var(--ok)" font-weight="bold">3.0×</text>
+
+  <!-- 圖例 -->
+  <rect x="150" y="425" width="16" height="12" fill="var(--accent)" opacity="0.55"/>
+  <text x="172" y="435" font-size="11" fill="var(--muted)">overshoot 衝程 50µm（危險區）</text>
+  <rect x="430" y="425" width="16" height="12" fill="var(--ok)" opacity="0.5"/>
+  <text x="452" y="435" font-size="11" fill="var(--muted)">安全餘裕</text>
+</svg>
+<figcaption>圖 2 · 快速下刀點三方案的危險區與安全餘裕對照：下刀點越遠，刀尖在接觸孔底前可消化 overshoot 的空間越大 · 作者自繪</figcaption>
+</figure>
+
+<div class="tbl-scroll">
+<table>
+<thead><tr><th>下刀點（距孔底）</th><th>空間餘裕</th><th>安全係數</th><th>每啄多花的空切時間</th></tr></thead>
+<tbody>
+<tr><td>60µm（最早）</td><td>10µm</td><td>1.2× ⚠️</td><td>基準</td></tr>
+<tr><td><strong>100µm（現採用）</strong></td><td>50µm</td><td><strong>2.0× ✅</strong></td><td>—</td></tr>
+<tr><td>120µm</td><td>70µm</td><td>2.4×</td><td>+0.08 秒/啄</td></tr>
+<tr><td>150µm</td><td>100µm</td><td>3.0×</td><td>+0.2 秒/啄</td></tr>
+</tbody>
+</table>
+</div>
+<p><strong>為什麼往保守端設（風險不對稱）</strong>：延長下刀點的代價只有「每啄多零點幾秒空切」（空切不傷刀）；但賭輸的代價是「斷一支 PCD 微鑽 + 報廢石英工件 + 挖斷刀」。下檔損失巨大、上檔節省微小 → 該往保守端站。</p>
+
+<h2>四、後續做法（與師傅討論的方案 + 風險提醒）</h2>
+<h3>採行方案</h3>
+<ol>
+<li>主軸充分暖機，消除熱偏移。→ 正確。同時讓 overshoot 在穩定溫度下量測，數值才可信（overshoot 會隨溫度漂移）。</li>
+<li>快速下刀點設在距孔底 100µm。→ 2× 安全係數，比舊的 60µm 大幅改善。</li>
+<li>快速進給由 F3000 提高到 F4000（因應生產節拍）。</li>
+</ol>
+
+<div class="callout warn">
+<p style="margin:0 0 0.75rem;"><strong>⚠️ 關鍵風險提醒：第 3 點與第 2 點互相拉扯</strong></p>
+<p style="margin:0;">快速進給提高 → 進入減速時慣性更大 → overshoot 會變大，這會反過來侵蝕第 2 點剛建立起來的 100µm 餘裕。</p>
+</div>
+
+<div class="tbl-scroll">
+<table>
+<thead><tr><th>估法</th><th>F4000 下的 overshoot 推估</th><th>100µm 的安全係數</th></tr></thead>
+<tbody>
+<tr><td>線性（與速度成正比）</td><td>50 → 約 67µm</td><td>1.5×</td></tr>
+<tr><td>動能（與速度平方成正比）</td><td>50 → 約 89µm</td><td>1.1× ⚠️</td></tr>
+</tbody>
+</table>
+</div>
+<p>實際會落在兩者之間，但<strong>方向確定是變大</strong>。</p>
+<p>→ <strong>務必在 F4000 條件下重新量一次 overshoot，不能沿用 50µm。</strong> 若重新量到 overshoot 升到 65µm 以上，100µm 的餘裕就掉回 1.5× 以下，下刀點應再拉到 150µm，或重新權衡節拍與 F4000 的必要性。</p>
+
+<h2>五、實驗即驗證（這次實驗要回收的數據）</h2>
+<ol>
+<li>重量 overshoot：在「暖機後 + F4000」條件下，量新的 overshoot 幅度，回推 100µm 的真實安全係數。</li>
+<li>記 baseline → 比 delta：只改下刀點一個變數（F4000 / F15 / Q0.05 / 轉速不動），記錄「舊設定孔數壽命 → 新設定孔數壽命」「崩邊率」「斷刀情形」。</li>
+<li>判定觸發源：在實際 G83 切削波形上，把「位置偏差振盪起點」對齊「電流開始抬升（＝刀尖接觸材料）的時刻」——
+  <ul>
+  <li>振盪早於接觸 → 減速觸發，延長下刀點方案正確。</li>
+  <li>振盪與接觸同步或更晚 → 接觸觸發，需改調伺服參數（降入刀速 / 調減速時間常數 / notch 陷波）。</li>
+  </ul>
+</li>
+</ol>
+
+<h2>六、名詞白話對照</h2>
+<div class="tbl-scroll">
+<table>
+<thead><tr><th>名詞</th><th>白話</th></tr></thead>
+<tbody>
+<tr><td>Overshoot（衝過頭）</td><td>減速時因慣性衝過目標位置的量</td></tr>
+<tr><td>Settling time（安定時間）</td><td>從晃動到回穩所需的時間</td></tr>
+<tr><td>自激振盪</td><td>伺服自己來回抖、停不下來（非外力造成）</td></tr>
+<tr><td>位置偏差</td><td>指令位置與實際位置的差距</td></tr>
+<tr><td>啄鑽量 Q</td><td>G83 每啄一次往下切的深度（此處 0.05mm）</td></tr>
+<tr><td>Notch（陷波器）</td><td>專門壓掉某個共振頻率的濾波設定</td></tr>
+</tbody>
+</table>
+</div>
+
+</article>
+<footer>
+<p style="color: var(--muted); font-size: var(--fs-meta); margin-top: 4rem; padding-top: 1.5rem; border-top: 1px solid var(--border);">
+最後更新：2026-06-16 · 資料來源：現場量測 NC Analyzer2（<code>Z_G0_196</code>）· CC BY 4.0 · 引用請標來源
+</p>
+</footer>
+</main>
+<script>
+  const bar = document.getElementById('progress');
+  window.addEventListener('scroll', () => {
+    const h = document.documentElement;
+    const max = h.scrollHeight - h.clientHeight;
+    const ratio = max > 0 ? h.scrollTop / max : 0;
+    bar.style.transform = 'scaleX(' + ratio + ')';
+  }, { passive: true });
+</script>
+</body>
+</html>
