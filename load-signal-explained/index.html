@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>從雜訊裡看出負載：系集平均與 d′ 兩個概念</title>
+<meta name="description" content="用白話與圖解說明兩個訊號分析概念——系集平均（把幾百個模糊的訊號疊出清楚形狀）與 d′ 可分性（量空載與負載分不分得開）。">
+
+<link rel="canonical" href="https://hale80427.github.io/brain-cards/load-signal-explained/">
+<meta name="author" content="彥皓">
+
+<meta property="og:type" content="article">
+<meta property="og:title" content="從雜訊裡看出負載：系集平均與 d′ 兩個概念">
+<meta property="og:description" content="用白話與圖解說明系集平均與 d′ 可分性，看懂超音波加工電性訊號怎麼分辨空載與負載。">
+<meta property="og:url" content="https://hale80427.github.io/brain-cards/load-signal-explained/">
+<meta property="og:image" content="https://hale80427.github.io/brain-cards/load-signal-explained/assets/dprime.png">
+<meta property="og:locale" content="zh_TW">
+
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="從雜訊裡看出負載：系集平均與 d′ 兩個概念">
+<meta name="twitter:description" content="用白話與圖解說明系集平均與 d′ 可分性。">
+<meta name="twitter:image" content="https://hale80427.github.io/brain-cards/load-signal-explained/assets/dprime.png">
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "從雜訊裡看出負載：系集平均與 d′ 兩個概念",
+  "description": "用白話與圖解說明系集平均與 d′ 可分性，看懂超音波加工電性訊號怎麼分辨空載與負載。",
+  "datePublished": "2026-06-16",
+  "dateModified": "2026-06-16",
+  "author": { "@type": "Person", "name": "彥皓" },
+  "url": "https://hale80427.github.io/brain-cards/load-signal-explained/",
+  "inLanguage": "zh-TW",
+  "license": "https://creativecommons.org/licenses/by/4.0/"
+}
+</script>
+
+<style>
+  :root {
+    --bg: oklch(98.4% 0.004 106.5);
+    --fg: oklch(21.8% 0 0);
+    --accent: oklch(54.3% 0.174 29.7);
+    --accent-warn: oklch(66.6% 0.157 58.3);
+    --muted: oklch(51.0% 0 0);
+    --border: oklch(92.1% 0.007 106.5);
+    --callout-tip: oklch(95.7% 0.014 174.2);
+    --callout-warn: oklch(96.9% 0.019 72.6);
+    --fs-meta: 0.85rem;
+    --fs-body: 1rem;
+    --fs-h2:   clamp(1.3rem, 3vw, 1.5rem);
+    --fs-h1:   clamp(1.75rem, 4vw, 2.25rem);
+    --font-serif: "Noto Serif TC", Georgia, serif;
+    --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+    --ease-linear: linear;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: oklch(21.8% 0 0);
+      --fg: oklch(95.3% 0.011 106.6);
+      --accent: oklch(70.4% 0.136 28.7);
+      --accent-warn: oklch(76.9% 0.165 70.1);
+      --muted: oklch(68.3% 0 0);
+      --border: oklch(32.1% 0 0);
+      --callout-tip: oklch(30.9% 0.029 178.3);
+      --callout-warn: oklch(30.7% 0.034 73.5);
+    }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
+  }
+  * { box-sizing: border-box; }
+  body {
+    font-family: var(--font-serif);
+    background: var(--bg);
+    color: var(--fg);
+    line-height: 1.8;
+    margin: 0;
+    padding: 0;
+    -webkit-font-smoothing: antialiased;
+  }
+  .progress-bar {
+    position: fixed; top: 0; left: 0; height: 3px; width: 100%;
+    background: var(--accent); z-index: 100;
+    transform: scaleX(0); transform-origin: left;
+    transition: transform 0.1s var(--ease-linear);
+  }
+  main {
+    max-width: 680px;
+    margin: 0 auto;
+    padding: clamp(2rem, 5vw, 4rem) clamp(1.5rem, 4vw, 2rem);
+  }
+  h1 { font-size: var(--fs-h1); line-height: 1.3; margin: 0 0 1rem; }
+  h2 { font-size: var(--fs-h2); line-height: 1.4; margin: 2.5rem 0 0.75rem; padding-bottom: 0.5rem; border-bottom: 1px solid var(--border); }
+  h3 { font-size: var(--fs-body); font-weight: 700; line-height: 1.4; margin: 1.75rem 0 0.5rem; color: var(--accent); }
+  p { margin: 0 0 1.25rem; }
+  ul, ol { margin: 0 0 1.25rem; padding-left: 1.5rem; }
+  li { margin: 0 0 0.5rem; }
+  a { color: var(--accent); text-underline-offset: 3px; }
+  a:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+  strong { font-weight: 700; }
+  .bluf { background: var(--callout-tip); border-left: 3px solid var(--accent); padding: 1.25rem 1.5rem; margin: 1.5rem 0 2rem; border-radius: 4px; }
+  .bluf strong { display: block; font-size: var(--fs-meta); letter-spacing: 0.05em; color: var(--accent); margin-bottom: 0.5rem; text-transform: uppercase; }
+  .callout { padding: 1rem 1.25rem; margin: 1.5rem 0; border-radius: 4px; border-left: 3px solid var(--muted); }
+  .callout.tip { background: var(--callout-tip); border-left-color: var(--accent); }
+  .callout.warn { background: var(--callout-warn); border-left-color: var(--accent-warn); }
+  table { border-collapse: collapse; width: 100%; margin: 1.5rem 0; font-size: var(--fs-body); }
+  th, td { padding: 0.6rem 0.8rem; border: 1px solid var(--border); text-align: left; vertical-align: top; }
+  th { background: var(--callout-tip); font-weight: 600; }
+  code { font-family: var(--font-mono); background: var(--callout-tip); padding: 0.1em 0.4em; border-radius: 3px; font-size: var(--fs-body); }
+  figure { margin: 1.75rem 0; }
+  figure img { width: 100%; height: auto; border-radius: 4px; display: block; border: 1px solid var(--border); }
+  figcaption { font-size: var(--fs-meta); color: var(--muted); margin-top: 0.5rem; text-align: center; }
+  @media print {
+    .progress-bar { display: none; }
+    body { font-size: 11pt; line-height: 1.6; }
+    main { max-width: 100%; padding: 1cm; }
+  }
+</style>
+</head>
+<body>
+<div class="progress-bar" id="progress"></div>
+<main>
+<header>
+<h1>從雜訊裡看出負載：系集平均與 d′ 兩個概念</h1>
+<div class="bluf">
+<strong>BLUF</strong>
+我們在量超音波加工的電性訊號，想分辨刀具「空載（沒在切）」和「負載（正在切石英）」。問題是單看一筆訊號太模糊、分不出來。這頁用兩個工具解決它：<strong>系集平均</strong>——把幾百個模糊的訊號疊起來、讓共同形狀浮現；<strong>d′</strong>——一把尺，量「空載和負載到底分不分得開」。看懂這兩個，就懂為什麼我們敢說「負載偵測得到」。
+</div>
+</header>
+<article>
+<!-- narrative: 物件,細節,矛盾 -->
+
+<p>背景一句話：每鑽一個孔，刀具會反覆「下刀切一小段 → 提刀退回 → 再下刀」，每一次叫一個<strong>啄</strong>。切的時候是負載、退刀的時候是空載。我們想從電性訊號看出這個一起一落——但單一個啄的訊號被雜訊和量測精度蓋住，看不清楚。下面兩個概念就是用來把它挖出來。</p>
+
+<h2>概念一：系集平均——把幾百個模糊訊號疊出清楚形狀</h2>
+
+<p>核心比喻：每一個啄，都是同一齣戲「空載 → 切削 → 空載」的一次<strong>錄影</strong>，但每卷帶子都很模糊。單看一卷看不清劇情。但把幾百卷對齊同一個起點疊起來、取平均，<strong>隨機的雜訊會互相抵消（有正有負），不變的劇情會留下來</strong>。這就是系集平均，醫學的心電圖、物理的鎖相放大都用這招。</p>
+
+<figure>
+<img src="assets/ensemble.png" width="1600" height="490" alt="系集平均三步圖：左為 8 個原始啄循環長度不一且有雜訊，中為對齊提刀谷並把時間正規化到 0 到 1 後疊在一起，右為平均後浮現空載到負載到空載的形狀。">
+<figcaption>系集平均三步：① 原始 8 個啄各自模糊看不出形狀 → ② 對齊提刀谷、把長度壓成相位 0–1 疊起來 → ③ 平均後雜訊抵消、共同形狀浮現。</figcaption>
+</figure>
+
+<h3>怎麼取平均？</h3>
+<p>不是把整段資料一次平均，而是<strong>先切成一個一個啄循環</strong>，再把這些循環「同相位疊在一起取平均」。圖中第 ③ 步那條紫線，就是 444 個啄在每個位置上的算術平均。</p>
+
+<h3>怎麼對齊提刀谷後平均？</h3>
+<p>問題：每個啄發生在不同時間、長度還不一樣，直接疊會錯位。解法：每個啄都有一個共同地標——<strong>提刀谷</strong>（刀退到表面、負載最低那一刻）。把每個啄的提刀谷都搬到同一個起點（圖中相位 0），444 個啄就對齊了，才能疊。</p>
+
+<h3>為什麼 X 軸是 0.0 到 1.0、用 0.5 當分界？</h3>
+<p>因為每個啄長度不同（淺孔約 1 秒、深孔約 3 秒），不能用「絕對秒數」當 X 軸，會對不齊。所以把<strong>每個啄的時間都壓成比例 0 到 1</strong>，這叫相位正規化：</p>
+<ul>
+<li><strong>0.0</strong>＝這個啄的提刀谷（空載，剛退刀）</li>
+<li><strong>0.5</strong>＝啄的中段＝下刀切最深＝<strong>負載</strong></li>
+<li><strong>1.0</strong>＝回到下一個提刀谷（空載）</li>
+</ul>
+<p>所以 X 軸是「相位」不是「時間」。0.5 不是人為切的，是<strong>切削本來就發生在循環中段</strong>，負載峰自然落在那裡。</p>
+
+<h3>「逐循環擾動（±1σ）」是什麼？</h3>
+<p>每個相位點上我有 444 個值（一個啄一個）。平均＝紫線；這 444 個值<strong>散開的程度</strong>＝紫色陰影帶 ±1σ。它在說：<strong>平均形狀很清楚，但單一個啄會在平均線上下抖動 ±1σ</strong>。這正是「單啄不可靠、要靠平均」的量化證據——陰影帶越窄代表越穩定。</p>
+
+<h2>概念二：d′——空載與負載到底分不分得開</h2>
+
+<p>系集平均讓我們看見「平均上有個一起一落」。但還要回答一個更嚴格的問題：<strong>隨便抓一個啄，光看它的訊號，分得出是空載還是負載嗎？</strong> 量這件事的尺，就是 d′。</p>
+
+<h3>先搞懂「離散程度」</h3>
+<p>離散程度＝<strong>資料散開的寬度</strong>。同一個平均值，資料可以擠得很密、也可以散得很開——散得越開，離散程度越大。量這個寬度的尺叫<strong>標準差（σ）</strong>。</p>
+
+<figure>
+<img src="assets/dprime.png" width="1600" height="1028" alt="d′ 四面板圖解：面板一示意離散程度 σ 是資料散開的寬度，面板二顯示差距固定但散開窄時兩堆分開 d′ 大，面板三顯示同樣差距但散開寬時兩堆重疊 d′ 小，面板四為真實 P_buck 資料空載與負載 d′ 等於 2.38 分得開。">
+<figcaption>① 離散程度 σ＝散開寬度 → ② 差距一樣、散得窄＝分得開（d′ 大）→ ③ 差距一樣、散得寬＝分不開（d′ 小）→ ④ 真實 P_buck 資料 d′＝2.38。</figcaption>
+</figure>
+
+<h3>為什麼 d′ 要「除以離散程度」</h3>
+<p>這是關鍵。<strong>分不分得開，光看兩堆中心差多遠不夠，要看差距相對於散開有多大。</strong> 看圖中 ② 和 ③——這兩張的「差距」完全一樣（都是 1.6）：</p>
+
+<table>
+<thead><tr><th>情況</th><th>差距</th><th>散開 σ</th><th>d′ ＝ 差距 ÷ σ</th><th>結果</th></tr></thead>
+<tbody>
+<tr><td>圖 ②</td><td>1.6</td><td>0.5（窄）</td><td><strong>3.2</strong></td><td>兩堆分開，幾乎不重疊</td></tr>
+<tr><td>圖 ③</td><td>1.6（一樣）</td><td>1.6（寬）</td><td><strong>1.0</strong></td><td>兩堆糊在一起</td></tr>
+</tbody>
+</table>
+
+<p>差距明明一樣，為什麼 ② 分得開、③ 分不開？<strong>因為 ③ 散得太開，把差距淹沒了。</strong> 所以判斷可分性，要問的不是「差幾瓦」，而是「<strong>差距是散開的幾倍</strong>」——這個倍數就是 d′。</p>
+
+<div class="callout tip">
+<strong>身高比喻：</strong>高個子平均 180、矮個子平均 160，差距 20 公分。如果每個人身高只飄 ±5 公分（散得窄）→ 差距是散開的 4 倍 → 一看就分得出。如果每個人飄 ±20 公分（散得寬）→ 很多矮的比高的還高 → 分不出。差距沒變，但「相對於散開」的比例變了，可分性就天差地別。
+</div>
+
+<h3>回到真實資料</h3>
+<p>看圖中面板 ④，這是石英加工的實測 P_buck（驅動器直流端實功）：</p>
+<p style="text-align:center;"><code>d′ = (負載 2.40W − 空載 1.96W) ÷ 散開 0.18W ≈ 0.44 ÷ 0.18 ≈ 2.38</code></p>
+<p>差距 0.44 瓦是散開 0.18 瓦的 <strong>2.38 倍</strong>，像圖 ② 那種「分得開」的情況。白話講：<strong>隨便挑一個啄，光看它的 P_buck，有約 88% 把握能說出這是切削還是空載。</strong></p>
+
+<h3>d′ 數值對照</h3>
+<table>
+<thead><tr><th>d′</th><th>意義</th><th>對應訊號</th></tr></thead>
+<tbody>
+<tr><td>0</td><td>完全重疊，分不出</td><td><strong>IFB（換能器電流）＝ −0.05 ≈ 0</strong></td></tr>
+<tr><td>1</td><td>看得出但會錯約 30%</td><td>—</td></tr>
+<tr><td>2</td><td>分得不錯（約 84% 對）</td><td>—</td></tr>
+<tr><td><strong>2.38</strong></td><td><strong>清楚可分（約 88% 對）</strong></td><td><strong>P_buck（直流端實功）</strong></td></tr>
+</tbody>
+</table>
+
+<h2>把兩個概念串起來：看對訊號才看得到</h2>
+
+<p>這就帶出整件事最關鍵的一句話。我們原本盯著 <strong>IFB（換能器電流）</strong> 看，覺得「空載負載沒差別」——因為驅動器的閉環會把電流鎖死，IFB 不管有沒有負載都幾乎不動（d′ ≈ 0）。負載資訊不在電流，而在 <strong>P_buck（直流端實功）</strong>：刀尖一旦吃料，系統要多吸實功，P_buck 上升 22%（d′ ＝ 2.38）。</p>
+
+<figure>
+<img src="assets/identifiability.png" width="1600" height="960" alt="空載與負載可識別性四面板：A 單啄原始訊號被量化與取樣淹沒，B 系集平均後空載到負載到空載特徵浮現，C P_buck 空載與負載分佈分得開 d′ 等於 2.38，D IFB 空載與負載分佈幾乎完全重疊 d′ 約 0。">
+<figcaption>同一份資料兩個訊號：C 的 P_buck 分得開（負載 +22%）、D 的 IFB 幾乎完全重疊。看 IFB 判負載必失敗，看 P_buck 才行。</figcaption>
+</figure>
+
+<div class="callout warn">
+<strong>一句話總結：</strong>① 用<strong>系集平均</strong>把幾百個模糊的啄疊出清楚的負載形狀；② 用 <strong>d′</strong> 量它到底分不分得開；③ 結論是——<strong>看 IFB 判負載必失敗，改看 P_buck、且逐循環聚合，負載就清楚可識別（+22%，d′ ＝ 2.38）。</strong>
+</div>
+
+</article>
+<footer>
+<p style="color: var(--muted); font-size: 0.85rem; margin-top: 4rem; padding-top: 1.5rem; border-top: 1px solid var(--border);">
+最後更新：2026-06-16 · 資料來源：石英 RUM 微鑽孔驅動器電性紀錄（blk4, 444 循環）· CC BY 4.0 · 引用請標來源
+</p>
+</footer>
+</main>
+<script>
+  const bar = document.getElementById('progress');
+  window.addEventListener('scroll', () => {
+    const h = document.documentElement;
+    const max = h.scrollHeight - h.clientHeight;
+    const ratio = max > 0 ? h.scrollTop / max : 0;
+    bar.style.transform = 'scaleX(' + ratio + ')';
+  }, { passive: true });
+</script>
+</body>
+</html>
