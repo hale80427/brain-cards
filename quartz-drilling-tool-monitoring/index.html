@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>石英長程鑽孔的電性監測：刀具磨耗與斷刀偵測</title>
+<meta name="description" content="以超音波驅動器既有電性記錄，對石英 RUM 微鑽孔做刀況監測——磨耗可提前 200-300 孔預警、斷刀呈現為負載掉到空載水位，附完整加工條件與監測方法。">
+
+<link rel="canonical" href="https://hale80427.github.io/brain-cards/quartz-drilling-tool-monitoring/">
+<meta name="author" content="彥皓">
+
+<meta property="og:type" content="article">
+<meta property="og:title" content="石英長程鑽孔的電性監測：刀具磨耗與斷刀偵測">
+<meta property="og:description" content="超音波驅動器電性記錄做石英微鑽孔刀況監測：磨耗提前預警、斷刀=負載消失。">
+<meta property="og:url" content="https://hale80427.github.io/brain-cards/quartz-drilling-tool-monitoring/">
+<meta property="og:image" content="https://hale80427.github.io/brain-cards/quartz-drilling-tool-monitoring/assets/wear-earlywarning.png">
+<meta property="og:locale" content="zh_TW">
+
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="石英長程鑽孔的電性監測：刀具磨耗與斷刀偵測">
+<meta name="twitter:description" content="超音波驅動器電性記錄做石英微鑽孔刀況監測。">
+<meta name="twitter:image" content="https://hale80427.github.io/brain-cards/quartz-drilling-tool-monitoring/assets/wear-earlywarning.png">
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "石英長程鑽孔的電性監測：刀具磨耗與斷刀偵測",
+  "description": "以超音波驅動器既有電性記錄，對石英 RUM 微鑽孔做刀況監測——磨耗可提前 200-300 孔預警、斷刀呈現為負載掉到空載水位。",
+  "datePublished": "2026-06-17",
+  "dateModified": "2026-06-17",
+  "author": { "@type": "Person", "name": "彥皓" },
+  "url": "https://hale80427.github.io/brain-cards/quartz-drilling-tool-monitoring/",
+  "inLanguage": "zh-TW",
+  "license": "https://creativecommons.org/licenses/by/4.0/"
+}
+</script>
+
+<style>
+  :root {
+    --bg: oklch(98.4% 0.004 106.5);
+    --fg: oklch(21.8% 0 0);
+    --accent: oklch(54.3% 0.174 29.7);
+    --accent-warn: oklch(66.6% 0.157 58.3);
+    --muted: oklch(51.0% 0 0);
+    --border: oklch(92.1% 0.007 106.5);
+    --callout-tip: oklch(95.7% 0.014 174.2);
+    --callout-warn: oklch(96.9% 0.019 72.6);
+    --fs-meta: 0.85rem;
+    --fs-body: 1rem;
+    --fs-h2:   clamp(1.3rem, 3vw, 1.5rem);
+    --fs-h1:   clamp(1.75rem, 4vw, 2.25rem);
+    --font-serif: "Noto Serif TC", Georgia, serif;
+    --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+    --ease-linear: linear;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: oklch(21.8% 0 0);
+      --fg: oklch(95.3% 0.011 106.6);
+      --accent: oklch(70.4% 0.136 28.7);
+      --accent-warn: oklch(76.9% 0.165 70.1);
+      --muted: oklch(68.3% 0 0);
+      --border: oklch(32.1% 0 0);
+      --callout-tip: oklch(30.9% 0.029 178.3);
+      --callout-warn: oklch(30.7% 0.034 73.5);
+    }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
+  }
+  * { box-sizing: border-box; }
+  body {
+    font-family: var(--font-serif);
+    background: var(--bg);
+    color: var(--fg);
+    line-height: 1.8;
+    margin: 0;
+    padding: 0;
+    -webkit-font-smoothing: antialiased;
+  }
+  .progress-bar {
+    position: fixed; top: 0; left: 0; height: 3px; width: 100%;
+    background: var(--accent); z-index: 100;
+    transform: scaleX(0); transform-origin: left;
+    transition: transform 0.1s var(--ease-linear);
+  }
+  main {
+    max-width: 720px;
+    margin: 0 auto;
+    padding: clamp(2rem, 5vw, 4rem) clamp(1.5rem, 4vw, 2rem);
+  }
+  h1 { font-size: var(--fs-h1); line-height: 1.3; margin: 0 0 1rem; }
+  h2 { font-size: var(--fs-h2); line-height: 1.4; margin: 2.5rem 0 0.75rem; padding-bottom: 0.5rem; border-bottom: 1px solid var(--border); }
+  h3 { font-size: var(--fs-body); font-weight: 700; line-height: 1.4; margin: 1.75rem 0 0.5rem; color: var(--accent); }
+  p { margin: 0 0 1.25rem; }
+  ul, ol { margin: 0 0 1.25rem; padding-left: 1.5rem; }
+  li { margin: 0 0 0.5rem; }
+  a { color: var(--accent); text-underline-offset: 3px; }
+  a:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+  strong { font-weight: 700; }
+  .bluf { background: var(--callout-tip); border-left: 3px solid var(--accent); padding: 1.25rem 1.5rem; margin: 1.5rem 0 2rem; border-radius: 4px; }
+  .bluf strong { display: block; font-size: var(--fs-meta); letter-spacing: 0.05em; color: var(--accent); margin-bottom: 0.5rem; text-transform: uppercase; }
+  .callout { padding: 1rem 1.25rem; margin: 1.5rem 0; border-radius: 4px; border-left: 3px solid var(--muted); }
+  .callout.tip { background: var(--callout-tip); border-left-color: var(--accent); }
+  .callout.warn { background: var(--callout-warn); border-left-color: var(--accent-warn); }
+  table { border-collapse: collapse; width: 100%; margin: 1.5rem 0; font-size: var(--fs-body); }
+  th, td { padding: 0.6rem 0.8rem; border: 1px solid var(--border); text-align: left; vertical-align: top; }
+  th { background: var(--callout-tip); font-weight: 600; }
+  code { font-family: var(--font-mono); background: var(--callout-tip); padding: 0.1em 0.4em; border-radius: 3px; font-size: var(--fs-body); }
+  figure { margin: 1.75rem 0; }
+  figure img { width: 100%; height: auto; border-radius: 4px; display: block; border: 1px solid var(--border); }
+  figcaption { font-size: var(--fs-meta); color: var(--muted); margin-top: 0.5rem; text-align: center; }
+  @media print {
+    .progress-bar { display: none; }
+    body { font-size: 11pt; line-height: 1.6; }
+    main { max-width: 100%; padding: 1cm; }
+  }
+</style>
+</head>
+<body>
+<div class="progress-bar" id="progress"></div>
+<main>
+<header>
+<h1>石英長程鑽孔的電性監測：刀具磨耗與斷刀偵測</h1>
+<div class="bluf">
+<strong>BLUF</strong>
+不外加感測器，只用超音波驅動器既有的電性記錄，對石英 RUM 微鑽孔做刀況監測。一支 PCD 刀從新到斷的完整生命週期（~450 孔、約 16 小時）顯示：<strong>磨耗可在斷刀前 200-300 孔提前預警</strong>（阻抗 R 單調上升）；<strong>斷刀呈現為「負載掉到空載水位」</strong>（鑽孔 R≈0.33 → 空載 R≈0.30）。代價是石英切削負載本就微弱（訊號僅 4-10%），必須先做頻率校正、只取真實鑽孔段、用長滾動窗，才抓得穩。
+</div>
+</header>
+<article>
+<!-- narrative: 物件,細節,矛盾 -->
+
+<h2>一、加工條件</h2>
+
+<p>本次為石英的旋轉超音波加工（RUM，刀具旋轉＋軸向超音波振動同時進行），採 G83 全退啄鑽。每孔的時序由 NC 程式決定，與刀具材質無關。</p>
+
+<table>
+<thead><tr><th>項目</th><th>值</th><th>備註</th></tr></thead>
+<tbody>
+<tr><td>工件材料</td><td>石英</td><td>脆性硬質</td></tr>
+<tr><td>加工方式</td><td>旋轉超音波加工（RUM）</td><td>旋轉 + 軸向超音波</td></tr>
+<tr><td>鑽孔循環</td><td>G83 全退啄鑽</td><td>每刀退到入孔表面上 0.1 mm</td></tr>
+<tr><td>每刀進給 Q</td><td>0.1 mm</td><td>每啄只吃 0.1 mm 新料</td></tr>
+<tr><td>切削進給</td><td>12 mm/min（0.2 mm/s）</td><td></td></tr>
+<tr><td>切削相時間</td><td>0.5 s（固定）</td><td>＝ Q ÷ 進給，與孔深無關</td></tr>
+<tr><td>孔深</td><td>4.0 mm</td><td></td></tr>
+<tr><td>每孔啄數</td><td>~40</td><td>＝ 4.0 ÷ 0.1</td></tr>
+<tr><td>單啄週期</td><td>1-3 s</td><td>淺孔 ~1 s、深孔 ~3 s（退刀距離隨深度增長）</td></tr>
+<tr><td>每孔工時</td><td>61 s</td><td><strong>NC 程式決定，固定值</strong></td></tr>
+<tr><td>主軸轉速</td><td>12000 rpm</td><td></td></tr>
+<tr><td>驅動器</td><td>UD7 超音波驅動器</td><td>追頻 TrackRange = 100 Hz</td></tr>
+<tr><td>取樣率</td><td>0.5 s/筆</td><td>硬體上限，無法更快</td></tr>
+</tbody>
+</table>
+
+<h2>二、監測方法：從驅動器電性看刀尖負載</h2>
+
+<h3>用什麼量？阻抗實部 R = Re(Z)</h3>
+<p>R 不是量測欄位，是從驅動器四個原始欄位算出的代理量：</p>
+<p style="text-align:center;"><code>R = Buck_VO × Buck_IO / IFB² = P_buck / IFB²</code></p>
+<p>由歐姆關係 <code>P = I²R</code> 得到。物理上 R 是換能器的<strong>機械阻尼電阻</strong>——刀尖咬料（負載）時更多能量轉成機械功，阻尼電阻上升，R 隨之上升。所以 R 反映刀尖接觸的機械負載。</p>
+
+<h3>為什麼不直接看電流？因為閉環把電流鎖死了</h3>
+<p>驅動器以閉環鎖定振幅（VFB 為設定值），所以換能器電流 IFB 幾乎不隨負載變動。下圖以 d′（可分性指標）量化：在 IFB 上，空載與負載完全重疊（d′ ≈ 0）；在 P_buck（直流端實功）上才分得開（d′ = 2.38）。<strong>負載資訊不在電流，在直流端實功與阻抗。</strong></p>
+
+<figure>
+<img src="assets/load-identifiability.png" width="1600" height="960" alt="四面板圖：A 單啄原始訊號被量化與取樣淹沒；B 系集平均後浮現空載到負載到空載；C P_buck 空載與負載分佈分得開 d′ 等於 2.38；D IFB 空載與負載分佈幾乎完全重疊 d′ 約 0。">
+<figcaption>空載 vs 負載可識別性：C 的 P_buck 分得開（負載 +22%）、D 的 IFB 幾乎完全重疊。看 IFB 判負載必失敗，看 P_buck 才行。</figcaption>
+</figure>
+
+<h3>必做的前處理：頻率校正</h3>
+<p>追頻會熱漂移到 TrackRange = 100 Hz 邊界後跳回初始鎖頻點，而 R 對「操作頻率離共振多遠」很敏感，於是產生一條與刀況無關的鋸齒（週期約 30-38 分鐘）。下圖證實：FREQ 與 R 反相同步，相關係數 −0.86、R² = 0.74。</p>
+
+<figure>
+<img src="assets/freq-r-sync.png" width="1600" height="861" alt="上下兩面板：上為 FREQ 鋸齒，從高漂到低剛好 100Hz 再跳回；下為 R 阻抗呈鏡像鋸齒，與 FREQ 反相同步。">
+<figcaption>追頻鋸齒：FREQ 漂移 100 Hz 觸邊界跳回，R 跟著鋸齒擺動（corr = −0.86）。這是操作點移動，非負載。</figcaption>
+</figure>
+
+<p>對策是頻率校正——用 <code>R_corr = R − (a + b·FREQ) + 平均</code> 扣掉這層鋸齒，雜訊約減半。<strong>後續所有刀況判讀都用校正後的 R_corr。</strong></p>
+
+<h2>三、成果</h2>
+
+<h3>成果一：磨耗可偵測，且提前 200-300 孔預警</h3>
+<p>把程式錯誤的空載段與斷刀後空跑段剔除，只留真實鑽孔資料後，R_corr 在斷刀前呈<strong>單調上升</strong>（刀漸鈍→機械阻抗升），統計上顯著。升幅雖小（+2-5%），但因為是趨勢、可由長期迴歸從雜訊中釣出。關鍵是：這條上升在真正斷刀前 200-300 孔就已可辨，足夠提前換刀。</p>
+
+<figure>
+<img src="assets/wear-earlywarning.png" width="1600" height="685" alt="僅平均線的全生命曲線：綠線為真實鑽孔 R_corr 約 0.33 且斷刀前緩升；灰線為空載段（程式錯誤與斷刀後）約 0.30，已標示剔除；紅線為磨耗趨勢；藍虛線為斷刀 600 分鐘；橙虛線為磨耗預警門檻。">
+<figcaption>剔除空載段後的磨耗早期訊號：綠＝真實鑽孔（R_corr 緩升＝磨耗）、灰＝空載段（已剔除）、紅＝磨耗趨勢、藍虛＝斷刀。</figcaption>
+</figure>
+
+<h3>成果二：斷刀＝負載掉到空載水位</h3>
+<p>斷刀（約 600 分鐘、~450 孔）不是瞬間突跳，而是<strong>切削負載消失</strong>：刀尖斷掉後程式繼續空跑，沒有真正接觸工件，R_corr 從鑽孔的 ~0.33 階梯式掉到空載的 ~0.30。鑽孔與空載相差約 10%——這個落差就是「有沒有在切」的判據。</p>
+
+<figure>
+<img src="assets/breakage-loadloss.png" width="1600" height="914" alt="上下兩面板：上為 P_buck 平滑線在斷刀點後下降；下為 R_corr 平滑線在斷刀點下台階；紅虛線標示負載消失台階位置，對應斷刀孔數。">
+<figcaption>斷刀＝負載消失台階：偵測到負載下降最陡點對應斷刀孔數。鑽孔（有負載）→ 空跑（無負載）。</figcaption>
+</figure>
+
+<div class="callout warn">
+<strong>關鍵限制：石英負載訊號本就微弱。</strong>石英切削負載只佔換能器總功率的一小部分（切削相僅 0.5 s／每啄），所以連「完全失去負載」也只讓中位功率掉約 4%。這是為什麼所有刀況事件在電性上都是 4-10% 級的小訊號——不是訊號不存在，是天生小，必須靠對的處理才抓得出來。
+</div>
+
+<h3>成果三：兩層「斷刀前換刀」預警法</h3>
+<p>綜合以上，給出可落地的監測策略：</p>
+<ol>
+<li><strong>第一層閘門｜先判「在不在鑽孔」</strong>：R_corr 在鑽孔水位（~0.33）才納入判斷；落到空載水位（~0.30）代表空載或已斷，剔除不算。</li>
+<li><strong>第二層預警｜在真實鑽孔上追磨耗</strong>：以新刀前 ~50 孔為基準，滾動監控 R_corr，累積升幅 ≥ 3-5% 且持續，即預警換刀。</li>
+</ol>
+
+<p>三個前置紀律缺一不可，否則小訊號會被淹沒：</p>
+<ul>
+<li>頻率校正（扣追頻鋸齒）</li>
+<li>只用真實鑽孔循環（剔除空載段）</li>
+<li>長滾動窗（數十孔）平均掉雜訊</li>
+</ul>
+
+<h2>四、結論</h2>
+
+<p>用既有電性記錄監測石英微鑽孔刀況是可行的，但要認清它的能與不能：</p>
+
+<table>
+<thead><tr><th>刀況事件</th><th>電性變化</th><th>偵測法</th><th>能不能抓</th></tr></thead>
+<tbody>
+<tr><td>磨耗</td><td>R_corr 升 +2-5%</td><td>長期趨勢迴歸</td><td>可（提前 200-300 孔預警）</td></tr>
+<tr><td>斷刀</td><td>負載掉到空載水位（~10%）</td><td>負載消失台階</td><td>可（確認斷刀，位置吻合）</td></tr>
+</tbody>
+</table>
+
+<p>根本特性是：<strong>石英切削負載弱，所有訊號都是小訊號</strong>，但只要方向對、處理對，磨耗趨勢做提前預警、負載台階做斷刀確認，兩者搭配即可在實際斷刀前把刀換掉。這正是這套監測的價值——不是抓斷刀的那一瞬間，而是在它斷之前就看出端倪。</p>
+
+</article>
+<footer>
+<p style="color: var(--muted); font-size: 0.85rem; margin-top: 4rem; padding-top: 1.5rem; border-top: 1px solid var(--border);">
+最後更新：2026-06-17 · 資料：石英 RUM 微鑽孔 UD7 驅動器電性記錄（新刀全生命，~450 孔） · CC BY 4.0 · 引用請標來源
+</p>
+</footer>
+</main>
+<script>
+  const bar = document.getElementById('progress');
+  window.addEventListener('scroll', () => {
+    const h = document.documentElement;
+    const max = h.scrollHeight - h.clientHeight;
+    const ratio = max > 0 ? h.scrollTop / max : 0;
+    bar.style.transform = 'scaleX(' + ratio + ')';
+  }, { passive: true });
+</script>
+</body>
+</html>

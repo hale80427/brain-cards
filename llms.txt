@@ -32,6 +32,7 @@
 - [usm-online-monitoring](https://hale80427.github.io/brain-cards/usm-online-monitoring/)：客戶展示版——電性訊號回推加工節奏與進給變更、等效切削阻抗 × 孔品質對照。
 - [usm-deltap-method](https://hale80427.github.io/brain-cards/usm-deltap-method/)：用 UD7 驅動器既有電性記錄在線監測微鑽孔刀況——追頻鎖共振帶 + ΔP／ΔR 同孔相減指標。
 - [load-signal-explained](https://hale80427.github.io/brain-cards/load-signal-explained/)：白話＋圖解系集平均與 d′ 可分性——看懂超音波加工電性訊號怎麼分辨空載與負載（看 IFB 必失敗、看 P_buck 才行）。
+- [quartz-drilling-tool-monitoring](https://hale80427.github.io/brain-cards/quartz-drilling-tool-monitoring/)：用 UD7 驅動器電性記錄監測石英微鑽孔刀況——磨耗提前 200-300 孔預警、斷刀＝負載掉到空載水位，含加工條件與兩層換刀預警法。
 - [bitturing-x-fact-check-starship-f12](https://hale80427.github.io/brain-cards/bitturing-x-fact-check-starship-f12/)：拆解病毒式 Musk 軼事、Starship 日期錯誤與可驗證來源強度。
 - [sun-yi-lei-first-win-youtube-summary](https://hale80427.github.io/brain-cards/sun-yi-lei-first-win-youtube-summary/)：從 Pacific League TV 影片整理孫易磊初勝利的投球機制與訪問重點。
 - [shibaura-nanotech-ultraprecision-chain](https://hale80427.github.io/brain-cards/shibaura-nanotech-ultraprecision-chain/)：用三份文件串起產品、技術傳承與市場併購的能力鏈。
