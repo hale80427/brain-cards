@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>如何跳出後悔循環</title>
+<meta name="description" content="Harvard Thinking 對後悔、揭露與行動修復的機制整理。">
+
+<!-- Canonical & 作者 -->
+<link rel="canonical" href="https://hale80427.github.io/brain-cards/harvard-thinking-regret-cycle/">
+<meta name="author" content="彥皓">
+
+<!-- Open Graph（FB / LINE / Slack / Discord 連結預覽）-->
+<meta property="og:type" content="article">
+<meta property="og:title" content="如何跳出後悔循環">
+<meta property="og:description" content="Harvard Thinking 對後悔、揭露與行動修復的機制整理。">
+<meta property="og:url" content="https://hale80427.github.io/brain-cards/harvard-thinking-regret-cycle/">
+<meta property="og:image" content="https://hale80427.github.io/brain-cards/og-default.jpg">
+<meta property="og:locale" content="zh_TW">
+
+<!-- Twitter / X Card -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="如何跳出後悔循環">
+<meta name="twitter:description" content="Harvard Thinking 對後悔、揭露與行動修復的機制整理。">
+<meta name="twitter:image" content="https://hale80427.github.io/brain-cards/og-default.jpg">
+
+<!-- 結構化資料（JSON-LD，提升 AI 與搜尋引擎理解）-->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "\u5982\u4f55\u8df3\u51fa\u5f8c\u6094\u5faa\u74b0",
+  "description": "Harvard Thinking \u5c0d\u5f8c\u6094\u3001\u63ed\u9732\u8207\u884c\u52d5\u4fee\u5fa9\u7684\u6a5f\u5236\u6574\u7406\u3002",
+  "datePublished": "2026-06-20",
+  "dateModified": "2026-06-20",
+  "author": { "@type": "Person", "name": "彥皓" },
+  "url": "https://hale80427.github.io/brain-cards/harvard-thinking-regret-cycle/",
+  "inLanguage": "zh-TW",
+  "license": "https://creativecommons.org/licenses/by/4.0/"
+}
+</script>
+
+<style>
+  :root {
+    /* color tokens — OKLCH (hallmark token discipline；禁止 inline hex / rgb / oklch / font-family；
+       hex 註解保留為設計者原意溯源，色彩值以 OKLCH 為事實源) */
+    --bg: oklch(98.4% 0.004 106.5);              /* 暖白（was #fafaf7） */
+    --fg: oklch(21.8% 0 0);                       /* 近黑（was #1a1a1a） */
+    --accent: oklch(54.3% 0.174 29.7);            /* 暖紅（was #c0392b） */
+    --accent-warn: oklch(66.6% 0.157 58.3);       /* 橘黃 callout warn 強調（was #d97706 inline，lift 進 token） */
+    --muted: oklch(51.0% 0 0);                    /* 中灰（was #666） */
+    --border: oklch(92.1% 0.007 106.5);           /* 淺暖灰（was #e5e5e0） */
+    --callout-tip: oklch(95.7% 0.014 174.2);      /* 淺薄荷（was #e8f4f0） */
+    --callout-warn: oklch(96.9% 0.019 72.6);      /* 淺暖米（was #fdf3e7） */
+    --fs-meta: 0.85rem;                          /* metadata / footer / .bluf 標籤 */
+    --fs-body: 1rem;                              /* p / li / td / blockquote / h3 / code / table */
+    --fs-h2:   clamp(1.3rem, 3vw, 1.5rem);      /* h2 段標題 */
+    --fs-h1:   clamp(1.75rem, 4vw, 2.25rem);    /* h1 主標題 */
+    /* font tokens（hallmark token discipline；禁止 inline font-family） */
+    --font-serif: "Noto Serif TC", Georgia, serif;
+    --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+    /* easing tokens（hallmark：禁止 unnamed easing） */
+    --ease-linear: linear;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: oklch(21.8% 0 0);                     /* was #1a1a1a */
+      --fg: oklch(95.3% 0.011 106.6);             /* 米白（was #f0f0e8） */
+      --accent: oklch(70.4% 0.136 28.7);          /* 亮珊瑚（was #e87c6e） */
+      --accent-warn: oklch(76.9% 0.165 70.1);     /* dark mode 等對等亮版 warn 強調 */
+      --muted: oklch(68.3% 0 0);                  /* was #999 */
+      --border: oklch(32.1% 0 0);                 /* was #333 */
+      --callout-tip: oklch(30.9% 0.029 178.3);    /* 深綠青（was #1f3530） */
+      --callout-warn: oklch(30.7% 0.034 73.5);    /* 深棕（was #3a2d1c） */
+    }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
+  }
+  * { box-sizing: border-box; }
+  body {
+    font-family: var(--font-serif);
+    background: var(--bg);
+    color: var(--fg);
+    line-height: 1.8;
+    margin: 0;
+    padding: 0;
+    -webkit-font-smoothing: antialiased;
+  }
+  .progress-bar {
+    /* hallmark：只動 transform / opacity，不動 layout property（避免 reflow + 對齊微互動紀律） */
+    position: fixed; top: 0; left: 0; height: 3px; width: 100%;
+    background: var(--accent); z-index: 100;
+    transform: scaleX(0); transform-origin: left;
+    transition: transform 0.1s var(--ease-linear);
+  }
+  main {
+    max-width: 680px;
+    margin: 0 auto;
+    padding: clamp(2rem, 5vw, 4rem) clamp(1.5rem, 4vw, 2rem);
+  }
+  /* === 字級階梯：嚴格 4 級。所有 font-size 必須引用以下 4 個變數之一 === */
+  /* === 違反 → KB-04 機械驗證會擋（font_levels > 4）=== */
+  /* === h3 / blockquote / code / table 等「想要不一樣」用 weight + color，不開新字級 === */
+  h1 { font-size: var(--fs-h1); line-height: 1.3; margin: 0 0 1rem; }
+  h2 { font-size: var(--fs-h2); line-height: 1.4; margin: 2.5rem 0 0.75rem; padding-bottom: 0.5rem; border-bottom: 1px solid var(--border); }
+  h3 { font-size: var(--fs-body); font-weight: 700; line-height: 1.4; margin: 1.75rem 0 0.5rem; color: var(--accent); }
+  p { margin: 0 0 1.25rem; }
+  a { color: var(--accent); text-underline-offset: 3px; }
+  a:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+  .bluf { background: var(--callout-tip); border-left: 3px solid var(--accent); padding: 1.25rem 1.5rem; margin: 1.5rem 0 2rem; border-radius: 4px; }
+  .bluf strong { display: block; font-size: var(--fs-meta); letter-spacing: 0.05em; color: var(--accent); margin-bottom: 0.5rem; text-transform: uppercase; }
+  .callout { padding: 1rem 1.25rem; margin: 1.5rem 0; border-radius: 4px; border-left: 3px solid var(--muted); }
+  .callout.tip { background: var(--callout-tip); border-left-color: var(--accent); }
+  .callout.warn { background: var(--callout-warn); border-left-color: var(--accent-warn); }
+  .callout.info { background: var(--callout-tip); border-left-color: var(--muted); }
+  .callout.quote { background: transparent; border-left-color: var(--accent); font-style: italic; }
+  table { border-collapse: collapse; width: 100%; margin: 1.5rem 0; font-size: var(--fs-body); }
+  th, td { padding: 0.6rem 0.8rem; border: 1px solid var(--border); text-align: left; vertical-align: top; }
+  th { background: var(--callout-tip); font-weight: 600; }
+  code { font-family: var(--font-mono); background: var(--callout-tip); padding: 0.1em 0.4em; border-radius: 3px; font-size: var(--fs-body); }
+  /* === 圖片 / 圖說（圖表規則見 KB-07）：figcaption 用既有 --fs-meta，不開新字級 === */
+  figure { margin: 1.5rem 0; }
+  figure img { width: 100%; height: auto; border-radius: 4px; display: block; }
+  figure svg { width: 100%; height: auto; display: block; }
+  figcaption { font-size: var(--fs-meta); color: var(--muted); margin-top: 0.5rem; text-align: center; }
+  @media print {
+    .progress-bar { display: none; }
+    body { font-size: 11pt; line-height: 1.6; }
+    main { max-width: 100%; padding: 1cm; }
+  }
+</style>
+</head>
+<body>
+<div class="progress-bar" id="progress"></div>
+<main>
+<header>
+<h1>如何跳出後悔循環</h1>
+<div class="bluf">
+<strong>BLUF</strong>
+<p>後悔的核心是反事實想像加上自我責任感；處理它的有效路徑，是分清自我和解與對人修復，再把情緒轉成下一次更早說、更小步做、更能補救的行動。</p>
+</div>
+</header>
+<article>
+<!-- narrative: 短期常後悔做錯事，長期更常後悔沒做的事。, 揭露決策要同時看見揭露與不揭露的好處、風險。, 第一次談砸後，第二次 check-in 往往才讓關係真正往前。 -->
+<h2>這集在回答什麼問題</h2>
+<figure><img src="data:image/jpeg;base64,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" alt="Harvard Thinking: Breaking the regret cycle 影片縮圖" width="480" height="360"><figcaption>Harvard Thinking 這集討論 regret：人如何被過去卡住，又如何把它轉成下一次選擇的材料。</figcaption></figure>
+<p>這集 Harvard Thinking 找來三位專家談後悔：Harvard Business School 的 Leslie John、心理學與神經科學家 Liz Phelps、緩和醫療與精神醫學專家 Susan Block。主題放在一個實用問題：過去已經發生，人還能如何把後悔拆成可處理的幾個環節。</p>
+<p>核心環節包括反事實想像、責任感、恐懼、損失規避、關係修復。把這些環節看清楚，後悔就會從反覆咀嚼，轉成下一次行動的材料。</p>
+<div class="callout info">一句話抓主軸：後悔會讓人卡住，但它也保存了下一次行動的訊號。關鍵是別只反覆咀嚼，要問自己還能修補什麼、學到什麼、下一次怎麼做得更早。</div>
+<h2>後悔的機制：反事實想像加上自我責任</h2>
+<figure><svg viewBox="0 0 998 120" role="img" xmlns="http://www.w3.org/2000/svg"><title>後悔如何形成</title><rect x="12" y="32" width="150" height="56" rx="6" fill="var(--callout-tip)" stroke="var(--accent)" stroke-width="1.5"/><text x="87" y="65" text-anchor="middle" font-size="15" fill="var(--fg)">事件已發生</text><line x1="162" y1="60" x2="210" y2="60" stroke="var(--accent)" stroke-width="1.5"/><polygon points="210,55 218,60 210,65" fill="var(--accent)"/><rect x="218" y="32" width="150" height="56" rx="6" fill="var(--callout-tip)" stroke="var(--accent)" stroke-width="1.5"/><text x="293" y="65" text-anchor="middle" font-size="15" fill="var(--fg)">反事實想像</text><line x1="368" y1="60" x2="416" y2="60" stroke="var(--accent)" stroke-width="1.5"/><polygon points="416,55 424,60 416,65" fill="var(--accent)"/><rect x="424" y="32" width="150" height="56" rx="6" fill="var(--callout-tip)" stroke="var(--accent)" stroke-width="1.5"/><text x="499" y="65" text-anchor="middle" font-size="15" fill="var(--fg)">自我責任感</text><line x1="574" y1="60" x2="622" y2="60" stroke="var(--accent)" stroke-width="1.5"/><polygon points="622,55 630,60 622,65" fill="var(--accent)"/><rect x="630" y="32" width="150" height="56" rx="6" fill="var(--callout-tip)" stroke="var(--accent)" stroke-width="1.5"/><text x="705" y="65" text-anchor="middle" font-size="15" fill="var(--fg)">後悔感</text><line x1="780" y1="60" x2="828" y2="60" stroke="var(--accent)" stroke-width="1.5"/><polygon points="828,55 836,60 828,65" fill="var(--accent)"/><rect x="836" y="32" width="150" height="56" rx="6" fill="var(--callout-tip)" stroke="var(--accent)" stroke-width="1.5"/><text x="911" y="65" text-anchor="middle" font-size="15" fill="var(--fg)">行動出口</text></svg><figcaption>後悔通常不只是難過，而是大腦把事件與另一條想像路線放在一起比較。</figcaption></figure>
+<p>Leslie John 把 regret 描述為一種由 counterfactuals（反事實想像）推動的認知：我希望某件事當時不一樣，或我希望自己做了另一個選擇。Liz Phelps 補上一層：後悔比失望更需要認知中介，因為它牽涉 agency（能動性）和 personal responsibility（個人責任）。</p>
+<p>Susan Block 則把 regret 和 remorse 分開。Regret 偏向自己的內在經驗，重點是與自己和解；remorse 牽涉自己傷害了別人，常會指向道歉、補償或重新啟動對話。這個分流很重要，因為兩種情緒需要的下一步不同。</p>
+<h2>短期後悔做錯事，長期後悔沒做的事</h2>
+<p>影片裡引用 Thomas Gilovich 等心理學研究：剛發生時，人較容易後悔自己做了某件事；時間拉長後，人更容易後悔當初沒有做的事。做錯的事通常有明確對象，還能道歉或補救；沒做的事比較抽象，腦中會長出很多版本的如果當時。</p>
+<ul><li>做了又後悔：痛感明確，修補路徑也比較清楚。</li><li>沒做而後悔：想像空間大，修補對象模糊，時間越久越容易放大。</li><li>心理免疫系統會幫人重新詮釋做過的事；沒做的事較難被同樣消化。</li></ul>
+<div class="callout tip">判斷重點：如果一個後悔長期留在心裡，先看它是否來自沒說、沒問、沒嘗試。這類後悔常需要一個小行動來關閉循環。</div>
+<h2>揭露與隱瞞：別只看說出口的風險</h2>
+<p>Leslie John 用揭露決策來說明人如何高估風險。人想說愛、談病情、向主管說明狀況時，腦中最先跳出來的常是壞結果：被拒絕、被羞辱、被誤解。她建議用 2×2 來看：揭露的好處、揭露的風險、不揭露的好處、不揭露的風險。</p>
+<ul><li>揭露的好處：建立信任、讓對方理解真實情況、啟動關係。</li><li>揭露的風險：尷尬、被拒絕、短期衝突。</li><li>不揭露的好處：短期安全、避免當下壓力。</li><li>不揭露的風險：關係停滯、孤立、留下更難補的遺憾。</li></ul>
+<blockquote>One axis is reveal or do not reveal, and the other is the benefit and the risks.<cite> — Leslie John, 11:31</cite></blockquote>
+<h2>恐懼為什麼常贏：損失規避把抽象風險放大</h2>
+<p>Liz Phelps 從神經科學角度談 fear 與 amygdala（杏仁核）。人對可能失去的東西比可能得到的東西更敏感，這是 loss aversion（損失規避）。在生存情境中，重視損失有適應性；放到社交情境，人可能把被拒絕、被誤會、被看輕想得太重。</p>
+<p>Susan Block 補上關係後果：長期保留、不說、不試，會帶來孤獨與隔離。病人與照顧者互相怕傷害對方，最後兩個人都孤單地承受壓力。這是溝通迴路被恐懼切斷後的結果，與道德標籤無關。</p>
+<h2>分享太多與分享太少：TMI 之外還有 TLI</h2>
+<p>Leslie 提出 TLI（too little information）：大家常把 TMI 視為最大社交錯誤，卻低估分享不足的代價。分享不足的損失通常不會爆炸式出現，它會變成同事不信任、友誼不展開、關係沒有開始。</p>
+<p>TMI 的尷尬多半有修補空間，可以道歉，可以回頭談；TLI 造成的是沒有發生的機會。這類機會不會留下清楚帳單，所以人更容易低估它。</p>
+<h2>做砸後的下一步：安排第二次對話</h2>
+<figure><svg viewBox="0 0 1100 1100" role="img" xmlns="http://www.w3.org/2000/svg"><title>從後悔回到行動</title><path d="M 637.5 169.9 A 390.0 390.0 0 0 1 884.4 349.4" fill="none" stroke="var(--accent)" stroke-width="5" stroke-linecap="round" stroke-dasharray="1000" stroke-dashoffset="0"/><polygon points="884.4,349.4 858.0,332.6 882.0,318.2" fill="var(--accent)"/><path d="M 938.5 515.7 A 390.0 390.0 0 0 1 844.2 806.1" fill="none" stroke="var(--accent)" stroke-width="5" stroke-linecap="round" stroke-dasharray="1000" stroke-dashoffset="0"/><polygon points="844.2,806.1 852.0,775.8 873.1,794.1" fill="var(--accent)"/><path d="M 702.6 908.9 A 390.0 390.0 0 0 1 397.4 908.9" fill="none" stroke="var(--accent)" stroke-width="5" stroke-linecap="round" stroke-dasharray="1000" stroke-dashoffset="0"/><polygon points="397.4,908.9 428.6,907.0 417.7,932.7" fill="var(--accent)"/><path d="M 255.8 806.1 A 390.0 390.0 0 0 1 161.5 515.7" fill="none" stroke="var(--accent)" stroke-width="5" stroke-linecap="round" stroke-dasharray="1000" stroke-dashoffset="0"/><polygon points="161.5,515.7 173.0,544.9 145.1,542.4" fill="var(--accent)"/><path d="M 215.6 349.4 A 390.0 390.0 0 0 1 462.5 169.9" fill="none" stroke="var(--accent)" stroke-width="5" stroke-linecap="round" stroke-dasharray="1000" stroke-dashoffset="0"/><polygon points="462.5,169.9 438.4,189.9 432.1,162.6" fill="var(--accent)"/><rect x="454.0" y="206.0" width="192.0" height="88.0" rx="16" fill="var(--callout-tip)" stroke="var(--accent)" stroke-width="2"/><text x="550.0" y="250.0" text-anchor="middle" font-size="28" font-weight="700" fill="var(--fg)">辨認情緒</text><text x="550.0" y="280.0" text-anchor="middle" font-size="18" fill="var(--muted)">regret 或 remorse</text><rect x="739.3" y="413.3" width="192.0" height="88.0" rx="16" fill="var(--callout-tip)" stroke="var(--accent)" stroke-width="2"/><text x="835.3" y="457.3" text-anchor="middle" font-size="28" font-weight="700" fill="var(--fg)">釐清對象</text><text x="835.3" y="487.3" text-anchor="middle" font-size="18" fill="var(--muted)">自己和解或對人修復</text><rect x="630.3" y="748.7" width="192.0" height="88.0" rx="16" fill="var(--callout-tip)" stroke="var(--accent)" stroke-width="2"/><text x="726.3" y="792.7" text-anchor="middle" font-size="28" font-weight="700" fill="var(--fg)">降低門檻</text><text x="726.3" y="822.7" text-anchor="middle" font-size="18" fill="var(--muted)">小版本行動，加退出路徑</text><rect x="277.7" y="748.7" width="192.0" height="88.0" rx="16" fill="var(--callout-tip)" stroke="var(--accent)" stroke-width="2"/><text x="373.7" y="792.7" text-anchor="middle" font-size="28" font-weight="700" fill="var(--fg)">回頭檢查</text><text x="373.7" y="822.7" text-anchor="middle" font-size="18" fill="var(--muted)">第二次對話或書寫反思</text><rect x="168.7" y="413.3" width="192.0" height="88.0" rx="16" fill="var(--callout-tip)" stroke="var(--accent)" stroke-width="2"/><text x="264.7" y="457.3" text-anchor="middle" font-size="28" font-weight="700" fill="var(--fg)">更新規則</text><text x="264.7" y="487.3" text-anchor="middle" font-size="18" fill="var(--muted)">下一次更早說、更清楚說</text></svg><figcaption>這個循環把情緒處理拉回可做的動作：辨認、分流、小步行動、回頭檢查、更新規則。</figcaption></figure>
+<p>主持人問了一個現實問題：如果鼓起勇氣說了，結果真的很糟怎麼辦？Leslie 的回答是，若從來沒有越線或摔跤，可能代表嘗試得太少；失敗也是學習資料。Susan 則給出更實用的步驟：回去 check in，問對方剛才感受如何。第一次對話沒談好，第二次對話常更接近真正想談的內容。</p>
+<blockquote>When that first conversation doesn&#x27;t go well, the second one when you go back gets deeper.<cite> — Susan Block, 22:35</cite></blockquote>
+<h2>可直接套用的三個問題</h2>
+<ol><li>這件事主要是我自己卡住，還是我傷害了某個人？前者先做自我和解，後者要考慮道歉或修補。</li><li>我正在逃避的，是現實風險，還是損失規避把風險放大？把揭露與不揭露的好處、風險一起列出來。</li><li>我能不能先做一個小版本，並保留退出路徑？例如先談 15 分鐘、先寫下來、先問一個問題。</li></ol>
+<div class="callout tip">Susan Block 的做法很直接：如果猶豫，先說 yes；但要替自己留退出路徑。這讓人更容易開始，也降低失敗的心理成本。</div>
+<h2>可引用句與查證提醒</h2>
+<blockquote>I think of regret as a counterfactual emotion.<cite> — Liz Phelps, 02:14</cite></blockquote>
+<blockquote>Regret has more to do with your own inner experience, and it&#x27;s about making amends with yourself.<cite> — Susan Block, 02:36</cite></blockquote>
+<blockquote>Our emotions are really a combination of the actual events and our interpretation of the events.<cite> — Liz Phelps, 28:34</cite></blockquote>
+<div class="callout warn">本文根據 YouTube captions 與前一份 timestamped transcript 整理。若要對外引用研究數字，例如影片中提到主動說 I love you 後約 80% 得到回應，應再查 Leslie John 的原始研究或書籍脈絡。</div>
+
+</article>
+<footer>
+<p style="color: var(--muted); font-size: 0.85rem; margin-top: 4rem; padding-top: 1.5rem; border-top: 1px solid var(--border);">
+Source: YouTube, Harvard University, Harvard Thinking: Breaking the regret cycle
+</p>
+</footer>
+</main>
+<script>
+  const bar = document.getElementById('progress');
+  window.addEventListener('scroll', () => {
+    const h = document.documentElement;
+    const max = h.scrollHeight - h.clientHeight;
+    const ratio = max > 0 ? h.scrollTop / max : 0;
+    bar.style.transform = 'scaleX(' + ratio + ')';
+  }, { passive: true });
+</script>
+</body>
+</html>
