@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>只用驅動器電性訊號，端到端追出石英微鑽刀的一生</title>
+<meta name="description" content="不加裝感測器，僅用超音波驅動器的回授電流與等效阻抗，端到端追出石英微鑽孔刀具從開鑽到斷刀的全生命磨耗：扣追頻鋸齒後磨耗單調升 +8.1%（R²=0.96），電性領先可見崩邊約 100 孔。">
+<link rel="canonical" href="https://hale80427.github.io/brain-cards/quartz-tool-life-wear/">
+<meta name="author" content="彥皓">
+<meta property="og:type" content="article">
+<meta property="og:title" content="只用驅動器電性訊號，端到端追出石英微鑽刀的一生">
+<meta property="og:description" content="僅用超音波驅動器既有電性回授，端到端追出石英微鑽刀全生命磨耗 +8.1%（R²=0.96），電性領先可見崩邊約 100 孔。">
+<meta property="og:url" content="https://hale80427.github.io/brain-cards/quartz-tool-life-wear/">
+<meta property="og:image" content="https://hale80427.github.io/brain-cards/quartz-tool-life-wear/assets/wear_final_20260622.png">
+<meta property="og:locale" content="zh_TW">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="只用驅動器電性訊號，端到端追出石英微鑽刀的一生">
+<meta name="twitter:description" content="僅用驅動器電性回授追出石英微鑽刀全生命磨耗 +8.1%（R²=0.96），電性領先可見崩邊約 100 孔。">
+<meta name="twitter:image" content="https://hale80427.github.io/brain-cards/quartz-tool-life-wear/assets/wear_final_20260622.png">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "只用驅動器電性訊號，端到端追出石英微鑽刀的一生",
+  "description": "僅用超音波驅動器既有電性回授，端到端追出石英旋轉超音波微鑽孔刀具從開鑽到斷刀的全生命磨耗。",
+  "datePublished": "2026-06-22",
+  "dateModified": "2026-06-22",
+  "author": { "@type": "Person", "name": "彥皓" },
+  "url": "https://hale80427.github.io/brain-cards/quartz-tool-life-wear/",
+  "inLanguage": "zh-TW",
+  "license": "https://creativecommons.org/licenses/by/4.0/"
+}
+</script>
+<style>
+  :root {
+    --bg: #ffffff;
+    --fg: #24292f;
+    --accent: #0969da;
+    --accent-warn: #cf222e;
+    --muted: #57606a;
+    --border: #d0d7de;
+    --surface: #f6f8fa;
+    --callout-tip: #ddf4ff;
+    --callout-warn: #fff8c5;
+    --fs-meta: 0.8125rem;
+    --fs-body: 0.9375rem;
+    --fs-h2: clamp(1.15rem, 2.5vw, 1.375rem);
+    --fs-h1: clamp(1.5rem, 3.5vw, 1.875rem);
+    --font-sans: "Inter", system-ui, -apple-system, "Noto Sans TC", sans-serif;
+    --font-mono: "SF Mono", ui-monospace, Menlo, "JetBrains Mono", monospace;
+    --ease-linear: linear;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #0d1117; --fg: #e6edf3; --accent: #58a6ff; --accent-warn: #ff7b72;
+      --muted: #8b949e; --border: #30363d; --surface: #161b22;
+      --callout-tip: #0c2d4a; --callout-warn: #3a3416;
+    }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
+  }
+  * { box-sizing: border-box; }
+  body {
+    font-family: var(--font-sans); font-size: var(--fs-body); background: var(--bg); color: var(--fg);
+    line-height: 1.65; margin: 0; padding: 0; -webkit-font-smoothing: antialiased;
+  }
+  .progress-bar {
+    position: fixed; top: 0; left: 0; height: 3px; width: 100%;
+    background: var(--accent); z-index: 100;
+    transform: scaleX(0); transform-origin: left;
+    transition: transform 0.1s var(--ease-linear);
+  }
+  .topbar {
+    position: sticky; top: 0; z-index: 50; background: var(--surface);
+    border-bottom: 1px solid var(--border); padding: 0.5rem clamp(1rem, 4vw, 2rem);
+    font-size: var(--fs-meta); color: var(--muted);
+    display: flex; justify-content: space-between; gap: 1rem;
+  }
+  main { max-width: 80ch; margin: 0 auto; padding: clamp(1.5rem, 4vw, 3rem) clamp(1.25rem, 4vw, 2rem); }
+  h1 { font-size: var(--fs-h1); line-height: 1.25; margin: 0 0 0.75rem; font-weight: 650; letter-spacing: -0.01em; }
+  h2 { font-size: var(--fs-h2); line-height: 1.4; margin: 2.5rem 0 0.75rem; font-weight: 650; padding-bottom: 0.4rem; border-bottom: 1px solid var(--border); }
+  h3 { font-size: var(--fs-body); font-weight: 700; line-height: 1.4; margin: 1.5rem 0 0.5rem; color: var(--accent); }
+  p { margin: 0 0 1rem; }
+  a { color: var(--accent); text-underline-offset: 3px; }
+  a:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+  strong { font-weight: 650; }
+  .bluf { background: var(--callout-tip); border-left: 4px solid var(--accent); padding: 1rem 1.25rem; margin: 1.25rem 0 2rem; border-radius: 0 6px 6px 0; }
+  .bluf strong { display: block; font-size: var(--fs-meta); letter-spacing: 0.05em; color: var(--accent); margin-bottom: 0.4rem; text-transform: uppercase; }
+  nav.toc { background: var(--surface); border: 1px solid var(--border); border-radius: 6px; padding: 0.9rem 1.25rem; margin: 0 0 2rem; font-size: var(--fs-meta); }
+  nav.toc strong { display: block; color: var(--muted); margin-bottom: 0.5rem; letter-spacing: 0.03em; }
+  nav.toc ol { margin: 0; padding-left: 1.2rem; columns: 2; column-gap: 1.5rem; }
+  nav.toc li { margin-bottom: 0.3rem; }
+  .callout { padding: 0.9rem 1.2rem; margin: 1.5rem 0; border-radius: 0 6px 6px 0; border-left: 4px solid var(--muted); font-size: var(--fs-body); }
+  .callout.tip { background: var(--callout-tip); border-left-color: var(--accent); }
+  .callout.warn { background: var(--callout-warn); border-left-color: var(--accent-warn); }
+  .callout strong { color: var(--accent); }
+  .callout.warn strong { color: var(--accent-warn); }
+  table { border-collapse: collapse; width: 100%; margin: 1.5rem 0; font-size: var(--fs-body); }
+  th, td { padding: 0.55rem 0.75rem; border: 1px solid var(--border); text-align: left; vertical-align: top; }
+  th { background: var(--surface); font-weight: 650; }
+  code { font-family: var(--font-mono); background: var(--surface); color: var(--accent-warn); padding: 0.12em 0.4em; border-radius: 4px; font-size: var(--fs-body); }
+  figure { margin: 1.75rem 0; }
+  figure img { width: 100%; height: auto; border: 1px solid var(--border); border-radius: 6px; display: block; }
+  figcaption { font-size: var(--fs-meta); color: var(--muted); margin-top: 0.5rem; text-align: center; }
+  footer p { color: var(--muted); font-size: var(--fs-meta); margin-top: 3rem; padding-top: 1.25rem; border-top: 1px solid var(--border); }
+  @media print { .progress-bar, .topbar { display: none; } main { max-width: 100%; padding: 1cm; } }
+</style>
+</head>
+<body>
+<div class="progress-bar" id="progress"></div>
+<div class="topbar"><span>石英刀況電性監測 · 技術報告</span><span>2026-06-22</span></div>
+<main>
+<header>
+<h1>只用驅動器電性訊號，端到端追出石英微鑽刀的一生</h1>
+<p style="color: var(--muted); font-size: var(--fs-body); margin: 0 0 1rem;">從超音波回授電流與等效阻抗，監測石英旋轉超音波微鑽孔（RUM）刀具從開鑽到斷刀的全生命磨耗</p>
+<div class="bluf">
+<strong>結論先講 BLUF</strong>
+<p style="margin:0;">在<strong>不額外加裝任何感測器</strong>的前提下，僅用超音波驅動器既有的電性回授，就能端到端追出石英微鑽孔一把刀<strong>從開鑽到斷刀的完整磨耗歷程</strong>。本輪 450 孔全生命實測：扣除追頻造成的週期性干擾後，刀具等效阻抗隨磨耗<strong>單調上升 +8.1%（決定係數 R²=0.96）</strong>；而入孔脆裂邊的肉眼劣化，比這條電性訊號<strong>晚約 100 孔</strong>才出現——電性磨耗訊號可以提前預警。</p>
+</div>
+</header>
+<article>
+<!-- narrative: 物件,細節,矛盾 -->
+<nav class="toc" aria-label="目錄">
+<strong>本文導覽</strong>
+<ol>
+<li><a href="#why">為什麼用電性監測</a></li>
+<li><a href="#states">三個狀態的電性指紋</a></li>
+<li><a href="#detrend">扣掉追頻鋸齒</a></li>
+<li><a href="#lead">電性領先崩邊</a></li>
+<li><a href="#break">斷刀的事件指紋</a></li>
+<li><a href="#compare">兩輪形狀對照</a></li>
+<li><a href="#decision">換刀決策啟示</a></li>
+</ol>
+</nav>
+
+<h2 id="why">為什麼要用電性訊號來監測刀況？</h2>
+<p>石英脆硬、微鑽尖徑極小，傳統接觸式刀具量測既困難、又得中斷加工。但旋轉超音波加工（RUM，Rotary Ultrasonic Machining）有個天然優勢：<strong>超音波換能器本身就是一個對「刀尖機械負載」敏感的感測元件</strong>。</p>
+<p>刀尖一接觸工件，等效機械阻抗就改變，這個改變會反映到驅動器的電流與功率回授上。換句話說——驅動器的電性訊號，就是一個免費、即時、非接觸的刀況代理量。</p>
+
+<h2 id="states">一輪加工的三個狀態，電流看得最清楚</h2>
+<p>一輪完整加工自然分成三段。我們刻意在開鑽前、斷刀後各收集一段空載訊號，與中間的鑽孔負載對照。最乾淨的判別量是<strong>回授電流（IFB）</strong>：</p>
+<table>
+<thead><tr><th>狀態</th><th>回授電流 IFB</th><th>說明</th></tr></thead>
+<tbody>
+<tr><td>鑽前空載</td><td>88 mA</td><td>基準</td></tr>
+<tr><td>鑽孔負載</td><td>84 mA</td><td>換能器被加載 → 電流下降</td></tr>
+<tr><td>斷刀後空載</td><td>90 mA</td><td>負載消失 → 電流跳回</td></tr>
+</tbody>
+</table>
+<p>這條「下降 → 跳回」的台階，把加工負載的起點與終點標得清清楚楚。</p>
+<div class="callout warn">
+<strong>反直覺的一點</strong>：等效阻抗 R 在三段是<strong>重疊</strong>的（0.51–0.54），單看阻抗分不開狀態。負載的乾淨載體是回授電流，<strong>不是阻抗</strong>——這點對後續判讀很關鍵。
+</div>
+<figure>
+<img src="assets/wear_3state_20260622.png" width="1600" height="1107" loading="lazy" alt="三段全生命電性圖：上半阻抗 R 在三段重疊，下半回授電流 IFB 呈現 88→84→90 mA 的下降與跳回台階，標出開鑽與斷刀時刻。">
+<figcaption>圖 1 · 三段全生命（鑽前空載／鑽孔負載／斷刀後空載）：回授電流 IFB 的「降→跳回」台階最能分辨負載狀態 · 作者自繪分析圖</figcaption>
+</figure>
+
+<h2 id="detrend">最大的干擾：把「追頻鋸齒」拿掉，磨耗才現形</h2>
+<p>監測磨耗最大的障礙，是驅動器的<strong>自動追頻</strong>。驅動器會持續追蹤共振頻率；當頻率因發熱漂移到追頻範圍（TrackRange ≈ 100 Hz）邊界，就跳回初始鎖頻點，形成一個<strong>週期性的鋸齒</strong>（本輪約 45 孔一個週期）。</p>
+<p>這個鋸齒讓阻抗在 <strong>±10%</strong> 之間來回擺動，幅度遠大於磨耗本身，把磨耗的緩慢上升完全蓋住。</p>
+<p>去趨勢的正確做法，是順著這個物理機制走：偵測每一個追頻週期、取週期內的中位數，並<strong>剔除橫跨「負載／空載邊界」的污染週期</strong>（開鑽處與斷刀處的週期會混入空載，必須排除）。</p>
+<figure>
+<img src="assets/wear_detrend_20260622.png" width="1600" height="795" loading="lazy" alt="扣追頻鋸齒前後對比：淡紅為含鋸齒原始阻抗，深藍為扣鋸齒後的磨耗曲線，金點為各追頻週期中位數，磨耗淨升約 8%。">
+<figcaption>圖 2 · 扣掉追頻鋸齒後，刀具磨耗從 ±10% 的擺動下乾淨浮現 · 作者自繪分析圖</figcaption>
+</figure>
+<p>扣掉鋸齒後，磨耗訊號乾淨浮現：刀具等效阻抗從開鑽後<strong>穩定上升 +8.1%（R²=0.96）</strong>，約 330 孔後進入平台，接著在 450 孔斷刀。</p>
+
+<h2 id="lead">電性磨耗，領先肉眼可見的崩邊</h2>
+<p>本輪在約 100–200 孔，阻抗開始明顯上升；而入孔的脆裂邊，是從 <strong>200 孔起</strong>才肉眼可見地變大。</p>
+<p>也就是說——<strong>電性磨耗訊號，領先實體崩邊約 100 孔出現</strong>。兩條互相獨立（正交）的證據彼此印證了同一件事：刀刃在約 200 孔附近開始鈍化。而電性的好處是：它走在前面，可以當提前預警。</p>
+<figure>
+<img src="assets/wear_final_20260622.png" width="1600" height="792" loading="lazy" alt="純負載磨耗曲線，X 軸為孔數，等效阻抗從 0.503 上升到 0.544（+8.1%），約 330 孔後進入平台，450 孔斷刀。">
+<figcaption>圖 3 · 純負載狀態下的刀具磨耗（X 軸＝孔數）：0.503→0.544，+8.1%，升到約 330 孔後平台 · 作者自繪分析圖</figcaption>
+</figure>
+
+<h2 id="break">斷刀的事件指紋</h2>
+<p>本輪 450 孔是<strong>突然斷刀、錄製即停</strong>。電性上留下兩個清楚的指紋：</p>
+<table>
+<thead><tr><th>時刻</th><th>電性表現</th></tr></thead>
+<tbody>
+<tr><td>斷刀前</td><td>等效阻抗衝到全程最高（負載最大）</td></tr>
+<tr><td>斷刀瞬間</td><td>回授電流跳回空載水位，加工負載驟然消失</td></tr>
+</tbody>
+</table>
+<p>「斷刀前阻抗衝峰 + 斷刀後負載驟失」這組合，可作為斷刀事件的判定依據。</p>
+
+<h2 id="compare">兩輪形狀對照（只比形狀，不比絕對值）</h2>
+<p>我們拿同一設定的前一輪（新刀全生命）做對照。但必須先講清一個邊界：<strong>兩輪的空載基線與電性耦合方式不同</strong>（夾持清潔改變了耦合形態），所以絕對阻抗值<strong>不可直接比，只能比「形狀」</strong>。</p>
+<div class="callout tip">
+<strong>新刀 vs 已磨合刀</strong>：新刀（前一輪）早期有明顯的 run-in（磨合）陡升後進入雜訊平台；已磨合刀（本輪）沒有早期陡升，是平緩穩定的上升後進入平台。形狀差異符合物理預期。
+</div>
+<figure>
+<img src="assets/wear_compare_shape_20260622.png" width="1600" height="659" loading="lazy" alt="兩輪磨耗形狀並排對照，Y 軸為相對起點百分比變化：左為前一輪新刀（早期陡升後雜訊平台），右為本輪已磨合刀（平緩穩升後平台）。">
+<figcaption>圖 4 · 兩輪磨耗「形狀」對照（Y 軸＝相對起點 %ΔR，只比形狀）：左新刀有早期磨合陡升，右本輪平緩穩升 · 作者自繪分析圖</figcaption>
+</figure>
+
+<h2 id="decision">對換刀決策的啟示</h2>
+<table>
+<thead><tr><th>啟示</th><th>依據</th></tr></thead>
+<tbody>
+<tr><td>換刀窗建議落在約 200–250 孔</td><td>此時阻抗升速翻倍、入孔脆裂邊開始劣化，且距斷刀（450 孔）仍有安全餘量</td></tr>
+<tr><td>阻抗進入「峰後平台」可作為接近壽命末期的徵兆</td><td>本輪約 330 孔後進入平台，450 孔斷刀</td></tr>
+<tr><td>監測不需任何額外感測器</td><td>直接用既有的驅動器電性回授線上實施</td></tr>
+</tbody>
+</table>
+</article>
+<footer>
+<p>最後更新：2026-06-22 · CC BY 4.0 · 引用請標來源<br>
+方法與資料：等效阻抗採 cut-phase R_base（逐啄循環中位數，代表切削相負載）；去趨勢採追頻週期正規化。本輪 450 孔（一孔約 57 秒）、前一輪為新刀全生命到斷刀。所有結論皆以可重現的電性管線推導。</p>
+</footer>
+</main>
+<script>
+  const bar = document.getElementById('progress');
+  window.addEventListener('scroll', () => {
+    const h = document.documentElement;
+    const max = h.scrollHeight - h.clientHeight;
+    bar.style.transform = 'scaleX(' + (max > 0 ? h.scrollTop / max : 0) + ')';
+  }, { passive: true });
+</script>
+</body>
+</html>
