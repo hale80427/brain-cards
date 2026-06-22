@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>微鑽孔加減速參數：用 jerk 控制 PCD 崩刃風險</title>
+<meta name="description" content="以 FANUC 參數串起 G01、G00、soft filter、jerk filter 與 SSS 的調機邏輯。">
+
+<!-- Canonical & 作者 -->
+<link rel="canonical" href="https://hale80427.github.io/brain-cards/pcd-microdrilling-acceleration-jerk-parameters/">
+<meta name="author" content="彥皓">
+
+<!-- Open Graph（FB / LINE / Slack / Discord 連結預覽）-->
+<meta property="og:type" content="article">
+<meta property="og:title" content="微鑽孔加減速參數：用 jerk 控制 PCD 崩刃風險">
+<meta property="og:description" content="以 FANUC 參數串起 G01、G00、soft filter、jerk filter 與 SSS 的調機邏輯。">
+<meta property="og:url" content="https://hale80427.github.io/brain-cards/pcd-microdrilling-acceleration-jerk-parameters/">
+<meta property="og:image" content="https://hale80427.github.io/brain-cards/og-default.jpg">
+<meta property="og:locale" content="zh_TW">
+
+<!-- Twitter / X Card -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="微鑽孔加減速參數：用 jerk 控制 PCD 崩刃風險">
+<meta name="twitter:description" content="以 FANUC 參數串起 G01、G00、soft filter、jerk filter 與 SSS 的調機邏輯。">
+<meta name="twitter:image" content="https://hale80427.github.io/brain-cards/og-default.jpg">
+
+<!-- 結構化資料（JSON-LD，提升 AI 與搜尋引擎理解）-->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "\u5fae\u947d\u5b54\u52a0\u6e1b\u901f\u53c3\u6578\uff1a\u7528 jerk \u63a7\u5236 PCD \u5d29\u5203\u98a8\u96aa",
+  "description": "\u4ee5 FANUC \u53c3\u6578\u4e32\u8d77 G01\u3001G00\u3001soft filter\u3001jerk filter \u8207 SSS \u7684\u8abf\u6a5f\u908f\u8f2f\u3002",
+  "datePublished": "2026-06-23",
+  "dateModified": "2026-06-23",
+  "author": { "@type": "Person", "name": "彥皓" },
+  "url": "https://hale80427.github.io/brain-cards/pcd-microdrilling-acceleration-jerk-parameters/",
+  "inLanguage": "zh-TW",
+  "license": "https://creativecommons.org/licenses/by/4.0/"
+}
+</script>
+
+<style>
+  :root {
+    /* color tokens — OKLCH (hallmark token discipline；禁止 inline hex / rgb / oklch / font-family；
+       hex 註解保留為設計者原意溯源，色彩值以 OKLCH 為事實源) */
+    --bg: oklch(98.4% 0.004 106.5);              /* 暖白（was #fafaf7） */
+    --fg: oklch(21.8% 0 0);                       /* 近黑（was #1a1a1a） */
+    --accent: oklch(54.3% 0.174 29.7);            /* 暖紅（was #c0392b） */
+    --accent-warn: oklch(66.6% 0.157 58.3);       /* 橘黃 callout warn 強調（was #d97706 inline，lift 進 token） */
+    --muted: oklch(51.0% 0 0);                    /* 中灰（was #666） */
+    --border: oklch(92.1% 0.007 106.5);           /* 淺暖灰（was #e5e5e0） */
+    --callout-tip: oklch(95.7% 0.014 174.2);      /* 淺薄荷（was #e8f4f0） */
+    --callout-warn: oklch(96.9% 0.019 72.6);      /* 淺暖米（was #fdf3e7） */
+    --fs-meta: 0.85rem;                          /* metadata / footer / .bluf 標籤 */
+    --fs-body: 1rem;                              /* p / li / td / blockquote / h3 / code / table */
+    --fs-h2:   clamp(1.3rem, 3vw, 1.5rem);      /* h2 段標題 */
+    --fs-h1:   clamp(1.75rem, 4vw, 2.25rem);    /* h1 主標題 */
+    /* font tokens（hallmark token discipline；禁止 inline font-family） */
+    --font-serif: "Noto Serif TC", Georgia, serif;
+    --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+    /* easing tokens（hallmark：禁止 unnamed easing） */
+    --ease-linear: linear;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: oklch(21.8% 0 0);                     /* was #1a1a1a */
+      --fg: oklch(95.3% 0.011 106.6);             /* 米白（was #f0f0e8） */
+      --accent: oklch(70.4% 0.136 28.7);          /* 亮珊瑚（was #e87c6e） */
+      --accent-warn: oklch(76.9% 0.165 70.1);     /* dark mode 等對等亮版 warn 強調 */
+      --muted: oklch(68.3% 0 0);                  /* was #999 */
+      --border: oklch(32.1% 0 0);                 /* was #333 */
+      --callout-tip: oklch(30.9% 0.029 178.3);    /* 深綠青（was #1f3530） */
+      --callout-warn: oklch(30.7% 0.034 73.5);    /* 深棕（was #3a2d1c） */
+    }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
+  }
+  * { box-sizing: border-box; }
+  body {
+    font-family: var(--font-serif);
+    background: var(--bg);
+    color: var(--fg);
+    line-height: 1.8;
+    margin: 0;
+    padding: 0;
+    -webkit-font-smoothing: antialiased;
+  }
+  .progress-bar {
+    /* hallmark：只動 transform / opacity，不動 layout property（避免 reflow + 對齊微互動紀律） */
+    position: fixed; top: 0; left: 0; height: 3px; width: 100%;
+    background: var(--accent); z-index: 100;
+    transform: scaleX(0); transform-origin: left;
+    transition: transform 0.1s var(--ease-linear);
+  }
+  main {
+    max-width: 680px;
+    margin: 0 auto;
+    padding: clamp(2rem, 5vw, 4rem) clamp(1.5rem, 4vw, 2rem);
+  }
+  /* === 字級階梯：嚴格 4 級。所有 font-size 必須引用以下 4 個變數之一 === */
+  /* === 違反 → KB-04 機械驗證會擋（font_levels > 4）=== */
+  /* === h3 / blockquote / code / table 等「想要不一樣」用 weight + color，不開新字級 === */
+  h1 { font-size: var(--fs-h1); line-height: 1.3; margin: 0 0 1rem; }
+  h2 { font-size: var(--fs-h2); line-height: 1.4; margin: 2.5rem 0 0.75rem; padding-bottom: 0.5rem; border-bottom: 1px solid var(--border); }
+  h3 { font-size: var(--fs-body); font-weight: 700; line-height: 1.4; margin: 1.75rem 0 0.5rem; color: var(--accent); }
+  p { margin: 0 0 1.25rem; }
+  a { color: var(--accent); text-underline-offset: 3px; }
+  a:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+  .bluf { background: var(--callout-tip); border-left: 3px solid var(--accent); padding: 1.25rem 1.5rem; margin: 1.5rem 0 2rem; border-radius: 4px; }
+  .bluf strong { display: block; font-size: var(--fs-meta); letter-spacing: 0.05em; color: var(--accent); margin-bottom: 0.5rem; text-transform: uppercase; }
+  .callout { padding: 1rem 1.25rem; margin: 1.5rem 0; border-radius: 4px; border-left: 3px solid var(--muted); }
+  .callout.tip { background: var(--callout-tip); border-left-color: var(--accent); }
+  .callout.warn { background: var(--callout-warn); border-left-color: var(--accent-warn); }
+  .callout.info { background: var(--callout-tip); border-left-color: var(--muted); }
+  .callout.quote { background: transparent; border-left-color: var(--accent); font-style: italic; }
+  table { border-collapse: collapse; width: 100%; margin: 1.5rem 0; font-size: var(--fs-body); }
+  th, td { padding: 0.6rem 0.8rem; border: 1px solid var(--border); text-align: left; vertical-align: top; }
+  th { background: var(--callout-tip); font-weight: 600; }
+  code { font-family: var(--font-mono); background: var(--callout-tip); padding: 0.1em 0.4em; border-radius: 3px; font-size: var(--fs-body); }
+  /* === 圖片 / 圖說（圖表規則見 KB-07）：figcaption 用既有 --fs-meta，不開新字級 === */
+  figure { margin: 1.5rem 0; }
+  figure img { width: 100%; height: auto; border-radius: 4px; display: block; }
+  figure svg { width: 100%; height: auto; display: block; }
+  figcaption { font-size: var(--fs-meta); color: var(--muted); margin-top: 0.5rem; text-align: center; }
+  @media print {
+    .progress-bar { display: none; }
+    body { font-size: 11pt; line-height: 1.6; }
+    main { max-width: 100%; padding: 1cm; }
+  }
+</style>
+</head>
+<body>
+<div class="progress-bar" id="progress"></div>
+<main>
+<header>
+<h1>微鑽孔加減速參數：用 jerk 控制 PCD 崩刃風險</h1>
+<div class="bluf">
+<strong>BLUF</strong>
+<p>#1201 與 #1205 決定加速度曲線骨架；#1207、#2007、#2008 拉長尺度；#1568 與 #12051 磨掉尖角；#8090 與 #12060 負責多 block 與多軸協調。D0.4 mm PCD 鑽石英時，第一優先是把命令側 jerk 壓低，再用位置偏差、電流峰值、刀具壽命交叉驗證。</p>
+</div>
+</header>
+<article>
+<!-- narrative: 速度本身不一定是崩刃主因；方向反轉時的加速度與 jerk 才是刀尖撞擊的直接來源。, 50 μm 的位置偏差約等於 D0.4 mm 刀徑的 12.5%，足以把問題導向 Z 軸動態追隨與反轉衝擊。, 推薦先做組合 B：#1201 = 1、#1207 增加、#1568 = 20–30 ms、#12051 = 10–20 ms。 -->
+<h2>問題核心：刀尖吃到的是 jerk</h2>
+<p>現場情境是 D0.4 mm PCD 鑽頭加工石英，G83 Macro 裡含大量 G01，進給在 F1000 與 F0 之間反覆切換。這種循環的危險點不在單純速度，而在方向反轉與停啟瞬間的加速度斜率。</p>
+<div class="callout warn">刀具受力可以先用 F = ma 理解；真正造成脆性 PCD 崩刃的尖峰，常來自 J = da/dt，也就是 jerk。調機目標應先壓 jerk，再談循環時間。</div>
+<figure><svg viewBox="0 0 792 120" role="img" xmlns="http://www.w3.org/2000/svg"><title>速度命令到刀尖衝擊</title><rect x="12" y="32" width="150" height="56" rx="6" fill="var(--callout-tip)" stroke="var(--accent)" stroke-width="1.5"/><text x="87" y="65" text-anchor="middle" font-size="15" fill="var(--fg)">F1000 ⇄ F0 反覆切換</text><line x1="162" y1="60" x2="210" y2="60" stroke="var(--accent)" stroke-width="1.5"/><polygon points="210,55 218,60 210,65" fill="var(--accent)"/><rect x="218" y="32" width="150" height="56" rx="6" fill="var(--callout-tip)" stroke="var(--accent)" stroke-width="1.5"/><text x="293" y="65" text-anchor="middle" font-size="15" fill="var(--fg)">加速度尖峰</text><line x1="368" y1="60" x2="416" y2="60" stroke="var(--accent)" stroke-width="1.5"/><polygon points="416,55 424,60 416,65" fill="var(--accent)"/><rect x="424" y="32" width="150" height="56" rx="6" fill="var(--callout-tip)" stroke="var(--accent)" stroke-width="1.5"/><text x="499" y="65" text-anchor="middle" font-size="15" fill="var(--fg)">jerk 尖峰</text><line x1="574" y1="60" x2="622" y2="60" stroke="var(--accent)" stroke-width="1.5"/><polygon points="622,55 630,60 622,65" fill="var(--accent)"/><rect x="630" y="32" width="150" height="56" rx="6" fill="var(--callout-tip)" stroke="var(--accent)" stroke-width="1.5"/><text x="705" y="65" text-anchor="middle" font-size="15" fill="var(--fg)">刀尖衝擊</text></svg><figcaption>從命令速度切換到刀尖衝擊的因果鏈。圖以 SVG 呈現，重點是加速度尖角與 jerk 尖峰。</figcaption></figure>
+<h2>#1201 與 #1205：決定加速度曲線骨架</h2>
+<p>#1201 G1_acc 控制 G01 的加減速曲線形狀。定時間模式在短線段中容易把速度切換壓得很短，形成尖峰；定斜率模式讓每次加減速按固定斜率建立，對微鑽孔反轉更友善。</p>
+<figure><svg viewBox="0 0 586 120" role="img" xmlns="http://www.w3.org/2000/svg"><title>#1201 G1_acc：G01 曲線骨架</title><rect x="12" y="32" width="150" height="56" rx="6" fill="var(--callout-tip)" stroke="var(--accent)" stroke-width="1.5"/><text x="87" y="65" text-anchor="middle" font-size="15" fill="var(--fg)">0，定時間</text><line x1="162" y1="60" x2="210" y2="60" stroke="var(--accent)" stroke-width="1.5"/><polygon points="210,55 218,60 210,65" fill="var(--accent)"/><rect x="218" y="32" width="150" height="56" rx="6" fill="var(--callout-tip)" stroke="var(--accent)" stroke-width="1.5"/><text x="293" y="65" text-anchor="middle" font-size="15" fill="var(--fg)">1，定斜率</text><line x1="368" y1="60" x2="416" y2="60" stroke="var(--accent)" stroke-width="1.5"/><polygon points="416,55 424,60 416,65" fill="var(--accent)"/><rect x="424" y="32" width="150" height="56" rx="6" fill="var(--callout-tip)" stroke="var(--accent)" stroke-width="1.5"/><text x="499" y="65" text-anchor="middle" font-size="15" fill="var(--fg)">結果</text></svg><figcaption>#1201 調成定斜率後，G01 的加速度建立方式從短促尖角改成可預期的斜坡。</figcaption></figure>
+<p>#1205 G0bdcc 對應 G00 快速移動。它影響快速退刀、快速接近與換位時的加減速。傳統切換容易產生 0 → 100% → 0 的暴力變化；補間前或多段定斜率可把快速移動的衝擊拆開。</p>
+<figure><svg viewBox="0 0 586 120" role="img" xmlns="http://www.w3.org/2000/svg"><title>#1205 G0bdcc：G00 快速移動</title><rect x="12" y="32" width="150" height="56" rx="6" fill="var(--callout-tip)" stroke="var(--accent)" stroke-width="1.5"/><text x="87" y="65" text-anchor="middle" font-size="15" fill="var(--fg)">傳統切換</text><line x1="162" y1="60" x2="210" y2="60" stroke="var(--accent)" stroke-width="1.5"/><polygon points="210,55 218,60 210,65" fill="var(--accent)"/><rect x="218" y="32" width="150" height="56" rx="6" fill="var(--callout-tip)" stroke="var(--accent)" stroke-width="1.5"/><text x="293" y="65" text-anchor="middle" font-size="15" fill="var(--fg)">補間前加減速</text><line x1="368" y1="60" x2="416" y2="60" stroke="var(--accent)" stroke-width="1.5"/><polygon points="416,55 424,60 416,65" fill="var(--accent)"/><rect x="424" y="32" width="150" height="56" rx="6" fill="var(--callout-tip)" stroke="var(--accent)" stroke-width="1.5"/><text x="499" y="65" text-anchor="middle" font-size="15" fill="var(--fg)">多段定斜率</text></svg><figcaption>#1205 的價值在高速 peck 退刀時最明顯：把 G00 的硬切換變成多段斜坡。</figcaption></figure>
+<h2>#1207、#2007、#2008：把加速度作用時間拉長</h2>
+<p>#1207 G1btL 是補間前時間常數，直接拉長加速度作用時間。時間拉長後，同樣速度變化會分散在更長區間，峰值加速度下降。對 D0.4 mm PCD，這是高優先級調整。</p>
+<p>#2007 G1tL 屬於 G01 主加減速時間常數，作用方向與 #1207 類似。#2008 G1t1 則提供第二段時間常數，可把反轉尾巴再拉長，降低方向反轉尖峰。</p>
+<figure><svg viewBox="0 0 792 120" role="img" xmlns="http://www.w3.org/2000/svg"><title>時間常數：把峰值攤平</title><rect x="12" y="32" width="150" height="56" rx="6" fill="var(--callout-tip)" stroke="var(--accent)" stroke-width="1.5"/><text x="87" y="65" text-anchor="middle" font-size="15" fill="var(--fg)">#1207 增加</text><line x1="162" y1="60" x2="210" y2="60" stroke="var(--accent)" stroke-width="1.5"/><polygon points="210,55 218,60 210,65" fill="var(--accent)"/><rect x="218" y="32" width="150" height="56" rx="6" fill="var(--callout-tip)" stroke="var(--accent)" stroke-width="1.5"/><text x="293" y="65" text-anchor="middle" font-size="15" fill="var(--fg)">#2007 增加</text><line x1="368" y1="60" x2="416" y2="60" stroke="var(--accent)" stroke-width="1.5"/><polygon points="416,55 424,60 416,65" fill="var(--accent)"/><rect x="424" y="32" width="150" height="56" rx="6" fill="var(--callout-tip)" stroke="var(--accent)" stroke-width="1.5"/><text x="499" y="65" text-anchor="middle" font-size="15" fill="var(--fg)">#2008 增加</text><line x1="574" y1="60" x2="622" y2="60" stroke="var(--accent)" stroke-width="1.5"/><polygon points="622,55 630,60 622,65" fill="var(--accent)"/><rect x="630" y="32" width="150" height="56" rx="6" fill="var(--callout-tip)" stroke="var(--accent)" stroke-width="1.5"/><text x="705" y="65" text-anchor="middle" font-size="15" fill="var(--fg)">結果</text></svg><figcaption>時間常數增大後，加速度峰值下降；代價是循環時間上升。</figcaption></figure>
+<h2>#1568 與 #12051：把尖角磨圓</h2>
+<p>#1568 SfiltG1 是 soft filter，可視為低通濾波器。它把加速度曲線的尖角磨成圓弧，降低機械共振、位置偏差與振動。建議起點可抓 20–30 ms。</p>
+<p>#12051 Jerk_filtG1 直接作用在 J = da/dt。若目標是降低刀尖撞擊力，這個參數最貼近失效機制。建議起點可抓 10–20 ms，並搭配位置偏差與主軸／伺服電流峰值觀察。</p>
+<figure><svg viewBox="0 0 586 120" role="img" xmlns="http://www.w3.org/2000/svg"><title>濾波：磨掉尖角</title><rect x="12" y="32" width="150" height="56" rx="6" fill="var(--callout-tip)" stroke="var(--accent)" stroke-width="1.5"/><text x="87" y="65" text-anchor="middle" font-size="15" fill="var(--fg)">#1568 soft filter</text><line x1="162" y1="60" x2="210" y2="60" stroke="var(--accent)" stroke-width="1.5"/><polygon points="210,55 218,60 210,65" fill="var(--accent)"/><rect x="218" y="32" width="150" height="56" rx="6" fill="var(--callout-tip)" stroke="var(--accent)" stroke-width="1.5"/><text x="293" y="65" text-anchor="middle" font-size="15" fill="var(--fg)">#12051 jerk filter</text><line x1="368" y1="60" x2="416" y2="60" stroke="var(--accent)" stroke-width="1.5"/><polygon points="416,55 424,60 416,65" fill="var(--accent)"/><rect x="424" y="32" width="150" height="56" rx="6" fill="var(--callout-tip)" stroke="var(--accent)" stroke-width="1.5"/><text x="499" y="65" text-anchor="middle" font-size="15" fill="var(--fg)">結果</text></svg><figcaption>soft filter 平滑加速度；jerk filter 進一步壓低加速度變化率。</figcaption></figure>
+<h2>#8090 與 #12060：讓多 block 與多軸協調</h2>
+<p>#8090 SSS 的核心是多 block 連續化。大量 G01 的 Macro 若每個 block 都停一下，再啟動下一段，刀尖會反覆吃到小衝擊。SSS 的目標是讓 A、B、C block 連續流動。</p>
+<p>#12060 VblAccPreInt 允許各軸採用不同加速度策略。X 軸可以保留速度，Z 軸可更柔和，避免單軸策略過度激進。微鑽孔的關鍵通常在 Z 軸，因此這個協調器有測試價值。</p>
+<figure><svg viewBox="0 0 586 120" role="img" xmlns="http://www.w3.org/2000/svg"><title>協調器：多 block 與多軸</title><rect x="12" y="32" width="150" height="56" rx="6" fill="var(--callout-tip)" stroke="var(--accent)" stroke-width="1.5"/><text x="87" y="65" text-anchor="middle" font-size="15" fill="var(--fg)">#8090 SSS</text><line x1="162" y1="60" x2="210" y2="60" stroke="var(--accent)" stroke-width="1.5"/><polygon points="210,55 218,60 210,65" fill="var(--accent)"/><rect x="218" y="32" width="150" height="56" rx="6" fill="var(--callout-tip)" stroke="var(--accent)" stroke-width="1.5"/><text x="293" y="65" text-anchor="middle" font-size="15" fill="var(--fg)">#12060 Variable Acceleration</text><line x1="368" y1="60" x2="416" y2="60" stroke="var(--accent)" stroke-width="1.5"/><polygon points="416,55 424,60 416,65" fill="var(--accent)"/><rect x="424" y="32" width="150" height="56" rx="6" fill="var(--callout-tip)" stroke="var(--accent)" stroke-width="1.5"/><text x="499" y="65" text-anchor="middle" font-size="15" fill="var(--fg)">結果</text></svg><figcaption>SSS 處理 block 之間的連續性；Variable Acceleration 處理各軸之間的差異。</figcaption></figure>
+<h2>三組調機方案</h2>
+<ol><li>組合 A，最保守：#1201 = 1，#1207 增加，#2007 增加。效果是加速度下降，循環時間可能增加 5–15%，適合作為第一輪驗證。</li><li>組合 B，推薦：#1201 = 1，#1207 增加，#1568 = 20–30 ms，#12051 = 10–20 ms。效果是加速度與 jerk 同時下降，通常是風險與成本最平衡的方案。</li><li>組合 C，微鑽孔專用：#8090 = ON，#12060 = ON，#1201 = 1，#1207 增加，#1568 增加，#12051 增加。效果是 block 連續化、反轉圓滑化、加速度與 jerk 同步變柔。</li></ol>
+<figure><svg viewBox="0 0 800 520" role="img" xmlns="http://www.w3.org/2000/svg"><title>三組方案優先序</title><polygon points="350.0,16.0 450.0,16.0 560.0,178.7 240.0,178.7" fill="var(--callout-tip)" stroke="var(--accent)" stroke-width="1.5"/><text x="400" y="91" text-anchor="middle" font-size="18" font-weight="700" fill="var(--fg)">組合 C</text><text x="400" y="119" text-anchor="middle" font-size="13" fill="var(--muted)">SSS + Variable Acceleration + 濾波 + 時間常數</text><polygon points="240.0,178.7 560.0,178.7 670.0,341.3 130.0,341.3" fill="var(--callout-tip)" stroke="var(--accent)" stroke-width="1.5"/><text x="400" y="254" text-anchor="middle" font-size="18" font-weight="700" fill="var(--fg)">組合 B</text><text x="400" y="282" text-anchor="middle" font-size="13" fill="var(--muted)">定斜率 + 時間常數 + soft filter + jerk filter</text><polygon points="130.0,341.3 670.0,341.3 780.0,504.0 20.0,504.0" fill="var(--callout-tip)" stroke="var(--accent)" stroke-width="1.5"/><text x="400" y="417" text-anchor="middle" font-size="18" font-weight="700" fill="var(--fg)">組合 A</text><text x="400" y="445" text-anchor="middle" font-size="13" fill="var(--muted)">定斜率 + 時間常數</text></svg><figcaption>三組方案從保守到完整，依序處理骨架、尺度、濾波與協調。</figcaption></figure>
+<h2>用量測結果驗證失效機制</h2>
+<p>你量到的位置偏差為 +49.87 μm 與 -49.74 μm。對 D0.4 mm PCD 來說，50 μm 約為刀徑 12.5%。這已經超出微小誤差範圍，最大嫌疑會指向 Z 軸動態追隨、過衝、反轉衝擊，再連到 PCD 崩裂。</p>
+<div class="callout tip">現場優先順序：① #1201 = 1；② #1207 增加；③ #1568 20 ms；④ #12051 10 ms；⑤ #8090 + #12060。每一步只改一小組，再看位置偏差峰值、電流峰值與刀具壽命是否同向改善。</div>
+<figure><svg viewBox="0 0 1100 1100" role="img" xmlns="http://www.w3.org/2000/svg"><title>調機驗證回路</title><path d="M 658.8 175.5 A 390.0 390.0 0 0 1 924.5 441.2" fill="none" stroke="var(--accent)" stroke-width="5" stroke-linecap="round" stroke-dasharray="1000" stroke-dashoffset="0"/><polygon points="924.5,441.2 903.3,418.2 930.1,410.4" fill="var(--accent)"/><path d="M 924.5 658.8 A 390.0 390.0 0 0 1 658.8 924.5" fill="none" stroke="var(--accent)" stroke-width="5" stroke-linecap="round" stroke-dasharray="1000" stroke-dashoffset="0"/><polygon points="658.8,924.5 681.8,903.3 689.6,930.1" fill="var(--accent)"/><path d="M 441.2 924.5 A 390.0 390.0 0 0 1 175.5 658.8" fill="none" stroke="var(--accent)" stroke-width="5" stroke-linecap="round" stroke-dasharray="1000" stroke-dashoffset="0"/><polygon points="175.5,658.8 196.7,681.8 169.9,689.6" fill="var(--accent)"/><path d="M 175.5 441.2 A 390.0 390.0 0 0 1 441.2 175.5" fill="none" stroke="var(--accent)" stroke-width="5" stroke-linecap="round" stroke-dasharray="1000" stroke-dashoffset="0"/><polygon points="441.2,175.5 418.2,196.7 410.4,169.9" fill="var(--accent)"/><rect x="436.0" y="206.0" width="228.0" height="88.0" rx="16" fill="var(--callout-tip)" stroke="var(--accent)" stroke-width="2"/><text x="550.0" y="250.0" text-anchor="middle" font-size="28" font-weight="700" fill="var(--fg)">改一組參數</text><text x="550.0" y="280.0" text-anchor="middle" font-size="18" fill="var(--muted)">先從 #1201、#1207、#1568、#12051</text><rect x="700.0" y="506.0" width="300.0" height="88.0" rx="16" fill="var(--callout-tip)" stroke="var(--accent)" stroke-width="2"/><text x="850.0" y="550.0" text-anchor="middle" font-size="28" font-weight="700" fill="var(--fg)">量位置偏差峰值</text><text x="850.0" y="580.0" text-anchor="middle" font-size="18" fill="var(--muted)">看 ±50 μm 是否下降</text><rect x="436.0" y="806.0" width="228.0" height="88.0" rx="16" fill="var(--callout-tip)" stroke="var(--accent)" stroke-width="2"/><text x="550.0" y="850.0" text-anchor="middle" font-size="28" font-weight="700" fill="var(--fg)">看電流峰值</text><text x="550.0" y="880.0" text-anchor="middle" font-size="18" fill="var(--muted)">確認伺服衝擊是否同步降低</text><rect x="118.0" y="506.0" width="264.0" height="88.0" rx="16" fill="var(--callout-tip)" stroke="var(--accent)" stroke-width="2"/><text x="250.0" y="550.0" text-anchor="middle" font-size="28" font-weight="700" fill="var(--fg)">追蹤刀具壽命</text><text x="250.0" y="580.0" text-anchor="middle" font-size="18" fill="var(--muted)">孔數差異是否縮小</text></svg><figcaption>調參後用三個觀測量驗證：位置偏差、電流峰值、刀具壽命。</figcaption></figure>
+
+</article>
+<footer>
+<p style="color: var(--muted); font-size: 0.85rem; margin-top: 4rem; padding-top: 1.5rem; border-top: 1px solid var(--border);">
+Source: 彥皓提供的 G83 Macro、PCD 微鑽孔與 FANUC 加減速參數整理。
+</p>
+</footer>
+</main>
+<script>
+  const bar = document.getElementById('progress');
+  window.addEventListener('scroll', () => {
+    const h = document.documentElement;
+    const max = h.scrollHeight - h.clientHeight;
+    const ratio = max > 0 ? h.scrollTop / max : 0;
+    bar.style.transform = 'scaleX(' + ratio + ')';
+  }, { passive: true });
+</script>
+</body>
+</html>

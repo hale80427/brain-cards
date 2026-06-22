@@ -15,6 +15,7 @@
 - 中文與英文 / 數字之間使用半形空格
 
 ## Cards
+- [pcd-microdrilling-acceleration-jerk-parameters](https://hale80427.github.io/brain-cards/pcd-microdrilling-acceleration-jerk-parameters/)：以 FANUC 參數串起 G01、G00、soft filter、jerk filter 與 SSS 的調機邏輯。
 - [quartz-tool-life-wear](https://hale80427.github.io/brain-cards/quartz-tool-life-wear/)：石英微鑽刀全生命磨耗電性監測：扣追頻鋸齒後等效阻抗單調升 +8.1%（R²=0.96），電性領先可見崩邊約 100 孔，含三段狀態與兩輪形狀對照
 - [harvard-thinking-regret-cycle](https://hale80427.github.io/brain-cards/harvard-thinking-regret-cycle/)：Harvard Thinking 對後悔、揭露與行動修復的機制整理。
 - [zeiss-drivesafe-lens-care](https://hale80427.github.io/brain-cards/zeiss-drivesafe-lens-care/)：整理蔡司 DriveSafe 單光鏡片的規格、夜間防眩效益、可信度與清潔保養。
