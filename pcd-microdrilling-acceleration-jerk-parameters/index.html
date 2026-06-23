@@ -4,21 +4,21 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>調機台不是調速度，是調 jerk：伺服參數提升微鑽孔壽命的物理拆解</title>
-<meta name="description" content="D0.4 mm PCD 鑽石英、G83 啄鑽往復的情境下，崩刃的元兇不是速度而是 jerk。九個伺服參數拆成四層，最高優先是 jerk filter #12051。">
+<meta name="description" content="D0.4 mm PCD 鑽石英、G83 啄鑽往復的情境下，崩刃的元兇不是速度而是 jerk。十個伺服參數拆成四層，最高優先是 jerk filter #12051。">
 
 <link rel="canonical" href="https://hale80427.github.io/brain-cards/pcd-microdrilling-acceleration-jerk-parameters/">
 <meta name="author" content="彥皓">
 
 <meta property="og:type" content="article">
 <meta property="og:title" content="調機台不是調速度，是調 jerk：伺服參數提升微鑽孔壽命的物理拆解">
-<meta property="og:description" content="崩刃的元兇不是速度而是 jerk。九個伺服參數拆成四層：骨架、尺度、磨皮機、協調器。">
+<meta property="og:description" content="崩刃的元兇不是速度而是 jerk。十個伺服參數拆成四層：骨架、尺度、磨皮機、協調器。">
 <meta property="og:url" content="https://hale80427.github.io/brain-cards/pcd-microdrilling-acceleration-jerk-parameters/">
 <meta property="og:image" content="https://hale80427.github.io/brain-cards/og-default.jpg">
 <meta property="og:locale" content="zh_TW">
 
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="調機台不是調速度，是調 jerk">
-<meta name="twitter:description" content="崩刃的元兇不是速度而是 jerk。九個伺服參數拆成四層，最高優先 #12051。">
+<meta name="twitter:description" content="崩刃的元兇不是速度而是 jerk。十個伺服參數拆成四層，最高優先 #12051。">
 <meta name="twitter:image" content="https://hale80427.github.io/brain-cards/og-default.jpg">
 
 <script type="application/ld+json">
@@ -26,7 +26,7 @@
   "@context": "https://schema.org",
   "@type": "Article",
   "headline": "調機台不是調速度，是調 jerk：伺服參數提升微鑽孔壽命的物理拆解",
-  "description": "D0.4 mm PCD 鑽石英、G83 啄鑽往復的情境下，崩刃的元兇不是速度而是 jerk。九個伺服參數拆成四層，最高優先是 jerk filter #12051。",
+  "description": "D0.4 mm PCD 鑽石英、G83 啄鑽往復的情境下，崩刃的元兇不是速度而是 jerk。十個伺服參數拆成四層，最高優先是 jerk filter #12051。",
   "datePublished": "2026-06-23",
   "dateModified": "2026-06-23",
   "author": { "@type": "Person", "name": "彥皓" },
@@ -155,7 +155,8 @@
 <div class="bluf">
 <strong class="label">BLUF</strong>
 <p>在 D0.4 mm PCD 鑽頭鑽石英、走 G83 啄鑽 macro 帶大量 G01 往復的情境下，崩刃的元兇不是速度，而是 <strong class="danger">jerk</strong>（加加速度，加速度對時間的變化率）。</p>
-<p>控制器裡九個伺服參數可拆成四層：<code>#1201</code> <code>#1205</code> 是<strong>骨架</strong>，決定曲線形狀；<code>#1207</code> <code>#2007</code> <code>#2008</code> 是<strong>尺度</strong>，決定加速度大小；<code>#1568</code> <code>#12051</code> 是<strong>磨皮機</strong>，磨掉尖角；<code>#8090</code> <code>#12060</code> 是<strong>協調器</strong>，讓運動連續化。最高優先是 jerk filter <code>#12051</code>。</p>
+<p>控制器裡十個伺服參數可拆成四層：<code>#1201</code> <code>#1205</code> 是<strong>骨架</strong>，決定曲線形狀；<code>#1206</code> <code>#1207</code> <code>#2007</code> <code>#2008</code> 是<strong>尺度</strong>，決定加速度大小；<code>#1568</code> <code>#12051</code> 是<strong>磨皮機</strong>，磨掉尖角；<code>#8090</code> <code>#12060</code> 是<strong>協調器</strong>，讓運動連續化。最高優先是 jerk filter <code>#12051</code>。</p>
+<p>尺度層的 <code>#1206</code> 與 <code>#1207</code> 是一對：<code>#1206</code>（G1bF）是補間前最大速度上限、<code>#1207</code>（G1btL）是補間前時間常數，真正決定補間前加速度的不是任一個，而是兩者的比例 <strong class="danger">a ≈ #1206 ÷ #1207</strong>。這個比例，正是判讀客戶「只動了 #1206、#1207」時的鑰匙——也是本文新增第六章專門處理的場景。</p>
 </div>
 </header>
 
@@ -164,9 +165,10 @@
 <ol>
 <li><a href="#s1">撞擊力從哪來：往復鑽孔背後的 da/dt</a></li>
 <li><a href="#s2">加減速曲線的解剖：尖角是怎麼來的</a></li>
-<li><a href="#s3">九個參數的四層架構</a></li>
+<li><a href="#s3">十個參數的四層架構</a></li>
 <li><a href="#s4">三種組合方案</a></li>
 <li><a href="#s5">回到量測：±50 μm 位置偏差說明什麼</a></li>
+<li><a href="#s6">當客戶實際動了 #1206、#1207：怎麼判讀與接手</a></li>
 </ol>
 </nav>
 
@@ -292,12 +294,12 @@
 <p>讀法：左右兩欄是「同一段位移」的兩種命令型態。速度看起來差不多，但往下看一層到加速度、再往下到 jerk，差異被放大——撞擊力住在最底層那一格。</p>
 </div>
 
-<h2 id="s3">三、九個參數的四層架構</h2>
-<p>把九個參數放進同一個物理模型，會發現它們各司其職，分成四層。理解這個分層，比死記每個參數的數字更接近實際的控制架構。</p>
+<h2 id="s3">三、十個參數的四層架構</h2>
+<p>把十個參數放進同一個物理模型，會發現它們各司其職，分成四層。理解這個分層，比死記每個參數的數字更接近實際的控制架構。</p>
 
 <figure>
 <svg viewBox="0 0 720 430" role="img" xmlns="http://www.w3.org/2000/svg">
-  <title>九個伺服參數的四層架構：骨架（決定曲線形狀）、尺度（決定加速度大小）、磨皮機（磨掉尖角）、協調器（全局連續化）</title>
+  <title>十個伺服參數的四層架構：骨架（決定曲線形狀）、尺度（決定加速度大小）、磨皮機（磨掉尖角）、協調器（全局連續化）</title>
   <g font-family="var(--font-body)">
     <!-- Layer 1 骨架 -->
     <rect x="20" y="20" width="680" height="86" rx="8" fill="var(--callout-tip)" stroke="var(--accent)"/>
@@ -316,14 +318,13 @@
     <rect x="20" y="116" width="680" height="86" rx="8" fill="var(--bg)" stroke="var(--border)"/>
     <text x="40" y="144" font-size="15" font-weight="700" fill="var(--fg)">第二層 · 尺度</text>
     <text x="40" y="166" font-size="12.5" fill="var(--muted)">決定加速度「多大」</text>
-    <text x="40" y="188" font-size="12.5" fill="var(--muted)">拉長時間常數 → 直接降 a</text>
+    <text x="40" y="188" font-size="12.5" fill="var(--accent)" font-weight="700">★ a ≈ #1206 ÷ #1207（比例決定激進度）</text>
     <g font-family="var(--font-mono)">
-      <rect x="396" y="134" width="92" height="26" rx="5" fill="var(--callout-tip)" stroke="var(--accent)"/>
-      <text x="442" y="151" font-size="12.5" fill="var(--accent)" text-anchor="middle">#1207 G1btL</text>
-      <rect x="500" y="134" width="86" height="26" rx="5" fill="var(--callout-tip)" stroke="var(--accent)"/>
-      <text x="543" y="151" font-size="12.5" fill="var(--accent)" text-anchor="middle">#2007 G1tL</text>
-      <rect x="598" y="134" width="90" height="26" rx="5" fill="var(--callout-tip)" stroke="var(--accent)"/>
-      <text x="643" y="151" font-size="12.5" fill="var(--accent)" text-anchor="middle">#2008 G1t1</text>
+      <rect x="392" y="130" width="96" height="26" rx="5" fill="var(--bg)" stroke="var(--accent)" stroke-width="2"/>
+      <text x="440" y="147" font-size="12.5" fill="var(--accent)" text-anchor="middle" font-weight="700">★ #1206 G1bF</text>
+      <rect x="500" y="130" width="96" height="26" rx="5" fill="var(--bg)" stroke="var(--accent)" stroke-width="2"/>
+      <text x="548" y="147" font-size="12.5" fill="var(--accent)" text-anchor="middle" font-weight="700">★ #1207 G1btL</text>
+      <text x="640" y="147" font-size="11.5" fill="var(--muted)" text-anchor="middle" font-family="var(--font-body)">+ #2007 / #2008</text>
     </g>
 
     <!-- Layer 3 磨皮機 -->
@@ -355,7 +356,7 @@
     </g>
   </g>
 </svg>
-<figcaption>圖 3 · 九個參數的四層架構：由下往上是骨架 → 尺度 → 磨皮機 → 協調器；<code>#12051</code> 在磨皮機層、優先級最高 · 作者自繪</figcaption>
+<figcaption>圖 3 · 十個參數的四層架構：由下往上是骨架 → 尺度 → 磨皮機 → 協調器；<code>#12051</code> 在磨皮機層、優先級最高 · 作者自繪</figcaption>
 </figure>
 
 <h3>第一層：骨架——決定加減速曲線的形狀</h3>
@@ -394,11 +395,61 @@
 <figcaption>圖 4 · <code>#1201</code> 兩種型態：定時間讓短線段被迫加陡（轉角更尖），定斜率讓所有移動共用平緩斜率 · 作者自繪</figcaption>
 </figure>
 
-<h3>第二層：尺度——決定加速度大小</h3>
-<p><code>#1207</code>（G1btL）是補間前時間常數，讓加速度的作用時間拉長，直接把 <code>a</code> 降下來。<code>#2007</code>（G1tL）是 G01 主加減速時間常數，功能類似，同樣直接控制 <code>a</code>。<code>#2008</code>（G1t1）是第二段時間常數，屬於雙段式加減速，可以進一步拉長尾巴，專門對付方向反轉時的尖峰。</p>
+<h3>第二層：尺度——決定加速度大小（<code>#1206</code> 與 <code>#1207</code> 是一對主角）</h3>
+<p>這一層真正的主角，是 <code>#1206</code>（G1bF）與 <code>#1207</code>（G1btL）這一對。依三菱手冊，<code>#1206</code> 是補間前 G01 的最大速度上限——速度命令能爬到的平台高度；<code>#1207</code> 是補間前 G01 的時間常數——速度爬上平台所花的斜坡時間。</p>
+<p>關鍵在於：這兩個不能分開看。把速度－時間圖攤開，<code>#1206</code> 是平台高度、<code>#1207</code> 是斜坡時間，而加速度就是斜率：</p>
+
+<figure>
+<svg viewBox="0 0 720 290" role="img" xmlns="http://www.w3.org/2000/svg">
+  <title>速度－時間圖：#1206 是速度平台高度、#1207 是斜坡時間，加速度等於斜率 a≈#1206÷#1207；比例越大斜率越陡、jerk 源頭越凶</title>
+  <g font-family="var(--font-body)">
+    <!-- axes -->
+    <line x1="64" y1="48" x2="64" y2="234" stroke="var(--muted)" stroke-width="1.5"/>
+    <line x1="64" y1="234" x2="688" y2="234" stroke="var(--muted)" stroke-width="1.5"/>
+    <text x="60" y="40" font-size="12" fill="var(--muted)" text-anchor="middle">速度</text>
+    <text x="688" y="252" font-size="12" fill="var(--muted)" text-anchor="end">時間</text>
+    <!-- platform dashed level #1206 -->
+    <line x1="64" y1="92" x2="560" y2="92" stroke="var(--accent)" stroke-width="1" stroke-dasharray="5 4"/>
+    <text x="566" y="88" font-size="12.5" fill="var(--accent)" font-weight="700" font-family="var(--font-mono)">#1206</text>
+    <text x="566" y="104" font-size="11" fill="var(--muted)">速度上限</text>
+    <!-- main trapezoid (gentle, accent) -->
+    <polyline points="64,234 224,92 470,92 560,234" fill="none" stroke="var(--accent)" stroke-width="2.5"/>
+    <!-- ramp-time bracket #1207 -->
+    <line x1="64" y1="250" x2="224" y2="250" stroke="var(--accent)" stroke-width="1"/>
+    <line x1="64" y1="246" x2="64" y2="254" stroke="var(--accent)" stroke-width="1"/>
+    <line x1="224" y1="246" x2="224" y2="254" stroke="var(--accent)" stroke-width="1"/>
+    <text x="144" y="268" font-size="12" fill="var(--accent)" text-anchor="middle"><tspan font-family="var(--font-mono)" font-weight="700">#1207</tspan> 斜坡時間</text>
+    <!-- slope label on ramp -->
+    <text x="150" y="150" font-size="12.5" fill="var(--fg)" font-weight="700" transform="rotate(-41 150 150)">斜率 = a ≈ #1206 ÷ #1207</text>
+    <!-- steeper variant (danger dashed) -->
+    <polyline points="64,234 150,92 150,92" fill="none" stroke="var(--accent-warn)" stroke-width="2" stroke-dasharray="6 4"/>
+    <text x="300" y="200" font-size="11.5" fill="var(--accent-warn)" font-weight="700">#1206↑ 或 #1207↓ → 斜率變陡 → jerk 源頭更凶</text>
+  </g>
+</svg>
+<figcaption>圖 5 · 速度－時間圖：<code>#1206</code> 是平台高度、<code>#1207</code> 是斜坡時間，補間前加速度就是斜率 <code>a ≈ #1206 ÷ #1207</code>；紅虛線是比例放大後的陡斜率 · 作者自繪</figcaption>
+</figure>
+
+<p>這個比例越大，補間前加速度越激進，jerk 的源頭就越凶；比例越小，加減速越柔。這解釋了一個現場常見的誤判：把 <code>#1206</code> 設太高，未必是「真的跑到高速度」——對 macro 裡大量短 G01（Z 軸下扎、退回、再下扎），刀根本還沒加速到目標就要反轉，<code>#1206</code> 太高的實際效果是短距離內逼出急加速，反而推高電流峰值、位置偏差與 jerk。</p>
+
+<table>
+<thead>
+<tr><th><code>#1206</code></th><th><code>#1207</code></th><th>效果</th><th>適合情境</th></tr>
+</thead>
+<tbody>
+<tr><td class="mono">↑</td><td class="mono">不變</td><td>速度上限提高、加速度需求增加</td><td>追節拍，但風險高</td></tr>
+<tr><td class="mono">↓</td><td class="mono">不變</td><td>速度上限降低、加速度需求降低</td><td>降刀尖撞擊</td></tr>
+<tr><td class="mono">不變</td><td class="mono">↑</td><td>加減速變柔、jerk 下降</td><td><strong>微鑽孔優先建議</strong></td></tr>
+<tr><td class="mono">↑</td><td class="mono">↑</td><td>維持速度但降斜率</td><td>折衷方案</td></tr>
+</tbody>
+</table>
+
+<p>同層的 <code>#2007</code>（G1tL）是 G01 主加減速時間常數、<code>#2008</code>（G1t1）是雙段式加減速的第二段時間常數，功能類似——都在拉長加速度的作用時間、直接把 <code>a</code> 降下來，<code>#2008</code> 專門對付方向反轉時的尖峰。</p>
 
 <h3>第三層：磨皮機——磨掉尖角</h3>
-<p><code>#1568</code>（SfiltG1）是 soft filter，本質是低通濾波器，把加速度的方波轉角磨成斜坡，平滑加速度、降低機械共振與位置偏差。<code>#12051</code>（Jerk_filtG1）是 jerk filter，直接作用在 <code>J = da/dt</code> 上，把 jerk 由尖峰削成受控斜率。對 PCD 而言，這是整組參數裡最高優先級的一個。</p>
+<p><code>#1568</code>（SfiltG1）是 soft filter，本質是低通濾波器，把加速度的方波轉角磨成斜坡，平滑加速度、降低機械共振與位置偏差，依手冊設定範圍 0 到 200 ms。<code>#12051</code>（Jerk_filtG1）是 jerk filter，直接作用在 <code>J = da/dt</code> 上，把 jerk 由尖峰削成受控斜率，設定範圍 0 到 50 ms。對 PCD 而言，這是整組參數裡最高優先級的一個。</p>
+<div class="callout warn">
+<p><strong>硬約束：</strong>依三菱手冊，S 形濾波的有效時間常數等於 <code>#1568 − #12051</code>，所以 <strong class="danger">#12051 必須小於 #1568</strong>，jerk 濾波不可吃掉整段 soft 濾波。實際設定時要守住這條。</p>
+</div>
 
 <h3>第四層：協調器——全局運動連續化</h3>
 <p><code>#8090</code>（SSS，Super Smooth Surface）把多個 block 連續化，避免「A 停、B 停、C 停」的逐段停頓，改成 A→B→C 連續流動；macro 裡大量 G01 的情境效果通常很明顯。<code>#12060</code>（VblAccPreInt，可變加速度）允許各軸用不同的加速度策略，例如 X 軸高速、Z 軸柔和，避免單軸過度激進。</p>
@@ -456,9 +507,56 @@
 
 <p>先把命令側的 jerk 壓下來，然後回頭看位置偏差峰值、電流峰值、刀具壽命三項是不是同步改善。整套調機的邏輯，就是把 <code>F = ma</code> 鏈條最上游的 jerk 先治住。</p>
 
+<h2 id="s6">六、當客戶實際動了 #1206、#1207：怎麼判讀與接手</h2>
+<p>前五章是「你從零調機」的路線圖。但現場常見另一種情境：客戶已經自己動了 <code>#1206</code>、<code>#1207</code>，你要做的是判讀他在幹嘛、接下來怎麼接。這一章專門處理這個。</p>
+<div class="callout tip">
+<p><strong>讀法分工：</strong>第四章的三組合方案 A/B/C 是<strong>你主動調機</strong>的強度路線；本章的 DOE 矩陣 A/B/C/D 是<strong>客戶已動 #1206/#1207 後</strong>的對照驗證實驗，兩張表用途不同，別混。判讀客戶動作的核心，就是第二層那條 <code>a ≈ #1206 ÷ #1207</code>——看的不是單一參數調大調小，是這個比例往哪走。</p>
+</div>
+
+<h3>6.1 三階段策略：先治衝擊，再談節拍</h3>
+<p><strong>第一階段——先降衝擊、不追節拍。</strong>設 <code>#1201=1</code>、<code>#1206 ↓ 或維持</code>、<code>#1207 ↑</code>、<code>#1568 ↑</code>、<code>#12051 ↑</code>。因果鏈是：G01 速度上限不過度追高 → 加減速時間拉長 → 加速度斜率變緩 → soft filter 再磨圓 → jerk filter 再降刀尖衝擊。這一階段適用 PCD 鑽頭、石英、壽命從千孔級掉到 60 孔、Z 軸位置偏差已逼近 ±50 μm 的情況。</p>
+<p><strong>第二階段——在不增衝擊下追回節拍。</strong>若第一階段壽命改善但太慢，再做：<code>#1206 小幅 ↑</code>、<code>#1207 同步 ↑ 或維持較大值</code>、<code>#1568</code> 與 <code>#12051</code> 先別降。核心原則是允許速度稍高，但不要讓 #1206/#1207 的比例快速變大。</p>
+<p><strong>第三階段——處理退刀衝擊。</strong>退刀若走 G00，設 <code>#1205=1 或 2</code>（呼應第一層骨架的 G00 形狀控制），搭配檢查 G00 退刀速度、反轉位置偏差、Z 軸電流峰值。退刀瞬間電流峰值若很高，<code>#1205</code> 會比 <code>#1206/#1207</code> 更直接命中問題。</p>
+
+<h3>6.2 現場 DOE 矩陣</h3>
+<table>
+<thead>
+<tr><th>組</th><th><code>#1206</code></th><th><code>#1207</code></th><th><code>#1568</code></th><th><code>#12051</code></th><th>目的</th></tr>
+</thead>
+<tbody>
+<tr><td><strong>A 基準</strong></td><td class="mono">原值</td><td class="mono">原值</td><td class="mono">原值</td><td class="mono">原值</td><td>建立對照</td></tr>
+<tr><td><strong>B 柔化</strong></td><td class="mono">原值</td><td class="mono">+30%</td><td class="mono">+10～20 ms</td><td class="mono">+5～10 ms</td><td>降 jerk</td></tr>
+<tr><td><strong>C 限速柔化</strong></td><td class="mono">−10～20%</td><td class="mono">+30%</td><td class="mono">+10～20 ms</td><td class="mono">+5～10 ms</td><td>最大降撞擊</td></tr>
+<tr><td><strong>D 節拍折衷</strong></td><td class="mono">+10%</td><td class="mono">+30～50%</td><td class="mono">維持</td><td class="mono">維持</td><td>減震後追回速度</td></tr>
+</tbody>
+</table>
+<div class="callout warn">
+<p><strong>守住硬約束：</strong><span class="danger">#12051 必須小於 #1568</span>。依三菱手冊，jerk filter 範圍 0 到 50 ms、soft filter 範圍 0 到 200 ms，且 S 形有效時間常數 = <code>#1568 − #12051</code>。</p>
+</div>
+
+<h3>6.3 怎麼看調對沒有</h3>
+<p><strong>調對的訊號：</strong>Z 軸速度回授尖角變圓、電流峰值下降、位置偏差峰值下降、反轉後振盪時間縮短、孔口崩邊降低、刃口微崩減少、刀具壽命上升。</p>
+<p><strong>調太軟的訊號：</strong>單孔時間增加、退屑節奏變慢、實際 peck 深度節拍改變、孔底停留變長、切屑排出變差，可能反而增加摩擦熱。兩端都要盯，往柔調過頭會從崩刃問題換成排屑與熱的問題。</p>
+
+<h3>6.4 不要爭論「調大調小」，要這 6 個數據</h3>
+<p>客戶若只動了 <code>#1206</code>、<code>#1207</code>，與其在電話裡爭論「調大還是調小」，不如直接要這六個數據：</p>
+<table>
+<thead>
+<tr><th>#</th><th>要的數據</th><th>判讀什麼</th></tr>
+</thead>
+<tbody>
+<tr><td>①②</td><td class="mono">調整前 / 調整後 #1206、#1207</td><td>算出比例 #1206/#1207 往哪走</td></tr>
+<tr><td>③</td><td>單孔時間</td><td>節拍變快還變慢</td></tr>
+<tr><td>④</td><td>Z 軸位置偏差峰值</td><td>動態追隨有沒有改善</td></tr>
+<tr><td>⑤</td><td>Z 軸電流峰值</td><td>衝擊載荷有沒有下降</td></tr>
+<tr><td>⑥</td><td>刀具壽命</td><td>最終成效</td></tr>
+</tbody>
+</table>
+<p>有這六個，就能判定他到底是在<strong>降撞擊</strong>還是只是<strong>追回節拍</strong>。其中最危險的一種組合是 <code>#1206 ↑</code> 但 <code>#1207 ↓</code>——這讓 #1206/#1207 的比例快速放大，對微鑽孔等於把撞擊推得更高，方向完全相反。判讀的依據永遠回到那個比例，不是單一參數的增減方向。</p>
+
 </article>
 <footer>
-<p>最後更新：2026-06-23 · CC BY 4.0 · 引用請標來源 · 參數編號與效果幅度為現場調機推估，實際數值依機台控制器版本與工件而定，請以實測為準。</p>
+<p>最後更新：2026-06-23 · CC BY 4.0 · 引用請標來源 · 參數定義與設定範圍依三菱電機 M800/M80/E80 系列 Alarm/Parameter Manual（IB-1501279-N）；效果幅度為現場調機推估，實際數值依機台控制器版本與工件而定，請以實測為準。</p>
 </footer>
 </main>
 <script>
