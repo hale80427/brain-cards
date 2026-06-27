@@ -15,6 +15,7 @@
 - 中文與英文 / 數字之間使用半形空格
 
 ## Cards
+- [ai-era-education-sensory-time-lag](https://hale80427.github.io/brain-cards/ai-era-education-sensory-time-lag/)：從 AI 工具衝擊、提問層次、師資資訊素養，重看公立教育的數位階級化風險。
 - [pcd-microdrilling-acceleration-jerk-parameters](https://hale80427.github.io/brain-cards/pcd-microdrilling-acceleration-jerk-parameters/)：崩刃元兇不是速度而是 jerk；九個伺服參數拆成四層（骨架/尺度/磨皮機/協調器），含加速度·速度·jerk 三聯對照 SVG。
 - [quartz-tool-life-wear](https://hale80427.github.io/brain-cards/quartz-tool-life-wear/)：石英微鑽刀全生命磨耗電性監測：扣追頻鋸齒後等效阻抗單調升 +8.1%（R²=0.96），電性領先可見崩邊約 100 孔，含三段狀態與兩輪形狀對照
 - [harvard-thinking-regret-cycle](https://hale80427.github.io/brain-cards/harvard-thinking-regret-cycle/)：Harvard Thinking 對後悔、揭露與行動修復的機制整理。
