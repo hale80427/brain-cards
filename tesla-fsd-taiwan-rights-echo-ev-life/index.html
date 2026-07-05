@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Tesla FSD 在台灣的爭議：買到的是承諾，還是監督版功能？</title>
+<meta name="description" content="整理 Echo’s Ev Life 影片中，台灣 FSD 車主維權的主張、技術疑點與法規脈絡。">
+
+<!-- Canonical & 作者 -->
+<link rel="canonical" href="https://hale80427.github.io/brain-cards/tesla-fsd-taiwan-rights-echo-ev-life/">
+<meta name="author" content="彥皓">
+
+<!-- Open Graph（FB / LINE / Slack / Discord 連結預覽）-->
+<meta property="og:type" content="article">
+<meta property="og:title" content="Tesla FSD 在台灣的爭議：買到的是承諾，還是監督版功能？">
+<meta property="og:description" content="整理 Echo’s Ev Life 影片中，台灣 FSD 車主維權的主張、技術疑點與法規脈絡。">
+<meta property="og:url" content="https://hale80427.github.io/brain-cards/tesla-fsd-taiwan-rights-echo-ev-life/">
+<meta property="og:image" content="https://hale80427.github.io/brain-cards/og-default.jpg">
+<meta property="og:locale" content="zh_TW">
+
+<!-- Twitter / X Card -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Tesla FSD 在台灣的爭議：買到的是承諾，還是監督版功能？">
+<meta name="twitter:description" content="整理 Echo’s Ev Life 影片中，台灣 FSD 車主維權的主張、技術疑點與法規脈絡。">
+<meta name="twitter:image" content="https://hale80427.github.io/brain-cards/og-default.jpg">
+
+<!-- 結構化資料（JSON-LD，提升 AI 與搜尋引擎理解）-->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "Tesla FSD \u5728\u53f0\u7063\u7684\u722d\u8b70\uff1a\u8cb7\u5230\u7684\u662f\u627f\u8afe\uff0c\u9084\u662f\u76e3\u7763\u7248\u529f\u80fd\uff1f",
+  "description": "\u6574\u7406 Echo\u2019s Ev Life \u5f71\u7247\u4e2d\uff0c\u53f0\u7063 FSD \u8eca\u4e3b\u7dad\u6b0a\u7684\u4e3b\u5f35\u3001\u6280\u8853\u7591\u9ede\u8207\u6cd5\u898f\u8108\u7d61\u3002",
+  "datePublished": "2026-07-05",
+  "dateModified": "2026-07-05",
+  "author": { "@type": "Person", "name": "彥皓" },
+  "url": "https://hale80427.github.io/brain-cards/tesla-fsd-taiwan-rights-echo-ev-life/",
+  "inLanguage": "zh-TW",
+  "license": "https://creativecommons.org/licenses/by/4.0/"
+}
+</script>
+
+<style>
+  :root {
+    /* color tokens — OKLCH (hallmark token discipline；禁止 inline hex / rgb / oklch / font-family；
+       hex 註解保留為設計者原意溯源，色彩值以 OKLCH 為事實源) */
+    --bg: oklch(98.4% 0.004 106.5);              /* 暖白（was #fafaf7） */
+    --fg: oklch(21.8% 0 0);                       /* 近黑（was #1a1a1a） */
+    --accent: oklch(54.3% 0.174 29.7);            /* 暖紅（was #c0392b） */
+    --accent-warn: oklch(66.6% 0.157 58.3);       /* 橘黃 callout warn 強調（was #d97706 inline，lift 進 token） */
+    --muted: oklch(51.0% 0 0);                    /* 中灰（was #666） */
+    --border: oklch(92.1% 0.007 106.5);           /* 淺暖灰（was #e5e5e0） */
+    --callout-tip: oklch(95.7% 0.014 174.2);      /* 淺薄荷（was #e8f4f0） */
+    --callout-warn: oklch(96.9% 0.019 72.6);      /* 淺暖米（was #fdf3e7） */
+    --fs-meta: 0.85rem;                          /* metadata / footer / .bluf 標籤 */
+    --fs-body: 1rem;                              /* p / li / td / blockquote / h3 / code / table */
+    --fs-h2:   clamp(1.3rem, 3vw, 1.5rem);      /* h2 段標題 */
+    --fs-h1:   clamp(1.75rem, 4vw, 2.25rem);    /* h1 主標題 */
+    /* font tokens（hallmark token discipline；禁止 inline font-family） */
+    --font-serif: "Noto Serif TC", Georgia, serif;
+    --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+    /* easing tokens（hallmark：禁止 unnamed easing） */
+    --ease-linear: linear;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: oklch(21.8% 0 0);                     /* was #1a1a1a */
+      --fg: oklch(95.3% 0.011 106.6);             /* 米白（was #f0f0e8） */
+      --accent: oklch(70.4% 0.136 28.7);          /* 亮珊瑚（was #e87c6e） */
+      --accent-warn: oklch(76.9% 0.165 70.1);     /* dark mode 等對等亮版 warn 強調 */
+      --muted: oklch(68.3% 0 0);                  /* was #999 */
+      --border: oklch(32.1% 0 0);                 /* was #333 */
+      --callout-tip: oklch(30.9% 0.029 178.3);    /* 深綠青（was #1f3530） */
+      --callout-warn: oklch(30.7% 0.034 73.5);    /* 深棕（was #3a2d1c） */
+    }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
+  }
+  * { box-sizing: border-box; }
+  body {
+    font-family: var(--font-serif);
+    background: var(--bg);
+    color: var(--fg);
+    line-height: 1.8;
+    margin: 0;
+    padding: 0;
+    -webkit-font-smoothing: antialiased;
+  }
+  .progress-bar {
+    /* hallmark：只動 transform / opacity，不動 layout property（避免 reflow + 對齊微互動紀律） */
+    position: fixed; top: 0; left: 0; height: 3px; width: 100%;
+    background: var(--accent); z-index: 100;
+    transform: scaleX(0); transform-origin: left;
+    transition: transform 0.1s var(--ease-linear);
+  }
+  main {
+    max-width: 680px;
+    margin: 0 auto;
+    padding: clamp(2rem, 5vw, 4rem) clamp(1.5rem, 4vw, 2rem);
+  }
+  /* === 字級階梯：嚴格 4 級。所有 font-size 必須引用以下 4 個變數之一 === */
+  /* === 違反 → KB-04 機械驗證會擋（font_levels > 4）=== */
+  /* === h3 / blockquote / code / table 等「想要不一樣」用 weight + color，不開新字級 === */
+  h1 { font-size: var(--fs-h1); line-height: 1.3; margin: 0 0 1rem; }
+  h2 { font-size: var(--fs-h2); line-height: 1.4; margin: 2.5rem 0 0.75rem; padding-bottom: 0.5rem; border-bottom: 1px solid var(--border); }
+  h3 { font-size: var(--fs-body); font-weight: 700; line-height: 1.4; margin: 1.75rem 0 0.5rem; color: var(--accent); }
+  p { margin: 0 0 1.25rem; }
+  a { color: var(--accent); text-underline-offset: 3px; }
+  a:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+  .bluf { background: var(--callout-tip); border-left: 3px solid var(--accent); padding: 1.25rem 1.5rem; margin: 1.5rem 0 2rem; border-radius: 4px; }
+  .bluf strong { display: block; font-size: var(--fs-meta); letter-spacing: 0.05em; color: var(--accent); margin-bottom: 0.5rem; text-transform: uppercase; }
+  .callout { padding: 1rem 1.25rem; margin: 1.5rem 0; border-radius: 4px; border-left: 3px solid var(--muted); }
+  .callout.tip { background: var(--callout-tip); border-left-color: var(--accent); }
+  .callout.warn { background: var(--callout-warn); border-left-color: var(--accent-warn); }
+  .callout.info { background: var(--callout-tip); border-left-color: var(--muted); }
+  .callout.quote { background: transparent; border-left-color: var(--accent); font-style: italic; }
+  table { border-collapse: collapse; width: 100%; margin: 1.5rem 0; font-size: var(--fs-body); }
+  th, td { padding: 0.6rem 0.8rem; border: 1px solid var(--border); text-align: left; vertical-align: top; }
+  th { background: var(--callout-tip); font-weight: 600; }
+  code { font-family: var(--font-mono); background: var(--callout-tip); padding: 0.1em 0.4em; border-radius: 3px; font-size: var(--fs-body); }
+  /* === 圖片 / 圖說（圖表規則見 KB-07）：figcaption 用既有 --fs-meta，不開新字級 === */
+  figure { margin: 1.5rem 0; }
+  figure img { width: 100%; height: auto; border-radius: 4px; display: block; }
+  figure svg { width: 100%; height: auto; display: block; }
+  figcaption { font-size: var(--fs-meta); color: var(--muted); margin-top: 0.5rem; text-align: center; }
+  @media print {
+    .progress-bar { display: none; }
+    body { font-size: 11pt; line-height: 1.6; }
+    main { max-width: 100%; padding: 1cm; }
+  }
+</style>
+</head>
+<body>
+<div class="progress-bar" id="progress"></div>
+<main>
+<header>
+<h1>Tesla FSD 在台灣的爭議：買到的是承諾，還是監督版功能？</h1>
+<div class="bluf">
+<strong>BLUF</strong>
+<p>這支影片的核心，是把車主付費時聽到的「全自動駕駛」承諾，對照台灣即將開放的 Level 2 監督版功能，拆出時間、責任、硬體與合約資訊四個落差。</p>
+</div>
+</header>
+<article>
+<!-- narrative: 240 位車主曾填表表達加入維權運動的意願；其中約 45 份進入實名陳情脈絡。, 早期車主主張自己購買的是 Full Self-Driving 的完整承諾，等待時間已長達五到八年。, 爭議焦點集中在 Level 2 監督版、HW3.0 能否支援未來 L4、App 規格文字更動與線上合約可追溯性。 -->
+<h2>一張圖先看：爭議卡在哪裡</h2>
+<figure><img src="assets/youtube-thumbnail-37b6c299.jpg" alt="Echo’s Ev Life 影片縮圖，主題為 Tesla FSD 台灣車主維權討論。" width="1600" height="900"><figcaption>影片來源畫面：Echo’s Ev Life 討論台灣 Tesla FSD 送件後，早期付費車主的維權主張。</figcaption></figure>
+<p>影片開頭先交代一件好消息：台灣 Tesla FSD 已向 VSCC 送件，若後續測試通過，車主終於可能用到更完整的輔助駕駛功能。緊接著，影片把視角轉到早期付費車主。這群人問的不只「能不能上線」，還包含一個更尖銳的問題：當年付費時被描述成 Full Self-Driving 的功能，今天若以 Level 2 監督版交付，算不算完成承諾。</p>
+<figure><svg viewBox="0 0 998 120" role="img" xmlns="http://www.w3.org/2000/svg"><title>FSD 承諾落差鏈</title><rect x="12" y="32" width="150" height="56" rx="6" fill="var(--callout-tip)" stroke="var(--accent)" stroke-width="1.5"/><text x="87" y="65" text-anchor="middle" font-size="15" fill="var(--fg)">早期購買</text><line x1="162" y1="60" x2="210" y2="60" stroke="var(--accent)" stroke-width="1.5"/><polygon points="210,55 218,60 210,65" fill="var(--accent)"/><rect x="218" y="32" width="150" height="56" rx="6" fill="var(--callout-tip)" stroke="var(--accent)" stroke-width="1.5"/><text x="293" y="65" text-anchor="middle" font-size="15" fill="var(--fg)">多年等待</text><line x1="368" y1="60" x2="416" y2="60" stroke="var(--accent)" stroke-width="1.5"/><polygon points="416,55 424,60 416,65" fill="var(--accent)"/><rect x="424" y="32" width="150" height="56" rx="6" fill="var(--callout-tip)" stroke="var(--accent)" stroke-width="1.5"/><text x="499" y="65" text-anchor="middle" font-size="15" fill="var(--fg)">Level 2 送件</text><line x1="574" y1="60" x2="622" y2="60" stroke="var(--accent)" stroke-width="1.5"/><polygon points="622,55 630,60 622,65" fill="var(--accent)"/><rect x="630" y="32" width="150" height="56" rx="6" fill="var(--callout-tip)" stroke="var(--accent)" stroke-width="1.5"/><text x="705" y="65" text-anchor="middle" font-size="15" fill="var(--fg)">交付落差</text><line x1="780" y1="60" x2="828" y2="60" stroke="var(--accent)" stroke-width="1.5"/><polygon points="828,55 836,60 828,65" fill="var(--accent)"/><rect x="836" y="32" width="150" height="56" rx="6" fill="var(--callout-tip)" stroke="var(--accent)" stroke-width="1.5"/><text x="911" y="65" text-anchor="middle" font-size="15" fill="var(--fg)">維權訴求</text></svg><figcaption>本文把影片內容整理成「承諾落差」的因果鏈：購買時的想像、法規送件路徑、實際責任分配與後續維權。</figcaption></figure>
+<h2>影片中的四條主線</h2>
+<ul><li>法規主線：台灣目前以 Level 2 架構送件最快，但 Level 2 屬於輔助駕駛，事故責任仍在駕駛。</li><li>消費主線：早期車主曾花十幾萬到二十幾萬元購買 FSD，等待多年後仍未取得當年想像的無人駕駛能力。</li><li>技術主線：HW3.0 與 HW4.0 的算力、鏡頭與車身架構不同，影片受訪者質疑 HW3.0 難以支援 L4 等級功能。</li><li>證據主線：車主關注 App 規格文字、線上合約版本、功能鎖定規則與國外集體訴訟案例，希望 Tesla 說明清楚。</li></ul>
+<div class="callout info">法律提醒：這篇文章只整理影片中的主張、時間點與推論，方便讀者判斷哪些是事實敘述，哪些還需要官方文件或判決補強。</div>
+<h2>條件：FSD 在台灣採 Level 2 送件</h2>
+<p>影片指出，台灣 Tesla 以 Level 2 架構送件。這個選擇在現實上有其效率：若直接要求 Level 3 或 Level 4，法規、責任歸屬與道路測試門檻都會更高，上線時間可能繼續往後拖。</p>
+<p>問題在於，Level 2 的法律與產品語意都偏向「輔助」。駕駛需要監督系統，手與注意力仍要留在駕駛任務上；出事時，責任通常不會像 Level 3 以上那樣移到車廠。這與早期車主理解的「一路睡到目的地」形成落差。</p>
+<blockquote>受訪者把 Level 2 定位為輔助駕駛，並強調它和自動駕駛、無人駕駛在責任分配上不同。<cite> — 影片約 03:49–03:56，摘要式引用</cite></blockquote>
+<h2>機制：承諾、付款與交付內容分開了</h2>
+<figure><svg viewBox="0 0 800 260" role="img" xmlns="http://www.w3.org/2000/svg"><title>自動駕駛等級與責任差異</title><rect x="0" y="10" width="800" height="72" rx="12" fill="var(--callout-tip)" stroke="var(--border)" stroke-width="1"/><rect x="0" y="10" width="8" height="72" rx="4" fill="var(--accent)"/><text x="30" y="44" font-size="18" font-weight="700" fill="var(--fg)">Level 2：輔助駕駛</text><text x="30" y="68" font-size="14" fill="var(--muted)">系統可控方向與速度；人類駕駛持續監督。</text><rect x="0" y="94" width="800" height="72" rx="12" fill="var(--callout-tip)" stroke="var(--border)" stroke-width="1"/><rect x="0" y="94" width="8" height="72" rx="4" fill="var(--accent)"/><text x="30" y="128" font-size="18" font-weight="700" fill="var(--fg)">Level 3：條件式自動駕駛</text><text x="30" y="152" font-size="14" fill="var(--muted)">特定場景可由系統接手；接管要求與責任開始改變。</text><rect x="0" y="178" width="800" height="72" rx="12" fill="var(--callout-tip)" stroke="var(--border)" stroke-width="1"/><rect x="0" y="178" width="8" height="72" rx="4" fill="var(--accent)"/><text x="30" y="212" font-size="18" font-weight="700" fill="var(--fg)">Level 4：高自動駕駛</text><text x="30" y="236" font-size="14" fill="var(--muted)">限定區域或條件內由系統完成駕駛任務。</text></svg><figcaption>Level 2 到 Level 4 的關鍵差異在監督義務與事故責任分配，而非功能名稱。</figcaption></figure>
+<p>影片中的車主主張，早年購買 FSD 時，核心吸引力來自「全自動駕駛」與 Robotaxi 願景。多年後實際開放 FSD Supervised，系統仍要求人類監督，車主便會認為交付內容低於付費時的期待。</p>
+<table>
+<thead><tr><th>爭議面向</th><th>車主在意的點</th><th>需要補強的證據</th></tr></thead>
+<tbody>
+<tr><td>名稱</td><td>Full Self-Driving 被理解為全自動駕駛</td><td>購買頁、發票、App 規格與當時官網截圖</td></tr>
+<tr><td>時間</td><td>部分車主等待五到八年</td><td>訂單日期、功能開放紀錄、官方公告</td></tr>
+<tr><td>責任</td><td>Level 2 仍由駕駛監督</td><td>台灣送件文件、使用條款、VSCC 或主管機關說明</td></tr>
+<tr><td>硬體</td><td>HW3.0 能否支援未來 L4</td><td>Tesla 官方技術說明、維修升級方案、實測資料</td></tr>
+</tbody>
+</table>
+<h2>結果：維權訴求集中在退費、說明與責任</h2>
+<p>影片提到，曾有 240 位車主透過表單表達加入維權運動的意願；後續若要讓政府機關介入，實名陳情的數量與資料完整度就變得重要。受訪者提到約 45 份實名陳情，並表示已把部分證據送交相關單位。</p>
+<ol><li>要求原廠說明：當年 FSD 承諾與現行 FSD Supervised 的差異。</li><li>要求釐清合約：車主能否查到購買當時的完整版本，而非只看到新版線上條款。</li><li>要求處理 HW3.0：若硬體難以支援未來完整能力，Tesla 應說明升級或補償方案。</li><li>要求退費或賠償：若承諾無法實現，車主主張應依法退費，並討論懲罰性賠償的可能。</li></ol>
+<blockquote>受訪者要求企業自清：既然功能已銷售給車主，原廠應說明交付內容與責任邊界。<cite> — 影片約 09:27–09:36，ASR 需回看校對</cite></blockquote>
+<h2>技術爭點：HW3.0 與 HW4.0 的差異</h2>
+<p>影片後段請受訪者說明 HW3.0 與 HW4.0。主張大意是：新舊硬體差異不只在晶片算力，也包含鏡頭畫素、車身控制架構與未來雷達支援。若要把 HW4.0 主機直接裝到 HW3.0 車上，可能牽涉車內控制器與訊號架構重做。</p>
+<figure><svg viewBox="0 0 800 260" role="img" xmlns="http://www.w3.org/2000/svg"><title>HW3.0 升級難點</title><rect x="0" y="10" width="800" height="72" rx="12" fill="var(--callout-tip)" stroke="var(--border)" stroke-width="1"/><rect x="0" y="10" width="8" height="72" rx="4" fill="var(--accent)"/><text x="30" y="44" font-size="18" font-weight="700" fill="var(--fg)">感知層</text><text x="30" y="68" font-size="14" fill="var(--muted)">鏡頭畫素、視野與資料品質影響模型判斷。</text><rect x="0" y="94" width="800" height="72" rx="12" fill="var(--callout-tip)" stroke="var(--border)" stroke-width="1"/><rect x="0" y="94" width="8" height="72" rx="4" fill="var(--accent)"/><text x="30" y="128" font-size="18" font-weight="700" fill="var(--fg)">運算層</text><text x="30" y="152" font-size="14" fill="var(--muted)">算力、位元格式與模型壓縮決定可跑的版本。</text><rect x="0" y="178" width="800" height="72" rx="12" fill="var(--callout-tip)" stroke="var(--border)" stroke-width="1"/><rect x="0" y="178" width="8" height="72" rx="4" fill="var(--accent)"/><text x="30" y="212" font-size="18" font-weight="700" fill="var(--fg)">車身控制層</text><text x="30" y="236" font-size="14" fill="var(--muted)">主機、控制器與舊車架構相容性決定改裝難度。</text></svg><figcaption>影片中的技術主張可拆成三層：感知、運算與車身控制。任一層不相容，都會提高升級難度。</figcaption></figure>
+<div class="callout warn">這段屬於受訪者技術判斷，不等同 Tesla 官方結論。若要作為法律或投資判斷，仍應查 Tesla 官方公告、維修手冊、專利文件與第三方拆解資料。</div>
+<h2>可驗證清單：讀者應該查什麼</h2>
+<ul><li>查購買文件：早期 FSD 在訂單、發票、App 規格中到底寫「全自動駕駛」或「全自動輔助駕駛」。</li><li>查版本記錄：線上合約是否能調出購買當時版本，App 顯示文字是否有時間戳。</li><li>查主管機關：台灣 FSD 送件適用的 Level 2 條件、測試範圍與駕駛責任說明。</li><li>查國外案例：澳洲、歐洲、美國相關集體訴訟或退款案例的實際案號、判決與和解條件。</li><li>查技術文件：HW3.0 到 HW4.0 是否有官方升級路徑，以及 V14 Lite 或量化方案對安全邊界的限制。</li></ul>
+<p>如果你是車主，第一步建議先保存資料：購車合約、付款證明、App 規格截圖、更新前後畫面、服務中心對話紀錄。沒有時間戳的說法，很難轉成有效證據。</p>
+<h2>一句話讀完</h2>
+<p>這支影片真正有價值的地方，是把 FSD 爭議從「科技功能何時來」拉回「車主付費時買到什麼承諾」。台灣若以 Level 2 監督版先上線，功能也許會前進，但早期車主的合約、硬體與責任問題仍會留下。</p>
+
+</article>
+<footer>
+<p style="color: var(--muted); font-size: 0.85rem; margin-top: 4rem; padding-top: 1.5rem; border-top: 1px solid var(--border);">
+來源：Echo’s Ev Life YouTube 影片 F0cmJSGcdKE；本文根據 ASR 逐字稿整理，直接引語仍需回看原片校對。
+</p>
+</footer>
+</main>
+<script>
+  const bar = document.getElementById('progress');
+  window.addEventListener('scroll', () => {
+    const h = document.documentElement;
+    const max = h.scrollHeight - h.clientHeight;
+    const ratio = max > 0 ? h.scrollTop / max : 0;
+    bar.style.transform = 'scaleX(' + ratio + ')';
+  }, { passive: true });
+</script>
+</body>
+</html>
