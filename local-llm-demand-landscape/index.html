@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>本機端 LLM 的需求端全景——用可控性換前沿性</title>
+<meta name="description" content="本機 LLM 的需求本質是用可控性換前沿性：換隱私主權、可預測成本、離線與客製自由，代價是承接硬體運維。差距已從代差收斂為時間差。">
+
+<link rel="canonical" href="https://hale80427.github.io/brain-cards/local-llm-demand-landscape/">
+<meta name="author" content="彥皓">
+
+<meta property="og:type" content="article">
+<meta property="og:title" content="本機端 LLM 的需求端全景——用可控性換前沿性">
+<meta property="og:description" content="本機 LLM 的需求本質是用可控性換前沿性。差距已從代差收斂為時間差（約 3–6 個月）。">
+<meta property="og:url" content="https://hale80427.github.io/brain-cards/local-llm-demand-landscape/">
+<meta property="og:image" content="https://hale80427.github.io/brain-cards/og-default.jpg">
+<meta property="og:locale" content="zh_TW">
+
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="本機端 LLM 的需求端全景——用可控性換前沿性">
+<meta name="twitter:description" content="本機 LLM 的需求本質是用可控性換前沿性。差距已從代差收斂為時間差（約 3–6 個月）。">
+<meta name="twitter:image" content="https://hale80427.github.io/brain-cards/og-default.jpg">
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "本機端 LLM 的需求端全景——用可控性換前沿性",
+  "description": "本機 LLM 的需求本質是用可控性換前沿性。差距已從代差收斂為時間差（約 3–6 個月）。",
+  "datePublished": "2026-07-19",
+  "dateModified": "2026-07-19",
+  "author": { "@type": "Person", "name": "彥皓" },
+  "url": "https://hale80427.github.io/brain-cards/local-llm-demand-landscape/",
+  "inLanguage": "zh-TW",
+  "license": "https://creativecommons.org/licenses/by/4.0/"
+}
+</script>
+
+<style>
+  :root {
+    --bg: oklch(98.4% 0.004 106.5);
+    --fg: oklch(21.8% 0 0);
+    --accent: oklch(54.3% 0.174 29.7);
+    --accent-warn: oklch(66.6% 0.157 58.3);
+    --muted: oklch(51.0% 0 0);
+    --border: oklch(92.1% 0.007 106.5);
+    --callout-tip: oklch(95.7% 0.014 174.2);
+    --callout-warn: oklch(96.9% 0.019 72.6);
+    --fs-meta: 0.85rem;
+    --fs-body: 1rem;
+    --fs-h2:   clamp(1.3rem, 3vw, 1.5rem);
+    --fs-h1:   clamp(1.75rem, 4vw, 2.25rem);
+    --font-serif: "Noto Serif TC", Georgia, serif;
+    --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+    --ease-linear: linear;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: oklch(21.8% 0 0);
+      --fg: oklch(95.3% 0.011 106.6);
+      --accent: oklch(70.4% 0.136 28.7);
+      --accent-warn: oklch(76.9% 0.165 70.1);
+      --muted: oklch(68.3% 0 0);
+      --border: oklch(32.1% 0 0);
+      --callout-tip: oklch(30.9% 0.029 178.3);
+      --callout-warn: oklch(30.7% 0.034 73.5);
+    }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
+  }
+  * { box-sizing: border-box; }
+  body {
+    font-family: var(--font-serif);
+    background: var(--bg);
+    color: var(--fg);
+    line-height: 1.8;
+    margin: 0;
+    padding: 0;
+    -webkit-font-smoothing: antialiased;
+  }
+  .progress-bar {
+    position: fixed; top: 0; left: 0; height: 3px; width: 100%;
+    background: var(--accent); z-index: 100;
+    transform: scaleX(0); transform-origin: left;
+    transition: transform 0.1s var(--ease-linear);
+  }
+  main {
+    max-width: 680px;
+    margin: 0 auto;
+    padding: clamp(2rem, 5vw, 4rem) clamp(1.5rem, 4vw, 2rem);
+  }
+  h1 { font-size: var(--fs-h1); line-height: 1.3; margin: 0 0 1rem; }
+  h2 { font-size: var(--fs-h2); line-height: 1.4; margin: 2.5rem 0 0.75rem; padding-bottom: 0.5rem; border-bottom: 1px solid var(--border); }
+  h3 { font-size: var(--fs-body); font-weight: 700; line-height: 1.4; margin: 1.75rem 0 0.5rem; color: var(--accent); }
+  p { margin: 0 0 1.25rem; }
+  ul, ol { margin: 0 0 1.25rem; padding-left: 1.4rem; }
+  li { margin: 0 0 0.5rem; }
+  a { color: var(--accent); text-underline-offset: 3px; }
+  a:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+  .bluf { background: var(--callout-tip); border-left: 3px solid var(--accent); padding: 1.25rem 1.5rem; margin: 1.5rem 0 2rem; border-radius: 4px; }
+  .bluf strong { display: block; font-size: var(--fs-meta); letter-spacing: 0.05em; color: var(--accent); margin-bottom: 0.5rem; text-transform: uppercase; }
+  .callout { padding: 1rem 1.25rem; margin: 1.5rem 0; border-radius: 4px; border-left: 3px solid var(--muted); }
+  .callout.tip { background: var(--callout-tip); border-left-color: var(--accent); }
+  .callout.warn { background: var(--callout-warn); border-left-color: var(--accent-warn); }
+  .callout strong { color: var(--accent); }
+  .callout.warn strong { color: var(--accent-warn); }
+  table { border-collapse: collapse; width: 100%; margin: 1.5rem 0; font-size: var(--fs-body); }
+  th, td { padding: 0.6rem 0.8rem; border: 1px solid var(--border); text-align: left; vertical-align: top; }
+  th { background: var(--callout-tip); font-weight: 600; }
+  code { font-family: var(--font-mono); background: var(--callout-tip); padding: 0.1em 0.4em; border-radius: 3px; font-size: var(--fs-body); }
+  .tbl-wrap { overflow-x: auto; }
+  .src-list { font-size: var(--fs-meta); color: var(--muted); }
+  .src-list li { margin-bottom: 0.35rem; }
+  .tag { font-family: var(--font-mono); font-size: var(--fs-meta); font-weight: 700; }
+  .tag.p { color: var(--accent); }
+  @media print {
+    .progress-bar { display: none; }
+    body { font-size: 11pt; line-height: 1.6; }
+    main { max-width: 100%; padding: 1cm; }
+  }
+</style>
+</head>
+<body>
+<div class="progress-bar" id="progress"></div>
+<main>
+<header>
+<h1>本機端 LLM 的需求端全景——用可控性換前沿性</h1>
+<div class="bluf">
+<strong>BLUF</strong>
+<p>在本機跑大語言模型，需求的本質是<strong>「用可控性換前沿性」</strong>：使用者離開雲端 API，換取隱私主權、可預測成本、離線與客製自由，代價是自己承接硬體與運維。</p>
+<p>關鍵轉折是——開放權重與前沿模型的差距，已從「代差」收斂為「時間差」（約 3–6 個月），本機「夠用」的邊界大幅擴張。功能廣度與工具鏈都不再是瓶頸，真正的需求缺口落在 <strong>UX 剛需</strong>（記憶持久化、模型切換、本地整合）。</p>
+<p>但這條邊界的精確座標（tokens/s、回本月數、逐 GPU 級距）在本次查證中<strong>高度分歧、不可信</strong>——本報告給方向、不給假精度，被否決的數字集中列於文末誠信段。</p>
+</div>
+</header>
+<article>
+<!-- narrative: 物件,細節,矛盾 -->
+
+<h2>一、核心張力：為什麼要離開雲端？</h2>
+
+<p>需求端的第一問是「為什麼不直接用雲端 API」。驅動力不是單一原因，而是一條從<strong>剛性強制</strong>到<strong>個人偏好</strong>的光譜。搞混這條光譜的層級，就會把「偏好」誤當「必須」。</p>
+
+<div class="tbl-wrap">
+<table>
+<thead><tr><th>層級</th><th>驅動力</th><th>底層機制</th></tr></thead>
+<tbody>
+<tr><td>剛性層<br>（法遵強制）</td><td>隱私與資料主權</td><td>HIPAA 無 BAA 的醫療、嚴格落地的金融、政府主權合約。關鍵在 CLOUD Act——美國供應商即使把機房設在歐盟，仍受美國司法管轄，故雲端「即使加密」也無法滿足真主權，air-gapped 本機部署成為唯一解</td></tr>
+<tr><td>結構層</td><td>可預測成本、離線可用</td><td>消除按 token 計費的變動稅（token tax），成本從營運費轉為一次性資本支出；離線環境（無網、機敏場域）雲端根本不可達</td></tr>
+<tr><td>偏好層</td><td>客製化／微調自由、模型可換</td><td>可自由換模型、微調權重、改 system prompt，不受供應商政策與版本更迭綁定</td></tr>
+</tbody>
+</table>
+</div>
+
+<p>產品定位本身就印證了這個驅動核心：<code>Jan</code> 的官方標語是「100% offline on your computer」，<code>LocalAI</code> 自我定位為「self-hosted, local-first alternative to OpenAI, Claude」——「隱私 ＋ 雲端替代」被開源社群當成第一賣點寫進 tagline。</p>
+
+<div class="callout warn">
+<strong>矛盾點（別把偏好誤當強制）</strong>
+<p>「必須本機」只對「無 BAA／真資料主權」這個子集是絕對的。HIPAA 本身其實沒有資料落地要求（屬合約性義務）；純粹的資料落地情境，有時用主權雲（sovereign cloud）就能替代。把偏好層的理由（省錢、想玩）講成剛性強制，是需求評估最常見的自我欺騙。</p>
+</div>
+
+<h2>二、功能廣度已不是瓶頸</h2>
+
+<p>三年前「本機模型能做什麼」還是一份短清單。到 2026 年 7 月，開放權重模型已在每一個功能面向都有對應的成熟選項——「做得到」不再是限制條件。</p>
+
+<div class="tbl-wrap">
+<table>
+<thead><tr><th>功能面向</th><th>代表開放權重模型</th></tr></thead>
+<tbody>
+<tr><td>對話 / 通用推理</td><td>Llama、Qwen3、DeepSeek、Mistral、Gemma、Phi 系列</td></tr>
+<tr><td>Coding</td><td>Qwen3-Coder（Apache 2.0）</td></tr>
+<tr><td>視覺多模態</td><td>Qwen3-VL、MiniCPM-V</td></tr>
+<tr><td>語音 / 音訊</td><td>Whisper-large-v3</td></tr>
+<tr><td>RAG / Embedding</td><td>Qwen3-Embedding / Reranker（MTEB 多語榜第一）</td></tr>
+</tbody>
+</table>
+</div>
+
+<div class="callout tip">
+<strong>關鍵事實：差距是「時間差」不是「代差」</strong>
+<p>據 Epoch AI 的 Capabilities Index（一手研究來源，非行銷部落格）：開放權重與封閉前沿的能力差距，2023 至 2025 平均約 3 個月、2026 年起約 4 個月；公開 benchmark 落在約 4–6 個月，私有 held-out benchmark 則約 8–10 個月。換言之，本機模型不是「弱一個世代」，而是「晚半年」。這正是本機夠用邊界擴張的根因。</p>
+</div>
+
+<p>限定條件：「覆蓋」指的是<strong>存在性</strong>——每個面向都有可用模型，不等於與雲端頂規品質平價。最前沿的複雜推理鏈、最新的多模態能力，雲端仍領先約半年。</p>
+
+<h2>三、應用場景盤點</h2>
+
+<p>把功能落到具體場景，本機在個人／家庭伺服器規模的成熟度分佈如下：</p>
+
+<div class="tbl-wrap">
+<table>
+<thead><tr><th>場景</th><th>本機成熟度</th><th>說明</th></tr></thead>
+<tbody>
+<tr><td>個人生產力</td><td>成熟</td><td>對話、摘要、改寫、翻譯——中小模型已足堪日常</td></tr>
+<tr><td>軟體開發</td><td>成熟</td><td>Qwen3-Coder 級模型可做補全、重構、除錯輔助</td></tr>
+<tr><td>本地文件 / 第二大腦</td><td>成熟（工具就緒）</td><td>RAGFlow、WeKnora 等開源 RAG 引擎可全本機建知識庫</td></tr>
+<tr><td>隱私敏感工作</td><td>本機的主場</td><td>法務、醫療、財務、機敏研發——資料不出本機是核心價值</td></tr>
+<tr><td>離線環境</td><td>本機獨佔</td><td>無網、機敏場域，雲端不可達</td></tr>
+<tr><td>7×24 背景 agent</td><td>可行但證據薄</td><td>家庭伺服器常駐 tool-calling 自動化——工具存在，長時間可靠度缺實測佐證</td></tr>
+</tbody>
+</table>
+</div>
+
+<h3>本地 RAG 知識庫具體長什麼樣</h3>
+
+<p>這對你的第二大腦場景最相關。兩套已被一手 GitHub README 逐字佐證的開源方案：</p>
+
+<ul>
+<li><code>RAGFlow</code>（infiniflow）：融合 RAG 與 Agent 能力的開源引擎，具深度文件理解，能解析 Word／slides／Excel／txt／圖片／掃描檔／結構化資料／網頁，採 template-based chunking 與「多路召回 ＋ 融合 re-ranking」。</li>
+<li><code>WeKnora</code>（騰訊）：可用 Ollama 本地模型同時當 LLM 與 embedding 後端，支援 Local／Docker／Kubernetes 私有離線部署，達成完整資料主權。</li>
+</ul>
+
+<div class="callout warn">
+<strong>待驗缺口</strong>
+<p>現有證據只到「功能存在」——個人第二大腦規模（數千至數萬份文件）下的<strong>召回品質、embedding 選型、繁體中文處理效果</strong>缺乏實測數據。這是要親自跑一次才知道的，不能靠部落格背書。</p>
+</div>
+
+<h2>四、不可或缺的體驗（UX 剛需）</h2>
+
+<p>這是需求端最硬、也最被低估的部分。功能廣度與工具鏈都成熟後，本機 LLM 的真正差異化不在「能不能跑」，而在「用起來順不順」。以下六項是社群反覆點名的剛需：</p>
+
+<h3>1. 記憶持久化——最痛的缺口</h3>
+<p>本機 runner（LM Studio、llama.cpp）每次開新 session 都從空白起，缺少雲端 Projects／Gems 那種「自動載入背景」的機制，使用者被迫一次次重新交代脈絡（re-brief）。這是 XDA 等社群媒體反覆抱怨的頭號痛點——不是模型不夠聰明，是它「記不住昨天」。</p>
+
+<h3>2. 模型切換</h3>
+<p>依任務一鍵換模型：日常用快的小模型、難題換大模型、coding 換專用模型。切換的摩擦力直接決定使用頻率。</p>
+
+<h3>3. context 管理</h3>
+<p>長對話的視窗管理——什麼進 context、什麼被截斷，需要可見可控。</p>
+
+<h3>4. 本地檔案與工具整合</h3>
+<p>能讀本機檔案、呼叫本機工具（tool-calling / function-calling），模型才從「聊天框」變成「能幹活的 agent」。</p>
+
+<h3>5. 隱私可見性</h3>
+<p>本機的價值主張是「資料沒外流」，但這個價值要「看得到」才成立——使用者需要能感知、能驗證資料確實留在本機，否則隱私只是口號。</p>
+
+<h3>6. 易用性分水嶺</h3>
+<p>一鍵安裝（Ollama 一行指令、LM Studio 圖形介面）vs 手動編譯（llama.cpp）——這條線決定觸及誰。技術門檻不是中性的，它直接篩選使用者群。</p>
+
+<div class="callout warn">
+<strong>誠信標註：回應速度</strong>
+<p>速度是 UX 的一級變數，互動流暢與否有主觀門檻。但本次研究中<strong>所有具體 tokens/s 數字全被對抗式驗證否決</strong>（詳見文末），因為它與硬體 × 量化 × 併發強耦合、跨來源分歧劇烈。所以這裡只能說「速度很關鍵」，不能給你一個可信的門檻數字——要精確值只有在目標機實測一條路。</p>
+</div>
+
+<h2>五、工具鏈三層地圖</h2>
+
+<p>本機 LLM 生態清楚分成三層。理解分層才能對場景選對工具，而不是被工具名稱淹沒。</p>
+
+<div class="tbl-wrap">
+<table>
+<thead><tr><th>層</th><th>角色</th><th>代表工具</th></tr></thead>
+<tbody>
+<tr><td>平台層</td><td>給人直接用</td><td>Ollama、LM Studio、Jan、LocalAI</td></tr>
+<tr><td>引擎層</td><td>負責跑得快</td><td>llama.cpp、vLLM、MLX-LM、TensorRT-LLM</td></tr>
+<tr><td>UI 前端</td><td>對話介面</td><td>Open WebUI、Lobe Chat、SillyTavern</td></tr>
+</tbody>
+</table>
+</div>
+
+<h3>依場景選型</h3>
+<ul>
+<li><strong>單人原型 / 快速上手</strong> → Ollama（一行安裝，最低摩擦）</li>
+<li><strong>GUI 優先的 Mac／Windows 使用者</strong> → LM Studio（內建 HuggingFace 瀏覽器與量化建議）</li>
+<li><strong>多使用者 / 常駐服務</strong> → vLLM（PagedAttention ＋ continuous batching，高併發吞吐遠勝單機 runner，這是家庭伺服器要服務多裝置時的分水嶺）</li>
+<li><strong>嵌入式 / 邊緣</strong> → llama.cpp（工廠、IoT、離線最輕量）</li>
+</ul>
+
+<div class="callout tip">
+<strong>框架精修</strong>
+<p>三層是<strong>巢狀</strong>不是並列——Ollama／LM Studio 實際上是把 llama.cpp／MLX 包裝成引擎再套介面。所以正確心智模型是「平台騎在引擎之上」，而非三者乾淨並排。這決定了你在哪一層調效能。</p>
+</div>
+
+<h2>六、硬體門檻（可量化的部分）</h2>
+
+<p>硬體需求有一部分是可以用第一性原理精確估算的，這部分可信；另一部分（跑多快）不可信，留到誠信段。</p>
+
+<div class="callout tip">
+<strong>VRAM 估算公式</strong>
+<p><code>VRAM ≈ 參數量(十億) × 每權重位元組數</code>，其中 FP16 = ×2、FP8 = ×1、INT4 = ×0.5。所以 <strong>INT4 量化把記憶體壓到 FP16 的 1/4</strong>。實例：Phi-4 14B 在 INT4 下純權重約 7GB，單張 RTX 4090（24GB）有大量餘裕。</p>
+</div>
+
+<p>限定：這條公式只估「權重」記憶體，實際總 VRAM 還要再加約 15–20% 給 KV cache、activation 與框架 overhead。</p>
+
+<h3>實務配置門檻</h3>
+<div class="tbl-wrap">
+<table>
+<thead><tr><th>等級</th><th>配置</th><th>能跑到</th></tr></thead>
+<tbody>
+<tr><td>可用底線</td><td>16GB RAM ＋ 8GB VRAM ＋ 100GB+ SSD</td><td>7B 級模型</td></tr>
+<tr><td>建議甜蜜點</td><td>32GB RAM ＋ 24GB VRAM（RTX 3090／4090）</td><td>單張 24GB 卡的天花板約 34B（Q4_K_M）</td></tr>
+<tr><td>大模型入場</td><td>需 40–48GB VRAM</td><td>70B（Q4_K_M，單張消費卡不夠，需多卡或大 unified memory）</td></tr>
+</tbody>
+</table>
+</div>
+
+<div class="callout warn">
+<strong>誠信標註</strong>
+<p>這張表只到「裝不裝得下」（VRAM 容量）層級，這部分經多來源交叉佐證可信。<strong>逐 GPU 級距的完整對照表、逐型號的 tokens/s，在查證中被否決</strong>——那些數字是分歧噪音，不列入。</p>
+</div>
+
+<h2>七、本機 vs 雲端：決策邊界（方向性）</h2>
+
+<p>什麼時候該本機、什麼時候該上雲，有一組方向性啟發（medium 信心，非精算）：</p>
+
+<div class="tbl-wrap">
+<table>
+<thead><tr><th>走雲端，如果……</th><th>走本機，如果……</th></tr></thead>
+<tbody>
+<tr><td>零星使用（月花 &lt; US$30）</td><td>月花 US$80+（重度使用）</td></tr>
+<tr><td>要最佳模型品質</td><td>處理敏感／專有資料</td></tr>
+<tr><td>要最新多模態（視覺／音訊）</td><td>要可預測成本</td></tr>
+<tr><td>不想管硬體</td><td>要離線可用</td></tr>
+</tbody>
+</table>
+</div>
+
+<div class="callout warn">
+<strong>誠信標註</strong>
+<p>US$30／US$80 是<strong>方向性門檻，不是硬事實</strong>，且假設你已擁有硬體。更精細的成本破局點（回本 5.8–6.7 個月、US$500–700 門檻、18–24 個月回本）在對抗驗證中<strong>全數陣亡</strong>。這組邊界只能當「往哪個方向想」的啟發，不能當精算依據。</p>
+</div>
+
+<h2>八、本研究的邊界與誠信段</h2>
+
+<p>這一段是整份報告最該讀的部分之一。本次 deep-research 抽取 117 條主張、對其中 25 條做三票對抗式查證，結果 <strong>14 條確認、11 條被否決</strong>。被否決的主張幾乎全部集中在同一類：<strong>精確數字</strong>。</p>
+
+<h3>被對抗式驗證否決的主張（不採信）</h3>
+<ul>
+<li>所有具體 tokens/s 分層（CPU 10–25、RTX 4090 130–160、Apple Silicon 45–120、各工具 40–12,500……）——跨來源分歧劇烈，多數 0–3 票全滅</li>
+<li>成本回本精算（5.8–6.7 個月、US$500–700 門檻、18–24 個月）</li>
+<li>逐 GPU 的 VRAM 級距對照表（RTX 3060／3090／5090／Mac Studio 逐級距）</li>
+<li>「MLX 是 Apple Silicon 最快路徑、Ollama 底層已改用 MLX」的主張</li>
+<li>品質差距的具體百分點（本機 7B HumanEval 45–55% vs 前沿 90%）</li>
+</ul>
+
+<div class="callout tip">
+<strong>方法論啟示</strong>
+<p>本機 LLM 領域的「數字」是最不可信的一層——因為它與硬體 × 量化 × 併發強耦合，而部落格級來源之間互相抄襲、缺一手實測。要拿到可信的效能與成本數字，只有一條路：<strong>在你自己的目標硬體上實測</strong>。這恰好是「建本機運算單元」能做的第一件正事——先建 benchmark。</p>
+</div>
+
+<h3>四個實測缺口（open questions）</h3>
+<ol>
+<li>目標硬體（RTX 4090／5090、Mac Studio M 系列）跑主流開放權重模型的真實 tokens/s——互動流暢門檻的關鍵</li>
+<li>7×24 背景常駐 agent 的實務可靠度、記憶持久化與 context 管理方案</li>
+<li>Apple Silicon unified memory 路徑（MLX vs llama.cpp Metal）的真實效能定位，以及大 unified memory 跑 100B+ 模型的實用性</li>
+<li>本機 RAG 在個人第二大腦規模的召回品質與繁中文件處理效果</li>
+</ol>
+
+<h2>對你的落地啟示</h2>
+
+<p>你們近期在建本機運算單元，這份需求端盤點指向三個結論：</p>
+
+<ul>
+<li><strong>「能不能跑」已經是解決的問題。</strong>功能廣度不缺、工具鏈成熟、硬體門檻可估算。把精力放在「能不能跑」上是打過去的仗。</li>
+<li><strong>真正的差異化在 UX 剛需。</strong>記憶持久化、模型切換、本地檔案與工具整合、隱私可見性——這些是產品與體驗要下功夫的地方，也是雲端替代品目前做得最差、本機最有機會贏的縫隙。</li>
+<li><strong>所有效能與回本數字，別信報告別信部落格。</strong>用你們的機器實測。這不只是嚴謹，更是你們建運算單元的第一個可交付成果——一份針對自己硬體的 benchmark，比任何二手數字都值錢。</li>
+</ul>
+
+<h2>來源</h2>
+
+<p class="src-list"><span class="tag p">一手</span>（GitHub README / 一手研究）：</p>
+<ul class="src-list">
+<li>RAGFlow — github.com/infiniflow/ragflow</li>
+<li>WeKnora（騰訊）— github.com/Tencent/WeKnora</li>
+<li>Jan — github.com/janhq/jan；LocalAI — github.com/mudler/LocalAI</li>
+<li>Qwen3-Coder / Qwen3-Embedding — github.com/QwenLM</li>
+<li>Epoch AI Capabilities Index — epoch.ai/data-insights（能力差距量測）</li>
+<li>awesome-local-llm — github.com/rafska/awesome-local-llm</li>
+</ul>
+<p class="src-list">次級 / 部落格（硬體門檻、成本邊界、UX 痛點——經多來源交叉佐證，非單一權威）：spheron.network（GPU 需求表）、zenvanriel.com（本機 vs 雲端決策）、promptquorum.com、codersera.com（工具鏈對照）、fungies.io（成本）、docs.openwebui.com、xda-developers.com（記憶持久化 UX 痛點）等。</p>
+
+</article>
+<footer>
+<p style="color: var(--muted); font-size: 0.85rem; margin-top: 4rem; padding-top: 1.5rem; border-top: 1px solid var(--border);">
+研究方法：deep-research harness——5 個搜尋角度、24 個來源、抽取 117 條主張、對 25 條做三票對抗式查證（14 確認 / 11 否決）。時效性：所引模型名稱與硬體門檻為 2026-07 現況，開放權重進展極快，絕對數字有半年內過期風險。<br>
+最後更新：2026-07-19 · CC BY 4.0 · 引用請標來源
+</p>
+</footer>
+</main>
+<script>
+  const bar = document.getElementById('progress');
+  window.addEventListener('scroll', () => {
+    const h = document.documentElement;
+    const max = h.scrollHeight - h.clientHeight;
+    const ratio = max > 0 ? h.scrollTop / max : 0;
+    bar.style.transform = 'scaleX(' + ratio + ')';
+  }, { passive: true });
+</script>
+</body>
+</html>

@@ -15,6 +15,7 @@
 - 中文與英文 / 數字之間使用半形空格
 
 ## Cards
+- [local-llm-demand-landscape](https://hale80427.github.io/brain-cards/local-llm-demand-landscape/)：本機端 LLM 需求端全景——用可控性換前沿性，差距是時間差非代差（約 3–6 個月），真正缺口在 UX 剛需（記憶持久化／模型切換／本地整合）；tokens/s、回本月數等精確數字經對抗式驗證否決已標明。
 - [tesla-fsd-taiwan-rights-echo-ev-life](https://hale80427.github.io/brain-cards/tesla-fsd-taiwan-rights-echo-ev-life/)：整理 Echo’s Ev Life 影片中，台灣 FSD 車主維權的主張、技術疑點與法規脈絡。
 - [ai-era-education-sensory-time-lag](https://hale80427.github.io/brain-cards/ai-era-education-sensory-time-lag/)：從 AI 工具衝擊、提問層次、師資資訊素養，重看公立教育的數位階級化風險。
 - [pcd-microdrilling-acceleration-jerk-parameters](https://hale80427.github.io/brain-cards/pcd-microdrilling-acceleration-jerk-parameters/)：崩刃元兇不是速度而是 jerk；九個伺服參數拆成四層（骨架/尺度/磨皮機/協調器），含加速度·速度·jerk 三聯對照 SVG。
