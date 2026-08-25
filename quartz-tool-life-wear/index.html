@@ -4,18 +4,18 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>只用驅動器電性訊號，端到端追出石英微鑽刀的一生</title>
-<meta name="description" content="不加裝感測器，僅用超音波驅動器的回授電流與等效阻抗，端到端追出石英微鑽孔刀具從開鑽到斷刀的全生命磨耗：扣追頻鋸齒後磨耗單調升 +8.1%（R²=0.96），電性領先可見崩邊約 100 孔。">
+<meta name="description" content="不加裝感測器，僅用超音波驅動器的回授電流與等效阻抗，端到端追出石英微鑽孔刀具從開鑽到斷刀的全生命磨耗：扣追頻鋸齒後磨耗單調升 +8.1%（R²=0.96），電性在崩邊肉眼可見之前就已在動，但領先幾孔待驗。">
 <link rel="canonical" href="https://hale80427.github.io/brain-cards/quartz-tool-life-wear/">
 <meta name="author" content="彥皓">
 <meta property="og:type" content="article">
 <meta property="og:title" content="只用驅動器電性訊號，端到端追出石英微鑽刀的一生">
-<meta property="og:description" content="僅用超音波驅動器既有電性回授，端到端追出石英微鑽刀全生命磨耗 +8.1%（R²=0.96），電性領先可見崩邊約 100 孔。">
+<meta property="og:description" content="僅用超音波驅動器既有電性回授，端到端追出石英微鑽刀全生命磨耗 +8.1%（R²=0.96），電性在崩邊肉眼可見之前就已在動，但領先幾孔待驗。">
 <meta property="og:url" content="https://hale80427.github.io/brain-cards/quartz-tool-life-wear/">
 <meta property="og:image" content="https://hale80427.github.io/brain-cards/quartz-tool-life-wear/assets/wear_final_20260622.png">
 <meta property="og:locale" content="zh_TW">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="只用驅動器電性訊號，端到端追出石英微鑽刀的一生">
-<meta name="twitter:description" content="僅用驅動器電性回授追出石英微鑽刀全生命磨耗 +8.1%（R²=0.96），電性領先可見崩邊約 100 孔。">
+<meta name="twitter:description" content="僅用驅動器電性回授追出石英微鑽刀全生命磨耗 +8.1%（R²=0.96），電性在崩邊肉眼可見之前就已在動，但領先幾孔待驗。">
 <meta name="twitter:image" content="https://hale80427.github.io/brain-cards/quartz-tool-life-wear/assets/wear_final_20260622.png">
 <script type="application/ld+json">
 {
@@ -116,7 +116,7 @@
 <p style="color: var(--muted); font-size: var(--fs-body); margin: 0 0 1rem;">從超音波回授電流與等效阻抗，監測石英旋轉超音波微鑽孔（RUM）刀具從開鑽到斷刀的全生命磨耗</p>
 <div class="bluf">
 <strong>結論先講 BLUF</strong>
-<p style="margin:0;">在<strong>不額外加裝任何感測器</strong>的前提下，僅用超音波驅動器既有的電性回授，就能端到端追出石英微鑽孔一把刀<strong>從開鑽到斷刀的完整磨耗歷程</strong>。本輪 450 孔全生命實測：扣除追頻造成的週期性干擾後，刀具等效阻抗隨磨耗<strong>單調上升 +8.1%（決定係數 R²=0.96）</strong>；而入孔脆裂邊的肉眼劣化，比這條電性訊號<strong>晚約 100 孔</strong>才出現——電性磨耗訊號可以提前預警。</p>
+<p style="margin:0;">在<strong>不額外加裝任何感測器</strong>的前提下，僅用超音波驅動器既有的電性回授，就能端到端追出石英微鑽孔一把刀<strong>從開鑽到斷刀的完整磨耗歷程</strong>。本輪 450 孔全生命實測：扣除追頻造成的週期性干擾後，刀具等效阻抗隨磨耗<strong>單調上升 +8.1%（決定係數 R²=0.96）</strong>；而入孔脆裂邊的肉眼劣化，是<strong>晚於</strong>這條電性訊號才出現的——電性可以當提前預警。<strong>但領先幾孔算不出來，本頁不主張</strong>（2026-08-25 更正，理由見下方「電性在崩邊肉眼可見之前，就已經在動」一節）。</p>
 </div>
 </header>
 <article>
@@ -127,7 +127,7 @@
 <li><a href="#why">為什麼用電性監測</a></li>
 <li><a href="#states">三個狀態的電性指紋</a></li>
 <li><a href="#detrend">扣掉追頻鋸齒</a></li>
-<li><a href="#lead">電性領先崩邊</a></li>
+<li><a href="#lead">電性早於崩邊</a></li>
 <li><a href="#break">斷刀的事件指紋</a></li>
 <li><a href="#compare">兩輪形狀對照</a></li>
 <li><a href="#decision">換刀決策啟示</a></li>
@@ -167,9 +167,14 @@
 </figure>
 <p>扣掉鋸齒後，磨耗訊號乾淨浮現：刀具等效阻抗從開鑽後<strong>穩定上升 +8.1%（R²=0.96）</strong>，約 330 孔後進入平台，接著在 450 孔斷刀。</p>
 
-<h2 id="lead">電性磨耗，領先肉眼可見的崩邊</h2>
-<p>本輪在約 100–200 孔，阻抗開始明顯上升；而入孔的脆裂邊，是從 <strong>200 孔起</strong>才肉眼可見地變大。</p>
-<p>也就是說——<strong>電性磨耗訊號，領先實體崩邊約 100 孔出現</strong>。兩條互相獨立（正交）的證據彼此印證了同一件事：刀刃在約 200 孔附近開始鈍化。而電性的好處是：它走在前面，可以當提前預警。</p>
+<h2 id="lead">電性在崩邊肉眼可見之前，就已經在動</h2>
+<p>扣掉鋸齒後，阻抗從約 45 孔起就一路穩定上升，到 330 孔進入平台。而入孔的脆裂邊，是從 <strong>200 孔起</strong>才肉眼可見地變大。</p>
+<p>兩條互相獨立（正交）的證據方向一致：電性已經在爬的時候，崩邊還看不出來。這是把電性當提前預警的依據。</p>
+<div class="callout warn">
+<p><strong>但「領先幾孔」這個數字算不出來，本頁不主張。</strong>（2026-08-25 更正）</p>
+<p>兩個理由。其一，去趨勢是按追頻週期正規化做的，<strong>解析度下限就是一個追頻週期、約 45 孔</strong>——比這更細的「哪一段升最快」不可靠，先前寫的「100–200 孔升最快」已收回。其二，崩邊那一側只有「200 孔起肉眼可見」這一個目視觀察點，<strong>沒有逐孔量化曲線</strong>，兩條曲線的轉折點無從相減。</p>
+<p>能撐住的說法只有一句：<strong>電性先動、崩邊後見，領先量待驗。</strong>機制層面的討論見<a href="../usm-electrical-wear-warning/">超音波鑽孔的電性預警機制</a>。</p>
+</div>
 <figure>
 <img src="assets/wear_final_20260622.png" width="1600" height="792" loading="lazy" alt="純負載磨耗曲線，X 軸為孔數，等效阻抗從 0.503 上升到 0.544（+8.1%），約 330 孔後進入平台，450 孔斷刀。">
 <figcaption>圖 3 · 純負載狀態下的刀具磨耗（X 軸＝孔數）：0.503→0.544，+8.1%，升到約 330 孔後平台 · 作者自繪分析圖</figcaption>
@@ -207,7 +212,7 @@
 </table>
 </article>
 <footer>
-<p>最後更新：2026-06-22 · CC BY 4.0 · 引用請標來源<br>
+<p>最後更新：2026-08-25（撤回「領先約 100 孔」的量化主張，改標待驗；原文 2026-06-22）· CC BY 4.0 · 引用請標來源<br>
 方法與資料：等效阻抗採 cut-phase R_base（逐啄循環中位數，代表切削相負載）；去趨勢採追頻週期正規化。本輪 450 孔（一孔約 57 秒）、前一輪為新刀全生命到斷刀。所有結論皆以可重現的電性管線推導。</p>
 </footer>
 </main>
