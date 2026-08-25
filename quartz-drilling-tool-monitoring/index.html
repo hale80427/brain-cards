@@ -100,7 +100,7 @@
   a:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
   strong { font-weight: 700; }
   .bluf { background: var(--callout-tip); border-left: 3px solid var(--accent); padding: 1.25rem 1.5rem; margin: 1.5rem 0 2rem; border-radius: 4px; }
-  .bluf strong { display: block; font-size: var(--fs-meta); letter-spacing: 0.05em; color: var(--accent); margin-bottom: 0.5rem; text-transform: uppercase; }
+  .bluf strong.label { display: block; font-size: var(--fs-meta); letter-spacing: 0.05em; color: var(--accent); margin-bottom: 0.5rem; text-transform: uppercase; }
   .callout { padding: 1rem 1.25rem; margin: 1.5rem 0; border-radius: 4px; border-left: 3px solid var(--muted); }
   .callout.tip { background: var(--callout-tip); border-left-color: var(--accent); }
   .callout.warn { background: var(--callout-warn); border-left-color: var(--accent-warn); }
@@ -124,7 +124,7 @@
 <header>
 <h1>石英長程鑽孔的電性監測：刀具磨耗與斷刀偵測</h1>
 <div class="bluf">
-<strong>BLUF</strong>
+<strong class="label">BLUF</strong>
 不外加感測器，只用超音波驅動器既有的電性記錄，對石英 RUM 微鑽孔做刀況監測。一支 PCD 刀從新到斷的完整生命週期（~450 孔、約 16 小時）顯示：<strong>磨耗可在斷刀前 200-300 孔提前預警</strong>（阻抗 R 單調上升）；<strong>斷刀呈現為「負載掉到空載水位」</strong>（鑽孔 R≈0.33 → 空載 R≈0.30）。代價是石英切削負載本就微弱（訊號僅 4-10%），必須先做頻率校正、只取真實鑽孔段、用長滾動窗，才抓得穩。
 </div>
 </header>

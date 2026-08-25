@@ -94,7 +94,7 @@
   a { color: var(--accent); text-underline-offset: 3px; }
   a:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
   .bluf { background: var(--callout-tip); border-left: 3px solid var(--accent); padding: 1.25rem 1.5rem; margin: 1.5rem 0 2rem; border-radius: 4px; }
-  .bluf strong { display: block; font-size: var(--fs-meta); letter-spacing: 0.05em; color: var(--accent); margin-bottom: 0.5rem; text-transform: uppercase; }
+  .bluf strong.label { display: block; font-size: var(--fs-meta); letter-spacing: 0.05em; color: var(--accent); margin-bottom: 0.5rem; text-transform: uppercase; }
   .callout { padding: 1rem 1.25rem; margin: 1.5rem 0; border-radius: 4px; border-left: 3px solid var(--muted); }
   .callout.tip { background: var(--callout-tip); border-left-color: var(--accent); }
   .callout.warn { background: var(--callout-warn); border-left-color: #d97706; }
@@ -118,7 +118,7 @@
 <h1>垂直 AI 產品的形狀</h1>
 <p class="subtitle">從 Anthropic SMB 公告拆解到漢鼎超音波加工 Agent 設計｜6 條結構性原則 + v1.0 設計含意</p>
 <div class="bluf">
-<strong>BLUF</strong>
+<strong class="label">BLUF</strong>
 <p>Anthropic 2026 年 5 月推出 Claude for Small Business，把通用 Claude 包裝成中小企業專用的垂直產品。本文不討論產品本身好不好用，而是拆解它的設計骨架——共 6 條結構性原則。每條原則都附對漢鼎自建超音波輔助加工 Plugin / AI Agent 的設計含意。</p>
 <p style="margin-bottom: 0;"><strong>結論</strong>：v1.0 不需要訓練新模型、不需要做開放 SDK；先盤點漢鼎內部過去 1–2 年的 Top 10 高頻加工場景，按「ready-to-run workflow + 可重複動作 skill + 業務鏈關鍵接口 integration」這三層組合來設計。</p>
 </div>

@@ -99,7 +99,7 @@
   a { color: var(--accent); text-underline-offset: 3px; }
   a:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
   .bluf { background: var(--callout-tip); border-left: 3px solid var(--accent); padding: 1.25rem 1.5rem; margin: 1.5rem 0 2rem; border-radius: 4px; }
-  .bluf strong { display: block; font-size: var(--fs-meta); letter-spacing: 0.05em; color: var(--accent); margin-bottom: 0.5rem; text-transform: uppercase; }
+  .bluf strong.label { display: block; font-size: var(--fs-meta); letter-spacing: 0.05em; color: var(--accent); margin-bottom: 0.5rem; text-transform: uppercase; }
   .bluf p:last-child { margin-bottom: 0; }
   .callout { padding: 1rem 1.25rem; margin: 1.5rem 0; border-radius: 4px; border-left: 3px solid var(--muted); }
   .callout.tip { background: var(--callout-tip); border-left-color: var(--accent); }
@@ -126,7 +126,7 @@
 <header>
 <h1>今天 evaluate skill 升了三次，做對的事比做多的事重要</h1>
 <div class="bluf">
-<strong>BLUF</strong>
+<strong class="label">BLUF</strong>
 <p>今天升了三個版本（v3.2.2、v3.3、v3.4-b）。中途試了一個 v3.4-a 失敗，rollback。過程中還遇到 git 異常刪 317 個檔案的災難。</p>
 <p><strong>重點不是「做了多少」，而是「保留下來的全部都是經得起 baseline 驗證的」</strong>。</p>
 </div>

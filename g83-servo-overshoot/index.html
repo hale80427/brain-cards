@@ -94,7 +94,7 @@
   a { color: var(--accent); text-underline-offset: 3px; }
   a:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
   .bluf { background: var(--callout-tip); border-left: 3px solid var(--accent); padding: 1.25rem 1.5rem; margin: 1.5rem 0 2rem; border-radius: 4px; }
-  .bluf strong { display: block; font-size: var(--fs-meta); letter-spacing: 0.05em; color: var(--accent); margin-bottom: 0.5rem; text-transform: uppercase; }
+  .bluf strong.label { display: block; font-size: var(--fs-meta); letter-spacing: 0.05em; color: var(--accent); margin-bottom: 0.5rem; text-transform: uppercase; }
   .callout { padding: 1rem 1.25rem; margin: 1.5rem 0; border-radius: 4px; border-left: 3px solid var(--muted); }
   .callout.tip { background: var(--callout-tip); border-left-color: var(--accent); }
   .callout.warn { background: var(--callout-warn); border-left-color: var(--accent-warn); }
@@ -123,7 +123,7 @@
 機台：Mitsubishi M80 控制器｜量測工具：NC Analyzer2｜對象：D0.4mm PCD 微鑽、石英深孔 G83 啄鑽｜2026-06-16｜現場量測 + 配置決策，待實驗驗證
 </p>
 <div class="bluf">
-<strong>BLUF</strong>
+<strong class="label">BLUF</strong>
 伺服<strong>穩態表現很好</strong>（位置偏差只有 5µm），問題集中在「快速進給轉切削進給」那一瞬間的暫態——那一下產生 50µm 的衝過頭（overshoot）並伴隨高頻振盪。只要讓刀尖在這個暫態<strong>平息之後、才接觸孔底</strong>，就能在穩態下切削。做法就是把「快速下刀點」拉到離孔底夠遠，給暫態足夠的空間與時間消化掉。
 </div>
 </header>

@@ -99,7 +99,7 @@
   a { color: var(--accent); text-underline-offset: 3px; }
   a:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
   .bluf { background: var(--callout-tip); border-left: 3px solid var(--accent); padding: 1.25rem 1.5rem; margin: 1.5rem 0 2rem; border-radius: 4px; }
-  .bluf strong { display: block; font-size: var(--fs-meta); letter-spacing: 0.05em; color: var(--accent); margin-bottom: 0.5rem; text-transform: uppercase; }
+  .bluf strong.label { display: block; font-size: var(--fs-meta); letter-spacing: 0.05em; color: var(--accent); margin-bottom: 0.5rem; text-transform: uppercase; }
   .callout { padding: 1rem 1.25rem; margin: 1.5rem 0; border-radius: 4px; border-left: 3px solid var(--muted); }
   .callout.tip { background: var(--callout-tip); border-left-color: var(--accent); }
   .callout.warn { background: var(--callout-warn); border-left-color: var(--accent-warn); }
@@ -127,7 +127,7 @@
 <header>
 <h1>本機端 LLM 的需求端全景——用可控性換前沿性</h1>
 <div class="bluf">
-<strong>BLUF</strong>
+<strong class="label">BLUF</strong>
 <p>在本機跑大語言模型，需求的本質是<strong>「用可控性換前沿性」</strong>：使用者離開雲端 API，換取隱私主權、可預測成本、離線與客製自由，代價是自己承接硬體與運維。</p>
 <p>關鍵轉折是——開放權重與前沿模型的差距，已從「代差」收斂為「時間差」（約 3–6 個月），本機「夠用」的邊界大幅擴張。功能廣度與工具鏈都不再是瓶頸，真正的需求缺口落在 <strong>UX 剛需</strong>（記憶持久化、模型切換、本地整合）。</p>
 <p>但這條邊界的精確座標（tokens/s、回本月數、逐 GPU 級距）在本次查證中<strong>高度分歧、不可信</strong>——本報告給方向、不給假精度，被否決的數字集中列於文末誠信段。</p>

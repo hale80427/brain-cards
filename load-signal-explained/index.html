@@ -100,7 +100,7 @@
   a:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
   strong { font-weight: 700; }
   .bluf { background: var(--callout-tip); border-left: 3px solid var(--accent); padding: 1.25rem 1.5rem; margin: 1.5rem 0 2rem; border-radius: 4px; }
-  .bluf strong { display: block; font-size: var(--fs-meta); letter-spacing: 0.05em; color: var(--accent); margin-bottom: 0.5rem; text-transform: uppercase; }
+  .bluf strong.label { display: block; font-size: var(--fs-meta); letter-spacing: 0.05em; color: var(--accent); margin-bottom: 0.5rem; text-transform: uppercase; }
   .callout { padding: 1rem 1.25rem; margin: 1.5rem 0; border-radius: 4px; border-left: 3px solid var(--muted); }
   .callout.tip { background: var(--callout-tip); border-left-color: var(--accent); }
   .callout.warn { background: var(--callout-warn); border-left-color: var(--accent-warn); }
@@ -124,7 +124,7 @@
 <header>
 <h1>從雜訊裡看出負載：系集平均與 d′ 兩個概念</h1>
 <div class="bluf">
-<strong>BLUF</strong>
+<strong class="label">BLUF</strong>
 我們在量超音波加工的電性訊號，想分辨刀具「空載（沒在切）」和「負載（正在切石英）」。問題是單看一筆訊號太模糊、分不出來。這頁用兩個工具解決它：<strong>系集平均</strong>——把幾百個模糊的訊號疊起來、讓共同形狀浮現；<strong>d′</strong>——一把尺，量「空載和負載到底分不分得開」。看懂這兩個，就懂為什麼我們敢說「負載偵測得到」。
 </div>
 </header>

@@ -98,7 +98,7 @@
   a { color: var(--accent); text-underline-offset: 3px; }
   a:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
   .bluf { background: var(--callout-tip); border-left: 3px solid var(--accent); padding: 1.25rem 1.5rem; margin: 1.5rem 0 2rem; border-radius: 4px; }
-  .bluf > strong { display: block; font-size: var(--fs-meta); letter-spacing: 0.05em; color: var(--accent); margin-bottom: 0.5rem; text-transform: uppercase; }
+  .bluf strong.label { display: block; font-size: var(--fs-meta); letter-spacing: 0.05em; color: var(--accent); margin-bottom: 0.5rem; text-transform: uppercase; }
   .callout { padding: 1rem 1.25rem; margin: 1.5rem 0; border-radius: 4px; border-left: 3px solid var(--muted); }
   .callout.tip { background: var(--callout-tip); border-left-color: var(--accent); }
   .callout.warn { background: var(--callout-warn); border-left-color: var(--accent-warn); }
@@ -152,7 +152,7 @@
 <header>
 <h1>超音波鑽孔的電性預警機制</h1>
 <div class="bluf">
-<strong>BLUF</strong>
+<strong class="label">BLUF</strong>
 <p>刀刃鈍化改變的是刀尖遇到的機械阻尼。而超音波驅動器是定振幅閉環——它不准振幅掉下去，只好多送實功補回來。<strong>那份「多送的功率」就是磨耗的放大鏡。</strong></p>
 <p>在氮化鋁板上鑽的第 121 到 180 個孔裡，這份功率走了 <strong>+58%</strong>，同一批孔的實測孔徑只走了 <strong>+0.13%</strong>（＋0.66 µm，落在一般量具的重複性裡）。同一件事，在電性上被放大了四百倍左右。</p>
 <p>所以「提前」不是電性比孔壁早知道。是它把同一個訊號放大到還來得及反應的尺度。</p>
