@@ -156,19 +156,19 @@ Evals 是把「感覺好像變好」轉成「可行動訊號」的工具。沒�
 
 <h3>影片教什麼</h3>
 
-<p>LLM 有個內建特性叫「自迴歸生成」——簡單講就是<strong>它寫下一個字會被前面寫的字影響</strong>。</p>
+<p>LLM 有個內建特性叫「自迴歸生成」——簡單講就是它寫下一個字會被前面寫的字影響。</p>
 
-<p>如果你叫一個 model judge 評分，<strong>它先寫出「總體 7/10」之後</strong>，後面寫推理時會不自覺地「合理化這個 7 分」。即使這份文件其實只值 4 分。</p>
+<p>如果你叫一個 model judge 評分，它先寫出「總體 7/10」之後，後面寫推理時會不自覺地「合理化這個 7 分」。即使這份文件其實只值 4 分。</p>
 
 <p>直覺類比：考試時老師如果先看到「答案是 B」，再看你的推導過程，他會傾向找理由支持 B。如果先看推導再看答案，他比較容易發現答案錯了。</p>
 
 <h3>我原本的問題</h3>
 
-<p>我的 evaluate 報告模板，<strong>總體評分表放在報告最開頭</strong>。LLM 寫到後面層次時，已經被自己寫下的分數鎖住了。</p>
+<p>我的 evaluate 報告模板，總體評分表放在報告最開頭。LLM 寫到後面層次時，已經被自己寫下的分數鎖住了。</p>
 
 <h3>修法</h3>
 
-<p>把總體評分表從報告開頭，<strong>搬到最末尾</strong>。新模板強制走這個順序：</p>
+<p>把總體評分表從報告開頭，搬到最末尾。新模板強制走這個順序：</p>
 
 <pre><code>第 1 層命中 → 第 2 層機制 → 第 3 層盲點
   → 五維 sanity check → 綜合建議的優點/問題
@@ -190,7 +190,7 @@ Evals 是把「感覺好像變好」轉成「可行動訊號」的工具。沒�
 
 <h3>影片教什麼</h3>
 
-<p>講者展示一個荒謬例子：一份投影片<strong>沒有任何圖片</strong>，但 image judge 給了 5 分。</p>
+<p>講者展示一個荒謬例子：一份投影片沒有任何圖片，但 image judge 給了 5 分。</p>
 
 <p>為什麼？因為 prompt 只寫「給 0 到 5 分」，<strong>沒給 judge 看「0 分長什麼樣 / 5 分長什麼樣」的具體範例</strong>。</p>
 
@@ -206,11 +206,11 @@ Evals 是把「感覺好像變好」轉成「可行動訊號」的工具。沒�
 7–5 分：需要驗證
 4–2 分：重大缺陷</code></pre>
 
-<p>這是<strong>講分數區間的意思</strong>，不是<strong>給 judge 看分數區間的範例</strong>。</p>
+<p>這是講分數區間的意思，不是給 judge 看分數區間的範例。</p>
 
 <h3>修法</h3>
 
-<p>新增一份檔案 <code>AI評估_分數錨點_v1.md</code>。把我手上的校準集（calibration fixtures Q1/Q3/Q4）三個案例的<strong>特徵抽取</strong>，嵌進 prompt 流程。</p>
+<p>新增一份檔案 <code>AI評估_分數錨點_v1.md</code>。把我手上的校準集（calibration fixtures Q1/Q3/Q4）三個案例的特徵抽取，嵌進 prompt 流程。</p>
 
 <p>例如「機制分 9 分長什麼樣」段：</p>
 
@@ -246,14 +246,14 @@ BLUF 結構 + N 個結論編號 + 每個結論末固定加「為什麼重要：[
 </thead>
 <tbody>
 <tr><td>Q1</td><td>9 ✅</td><td>2 ✅</td><td>全符合</td></tr>
-<tr><td>Q3</td><td>3 ✅</td><td><strong>19</strong></td><td>機制對，語言<strong>低估</strong>了（應該 22–32）</td></tr>
+<tr><td>Q3</td><td>3 ✅</td><td>19</td><td>機制對，語言低估了（應該 22–32）</td></tr>
 <tr><td>Q4</td><td>9 ✅</td><td>20 ✅</td><td>全符合</td></tr>
 </tbody>
 </table>
 
 <p>Q3 語言分系統性低估了 3 到 13 分。</p>
 
-<p>回頭找原因。<strong>Q3 是典型的 AI agent DeepSearch 報告風格</strong>。充滿 BLUF、編號清單、DIRECT/INDIRECT 證據等級標記。每個結論末固定加「為什麼重要：」句構。這些是<strong>結構層</strong>的 AI 味。但我的規則庫只覆蓋詞彙層（D 詞彙癌）跟句法層（G 翻譯腔）。<strong>沒有規則抓結構層</strong>。</p>
+<p>回頭找原因。Q3 是典型的 AI agent DeepSearch 報告風格。充滿 BLUF、編號清單、DIRECT/INDIRECT 證據等級標記。每個結論末固定加「為什麼重要：」句構。這些是結構層的 AI 味。但我的規則庫只覆蓋詞彙層（D 詞彙癌）跟句法層（G 翻譯腔）。沒有規則抓結構層。</p>
 
 <p>這個發現很有價值，但也意味著要再升一版。我把規劃寫成 v3.4 的四個方向（v3.4-a / b / c / d），按 ROI × 改動量排序，準備一個一個動。</p>
 
@@ -265,9 +265,9 @@ BLUF 結構 + N 個結論編號 + 每個結論末固定加「為什麼重要：[
 
 <h3>動機</h3>
 
-<p>baseline Q4 報告發現一個漏抓。Q4 fixture 裡有句「<strong>不是</strong>某一家公司的策略選擇，<strong>而是</strong> AI 原廠面對結構缺口必然演化出的四模塊」。這明顯是 C 類「二元對比洞察錯覺」句構，但 prefilter 沒抓到。</p>
+<p>baseline Q4 報告發現一個漏抓。Q4 fixture 裡有句「不是某一家公司的策略選擇，而是 AI 原廠面對結構缺口必然演化出的四模塊」。這明顯是 C 類「二元對比洞察錯覺」句構，但 prefilter 沒抓到。</p>
 
-<p>查正則表發現：C 類規則覆蓋三個變體——「<strong>這</strong>不是 X 而是 Y」「<strong>從來</strong>不是 X 而是 Y」「<strong>並非</strong> X 而是 Y」。<strong>漏了最常見的無前綴版本</strong>。</p>
+<p>查正則表發現：C 類規則覆蓋三個變體——「這不是 X 而是 Y」「從來不是 X 而是 Y」「並非 X 而是 Y」。<strong>漏了最常見的無前綴版本</strong>。</p>
 
 <h3>嘗試的修法</h3>
 
@@ -285,25 +285,25 @@ BLUF 結構 + N 個結論編號 + 每個結論末固定加「為什麼重要：[
 </thead>
 <tbody>
 <tr><td>Q4</td><td>+2（修漏抓）</td><td>+2 ✅</td></tr>
-<tr><td>Q1</td><td>0（不變）</td><td><strong>+6（3 句誤抓）</strong> 🚨</td></tr>
+<tr><td>Q1</td><td>0（不變）</td><td>+6（3 句誤抓） 🚨</td></tr>
 <tr><td>Q3</td><td>0（不變）</td><td>0 ✅</td></tr>
-<tr><td>YouTube</td><td>0（不變）</td><td><strong>+8（4 句誤抓）</strong> 🚨</td></tr>
+<tr><td>YouTube</td><td>0（不變）</td><td>+8（4 句誤抓） 🚨</td></tr>
 </tbody>
 </table>
 
 <p>Q1 誤抓的句子（全部是合法的事實澄清）：</p>
 
 <ul>
-<li>「AI 應用的上線複雜度<strong>不是</strong>傳統軟體的線性延伸，<strong>而是</strong>多了一整層獨有問題」</li>
-<li>「它的成本<strong>不是</strong>一次性購買<strong>而是</strong>按 token 計費」</li>
-<li>「<strong>不是</strong>寫碼層多了幾個函式，<strong>而是</strong>在工程之上多了一層」</li>
+<li>「AI 應用的上線複雜度不是傳統軟體的線性延伸，而是多了一整層獨有問題」</li>
+<li>「它的成本不是一次性購買而是按 token 計費」</li>
+<li>「不是寫碼層多了幾個函式，而是在工程之上多了一層」</li>
 </ul>
 
 <p>YouTube 誤抓（全部是合法的重新聚焦）：</p>
 
 <ul>
-<li>「真正重點<strong>不是</strong>投影片，<strong>而是</strong> agent engineering 的控制迴路」</li>
-<li>「<strong>不是</strong>調 prompt，<strong>而是</strong>換模型」</li>
+<li>「真正重點不是投影片，而是 agent engineering 的控制迴路」</li>
+<li>「不是調 prompt，而是換模型」</li>
 </ul>
 
 <h3>為什麼這些是 false positive？</h3>
@@ -316,12 +316,12 @@ BLUF 結構 + N 個結論編號 + 每個結論末固定加「為什麼重要：[
 </thead>
 <tbody>
 <tr>
-<td>「未來<strong>不是</strong> AI 取代人，<strong>而是</strong> AI 增強人」（廉價二分法，製造「有見地」假象）</td>
-<td>「成本<strong>不是</strong>一次性購買<strong>而是</strong>按 token 計費」（純事實澄清）</td>
+<td>「未來不是 AI 取代人，而是 AI 增強人」（廉價二分法，製造「有見地」假象）</td>
+<td>「成本不是一次性購買而是按 token 計費」（純事實澄清）</td>
 </tr>
 <tr>
-<td>「這<strong>不是</strong>技術問題，<strong>而是</strong>文化問題」（用二元簡化掩蓋多因素互動）</td>
-<td>「真正重點<strong>不是</strong>投影片，<strong>而是</strong> agent engineering」（重新聚焦讀者注意力）</td>
+<td>「這不是技術問題，而是文化問題」（用二元簡化掩蓋多因素互動）</td>
+<td>「真正重點不是投影片，而是 agent engineering」（重新聚焦讀者注意力）</td>
 </tr>
 </tbody>
 </table>
@@ -336,7 +336,7 @@ BLUF 結構 + N 個結論編號 + 每個結論末固定加「為什麼重要：[
 抓到 regression → rollback，不 push through。
 </blockquote>
 
-<p>修一個 +2 引入 +14 的 noise，ROI 顯著為負。把這次嘗試標為 ABORTED，rollback 規則，但<strong>保留試誤註解在程式碼裡</strong>，避免未來重蹈覆轍。</p>
+<p>修一個 +2 引入 +14 的 noise，ROI 顯著為負。把這次嘗試標為 ABORTED，rollback 規則，但保留試誤註解在程式碼裡，避免未來重蹈覆轍。</p>
 
 <p>對應 commit <code>67f7766</code>。</p>
 
@@ -356,7 +356,7 @@ one-lever-at-a-time 紀律的真正價值，不在於 commit 訊息漂亮。而�
 
 <p>v3.4-a 失敗根因是「人類也大量用此句構做合法澄清」。</p>
 
-<p>v3.4-b 採對策：<strong>刻意只抓 AI agent 研究報告專屬的格式特徵</strong>。避開人類撰寫的決策文件、學術論文也會用的句構。</p>
+<p>v3.4-b 採對策：刻意只抓 AI agent 研究報告專屬的格式特徵。避開人類撰寫的決策文件、學術論文也會用的句構。</p>
 
 <h3>新增 4 條規則</h3>
 
@@ -380,7 +380,7 @@ one-lever-at-a-time 紀律的真正價值，不在於 commit 訊息漂亮。而�
 </thead>
 <tbody>
 <tr><td>Q1</td><td>0</td><td>0</td><td>9 → 9</td><td>✅ 無</td></tr>
-<tr><td><strong>Q3</strong></td><td><strong>0</strong></td><td><strong>+4</strong></td><td><strong>8 → 12</strong></td><td>✅ 預期增加</td></tr>
+<tr><td>Q3</td><td>0</td><td>+4</td><td>8 → 12</td><td>✅ 預期增加</td></tr>
 <tr><td>Q4</td><td>0</td><td>0</td><td>10 → 10</td><td>✅ 無</td></tr>
 <tr><td>YouTube</td><td>0</td><td>0</td><td>14 → 14</td><td>✅ 無</td></tr>
 </tbody>
@@ -403,7 +403,7 @@ one-lever-at-a-time 紀律的真正價值，不在於 commit 訊息漂亮。而�
 </table>
 
 <div class="callout warn">
-<p><strong>內化的設計原則</strong>：設計新規則時，先問自己「人類也會這樣寫嗎？」如果答案是「會」，就不該規則化，留給 LLM judge 用語境判斷。</p>
+<p>內化的設計原則：設計新規則時，先問自己「人類也會這樣寫嗎？」如果答案是「會」，就不該規則化，留給 LLM judge 用語境判斷。</p>
 </div>
 
 <hr>
@@ -412,7 +412,7 @@ one-lever-at-a-time 紀律的真正價值，不在於 commit 訊息漂亮。而�
 
 <p>中間還遇到一個怪事。commit <code>6a30b76</code> 我只 <code>git add</code> 了三個檔案，pre-commit 用 <code>git diff --cached --stat</code> 確認也是三個檔案。但 commit 完跑出來顯示「317 files changed, 51280 deletions(-)」。它把整個 repo 的 git index 全清空了。</p>
 
-<p>幸好 <strong>working tree 完整未動</strong>。檢查 <code>.git/hooks/</code> 沒有任何 hook，git config 也沒有相關設定。原因至今不明，可能是 OS 或 git 在某種 race condition 下的異常。</p>
+<p>幸好 working tree 完整未動。檢查 <code>.git/hooks/</code> 沒有任何 hook，git config 也沒有相關設定。原因至今不明，可能是 OS 或 git 在某種 race condition 下的異常。</p>
 
 <p>修復流程：</p>
 
@@ -426,7 +426,7 @@ git show --stat HEAD | tail -10  # 立即驗證 commit stat 正常</code></pre>
 
 <p>第二次 commit 成功，3 files changed, 159 insertions(+)，tracked 檔案數從 319 → 320，正常。</p>
 
-<p>從這次之後，<strong>每次 commit 後都跑這個三段驗證流程</strong>。</p>
+<p>從這次之後，每次 commit 後都跑這個三段驗證流程。</p>
 
 <hr>
 
@@ -464,9 +464,9 @@ git show --stat HEAD | tail -10  # 立即驗證 commit stat 正常</code></pre>
 <p>今天累積到 v3.4-b，下次開新 session 可以接著動：</p>
 
 <ol>
-<li><strong>v3.4-c（最高 ROI）</strong>：新增 J 類「結構性 AI 味」規則庫，4 個維度——子標題密度、清單覆蓋率、證據等級元標記、自定義固定模板偵測。預期完成後 Q3 加權總分從 12 → 22+，落入 ground truth 區間。<strong>這是修 Q3 系統性低估的根因動作</strong>。</li>
-<li><strong>v3.4-d</strong>：新增中英混雜術語密度規則（Probability Mass / Brownfield 等專業詞中英並列密度過高即為 AI 味痕跡）。讓 Q4 的中英混雜部分從 LLM judge 手算變 prefilter 自動偵測。</li>
-<li><strong>B1 新建 Q5 fixture</strong>：YouTube 摘要本身可作為標準素材（「中等機制 + 乾淨語言 + 結構性 AI 味」），補 anchor 表中間區間。</li>
+<li>v3.4-c（最高 ROI）：新增 J 類「結構性 AI 味」規則庫，4 個維度——子標題密度、清單覆蓋率、證據等級元標記、自定義固定模板偵測。預期完成後 Q3 加權總分從 12 → 22+，落入 ground truth 區間。這是修 Q3 系統性低估的根因動作。</li>
+<li>v3.4-d：新增中英混雜術語密度規則（Probability Mass / Brownfield 等專業詞中英並列密度過高即為 AI 味痕跡）。讓 Q4 的中英混雜部分從 LLM judge 手算變 prefilter 自動偵測。</li>
+<li>B1 新建 Q5 fixture：YouTube 摘要本身可作為標準素材（「中等機制 + 乾淨語言 + 結構性 AI 味」），補 anchor 表中間區間。</li>
 </ol>
 
 <p>v3.4-c 涉及新類別架構（不只是規則擴展），複雜度遠高於 v3.4-b，建議單獨開 session 處理。</p>
@@ -483,7 +483,7 @@ fe0bef2  v3.4-b  擴 I 類覆蓋 agent 免責語（0 regression）</code></pre>
 
 <p>5 個 commit，2 次成功升版，1 次成功 rollback，1 次 git 災難復原。一天的工作量。</p>
 
-<p><strong>保留下來的全部都是經得起 baseline 驗證的</strong>。這比「做了多少」更重要。</p>
+<p>保留下來的全部都是經得起 baseline 驗證的。這比「做了多少」更重要。</p>
 
 </article>
 
