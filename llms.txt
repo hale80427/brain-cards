@@ -37,6 +37,7 @@
 - [ai-agents-platform-strategy](https://hale80427.github.io/brain-cards/ai-agents-platform-strategy/)：MIT Sloan 講座重點：平台、資料網路效應、agent 治理與定價
 - [systems-thinking-leaders-youtube](https://hale80427.github.io/brain-cards/systems-thinking-leaders-youtube/)：John Sterman 談 policy resistance、因果圖與管理模擬器。
 - [loop-engineering-agent-workflows](https://hale80427.github.io/brain-cards/loop-engineering-agent-workflows/)：用白話拆解 Addy Osmani 的 Loop Engineering 實務框架。
+- [usm-electrical-wear-warning](https://hale80427.github.io/brain-cards/usm-electrical-wear-warning/)：為什麼電性訊號能提前反映刀具磨耗——定振幅閉環機制、電性 vs 孔徑的 440 倍放大、分板相關性與六條失效邊界。
 - [usm-online-monitoring](https://hale80427.github.io/brain-cards/usm-online-monitoring/)：客戶展示版——電性訊號回推加工節奏與進給變更、等效切削阻抗 × 孔品質對照。
 - [usm-deltap-method](https://hale80427.github.io/brain-cards/usm-deltap-method/)：用 UD7 驅動器既有電性記錄在線監測微鑽孔刀況——追頻鎖共振帶 + ΔP／ΔR 同孔相減指標。
 - [load-signal-explained](https://hale80427.github.io/brain-cards/load-signal-explained/)：白話＋圖解系集平均與 d′ 可分性——看懂超音波加工電性訊號怎麼分辨空載與負載（看 IFB 必失敗、看 P_buck 才行）。

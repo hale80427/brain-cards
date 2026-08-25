@@ -1,0 +1,517 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>超音波鑽孔的電性預警機制</title>
+<meta name="description" content="磨耗改變刀尖的機械阻尼，定振幅閉環的驅動器必須多送實功補回去。這份多送的功率是磨耗的放大鏡：同樣 60 個孔，它走了 58%，孔徑只走了 0.13%。">
+
+<link rel="canonical" href="https://hale80427.github.io/brain-cards/usm-electrical-wear-warning/">
+<meta name="author" content="彥皓">
+
+<meta property="og:type" content="article">
+<meta property="og:title" content="超音波鑽孔的電性預警機制">
+<meta property="og:description" content="磨耗改變刀尖的機械阻尼，定振幅閉環的驅動器必須多送實功補回去。這份多送的功率是磨耗的放大鏡：同樣 60 個孔，它走了 58%，孔徑只走了 0.13%。">
+<meta property="og:url" content="https://hale80427.github.io/brain-cards/usm-electrical-wear-warning/">
+<meta property="og:image" content="https://hale80427.github.io/brain-cards/og-default.jpg">
+<meta property="og:locale" content="zh_TW">
+
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="超音波鑽孔的電性預警機制">
+<meta name="twitter:description" content="磨耗改變刀尖的機械阻尼，定振幅閉環的驅動器必須多送實功補回去。這份多送的功率是磨耗的放大鏡。">
+<meta name="twitter:image" content="https://hale80427.github.io/brain-cards/og-default.jpg">
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "超音波鑽孔的電性預警機制",
+  "description": "磨耗改變刀尖的機械阻尼，定振幅閉環的驅動器必須多送實功補回去。這份多送的功率是磨耗的放大鏡。",
+  "datePublished": "2026-08-25",
+  "dateModified": "2026-08-25",
+  "author": { "@type": "Person", "name": "彥皓" },
+  "url": "https://hale80427.github.io/brain-cards/usm-electrical-wear-warning/",
+  "inLanguage": "zh-TW",
+  "license": "https://creativecommons.org/licenses/by/4.0/"
+}
+</script>
+
+<style>
+  :root {
+    --bg: oklch(98.4% 0.004 106.5);
+    --fg: oklch(21.8% 0 0);
+    --accent: oklch(54.3% 0.174 29.7);
+    --accent-warn: oklch(66.6% 0.157 58.3);
+    --muted: oklch(51.0% 0 0);
+    --border: oklch(92.1% 0.007 106.5);
+    --callout-tip: oklch(95.7% 0.014 174.2);
+    --callout-warn: oklch(96.9% 0.019 72.6);
+    --fs-meta: 0.85rem;
+    --fs-body: 1rem;
+    --fs-h2:   clamp(1.3rem, 3vw, 1.5rem);
+    --fs-h1:   clamp(1.75rem, 4vw, 2.25rem);
+    --font-serif: "Noto Serif TC", Georgia, serif;
+    --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+    --ease-linear: linear;
+    --ease-draw: cubic-bezier(0.22, 0.61, 0.36, 1);
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: oklch(21.8% 0 0);
+      --fg: oklch(95.3% 0.011 106.6);
+      --accent: oklch(70.4% 0.136 28.7);
+      --accent-warn: oklch(76.9% 0.165 70.1);
+      --muted: oklch(68.3% 0 0);
+      --border: oklch(32.1% 0 0);
+      --callout-tip: oklch(30.9% 0.029 178.3);
+      --callout-warn: oklch(30.7% 0.034 73.5);
+    }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
+  }
+  * { box-sizing: border-box; }
+  body {
+    font-family: var(--font-serif);
+    background: var(--bg);
+    color: var(--fg);
+    line-height: 1.8;
+    margin: 0;
+    padding: 0;
+    -webkit-font-smoothing: antialiased;
+  }
+  .progress-bar {
+    position: fixed; top: 0; left: 0; height: 3px; width: 100%;
+    background: var(--accent); z-index: 100;
+    transform: scaleX(0); transform-origin: left;
+    transition: transform 0.1s var(--ease-linear);
+  }
+  main {
+    max-width: 680px;
+    margin: 0 auto;
+    padding: clamp(2rem, 5vw, 4rem) clamp(1.5rem, 4vw, 2rem);
+  }
+  h1 { font-size: var(--fs-h1); line-height: 1.3; margin: 0 0 1rem; }
+  h2 { font-size: var(--fs-h2); line-height: 1.4; margin: 2.5rem 0 0.75rem; padding-bottom: 0.5rem; border-bottom: 1px solid var(--border); }
+  h3 { font-size: var(--fs-body); font-weight: 700; line-height: 1.4; margin: 1.75rem 0 0.5rem; color: var(--accent); }
+  p { margin: 0 0 1.25rem; }
+  a { color: var(--accent); text-underline-offset: 3px; }
+  a:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+  .bluf { background: var(--callout-tip); border-left: 3px solid var(--accent); padding: 1.25rem 1.5rem; margin: 1.5rem 0 2rem; border-radius: 4px; }
+  .bluf > strong { display: block; font-size: var(--fs-meta); letter-spacing: 0.05em; color: var(--accent); margin-bottom: 0.5rem; text-transform: uppercase; }
+  .callout { padding: 1rem 1.25rem; margin: 1.5rem 0; border-radius: 4px; border-left: 3px solid var(--muted); }
+  .callout.tip { background: var(--callout-tip); border-left-color: var(--accent); }
+  .callout.warn { background: var(--callout-warn); border-left-color: var(--accent-warn); }
+  .callout p:last-child { margin-bottom: 0; }
+  .scroll-x { overflow-x: auto; margin: 1.5rem 0; }
+  .scroll-x table { margin: 0; }
+  .scroll-x th:first-child, .scroll-x td:first-child { white-space: nowrap; }
+  table { border-collapse: collapse; width: 100%; margin: 1.5rem 0; font-size: var(--fs-body); }
+  th, td { padding: 0.6rem 0.8rem; border: 1px solid var(--border); text-align: left; vertical-align: top; }
+  th { background: var(--callout-tip); font-weight: 600; }
+  code { font-family: var(--font-mono); background: var(--callout-tip); padding: 0.1em 0.4em; border-radius: 3px; font-size: var(--fs-body); }
+  figure { margin: 1.5rem 0; }
+  figure img { width: 100%; height: auto; border-radius: 4px; display: block; }
+  figure svg { width: 100%; height: auto; display: block; }
+  figcaption { font-size: var(--fs-meta); color: var(--muted); margin-top: 0.5rem; text-align: center; }
+
+  /* === 分步機制圖（結構型自繪 SVG，純內嵌，無外部函式庫）=== */
+  .stepfig { border: 1px solid var(--border); border-radius: 6px; padding: 1rem 1rem 0.5rem; background: var(--callout-tip); }
+  .stepfig .ctrl { display: flex; flex-wrap: wrap; gap: 0.5rem; align-items: center; margin-bottom: 0.75rem; }
+  .stepfig button {
+    font-family: inherit; font-size: var(--fs-meta); font-weight: 700;
+    color: var(--bg); background: var(--accent);
+    border: 1px solid var(--accent); border-radius: 4px;
+    padding: 0.4rem 0.9rem; cursor: pointer;
+    transition: opacity 0.15s var(--ease-linear);
+  }
+  .stepfig button.ghost { color: var(--accent); background: transparent; }
+  .stepfig button:hover { opacity: 0.78; }
+  .stepfig button:focus-visible { outline: 2px solid var(--fg); outline-offset: 2px; }
+  .stepfig button[disabled] { opacity: 0.35; cursor: default; }
+  .stepfig .cue { font-size: var(--fs-meta); color: var(--muted); }
+  .stepfig .say { font-size: var(--fs-meta); color: var(--fg); min-height: 3.4em; margin: 0.25rem 0 0.75rem; font-weight: 600; }
+  .js-on .sv-step { opacity: 0; transition: opacity 0.35s var(--ease-draw); }
+  .js-on .sv-step.on { opacity: 1; }
+  .js-on .sv-link { stroke-dashoffset: 1; transition: stroke-dashoffset 0.55s var(--ease-draw); }
+  .js-on .sv-step.on .sv-link { stroke-dashoffset: 0; }
+  .sv-link { stroke-dasharray: 1; }
+  @media print {
+    .progress-bar { display: none; }
+    .stepfig .ctrl { display: none; }
+    .js-on .sv-step { opacity: 1 !important; }
+    .js-on .sv-link { stroke-dashoffset: 0 !important; }
+    body { font-size: 11pt; line-height: 1.6; }
+    main { max-width: 100%; padding: 1cm; }
+  }
+</style>
+</head>
+<body>
+<div class="progress-bar" id="progress"></div>
+<main>
+<header>
+<h1>超音波鑽孔的電性預警機制</h1>
+<div class="bluf">
+<strong>BLUF</strong>
+<p>刀刃鈍化改變的是刀尖遇到的機械阻尼。而超音波驅動器是定振幅閉環——它不准振幅掉下去，只好多送實功補回來。<strong>那份「多送的功率」就是磨耗的放大鏡。</strong></p>
+<p>在氮化鋁板上鑽的第 121 到 180 個孔裡，這份功率走了 <strong>+58%</strong>，同一批孔的實測孔徑只走了 <strong>+0.13%</strong>（＋0.66 µm，落在一般量具的重複性裡）。同一件事，在電性上被放大了四百倍左右。</p>
+<p>所以「提前」不是電性比孔壁早知道。是它把同一個訊號放大到還來得及反應的尺度。</p>
+</div>
+</header>
+<article>
+<!-- narrative: 物件,細節,矛盾 -->
+
+<h2>一、這套方法在做什麼</h2>
+
+<p>設備是 CNC 超音波輔助微鑽孔：G83 啄鑽循環、換能器工作在 28.6 kHz 附近、UD7 驅動器、工件是氮化鋁（AlN）、鑽頭直徑 0.5 mm。我們不裝額外感測器，只讀驅動器本來就在輸出的紀錄檔。</p>
+
+<p>每一啄分成兩相：刀尖吃到料的切削相，跟刀退出來空轉的空切相。把同一個孔內這兩相的電性量相減，就得到三個候選指標。</p>
+
+<div class="scroll-x">
+<table>
+<caption class="cue" style="text-align:left;font-size:var(--fs-meta);color:var(--muted);padding-bottom:0.4rem;">三個候選指標，都是「切削相減空切相」</caption>
+<thead>
+<tr><th>指標</th><th>怎麼算</th><th>它在物理上是什麼</th><th>對磨耗敏感嗎</th></tr>
+</thead>
+<tbody>
+<tr><td>ΔI</td><td>空切電流 − 切削電流</td><td>電流幅值的變化量</td><td><strong>不敏感</strong>。全程 9.62 ± 0.41 mA</td></tr>
+<tr><td>ΔP</td><td>切削相 − 空切相的直流端實功</td><td>刀尖真正吃掉的功率</td><td><strong>敏感</strong>。單調上升</td></tr>
+<tr><td>ΔR</td><td>ΔP ÷ 電流平方</td><td>機械阻尼折算成的等效電阻</td><td><strong>敏感，而且更乾淨</strong></td></tr>
+</tbody>
+</table>
+</div>
+
+<p>「直流端實功」指的是驅動器裡降壓級（Buck）的輸出電壓乘輸出電流。它是真正被送出去、不會退回來的那份功率——跟示波器上看到的振盪電流幅值是兩回事。這個區別是整篇文章的樞紐。</p>
+
+<h2>二、機制：電流不動，功率卻動</h2>
+
+<p>這裡是最反直覺的一段。刀變鈍、切削阻力變大，照常理電流應該上升；實際上電流幾乎不動，而且它<strong>本來就是往下掉的</strong>。</p>
+
+<p>原因在驅動器的控制策略。往下按一次看一步。</p>
+
+<figure class="stepfig" id="mechfig">
+  <div class="ctrl">
+    <button type="button" id="mf-next">下一步</button>
+    <button type="button" class="ghost" id="mf-reset">從頭看</button>
+    <span class="cue" id="mf-count">第 0 / 6 步</span>
+  </div>
+  <p class="say" id="mf-say">按「下一步」，從刀刃開始走一遍這條因果鏈。</p>
+  <svg viewBox="0 0 720 400" role="img" aria-labelledby="mf-title mf-desc" xmlns="http://www.w3.org/2000/svg">
+    <title id="mf-title">定振幅閉環把磨耗轉成功率訊號的六步因果鏈</title>
+    <desc id="mf-desc">刀刃鈍化使刀尖機械阻尼上升，振幅本應下降；定振幅閉環不允許振幅下降，於是驅動器加大直流端實功；電流幅值被閉環釘住不變，多出來的負載只反映在實功上，形成 ΔP 與 ΔR 兩個指標。</desc>
+    <defs>
+      <marker id="ar" markerWidth="9" markerHeight="9" refX="7" refY="3.2" orient="auto">
+        <path d="M0,0 L7,3.2 L0,6.4 Z" fill="var(--accent)"/>
+      </marker>
+      <marker id="ar2" markerWidth="9" markerHeight="9" refX="7" refY="3.2" orient="auto">
+        <path d="M0,0 L7,3.2 L0,6.4 Z" fill="var(--accent-warn)"/>
+      </marker>
+    </defs>
+
+    <!-- 1 -->
+    <g class="sv-step" data-i="1">
+      <rect x="14" y="24" width="200" height="76" rx="6" fill="var(--bg)" stroke="var(--accent)" stroke-width="2"/>
+      <text x="114" y="54" text-anchor="middle" font-size="17" font-weight="700" fill="var(--fg)">1 · 刀刃鈍化</text>
+      <text x="114" y="80" text-anchor="middle" font-size="14" fill="var(--muted)">刃口圓角變大</text>
+    </g>
+    <!-- 2 -->
+    <g class="sv-step" data-i="2">
+      <path class="sv-link" pathLength="1" d="M214,62 L246,62" stroke="var(--accent)" stroke-width="2.5" fill="none" marker-end="url(#ar)"/>
+      <rect x="256" y="24" width="200" height="76" rx="6" fill="var(--bg)" stroke="var(--accent)" stroke-width="2"/>
+      <text x="356" y="54" text-anchor="middle" font-size="17" font-weight="700" fill="var(--fg)">2 · 機械阻尼上升</text>
+      <text x="356" y="80" text-anchor="middle" font-size="14" fill="var(--muted)">刀尖更難振起來</text>
+    </g>
+    <!-- 3 -->
+    <g class="sv-step" data-i="3">
+      <path class="sv-link" pathLength="1" d="M456,62 L488,62" stroke="var(--accent)" stroke-width="2.5" fill="none" marker-end="url(#ar)"/>
+      <rect x="498" y="24" width="208" height="76" rx="6" fill="var(--bg)" stroke="var(--accent)" stroke-width="2"/>
+      <text x="602" y="54" text-anchor="middle" font-size="17" font-weight="700" fill="var(--fg)">3 · 振幅本來會掉</text>
+      <text x="602" y="80" text-anchor="middle" font-size="14" fill="var(--muted)">如果沒人管它</text>
+    </g>
+    <!-- 4 -->
+    <g class="sv-step" data-i="4">
+      <path class="sv-link" pathLength="1" d="M602,100 L602,146" stroke="var(--accent-warn)" stroke-width="2.5" fill="none" marker-end="url(#ar2)"/>
+      <rect x="470" y="156" width="236" height="88" rx="6" fill="var(--callout-warn)" stroke="var(--accent-warn)" stroke-width="2.5"/>
+      <text x="588" y="186" text-anchor="middle" font-size="17" font-weight="700" fill="var(--fg)">4 · 閉環不准它掉</text>
+      <text x="588" y="211" text-anchor="middle" font-size="14" fill="var(--muted)">驅動器鎖住振幅設定值</text>
+      <text x="588" y="232" text-anchor="middle" font-size="14" fill="var(--muted)">這是整條鏈的樞紐</text>
+    </g>
+    <!-- 5 -->
+    <g class="sv-step" data-i="5">
+      <path class="sv-link" pathLength="1" d="M470,200 L438,200" stroke="var(--accent)" stroke-width="2.5" fill="none" marker-end="url(#ar)"/>
+      <rect x="222" y="156" width="206" height="88" rx="6" fill="var(--bg)" stroke="var(--accent)" stroke-width="2"/>
+      <text x="325" y="186" text-anchor="middle" font-size="17" font-weight="700" fill="var(--fg)">5 · 多送直流實功</text>
+      <text x="325" y="211" text-anchor="middle" font-size="14" fill="var(--muted)">Buck 端輸出功率上升</text>
+      <text x="325" y="232" text-anchor="middle" font-size="14" fill="var(--muted)">電流幅值被釘住不動</text>
+    </g>
+    <!-- 6 -->
+    <g class="sv-step" data-i="6">
+      <path class="sv-link" pathLength="1" d="M325,244 L325,286" stroke="var(--accent)" stroke-width="2.5" fill="none" marker-end="url(#ar)"/>
+      <rect x="120" y="296" width="410" height="86" rx="6" fill="var(--bg)" stroke="var(--accent)" stroke-width="2.5"/>
+      <text x="325" y="326" text-anchor="middle" font-size="17" font-weight="700" fill="var(--accent)">6 · 這就是 ΔP，再除電流平方就是 ΔR</text>
+      <text x="325" y="351" text-anchor="middle" font-size="14" fill="var(--muted)">ΔR 把電流水位的漂移也扣掉</text>
+      <text x="325" y="372" text-anchor="middle" font-size="14" fill="var(--muted)">於是同一個磨耗，抖動只剩三分之一</text>
+    </g>
+  </svg>
+  <figcaption>圖 1 · 定振幅閉環把「刀變鈍」翻譯成「多送的實功」的六步鏈 · 作者自繪 · 可點擊分步</figcaption>
+</figure>
+
+<h3>一個機械人比較好進的類比</h3>
+
+<p>定速巡航的車子上坡。車速錶（＝振幅）幾乎不動，因為巡航系統就是要它不動。真正變的是油門開度與油耗。你要判斷坡有多陡，看時速表永遠看不出來，得看瞬間油耗。</p>
+
+<p>在這裡，時速表是振幅設定值 <code>VFB</code>，油耗是 Buck 端實功 <code>P_buck</code>。</p>
+
+<div class="callout warn">
+<p><strong>一個容易搞反的方向。</strong>切削時電流不是上升，是<strong>下降</strong>約 9.6 mA。定振幅閉環底下，負載加重會把工作點推離共振尖峰，電流幅值反而降。所以判定「這一啄有沒有在切」的門檻是 <code>IFB &lt; 84 mA</code>，方向跟直覺相反。</p>
+</div>
+
+<h3>那為什麼不用「電壓乘電流」就好</h3>
+
+<p>因為那算出來的是視在功率，不是真正被消耗掉的功率。負載變化主要改的是電壓與電流之間的相位差，幅值變化很小。相位資訊在幅值乘積裡被抹掉了。</p>
+
+<p>先前分析對這件事有一個直接讀數：振幅設定值乘電流（<code>VFB × IFB</code>，也就是視在功率）與 ΔP 的相關係數是 0.06——等於零。負載資訊完全不在那條路上。</p>
+
+<h2>三、資料長什麼樣：三個通道並排</h2>
+
+<p>下面是氮化鋁板上 91 到 300 號孔、共 210 個孔的逐孔結果。虛線是不同記錄檔的邊界；紅線是該段的線性趨勢。</p>
+
+<figure>
+  <img src="assets/figA_three_channels.png" alt="三張並排的折線圖：ΔI 電流差全程平坦；ΔP 切削增量功率在孔 121 到 180 與孔 211 到 300 兩段都呈上升趨勢；ΔR 阻抗實部差同樣上升，且點的散布明顯比 ΔP 收斂。" width="1103" height="1119" loading="lazy">
+  <figcaption>圖 2 · 同一批孔的三個電性通道 · 資料來源：<code>usm-drilling-analysis/holes_all.xlsx</code>（2026-06-12 孔號更正重建版）· 本次重算</figcaption>
+</figure>
+
+<p>三件事值得停下來看。</p>
+
+<h3>ΔI：好用的切削偵測器，沒用的磨耗計</h3>
+
+<p>它穩定在 9.62 ± 0.41 mA，變異係數只有 4.3%。這個 9.6 mA 的落差非常可靠，用來切分切削相／空切相綽綽有餘。但它在整整 210 個孔裡幾乎沒有趨勢——孔 211 到 300 那段的斜率檢定 <em>t</em> = +0.22，等於沒有。<strong>刀在變鈍，這個指標一無所知。</strong></p>
+
+<h3>ΔP：兩段都在漲</h3>
+
+<p>孔 121 到 180 每孔 +2.11（<em>t</em> = 3.09），孔 211 到 300 每孔 +1.58（<em>t</em> = 2.13）。這是刀具負載持續累積的主證據。</p>
+
+<h3>ΔR：漲得一樣，但抖得少很多</h3>
+
+<p>孔 121 到 180 這段，ΔP 的變異係數是 0.353，ΔR 是 0.118——只剩三分之一。孔 211 到 300 是 0.469 對 0.180，同樣的比例。因為 ΔR 已經把電流水位的緩慢漂移扣掉，剩下的比較接近純粹的阻尼變化。</p>
+
+<div class="callout tip">
+<p>為什麼除以電流平方就能扣掉水位。電功率的基本式是 <em>P</em> = <em>I</em>²<em>R</em>。反過來 <em>R</em> = <em>P</em> / <em>I</em>²，得到的就是等效電阻，也就是機械阻尼折算到電路上的那一項（阻抗的實部）。電流水位若因為溫度或重新夾持而整體漂了幾個百分點，ΔP 會跟著漂，ΔR 不會。</p>
+<p>注意單位：這裡的 <em>R</em> 是驅動器紀錄的原始計數，不是校準過的歐姆值。<strong>只看相對變化，不看絕對值。</strong></p>
+</div>
+
+<h2>四、「提前」到底是什麼意思</h2>
+
+<p>這個詞在工廠裡常被含混使用，值得拆成兩個不同的主張。</p>
+
+<div class="scroll-x">
+<table>
+<thead>
+<tr><th>主張</th><th>意思</th><th>本文資料支持嗎</th></tr>
+</thead>
+<tbody>
+<tr><td>放大</td><td>同一段磨耗，電性的相對變化比幾何量大得多，所以更早越過可偵測門檻</td><td><strong>支持，而且可量化</strong></td></tr>
+<tr><td>領先</td><td>電性先動，孔壁品質過一段時間才動——時間上真的有落後</td><td><strong>只有觀察，沒有乾淨證據</strong></td></tr>
+</tbody>
+</table>
+</div>
+
+<h3>放大：四百倍</h3>
+
+<p>取孔 121 到 180 這 60 個孔——這段電性與孔徑都有顯著趨勢，可以蘋果對蘋果比。把每條線都換算成「相對這 60 孔起點走了百分之幾」：</p>
+
+<figure>
+  <img src="assets/figD_amplification.png" alt="四條由線性趨勢換算的百分比變化線：ΔP 上升 58%、ΔR 上升 20%、ΔI 上升 3%、實測孔徑上升 0.13%。後兩條幾乎貼在零線上。" width="1090" height="564" loading="lazy">
+  <figcaption>圖 3 · 同樣 60 個孔，四個量各自走了多遠（以各自段初的趨勢值為基準）· 本次重算</figcaption>
+</figure>
+
+<p>孔徑確實在變大——每孔 +0.0111 µm，統計上顯著（<em>t</em> = 2.96）。但 60 個孔加起來只有 0.66 µm，相對 500 µm 的孔徑是 0.13%。這個量落在一般量具的重複性裡，現場靠抽檢基本上讀不出來。</p>
+
+<p>同一段時間，ΔP 走了 58%。<strong>比值大約 440 倍。</strong></p>
+
+<p>這就是「提前」的真正機制：不是電性有預知能力，而是同一個物理事件在不同量測上的相對幅度差了兩個數量級。訊號大兩個數量級，你就能在小得多的磨耗量上做出可信判斷——時間上自然提早。</p>
+
+<h3>領先：目前只有觀察</h3>
+
+<p>石英鑽孔那一輪有個側面觀察：電性在第 100 到 200 孔之間就在升，而彥皓在現場是第 200 孔起才看到入孔脆裂邊明顯變大。方向吻合，但那是目視判斷、沒有逐孔量化，不足以當作「領先幾孔」的證據。</p>
+
+<div class="callout warn">
+<p>本文不主張時間上的領先。要證明領先，需要同一批孔上兩條逐孔量化曲線的轉折點比較。目前手上沒有。<strong>放大是已證的，領先是待驗的。</strong></p>
+</div>
+
+<h2>五、電性對得上實體孔嗎</h2>
+
+<p>放大再漂亮，如果對不上實際加工品質也沒用。氮化鋁這批有 180 個孔用光學量測拍過孔徑，可以直接 join。</p>
+
+<figure>
+  <img src="assets/figB_hole_quality.png" alt="兩張散布圖並排。左為板 1（孔 91 至 180），ΔR 與實測孔徑呈正相關，相關係數 +0.334。右為板 2（孔 211 至 300），點雲散開沒有方向，相關係數 −0.043。" width="1150" height="505" loading="lazy">
+  <figcaption>圖 4 · 電性 ΔR 與實測孔徑的關係，分板來看 · 資料來源：<code>hole_quality_join.csv</code> · 本次重算</figcaption>
+</figure>
+
+<p>結果是一半好消息、一半壞消息，而且壞的那一半必須講在前面。</p>
+
+<p>板 1（孔 91–180）對得上。ΔR 與孔徑相關係數 +0.334，樣本 90 個孔，統計上顯著。同一段孔徑本身也在單調變大（每孔 +0.0178 µm，<em>t</em> = 8.85）。這是電性與實體互相印證的那一段。</p>
+
+<p>板 2（孔 211–300）對不上。相關係數 −0.043，等於沒有。而且這段孔徑本身也不再有趨勢（<em>t</em> = 0.81）。它已經整體上移到 500.26 µm，比板 1 的 498.33 µm 高了約 1.9 µm，然後就停在那裡抖。</p>
+
+<div class="callout warn">
+<p>一個必須自己拆掉的數字。兩塊板合併算，相關係數是 +0.354，看起來很漂亮。但那個數字有一部分只是兩塊板之間的水位差被當成了相關性——板 2 的孔徑水位高、ΔR 水位也高，合併之後自動製造出正斜率。</p>
+<p>能撐得住的說法只有一句：<strong>板內對得上（r = +0.334，n = 90），板間不可比。</strong></p>
+</div>
+
+<h3>還有一條獨立的證據：散布同時放大</h3>
+
+<p>除了水位，還有一件事值得看——抖動的幅度。刀鈍到一定程度，加工會開始不穩定，同樣的程式跑出來的孔開始參差。</p>
+
+<figure>
+  <img src="assets/figC_scatter_growth.png" alt="雙軸折線圖。綠線為孔徑的 20 孔滾動標準差，橘線為 ΔR 的 20 孔滾動標準差。兩條線在板 1 後段同步上升，在板 2 都維持在較高水位。孔 181 至 210 區間以灰底標示為未量孔徑。" width="1091" height="489" loading="lazy">
+  <figcaption>圖 5 · 孔徑散布與 ΔR 散布同步放大（各以 20 孔滾動標準差表示）· 本次重算</figcaption>
+</figure>
+
+<p>板 1 前 20 孔的孔徑標準差是 0.406 µm，後 20 孔是 0.681 µm；到板 2 已經是 1.0 µm 以上。ΔR 的散布同一時間也翻倍。</p>
+
+<p>這兩條線來自兩套完全獨立的量測——一套是光學量孔徑，一套是驅動器讀電。它們沒有共用任何感測器、任何訊號路徑。兩者同步放大，比單看其中一條的趨勢更難用巧合解釋。</p>
+
+<h2>六、實際怎麼用：兩層判斷</h2>
+
+<p>直接拿 ΔR 的絕對值判刀況會出事。原因在後面第七節，這裡先給可以照做的版本。</p>
+
+<figure>
+  <svg viewBox="0 0 700 236" role="img" aria-labelledby="gate-t gate-d" xmlns="http://www.w3.org/2000/svg">
+    <title id="gate-t">兩層換刀判斷流程</title>
+    <desc id="gate-d">第一層先用電阻水位判斷這一段究竟是在鑽孔還是空載，把空載段剔除；第二層只在真實鑽孔的資料上追蹤電阻的累積升幅，超過百分之三到五即觸發換刀。</desc>
+    <defs>
+      <marker id="ar3" markerWidth="9" markerHeight="9" refX="7" refY="3.2" orient="auto">
+        <path d="M0,0 L7,3.2 L0,6.4 Z" fill="var(--accent)"/>
+      </marker>
+    </defs>
+    <rect x="10" y="20" width="196" height="94" rx="6" fill="var(--bg)" stroke="var(--muted)" stroke-width="2"/>
+    <text x="108" y="52" text-anchor="middle" font-size="16" font-weight="700" fill="var(--fg)">逐孔電性資料</text>
+    <text x="108" y="77" text-anchor="middle" font-size="14" fill="var(--muted)">驅動器紀錄檔</text>
+    <text x="108" y="98" text-anchor="middle" font-size="14" fill="var(--muted)">不加裝感測器</text>
+
+    <path d="M206,67 L242,67" stroke="var(--accent)" stroke-width="2.5" fill="none" marker-end="url(#ar3)"/>
+
+    <rect x="252" y="14" width="204" height="106" rx="6" fill="var(--callout-warn)" stroke="var(--accent-warn)" stroke-width="2"/>
+    <text x="354" y="44" text-anchor="middle" font-size="16" font-weight="700" fill="var(--fg)">第 1 層 · 剔除空載</text>
+    <text x="354" y="69" text-anchor="middle" font-size="14" fill="var(--muted)">看電阻水位在不在</text>
+    <text x="354" y="90" text-anchor="middle" font-size="14" fill="var(--muted)">鑽孔那一檔</text>
+    <text x="354" y="111" text-anchor="middle" font-size="14" fill="var(--muted)">空跑段一律不計</text>
+
+    <path d="M456,67 L492,67" stroke="var(--accent)" stroke-width="2.5" fill="none" marker-end="url(#ar3)"/>
+
+    <rect x="502" y="14" width="188" height="106" rx="6" fill="var(--bg)" stroke="var(--accent)" stroke-width="2"/>
+    <text x="596" y="44" text-anchor="middle" font-size="16" font-weight="700" fill="var(--fg)">第 2 層 · 追升幅</text>
+    <text x="596" y="69" text-anchor="middle" font-size="14" fill="var(--muted)">只在真實鑽孔段</text>
+    <text x="596" y="90" text-anchor="middle" font-size="14" fill="var(--muted)">追累積升幅</text>
+    <text x="596" y="111" text-anchor="middle" font-size="14" fill="var(--muted)">用長滾動窗</text>
+
+    <path d="M596,120 L596,152" stroke="var(--accent)" stroke-width="2.5" fill="none" marker-end="url(#ar3)"/>
+    <rect x="352" y="162" width="338" height="60" rx="6" fill="var(--bg)" stroke="var(--accent)" stroke-width="2.5"/>
+    <text x="521" y="190" text-anchor="middle" font-size="16" font-weight="700" fill="var(--accent)">累積升幅 ≥ 3–5% ⇒ 準備換刀</text>
+    <text x="521" y="212" text-anchor="middle" font-size="14" fill="var(--muted)">每一輪只跟自己的起點比，不跨輪比</text>
+  </svg>
+  <figcaption>圖 6 · 兩層換刀判斷 · 作者自繪</figcaption>
+</figure>
+
+<p>第一層先問「機器現在到底在不在鑽孔」。程式空跑、刀斷了之後的空轉，電性水位跟真實鑽孔差得出來（石英那輪是 0.33 對 0.30，約 10%）。這些段落如果混進趨勢裡，會把後面的判斷整個帶歪。</p>
+
+<p>第二層才在乾淨的鑽孔段上追累積升幅。經驗值是升幅 3% 到 5% 觸發換刀準備。</p>
+
+<div class="callout tip">
+<p>三條前置紀律，缺一不可：頻率校正（見下節）、只取真實鑽孔段、用夠長的滾動窗。窗太短會被追頻週期的擺動騙——石英那輪用 50 孔窗算出來的斜率會亂跳，換成 90 孔窗才穩。</p>
+</div>
+
+<h2>七、這套方法在哪裡會失效</h2>
+
+<p>這節比前面六節都重要。以下每一條都是實際踩過的。</p>
+
+<h3>前提：驅動器必須是定振幅閉環</h3>
+
+<p>整條因果鏈建立在「閉環不准振幅掉」上。如果換一台定電壓或開環驅動的機器，負載變化會直接反映在電流上，指標的方向與意義都要重新推導。<strong>換驅動器等於整套重來。</strong></p>
+
+<h3>ΔR 的絕對水位不能拿來判斷空載或負載</h3>
+
+<p>這條最反直覺。石英那輪量到：新刀初期的負載電阻反而低於空載（0.503 對 0.537），要等磨耗累積之後才升過空載水位（0.544）。也就是說「負載比空載高」這件事本身會隨刀況翻轉。<strong>絕對水位不可判相，只能看相對趨勢。</strong></p>
+
+<h3>追頻鋸齒會蓋住磨耗</h3>
+
+<p>驅動器會自動追蹤共振頻率。當熱漂移把頻率推到追頻範圍邊界，它會跳回初始鎖頻點，於是電阻曲線出現週期性鋸齒。石英那輪的鋸齒振幅是 ±10%，而要找的磨耗訊號只有 4% 到 10%——訊號整個被埋掉。</p>
+
+<p>去掉鋸齒的方法要對症：先量電阻對頻率的線性程度，線性強就對頻率做回歸校正，線性弱就改成按追頻週期取中位數。套錯方法會得到符號相反的結論。這也決定了解析度下限——一個追頻週期大約 45 孔，比這更細的「哪 50 孔升最快」不可靠。</p>
+
+<h3>跨輪、跨儀測鏈都不可比</h3>
+
+<p>清潔筒夾、重新夾刀、換記錄格式，都會搬動空載零點本身。零點動了，同樣算出來的百分比升幅就不在同一把尺上。<strong>每一輪只跟自己比</strong>，換刀決策用「距離自己這輪的預警里程」，不用跨輪倍數。</p>
+
+<h3>訊號強度是材料給的，不是方法給的</h3>
+
+<p>氮化鋁上 ΔP 一段能走 58%。換到石英，切削負載天生就弱——每一啄的切削相只有 0.5 秒，而驅動器取樣週期就是 0.5 秒，等於整個切削相只有一個取樣點。所有刀況事件的電性變化都被壓在 4% 到 10% 之間。方法能不能用，取決於材料肯給多少訊號。</p>
+
+<h2>八、資料與可重現性</h2>
+
+<p>本文所有圖表與統計量於 2026-08-25 重新計算。資料來自兩個檔案：</p>
+
+<ul>
+<li><code>usm-drilling-analysis/holes_all.xlsx</code>——213 孔，孔 88–300，2026-06-12 孔號更正重建版</li>
+<li><code>hole_quality_join.csv</code>——180 孔的光學孔徑量測</li>
+</ul>
+
+<p>孔 88–90 因記錄不完整（只錄到 5.7 分鐘）未納入分析。</p>
+
+<div class="callout warn">
+<p>兩個未在本次重算的數字，來自先前分析紀錄：視在功率與 ΔP 的相關係數 0.06；石英輪的水位、鋸齒與訊號強度讀數。引用時請回原始分析檔覆核。</p>
+<p>另有一份已作廢的檔案：<code>USM_鑽孔118-210_逐孔電性指標.xlsx</code>（2026-06-11 版）孔號標定錯誤、漏掉孔 90–120 整段，不可再引用。</p>
+</div>
+
+</article>
+<footer>
+<p style="color: var(--muted); font-size: var(--fs-meta); margin-top: 4rem; padding-top: 1.5rem; border-top: 1px solid var(--border);">
+最後更新：2026-08-25 · 資料重算日：2026-08-25 · CC BY 4.0 · 引用請標來源
+</p>
+</footer>
+</main>
+<script>
+  const bar = document.getElementById('progress');
+  window.addEventListener('scroll', () => {
+    const h = document.documentElement;
+    const max = h.scrollHeight - h.clientHeight;
+    const ratio = max > 0 ? h.scrollTop / max : 0;
+    bar.style.transform = 'scaleX(' + ratio + ')';
+  }, { passive: true });
+
+  (function () {
+    const fig = document.getElementById('mechfig');
+    if (!fig) return;
+    const steps = Array.prototype.slice.call(fig.querySelectorAll('.sv-step'));
+    const btnNext = document.getElementById('mf-next');
+    const btnReset = document.getElementById('mf-reset');
+    const count = document.getElementById('mf-count');
+    const say = document.getElementById('mf-say');
+    const lines = [
+      '按「下一步」，從刀刃開始走一遍這條因果鏈。',
+      '刀刃鈍化。刃口的圓角變大，這是磨耗在幾何上的樣子。',
+      '刀尖遇到的機械阻尼跟著上升——同樣的推力，振起來變吃力了。',
+      '如果沒人管它，振幅就會掉下去。加工品質也會跟著掉。',
+      '但驅動器是定振幅閉環。它鎖住振幅設定值，不准振幅掉——這是整條鏈的樞紐。',
+      '要維持振幅就得多送功率。多的功率從 Buck 直流端出去，而電流幅值被閉環釘住不動。',
+      '這份多送的實功就是 ΔP。再除以電流平方得到 ΔR，把電流水位的漂移也扣掉，抖動只剩三分之一。'
+    ];
+    let i = 0;
+    document.body.classList.add('js-on');
+    function render() {
+      steps.forEach(function (g) {
+        g.classList.toggle('on', Number(g.dataset.i) <= i);
+      });
+      count.textContent = '第 ' + i + ' / ' + steps.length + ' 步';
+      say.textContent = lines[i];
+      btnNext.disabled = i >= steps.length;
+      btnNext.textContent = i >= steps.length ? '走完了' : (i === 0 ? '下一步' : '下一步');
+    }
+    btnNext.addEventListener('click', function () { if (i < steps.length) { i += 1; render(); } });
+    btnReset.addEventListener('click', function () { i = 0; render(); });
+    render();
+  })();
+</script>
+</body>
+</html>
