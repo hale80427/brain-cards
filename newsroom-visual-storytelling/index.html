@@ -112,6 +112,17 @@
   main > article { grid-column: full; }
   main > .wide, main > article > .wide { grid-column: wide; }
   main > .full, main > article > .full { grid-column: full; }
+  /* ⚠ 內文 680 ＋ 兩側加寬各 130 ＋ 兩側留白 ＝ 約 972px。
+     視窗低於這個數，加寬軌道會從內文身上搶寬度而不是自己塌陷——
+     實測 390px 視窗下內文只剩 208px、左緣還空掉 146px。故在此併軌。 */
+  @media (max-width: 1000px) {
+    main, main > article {
+      grid-template-columns:
+        [full-start] minmax(1rem, 1fr)
+        [wide-start content-start] minmax(0, 680px) [content-end wide-end]
+        minmax(1rem, 1fr) [full-end];
+    }
+  }
   h1 { font-size: var(--fs-h1); line-height: 1.35; margin: 0 0 1rem; font-family: var(--font-serif); }
   h2 { font-size: var(--fs-h2); line-height: 1.45; margin: 3.5rem 0 0.75rem; padding-bottom: 0.5rem; border-bottom: 1px solid var(--border); font-family: var(--font-serif); }
   h3 { font-size: var(--fs-body); font-weight: 700; line-height: 1.5; margin: 2rem 0 0.5rem; color: var(--accent); }
@@ -139,6 +150,13 @@
   .tbl table { margin: 0; min-width: 620px; }
   code { font-family: var(--font-mono); background: var(--callout-tip); padding: 0.1em 0.4em; border-radius: 3px; font-size: var(--fs-body); }
   figure { margin: 2rem 0; }
+  /* L8｜手機版是重畫不是縮小。三張圖各有一份為直式螢幕重排的版本，
+     標籤更少、方向從橫向改直向。不是把同一張 SVG 縮到 343px（字會小到看不清）。 */
+  .fig-narrow { display: none; }
+  @media (max-width: 700px) {
+    .fig-wide { display: none; }
+    .fig-narrow { display: block; }
+  }
   figure svg { width: 100%; height: auto; display: block; }
   figcaption { font-size: var(--fs-meta); color: var(--muted); margin-top: 0.6rem; line-height: 1.7; }
   /* L6｜Note 在前、Source 在後。左緣對齊繪圖區左緣，不是頁面邊界 */
@@ -206,7 +224,7 @@
 <p>我把被引用的出處全部拿到手，逐字查。</p>
 
 <figure class="wide">
-<svg viewBox="0 0 900 700" role="img" xmlns="http://www.w3.org/2000/svg">
+<svg class="fig-wide" viewBox="0 0 900 700" role="img" xmlns="http://www.w3.org/2000/svg">
   <title>單圖多幕：同一組三個數字，三次疊加註解後全部落空</title>
   <defs>
     <marker id="nvArrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto">
@@ -304,6 +322,65 @@
   <text x="0" y="624" font-size="13" font-weight="700" fill="var(--accent)" font-family="sans-serif">這個出處本身是虛構的。</text>
   <text x="0" y="646" font-size="12.5" fill="var(--grid-mid)" font-family="sans-serif">那頁不是調查報告，也沒引用任何調查。</text>
 </svg>
+<svg class="fig-narrow" viewBox="0 0 360 952" role="img" xmlns="http://www.w3.org/2000/svg">
+  <title>單圖多幕（直式版）：同一組三個數字，三次疊加註解後全部落空</title>
+  <defs>
+    <marker id="nvnArrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M0 0 L10 5 L0 10 z" fill="var(--accent)"/>
+    </marker>
+  </defs>
+  <g font-family="sans-serif">
+    <text x="0" y="14" font-size="13" font-weight="700" fill="var(--accent)">幕 1</text>
+    <text x="42" y="14" font-size="13" fill="var(--muted)">看起來都有出處</text>
+    <rect x="0" y="24" width="356" height="52" rx="6" fill="none" stroke="var(--grid-line)" stroke-width="1.5"/>
+    <text x="13" y="46" font-size="15" font-weight="700" fill="var(--fg)">只有 15% 的讀者會點</text>
+    <text x="13" y="66" font-size="12.5" fill="var(--grid-mid)">紐約時報圖表部門主管，2016</text>
+    <rect x="0" y="84" width="356" height="52" rx="6" fill="none" stroke="var(--grid-line)" stroke-width="1.5"/>
+    <text x="13" y="106" font-size="15" font-weight="700" fill="var(--fg)">40% 被動態效果影響</text>
+    <text x="13" y="126" font-size="12.5" fill="var(--grid-mid)">說是無障礙機構的調查</text>
+    <rect x="0" y="144" width="356" height="52" rx="6" fill="none" stroke="var(--grid-line)" stroke-width="1.5"/>
+    <text x="13" y="166" font-size="15" font-weight="700" fill="var(--fg)">超過 50% 被視差觸發症狀</text>
+    <text x="13" y="186" font-size="12.5" fill="var(--grid-mid)">同一份「調查」</text>
+
+    <text x="0" y="232" font-size="13" font-weight="700" fill="var(--accent)">幕 2</text>
+    <text x="42" y="232" font-size="13" fill="var(--muted)">出處攤開，五份文件全部取得</text>
+    <rect x="0" y="242" width="356" height="60" rx="6" fill="none" stroke="var(--grid-line)" stroke-width="1.5" stroke-dasharray="4 3"/>
+    <text x="13" y="264" font-size="13" fill="var(--grid-mid)">① 原始投影片 PDF·24 頁　② 現場報導</text>
+    <text x="13" y="286" font-size="13" fill="var(--grid-mid)">③ 與會者筆記　三份·全文取得</text>
+    <rect x="0" y="310" width="356" height="60" rx="6" fill="none" stroke="var(--grid-line)" stroke-width="1.5" stroke-dasharray="4 3"/>
+    <text x="13" y="332" font-size="13" fill="var(--grid-mid)">④ Web Axe 該頁·內文 18,415 字元</text>
+    <text x="13" y="354" font-size="13" fill="var(--grid-mid)">HTTP 200·全文取得</text>
+    <rect x="0" y="378" width="356" height="60" rx="6" fill="none" stroke="var(--grid-line)" stroke-width="1.5" stroke-dasharray="4 3"/>
+    <text x="13" y="400" font-size="13" fill="var(--grid-mid)">⑤ WebAIM 該頁·內文 4,418 字元</text>
+    <text x="13" y="422" font-size="13" fill="var(--grid-mid)">HTTP 200·全文取得</text>
+
+    <text x="0" y="474" font-size="13" font-weight="700" fill="var(--accent)">幕 3</text>
+    <text x="42" y="474" font-size="13" fill="var(--muted)">逐字比對之後</text>
+    <rect x="0" y="484" width="356" height="52" rx="6" fill="none" stroke="var(--grid-line)" stroke-width="1.5"/>
+    <text x="13" y="506" font-size="15" font-weight="700" fill="var(--grid-mid)" text-decoration="line-through">只有 15% 的讀者會點</text>
+    <text x="13" y="526" font-size="12.5" font-weight="700" fill="var(--accent)">三份文件都沒有這個數字</text>
+    <rect x="0" y="544" width="356" height="52" rx="6" fill="none" stroke="var(--grid-line)" stroke-width="1.5"/>
+    <text x="13" y="566" font-size="15" font-weight="700" fill="var(--grid-mid)" text-decoration="line-through">40% 被動態效果影響</text>
+    <text x="13" y="586" font-size="12.5" font-weight="700" fill="var(--accent)">該頁唯一的百分比是 28%</text>
+    <rect x="0" y="604" width="356" height="52" rx="6" fill="none" stroke="var(--grid-line)" stroke-width="1.5"/>
+    <text x="13" y="626" font-size="15" font-weight="700" fill="var(--grid-mid)" text-decoration="line-through">超過 50% 被視差觸發症狀</text>
+    <text x="13" y="646" font-size="12.5" font-weight="700" fill="var(--accent)">同上·查無此數字</text>
+
+    <line x1="178" y1="664" x2="178" y2="694" stroke="var(--accent)" stroke-width="1.8" marker-end="url(#nvnArrow)"/>
+    <rect x="0" y="700" width="356" height="126" rx="6" fill="var(--callout-tip)" stroke="var(--accent)" stroke-width="1.5"/>
+    <text x="16" y="726" font-size="13.5" font-weight="700" fill="var(--accent)">但第三個數字最陰險</text>
+    <text x="16" y="750" font-size="13.5" fill="var(--fg)">WebAIM 那頁確實有一個 35%。</text>
+    <text x="16" y="772" font-size="13.5" fill="var(--fg)">它講的是「美國 40 歲以上成人，</text>
+    <text x="16" y="794" font-size="13.5" fill="var(--fg)">曾有前庭功能失調的比例」——</text>
+    <text x="16" y="816" font-size="13.5" font-weight="700" fill="var(--accent)">人口盛行率，不是設計傷害率。</text>
+
+    <text x="0" y="866" font-size="13" fill="var(--muted)">五份文件出現 “survey” 一字的次數：</text>
+    <text x="0" y="900" font-size="26" font-weight="700" fill="var(--accent)">0</text>
+    <text x="34" y="900" font-size="13" fill="var(--muted)">次</text>
+    <text x="0" y="926" font-size="13.5" font-weight="700" fill="var(--accent)">「無障礙機構的調查」這個出處是虛構的。</text>
+    <text x="0" y="946" font-size="12.5" fill="var(--grid-mid)">那頁不是調查報告，也沒引用任何調查。</text>
+  </g>
+</svg>
 <figcaption>圖 1 · 同一組數字疊三次註解：看起來有出處、出處攤開來、逐字比對後全部落空 · 作者自繪</figcaption>
 <p class="notesrc"><b>Note</b>：這是「單圖多幕」手法——不換圖，只在同一組物件上逐層加註。讀者不必重新認識新圖，眼睛跟著同一批方框走。<br>
 <b>Source</b>：原始投影片取自作者本人 GitHub 公開檔案；其餘四份以 HTTP 200 取得全文後程式化比對。查證紀錄見文末原始資料。</p>
@@ -362,7 +439,7 @@
 <p>四條互不相通的研究線，各自從不同起點推導，撞出同一個算式。</p>
 
 <figure>
-<svg viewBox="0 0 700 250" role="img" xmlns="http://www.w3.org/2000/svg">
+<svg class="fig-wide" viewBox="0 0 700 250" role="img" xmlns="http://www.w3.org/2000/svg">
   <title>互動淨值＝讀者理解增量，減去讀者動作成本，再減去跨裝置工程成本</title>
   <g font-family="sans-serif">
     <rect x="2" y="34" width="178" height="86" rx="7" fill="none" stroke="var(--accent)" stroke-width="2"/>
@@ -390,6 +467,27 @@
     <rect x="2" y="156" width="610" height="70" rx="7" fill="var(--callout-tip)" stroke="var(--accent)" stroke-width="2"/>
     <text x="307" y="186" text-anchor="middle" font-size="15.5" font-weight="700" fill="var(--accent)">所以只要問一句：這一招要求讀者多做什麼？</text>
     <text x="307" y="210" text-anchor="middle" font-size="13.5" fill="var(--fg)">如果答案不是「什麼都不用多做」，它大概活不久。</text>
+  </g>
+</svg>
+<svg class="fig-narrow" viewBox="0 0 360 432" role="img" xmlns="http://www.w3.org/2000/svg">
+  <title>互動淨值的三項相減（直式版）</title>
+  <g font-family="sans-serif">
+    <rect x="0" y="8" width="356" height="72" rx="7" fill="none" stroke="var(--accent)" stroke-width="2"/>
+    <text x="178" y="36" text-anchor="middle" font-size="15" font-weight="700" fill="var(--accent)">讀者多懂了多少</text>
+    <text x="178" y="60" text-anchor="middle" font-size="13" fill="var(--grid-mid)">唯一的正項，而且通常很小</text>
+    <text x="178" y="104" text-anchor="middle" font-size="26" font-weight="700" fill="var(--grid-mid)">−</text>
+    <rect x="0" y="116" width="356" height="72" rx="7" fill="none" stroke="var(--grid-line)" stroke-width="2"/>
+    <text x="178" y="144" text-anchor="middle" font-size="15" font-weight="700" fill="var(--fg)">讀者要多做的動作</text>
+    <text x="178" y="168" text-anchor="middle" font-size="13" fill="var(--grid-mid)">點、拖、選、等，每一下都在扣分</text>
+    <text x="178" y="212" text-anchor="middle" font-size="26" font-weight="700" fill="var(--grid-mid)">−</text>
+    <rect x="0" y="224" width="356" height="72" rx="7" fill="none" stroke="var(--grid-line)" stroke-width="2"/>
+    <text x="178" y="252" text-anchor="middle" font-size="15" font-weight="700" fill="var(--fg)">你要多做的工</text>
+    <text x="178" y="276" text-anchor="middle" font-size="13" fill="var(--grid-mid)">手機、平板、桌機，每一台都要測</text>
+    <text x="178" y="318" text-anchor="middle" font-size="22" font-weight="700" fill="var(--grid-mid)">= ?</text>
+    <rect x="0" y="334" width="356" height="90" rx="7" fill="var(--callout-tip)" stroke="var(--accent)" stroke-width="2"/>
+    <text x="178" y="362" text-anchor="middle" font-size="14.5" font-weight="700" fill="var(--accent)">所以只要問一句：</text>
+    <text x="178" y="384" text-anchor="middle" font-size="14.5" font-weight="700" fill="var(--accent)">這一招要求讀者多做什麼？</text>
+    <text x="178" y="408" text-anchor="middle" font-size="13" fill="var(--fg)">不是「什麼都不用多做」，它大概活不久。</text>
   </g>
 </svg>
 <figcaption>圖 2 · 互動的三項相減：唯一的正項通常最小，兩個負項卻是確定要付的 · 作者自繪</figcaption>
@@ -473,7 +571,7 @@
 <h2>六千多行裡，真正有實驗撐著的只有七條</h2>
 
 <figure>
-<svg viewBox="0 0 700 232" role="img" xmlns="http://www.w3.org/2000/svg">
+<svg class="fig-wide" viewBox="0 0 700 232" role="img" xmlns="http://www.w3.org/2000/svg">
   <title>證據強度四層：有受控實驗支持的只有七條</title>
   <g font-family="sans-serif">
     <rect x="250" y="12" width="200" height="42" rx="6" fill="var(--callout-tip)" stroke="var(--accent)" stroke-width="2"/>
@@ -493,6 +591,25 @@
     <text x="350" y="198" text-anchor="middle" font-size="12.5" fill="var(--muted)">其餘全部</text>
 
     <text x="350" y="224" text-anchor="middle" font-size="13" font-weight="700" fill="var(--accent)">另有 13 條已被推翻，標記為不得使用</text>
+  </g>
+</svg>
+<svg class="fig-narrow" viewBox="0 0 360 252" role="img" xmlns="http://www.w3.org/2000/svg">
+  <title>證據強度四層（直式版）：有受控實驗支持的只有七條</title>
+  <g font-family="sans-serif">
+    <rect x="108" y="8" width="140" height="44" rx="6" fill="var(--callout-tip)" stroke="var(--accent)" stroke-width="2"/>
+    <text x="178" y="28" text-anchor="middle" font-size="13.5" font-weight="700" fill="var(--accent)">有受控實驗撐著</text>
+    <text x="178" y="45" text-anchor="middle" font-size="12.5" fill="var(--muted)">7 條</text>
+    <rect x="74" y="58" width="208" height="44" rx="6" fill="none" stroke="var(--grid-mid)" stroke-width="2"/>
+    <text x="178" y="78" text-anchor="middle" font-size="13.5" font-weight="700" fill="var(--fg)">有可用性測試撐著</text>
+    <text x="178" y="95" text-anchor="middle" font-size="12.5" fill="var(--muted)">3 條</text>
+    <rect x="34" y="108" width="288" height="44" rx="6" fill="none" stroke="var(--grid-line)" stroke-width="2"/>
+    <text x="178" y="128" text-anchor="middle" font-size="13.5" font-weight="700" fill="var(--fg)">業界都這樣做，但沒有數據</text>
+    <text x="178" y="145" text-anchor="middle" font-size="12.5" fill="var(--muted)">16 項</text>
+    <rect x="0" y="158" width="356" height="44" rx="6" fill="none" stroke="var(--grid-line)" stroke-width="1.5" stroke-dasharray="4 3"/>
+    <text x="178" y="178" text-anchor="middle" font-size="13.5" font-weight="700" fill="var(--grid-mid)">某個人說的，沒有別人驗證過</text>
+    <text x="178" y="195" text-anchor="middle" font-size="12.5" fill="var(--muted)">其餘全部</text>
+    <text x="178" y="228" text-anchor="middle" font-size="13" font-weight="700" fill="var(--accent)">另有 13 條已被推翻，</text>
+    <text x="178" y="246" text-anchor="middle" font-size="13" font-weight="700" fill="var(--accent)">標記為不得使用</text>
   </g>
 </svg>
 <figcaption>圖 3 · 數百個來源裡，撐得起「實驗證明」四個字的只有最上面那一格 · 作者自繪</figcaption>
@@ -612,6 +729,7 @@
 <tr><td>三種寬度的網格</td><td>內文 680px、圖 1 用加寬欄、其餘用內文寬。</td></tr>
 <tr><td>內容類型標籤前綴</td><td>【查證】【機制】【對照】【爭論】【誠實】【清單】【本土】【複盤】，八個，控制在十個以內。</td></tr>
 <tr><td>著重號</td><td>正文裡字下面有小點的地方。那不是粗體——中文沒有真斜體，著重號是中文書籍百年來的標準做法，而且不需要多載一個字重。</td></tr>
+<tr><td>手機版是重畫</td><td>三張圖各有一份<strong>為直式螢幕重排的版本</strong>——橫向三欄改成直向堆疊、標籤精簡。窄螢幕載入的是那一份，不是把同一張圖縮到 343px（那樣圖內文字會小到看不清）。把瀏覽器拉窄過 700px 就會換版。</td></tr>
 <tr><td>系統字堆疊</td><td>網頁字型載入量是 <strong>0 KB</strong>。全部走你裝置上已有的字。</td></tr>
 <tr><td>首屏零 JavaScript</td><td>唯一一段 JavaScript 是頂端那條進度條，而且它在 <code>&lt;/body&gt;</code> 前才執行。關掉 JavaScript，這一頁完整可讀。</td></tr>
 <tr><td>頁尾姊妹作連結列</td><td>最下面那一排。</td></tr>
@@ -639,6 +757,9 @@
 <div class="callout warn">
 <p><strong>做這一頁時踩到的第二個坑，一併記下。</strong>第一次把頁面渲染成圖檢查時，我把視窗高度設成 4,200 像素，而真實頁高是 5,416——整個第三層我根本沒截到，卻宣稱驗過了。</p>
 <p>目視自驗這道關卡，它自己也會有假陰性：<strong>截圖高度不夠，就是沉默的漏驗</strong>。之後渲染長頁要先逐列掃描量出真實高度再截。</p>
+<p><strong>第三個坑更難堪：這頁上線後，我才被指出手機版整個垮掉。</strong>三種寬度的網格在窄螢幕上不會自己塌陷——兩側各 130px 的加寬軌道會反過來從內文身上搶寬度。實測 390px 視窗下內文只剩 <span class="nb">208px</span>、左緣還空掉 <span class="nb">146px</span>，中文一行只排得下四五個字。</p>
+<p>上線前我確實跑過手機寬度的檢查，但跑的是<em>程式化的溢出偵測</em>，回傳 false 就當過了——<strong>而那個指標量的是「有沒有超出邊界」，不是「還讀不讀得下去」。我沒有看那張截圖。</strong></p>
+<p>這正是本頁前面說過的那件事的反面示範：<span class="nb">L8</span>「手機版是重畫不是縮小」我寫進了清單，卻沒有套用在自己的圖上。三張圖的直式版本是事後補的。</p>
 </div>
 
 </article>
