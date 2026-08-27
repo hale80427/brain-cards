@@ -1,0 +1,672 @@
+<!DOCTYPE html>
+<html lang="zh-Hant-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>頂級新聞媒體的互動專題，與三個不存在的數字</title>
+<meta name="description" content="七條研究線拆解國際頂級新聞媒體的數位專題手法。查證後發現，這個領域最常被引用的三個數字回到原始出處是空的。">
+
+<link rel="canonical" href="https://hale80427.github.io/brain-cards/newsroom-visual-storytelling/">
+<meta name="author" content="彥皓">
+
+<meta property="og:type" content="article">
+<meta property="og:title" content="頂級新聞媒體的互動專題，與三個不存在的數字">
+<meta property="og:description" content="七條研究線拆解國際頂級新聞媒體的數位專題手法。查證後發現，這個領域最常被引用的三個數字回到原始出處是空的。">
+<meta property="og:url" content="https://hale80427.github.io/brain-cards/newsroom-visual-storytelling/">
+<meta property="og:image" content="https://hale80427.github.io/brain-cards/og-default.jpg">
+<meta property="og:locale" content="zh_TW">
+
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="頂級新聞媒體的互動專題，與三個不存在的數字">
+<meta name="twitter:description" content="七條研究線拆解國際頂級新聞媒體的數位專題手法。查證後發現，這個領域最常被引用的三個數字回到原始出處是空的。">
+<meta name="twitter:image" content="https://hale80427.github.io/brain-cards/og-default.jpg">
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "頂級新聞媒體的互動專題，與三個不存在的數字",
+  "description": "七條研究線拆解國際頂級新聞媒體的數位專題手法。查證後發現，這個領域最常被引用的三個數字回到原始出處是空的。",
+  "datePublished": "2026-08-27",
+  "dateModified": "2026-08-27",
+  "author": { "@type": "Person", "name": "彥皓" },
+  "url": "https://hale80427.github.io/brain-cards/newsroom-visual-storytelling/",
+  "inLanguage": "zh-TW",
+  "license": "https://creativecommons.org/licenses/by/4.0/"
+}
+</script>
+
+<style>
+  :root {
+    --bg: oklch(98.4% 0.004 106.5);
+    --fg: oklch(21.8% 0 0);
+    --accent: oklch(54.3% 0.174 29.7);
+    --accent-warn: oklch(66.6% 0.157 58.3);
+    --muted: oklch(51.0% 0 0);
+    --border: oklch(92.1% 0.007 106.5);
+    --callout-tip: oklch(95.7% 0.014 174.2);
+    --callout-warn: oklch(96.9% 0.019 72.6);
+    /* 圖表灰階：L4「灰底加單一主角色」的背景階，非強調色 */
+    --grid-line: oklch(87.0% 0.004 106.5);
+    --grid-mid: oklch(62.0% 0.004 106.5);
+    --fs-meta: 0.85rem;
+    --fs-body: 1rem;
+    --fs-h2:   clamp(1.3rem, 3vw, 1.5rem);
+    --fs-h1:   clamp(1.75rem, 4vw, 2.25rem);
+    --font-serif: "Noto Serif TC", "Songti TC", Georgia, serif;
+    --font-sans: -apple-system, "PingFang TC", "Noto Sans TC", system-ui, sans-serif;
+    --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+    --ease-linear: linear;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: oklch(21.8% 0 0);
+      --fg: oklch(95.3% 0.011 106.6);
+      --accent: oklch(70.4% 0.136 28.7);
+      --accent-warn: oklch(76.9% 0.165 70.1);
+      --muted: oklch(68.3% 0 0);
+      --border: oklch(32.1% 0 0);
+      --callout-tip: oklch(30.9% 0.029 178.3);
+      --callout-warn: oklch(30.7% 0.034 73.5);
+      --grid-line: oklch(38.0% 0 0);
+      --grid-mid: oklch(58.0% 0 0);
+    }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
+  }
+  * { box-sizing: border-box; }
+  body {
+    font-family: var(--font-sans);
+    background: var(--bg);
+    color: var(--fg);
+    line-height: 1.85;
+    margin: 0;
+    padding: 0;
+    -webkit-font-smoothing: antialiased;
+    /* L1｜中文排版三條 P0，這一頁自己在用 */
+    text-autospace: normal;
+    font-synthesis: none;
+    line-break: strict;
+  }
+  .progress-bar {
+    position: fixed; top: 0; left: 0; height: 3px; width: 100%;
+    background: var(--accent); z-index: 100;
+    transform: scaleX(0); transform-origin: left;
+    transition: transform 0.1s var(--ease-linear);
+  }
+  /* L9｜三種寬度的版面網格。
+     ⚠ 軌道定義抽成自訂屬性，因為 article 必須套同一份——
+     否則 main > .wide 這個直接子層選擇器打不到 article 內的元素，加寬欄會靜默失效。 */
+  main, main > article {
+    display: grid;
+    grid-template-columns:
+      [full-start] minmax(1rem, 1fr)
+      [wide-start] minmax(0, 130px)
+      [content-start] minmax(0, 680px) [content-end]
+      minmax(0, 130px) [wide-end]
+      minmax(1rem, 1fr) [full-end];
+  }
+  main { padding: clamp(2rem, 5vw, 4rem) 0; }
+  main > *, main > article > * { grid-column: content; }
+  main > article { grid-column: full; }
+  main > .wide, main > article > .wide { grid-column: wide; }
+  main > .full, main > article > .full { grid-column: full; }
+  h1 { font-size: var(--fs-h1); line-height: 1.35; margin: 0 0 1rem; font-family: var(--font-serif); }
+  h2 { font-size: var(--fs-h2); line-height: 1.45; margin: 3.5rem 0 0.75rem; padding-bottom: 0.5rem; border-bottom: 1px solid var(--border); font-family: var(--font-serif); }
+  h3 { font-size: var(--fs-body); font-weight: 700; line-height: 1.5; margin: 2rem 0 0.5rem; color: var(--accent); }
+  p { margin: 0 0 1.25rem; text-wrap: pretty; }
+  a { color: var(--accent); text-underline-offset: 3px; }
+  a:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+  /* L12｜著重號取代部分粗體。中文沒有真斜體，合成傾斜對繁體是災難 */
+  em { font-style: normal; text-emphasis: filled dot; text-emphasis-position: under right;
+       -webkit-text-emphasis: filled dot; -webkit-text-emphasis-position: under right; font-weight: 600; }
+  em:lang(en) { font-style: italic; text-emphasis: none; -webkit-text-emphasis: none; font-weight: inherit; }
+  .bluf { background: var(--callout-tip); border-left: 3px solid var(--accent); padding: 1.25rem 1.5rem; margin: 1.5rem 0 2rem; border-radius: 4px; }
+  .bluf strong.label { display: block; font-size: var(--fs-meta); letter-spacing: 0.05em; color: var(--accent); margin-bottom: 0.5rem; text-transform: uppercase; }
+  .callout { padding: 1rem 1.25rem; margin: 1.5rem 0; border-radius: 4px; border-left: 3px solid var(--muted); }
+  .callout.tip { background: var(--callout-tip); border-left-color: var(--accent); }
+  .callout.warn { background: var(--callout-warn); border-left-color: var(--accent-warn); }
+  /* L11｜內容類型標籤前綴 */
+  .kicker { display: inline-block; font-size: var(--fs-meta); font-weight: 700; letter-spacing: 0.1em;
+            color: var(--accent); margin: 3.5rem 0 0; font-family: var(--font-sans); }
+  .kicker + h2 { margin-top: 0.4rem; border-bottom: none; padding-bottom: 0; }
+  .lede { font-size: var(--fs-body); color: var(--muted); margin: 0 0 2rem; }
+  table { border-collapse: collapse; width: 100%; margin: 1.5rem 0; font-size: var(--fs-body); }
+  th, td { padding: 0.7rem 0.85rem; border: 1px solid var(--border); text-align: left; vertical-align: top; line-height: 1.75; }
+  th { background: var(--callout-tip); font-weight: 600; }
+  .tbl { overflow-x: auto; margin: 1.5rem 0; }
+  .tbl table { margin: 0; min-width: 620px; }
+  code { font-family: var(--font-mono); background: var(--callout-tip); padding: 0.1em 0.4em; border-radius: 3px; font-size: var(--fs-body); }
+  figure { margin: 2rem 0; }
+  figure svg { width: 100%; height: auto; display: block; }
+  figcaption { font-size: var(--fs-meta); color: var(--muted); margin-top: 0.6rem; line-height: 1.7; }
+  /* L6｜Note 在前、Source 在後。左緣對齊繪圖區左緣，不是頁面邊界 */
+  .notesrc { font-size: var(--fs-meta); color: var(--muted); margin: 0.5rem 0 0; line-height: 1.7; }
+  .notesrc b { color: var(--fg); font-weight: 600; }
+  /* L7｜<details> 原始資料表 */
+  details { border: 1px solid var(--border); border-radius: 4px; padding: 0 1rem; margin: 1.25rem 0; background: var(--callout-tip); }
+  details[open] { padding-bottom: 1rem; }
+  summary { cursor: pointer; padding: 0.85rem 0; font-weight: 700; font-size: var(--fs-body); list-style: none; }
+  summary::-webkit-details-marker { display: none; }
+  summary::before { content: "▸ "; color: var(--accent); }
+  details[open] summary::before { content: "▾ "; }
+  details .in { border-top: 1px solid var(--border); padding-top: 0.9rem; font-size: var(--fs-body); }
+  details .in p:last-child { margin-bottom: 0; }
+  .quote { border-left: 3px solid var(--border); padding: 0.2rem 0 0.2rem 1rem; margin: 0 0 1.25rem;
+           color: var(--muted); font-family: var(--font-mono); font-size: var(--fs-body); line-height: 1.7; }
+  .kv { display: flex; justify-content: space-between; gap: 1rem; padding: 0.5rem 0;
+        border-bottom: 1px dashed var(--border); font-size: var(--fs-body); }
+  .kv:last-of-type { border-bottom: 0; }
+  .kv .k { color: var(--muted); }
+  .kv .v { font-weight: 700; flex: none; }
+  .nb { white-space: nowrap; }
+  .mark { color: var(--accent); }
+  .dim { color: var(--muted); }
+  /* L10｜頁尾姊妹作連結列 */
+  .siblings { border-top: 1px solid var(--border); margin-top: 3rem; padding-top: 1.25rem; }
+  .siblings ul { list-style: none; padding: 0; margin: 0.5rem 0 0; }
+  .siblings li { padding: 0.35rem 0; font-size: var(--fs-meta); color: var(--muted); }
+  footer p { color: var(--muted); font-size: var(--fs-meta); margin-top: 3rem; padding-top: 1.5rem; border-top: 1px solid var(--border); }
+  @media print {
+    .progress-bar { display: none; }
+    body { font-size: 11pt; line-height: 1.6; }
+    main { display: block; max-width: 100%; padding: 1cm; }
+    details { border: 0; background: none; }
+    details .in { display: block !important; }
+  }
+</style>
+</head>
+<body>
+<div class="progress-bar" id="progress"></div>
+<main>
+
+<header>
+<h1>頂級新聞媒體的互動專題，<br>與三個不存在的數字</h1>
+<p class="lede">七條研究線、<span class="nb">6,443 行</span>、數百個來源。這一頁用它自己講的手法來講它自己——文末會逐條交代用了哪些、又刻意不用哪些。</p>
+
+<div class="bluf">
+<strong class="label">BLUF</strong>
+<p>這個領域最常被引用的三個數字，<strong>回到原始出處是空的</strong>。五份原始文件逐字查過，沒有一份含有它們。</p>
+<p>真正該抄的不是效果，是一句判準：<em>多做什麼</em>。</p>
+<p>而你跟頂級媒體的差距不在技術。天下雜誌的互動專題，本質上也只是一份靜態網頁檔。</p>
+</div>
+</header>
+
+<article>
+<!-- narrative: 矛盾,物件,直接引語,細節 -->
+
+<span class="kicker">【查證】</span>
+<h2>被轉述十年的三個數字，回到源頭都是空的</h2>
+
+<p>做這份研究時，同一句話在不同軸線上被引用了三次：「只有 15% 的讀者會點互動元件」。它的補數版本是「85% 的人忽略提示框」。</p>
+
+<p>這句話被歸給 Archie Tse——他 2016 年是紐約時報的圖表部門副主任，在 Malofiej 資訊圖表研討會上做了一場演講，標題叫〈Why We Are Doing Fewer Interactives〉。</p>
+
+<p>我把被引用的出處全部拿到手，逐字查。</p>
+
+<figure class="wide">
+<svg viewBox="0 0 900 700" role="img" xmlns="http://www.w3.org/2000/svg">
+  <title>單圖多幕：同一組三個數字，三次疊加註解後全部落空</title>
+  <defs>
+    <marker id="nvArrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M0 0 L10 5 L0 10 z" fill="var(--grid-mid)"/>
+    </marker>
+    <marker id="nvArrowHi" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M0 0 L10 5 L0 10 z" fill="var(--accent)"/>
+    </marker>
+  </defs>
+
+  <!-- ===== 幕 1 ===== -->
+  <text x="0" y="16" font-size="13" font-weight="700" fill="var(--accent)" font-family="sans-serif">幕 1</text>
+  <text x="46" y="16" font-size="13" fill="var(--muted)" font-family="sans-serif">三個數字，看起來都有出處</text>
+
+  <g>
+    <rect x="0" y="30" width="270" height="52" rx="6" fill="none" stroke="var(--grid-line)" stroke-width="1.5"/>
+    <text x="14" y="52" font-size="15" font-weight="700" fill="var(--fg)" font-family="sans-serif">只有 15% 的讀者會點</text>
+    <text x="14" y="72" font-size="12.5" fill="var(--grid-mid)" font-family="sans-serif">紐約時報圖表部門主管，2016</text>
+
+    <rect x="300" y="30" width="270" height="52" rx="6" fill="none" stroke="var(--grid-line)" stroke-width="1.5"/>
+    <text x="314" y="52" font-size="15" font-weight="700" fill="var(--fg)" font-family="sans-serif">40% 被動態效果影響</text>
+    <text x="314" y="72" font-size="12.5" fill="var(--grid-mid)" font-family="sans-serif">說是無障礙機構的調查</text>
+
+    <rect x="600" y="30" width="270" height="52" rx="6" fill="none" stroke="var(--grid-line)" stroke-width="1.5"/>
+    <text x="614" y="52" font-size="15" font-weight="700" fill="var(--fg)" font-family="sans-serif">超過 50% 被視差觸發症狀</text>
+    <text x="614" y="72" font-size="12.5" fill="var(--grid-mid)" font-family="sans-serif">同一份「調查」</text>
+  </g>
+
+  <!-- ===== 幕 2 ===== -->
+  <text x="0" y="146" font-size="13" font-weight="700" fill="var(--accent)" font-family="sans-serif">幕 2</text>
+  <text x="46" y="146" font-size="13" fill="var(--muted)" font-family="sans-serif">把出處攤開，五份文件全部取得</text>
+
+  <g opacity="0.45">
+    <rect x="0" y="160" width="270" height="52" rx="6" fill="none" stroke="var(--grid-line)" stroke-width="1.5"/>
+    <text x="14" y="182" font-size="15" font-weight="700" fill="var(--fg)" font-family="sans-serif">只有 15% 的讀者會點</text>
+    <rect x="300" y="160" width="270" height="52" rx="6" fill="none" stroke="var(--grid-line)" stroke-width="1.5"/>
+    <text x="314" y="182" font-size="15" font-weight="700" fill="var(--fg)" font-family="sans-serif">40% 被動態效果影響</text>
+    <rect x="600" y="160" width="270" height="52" rx="6" fill="none" stroke="var(--grid-line)" stroke-width="1.5"/>
+    <text x="614" y="182" font-size="15" font-weight="700" fill="var(--fg)" font-family="sans-serif">超過 50% 被視差觸發症狀</text>
+  </g>
+
+  <line x1="135" y1="216" x2="135" y2="248" stroke="var(--grid-mid)" stroke-width="1.5" marker-end="url(#nvArrow)"/>
+  <line x1="435" y1="216" x2="435" y2="248" stroke="var(--grid-mid)" stroke-width="1.5" marker-end="url(#nvArrow)"/>
+  <line x1="735" y1="216" x2="735" y2="248" stroke="var(--grid-mid)" stroke-width="1.5" marker-end="url(#nvArrow)"/>
+
+  <g font-family="sans-serif">
+    <rect x="0" y="252" width="270" height="86" rx="6" fill="none" stroke="var(--grid-line)" stroke-width="1.5" stroke-dasharray="4 3"/>
+    <text x="14" y="274" font-size="12.5" fill="var(--grid-mid)">① 原始投影片 PDF·24 頁</text>
+    <text x="14" y="294" font-size="12.5" fill="var(--grid-mid)">② Nieman Lab 現場報導</text>
+    <text x="14" y="314" font-size="12.5" fill="var(--grid-mid)">③ 與會者現場筆記</text>
+    <text x="14" y="332" font-size="12.5" fill="var(--grid-mid)">三份·全文取得</text>
+
+    <rect x="300" y="252" width="270" height="86" rx="6" fill="none" stroke="var(--grid-line)" stroke-width="1.5" stroke-dasharray="4 3"/>
+    <text x="314" y="274" font-size="12.5" fill="var(--grid-mid)">④ Web Axe 該頁</text>
+    <text x="314" y="294" font-size="12.5" fill="var(--grid-mid)">內文 18,415 字元</text>
+    <text x="314" y="322" font-size="12.5" fill="var(--grid-mid)">HTTP 200·全文取得</text>
+
+    <rect x="600" y="252" width="270" height="86" rx="6" fill="none" stroke="var(--grid-line)" stroke-width="1.5" stroke-dasharray="4 3"/>
+    <text x="614" y="274" font-size="12.5" fill="var(--grid-mid)">⑤ WebAIM 該頁</text>
+    <text x="614" y="294" font-size="12.5" fill="var(--grid-mid)">內文 4,418 字元</text>
+    <text x="614" y="322" font-size="12.5" fill="var(--grid-mid)">HTTP 200·全文取得</text>
+  </g>
+
+  <!-- ===== 幕 3 ===== -->
+  <text x="0" y="402" font-size="13" font-weight="700" fill="var(--accent)" font-family="sans-serif">幕 3</text>
+  <text x="46" y="402" font-size="13" fill="var(--muted)" font-family="sans-serif">逐字比對之後</text>
+
+  <g font-family="sans-serif">
+    <rect x="0" y="416" width="270" height="52" rx="6" fill="none" stroke="var(--grid-line)" stroke-width="1.5"/>
+    <text x="14" y="438" font-size="15" font-weight="700" fill="var(--grid-mid)" text-decoration="line-through">只有 15% 的讀者會點</text>
+    <text x="14" y="458" font-size="12.5" fill="var(--accent)" font-weight="700">三份文件都沒有這個數字</text>
+
+    <rect x="300" y="416" width="270" height="52" rx="6" fill="none" stroke="var(--grid-line)" stroke-width="1.5"/>
+    <text x="314" y="438" font-size="15" font-weight="700" fill="var(--grid-mid)" text-decoration="line-through">40% 被動態效果影響</text>
+    <text x="314" y="458" font-size="12.5" fill="var(--accent)" font-weight="700">該頁唯一的百分比是 28%</text>
+
+    <rect x="600" y="416" width="270" height="52" rx="6" fill="none" stroke="var(--grid-line)" stroke-width="1.5"/>
+    <text x="614" y="438" font-size="15" font-weight="700" fill="var(--grid-mid)" text-decoration="line-through">超過 50% 被視差觸發症狀</text>
+    <text x="614" y="458" font-size="12.5" fill="var(--accent)" font-weight="700">同上·查無此數字</text>
+  </g>
+
+  <!-- 註解層 -->
+  <line x1="735" y1="480" x2="735" y2="516" stroke="var(--accent)" stroke-width="1.8" marker-end="url(#nvArrowHi)"/>
+  <rect x="452" y="520" width="418" height="128" rx="6" fill="var(--callout-tip)" stroke="var(--accent)" stroke-width="1.5"/>
+  <text x="470" y="546" font-size="13" font-weight="700" fill="var(--accent)" font-family="sans-serif">但第三個數字最陰險</text>
+  <text x="470" y="570" font-size="13" fill="var(--fg)" font-family="sans-serif">WebAIM 那頁確實有一個 35%。</text>
+  <text x="470" y="592" font-size="13" fill="var(--fg)" font-family="sans-serif">它講的是「美國 40 歲以上成人，</text>
+  <text x="470" y="614" font-size="13" fill="var(--fg)" font-family="sans-serif">曾有前庭功能失調的比例」——</text>
+  <text x="470" y="636" font-size="13" font-weight="700" fill="var(--accent)" font-family="sans-serif">人口盛行率，不是設計傷害率。</text>
+
+  <text x="0" y="546" font-size="13" fill="var(--muted)" font-family="sans-serif">五份文件出現 “survey” 一字的次數：</text>
+  <text x="0" y="574" font-size="26" font-weight="700" fill="var(--accent)" font-family="sans-serif">0</text>
+  <text x="34" y="574" font-size="13" fill="var(--muted)" font-family="sans-serif">次</text>
+  <text x="0" y="602" font-size="13" fill="var(--fg)" font-family="sans-serif">所以「無障礙機構的調查」</text>
+  <text x="0" y="624" font-size="13" font-weight="700" fill="var(--accent)" font-family="sans-serif">這個出處本身是虛構的。</text>
+  <text x="0" y="646" font-size="12.5" fill="var(--grid-mid)" font-family="sans-serif">那頁不是調查報告，也沒引用任何調查。</text>
+</svg>
+<figcaption>圖 1 · 同一組數字疊三次註解：看起來有出處、出處攤開來、逐字比對後全部落空 · 作者自繪</figcaption>
+<p class="notesrc"><b>Note</b>：這是「單圖多幕」手法——不換圖，只在同一組物件上逐層加註。讀者不必重新認識新圖，眼睛跟著同一批方框走。<br>
+<b>Source</b>：原始投影片取自作者本人 GitHub 公開檔案；其餘四份以 HTTP 200 取得全文後程式化比對。查證紀錄見文末原始資料。</p>
+</figure>
+
+<p>Tse 的原始主張是<em>質性的</em>，逐字是：</p>
+
+<p class="quote">If you make a tooltip or rollover, assume no one will ever see it. If content is important for readers to see, don't hide it.</p>
+
+<p>沒有數字。那個百分比是後續轉述一層一層加上去的。</p>
+
+<div class="callout warn">
+<p><strong>可以說什麼、不可以說什麼。</strong>準確的講法是「查無出處」，不是「這是假的」。紐約時報內部可能真的有這份數據，只是從未公開。後者你證明不了，而且會被反問。</p>
+</div>
+
+<details>
+<summary>查證紀錄：五份文件的原始讀數</summary>
+<div class="in">
+<div class="kv"><span class="k">原始投影片檔案大小</span><span class="v">2,199,883 bytes</span></div>
+<div class="kv"><span class="k">頁數</span><span class="v">24 頁</span></div>
+<div class="kv"><span class="k">文字層出現過的所有數字</span><span class="v">1、2、3、2015、2016</span></div>
+<div class="kv"><span class="k">百分比符號出現次數</span><span class="v">0</span></div>
+<div class="kv"><span class="k">Nieman Lab 現場報導</span><span class="v">HTTP 200·全文無百分比</span></div>
+<div class="kv"><span class="k">與會者現場筆記</span><span class="v">HTTP 200·全文無百分比</span></div>
+<div class="kv"><span class="k">Web Axe 該頁內文長度</span><span class="v">18,415 字元</span></div>
+<div class="kv"><span class="k">該頁唯一出現的百分比</span><span class="v">28%</span></div>
+<div class="kv"><span class="k">WebAIM 該頁內文長度</span><span class="v">4,418 字元</span></div>
+<div class="kv"><span class="k">該頁唯一出現的百分比</span><span class="v">35%</span></div>
+<div class="kv"><span class="k">兩頁出現 “survey” 的次數</span><span class="v">0</span></div>
+<p style="margin-top:1rem">24 頁另以 60 dpi 全數渲染成圖片、逐頁目視確認，投影片上沒有任何百分比。</p>
+<p>WebAIM 那個 35% 的原文逐字：</p>
+<p class="quote">As many as 35% of adults aged 40 years or older in the United States have experienced some form of vestibular dysfunction.</p>
+<p>真正的源頭是 Agrawal 等人發表於 <em lang="en">Archives of Internal Medicine</em> 2009 年的論文，對 NHANES 資料的分析，精確值 <strong>35.4%</strong>，PubMed 編號 19468085。純流行病學數字，與視差設計無關。</p>
+</div>
+</details>
+
+<details>
+<summary>順帶更正：流傳版的三條規則，第 3 條是錯的</summary>
+<div class="in">
+<p>網路上流傳的版本，把第 2 條的後半句拆出來當第 3 條，把真正的第 3 條整條擠掉。從原始 PDF 抽出的逐字原文是：</p>
+<ol>
+<li>If you make the reader click or do anything other than scroll, something spectacular has to happen.</li>
+<li>If you make a tooltip or rollover, assume no one will ever see it. If content is important for readers to see, don't hide it. <span class="mark">← 流傳版把這半句拆出來當第 3 條</span></li>
+<li>When deciding whether to make something interactive, remember that getting it to work on all platforms is expensive. <span class="mark">← 流傳版把這條整條擠掉了</span></li>
+</ol>
+<p>被擠掉的第 3 條，是三條裡唯一在談工程成本、而不是讀者行為的。</p>
+<p>原始論證有兩隻腳：讀者不會點（行為面），而且要在所有裝置上都能用非常貴（經濟面）。流傳版砍掉了第二隻腳，整個論證看起來就像在講讀者懶惰，而不是在講投資報酬率。</p>
+<p>第二隻腳才是一人作業者真正會撞到的那個限制。</p>
+</div>
+</details>
+
+
+<span class="kicker">【機制】</span>
+<h2>互動的淨值是一個減法，而讀者扣完就走、不會通知你</h2>
+
+<p>四條互不相通的研究線，各自從不同起點推導，撞出同一個算式。</p>
+
+<figure>
+<svg viewBox="0 0 700 250" role="img" xmlns="http://www.w3.org/2000/svg">
+  <title>互動淨值＝讀者理解增量，減去讀者動作成本，再減去跨裝置工程成本</title>
+  <g font-family="sans-serif">
+    <rect x="2" y="34" width="178" height="86" rx="7" fill="none" stroke="var(--accent)" stroke-width="2"/>
+    <text x="91" y="62" text-anchor="middle" font-size="14.5" font-weight="700" fill="var(--accent)">讀者多懂了多少</text>
+    <text x="91" y="86" text-anchor="middle" font-size="12.5" fill="var(--grid-mid)">唯一的正項</text>
+    <text x="91" y="106" text-anchor="middle" font-size="12.5" fill="var(--grid-mid)">而且通常很小</text>
+
+    <text x="199" y="85" text-anchor="middle" font-size="28" font-weight="700" fill="var(--grid-mid)">−</text>
+
+    <rect x="218" y="34" width="178" height="86" rx="7" fill="none" stroke="var(--grid-line)" stroke-width="2"/>
+    <text x="307" y="62" text-anchor="middle" font-size="14.5" font-weight="700" fill="var(--fg)">讀者要多做的動作</text>
+    <text x="307" y="86" text-anchor="middle" font-size="12.5" fill="var(--grid-mid)">點、拖、選、等</text>
+    <text x="307" y="106" text-anchor="middle" font-size="12.5" fill="var(--grid-mid)">每一下都在扣分</text>
+
+    <text x="415" y="85" text-anchor="middle" font-size="28" font-weight="700" fill="var(--grid-mid)">−</text>
+
+    <rect x="434" y="34" width="178" height="86" rx="7" fill="none" stroke="var(--grid-line)" stroke-width="2"/>
+    <text x="523" y="62" text-anchor="middle" font-size="14.5" font-weight="700" fill="var(--fg)">你要多做的工</text>
+    <text x="523" y="86" text-anchor="middle" font-size="12.5" fill="var(--grid-mid)">手機、平板、桌機</text>
+    <text x="523" y="106" text-anchor="middle" font-size="12.5" fill="var(--grid-mid)">每一台都要測</text>
+
+    <text x="640" y="85" text-anchor="middle" font-size="24" font-weight="700" fill="var(--grid-mid)">=</text>
+    <text x="672" y="88" text-anchor="middle" font-size="24" font-weight="700" fill="var(--fg)">?</text>
+
+    <rect x="2" y="156" width="610" height="70" rx="7" fill="var(--callout-tip)" stroke="var(--accent)" stroke-width="2"/>
+    <text x="307" y="186" text-anchor="middle" font-size="15.5" font-weight="700" fill="var(--accent)">所以只要問一句：這一招要求讀者多做什麼？</text>
+    <text x="307" y="210" text-anchor="middle" font-size="13.5" fill="var(--fg)">如果答案不是「什麼都不用多做」，它大概活不久。</text>
+  </g>
+</svg>
+<figcaption>圖 2 · 互動的三項相減：唯一的正項通常最小，兩個負項卻是確定要付的 · 作者自繪</figcaption>
+<p class="notesrc"><b>Note</b>：這條是四軸收斂出的<em>業界共識</em>，不是實驗結論。沒有人做過實驗證明「動作越少越好」。<br>
+<b>Source</b>：Nielsen Norman Group 把中間那項正名為 interaction cost；Tse 的三規則是它的新聞編輯室版本。</p>
+</figure>
+
+<p>這也是<strong>捲動之所以贏</strong>的第一性原理，而不是因為它比較潮。捲動的生理成本極低——一根手指、不用瞄準；心智成本接近零——不需要先判斷「這裡能不能捲」。它是最接近零成本的推進動作。</p>
+
+<p>反過來看退場的招式，共同點都是<strong>要求讀者付出額外成本</strong>：戴頭顯、開喇叭、動手剪輯、忍受卡頓。留下來的共同點是「讀者只需要往下捲」。</p>
+
+
+<span class="kicker">【對照】</span>
+<h2>捲動敘事幫你的是「讓人願意讀」，不是「讓人讀懂」</h2>
+
+<p>這對一份要被同行逐點檢查的報告來說是壞消息，我不修飾。</p>
+
+<div class="tbl">
+<table>
+<thead>
+<tr><th style="width:22%">量的是什麼</th><th style="width:39%">研究說了什麼</th><th style="width:39%">對你的意思</th></tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>感知投入度</strong><br>與情緒反應</td>
+<td>2023 年一份受控實驗：捲動敘事格式在感知投入度上<strong>顯著有利</strong>，引發情緒反應也突出。</td>
+<td>它能讓人願意把長報告讀下去。這是真的效果。</td>
+</tr>
+<tr>
+<td><strong>資訊接收強度</strong></td>
+<td>另一份實證研究：故事化取徑提高動機，但<strong>資訊接收的強度下降</strong>。</td>
+<td>讀進去的東西打折。你的目標函數是正確理解，這一項直接扣分。</td>
+</tr>
+</tbody>
+</table>
+</div>
+
+<div class="callout warn">
+<p><strong>這裡不畫成長條圖，是刻意的。</strong>兩份研究用的不是同一把尺，效果量無法相減。畫成長條會暗示一個我沒有的量化比較——那正是這份研究從頭到尾在警告的事。</p>
+<p>這一頁的前一個版本，我真的把它畫成長條圖了，高度 78% 對 34%。那兩個數字是我編的。render 之後目視才抓到，改成上面這張表。</p>
+</div>
+
+<p>兩份實驗量的是不同東西，方向相反，而且都可能是真的。ECCE 那篇自己也標了邊界：它量的是「讀者覺得自己更投入」與「情緒被打動」，不是「記得更多」或「理解得更正確」。跨研究對理解的效果是混合的。</p>
+
+
+<span class="kicker">【爭論】</span>
+<h2>所謂業界共識，其實從來沒有共識過</h2>
+
+<p>這份研究找到最乾淨的一組反證：同一年、相隔兩個月、兩位權威、同一個元件、相反的建議。</p>
+
+<div class="tbl">
+<table>
+<thead>
+<tr><th style="width:32%">誰</th><th style="width:14%">時間</th><th style="width:54%">對「步進器」的建議</th></tr>
+</thead>
+<tbody>
+<tr><td>Archie Tse<br><span class="dim">紐約時報圖表部門</span></td><td>2016 年 3 月</td><td>逐字列在「我們以前做比較多、<strong>現在少做</strong>」的第一項</td></tr>
+<tr><td>Robert Kosara<br><span class="dim">資料視覺化學者</span></td><td>2016 年 5 月</td><td>主張步進器<strong>比捲動更好</strong>——導航清楚、不干擾閱讀</td></tr>
+</tbody>
+</table>
+</div>
+
+<p class="notesrc"><b>Note</b>：「步進器」是指那種一步一步點下一頁的分頁式圖表。</p>
+
+<p>兩人同年、同領域，對同一個元件給出相反建議。這代表這個問題<em>從來沒有被實證解決過</em>。所謂共識，很大程度只是 Tse 那一派傳得比較廣。</p>
+
+<p>2024 年一份受控實驗其實已經給了理由：<strong>互動技法的效果隨任務類型而變，不存在通用最優解</strong>。誰對，取決於你的讀者拿這頁要做什麼任務，不取決於誰比較有名。</p>
+
+<details>
+<summary>另外十組矛盾，我沒有調和掉</summary>
+<div class="in">
+<p>綜合層一共列出 11 組張力，其中 5 組是跨軸拼出來的、沒有任何一份原始報告寫過。挑三組最尖的：</p>
+<p><strong>一、AI 紅線全部畫在像素上，沒有人管圖表決策。</strong>各家媒體禁的是生成式影像——美聯社明文禁止對新聞照片 create、alter、enhance；World Press Photo 全類別禁生成式影像。機制是索引性：新聞照片的證據力來自光線真的從現場打到感光元件上。但 AI 產出的是圖表<em>程式碼</em>不是像素，繞過了所有影像紅線；而它做的圖表決策（要不要 3D、要不要雙軸、Y 軸歸不歸零）一樣會誤導讀者，沒有任何一家的條文管到這層。<strong>你叫 AI 產圖表程式碼時，那些業界禁忌不會自動被遵守。</strong></p>
+<p><strong>二、最被推薦的那一招，在台灣的通路上風險最高。</strong>「圖釘住不動、文字往下捲」被最多軸線列為第一優先。但台灣讀者多半從 LINE 或 FB 的內建瀏覽器點開連結，那種瀏覽器對這個效果的支援不一致；而且它<em>壞掉時不會報錯</em>——外層容器有一個常見設定就會靜默失效。你在自己的 Safari 上測永遠是好的。</p>
+<p><strong>三、「用系統字」與「自有字體是版面地基」兩邊都對。</strong>媒體要的是品牌辨識與規模經濟，一人作業要的是載入速度與零維護。但這裡有個天花板：系統字堆疊做得出三族分工的<em>結構</em>，做不出它的<em>細緻度</em>——那些字不是同一位設計師為同一套版面調過的，字面大小與視覺重量對不齊。這不是靠努力能補的。</p>
+</div>
+</details>
+
+
+<span class="kicker">【誠實】</span>
+<h2>六千多行裡，真正有實驗撐著的只有七條</h2>
+
+<figure>
+<svg viewBox="0 0 700 232" role="img" xmlns="http://www.w3.org/2000/svg">
+  <title>證據強度四層：有受控實驗支持的只有七條</title>
+  <g font-family="sans-serif">
+    <rect x="250" y="12" width="200" height="42" rx="6" fill="var(--callout-tip)" stroke="var(--accent)" stroke-width="2"/>
+    <text x="350" y="32" text-anchor="middle" font-size="14" font-weight="700" fill="var(--accent)">有受控實驗撐著</text>
+    <text x="350" y="48" text-anchor="middle" font-size="12.5" fill="var(--muted)">7 條</text>
+
+    <rect x="190" y="62" width="320" height="42" rx="6" fill="none" stroke="var(--grid-mid)" stroke-width="2"/>
+    <text x="350" y="82" text-anchor="middle" font-size="14" font-weight="700" fill="var(--fg)">有可用性測試撐著</text>
+    <text x="350" y="98" text-anchor="middle" font-size="12.5" fill="var(--muted)">3 條</text>
+
+    <rect x="110" y="112" width="480" height="42" rx="6" fill="none" stroke="var(--grid-line)" stroke-width="2"/>
+    <text x="350" y="132" text-anchor="middle" font-size="14" font-weight="700" fill="var(--fg)">業界都這樣做，但沒有數據</text>
+    <text x="350" y="148" text-anchor="middle" font-size="12.5" fill="var(--muted)">16 項</text>
+
+    <rect x="30" y="162" width="640" height="42" rx="6" fill="none" stroke="var(--grid-line)" stroke-width="1.5" stroke-dasharray="4 3"/>
+    <text x="350" y="182" text-anchor="middle" font-size="14" font-weight="700" fill="var(--grid-mid)">某個人說的，沒有別人驗證過</text>
+    <text x="350" y="198" text-anchor="middle" font-size="12.5" fill="var(--muted)">其餘全部</text>
+
+    <text x="350" y="224" text-anchor="middle" font-size="13" font-weight="700" fill="var(--accent)">另有 13 條已被推翻，標記為不得使用</text>
+  </g>
+</svg>
+<figcaption>圖 3 · 數百個來源裡，撐得起「實驗證明」四個字的只有最上面那一格 · 作者自繪</figcaption>
+<p class="notesrc"><b>Note</b>：「有實驗支持」的門檻是同儕審查過的受控實驗。門檻拉低一點，數字就會變多。<br>
+<b>Source</b>：分級由綜合層依各軸標註的證據型別統計，非外部評鑑。</p>
+</figure>
+
+<div class="callout tip">
+<p>但不要反過來推論「其餘六千多行都不可信」。業界慣例是幾十年累積的失敗經驗，它的證據形態是<em>倖存下來的做法</em>，不是實驗。沒有實驗證據不等於錯，只是你引用時不能寫「研究顯示」。</p>
+</div>
+
+
+<span class="kicker">【清單】</span>
+<h2>明天就能用的十三條，全部不需要任何函式庫</h2>
+
+<p>綜合層產出的完整清單是低成本 13 條、中成本 12 條、高成本 6 條，每條都附「最可能在哪裡失效」。這裡列低成本那一級——純 CSS 與 HTML，一小時內。</p>
+
+<div class="tbl wide">
+<table>
+<thead>
+<tr><th style="width:20%">手法</th><th style="width:38%">一句話原理</th><th style="width:42%">最可能在哪裡失效</th></tr>
+</thead>
+<tbody>
+<tr><td><strong>中文排版三條 P0</strong></td><td><code>lang="zh-Hant-TW"</code> 決定瀏覽器挑哪一國的漢字字形；<code>text-autospace</code> 在排版引擎層插入中英之間的空白而不動原始文字；<code>font-synthesis: none</code> 擋掉合成粗體與合成傾斜。</td><td><code>text-autospace</code> 只能用 <code>normal</code>，寫錯值不報錯、只是靜默不生效。Samsung Internet 完全不支援。</td></tr>
+<tr><td><strong>主動式標題</strong></td><td>標題寫成一句完整主張，不是寫主題。「失業率」是主題，「失業率三個月內回到疫情前」是主張。</td><td>你自己還沒想清楚結論時，寫不出主動式標題。這時人的反應是退回主題式並自我說服「這樣比較客觀」。寫不出來就是訊號。</td></tr>
+<tr><td><strong>圖說寫成一句結論</strong></td><td>圖說是讀者第二高閱讀率的元件，僅次於大標。它必須能脫離內文獨立成立。</td><td>寫成「本圖顯示 2020 到 2025 的變化」這種廢話。判準是把圖遮住，這句話還有沒有資訊。</td></tr>
+<tr><td><strong>灰底加單一主角色</strong></td><td>顏色一旦用來表示重要性，就不能再拿去裝飾。強調靠<em>其他降灰</em>，不靠主角加亮——降噪不破壞色票，加亮會。</td><td>一份報告出現第二個強調色的那一刻。兩個強調色就沒有強調。</td></tr>
+<tr><td><strong>直接標籤取代圖例</strong></td><td>把系列名放在物理上最靠近該筆資料的位置。省掉眼睛在圖與圖例之間跳動時要暫存「藍色等於哪一項」的成本。</td><td>多條線末值接近時標籤會重疊。要預留右側標籤區並手動微調位置加短引線。</td></tr>
+<tr><td><strong>Note 與 Source 分開</strong></td><td>兩個不同欄位，順序固定。Note 答「怎麼算的、有什麼但書」，影響<em>如何解讀</em>；Source 答「資料哪來」，影響<em>是否採信</em>。</td><td>動過資料卻只寫署名。「Chart by 彥皓」是署名，「Analysis by 彥皓」是宣告你動過資料——混用是不誠實的。</td></tr>
+<tr><td><strong>可展開的原始資料表</strong></td><td><code>&lt;details&gt;</code> 裡掛一張原始數據表。原生 HTML 零依賴，同時服務螢幕閱讀器、想核對數字的專業讀者、搜尋引擎索引。</td><td>表格與圖的數字不同步。圖改了表沒改，比沒放表更糟——它把你的可稽核性變成把柄。兩者要從同一份資料源產出。</td></tr>
+<tr><td><strong>手機版是重畫</strong></td><td><code>&lt;picture&gt;</code> 加 <code>&lt;source media&gt;</code>，手機吃的是另一張構圖：裁切不同、標籤更少、橫式改直式。</td><td>真正的失效是人性面——<em>懶得畫第二張圖</em>，於是條件寫了但兩張圖其實一樣。</td></tr>
+<tr><td><strong>三種寬度的網格</strong></td><td>內文寬、加寬、全出血，三種就夠。再多會讓節奏變雜訊。</td><td>全出血放錯位置。它的功能不是「放大照片」，是<em>製造停頓</em>，該放在章節轉折點——放錯會把論證從中間切斷。</td></tr>
+<tr><td><strong>頁尾姊妹作連結列</strong></td><td>每做一個專題就在頁尾加一排同系列連結。整批作品自然形成一個宇宙。</td><td>連結會爛。一人作業改路徑、換部署位置的頻率比機構高得多，而頁尾是最不會被注意到的地方。</td></tr>
+<tr><td><strong>內容類型標籤前綴</strong></td><td>【機制】【對照】【複盤】這種前綴。既是給讀者的預期管理，也是給搜尋引擎的分類訊號。</td><td>標籤一多就失去分類功能。五個以內有用，十個以上讀者記不住。</td></tr>
+<tr><td><strong>著重號</strong></td><td>中文沒有真斜體。中文書籍百年來的標準強調法是每個字下方一個小點，比粗體優雅，而且<em>不需要多載一個字重</em>。</td><td>行高不夠時著重號會撞到下一行。1.8 剛好夠，1.5 會擠。極小字級幾乎看不見，圖說那裡還是用粗體。</td></tr>
+<tr><td><strong>灰階自檢</strong></td><td>整張圖套 <code>filter: grayscale(1)</code>。灰階下兩條線分不出來，就代表你只靠色相編碼。</td><td>過了灰階不等於過了色盲測試。亮度差夠大但色相相鄰的顏色會通過灰階而在色盲眼中失效——<em>必要條件，不是充分條件</em>。</td></tr>
+</tbody>
+</table>
+</div>
+
+<div class="callout tip">
+<p><strong>如果只做三件事，照這個順序。</strong></p>
+<p>一、把中文排版三條 P0 焊進你的網頁模板。一小時，做一次，之後每一頁自動生效——<em>唯一有複利的動作</em>。</p>
+<p>二、主動式標題、圖說寫結論、Note 與 Source 分開。零技術，而且是寫作紀律，換工具換平台都不會失效。</p>
+<p>三、同一張圖用多幕講完。你的題型「一個結果、多個候選原因」命中率最高的一招。</p>
+<p>「圖釘住不動、文字往下捲」<strong>刻意沒有進前三</strong>——它是被最多軸線推薦的一招，卻也是在你的真實通路上最容易壞的一招。先把不會壞的做完，再碰會壞的。</p>
+</div>
+
+
+<span class="kicker">【本土】</span>
+<h2>中文不是英文加一個字集，而你跟天下的差距不在技術</h2>
+
+<p>我扒了天下雜誌某篇互動專題的完整原始碼，<span class="nb">3,180,548 bytes</span>，逐項比對指紋。</p>
+
+<details>
+<summary>天下雜誌互動專題的技術棧：八項指紋</summary>
+<div class="in">
+<div class="kv"><span class="k">建置工具的執行檔</span><span class="v"><code>shimport@2.0.5</code></span></div>
+<div class="kv"><span class="k">框架專屬的樣式標記</span><span class="v"><code>svelte-5s4uq</code> 等 14 組</span></div>
+<div class="kv"><span class="k">原始碼中的框架字樣</span><span class="v"><code>sapper</code> 直接出現</span></div>
+<div class="kv"><span class="k">字型</span><span class="v"><code>Roboto, "Noto Sans TC"</code></span></div>
+<div class="kv"><span class="k">中文字重數量</span><span class="v">5 個（100/300/400/500/700）</span></div>
+<div class="kv"><span class="k">內文字級</span><span class="v">18px</span></div>
+<div class="kv"><span class="k">行高</span><span class="v">1.75</span></div>
+<div class="kv"><span class="k">內文欄寬上限</span><span class="v">640px</span></div>
+<p style="margin-top:1rem">Svelte 是一種「編譯完就變成純網頁檔」的前端工具。編譯結束後產出的就是一堆 HTML、CSS、JavaScript 檔案，丟到任何靜態主機都能跑。所以天下的互動專題本質上就是<em>一份靜態網頁檔</em>。</p>
+<p><strong>對照組</strong>：報導者只用 3 個中文字重，而且在字型清單最後掛了一套支援台語漢字的字型（Tauhu Oo）。英文網頁不需要為了少數字元多掛一套字型；繁體中文網頁碰到台語、客語、原住民族語、罕用字，就會出現空白方框。</p>
+</div>
+</details>
+
+<p><strong>基礎設施上沒有落差。</strong>差的是人力與流程，而那個差距是真的——他們一篇專題有記者、設計、工程三方協作。</p>
+
+<div class="tbl">
+<table>
+<thead>
+<tr><th style="width:46%">誰</th><th style="width:54%">一篇專題要多久</th></tr>
+</thead>
+<tbody>
+<tr><td>The Pudding<br><span class="dim">6 到 8 人的團隊</span></td><td><strong>4 到 6 週</strong>，一人端到端（研究、資料、設計、寫作、程式）</td></tr>
+<tr><td>紐約時報視覺調查組</td><td>快速題 1 到 2 週／<strong>常態 1 到 2 個月</strong>／3D 重建約 6 個月</td></tr>
+<tr><td>華盛頓郵報圖表部門</td><td>約 30 人、7 種角色</td></tr>
+</tbody>
+</table>
+</div>
+
+<p>The Pudding 的一人 4 到 6 週，跟紐約時報整組的 1 到 2 個月，<em>兩個數字幾乎一樣</em>。所以 30 人部門買到的是並行度與品質下限，<strong>不是速度</strong>。降低的是基礎設施門檻，不是時間。</p>
+
+<div class="callout warn">
+<p><strong>兩個要更正的常識。</strong>Malofiej 這個常被當標竿的資訊圖表獎，自 2021 年 10 月 1 日起<em>已暫停</em>，查無 2024 到 2026 年名單。Data Journalism Awards 也已於 2019 年隨主辦組織停辦，網路上殘存的頁面是歷史檔案。現在可用的標竿是 SND 與 Sigma Awards。</p>
+</div>
+
+<p>另一個制度層級的訊號：SND 第 47 屆把最高獎依機構規模拆成兩組，微型與小型組的大獎給了 The Pudding，而且得獎標的是跨多篇的設計作品集，不是單篇作品。小團隊的競爭力錨在「一致的設計系統跨多篇累積」，不在單篇的爆發力。</p>
+
+
+<span class="kicker">【複盤】</span>
+<h2>這一頁自己用了哪些手法，又刻意不用哪些</h2>
+
+<p>用研究本身的手法來呈現研究，是這一頁的設計前提。下面逐條交代，你可以自己驗。</p>
+
+<h3>用了這些</h3>
+
+<div class="tbl wide">
+<table>
+<thead>
+<tr><th style="width:30%">手法</th><th style="width:70%">你在這一頁的哪裡看得到</th></tr>
+</thead>
+<tbody>
+<tr><td>中文排版三條 P0</td><td><code>&lt;html lang="zh-Hant-TW"&gt;</code> 加上 <code>text-autospace: normal</code>、<code>font-synthesis: none</code>、<code>line-break: strict</code>。中英數之間的空白是排版引擎插的，你複製這段文字不會夾帶多餘空格。</td></tr>
+<tr><td>主動式標題</td><td>每一個段落標題都是一句主張。「被轉述十年的三個數字，回到源頭都是空的」——不是「數字查證」。</td></tr>
+<tr><td>圖說寫成一句結論</td><td>三張圖的圖說都能脫離內文獨立讀懂。</td></tr>
+<tr><td>Note 與 Source 分開</td><td>每張圖下方，Note 在前、Source 在後。Note 講怎麼得到的與但書，Source 講資料哪來。</td></tr>
+<tr><td>灰底加單一主角色</td><td>三張圖只有一個強調色。所有背景結構走灰階，重點才上色。你可以把整頁截圖轉灰階自己驗。</td></tr>
+<tr><td>直接標籤</td><td>三張圖都沒有圖例。標籤直接放在物件旁邊。</td></tr>
+<tr><td>單圖多幕</td><td>圖 1。同一組三個方框，疊三次註解，不換圖。</td></tr>
+<tr><td>註解層</td><td>圖 1 右下角那個引線指向的說明框。它不是圖的一部分，是壓在圖上的第二層。</td></tr>
+<tr><td>可展開的原始資料</td><td>六個折疊區。原生 HTML，不需要 JavaScript 就能展開。</td></tr>
+<tr><td>三種寬度的網格</td><td>內文 680px、圖 1 用加寬欄、其餘用內文寬。</td></tr>
+<tr><td>內容類型標籤前綴</td><td>【查證】【機制】【對照】【爭論】【誠實】【清單】【本土】【複盤】，八個，控制在十個以內。</td></tr>
+<tr><td>著重號</td><td>正文裡字下面有小點的地方。那不是粗體——中文沒有真斜體，著重號是中文書籍百年來的標準做法，而且不需要多載一個字重。</td></tr>
+<tr><td>系統字堆疊</td><td>網頁字型載入量是 <strong>0 KB</strong>。全部走你裝置上已有的字。</td></tr>
+<tr><td>首屏零 JavaScript</td><td>唯一一段 JavaScript 是頂端那條進度條，而且它在 <code>&lt;/body&gt;</code> 前才執行。關掉 JavaScript，這一頁完整可讀。</td></tr>
+<tr><td>頁尾姊妹作連結列</td><td>最下面那一排。</td></tr>
+</tbody>
+</table>
+</div>
+
+<h3>刻意不用這些</h3>
+
+<div class="tbl wide">
+<table>
+<thead>
+<tr><th style="width:30%">沒用的手法</th><th style="width:70%">為什麼</th></tr>
+</thead>
+<tbody>
+<tr><td><strong>圖釘住不動、文字往下捲</strong></td><td>研究裡最多軸線推薦的一招。但台灣讀者多半從 LINE 或 FB 的內建瀏覽器點連結，那種瀏覽器對它的支援不一致，而且<em>壞掉時不會報錯</em>。這一頁要能被轉發，所以不用。</td></tr>
+<tr><td><strong>點擊式分步圖</strong></td><td>圖 1 本來可以做成「點一下看下一幕」。沒做，是因為 Tse 與 Kosara 對這個元件的建議至今相反，這場爭論沒有被實證解決過。既然沒有定論，就選成本較低的那邊——<strong>靜態三幕並排，讀者只需要往下捲</strong>。</td></tr>
+<tr><td><strong>視差捲動</strong></td><td>效益未經證實（唯一相關研究樣本數 86，結論是未提升整體體驗），而傷害方向雖有共識、常被引用的百分比卻查無出處。兩邊都不硬，不值得冒險。</td></tr>
+<tr><td><strong>通用淡入動畫</strong></td><td>屬於裝飾型動態。判準是把動畫全部關掉之後，讀者是否仍能得到完整的故事——如果是，那個動畫就是認知稅。</td></tr>
+<tr><td><strong>長條圖表示投入度與理解度</strong></td><td>兩份研究用的不是同一把尺，我沒有可以相減的效果量。畫成長條會暗示一個不存在的量化比較。前一版我真的畫了，高度是我編的，render 後目視才抓到。</td></tr>
+</tbody>
+</table>
+</div>
+
+<div class="callout warn">
+<p><strong>做這一頁時踩到的第二個坑，一併記下。</strong>第一次把頁面渲染成圖檢查時，我把視窗高度設成 4,200 像素，而真實頁高是 5,416——整個第三層我根本沒截到，卻宣稱驗過了。</p>
+<p>目視自驗這道關卡，它自己也會有假陰性：<strong>截圖高度不夠，就是沉默的漏驗</strong>。之後渲染長頁要先逐列掃描量出真實高度再截。</p>
+</div>
+
+</article>
+
+<footer>
+<div class="siblings">
+<p class="dim" style="margin:0">同系列</p>
+<ul>
+<li>頂級新聞媒體數位專題研究 · 七軸原始報告（本機，未公開）</li>
+<li>可直接抄的手法清單 · 低成本 13 條／中成本 12 條／高成本 6 條（本頁收錄低成本級）</li>
+<li>十一組矛盾與張力 · 未調和版（本頁收錄三組）</li>
+</ul>
+</div>
+<p>
+最後更新：2026-08-27 · CC BY 4.0 · 引用請標來源<br>
+研究方法：七條平行軸線獨立收集，一條異質索引交叉，一層綜合收攏。所有具體數字回查原始出處，查證失敗者標記為不得使用。
+</p>
+</footer>
+
+</main>
+<script>
+  const bar = document.getElementById('progress');
+  window.addEventListener('scroll', () => {
+    const h = document.documentElement;
+    const max = h.scrollHeight - h.clientHeight;
+    const ratio = max > 0 ? h.scrollTop / max : 0;
+    bar.style.transform = 'scaleX(' + ratio + ')';
+  }, { passive: true });
+</script>
+</body>
+</html>
