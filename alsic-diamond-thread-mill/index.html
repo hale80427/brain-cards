@@ -1,0 +1,516 @@
+<!DOCTYPE html>
+<html lang="zh-Hant-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>鍍上鑽石膜，補的是硬度排序，不是這把刀在 Al-SiC 裡缺的切削對象</title>
+<meta name="description" content="一把為連續纖維設計的正反旋牙型銑刀鍍上 CVD 鑽石膜後銑 Al-SiC 40 vol%：三個獨立來源收斂到「這題問錯了」，但沒有判死——爭議收斂成一小時試切能回答的問題。">
+
+<link rel="canonical" href="https://hale80427.github.io/brain-cards/alsic-diamond-thread-mill/">
+<meta name="author" content="彥皓">
+
+<meta property="og:type" content="article">
+<meta property="og:title" content="鍍上鑽石膜，補的是硬度排序，不是這把刀在 Al-SiC 裡缺的切削對象">
+<meta property="og:description" content="一把為連續纖維設計的正反旋牙型銑刀鍍上 CVD 鑽石膜後銑 Al-SiC 40 vol%：三個獨立來源收斂到「這題問錯了」，但沒有判死。">
+<meta property="og:url" content="https://hale80427.github.io/brain-cards/alsic-diamond-thread-mill/">
+<meta property="og:image" content="https://hale80427.github.io/brain-cards/og-default.jpg">
+<meta property="og:locale" content="zh_TW">
+
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="鍍上鑽石膜，補的是硬度排序，不是這把刀在 Al-SiC 裡缺的切削對象">
+<meta name="twitter:description" content="一把為連續纖維設計的正反旋牙型銑刀鍍上 CVD 鑽石膜後銑 Al-SiC 40 vol%：三個獨立來源收斂到「這題問錯了」，但沒有判死。">
+<meta name="twitter:image" content="https://hale80427.github.io/brain-cards/og-default.jpg">
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "鍍上鑽石膜，補的是硬度排序，不是這把刀在 Al-SiC 裡缺的切削對象",
+  "description": "一把為連續纖維設計的正反旋牙型銑刀鍍上 CVD 鑽石膜後銑 Al-SiC 40 vol%：三個獨立來源收斂到「這題問錯了」，但沒有判死。",
+  "datePublished": "2026-08-28",
+  "dateModified": "2026-08-28",
+  "author": { "@type": "Person", "name": "彥皓" },
+  "url": "https://hale80427.github.io/brain-cards/alsic-diamond-thread-mill/",
+  "inLanguage": "zh-TW",
+  "license": "https://creativecommons.org/licenses/by/4.0/"
+}
+</script>
+
+<style>
+  /* ===== KB-02 模板基底 ＋ KB-06 方向 B（工程文檔風）token diff ===== */
+  :root {
+    --bg: oklch(100% 0 0);
+    --fg: oklch(24.5% 0.012 250);
+    --accent: oklch(52.0% 0.160 255);
+    --accent-warn: oklch(59.5% 0.150 58);
+    --muted: oklch(50.0% 0.008 250);
+    --border: oklch(91.0% 0.006 250);
+    --callout-tip: oklch(96.5% 0.014 255);
+    --callout-warn: oklch(96.8% 0.024 78);
+    --fs-meta: 0.8125rem;
+    --fs-body: 0.9375rem;
+    --fs-h2: clamp(1.15rem, 2.5vw, 1.375rem);
+    --fs-h1: clamp(1.5rem, 3.5vw, 1.9rem);
+    --font-serif: "Noto Sans TC", "PingFang TC", "Inter", system-ui, -apple-system, sans-serif;
+    --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+    --ease-linear: linear;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: oklch(17.5% 0.014 258);
+      --fg: oklch(91.5% 0.012 250);
+      --accent: oklch(72.0% 0.130 250);
+      --accent-warn: oklch(78.0% 0.140 70);
+      --muted: oklch(66.0% 0.010 250);
+      --border: oklch(30.0% 0.012 258);
+      --callout-tip: oklch(26.5% 0.030 255);
+      --callout-warn: oklch(27.5% 0.035 72);
+    }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
+  }
+  * { box-sizing: border-box; }
+  body {
+    font-family: var(--font-serif);
+    background: var(--bg);
+    color: var(--fg);
+    line-height: 1.8;
+    margin: 0;
+    padding: 0;
+    -webkit-font-smoothing: antialiased;
+    /* 中文排版三條 P0（KB-09 L1） */
+    text-autospace: normal;
+    font-synthesis: none;
+    line-break: strict;
+  }
+  .progress-bar {
+    position: fixed; top: 0; left: 0; height: 3px; width: 100%;
+    background: var(--accent); z-index: 100;
+    transform: scaleX(0); transform-origin: left;
+    transition: transform 0.1s var(--ease-linear);
+  }
+  /* ===== 三種寬度的版面網格（KB-09 L9）=====
+     content 720（B 方向密度型較 KB-02 的 680 寬）／wide ±120／full。
+     ⚠ 併軌斷點必須 ≥ 720+120*2+留白 ≈ 1000 ⇒ 設 1040。 */
+  main, main > article {
+    display: grid;
+    grid-template-columns:
+      [full-start] minmax(1rem, 1fr)
+      [wide-start] minmax(0, 120px)
+      [content-start] minmax(0, 720px) [content-end]
+      minmax(0, 120px) [wide-end]
+      minmax(1rem, 1fr) [full-end];
+  }
+  main { padding: clamp(2rem, 5vw, 4rem) 0; }
+  main > *, main > article > * { grid-column: content; }
+  main > article { grid-column: full; }
+  main > .wide, main > article > .wide { grid-column: wide; }
+  main > .full, main > article > .full { grid-column: full; }
+  @media (max-width: 1040px) {
+    main, main > article {
+      grid-template-columns:
+        [full-start] minmax(1rem, 1fr)
+        [wide-start content-start] minmax(0, 720px) [content-end wide-end]
+        minmax(1rem, 1fr) [full-end];
+    }
+  }
+  /* ===== 字級階梯：嚴格 4 級 ===== */
+  h1 { font-size: var(--fs-h1); line-height: 1.35; margin: 0 0 1rem; letter-spacing: -0.01em; }
+  h2 { font-size: var(--fs-h2); line-height: 1.45; margin: 2.75rem 0 0.75rem;
+       border-left: 4px solid var(--accent); padding: 0 0 0 0.7rem; }
+  h3 { font-size: var(--fs-body); font-weight: 700; line-height: 1.4; margin: 1.75rem 0 0.5rem; color: var(--accent); }
+  p, li, td, th, figcaption, summary { font-size: var(--fs-body); }
+  p { margin: 0 0 1.15rem; }
+  ul, ol { padding-left: 1.4rem; }
+  li { margin-bottom: 0.5rem; }
+  a { color: var(--accent); text-underline-offset: 3px; }
+  a:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+  /* 著重號取代部分粗體（KB-09 L12）——行高 1.8 剛好夠 */
+  em { font-style: normal; font-weight: 600;
+       text-emphasis: filled dot; text-emphasis-position: under right;
+       -webkit-text-emphasis: filled dot; -webkit-text-emphasis-position: under right; }
+  em:lang(en) { font-style: italic; font-weight: inherit;
+                text-emphasis: none; -webkit-text-emphasis: none; }
+  .bluf { font-size: var(--fs-body); background: var(--callout-tip); border-left: 3px solid var(--accent);
+          padding: 1.15rem 1.4rem; margin: 1.5rem 0 2rem; border-radius: 4px; }
+  .bluf strong.label { display: block; font-size: var(--fs-meta); letter-spacing: 0.05em;
+                       color: var(--accent); margin-bottom: 0.5rem; text-transform: uppercase; }
+  .bluf p:last-child { margin-bottom: 0; }
+  .callout { font-size: var(--fs-body); padding: 0.9rem 1.15rem; margin: 1.5rem 0; border-radius: 4px; border-left: 3px solid var(--muted); }
+  .callout.tip { background: var(--callout-tip); border-left-color: var(--accent); }
+  .callout.warn { background: var(--callout-warn); border-left-color: var(--accent-warn); }
+  .callout p:last-child { margin-bottom: 0; }
+  /* 內容類型標籤前綴（KB-09 L11）——固定四種，不再增加 */
+  .kicker { display: inline-block; font-size: var(--fs-meta); font-weight: 700;
+            letter-spacing: 0.1em; color: var(--accent); margin: 2.75rem 0 0; }
+  .kicker + h2 { margin-top: 0.35rem; }
+  /* Note 與 Source 是兩個欄位，Note 在前（KB-09 L6） */
+  .notesrc { font-size: var(--fs-meta); color: var(--muted); margin: 0.5rem 0 0; line-height: 1.7; }
+  .notesrc b { color: var(--fg); font-weight: 600; }
+  .tbl { overflow-x: auto; margin: 1.5rem 0; }
+  table { border-collapse: collapse; width: 100%; font-variant-numeric: tabular-nums; }
+  th, td { padding: 0.55rem 0.75rem; border: 1px solid var(--border); text-align: left; vertical-align: top; }
+  th { background: var(--callout-tip); font-weight: 600; }
+  code { font-family: var(--font-mono); background: var(--callout-tip);
+         padding: 0.1em 0.4em; border-radius: 3px; font-size: var(--fs-body); }
+  blockquote { margin: 1.5rem 0; padding: 0.6rem 0 0.6rem 1.1rem;
+               border-left: 3px solid var(--border); color: var(--fg); }
+  blockquote p:last-child { margin-bottom: 0; }
+  details { border: 1px solid var(--border); border-radius: 4px; padding: 0.75rem 1rem; margin: 1.5rem 0; }
+  details summary { cursor: pointer; font-weight: 600; color: var(--accent); }
+  details[open] summary { margin-bottom: 0.75rem; }
+  figure { margin: 1.75rem 0; }
+  figure img { width: 100%; height: auto; border-radius: 4px; display: block; }
+  .figscroll { overflow-x: auto; }
+  figure svg { width: 100%; min-width: 500px; height: auto; display: block; }
+  figcaption { color: var(--muted); margin-top: 0.5rem; line-height: 1.7; }
+  hr { border: 0; border-top: 1px solid var(--border); margin: 3rem 0; }
+  footer p { color: var(--muted); margin-top: 3rem; padding-top: 1.5rem; border-top: 1px solid var(--border); }
+  @media print {
+    .progress-bar { display: none; }
+    body { font-size: 11pt; line-height: 1.6; }
+  }
+</style>
+</head>
+<body>
+<div class="progress-bar" id="progress"></div>
+<main>
+<header>
+<h1>鍍上鑽石膜，補的是硬度排序，不是這把刀在 Al-SiC 裡缺的切削對象</h1>
+<div class="bluf">
+<strong class="label">BLUF</strong>
+<p>一把為連續纖維複合材料設計的正反旋牙型銑刀（Ø4、兩槽），廠商為客戶客製鍍了 CVD 鑽石膜，要拿去銑 40 vol% 的 Al-SiC。三個互相獨立的來源收斂到同一個判斷：這把刀的幾何在顆粒增強鋁基複材裡<em>找不到對應的切削對象</em>。</p>
+<p>鑽石膜只補了硬度排序。它沒有補排屑路徑，沒有補刃口相對顆粒的尺度，也沒有補斷續衝擊下的膜與基材界面。</p>
+<p><em>但沒有判死</em>——唯一的實測證據方向反而是正面的。爭議已經收斂成一個一小時試切能回答的問題。</p>
+</div>
+</header>
+<article>
+<!-- narrative: 物件,細節,矛盾,直接引語 -->
+
+<h2>這把刀跟上一把，只有直徑差不多是共通的</h2>
+
+<p>前一輪的對象是 OSG PCD-MRM D3 × R0.1 × 25 刃，一體燒結的聚晶鑽石（polycrystalline diamond，PCD，把鑽石顆粒與鈷結合劑高溫高壓燒成一整塊）。</p>
+<p>這一輪換成 WU CARBIDE WU38/2CFX，硬質合金基材外加客製化學氣相沉積鑽石膜（CVD diamond coating，一層長在刀體表面的多晶鑽石薄膜）。</p>
+<p>兩者放在一起看，差的不是一個等級，是不同的物種。</p>
+
+<div class="tbl wide">
+<table>
+<thead>
+<tr><th>項目</th><th>上一把：PCD D3 × R0.1 × 25 刃</th><th>這一把：D4 兩槽牙型</th></tr>
+</thead>
+<tbody>
+<tr><td>刃形</td><td>R0.1 圓角刃，連續圓弧</td><td>牙型鋸齒，齒距估 0.25–0.5 mm（未量）</td></tr>
+<tr><td>每齒進給 f<sub>z</sub></td><td>0.857 µm（S14000 F300）</td><td>10.0 µm（Z=2）／20.0 µm（Z=1）</td></tr>
+<tr><td>刃口鈍圓 r<sub>n</sub></td><td>2.5–7 µm</td><td>17 µm（鍍後量測值）</td></tr>
+<tr><td>齒間角</td><td>14.4°，小於接觸角</td><td>180°，遠大於接觸角</td></tr>
+<tr><td>相對犁耕門檻</td><td>兩種工法都深在犁耕域</td><td>兩種工法都跳出來了</td></tr>
+<tr><td>主要失效模式</td><td>黏著、SiC 磨掉鈷結合劑、鑽石顆粒被扯下</td><td>多一條 PCD 沒有的：塗層剝離</td></tr>
+</tbody>
+</table>
+<p class="notesrc"><b>Note</b>：f<sub>z</sub> 與 h<sub>max</sub> 這兩欄依賴有效切削齒數 Z，而 Z 尚未量測，故全文雙值並列（見下方灰框）。D4 該欄的 f<sub>z</sub> 用試切表定的 S11000 F220 算，不是上一把的 S14000 F300。</p>
+<p class="notesrc"><b>Source</b>：型錄第 4 頁規格表、專利說明書、<code>geometry_wu38_d4.py</code>（exit 0）。對照臂逐處明寫＝第 190 跑的 OSG PCD-MRM D3 × R0.1 × 25 刃。</p>
+</div>
+
+<p>齒間角那一列是這張表裡最容易被略過、實際上最重要的一列。25 刃 PCD 的齒間角 14.4° 小於接觸角，代表刀從來不脫離工件。兩槽刀的齒間角 180°，遠大於任何一組參數下的接觸角。這代表<em>這把刀每轉都完全退出一次</em>。</p>
+<p>這件事同時是好消息和壞消息：脫離給了排屑與冷卻的機會，也讓鑽石膜每轉承受一次進退刀衝擊。CVD 鑽石是脆性陶瓷，週期性衝擊正是界面疲勞剝離的驅動力。</p>
+
+<div class="callout warn">
+<p><strong>一條必須先講的地基問題：有效切削齒數 Z 目前真的還不知道。</strong></p>
+<p>交接包寫 Z=2，那是上一棒的判斷，不是量測。專利與型錄對上之後可以確定兩件事。第一，圓周上分右旋刃部與左旋刃部，型錄「刃數 flutes ＝ 2」講的是槽數，不是每轉的有效切削次數。</p>
+<p>第二，左右兩側的齒在軸向上錯開，所以 <em>Z 會隨軸向位置在 1 與 2 之間振盪</em>。</p>
+<p>凡是依賴 Z 的數字，本文一律雙值並列。這個不確定性不只是「差一倍」——後面會看到，它跨過了一道懸崖的方向。</p>
+</div>
+
+<h2>正反旋刃夾一條直槽，切屑會在刀身中段對撞</h2>
+
+<p>專利本文的技術領域逐字寫「纖維材料」，全文零次出現金屬、鋁或碳化矽。幾何是這樣的：圓周分成右旋刃部與左旋刃部，中間夾一條<em>與旋轉中心軸平行的直排屑槽</em>（專利 0004 逐字：「與該旋轉中心軸平行的切屑容積槽」）。</p>
+<p>每一半沿軸向排多圈牙型鋸齒。右旋刃與左旋刃的刀面朝向相反（0013），所以兩側產生的軸向切削力方向相反。</p>
+
+<p>對 CFRP 來說這是聰明的設計：上下相向的軸向力把纖維往內夾，抑制出入口的分層與毛邊，而切屑是粉末，直槽夠用。</p>
+
+<figure>
+<div class="figscroll">
+<svg viewBox="0 0 560 232" role="img" xmlns="http://www.w3.org/2000/svg">
+<title>刀具幾何示意：右旋刃部與左旋刃部把切屑推向相反軸向，在中間的直排屑槽相遇</title>
+<defs>
+  <marker id="fig1-arrow" markerWidth="9" markerHeight="9" refX="7" refY="3" orient="auto">
+    <path d="M0,0 L7,3 L0,6 Z" fill="var(--accent)"/>
+  </marker>
+  <marker id="fig1-arrow-warn" markerWidth="9" markerHeight="9" refX="7" refY="3" orient="auto">
+    <path d="M0,0 L7,3 L0,6 Z" fill="var(--accent-warn)"/>
+  </marker>
+</defs>
+
+<!-- 刀體 -->
+<rect x="40" y="70" width="480" height="76" rx="4" fill="var(--callout-tip)" stroke="var(--border)"/>
+<!-- 牙型鋸齒（上緣） -->
+<path d="M40,70 l14,-11 l14,11 l14,-11 l14,11 l14,-11 l14,11 l14,-11 l14,11 l14,-11 l14,11 l14,-11 l14,11 l14,-11 l14,11"
+      fill="none" stroke="var(--accent)" stroke-width="2"/>
+<path d="M296,70 l14,-11 l14,11 l14,-11 l14,11 l14,-11 l14,11 l14,-11 l14,11 l14,-11 l14,11 l14,-11 l14,11 l14,-11 l14,11 l14,-11 l14,11"
+      fill="none" stroke="var(--accent)" stroke-width="2"/>
+<!-- 中央直排屑槽 -->
+<rect x="266" y="59" width="28" height="98" fill="var(--callout-warn)" stroke="var(--accent-warn)" stroke-width="2"/>
+<!-- 切屑流向箭頭 -->
+<line x1="120" y1="108" x2="248" y2="108" stroke="var(--accent)" stroke-width="2.5" marker-end="url(#fig1-arrow)"/>
+<line x1="440" y1="108" x2="312" y2="108" stroke="var(--accent)" stroke-width="2.5" marker-end="url(#fig1-arrow)"/>
+<!-- 對撞標記 -->
+<line x1="280" y1="157" x2="280" y2="176" stroke="var(--accent-warn)" stroke-width="2" marker-end="url(#fig1-arrow-warn)"/>
+
+<text x="150" y="46" font-size="14" fill="var(--fg)">右旋刃部</text>
+<text x="392" y="46" font-size="14" fill="var(--fg)">左旋刃部</text>
+<text x="150" y="96" font-size="13" fill="var(--muted)">切屑往右推</text>
+<text x="352" y="96" font-size="13" fill="var(--muted)">切屑往左推</text>
+<text x="280" y="198" font-size="13" fill="var(--accent-warn)" text-anchor="middle">直槽：無螺旋角，兩股切屑在此相遇</text>
+<text x="40" y="176" font-size="12" fill="var(--muted)">刃長 6 mm，齒圈數未量</text>
+</svg>
+</div>
+<figcaption>圖 1 · 右旋刃與左旋刃的刀面朝向相反，把切屑推向相反軸向，而中間那條直槽沒有螺旋角可以把它們送出去 · 作者自繪</figcaption>
+<p class="notesrc"><b>Note</b>：示意圖，不按比例。專利第 10 圖本身即明文標示非按比例（0010），齒圈數與齒形角度都是未量參數。</p>
+<p class="notesrc"><b>Source</b>：專利說明書 0004／0011／0013 段與第 7、10 圖；作者依上述段落重繪。</p>
+</figure>
+
+<p>換到 Al-SiC 上，同一個幾何的後果反過來。鋁基材是延性的，切屑是半連續的黏性帶狀物，不是粉。</p>
+<p>兩側刀面把切屑推向相反的軸向，而它們在中間那條直槽相遇。直槽沒有螺旋角，沒有任何把切屑往外推的分量。</p>
+
+<p class="kicker">【翻轉】</p>
+<h2>我在第一輪把 17 µm 當成「太鈍」的問題，方向錯了</h2>
+
+<p>第一輪我的框架是：鍍後刃口鈍圓 17 µm 太鈍，最小切屑厚度門檻被推高，要想辦法讓每齒切屑厚度跳出犁耕域（ploughing regime，切屑太薄時刀不是在剪切材料而是在推擠與摩擦）。</p>
+<p>這個框架在做溯源抽驗時被自己推翻。</p>
+
+<p>翻轉來自 Chou 的博士論文，University of Alabama，237 頁，本機下載後抽文。第 89–90 頁有一組刃口鈍圓半徑對壽命的參數研究，逐字：</p>
+
+<blockquote>
+<p>「A general trend can be noted: the larger the edge radius, the better the wear resistance among the edge radii tested. Using 0.5 mm VB as the life criterion, 65 µm radius tools have an average of ~20 min of tool life vs. ~3 min for 5 µm radius tools.」</p>
+</blockquote>
+
+<p>同一篇的有限元素模擬結論另一句：「a larger uncut chip thickness tends to result in coating delaminations」。</p>
+
+<p>把兩句放在一起：對切 Al/SiC 的 CVD 鑽石塗層刀，決定壽命的不是切削效率，是<em>塗層剝離</em>；而剝離由刃口的應力集中與機械負荷驅動。</p>
+<p>所以<em>刃口越鈍越好、每齒切屑厚度越大越早剝離</em>。</p>
+
+<p>這跟犁耕域的方向正好相反。犁耕域說「切屑太薄就不是剪切、是摩擦，要把 f<sub>z</sub> 加大」；剝離說「切屑太厚膜會掉，要把 f<sub>z</sub> 壓小」。<em>兩邊各是一道懸崖，中間才是窗口。</em></p>
+
+<figure>
+<div class="figscroll">
+<svg viewBox="0 0 560 250" role="img" xmlns="http://www.w3.org/2000/svg">
+<title>每齒最大切屑厚度的兩道懸崖：左側犁耕域有刻度，右側剝離風險只有方向沒有刻度</title>
+<defs>
+  <marker id="fig2-arrow" markerWidth="9" markerHeight="9" refX="7" refY="3" orient="auto">
+    <path d="M0,0 L7,3 L0,6 Z" fill="var(--fg)"/>
+  </marker>
+  <linearGradient id="fig2-risk" x1="0" y1="0" x2="1" y2="0">
+    <stop offset="0%" stop-color="var(--callout-warn)" stop-opacity="0"/>
+    <stop offset="100%" stop-color="var(--accent-warn)" stop-opacity="0.55"/>
+  </linearGradient>
+</defs>
+
+<!-- 犁耕域帶 -->
+<rect x="50" y="70" width="116.5" height="70" fill="var(--muted)" opacity="0.20"/>
+<rect x="126.6" y="70" width="39.9" height="70" fill="var(--accent)" opacity="0.18"/>
+<!-- 剝離風險漸層 -->
+<rect x="166.5" y="70" width="353.5" height="70" fill="url(#fig2-risk)"/>
+<!-- 軸 -->
+<line x1="50" y1="140" x2="530" y2="140" stroke="var(--fg)" stroke-width="1.5" marker-end="url(#fig2-arrow)"/>
+<!-- 刻度 -->
+<line x1="50" y1="140" x2="50" y2="147" stroke="var(--muted)"/>
+<line x1="147.9" y1="140" x2="147.9" y2="147" stroke="var(--muted)"/>
+<line x1="245.8" y1="140" x2="245.8" y2="147" stroke="var(--muted)"/>
+<line x1="343.8" y1="140" x2="343.8" y2="147" stroke="var(--muted)"/>
+<line x1="441.7" y1="140" x2="441.7" y2="147" stroke="var(--muted)"/>
+<text x="50" y="163" font-size="12" fill="var(--muted)" text-anchor="middle">0</text>
+<text x="147.9" y="163" font-size="12" fill="var(--muted)" text-anchor="middle">5</text>
+<text x="245.8" y="163" font-size="12" fill="var(--muted)" text-anchor="middle">10</text>
+<text x="343.8" y="163" font-size="12" fill="var(--muted)" text-anchor="middle">15</text>
+<text x="441.7" y="163" font-size="12" fill="var(--muted)" text-anchor="middle">20</text>
+<text x="500" y="163" font-size="12" fill="var(--muted)" text-anchor="middle">µm</text>
+
+<!-- h_min 帶標註 -->
+<line x1="126.6" y1="70" x2="126.6" y2="140" stroke="var(--accent)" stroke-width="1.5" stroke-dasharray="4 3"/>
+<line x1="166.5" y1="70" x2="166.5" y2="140" stroke="var(--accent)" stroke-width="1.5" stroke-dasharray="4 3"/>
+
+<!-- 試件標記 Z=2 -->
+<circle cx="206.7" cy="105" r="6" fill="var(--accent)"/>
+<circle cx="245.8" cy="105" r="6" fill="var(--accent)"/>
+<!-- 試件標記 Z=1 -->
+<circle cx="363.3" cy="105" r="6" fill="none" stroke="var(--accent)" stroke-width="2"/>
+<circle cx="441.7" cy="105" r="6" fill="none" stroke="var(--accent)" stroke-width="2"/>
+
+<text x="88" y="60" font-size="13" fill="var(--fg)" text-anchor="middle">犁耕域</text>
+<text x="146" y="196" font-size="12" fill="var(--accent)" text-anchor="middle">h_min 3.9–5.9</text>
+<text x="226" y="90" font-size="12" fill="var(--fg)" text-anchor="middle">Z=2 兩試件</text>
+<text x="402" y="90" font-size="12" fill="var(--fg)" text-anchor="middle">若 Z=1</text>
+<text x="430" y="60" font-size="13" fill="var(--accent-warn)" text-anchor="middle">剝離風險升高（無刻度）</text>
+<text x="50" y="228" font-size="12" fill="var(--muted)">橫軸＝每齒最大切屑厚度 h_max</text>
+</svg>
+</div>
+<figcaption>圖 2 · 犁耕域與剝離風險是方向相反的兩道懸崖，而窗口的上界至今沒有刻度 · 作者自繪</figcaption>
+<p class="notesrc"><b>Note</b>：左界 h_min ＝ 0.23–0.35 × 鍍後 r<sub>n</sub> 17 µm，該比值出自鋁合金而非 Al-SiC，移植代價未量。右側只有方向沒有數值——Chou 給的是趨勢不是門檻，漸層的起點是作者為了畫圖而選的，<em>不代表任何實測閾值</em>。</p>
+<p class="notesrc"><b>Source</b>：h_min 比值取自 Malekian 2012、Yuan 1996、de Oliveira 2015；右側方向取自 Chou 博士論文的有限元素結論。座標與試件位置由 <code>geometry_wu38_d4.py</code> 算出。</p>
+</figure>
+
+<p>窗口的下界是 h<sub>min</sub> ≈ 3.9–5.9 µm（三個獨立來源給的比值 0.23–0.35，乘上鍍後 17 µm）。</p>
+<p>上界沒有數字——Chou 給的是方向不是門檻。試切表定的兩件，h<sub>max</sub> 分別是 8.0 與 10.0 µm（Z=2），對下界的裕度 +2.05 至 +4.05 µm。</p>
+
+<p><em>而如果 Z 其實是 1</em>，同樣兩件的 h<sub>max</sub> 變成 16.0 與 20.0 µm，離下界更遠，也離上界那道沒有刻度的懸崖更近。這就是為什麼「數清楚有幾圈齒」不是雜事，是第一個動作。</p>
+
+<details>
+<summary>檢視原始資料：兩件試切的參數與重算指令</summary>
+<div class="tbl">
+<table>
+<thead>
+<tr><th>項目</th><th>大 Ae 小 Ap 件</th><th>大 Ap 小 Ae 件</th></tr>
+</thead>
+<tbody>
+<tr><td>A<sub>p</sub> / A<sub>e</sub></td><td>1.0 / 2.0 mm</td><td>4.0 / 0.8 mm</td></tr>
+<tr><td>S / F</td><td>11,000 rpm / 220 mm·min⁻¹</td><td>11,000 rpm / 220 mm·min⁻¹</td></tr>
+<tr><td>V<sub>c</sub></td><td>138.23 m/min</td><td>138.23 m/min</td></tr>
+<tr><td>f<sub>z</sub>（Z=2 / Z=1）</td><td>10.0 / 20.0 µm</td><td>10.0 / 20.0 µm</td></tr>
+<tr><td>h<sub>max</sub>（Z=2 / Z=1）</td><td>10.0 / 20.0 µm</td><td>8.0 / 16.0 µm</td></tr>
+<tr><td>接觸角</td><td>90.00°</td><td>53.13°</td></tr>
+<tr><td>每轉在切的比例</td><td>25.00%</td><td>14.76%</td></tr>
+<tr><td>切屑量 MRR</td><td>440 mm³/min</td><td>704 mm³/min</td></tr>
+<tr><td>這件測什麼</td><td>塗層剝離 H2（單齒負荷高、咬得久）</td><td>排屑塞死 H1（切屑量是另一件的 1.60 倍）</td></tr>
+</tbody>
+</table>
+</div>
+<p class="notesrc"><b>Note</b>：本表與圖 2 從同一支腳本產出，改參數要一起改。S 從上一把的 14,000 降到 11,000 是為了對齊 V<sub>c</sub>（D3@S14000 ＝ 131.95、D4@S14000 會變 175.93，高 33%），讓熱負荷這個變因少一個。</p>
+<p class="notesrc"><b>Source</b>：<code>python3 geometry_wu38_d4.py --n &lt;齒圈數&gt;</code>（exit 0，資格檢 11/11）。</p>
+</details>
+
+<p>兩票外部審查（Grok 存在性攻擊票、Sol 文獻票）都引了 Chou &amp; Liu 2005 那篇期刊論文，都只報「約 3 分鐘剝離」。<em>兩票都沒有撈到同作者博士論文第 89–90 頁那組參數研究</em>，而那一段翻轉了整棒的框架。</p>
+<p>這不算任一家的敗場：兩家的檢索通道結構上都到不了那 237 頁。</p>
+
+<h2>兩個候選死法：齒谷被黏鋁填平，或膜從齒根剝離</h2>
+
+<p><strong>H1｜排屑塞死。</strong> 直槽沒有螺旋角推屑，加上左右齒把切屑推向相反軸向、在中段對撞；黏鋁把齒谷填平，刀退化成光滑圓柱，只摩擦不切削。</p>
+<p>這條假說不依賴齒數、不依賴塗層，是第一性原理層，而且可能比塗層剝離更早殺死這把刀。</p>
+
+<p><strong>H2｜塗層剝離。</strong> 每轉完全脫離工件一次，加上牙型齒把一條連續刃拆成多個應力集中點；CVD 鑽石是脆性陶瓷，界面疲勞剝離。齒根是銳角，同時是去鈷前處理與附著力最差的位置。</p>
+
+<p>兩條的差別在於<em>可不可逆</em>。H1 是可逆的：刀本身沒壞，解法在冷卻與吹屑方式、在 A<sub>p</sub> 與 A<sub>e</sub> 的分配。H2 不可逆：膜掉了就是掉了，換冷卻方式救不回來。</p>
+
+<h2>為什麼不判死：唯一的實測方向反而是正面的</h2>
+
+<p>機制推論全部指向「不能用」，但機制推論零實驗。而真正做過實驗的那一篇，方向是相反的。</p>
+
+<p>Vargas 2017 用 CVD 鑽石塗層立銑刀實測銑削 SiC 含量超過 25% 的 AlSiC，刀確實切得動。差別在那是<em>常規螺旋槽立銑刀</em>，不是牙型刀。</p>
+<p>同一篇還有一句與直覺相反的實測結果，逐字：「The use of coolant caused a 50% increase in tool wear compared to the dry-cutting experiments」——用冷卻液反而讓刀耗增加五成。</p>
+
+<p>另一個不判死的理由是四個負面斷言的分母。文獻檢索找不到的，不是「有人做過而且失敗」，是<em>沒有人做過這個交叉點</em>：</p>
+
+<div class="tbl wide">
+<table>
+<thead>
+<tr><th>檢索的問題</th><th>候選筆數</th><th>符合</th></tr>
+</thead>
+<tbody>
+<tr><td>直槽與螺旋槽在延性金屬上的受控比較</td><td>30</td><td>0</td></tr>
+<tr><td>牙型齒谷積屑的量化門檻</td><td>30</td><td>0</td></tr>
+<tr><td>CFRP 專用多齒刀單獨切金屬的性能試驗</td><td>34</td><td>0</td></tr>
+<tr><td>CVD 塗層與 PCD 在同條件下的三欄完整比較</td><td>28</td><td>0</td></tr>
+</tbody>
+</table>
+<p class="notesrc"><b>Note</b>：這四個零的通道是公開網頁索引，不是 Scopus 或 Web of Science 的系統性全集，主 session 也沒有複跑檢索。它們證明的是「桌面推導已經到底」，<em>不是</em>「這件事不可能成立」。</p>
+<p class="notesrc"><b>Source</b>：GPT-5.6（Sol）以 web.run 檢索，分母逐項拆開回報；第 191 跑 ledger R1 節。</p>
+</div>
+
+<h2>一小時試切就能分開兩個假說：清掉齒谷之後，功率回不回來</h2>
+
+<p>既然文獻在這個交叉點是空的，剩下的路是實測。分離兩個假說的動作只有一個，而且很便宜：</p>
+
+<ol>
+<li>切三段，每段兩分鐘，記下第三段結束時的主軸功率或電流。</li>
+<li>停機，用銅刷或木片把齒谷裡的黏鋁清乾淨（不能用鋼刷，會刮傷膜）。</li>
+<li>用同一組參數再切 30 秒，記下功率。</li>
+</ol>
+
+<figure>
+<div class="figscroll">
+<svg viewBox="0 0 560 240" role="img" xmlns="http://www.w3.org/2000/svg">
+<title>清屑測試的判讀分支：功率回復代表可逆的排屑失效，不回復代表不可逆的塗層剝離</title>
+<defs>
+  <marker id="fig3-arrow" markerWidth="9" markerHeight="9" refX="7" refY="3" orient="auto">
+    <path d="M0,0 L7,3 L0,6 Z" fill="var(--muted)"/>
+  </marker>
+</defs>
+
+<rect x="20" y="96" width="130" height="48" rx="4" fill="var(--callout-tip)" stroke="var(--accent)"/>
+<text x="85" y="117" font-size="13" fill="var(--fg)" text-anchor="middle">清掉齒谷</text>
+<text x="85" y="136" font-size="13" fill="var(--fg)" text-anchor="middle">再切 30 秒</text>
+
+<line x1="150" y1="120" x2="205" y2="120" stroke="var(--muted)" stroke-width="1.5" marker-end="url(#fig3-arrow)"/>
+
+<path d="M205,120 L228,120 L228,44" fill="none" stroke="var(--muted)" stroke-width="1.5"/>
+<path d="M205,120 L228,120 L228,120" fill="none" stroke="var(--muted)" stroke-width="1.5"/>
+<path d="M205,120 L228,120 L228,200" fill="none" stroke="var(--muted)" stroke-width="1.5"/>
+<line x1="228" y1="44" x2="268" y2="44" stroke="var(--muted)" stroke-width="1.5" marker-end="url(#fig3-arrow)"/>
+<line x1="228" y1="120" x2="268" y2="120" stroke="var(--muted)" stroke-width="1.5" marker-end="url(#fig3-arrow)"/>
+<line x1="228" y1="200" x2="268" y2="200" stroke="var(--muted)" stroke-width="1.5" marker-end="url(#fig3-arrow)"/>
+
+<rect x="278" y="20" width="262" height="48" rx="4" fill="var(--callout-tip)" stroke="var(--accent)"/>
+<text x="292" y="40" font-size="13" fill="var(--fg)">功率掉回第 1 段水準</text>
+<text x="292" y="59" font-size="13" fill="var(--accent)">→ H1 排屑塞死 · 可逆</text>
+
+<rect x="278" y="96" width="262" height="48" rx="4" fill="var(--callout-warn)" stroke="var(--accent-warn)"/>
+<text x="292" y="116" font-size="13" fill="var(--fg)">清乾淨了也回不來</text>
+<text x="292" y="135" font-size="13" fill="var(--accent-warn)">→ H2 塗層剝離 · 不可逆</text>
+
+<rect x="278" y="176" width="262" height="48" rx="4" fill="none" stroke="var(--muted)" stroke-dasharray="5 4"/>
+<text x="292" y="196" font-size="13" fill="var(--fg)">只回一部分：分不開</text>
+<text x="292" y="215" font-size="13" fill="var(--muted)">→ 改看刃口有沒有露白</text>
+</svg>
+</div>
+<figcaption>圖 3 · 清掉齒谷後功率回不回得來，把兩個假說分成可逆與不可逆兩邊；只回一部分時分不開，改看刃口有沒有露白 · 作者自繪</figcaption>
+<p class="notesrc"><b>Note</b>：第三個分支（虛線框）不是備案，是這個分離器已知的失效模式——黏鋁填齒谷會生熱、熱應力加速膜剝離，也就是 <em>H1 是 H2 的觸發器</em>，兩條同時發生時功率只會回一部分。</p>
+<p class="notesrc"><b>Source</b>：作者自繪，判讀邏輯出自試切作業單第 6 節。</p>
+</figure>
+
+<p>這個分離器自己也有失效點，而且必須先講：兩條可能幾乎同時發生。黏鋁填齒谷造成摩擦生熱，熱應力加速膜剝離——<em>H1 是 H2 的觸發器</em>。</p>
+<p>真的走這條鏈時，清屑後功率只回一部分，兩個假說分不開。處置不是硬判，是記下回復的比例，改看刃口有沒有露白。</p>
+<p>露白代表膜已經掉了，無論 H1 有沒有先動。</p>
+
+<p class="kicker">【邊界】</p>
+<h2>五件不得讀錯的事，第一件是這整篇零實驗證據</h2>
+
+<p>寫給任何要接手這件事的人，五條，不修飾：</p>
+
+<ol>
+<li><strong>「這把刀不能用」目前是機制推論，零實驗證據。</strong> 唯一的實測方向反而是正面的（Vargas 2017，但那是常規螺旋槽刀）。</li>
+<li><strong>有效切削齒數還沒量。</strong> 交接包的六條讀數自動核對全部通過，其中三條照樣是錯的——它們建立在上一棒假設的 Z=2 上。<em>核對通過只證明算術一致，不證明輸入正確。</em></li>
+<li><strong>h<sub>min</sub> 的比值 0.23–0.35 全部來自鋁合金</strong>（Al6082-T6、Al6061），不是 Al-SiC 40 vol%，也不是塗層刀。移植的代價沒有量過。</li>
+<li><strong>Chou 那組刃口半徑壽命數據是車削、A359/SiC-20p。</strong> 這裡是銑削、40 vol%。SiC 更多（不利）、負載週期比低（有利）、多了斷續衝擊（不利），<em>淨值未知</em>。那個「約 3 分鐘」不能當預測值。</li>
+<li><strong>還缺一個工件的一階量：SiC 顆粒尺寸。</strong> 刃口鈍圓相對顆粒直徑的比值，決定顆粒是被剪斷還是被推走。目前只有 40 vol%（碰到的頻率），沒有粒徑（單顆怎麼被去掉）。這個數字要跟材料供應商要，不是刀具供應商。</li>
+</ol>
+
+<h2>那個 17 µm 該問的不是真假，是它在量什麼</h2>
+
+<p>那個 17 µm 是廠商口述的一句話。正確的動作不是驗它真假，是拆開問它在講什麼。</p>
+<p>已經確認是鍍後量測值，剩下三個問題：</p>
+
+<ul>
+<li><strong>膜厚多少 µm？</strong> Qin 2009 逐字：「the life of diamond coated tools increases with the coating thickness because of delay of delaminations」——厚膜是靠延後剝離延長壽命，不是靠鑽石慢慢磨。薄膜等於可磨的鑽石體積小，等於早剝離。</li>
+<li><strong>這 17 µm 是用什麼量的？</strong> SEM 側影、光學投影、白光干涉、刀具量測儀，不同方法對「刃口半徑」的定義差一個量級。</li>
+<li><strong>鍍膜前有沒有做去鈷（Co etching）？做到多深？</strong> 鈷會催化鑽石轉成石墨，是硬質合金鍍鑽石的必要前處理；但去鈷過深會留下脆弱的貧鈷層，在銑削的高負載下反而帶動剝離。牙型齒的齒根是銳角，正是去鈷與附著力最差的位置。</li>
+</ul>
+
+</article>
+<footer>
+<p>最後更新：2026-08-28 · CC BY 4.0 · 引用請標來源</p>
+<p>本文的判斷來自第 191 跑編排紀錄 <code>orchestration-ledger_wu38-cfx-d4-feasibility_2026-08-26.md</code>；所有幾何讀數可用 <code>python3 geometry_wu38_d4.py --n &lt;齒圈數&gt;</code> 重算。</p>
+<p>文獻：Chou 博士論文（University of Alabama，237 頁）／Vargas 2017 碩士論文（University of the Pacific）／Qin et al. 2009 <i lang="en">Surf. Coat. Technol.</i> 204:1056–1060／Malekian et al. 2012 <i lang="en">JMPT</i> 212(3):553–559／de Oliveira et al. 2015 <i lang="en">IJMTM</i>（DOI 10.1016/j.ijmachtools.2014.11.001）。</p>
+<p>對照臂聲明：本文所有「相較 PCD 如何」的判斷，對照臂是第 190 跑的 OSG PCD-MRM D3 × R0.1 × 25 刃，非其他 PCD 刀具。</p>
+</footer>
+</main>
+<script>
+  const bar = document.getElementById('progress');
+  window.addEventListener('scroll', () => {
+    const h = document.documentElement;
+    const max = h.scrollHeight - h.clientHeight;
+    const ratio = max > 0 ? h.scrollTop / max : 0;
+    bar.style.transform = 'scaleX(' + ratio + ')';
+  }, { passive: true });
+</script>
+</body>
+</html>
