@@ -15,6 +15,7 @@
 - 中文與英文 / 數字之間使用半形空格
 
 ## Cards
+- [xpower-bronze-bond-dressing](https://hale80427.github.io/brain-cards/xpower-bronze-bond-dressing/)：X Power 反應式修整塊對青銅基金屬結合劑的證據盤點——「55 倍」是倍數不是修整比（絕對值 0.55 為三種結合劑最低），Nb₃Sn 化學脆化機制在擴散動力學上差 10 個數量級且專利無 XRD／SEM 佐證，專利已於 2013／2016 失效；青銅結合劑實際案例 0 則（六通道分母拆解），附新品開刃驗證判讀表與三層證據分級。
 - [alsic-diamond-thread-mill](https://hale80427.github.io/brain-cards/alsic-diamond-thread-mill/)：為 CFRP 設計的鑽石膜牙型銑刀 D4 能不能銑 Al-SiC 40 vol%——三個獨立來源判「這題問錯了」但沒判死，含兩道懸崖的參數窗口與一小時試切分離器。
 - [mitsubishi-alsic-milling](https://hale80427.github.io/brain-cards/mitsubishi-alsic-milling/)：三菱粉末冶金 Al-SiC 40 vol% 的製法判定與兩份官方來源數據對照，含 14 條物性→切削力學因果鏈映射（磨料磨耗刀材門檻、熱分配往工件跑、拔出與穿切競爭）與向日方索取清單；標的材料本身無實測，全文標四級來源等級。
 - [local-llm-demand-landscape](https://hale80427.github.io/brain-cards/local-llm-demand-landscape/)：本機端 LLM 需求端全景——用可控性換前沿性，差距是時間差非代差（約 3–6 個月），真正缺口在 UX 剛需（記憶持久化／模型切換／本地整合）；tokens/s、回本月數等精確數字經對抗式驗證否決已標明。
