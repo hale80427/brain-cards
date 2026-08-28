@@ -140,6 +140,9 @@
   /* 著重號在 --fs-meta（約 13.6px）下幾乎看不見，且會擠到下一行（KB-09 L12）⇒ 註解層一律降回粗體 */
   .notesrc em, figcaption em { text-emphasis: none; -webkit-text-emphasis: none; font-weight: 700; color: var(--fg); }
   .nb { white-space: nowrap; }
+  /* 圖說的主張句用**顏色**區隔而非字重：全頁加粗預算 <5%，而六段圖說主張句
+     一度就吃掉全部加粗的一半（KB-02「視覺差異用 font-weight / color / letter-spacing」）。 */
+  .figclaim { color: var(--fg); }
   th[scope="row"] .sub { font-weight: 400; color: var(--muted); }
   table { border-collapse: collapse; width: 100%; margin: 0; font-size: var(--fs-body); }
   th, td { padding: 0.55rem 0.75rem; border: 1px solid var(--border); text-align: left; vertical-align: top; line-height: 1.65; }
@@ -244,7 +247,7 @@
   <text x="526" y="288" font-size="12.5" fill="var(--muted)">比較容易發脾氣、生氣</text>
   <text x="526" y="304" font-size="12.5" fill="var(--muted)">調節不了強度</text>
 </svg></div>
-<figcaption><b>圖 1 · 四個軸同時失靈，才是「他哪裡都做不好」的原因——只修注意力那一軸解釋不了為什麼情緒與人際一起出事。</b><br>
+<figcaption><span class="figclaim">圖 1 · 四個軸同時失靈，才是「他哪裡都做不好」的原因——只修注意力那一軸解釋不了為什麼情緒與人際一起出事。</span><br>
 <span class="notesrc"><b>Note</b>：本圖為依節目敘述（<span class="ts">04:03</span>–<span class="ts">07:29</span>）整理的概念圖，非診斷工具，四軸不是官方診斷準則的分類。<br>
 <b>Source</b>：【#博音】EP239 ft. 高淑芬醫師。作者自繪。</span></figcaption>
 </figure>
@@ -312,7 +315,7 @@
   <text x="480" y="252" font-size="12.5" fill="var(--muted)">光是成長坎坷這一項</text>
   <text x="480" y="272" font-size="12.5" fill="var(--muted)">就足以長出共病。</text>
 </svg></div>
-<figcaption><b>圖 2 · 經驗層那條路不需要生物脆弱性也會走完——這才是「早點介入」的真正理由，不是為了早點吃藥。</b><br>
+<figcaption><span class="figclaim">圖 2 · 經驗層那條路不需要生物脆弱性也會走完——這才是「早點介入」的真正理由，不是為了早點吃藥。</span><br>
 <span class="notesrc"><b>Note</b>：兩條路徑的區分是她在 <span class="ts">11:44</span>–<span class="ts">12:41</span> 的口述論證，非引自特定研究。「四到五倍」她未指明對照組與共病種類，引用前需回查原始研究。<br>
 <b>Source</b>：【#博音】EP239 ft. 高淑芬醫師。作者自繪。</span></figcaption>
 </figure>
@@ -364,7 +367,7 @@
   <line x1="690" y1="82" x2="690" y2="262" stroke="var(--accent)" stroke-width="1" stroke-dasharray="3 3"/>
   <text x="310" y="258" font-size="13" font-weight="700" fill="var(--accent)">這一段是缺口：約四分之三的人沒有在治療</text>
 </svg></div>
-<figcaption><b>圖 3 · 每四個真的有 ADHD 的孩子，大約只有一個在用藥——落差的方向是治療不足，不是過度用藥。</b><br>
+<figcaption><span class="figclaim">圖 3 · 每四個真的有 ADHD 的孩子，大約只有一個在用藥——落差的方向是治療不足，不是過度用藥。</span><br>
 <span class="notesrc"><b>Note</b>：7–8% 出自高淑芬主持的全國性流行病學調查（臺大醫院公開資料記為 8%）。3% 與六成用藥是她在節目中引述的健保資料，她的原話是「曾經」，<em>未標年份</em>，並補充「現在還比較好多了」。第三條「約 1.8%」是<b>作者依 3% × 60% 推算</b>，不是她給的數字；「約四分之三」同為作者以 7.5% 為分母的推算。三段的量測時點不一定相同，此圖呈現的是量級關係，不是同期橫斷面。<br>
 <b>Source</b>：【#博音】EP239 <span class="ts">15:52</span>–<span class="ts">16:05</span>；盛行率交叉對照臺大醫院公開介紹頁。作者自繪與推算。</span></figcaption>
 </figure>
@@ -500,7 +503,7 @@
   <text x="92" y="66" font-size="12.5" fill="var(--muted)">熱心、敢講、炒熱氣氛</text>
   <text x="92" y="50" font-size="13" font-weight="700" fill="var(--fg)">同一批特質，前期是優勢</text>
 </svg></div>
-<figcaption><b>圖 4 · 同一批特質在小三前是受歡迎的來源，小三後變成被排斥的原因——改變的是同儕的成熟度，不是他。</b><br>
+<figcaption><span class="figclaim">圖 4 · 同一批特質在小三前是受歡迎的來源，小三後變成被排斥的原因——改變的是同儕的成熟度，不是他。</span><br>
 <span class="notesrc"><b>Note</b>：本圖為<em>示意圖，不是量測資料</em>。曲線形狀依高淑芬 <span class="ts">33:52</span>–<span class="ts">35:39</span> 的臨床敘述繪製，縱軸無刻度、無單位，不可用於任何量化推論。<br>
 <b>Source</b>：【#博音】EP239 ft. 高淑芬醫師。作者自繪。</span></figcaption>
 </figure>
@@ -552,7 +555,7 @@
   <text x="560" y="128" font-size="13.5" font-weight="700" fill="var(--fg)">完全消失</text>
   <text x="560" y="148" font-size="12.5" fill="var(--muted)">不需用藥</text>
 </svg></div>
-<figcaption><b>圖 5 · 即使全都接受過治療，到二十歲仍有四成完全符合診斷——「長大就會好」不成立。</b><br>
+<figcaption><span class="figclaim">圖 5 · 即使全都接受過治療，到二十歲仍有四成完全符合診斷——「長大就會好」不成立。</span><br>
 <span class="notesrc"><b>Note</b>：這個世代<em>全部都有接受治療</em>，她明說沒治療的問題更多，因此本圖不可外推到未治療族群。40% 與 15% 為她口述，中間「約 45%」是<b>作者以 100% 減去兩者推得</b>，她只描述為「其他的」。她未說明樣本數、追蹤方法與診斷工具。<br>
 <b>Source</b>：【#博音】EP239 <span class="ts">38:24</span>–<span class="ts">38:45</span>。作者自繪與推算。</span></figcaption>
 </figure>
@@ -625,7 +628,7 @@
   <text x="32" y="208" font-size="12.5" fill="var(--fg)">頭腦比別人好卻只讀到國中高中、換了十幾個學校；別人能結婚生子，他交了很多女友卻都無法持續。</text>
   <text x="32" y="226" font-size="12.5" fill="var(--muted)">她的原話：「就是從你 outcome，你就可以 validate 這是有個病啊。」</text>
 </svg></div>
-<figcaption><b>圖 6 · 決定性的不是症狀有多重，而是第四道——有沒有造成顯著的功能損害。</b><br>
+<figcaption><span class="figclaim">圖 6 · 決定性的不是症狀有多重，而是第四道——有沒有造成顯著的功能損害。</span><br>
 <span class="notesrc"><b>Note</b>：四道判準的<em>排列與編號為作者整理</em>，高淑芬在節目中是分散論述（<span class="ts">45:54</span>–<span class="ts">50:53</span>），並未給出這樣的流程。<br>
 <b>Source</b>：【#博音】EP239 ft. 高淑芬醫師。作者自繪與整理。</span></figcaption>
 </figure>
