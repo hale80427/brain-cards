@@ -15,6 +15,7 @@
 - 中文與英文 / 數字之間使用半形空格
 
 ## Cards
+- [sam-altman-impossible](https://hale80427.github.io/brain-cards/sam-altman-impossible/)：Sam Altman 在 David Senra 專訪中的完整重點——他把 AI 採用率低歸成產品失敗（「技術零件都到位，iPhone 時刻還沒發生」），點名下一個產品缺口是模型對使用者的脈絡了解太少而非智力，說明砍掉 Sora 與 Atlas 的判準是「只留通用智慧與它的上游」，主張從成功學到的比從失敗學到的多，並還原 OpenAI 開張第一天沒有產品也沒有訊號的四年半。附時間戳與自動字幕誤字效度清單。
 - [uncle-bob-agent-fundamentals](https://hale80427.github.io/brain-cards/uncle-bob-agent-fundamentals/)：Robert C. Martin 談 AI agent 時代的軟體基本功——把「教 agent 寫好 code」從寫 prompt 規則換成架確定性檢查器，機制是 lost in the middle 讓長規則文件失效；他重啟兩個 2000 年代因人力太貴而擱置的老工具（CRAP score、mutation testing），五道關卡流水線（specifier→coder→cleaner→hardener→QA）每關換乾淨 context；核心區分是人類的「價值」可搬給 agent、「紀律」（如 TDD）不可搬、「門檻」需重調（CRAP 對人 <4 對 agent 設 6）；他反對 spec-driven development 並明講架構自動化是他唯一還沒做成的一塊。
 - [adhd-four-switches](https://hale80427.github.io/brain-cards/adhd-four-switches/)：臺大醫院副院長高淑芬談 ADHD——核心是自我調節（專注力／動作／耐心／情緒四軸）而非注意力；治療缺口 7–8%→3%→約 1.8%，二十歲仍有 40% 符合完整診斷，注意力不足型不會自己好故成人男女比趨近 1:1；含「環境鬆綁反而更嚴重」的自然實驗反駁社會建構論，六張自繪圖與六條查證不確定清單（節目中 FDA 1950 年應為 1955 年，已更正）。
 - [xpower-bronze-bond-dressing](https://hale80427.github.io/brain-cards/xpower-bronze-bond-dressing/)：X Power 反應式修整塊對青銅基金屬結合劑的證據盤點——「55 倍」是倍數不是修整比（絕對值 0.55 為三種結合劑最低），Nb₃Sn 化學脆化機制在擴散動力學上差 10 個數量級且專利無 XRD／SEM 佐證，專利已於 2013／2016 失效；青銅結合劑實際案例 0 則（六通道分母拆解），附新品開刃驗證判讀表與三層證據分級。

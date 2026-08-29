@@ -1,0 +1,612 @@
+<!DOCTYPE html>
+<html lang="zh-Hant-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Sam Altman：iPhone 時刻還沒到</title>
+<meta name="description" content="Sam Altman 在 David Senra 專訪中的完整重點：技術到位但產品沒到位、脈絡是下一個缺口、砍掉 Sora 與 Atlas 的判準、以及 OpenAI 開張第一天的空白。">
+<link rel="canonical" href="https://hale80427.github.io/brain-cards/sam-altman-impossible/">
+<meta name="author" content="彥皓">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Sam Altman：iPhone 時刻還沒到">
+<meta property="og:description" content="Sam Altman 在 David Senra 專訪中的完整重點：技術到位但產品沒到位、脈絡是下一個缺口、砍掉 Sora 與 Atlas 的判準、以及 OpenAI 開張第一天的空白。">
+<meta property="og:url" content="https://hale80427.github.io/brain-cards/sam-altman-impossible/">
+<meta property="og:image" content="https://hale80427.github.io/brain-cards/og-default.jpg">
+<meta property="og:locale" content="zh_TW">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Sam Altman：iPhone 時刻還沒到">
+<meta name="twitter:description" content="Sam Altman 在 David Senra 專訪中的完整重點：技術到位但產品沒到位、脈絡是下一個缺口、砍掉 Sora 與 Atlas 的判準、以及 OpenAI 開張第一天的空白。">
+<meta name="twitter:image" content="https://hale80427.github.io/brain-cards/og-default.jpg">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "Sam Altman：iPhone 時刻還沒到",
+  "description": "Sam Altman 在 David Senra 專訪中的完整重點筆記。",
+  "datePublished": "2026-08-29",
+  "dateModified": "2026-08-29",
+  "author": { "@type": "Person", "name": "彥皓" },
+  "url": "https://hale80427.github.io/brain-cards/sam-altman-impossible/",
+  "inLanguage": "zh-TW",
+  "license": "https://creativecommons.org/licenses/by/4.0/"
+}
+</script>
+<style>
+  :root {
+    --bg: oklch(98.4% 0.004 106.5);
+    --fg: oklch(21.8% 0 0);
+    --accent: oklch(54.3% 0.174 29.7);
+    --accent-warn: oklch(66.6% 0.157 58.3);
+    --muted: oklch(51.0% 0 0);
+    --border: oklch(92.1% 0.007 106.5);
+    --callout-tip: oklch(95.7% 0.014 174.2);
+    --callout-warn: oklch(96.9% 0.019 72.6);
+    --fs-meta: 0.85rem;
+    --fs-body: 1rem;
+    --fs-h2:   clamp(1.3rem, 3vw, 1.5rem);
+    --fs-h1:   clamp(1.75rem, 4vw, 2.25rem);
+    --font-serif: "Noto Serif TC", Georgia, serif;
+    --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+    --ease-linear: linear;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: oklch(21.8% 0 0);
+      --fg: oklch(95.3% 0.011 106.6);
+      --accent: oklch(70.4% 0.136 28.7);
+      --accent-warn: oklch(76.9% 0.165 70.1);
+      --muted: oklch(68.3% 0 0);
+      --border: oklch(32.1% 0 0);
+      --callout-tip: oklch(30.9% 0.029 178.3);
+      --callout-warn: oklch(30.7% 0.034 73.5);
+    }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
+  }
+  * { box-sizing: border-box; }
+  body {
+    font-family: var(--font-serif);
+    background: var(--bg);
+    color: var(--fg);
+    line-height: 1.8;
+    margin: 0;
+    padding: 0;
+    -webkit-font-smoothing: antialiased;
+    text-autospace: normal;
+    font-synthesis: none;
+    line-break: strict;
+  }
+  .progress-bar {
+    position: fixed; top: 0; left: 0; height: 3px; width: 100%;
+    background: var(--accent); z-index: 100;
+    transform: scaleX(0); transform-origin: left;
+    transition: transform 0.1s var(--ease-linear);
+  }
+  main, main > article {
+    display: grid;
+    grid-template-columns:
+      [full-start] minmax(1rem, 1fr)
+      [wide-start] minmax(0, 130px)
+      [content-start] minmax(0, 680px) [content-end]
+      minmax(0, 130px) [wide-end]
+      minmax(1rem, 1fr) [full-end];
+  }
+  main { padding: clamp(2rem, 5vw, 4rem) 0; }
+  main > *, main > article > * { grid-column: content; }
+  main > article { grid-column: full; }
+  main > .wide, main > article > .wide { grid-column: wide; }
+  main > .full, main > article > .full { grid-column: full; }
+  @media (max-width: 1000px) {
+    main, main > article {
+      grid-template-columns:
+        [full-start] minmax(1rem, 1fr)
+        [wide-start content-start] minmax(0, 680px) [content-end wide-end]
+        minmax(1rem, 1fr) [full-end];
+    }
+  }
+  h1 { font-size: var(--fs-h1); line-height: 1.3; margin: 0 0 1rem; }
+  h2 { font-size: var(--fs-h2); line-height: 1.4; margin: 2.5rem 0 0.75rem; padding-bottom: 0.5rem; border-bottom: 1px solid var(--border); }
+  h3 { font-size: var(--fs-body); font-weight: 700; line-height: 1.4; margin: 1.75rem 0 0.5rem; color: var(--accent); }
+  p { margin: 0 0 1.25rem; }
+  ul, ol { margin: 0 0 1.25rem; padding-left: 1.5rem; }
+  li { margin: 0 0 0.5rem; }
+  a { color: var(--accent); text-underline-offset: 3px; }
+  a:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+  em { font-style: normal; font-weight: 600;
+       text-emphasis: filled dot; text-emphasis-position: under right;
+       -webkit-text-emphasis: filled dot; -webkit-text-emphasis-position: under right; }
+  em:lang(en) { font-style: italic; font-weight: inherit;
+                text-emphasis: none; -webkit-text-emphasis: none; }
+  blockquote { margin: 1.5rem 0; padding: 0.75rem 0 0.75rem 1.25rem;
+               border-left: 3px solid var(--accent); color: var(--fg); font-weight: 500; }
+  blockquote p:last-child { margin-bottom: 0; }
+  .bluf { background: var(--callout-tip); border-left: 3px solid var(--accent); padding: 1.25rem 1.5rem; margin: 1.5rem 0 2rem; border-radius: 4px; }
+  .bluf strong.label { display: block; font-size: var(--fs-meta); letter-spacing: 0.05em; color: var(--accent); margin-bottom: 0.5rem; text-transform: uppercase; }
+  .bluf p:last-child { margin-bottom: 0; }
+  .callout { padding: 1rem 1.25rem; margin: 1.5rem 0; border-radius: 4px; border-left: 3px solid var(--muted); }
+  .callout.tip { background: var(--callout-tip); border-left-color: var(--accent); }
+  .callout.warn { background: var(--callout-warn); border-left-color: var(--accent-warn); }
+  .callout p:last-child, .callout ul:last-child { margin-bottom: 0; }
+  .kicker { display: inline-block; font-size: var(--fs-meta); font-weight: 700;
+            letter-spacing: 0.1em; color: var(--accent); margin: 2.5rem 0 0; }
+  .kicker + h2 { margin-top: 0.4rem; border-bottom: none; padding-bottom: 0; }
+  .notesrc { font-size: var(--fs-meta); color: var(--muted); margin: 0.5rem 0 0; line-height: 1.7; }
+  .notesrc b { color: var(--fg); font-weight: 600; }
+  .ts { font-family: var(--font-mono); font-size: var(--fs-meta); color: var(--muted); white-space: nowrap; }
+  table { border-collapse: collapse; width: 100%; margin: 1.5rem 0; font-size: var(--fs-body); }
+  th, td { padding: 0.6rem 0.8rem; border: 1px solid var(--border); text-align: left; vertical-align: top; }
+  th { background: var(--callout-tip); font-weight: 600; }
+  code { font-family: var(--font-mono); background: var(--callout-tip); padding: 0.1em 0.4em; border-radius: 3px; font-size: var(--fs-body);
+         overflow-wrap: anywhere; word-break: break-word; }
+  .tbl { overflow-x: auto; margin: 1.5rem 0; min-width: 0; }
+  .tbl table { margin: 0; min-width: 560px; }
+  figure { margin: 1.5rem 0; }
+  figure img { width: 100%; height: auto; border-radius: 4px; display: block; }
+  figcaption { font-size: var(--fs-meta); color: var(--muted); margin-top: 0.5rem; text-align: center; }
+  footer p { color: var(--muted); font-size: var(--fs-meta); margin-top: 4rem; padding-top: 1.5rem; border-top: 1px solid var(--border); }
+  @media print {
+    .progress-bar { display: none; }
+    body { font-size: 11pt; line-height: 1.6; }
+    main { max-width: 100%; padding: 1cm; }
+  }
+</style>
+</head>
+<body>
+<div class="progress-bar" id="progress"></div>
+<main>
+<header>
+<h1>Sam Altman：技術零件都到位了，iPhone 時刻還沒發生</h1>
+<p class="notesrc" style="margin-bottom:1.5rem;">David Senra 頻道專訪 · 2026-08-23 上傳 · 片長 1:18:16 · 逐字稿來源為 YouTube 自動字幕<br>
+原片：<a href="https://www.youtube.com/watch?v=kG8AoExkX40">youtube.com/watch?v=kG8AoExkX40</a></p>
+<div class="bluf">
+<strong class="label">BLUF</strong>
+<p>這場訪談的主軸不是模型能力，是<strong>節奏</strong>。技術跑得比社會快，而 Altman 認為慢的那一邊才是常態——連他自己都還在用二十年前的方式用電腦。他把採用率低歸成<strong>產品失敗</strong>，不是使用者失敗。</p>
+</div>
+</header>
+<article>
+<!-- narrative: 物件,細節,矛盾,直接引語,場景 -->
+
+<p class="kicker">【對照】</p>
+<h2>判斷一位 CEO 有沒有真懂 AI，看他自己動不動手</h2>
+
+<p>Altman 說 Shopify 的 Tobi Lütke 是他見過最前傾的 CEO：自己寫軟體、自己試模型、自己重想工作流，不是靠底下團隊轉述 <span class="ts">[02:13]</span>。</p>
+
+<p>他給的產品回饋「準確、細緻、在刀口上」。Altman 說這個組合只有他一個——<strong>大公司 CEO 加上前沿級回饋</strong>的交集 <span class="ts">[01:37]</span>。</p>
+
+<p>機制在這裡：爬到那個層級之後，中間隔著層層團隊在「幫你把粗糙處磨平」，你就拿不到手感 <span class="ts">[02:35]</span>。</p>
+
+<h3>Tobi 的預測，與 Altman 的分歧</h3>
+
+<p>Tobi 說 2026 年會是每一門生意都重新開放競標的一年，而且「做出 AI 原生版 Shopify 的會是我自己」<span class="ts">[01:51]</span>。</p>
+
+<p>Altman 同意方向，<strong>不同意時程</strong> <span class="ts">[02:55]</span>：</p>
+
+<ul>
+<li>不是字面上每一門生意。<em>AI 越強，反 AI 的生意反而更難被取代</em>——真實的、非技術的體驗 <span class="ts">[03:07]</span></li>
+<li>但軟體生意「很多真的會被重新開放競標」</li>
+<li>他承認自己錯過一次：GPT-4（2023）出來時，他以為軟體業會馬上被掀掉，結果沒有 <span class="ts">[03:50]</span></li>
+</ul>
+
+<p>錯的原因是<strong>經濟體的慣性太大</strong>。人繼續照舊買、照舊用。他說這其實是好事，會讓轉型更平順、更慢 <span class="ts">[04:14]</span>。</p>
+
+<p>Senra 的歷史對照是 Larry Ellison 在 1980 年代講過同一句話：這不是軟體問題，是人的問題 <span class="ts">[04:47]</span>。Altman 自己的版本是 Netflix 已經在寄 DVD 了，人還是往 Blockbuster 跑 <span class="ts">[05:15]</span>。</p>
+
+<p class="kicker">【自白】</p>
+<h2>他自己就是「明知有更好方法卻改不掉」的那個案例</h2>
+
+<p>被問到會不會對自己的行為感到震驚，他的回答是 100%，而且說「等這個問題很久了」<span class="ts">[06:06]</span>。</p>
+
+<p>他有 Codex，卻二十年來用電腦的方式沒變：在訊息軟體之間複製貼上、漫無目的滑信箱挑最不痛的那封回、手寫待辦清單 <span class="ts">[06:26]</span>。</p>
+
+<blockquote><p>我腦中有個東西，把「做這些機械動作」編碼成「這才叫工作、這才叫有生產力」。<span class="ts">[06:48]</span></p></blockquote>
+
+<p>他強調這不是嘴上偏好。用揭示性偏好（revealed preference，看行為不看說法）來讀，他一定是偷偷喜歡這樣做，否則說不通 <span class="ts">[07:13]</span>。</p>
+
+<div class="callout tip">
+<p><strong>他把這歸為產品失敗，不是使用者失敗</strong> <span class="ts">[07:58]</span>。現在是兩個世界並存：舊方式的電腦，加上一個能用你電腦的 Codex，而沒人知道什麼時候該用哪個。</p>
+</div>
+
+<p>類比是 iPhone 之前的智慧型手機。他 2003 年前後就用 Palm Treo。技術零件都在，差一個多點觸控，但真正缺的是產品想法 <span class="ts">[08:22]</span>。</p>
+
+<p>結論句：所有技術拼圖都到位了，但那個「完全改變人跟技術介面關係」的時刻還沒發生 <span class="ts">[08:40]</span>。</p>
+
+<p class="kicker">【機制】</p>
+<h2>他把時間全押在研究與算力，因為那是唯一會延續指數的那條線</h2>
+
+<p>「我現在絕大部分心力在研究和算力上。我很想多花時間在產品。」<span class="ts">[10:02]</span></p>
+
+<p>判準是：找出那個高槓桿、困難、能讓指數繼續下去的問題。對 OpenAI 而言就是模型與算力 <span class="ts">[10:24]</span>。</p>
+
+<p>他說算力這題天然適合他，因為它同時包含複雜供應鏈、夥伴關係、金融結構、自研晶片、晶圓廠、機櫃、電力系統。他形容那<strong>可能已經是史上最貴的基礎建設專案</strong> <span class="ts">[10:51]</span>。</p>
+
+<h3>投資與研究的共同結構：冪次律</h3>
+
+<blockquote><p>你最好的那筆投資，報酬會超過其他所有投資加起來。第二好的那筆，會超過剩下的加起來。<span class="ts">[11:54]</span></p></blockquote>
+
+<p>AI 研究也長這樣。所以高風險賭注是可以的——前提是你挑的是「賭中了就超級有價值」那一種 <span class="ts">[13:01]</span>。</p>
+
+<p>2015 年底創立 OpenAI 時，他們被整個領域的權威痛打。後來專注在大型語言模型時，又被打一次 <span class="ts">[12:37]</span>。</p>
+
+<h3>他要的是「非共識」的人</h3>
+
+<p>反例：跟前一千個創辦人講一樣的東西，只換個說法說服自己「我不一樣」。聽 Peter Thiel 講太多次「你要做不一樣的事」，就去模仿那個姿態，但心裡並不真的相信。</p>
+
+<p>正例：<em>願意撐住一個很不受歡迎、很可能錯的信念，但如果對了就會對得很徹底</em> <span class="ts">[13:51]</span>。</p>
+
+<div class="callout warn">
+<p>他點出今天的反轉：2015 年全世界搞 AGI 的只有 DeepMind 加一兩家，同年有好幾千個創辦人在做照片分享 App。而今天「一堆人想開 AI 實驗室」<strong>本身就已經是共識了</strong>。真正非共識的是那兩三個在做「AI 變好之後才可能、但現在看起來還不像好主意」的事 <span class="ts">[14:35]</span>。</p>
+</div>
+
+<p>他引 Demis Hassabis 的看法：三大玩家格局大致底定，但仍有大約一成機率，某個修士型研究者從沒人想過的角度切進來。Altman 的回應是「我不會給數字，但機率確實不是零，而我喜歡這件事」<span class="ts">[15:19]</span>。</p>
+
+<p class="kicker">【來歷】</p>
+<h2>一位教授曾告訴他，深度學習是最保證毀掉職涯的方向</h2>
+
+<p>他從小就是那種週五晚上在電腦前、看科幻小說的小孩。上大學就是為了唸 AI <span class="ts">[18:37]</span>。</p>
+
+<p>大一升大二那年暑假進 AI 實驗室，什麼都不 work。教授的原話是：這些方向你都可以試，但<strong>我們唯一確定不 work 的就是深度學習</strong> <span class="ts">[19:01]</span>。</p>
+
+<p>那是 2005 年前後。他信了，於是繞去做新創。</p>
+
+<h3>他走的是反方向：投資人到創辦人</h3>
+
+<p>矽谷常見路徑是創辦人、半退休、當投資人。兩人在這裡互相打氣：「我們不需要更多退休去投資的創辦人。」<span class="ts">[20:03]</span></p>
+
+<p>投資人經驗為什麼有用？你看得到所有的關鍵時刻。你不會累積日常營運的手感，但你一整天看的都是別人生死交關的那一刻 <span class="ts">[20:59]</span>。</p>
+
+<p>他形容那是資料集的厚度。遇到決策時，腦中會浮現「那家公司當時碰到類似的事」<span class="ts">[21:20]</span>。</p>
+
+<p>順帶一提，他對自己第一次創業的評價是：其實沒做得多好 <span class="ts">[1:03:51]</span>。</p>
+
+<p class="kicker">【動機】</p>
+<h2>「不可能」對他不是勸退訊號，是吸引力訊號</h2>
+
+<p>為什麼 AI 對一個聖路易的小孩有吸引力？他說這不特別——每個電腦阿宅都覺得那是最酷的事，只是大家同時覺得那不可能 <span class="ts">[23:19]</span>。</p>
+
+<blockquote><p>我比較怪的地方是：好，那來試試看。<span class="ts">[23:37]</span></p></blockquote>
+
+<p>他強調那不是抗拒，是「你確定嗎？為什麼不行？試試看會怎樣」。吸引力的根源是一個能讓你做成所有其他事的技術 <span class="ts">[23:59]</span>。</p>
+
+<h3>他現在最在意的是 AI 對科學發現的作用</h3>
+
+<p>「AI 去發現新物理、治好疾病、以及它已經在數學上做到的事——我認為這會比自動化其他工作更重要。」<span class="ts">[25:28]</span></p>
+
+<p>他也誠實標了記憶污染：小時候到底想過多少、多少是現在的工作反過來染色的記憶，他分不清 <span class="ts">[24:42]</span>。</p>
+
+<h3>Shannon 與 Turing 在 1940 年代每天喝咖啡談 AI</h3>
+
+<p>Senra 說這兩人當時認為 1955 年左右電腦就會比人聰明，覺得反對者荒謬。他們想要電腦做的事是：解數學、寫詩、治病。而我們現在正好走到那個時刻，他們卻沒能看到 <span class="ts">[26:38]</span>。</p>
+
+<p>Altman 接了一句：這裡有個很深的人類心理缺陷——大家總說「它永遠不會做到 X」，而 X 的界線<strong>剛好畫在自己活著的這個時點</strong> <span class="ts">[27:57]</span>。</p>
+
+<h3>但「人會不會在乎」是另一個問題</h3>
+
+<p>假設兩個 AI 的對話比兩個人的更有趣，人會想聽哪一個？</p>
+
+<p>Altman 的判斷是：人永遠會被人吸引。跟人、跟連結、跟人喜歡人有關的工作，在後 AI 世界會<strong>更值錢，不是更不值錢</strong> <span class="ts">[28:54]</span>。</p>
+
+<p>他也給了邊界：只想跟電腦互動、不喜歡人的那群人一定存在，「而且這座城市裡可能不少」，但那是人類裡極小的一撮 <span class="ts">[29:32]</span>。</p>
+
+<p>所以他的結論是：<em>即使有超級智慧，世界整體上不會變得那麼不一樣</em> <span class="ts">[29:48]</span>。</p>
+
+<p class="kicker">【風險】</p>
+<h2>他最擔心的兩個風險互相拉扯：失控，與權力過度集中</h2>
+
+<div class="tbl">
+<table>
+<caption class="notesrc" style="text-align:left; caption-side:bottom;"><b>Note</b>：兩條風險是 Altman 自己在 <span class="ts">[30:34]</span> 的說法，順序照他講的。他明說兩者「有點互相拉扯」。</caption>
+<thead>
+<tr><th>風險</th><th>形狀</th><th>他的判語</th></tr>
+</thead>
+<tbody>
+<tr><td>失去控制</td><td>AI 強到我們無法保證想要的控制權</td><td rowspan="2">兩個都是反人類的立場。正確姿勢是人深度掌握未來、人被深度賦權</td></tr>
+<tr><td>權力過度集中</td><td>一家公司、一個模型、一個人握有太多權力</td></tr>
+</tbody>
+</table>
+</div>
+
+<p>他點名一種他認為真實存在的立場：因為不信任人，所以把權力集中在少數公司手上，不讓其他人用這個技術，但會給你們一些好處。</p>
+
+<p>他把那套說法漫畫化成一段話 <span class="ts">[31:44]</span>：</p>
+
+<blockquote><p>我們給全世界治好所有疾病、讓東西變得很便宜。交換條件是你們放棄自主權、放棄對未來的影響力和權力。這一切以安全為名，順帶還有絕對猖獗的不平等。</p></blockquote>
+
+<p>他的評語是：<strong>這是很爛的銷售話術，而且是很反人類的銷售話術</strong> <span class="ts">[32:10]</span>。</p>
+
+<p>為什麼有人願意這樣講？他歸因於恐懼與權力。有些人真的被風險量級嚇到，覺得該用自由換安全；但那也很容易變成<em>替尋求權力的行為找正當性</em> <span class="ts">[32:32]</span>。</p>
+
+<p class="kicker">【方法】</p>
+<h2>迭代部署不只是產品方法論，他認為那也是安全方法論</h2>
+
+<p>他同意末日論者（doomers）的一半：這是強大技術，每一級都該偏向謹慎。不同意的一半是——<strong>這不是不可解的問題</strong> <span class="ts">[33:30]</span>。</p>
+
+<p>2015 年當時有兩個廣泛共識：一，十年內不可能做出很像 AGI 的東西；二，就算做出來也不可能安全。</p>
+
+<p>他的論點是：十年後第一條被推翻，而世界末日的預測沒發生。<em>這應該更新大家對未來的預測</em> <span class="ts">[34:14]</span>。</p>
+
+<h3>方法直接來自新創</h3>
+
+<p>把東西放進世界，看它在哪裡壞掉。「這是做出好產品的方式，也是做出安全產品的方式。」<span class="ts">[34:37]</span></p>
+
+<p>ChatGPT 上線不到四年、十億人使用、涉及敏感重要的事，而還能維持普遍被認為安全的狀態。他說關在象牙塔裡不可能達成 <span class="ts">[35:20]</span>。</p>
+
+<div class="callout warn">
+<p>但他明說會更難 <span class="ts">[36:08]</span>：模型能力太強、曲線太陡，<strong>未知的未知從絕對量看變大了</strong>。未來會需要做出困難決定——什麼時候延後開發、什麼時候說「先跟現實接觸」、什麼時候說「再多研究一陣子」。</p>
+</div>
+
+<h3>他拿 FAA 當範本</h3>
+
+<p>飛行表面上極度危險，你現在上飛機卻幾乎不會想這件事。關鍵是 FAA 有極度穩固的事故通報、極度清醒、從不試圖含糊帶過。目標是把資訊榨到最多 <span class="ts">[37:16]</span>。</p>
+
+<p>對應到 OpenAI 的動作：出事就做事故紀錄、發清楚的事後檢討、把學到的分享給其他做 AI 的人 <span class="ts">[38:05]</span>。</p>
+
+<p>兩條紅線他講得很硬：不能拿這個去強加我們的世界觀；也不能關在實驗室裡把所有影響想清楚——因為<em>社會與模型是共同演化的</em> <span class="ts">[37:42]</span>。</p>
+
+<p class="kicker">【落差】</p>
+<h2>「每個人都在用 AI，每個人都討厭 AI」——他認為這是產業自己造成的</h2>
+
+<p>Senra 的困惑是：他做創業者取向的節目，發現大家都在用 AI，但大家都討厭 AI <span class="ts">[40:17]</span>。</p>
+
+<p>Altman 拆成三層 <span class="ts">[40:28]</span>：</p>
+
+<ol>
+<li>人本來就害怕快速的社會經濟變動。工業革命時也沒有普遍溫暖的感受。這種內建慣性其實是社會的好特徵，他不主張硬去對抗人類生物性</li>
+<li>這個領域自己講話的方式很糟。一邊說「有 25% 機率我們會毀掉世界」，一邊說「但我們還是要衝，因為不然壞人會先做出來」<span class="ts">[41:16]</span></li>
+<li>即使給了答案（無條件基本收入、工作變成選配），也幾乎沒人在談<em>為什麼人應該擁有更多權力與個人自由，而不是更少</em> <span class="ts">[41:35]</span></li>
+</ol>
+
+<p>他認為被忽略的核心是自主權。人能影響自己的未來、集體決定社會走向，這對大多數人非常重要。而 AI 領域的人自己享有這種自主，卻很少花時間反思它對別人有多重要 <span class="ts">[41:58]</span>。</p>
+
+<h3>他全片最實務的一個預測</h3>
+
+<div class="callout tip">
+<p>大部分人不見得想開大公司，<strong>但很多人想開小公司</strong>，而那一直需要相當的特權、運氣與資源。「我們即將看到史上最大一波開小公司的浪潮。」<span class="ts">[43:29]</span></p>
+<p>他自承：這件事整個領域包括 OpenAI 自己都講得太少，也還沒做出足夠的產品去加速它 <span class="ts">[43:50]</span>。</p>
+</div>
+
+<p>Senra 拿 Intel 三巨頭當對照：Noyce、Moore、Grove 當年停下手邊工作去教育客戶、投資人、整個國家，一度開的課比當地社區大學整本課程目錄還多。他的問題是「為什麼 AI 圈沒人在做這件事」<span class="ts">[44:33]</span>。</p>
+
+<p>Altman 的回答很短：<strong>沒有藉口，我們該做更多。我們試過幾個版本，都沒完全做對。現在正在做。</strong> <span class="ts">[45:28]</span></p>
+
+<p class="kicker">【缺口】</p>
+<h2>限制他的不是模型智力，是模型對他的脈絡了解太少</h2>
+
+<blockquote><p>我不想說它們已經夠聰明⋯⋯但它們相當聰明了。我現在感覺被限制住的，是 AI 對我掌握了多少有用的脈絡。<span class="ts">[46:13]</span></p></blockquote>
+
+<p>他做不到的事：讀完內部 Slack 每一篇貼文、讀完每一則客戶回饋、讀完該讀的研究論文 <span class="ts">[46:35]</span>。</p>
+
+<p>他要的是一個持續嘗試對他有幫助的 agent，能看懂比他有時間看的更多脈絡，並在他要做決定時把脈絡端上來 <span class="ts">[47:00]</span>。</p>
+
+<p>他明白點出這是產品側的缺口：「我們正確地把重心放在模型智力上，但在產品側，我們還沒有想夠：當一個模型擁有比任何人都多的脈絡，並拿它來建議你的重大決策，那意味著什麼。」<span class="ts">[47:23]</span></p>
+
+<p>這條軸上人類天生贏不了。<em>沒有人能在幾秒內讀完幾萬頁脈絡並準確使用它</em> <span class="ts">[47:53]</span>。</p>
+
+<p>Senra 現場給了一個實例：他從 2018 年起把讀過每本書的筆記與畫線全存進資料庫，加上自己節目的逐字稿，做成自用的 AI 工具，每天用它做每一集節目——因為七年前做的筆記他自己早就不記得了 <span class="ts">[48:16]</span>。</p>
+
+<p class="kicker">【取捨】</p>
+<h2>OpenAI 的定位是平台公司，代價是砍掉好產品</h2>
+
+<p>「我們比較想當平台公司，而不是產品公司。」當然還是會做產品 <span class="ts">[49:18]</span>。</p>
+
+<ul>
+<li>產品線已經合併：<strong>ChatGPT 與 Codex 合併</strong>。過去是 ChatGPT、Codex、API 三塊 <span class="ts">[49:35]</span></li>
+<li>他承認 Codex 這個名字取壞了：它不只是寫程式，什麼工作都能做，結果把人搞混</li>
+<li>目標形狀：一個介面加一個 API，兩者最終會越走越合 <span class="ts">[49:53]</span></li>
+<li>成本曲線上每一點都要做到最好：頂級模型做科學發現，便宜模型做不需要天才級智力的大量工作 <span class="ts">[50:16]</span></li>
+<li>明說不做：不做每一個產品類別、不跟自己的客戶競爭、不試圖吞掉整個經濟 <span class="ts">[51:01]</span></li>
+</ul>
+
+<h3>砍掉好想法是他自認最弱的一環</h3>
+
+<blockquote><p>為了追 great 而犧牲 good，是任何創業者或企業最難學會的一課。砍好想法很痛苦。我很不擅長這件事，我知道我很爛。<span class="ts">[51:42]</span></p></blockquote>
+
+<div class="tbl">
+<table>
+<caption class="notesrc" style="text-align:left; caption-side:bottom;"><b>Note</b>：兩項都是 Altman 在片中自述「去年砍掉」，本頁未另外查證公開消息。<br><b>Source</b>：David Senra 專訪 <span class="ts">[52:06]</span>、<span class="ts">[52:29]</span>。</caption>
+<thead>
+<tr><th>被砍的</th><th>他自己的評價</th><th>砍掉的理由</th></tr>
+</thead>
+<tbody>
+<tr><td>Sora</td><td>好產品、好玩、酷</td><td>吃掉大量算力，重要性不如把算力放在 Codex</td></tr>
+<tr><td>Atlas 瀏覽器</td><td>「我認為那是最好的瀏覽器」</td><td>不值得佔用那批人才</td></tr>
+</tbody>
+</table>
+</div>
+
+<p>判準本身很乾淨：在算力有限、人有限、資源有限的世界裡，<strong>「知識工作與科學的通用智慧」是最重要的一件事</strong>。其餘一切只有在它上游才留——自研晶片、資料中心、基礎設施軟體、訓練模型 <span class="ts">[52:49]</span>。</p>
+
+<p class="kicker">【外腦】</p>
+<h2>他有兩個外部大腦：Peter Thiel 與 Paul Graham</h2>
+
+<p>Senra 先鋪 Charlie Munger 的「猩猩理論」：一個聰明人對著猩猩把煩惱全講一遍，猩猩什麼都不懂，但人講完就變好了。<em>被迫把想法結構化本身就有價值</em> <span class="ts">[53:38]</span>。</p>
+
+<p>Altman 的對話對象分三類 <span class="ts">[54:14]</span>：</p>
+
+<ol>
+<li>待很久的研究員們：一起經歷過所有事，發展出共享語言與直覺標準。這在公司外面複製不出來，用來談技術會往哪去</li>
+<li>Paul Graham 與 Peter Thiel：卡在真正非顯然的問題時去找的那兩個人</li>
+</ol>
+
+<p>他給的判準很精準：</p>
+
+<blockquote><p>如果 LLM 做的是預測下一個字，那這兩個人是我最預測不到下一個字的人。<span class="ts">[54:58]</span></p></blockquote>
+
+<h3>Thiel 的例子：ChatGPT 上線兩個月後那次</h3>
+
+<p>當時成長很快，但公司內部很多人覺得那是低價值成長——人只是好奇來聊天，不穩固。他們列了五六件別的事想改做。</p>
+
+<p>Thiel 的回答是：<strong>除了這件事以外做任何事都是明顯的錯誤</strong> <span class="ts">[57:06]</span>。</p>
+
+<p>他的理由是 Google 文字框的威力——一個你可以打任何東西進去、而它會做對事的空框。</p>
+
+<p>當時所有人擔心的是它<em>不符合矽谷共識</em>：沒有 feed、沒有網路效應、沒有鎖定、沒有脈絡累積（那時還沒有 memory）。</p>
+
+<p>Thiel 的反問是：大家追 Google 商業模式追了二十年，這是第一個真的出現的東西，空文字框對 Google 明明就管用，你為什麼不加倍下注 <span class="ts">[57:49]</span>？</p>
+
+<p>Altman 的評語兩個字：簡單的天才。</p>
+
+<h3>Paul Graham 的例子：早到讓你尷尬的 V1</h3>
+
+<p>YC 的迷因是他會邊搖手指邊說「你知道你該做什麼」，後面接的東西有時很棒、有時很糟。但重點是那種創造性與開放地形 <span class="ts">[58:48]</span>。</p>
+
+<p>他把整個新創生態推向：<strong>發一個你會覺得丟臉的 V1</strong>，因為客戶回饋會讓它變好得多。</p>
+
+<div class="callout tip">
+<p>ChatGPT 上線前，Altman <strong>根本沒問 Paul Graham 該不該發</strong>——因為他已經知道對方會說什麼 <span class="ts">[59:16]</span>。對照 Senra 的故事：Munger 過世前幾個月說他跟 Buffett「從不講話了」，因為 Buffett 只要假裝拿起電話，就已經知道他會說什麼。那是 65 年共事的結果 <span class="ts">[59:52]</span>。</p>
+</div>
+
+<p>回頭看所有 YC 創辦人的資料點，最讓他驚訝的是<em>「快速行動加上迭代」與成功的相關性有多高</em> <span class="ts">[1:00:27]</span>。</p>
+
+<p class="kicker">【反事實】</p>
+<h2>YC 對他的影響不在方法，在「誰有資格開公司」被改寫</h2>
+
+<p>「用傳統指標——市值、創造的價值——YC 已經是最有價值的科技公司之一。但 YC 在過去二十年裡對整個科技與創業生態的影響，只被理解了一部分。」<span class="ts">[1:01:32]</span></p>
+
+<p>他拆成兩件事，而第二件更重要 <span class="ts">[1:02:38]</span>：</p>
+
+<ul>
+<li><strong>作業系統</strong>：具體該做什麼</li>
+<li><strong>哲學</strong>：迭代部署、技術人掌權、<em>願意在公司各個層級賭上有能量有野心但經驗較少的年輕人</em></li>
+<li><strong>生態改變</strong>：更多槓桿流向創辦人、年輕技術創辦人能募到大筆資本、不需要漂亮履歷也能做有野心的事</li>
+</ul>
+
+<p>他的反事實推論很硬：把時鐘轉回 2004 年，只讓技術演進到 2016 年、其他一切都不變的話——<strong>他認為 OpenAI 不可能存在</strong> <span class="ts">[1:03:27]</span>。</p>
+
+<p class="kicker">【反直覺】</p>
+<h2>他認為從成功學到的比從失敗學到的多</h2>
+
+<div class="callout warn">
+<p>先標一個他自己講錯的地方。 他引《安娜·卡列尼娜》開場時把句子講反了。托爾斯泰的原句是「幸福的家庭都相似，不幸的家庭各有各的不幸」。論點不受影響，因為他要的正是「成功的樣態較一致」這個方向 <span class="ts">[1:04:04]</span>。</p>
+</div>
+
+<p><strong>從失敗學到的東西太泛</strong>：關於毅力、關於某件事不要做。而大部分事情本來就不 work，失敗的原因太多，<em>因果很難拼對</em> <span class="ts">[1:04:19]</span>。</p>
+
+<p><strong>從成功學到的可以直接搬</strong>：搞懂 YC 哪些部分真的管用、OpenAI 哪些部分真的管用，往前套用有用得多 <span class="ts">[1:04:42]</span>。</p>
+
+<blockquote><p>我從成功學到的教訓很好，而我當時應該更常套用它們。從失敗學到的，不是我早就知道的通則，就是反而擋了別的路。<span class="ts">[1:05:03]</span></p></blockquote>
+
+<h3>重複本身就是機制</h3>
+
+<p>Senra 的框架是：他的另一個節目是「創業者的教會」——共同的知識底本、固定間隔聚會、反覆回到同樣的書與故事。他研究過主要宗教的共同點，因為在所有人造物裡宗教活得最久 <span class="ts">[1:06:18]</span>。</p>
+
+<p>Altman 極強烈同意，但補一個方向：要被反覆提醒的應該是正面的那些——多跟使用者談、更早出貨、對招誰進來守更高的標準、犯錯要更快處理 <span class="ts">[1:06:57]</span>。</p>
+
+<p class="kicker">【空白】</p>
+<h2>OpenAI 最難的一段：四年半沒有產品，也沒有訊號</h2>
+
+<p>「OpenAI 跟我過去所有的模式比對最不一樣的地方是：從創立到發出第一個產品，中間隔了四年半。」<span class="ts">[1:10:02]</span></p>
+
+<p>Senra 說：那是 YC 建議的相反面。Altman 說：是。</p>
+
+<p>難題的本質是——<strong>當你沒有客戶這個外部訊號，你怎麼知道研究有沒有在前進</strong> <span class="ts">[1:10:24]</span>？</p>
+
+<h3>他們造出來的替代訊號</h3>
+
+<div class="tbl">
+<table>
+<caption class="notesrc" style="text-align:left; caption-side:bottom;"><b>Note</b>：三項都是 Altman 自述，未經外部查證。「假截止日期」是他主動點名的失敗品。<br><b>Source</b>：David Senra 專訪 <span class="ts">[1:10:48]</span>–<span class="ts">[1:15:41]</span>。</caption>
+<thead>
+<tr><th>替代訊號</th><th>怎麼運作</th><th>結果</th></tr>
+</thead>
+<tbody>
+<tr><td>排行榜</td><td>Dota 2 時期用強化學習打電玩，把不同想法的表現攤在榜上</td><td>有效——客觀、真實，人自然往那裡衝</td></tr>
+<tr><td>外部 demo</td><td>對著一位研究員真心想打動的重量級人物做展示</td><td>有效，且他形容為「驚人」</td></tr>
+<tr><td>假的截止日期</td><td>人為訂死線製造壓力</td><td>沒有用</td></tr>
+</tbody>
+</table>
+</div>
+
+<p>他們去問過誰？當時矽谷每個人（包括他自己）都想開研究實驗室，Bell Labs 與 Xerox PARC 的書很紅。但<em>真正還記得怎麼做的人不多</em>。他們找了 Alan Kay 與少數幾位。有些建議很好，有些沒能轉譯到當下這個時刻 <span class="ts">[1:11:29]</span>。</p>
+
+<p>Senra 補一刀：Bell Labs 後面有壟斷級的印鈔機，Polaroid 也是，本田同樣把研發拆成獨立所有權。Altman 的回應是：「我們沒有那個東西。」<span class="ts">[1:12:33]</span></p>
+
+<h3>開張第一天的空白</h3>
+
+<p>他對早期最主要的記憶是：一直在募資、一直失敗、極度挫折 <span class="ts">[1:12:51]</span>。</p>
+
+<p>2015 年底宣布，2016 年元旦後第一天上工。11 或 12 個人早上九點多到 Greg Brockman 的公寓 <span class="ts">[1:13:15]</span>。</p>
+
+<p>大家帶著興奮走進來，像開學第一天。然後環顧四周：<strong>那我們現在要幹嘛？</strong></p>
+
+<p>有人說「我們該弄塊白板」。白板來了。再環顧一次。<em>房間裡的能量就這樣塌下去</em> <span class="ts">[1:13:37]</span>。</p>
+
+<blockquote><p>這不像做產品的新創。我們說我們要做 AGI。那也許該寫幾篇論文？好，寫論文。也許該想幾個點子？好，想點子。⋯⋯每個人都有「我完全不知道自己在幹嘛」的時刻。那是我的其中一次。<span class="ts">[1:14:01]</span></p></blockquote>
+
+<p>之後是「多年來大多是混亂的跌撞」，慢慢找到做研究賭注與評估研究賭注的節奏，找到一個能往上爬的梯度 <span class="ts">[1:14:20]</span>。</p>
+
+<p>路徑是：unsupervised sentiment neuron 論文，到 GPT-1，再到之後的 GPT。再加上 scaling laws 的工作，讓他們有信心去買算力，也理解該怎麼把模型放大 <span class="ts">[1:14:47]</span>。</p>
+
+<p class="kicker">【收尾】</p>
+<h2>他寫給兒子的信，只寫了八封</h2>
+
+<p>大兒子出生後，他晚上哄睡時得找話講，就講自己這天過得如何、在跟什麼搏鬥、在擔心什麼 <span class="ts">[1:15:57]</span>。</p>
+
+<p>後來改成每個星期天寫一封信給他。「我大概只寫了八封左右。」<span class="ts">[1:16:16]</span></p>
+
+<p>他說那個心態框架很特別：<strong>寫給小孩的時候，你躲不到任何東西後面</strong>——「這件事發生了，感覺不太好，下週最好換個做法」<span class="ts">[1:17:26]</span>。</p>
+
+<p>Senra 的勸告：創辦人不會在四十歲寫自傳，都是七十歲才寫，那時候太多東西已經流失了。他們全都說同一句「我真希望我當年有寫日記」。他建議 Altman 就算不自己寫，也該找人寫一本，哪怕只給內部看 <span class="ts">[1:16:51]</span>。</p>
+
+<p>他舉的範本是 Michael Moritz 的《The Little Kingdom》——蘋果早期史，寫到 Steve Jobs 還沒被趕出蘋果就結束了。所以留下的是<em>當時真正發生的事</em>，不是事後重述 <span class="ts">[1:17:09]</span>。</p>
+
+<p>訪談收在 Altman 的一句：「也許我會找個方法再寫。」</p>
+
+<p class="kicker">【拆解】</p>
+<h2>四條可以直接借用的東西</h2>
+
+<ol>
+<li><strong>「iPhone 時刻還沒到」是他自己的診斷，不是外界的批評。</strong> 他把採用率低歸為產品失敗。設計任何 AI 工作流時，這句話等於在說：瓶頸在介面與習慣，不在模型 <span class="ts">[07:58]</span></li>
+<li><strong>脈絡是他點名的下一個產品缺口。</strong>「模型夠聰明了，限制我的是它對我知道得太少。」<span class="ts">[46:13]</span></li>
+<li><strong>砍掉好東西的判準很乾淨。</strong> 算力有限、人有限，所以只留「通用智慧」與它的上游。Sora 與 Atlas 都是「好產品但不是上游」而被砍 <span class="ts">[52:49]</span></li>
+<li><strong>他主張從成功學而非從失敗學</strong>，理由是失敗的因果拼不對、教訓太泛。這與「失效點導向」的做法有張力，值得自己判一次哪邊在哪個情境成立 <span class="ts">[1:04:19]</span></li>
+</ol>
+
+<p class="kicker">【效度】</p>
+<h2>這份筆記裡不確定的部分</h2>
+
+<p>逐字稿是 YouTube 自動字幕，無人工字幕。以下誤字與待查點<em>都沒有進上面的正文結論</em>。</p>
+
+<div class="tbl">
+<table>
+<caption class="notesrc" style="text-align:left; caption-side:bottom;"><b>Note</b>：把握度是我對「該處判讀正確」的主觀評級，非量化指標。低把握度的項目已從正文剔除或未引用。<br><b>Source</b>：逐字稿檔 <code>transcript.md</code>，由 yt-dlp 抓 en-orig 自動字幕產生，2634 段。</caption>
+<thead>
+<tr><th>位置</th><th>逐字稿寫的</th><th>判讀</th><th>把握度</th></tr>
+</thead>
+<tbody>
+<tr><td><span class="ts">[00:02]</span></td><td>Toby Luque</td><td>Tobi Lütke（Shopify 執行長）</td><td>高</td></tr>
+<tr><td><span class="ts">[00:36]</span></td><td>we are not an NPC company</td><td>引述 Tobi，可能是梗也可能是誤聽</td><td>低，不建議引用</td></tr>
+<tr><td><span class="ts">[08:22]</span></td><td>Palm Trio</td><td>Palm Treo</td><td>高</td></tr>
+<tr><td><span class="ts">[11:54]</span></td><td>Surbiton testing</td><td>語境是 startup investing，整句被字幕吃掉</td><td>中，只取語境未引原句</td></tr>
+<tr><td><span class="ts">[35:42]</span></td><td>in our three tower</td><td>應為 ivory tower（象牙塔）</td><td>中高</td></tr>
+<tr><td><span class="ts">[1:07:42]</span></td><td>Verner Cole</td><td>人名，查不出對應</td><td><strong>低，已從正文剔除</strong></td></tr>
+<tr><td><span class="ts">[1:01:14]</span></td><td>The Band / Velvet Underground</td><td>Senra 自己也不確定</td><td>原文即不確定</td></tr>
+</tbody>
+</table>
+</div>
+
+<p>其他要注意的：</p>
+
+<ul>
+<li>時間標記可能有正負兩秒漂移。那是自動字幕的 cue 邊界，不是章節邊界</li>
+<li>三段贊助商廣告已剔除（<span class="ts">[15:57]</span> Ramp、<span class="ts">[17:10]</span> AppLovin、<span class="ts">[38:30]</span> Deel），不屬訪談內容</li>
+<li>Sora 與 Atlas 被砍是 Altman 在片中的說法，本頁沒有另外查證公開消息</li>
+<li>這是純口述訪談，全片沒有投影片、沒有圖表，所以本頁沒有畫面層素材</li>
+</ul>
+
+</article>
+<footer>
+<p>最後更新：2026-08-29 · CC BY 4.0 · 引用請標來源 · 本頁為 David Senra 專訪的中文重點筆記，非逐字翻譯；原片版權屬原作者</p>
+</footer>
+</main>
+<script>
+  const bar = document.getElementById('progress');
+  window.addEventListener('scroll', () => {
+    const h = document.documentElement;
+    const max = h.scrollHeight - h.clientHeight;
+    const ratio = max > 0 ? h.scrollTop / max : 0;
+    bar.style.transform = 'scaleX(' + ratio + ')';
+  }, { passive: true });
+</script>
+</body>
+</html>
