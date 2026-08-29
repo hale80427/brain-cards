@@ -1,0 +1,638 @@
+<!DOCTYPE html>
+<html lang="zh-Hant-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>對 agent 不要用 prompt 講道理，要用跑得起來的工具把它關進迴圈</title>
+<meta name="description" content="Uncle Bob 用了大半年 agent 寫 code 之後，把「教 agent 寫好 code」從寫規則整個換成架檢查器。這是他 56 分鐘直播訪談的中文整理與拆解。">
+
+<link rel="canonical" href="https://hale80427.github.io/brain-cards/uncle-bob-agent-fundamentals/">
+<meta name="author" content="彥皓">
+
+<meta property="og:type" content="article">
+<meta property="og:title" content="對 agent 不要用 prompt 講道理，要用跑得起來的工具把它關進迴圈">
+<meta property="og:description" content="Uncle Bob 用了大半年 agent 寫 code 之後，把「教 agent 寫好 code」從寫規則整個換成架檢查器。這是他 56 分鐘直播訪談的中文整理與拆解。">
+<meta property="og:url" content="https://hale80427.github.io/brain-cards/uncle-bob-agent-fundamentals/">
+<meta property="og:image" content="https://hale80427.github.io/brain-cards/og-default.jpg">
+<meta property="og:locale" content="zh_TW">
+
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="對 agent 不要用 prompt 講道理，要用跑得起來的工具把它關進迴圈">
+<meta name="twitter:description" content="Uncle Bob 用了大半年 agent 寫 code 之後，把「教 agent 寫好 code」從寫規則整個換成架檢查器。">
+<meta name="twitter:image" content="https://hale80427.github.io/brain-cards/og-default.jpg">
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "對 agent 不要用 prompt 講道理，要用跑得起來的工具把它關進迴圈",
+  "description": "Uncle Bob 用了大半年 agent 寫 code 之後，把「教 agent 寫好 code」從寫規則整個換成架檢查器。這是他 56 分鐘直播訪談的中文整理與拆解。",
+  "datePublished": "2026-08-29",
+  "dateModified": "2026-08-29",
+  "author": { "@type": "Person", "name": "彥皓" },
+  "url": "https://hale80427.github.io/brain-cards/uncle-bob-agent-fundamentals/",
+  "inLanguage": "zh-TW",
+  "license": "https://creativecommons.org/licenses/by/4.0/"
+}
+</script>
+
+<style>
+  :root {
+    /* 色票：主色 accent（藍）＋ 警示色 accent-warn（橘），共 2 個強調色 */
+    --bg: oklch(100% 0 0);
+    --fg: oklch(25.5% 0.012 258);
+    --accent: oklch(52.0% 0.185 258);
+    --accent-warn: oklch(58.0% 0.145 55);
+    --muted: oklch(48.5% 0.014 258);
+    --border: oklch(90.5% 0.006 258);
+    --callout-tip: oklch(96.8% 0.014 250);
+    --callout-warn: oklch(96.5% 0.020 72);
+    --surface: oklch(97.8% 0.004 258);
+    /* 字級：嚴格 4 級，所有 font-size 只准引用這四個 */
+    --fs-meta: 0.875rem;
+    --fs-body: 1rem;
+    --fs-h2: clamp(1.15rem, 2.5vw, 1.375rem);
+    --fs-h1: clamp(1.5rem, 3.5vw, 1.9rem);
+    --font-sans: "Inter", "Noto Sans TC", -apple-system, BlinkMacSystemFont, system-ui, "PingFang TC", sans-serif;
+    --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+    --ease-linear: linear;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: oklch(17.5% 0.014 258);
+      --fg: oklch(91.5% 0.012 258);
+      --accent: oklch(72.0% 0.132 250);
+      --accent-warn: oklch(76.0% 0.140 68);
+      --muted: oklch(70.0% 0.014 258);
+      --border: oklch(30.5% 0.014 258);
+      --callout-tip: oklch(24.5% 0.028 250);
+      --callout-warn: oklch(25.5% 0.030 68);
+      --surface: oklch(21.0% 0.012 258);
+    }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
+  }
+  * { box-sizing: border-box; }
+  body {
+    font-family: var(--font-sans);
+    background: var(--bg);
+    color: var(--fg);
+    line-height: 1.7;
+    margin: 0;
+    padding: 0;
+    -webkit-font-smoothing: antialiased;
+    text-autospace: normal;
+    font-synthesis: none;
+    line-break: strict;
+  }
+  .progress-bar {
+    position: fixed; top: 0; left: 0; height: 3px; width: 100%;
+    background: var(--accent); z-index: 100;
+    transform: scaleX(0); transform-origin: left;
+    transition: transform 0.1s var(--ease-linear);
+  }
+  .shell {
+    display: grid;
+    grid-template-columns: 190px minmax(0, 1fr);
+    gap: 3rem;
+    max-width: 1120px;
+    margin: 0 auto;
+    padding: 2.5rem 1.25rem 4rem;
+  }
+  /* 左側目次：sticky，只在寬螢幕出現 */
+  .toc {
+    font-size: var(--fs-meta);
+    position: sticky; top: 2rem; align-self: start;
+    max-height: calc(100vh - 4rem); overflow-y: auto;
+  }
+  .toc b { display: block; color: var(--muted); font-weight: 600;
+           letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 0.7rem; }
+  .toc a { display: block; color: var(--fg); text-decoration: none;
+           padding: 0.28rem 0 0.28rem 0.85rem; border-left: 2px solid var(--border);
+           line-height: 1.45; }
+  .toc a:hover, .toc a:focus-visible { color: var(--accent); border-left-color: var(--accent); }
+  .toc a:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+  /* 660px ÷ 16px ≈ 41 個中文字，落在 28–45 字的可讀區間內。
+     不用 ch 單位——ch 量的是 "0" 的寬度，對中文完全不準。 */
+  main { max-width: 620px; min-width: 0; }
+  h1 { font-size: var(--fs-h1); line-height: 1.32; margin: 0 0 0.75rem; letter-spacing: -0.015em; }
+  h2 { font-size: var(--fs-h2); line-height: 1.42; margin: 0 0 0.7rem; letter-spacing: -0.01em; }
+  h3 { font-size: var(--fs-body); font-weight: 700; color: var(--accent);
+       line-height: 1.45; margin: 1.6rem 0 0.4rem; }
+  p { margin: 0 0 1rem; font-size: var(--fs-body); }
+  li { font-size: var(--fs-body); margin-bottom: 0.4rem; }
+  ul, ol { padding-left: 1.3rem; margin: 0 0 1.15rem; }
+  a { color: var(--accent); text-underline-offset: 3px; }
+  a:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+  /* 著重號取代部分粗體——中文沒有真斜體 */
+  /* 著重號本身就是強調手段，不再疊字重——疊了是雙重強調，也會把加粗比例推破 5% */
+  em { font-style: normal; font-weight: inherit;
+       text-emphasis: filled dot; text-emphasis-position: under right;
+       -webkit-text-emphasis: filled dot; -webkit-text-emphasis-position: under right; }
+  em:lang(en) { font-style: italic; font-weight: inherit;
+                text-emphasis: none; -webkit-text-emphasis: none; }
+  .meta { font-size: var(--fs-meta); color: var(--muted); margin: 0 0 1.5rem;
+          padding-bottom: 1.15rem; border-bottom: 1px solid var(--border); }
+  .meta a { color: var(--accent); }
+  /* font-size 必填：漏了會繼承 body 的 16px 而多開一級，機械驗收會擋 font_levels > 4 */
+  .bluf { background: var(--callout-tip); border-left: 4px solid var(--accent);
+          padding: 1.1rem 1.3rem; margin: 1.25rem 0 1.5rem; border-radius: 0 5px 5px 0;
+          font-size: var(--fs-body); }
+  .bluf strong.label { display: block; font-size: var(--fs-meta); letter-spacing: 0.09em;
+                       color: var(--accent); margin-bottom: 0.45rem; text-transform: uppercase; }
+  .bluf p:last-child { margin-bottom: 0; }
+  /* 內容類型標籤前綴：固定四種，不再增加 */
+  .kicker { display: inline-block; font-size: var(--fs-meta); font-weight: 700;
+            letter-spacing: 0.12em; color: var(--accent); margin: 3rem 0 0; }
+  .kicker + h2 { margin-top: 0.35rem; }
+  section { scroll-margin-top: 1.5rem; }
+  /* callout：四型封頂 tip / warn / quote / note。
+     刻意不用左側色條——BLUF 已經佔了那個手法，整頁再重複五次就從「標記」變成壁紙。
+     這裡改用底色分型，型別靠開頭標籤的顏色講。 */
+  .callout { padding: 0.95rem 1.2rem; margin: 1.25rem 0; border-radius: 6px;
+             background: var(--surface); font-size: var(--fs-body); }
+  .callout p:last-child { margin-bottom: 0; }
+  .callout.tip { background: var(--callout-tip); }
+  .callout.warn { background: var(--callout-warn); }
+  .callout b { color: var(--accent); }
+  .callout.warn b { color: var(--accent-warn); }
+  /* callout 的開頭標籤：靠顏色與字距分辨，不靠字重。
+     整頁的加粗有 5% 的預算上限，這種每則 callout 都出現一次的裝置最不該去佔它。 */
+  .callout .lab { color: var(--accent); letter-spacing: 0.03em; }
+  .callout.warn .lab { color: var(--accent-warn); }
+  /* 引文用中文引號標示，不用左側色條——中文本來就有成對的引號，
+     那是比一條線更準確的引文記號，也讓左側色條回歸 BLUF 專用。 */
+  blockquote { margin: 1.75rem 0; padding: 0; color: var(--fg); }
+  blockquote p { margin: 0 0 0.4rem; font-weight: 600; }
+  blockquote p::before { content: "「"; color: var(--accent); }
+  blockquote p::after { content: "」"; color: var(--accent); }
+  blockquote cite { display: block; font-size: var(--fs-meta); color: var(--muted);
+                    font-style: normal; font-weight: 400; }
+  /* 時間戳 */
+  .ts { font-family: var(--font-mono); font-size: var(--fs-meta); color: var(--muted);
+        background: var(--surface); padding: 0.08em 0.38em; border-radius: 3px;
+        white-space: nowrap; }
+  code { font-family: var(--font-mono); background: var(--surface); padding: 0.1em 0.4em;
+         border-radius: 3px; font-size: var(--fs-meta);
+         overflow-wrap: anywhere; word-break: break-word; }
+  .tbl { overflow-x: auto; margin: 1.35rem 0; min-width: 0; }
+  table { border-collapse: collapse; width: 100%; margin: 0; font-size: var(--fs-body); }
+  .tbl table { min-width: 520px; }
+  th, td { padding: 0.55rem 0.75rem; border: 1px solid var(--border);
+           text-align: left; vertical-align: top; line-height: 1.55; }
+  th { background: var(--callout-tip); font-weight: 600; }
+  /* 圖與圖說 */
+  figure { margin: 1.6rem 0; }
+  figure svg { width: 100%; height: auto; display: block; }
+  figcaption { font-size: var(--fs-meta); color: var(--muted); margin-top: 0.55rem;
+               line-height: 1.6; }
+  /* 底部 margin 必填：這塊是 div 不是 p，拿不到 p 的預設下緣間距，Source 會黏住下一段 */
+  .notesrc { font-size: var(--fs-meta); color: var(--muted); margin: 0.35rem 0 1.15rem; line-height: 1.6; }
+  .notesrc b { color: var(--fg); font-weight: 600; }
+
+  /* ===== 圖 1：五關卡流水線（HTML+CSS，非 SVG——文字要能跟著字級走，不被等比縮小）===== */
+  .pipe { display: grid; gap: 0.5rem; margin: 0; }
+  .pipe-row { display: grid; grid-template-columns: 116px minmax(0, 1fr) 132px;
+              gap: 0.75rem; align-items: stretch; }
+  .pipe-name { background: var(--callout-tip); border: 1px solid var(--accent);
+               border-radius: 5px; padding: 0.55rem 0.6rem; font-size: var(--fs-meta);
+               font-weight: 700; color: var(--accent); display: flex;
+               align-items: center; justify-content: center; text-align: center; line-height: 1.35; }
+  .pipe-job { background: var(--surface); border: 1px solid var(--border);
+              border-radius: 5px; padding: 0.55rem 0.75rem; font-size: var(--fs-meta);
+              line-height: 1.55; }
+  .pipe-tool { border: 1px dashed var(--border); border-radius: 5px;
+               padding: 0.55rem 0.6rem; font-size: var(--fs-meta); color: var(--muted);
+               line-height: 1.45; display: flex; align-items: center; }
+  .pipe-arrow { font-size: var(--fs-meta); color: var(--accent); text-align: center;
+                line-height: 1; margin: -0.15rem 0; }
+  @media (max-width: 620px) {
+    .pipe-row { grid-template-columns: 1fr; gap: 0.35rem; }
+    .pipe-name { justify-content: flex-start; text-align: left; }
+  }
+
+  /* ===== 圖 5：三層對照（HTML+CSS）===== */
+  .layers { display: grid; gap: 0.6rem; margin: 0; }
+  .layer { border-radius: 5px; padding: 0.75rem 0.95rem; font-size: var(--fs-meta);
+           line-height: 1.6; border-left: 4px solid var(--muted); background: var(--surface); }
+  .layer.keep { border-left-color: var(--accent); background: var(--callout-tip); }
+  .layer.tune { border-left-color: var(--accent-warn); background: var(--callout-warn); }
+  .layer.drop { border-left-color: var(--muted); }
+  .layer b { display: block; margin-bottom: 0.2rem; }
+  .layer.keep b { color: var(--accent); }
+  .layer.tune b { color: var(--accent-warn); }
+
+  footer { margin-top: 3rem; padding-top: 1.25rem; border-top: 1px solid var(--border);
+           font-size: var(--fs-meta); color: var(--muted); line-height: 1.7; }
+  footer a { color: var(--accent); }
+
+  @media (max-width: 860px) {
+    .shell { grid-template-columns: 1fr; gap: 1.75rem; padding-top: 1.75rem; }
+    .toc { position: static; max-height: none; border-bottom: 1px solid var(--border);
+           padding-bottom: 1.15rem; }
+    .toc-list { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0 0.75rem; }
+  }
+  @media print {
+    .progress-bar, .toc { display: none; }
+    .shell { grid-template-columns: 1fr; max-width: 100%; padding: 1cm; }
+    body { line-height: 1.55; }
+  }
+</style>
+</head>
+<body>
+<div class="progress-bar" id="progress"></div>
+<div class="shell">
+
+<nav class="toc" aria-label="目次">
+  <b>目次</b>
+  <div class="toc-list">
+    <a href="#s1">1 · 他的轉折點</a>
+    <a href="#s2">2 · 規則為什麼會失效</a>
+    <a href="#s3">3 · 兩個太貴的老工具</a>
+    <a href="#s4">4 · 五道關卡</a>
+    <a href="#s5">5 · context 的軌跡</a>
+    <a href="#s6">6 · 唯一沒自動化成功的</a>
+    <a href="#s7">7 · 該調 vs 不該搬</a>
+    <a href="#s8">8 · 反對 spec-driven</a>
+    <a href="#s9">9 · 規格是消耗品</a>
+    <a href="#s10">10 · 新人怎麼學戰略</a>
+    <a href="#s11">11 · 為什麼基本功還重要</a>
+    <a href="#uncertain">· 我不確定的地方</a>
+  </div>
+</nav>
+
+<main>
+<header>
+  <h1>對 agent 不要用 prompt 講道理，要用跑得起來的工具把它關進迴圈</h1>
+  <div class="meta">
+    Robert C. Martin（Uncle Bob）× Matt Pocock 直播訪談 · 56:39 · 2026-08-19 ·
+    <a href="https://www.youtube.com/watch?v=zcLPGC-tvgk" rel="noopener">看原片</a><br>
+    以下是中文整理與拆解，不是逐字翻譯；引號內為片中說法的中譯，後面的時間戳可跳回原片查證。
+  </div>
+  <div class="bluf">
+    <strong class="label">BLUF</strong>
+    <p>他把「教 agent 寫好 code」從<em>寫規則</em>整個換成<em>架檢查器</em>。理由不是品味——他親眼看到 agent 被自己製造的爛 code 卡到繞圈、改一個壞一個，最後一隻直接說它處理不了了。</p>
+    <p>三個最硬的點：規則塞進 prompt 會失效（機制是 lost in the middle）；他挖出兩個 2000 年代「太貴而不能用」的老工具，因為 agent 不嫌無聊；人類的<em>價值</em>可以加在 agent 上，人類的<em>紀律</em>不行。</p>
+  </div>
+</header>
+
+<article>
+<!-- narrative: 物件,細節,矛盾,直接引語,場景 -->
+
+<section id="s1">
+<span class="kicker">【機制】</span>
+<h2>1 · 說服他的不是 code 醜，是他看見 agent 開始打結</h2>
+<p>2025 年底，Robert C. Martin 開始認真用 agent 寫 code。第一個是早期的 Grok。它寫得出東西，但一直留下他所謂的「dog doo」——他得一路跟在後面清 <span class="ts">04:50</span>。</p>
+<p>他當時的評語本身就是矛盾的：因為它快，所以有趣；因為它逼他一直清，所以讓他變慢 <span class="ts">05:16</span>。</p>
+<p>真正翻轉他做法的是下一步。他刻意不清爛攤子、一路往下疊功能，然後看著 agent 改一個地方就弄壞另一個，修那個又弄壞下一個，開始繞圈。有一次 agent 直接放棄——他說原話不是那樣講的，但那顯然就是它的意思 <span class="ts">11:59</span>。</p>
+<div class="callout tip">
+  <p><span class="lab">機制判斷 ·</span> agent 跟人一樣會被髒 code 拖垮。門檻也許高一點，但<em>門檻仍然在</em>。到了那個點，它不只是寫得慢，是會開始把事情越弄越糟然後動彈不得 <span class="ts">11:30</span>。</p>
+</div>
+</section>
+
+<section id="s2">
+<span class="kicker">【機制】</span>
+<h2>2 · 你寫在開頭的規則，只要文件夠長就會被擠進沒人看的中段</h2>
+<p>他一開始也走塞規則那條路：把測試驅動開發（TDD）、Clean Code 的規矩寫成五到十頁的指示餵進去 <span class="ts">12:55</span>。</p>
+<p>結果是 agent 把那些規則當成《神鬼奇航》裡的那種「規範」——比較像參考意見，看心情遵守 <span class="ts">13:22</span>。</p>
+<p>他去查了機制，叫 <em>lost in the middle</em>（迷失在中段）。白話說：模型的注意力不是平均分配的，一段輸入的開頭與結尾權重高，中段被稀釋。所以你寫在最前面的規則，只要後面內容一長，它就被推進中段而失效——前三句可能還在，第 50、第 80 句已經沒了 <span class="ts">14:26</span>。</p>
+
+<figure>
+<svg viewBox="0 0 640 250" role="img" xmlns="http://www.w3.org/2000/svg">
+  <title>圖 2：注意力權重在 context 開頭與結尾高、中段塌陷，長規則文件會整段落進塌陷區</title>
+  <defs>
+    <marker id="g2-arrow" markerWidth="9" markerHeight="9" refX="7" refY="3.2" orient="auto">
+      <path d="M0,0 L7,3.2 L0,6.4" fill="var(--accent-warn)"/>
+    </marker>
+  </defs>
+  <!-- 座標軸 -->
+  <line x1="60" y1="200" x2="600" y2="200" stroke="var(--border)" stroke-width="1.5"/>
+  <line x1="60" y1="40" x2="60" y2="200" stroke="var(--border)" stroke-width="1.5"/>
+  <text x="60" y="228" font-size="15" fill="var(--muted)">context 開頭</text>
+  <text x="600" y="228" font-size="15" fill="var(--muted)" text-anchor="end">結尾</text>
+  <text x="52" y="46" font-size="15" fill="var(--muted)" text-anchor="end" transform="rotate(-90 52 46)">注意力權重</text>
+  <!-- U 形曲線 -->
+  <path d="M70,60 C160,72 190,168 330,170 C470,168 500,72 590,60"
+        fill="none" stroke="var(--accent)" stroke-width="3"/>
+  <!-- 塌陷區 -->
+  <rect x="195" y="130" width="270" height="70" fill="var(--callout-warn)" opacity="0.75"/>
+  <text x="330" y="163" font-size="16" fill="var(--fg)" text-anchor="middle" font-weight="600">這裡是中段</text>
+  <text x="330" y="186" font-size="15" fill="var(--muted)" text-anchor="middle">你的第 50 條規則在這</text>
+  <!-- 標註 -->
+  <circle cx="76" cy="61" r="5" fill="var(--accent)"/>
+  <text x="90" y="52" font-size="15" fill="var(--fg)">前三句還在</text>
+  <circle cx="584" cy="61" r="5" fill="var(--accent)"/>
+  <text x="570" y="52" font-size="15" fill="var(--fg)" text-anchor="end">最近說的話還在</text>
+  <line x1="330" y1="118" x2="330" y2="128" stroke="var(--accent-warn)" stroke-width="2" marker-end="url(#g2-arrow)"/>
+  <text x="330" y="110" font-size="15" fill="var(--accent-warn)" text-anchor="middle" font-weight="600">規則越寫越多，只是把它們越推越深</text>
+</svg>
+<figcaption>圖 2 · 規則寫得越長，越多條會落進注意力塌陷的中段——所以「補一條規則」這個動作本身會削弱前面每一條 · 作者自繪</figcaption>
+<div class="notesrc"><b>Note：</b>曲線形狀為示意，不是量測值；片中只給了定性描述，沒有給任何權重數字。<br><b>Source：</b>訪談 <span class="ts">13:52</span>–<span class="ts">14:50</span>。</div>
+</figure>
+
+<p>主持人補了一個同義說法，來自 Dex Horthy：context 有 <em>smart zone</em> 與 <em>dumb zone</em>，前段較聰明，越往後注意力越稀釋，「像每個字都在一間越來越擠的房間裡喊話，你聽不見訊號只聽見雜音」<span class="ts">15:36</span>。</p>
+<div class="callout tip">
+  <p><span class="lab">他的結論 ·</span> 把初始 prompt 砍到最短，讓它擠得進高權重區；<em>其餘一律交給事後跑的確定性工具</em>。因為工具不會被稀釋掉——它要嘛跑過要嘛沒跑過 <span class="ts">14:50</span>。</p>
+</div>
+</section>
+
+<section id="s3">
+<span class="kicker">【對照】</span>
+<h2>3 · 那兩個老工具當年不是無效，是人力太貴——而 agent 不嫌無聊</h2>
+<p>這是全片機制上最漂亮的一段。他挖出兩個 2000 年代初就存在、他當時試過又擱置的工具。</p>
+
+<div class="tbl">
+<table>
+  <thead>
+    <tr><th>工具</th><th>它做什麼</th><th>當年為什麼被他擱置</th></tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><b>CRAP score</b><br><span class="ts">05:53</span></td>
+      <td>把測試覆蓋率、與每個函式的<em>圈複雜度</em>（cyclomatic complexity，白話說就是「穿過這個函式有幾條路徑」）混成一個分數。分數越高代表這個函式越糟。</td>
+      <td>他跑過一次，確實抓出一堆爛函式。但一個一個重寫函式、重寫測試，人做不完——而且東西當時是會動的，他覺得付不起這個代價。</td>
+    </tr>
+    <tr>
+      <td><b>Mutation testing</b><br>（變異測試）<br><span class="ts">06:49</span></td>
+      <td>一支程式自動把原始碼裡的加號翻成減號、小於翻成大於、等於翻成不等於。每翻一次就跑一遍全部測試，<em>預期測試該掛</em>。沒掛，代表出現「存活的變種」——那就是測試的破洞。</td>
+      <td>同一個專案，測試跑一次四分鐘、要跑好幾百次，只能整夜跑。塞不進正常的建置流程。</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+<div class="notesrc"><b>Note：</b>CRAP 片中只說「是個縮寫，我能說什麼呢」，沒有展開全稱，本文不代填。<br><b>Source：</b>訪談 <span class="ts">05:53</span>–<span class="ts">08:40</span>。</div>
+
+<p>2025 年底他想通的那句話，是整個轉向的支點：</p>
+<blockquote>
+  <p>這些傢伙很快，而且不在乎工作有多無聊，而且我叫它做它就做。</p>
+  <cite>Robert C. Martin · <span class="ts">07:56</span></cite>
+</blockquote>
+<p>於是變異測試從整夜跑變成大約 30 分鐘，跑完 agent 自己去補上缺的測試 <span class="ts">08:17</span>。</p>
+<div class="callout warn">
+  <p><span class="lab">他推到很激進的地方 ·</span> 他的目標是把系統做到「<em>我完全不必看 code</em>」<span class="ts">09:02</span>。理由不是偷懶，是分工：agent 對 code 很快，他自己很慢，所以他不打算把自己的慢強加上去 <span class="ts">09:23</span>。他改成看 CRAP 分數、抽查、跑一整批測試。</p>
+</div>
+</section>
+
+<section id="s4">
+<span class="kicker">【機制】</span>
+<h2>4 · 他把工作切成五道關卡，每道換一顆乾淨的腦袋</h2>
+<p>這是他目前的實際做法。順序與分工如下 <span class="ts">20:21</span>–<span class="ts">22:25</span>。</p>
+
+<figure>
+<div class="pipe">
+  <div class="pipe-row">
+    <div class="pipe-name">1 · Specifier<br>規格員</div>
+    <div class="pipe-job">把人寫的文件轉成兩份東西：一份 Gherkin（<code>given / when / then</code> 格式的高階驗收測試），一份 QA 程序。QA 程序要<em>從人的視角、從畫面操作</em>，目的是證明系統真的會動。</div>
+    <div class="pipe-tool">輸出：驗收測試＋QA 文件</div>
+  </div>
+  <div class="pipe-arrow">▼</div>
+  <div class="pipe-row">
+    <div class="pipe-name">2 · Coder<br>實作員</div>
+    <div class="pipe-job">寫單元測試與實作，把上一關的驗收測試弄綠。他明說這一關<em>不要求漂亮</em>——只要會動。</div>
+    <div class="pipe-tool">輸出：會動但很髒的 code</div>
+  </div>
+  <div class="pipe-arrow">▼</div>
+  <div class="pipe-row">
+    <div class="pipe-name">3 · Cleaner<br>清潔員</div>
+    <div class="pipe-job">跑 CRAP 分析與一般 code review，清掉實作員留下的爛攤子。他的原話是：到那時候實作員一定已經弄得一團糟。</div>
+    <div class="pipe-tool">工具：CRAP score</div>
+  </div>
+  <div class="pipe-arrow">▼</div>
+  <div class="pipe-row">
+    <div class="pipe-name">4 · Hardener<br>加固員</div>
+    <div class="pipe-job">跑變異測試。他形容這一隻「毫不留情」——要 100% 覆蓋，每一個等號、每一個小於號都要翻過一遍。這關花的時間最長。</div>
+    <div class="pipe-tool">工具：mutation testing</div>
+  </div>
+  <div class="pipe-arrow">▼</div>
+  <div class="pipe-row">
+    <div class="pipe-name">5 · QA agent<br>驗收員</div>
+    <div class="pipe-job">把第一關那份 QA 文件變成可執行腳本，實際去操作系統，產出一個確定性的結果——不是「我覺得可以了」。</div>
+    <div class="pipe-tool">輸出：確定性的通過／不通過</div>
+  </div>
+</div>
+<figcaption>圖 1 · 五道關卡的設計重點不在分工細，在於每一關都是新開的 agent、拿到乾淨的 context，且每一關的出口都由跑得起來的工具判定而非模型自評 · 作者自繪</figcaption>
+<div class="notesrc"><b>Note：</b>各關名稱依片中說法譯出；「輸出／工具」欄是依他描述整理的，片中沒有逐關列表。<br><b>Source：</b>訪談 <span class="ts">20:21</span>–<span class="ts">22:25</span>。</div>
+</figure>
+
+<h3>多開幾隻的兩個好處，他講得很清楚</h3>
+<ul>
+  <li><b>可以平行跑</b>——他說筆電同時撐得住的數量遠不只三隻 <span class="ts">19:26</span>。</li>
+  <li><b>每隻只做一件事，context 就受控</b>——lost in the middle 沒那麼嚴重，於是頂端能多塞幾條規則<em>而且真的被遵守</em> <span class="ts">19:34</span>。</li>
+  <li>附帶手法：讓 agent <em>出生 → 做完 → 死掉</em>，下一隻拿到全新的 context <span class="ts">19:53</span>。</li>
+</ul>
+<div class="callout warn">
+  <p><span class="lab">代價他也講了 ·</span> 啟動成本高——一隻 agent 光起來就 10 到 15 秒，起來之後還要重新摸清整個 context <span class="ts">20:06</span>。而且他明說這套<em>正在犧牲生產力換品質</em>，只是他還沒找到那個換不下去的臨界點 <span class="ts">17:28</span>。</p>
+</div>
+
+<h3>他自己給的讀數是 4 到 5 倍，但那是體感不是實驗</h3>
+<p>同一件事：單一 agent 五分鐘做完，但品質可疑；走完這五關約<em>一小時</em>；人來做約<em>半天</em> <span class="ts">22:29</span>。他算成 4 到 5 倍生產力，而且品質比人願意給的更高。</p>
+<div class="callout">
+  <p><span class="lab">先別當數據用 ·</span> 這是他的自述，沒有量測方法、沒有對照組，片中也沒說是什麼專案、什麼語言、多大的 codebase。它是一個實務者的體感，不是一個實驗結果。</p>
+</div>
+</section>
+
+<section id="s5">
+<span class="kicker">【機制】</span>
+<h2>5 · context 有一條軌跡，而軌跡會污染後面每一句話</h2>
+<p>主持人先給了說法：一個 session 的走向會自我延續。你叫它測一次畫面，之後每一次改動它都會回去測畫面。<em>清掉軌跡的唯一辦法是清掉 context</em> <span class="ts">23:11</span>。</p>
+<p>Uncle Bob 用一個跟程式無關的例子接住，這是全片最好懂的一段：</p>
+<blockquote>
+  <p>你正在跟模型聊咖啡怎麼沖。旁邊有人走過，在講他昨天看的連續劇——那段話進了 context。<em>你沒放進去，是路過的人放的。</em>從那之後，所有關於咖啡的回答都會沾到那齣連續劇。模型分不出來。</p>
+  <cite>Robert C. Martin · <span class="ts">24:03</span>（依片中說法中譯）</cite>
+</blockquote>
+<p>他的推論：只要 context 內部保持一致、方向不亂，那些誇張的幻覺就不太會發生 <span class="ts">24:54</span>。</p>
+<p>同一個機制他直接搬去論證模組化 <span class="ts">28:33</span>：一個模組如果什麼東西都往裡塞，agent 進去會不知道自己在幹嘛；切乾淨了，<em>每個模組自己有一條軌跡</em>，它就不會被裡面的雜訊搞混。</p>
+</section>
+
+<section id="s6">
+<span class="kicker">【複盤】</span>
+<h2>6 · 架構是他到現在唯一還沒自動化成功的一塊</h2>
+<p>直到訪談前一個月，模組結構都還是他手動處理：叫 agent 建完東西，再回頭審問它「這裡結構長怎樣、模組之間怎麼講話」——<em>然後被答案嚇死</em>，再自己設計模組切法丟回去重來 <span class="ts">26:06</span>。</p>
+<p>他為此做了兩個東西：</p>
+<ul>
+  <li><b>架構檢視器</b>（他讓 agent 幫他做的）：畫出 UML 式的模組圖與依賴流向，可以點進子模組、一路點到原始碼 <span class="ts">26:55</span>。</li>
+  <li><b>依賴規格檔＋檢查器</b>：明文定義誰可以依賴誰、依賴該往哪個方向流，寫成一份 agent 不能違反的規格。末端跑檢查器，違反就得自己修——通常是反轉依賴、插一層介面、或把模組切開 <span class="ts">27:34</span>。</li>
+</ul>
+<div class="callout warn">
+  <p><span class="lab">他明講的失敗 ·</span> 「我現在正在試能不能把這塊也自動化，<em>目前運氣不太好</em>」<span class="ts">28:08</span>。這是全片唯一一處他主動說自己還沒做到的地方。</p>
+</div>
+<h3>模組切好，agent 才不會在裡面迷路</h3>
+<p>他的論證跟乾淨 code 是同一個：切得好、介面有紀律的東西，人腦抓得住，因為人是靠分艙來理解的。模型是照著人建的，所以也吃這套 <span class="ts">28:33</span>。</p>
+<p>主持人補上 John Ousterhout 的 <em>deep module</em>（深模組：介面窄、內部藏得深）為什麼特別適合 agent——模型可以<em>只讀介面就動作，不必讀實作</em> <span class="ts">30:04</span>。Uncle Bob 同意，並補了一句重要的但書：</p>
+<div class="callout tip">
+  <p><span class="lab">這既是優勢也是危險 ·</span> 只讀介面不讀實作能成立的前提，是<em>底下的 code 真的跟介面一致</em> <span class="ts">30:34</span>。他還提到模型會去讀測試，用測試來理解系統到底在做什麼。</p>
+</div>
+</section>
+
+<section id="s7">
+<span class="kicker">【對照】</span>
+<h2>7 · 人類的價值可以搬過去，人類的紀律不行</h2>
+<p>這是全片最值得單獨記住的一段區分 <span class="ts">35:01</span>。</p>
+
+<figure>
+<div class="layers">
+  <div class="layer keep">
+    <b>✓ 價值｜照搬</b>
+    要乾淨、要可測、要模組切得開、要有紀律的介面——這些是<em>目標</em>，不是做法。它們對人成立的理由（複雜度要被組織成人能構想的形狀），對模型同樣成立。
+  </div>
+  <div class="layer tune">
+    <b>△ 門檻｜要重調</b>
+    agent 的短期記憶又大又精準，所以同一條規則的數值要換。他對人要求 CRAP 低於 4，對 agent 設 6，正在考慮推到 8 <span class="ts">32:24</span>。他明說<em>這個門檻不好找</em>，還在試。
+  </div>
+  <div class="layer drop">
+    <b>✗ 紀律｜不要搬</b>
+    TDD 是為人設計的<em>行為</em>，因為人的短期記憶就那麼小。要求 agent 寫一行測試、寫一行實作、再寫一行測試，沒有意義 <span class="ts">34:03</span>。他改成允許 agent 走 Ousterhout 式的節奏：寫完一個函式，再補那個函式的測試。
+  </div>
+</div>
+<figcaption>圖 3 · 同一套軟體基本功拆成三層之後，只有中間那層需要重新校準，最上層照搬、最下層不該搬——把三層混為一談，就會變成「規則寫滿卻沒有一條被遵守」 · 作者自繪</figcaption>
+<div class="notesrc"><b>Note：</b>三層的切法是本文依他 <span class="ts">35:01</span> 那段話整理的，片中沒有畫成三層；他的原話是「把人類的價值加在 agent 上不是錯的，把人類的紀律加上去才是錯的，而門檻可能需要改」。<br><b>Source：</b>訪談 <span class="ts">32:24</span>–<span class="ts">35:23</span>。</div>
+</figure>
+
+<div class="callout tip">
+  <p><span class="lab">最有說服力的一個觀察 ·</span> 就算他明確下令要高紀律的 TDD，agent <em>每次都會滑回</em>「先寫函式再補測試」那個節奏 <span class="ts">34:56</span>。他的判斷是：那大概就是它適合的方式。</p>
+</div>
+<div class="callout warn">
+  <p><span class="lab">他自己補的但書 ·</span> 他跟 agent 討論過「CRAP 設 6 合不合理」，agent 說大概可以。然後他馬上補一句：<em>你不能相信任何跟 agent 的辯論</em> <span class="ts">33:37</span>。</p>
+</div>
+</section>
+
+<section id="s8">
+<span class="kicker">【對照】</span>
+<h2>8 · 他認為 spec-driven development 大概不會成功</h2>
+<p>他把「先把規格寫到極致再交給 agent」直接對應到 1970 年代的<em>瀑布式開發</em>，而敏捷就是對那件事的回擊 <span class="ts">36:16</span>。</p>
+<p>他自己試過，訪談那週還在試，結果一律是災難，而且失敗形狀固定：計畫寫好了，agent 跑起來你才發現有些事你沒想到、而它們沒你有智慧，於是它們半調子地衝出去，你得喊停、回捲、重寫計畫、重跑 <span class="ts">37:09</span>。</p>
+<div class="callout warn">
+  <p><span class="lab">agent 特別會助長這個陷阱 ·</span> 「agent 超愛寫計畫。天啊它們有多愛。它們會把計畫寫得華麗、漂亮、細節齊全」<span class="ts">39:13</span>——然後在收尾的時候垮掉。</p>
+</div>
+
+<h3>他用來說服人的比喻，是本片最好的一段類比</h3>
+<p>如果蓋房子的每一次修改都只要一塊錢——包含打地基、上屋頂在內，每改一次都是一塊錢——你還會先付幾千塊給建築師畫出完美藍圖，再花一塊錢叫承包商一次蓋好嗎 <span class="ts">39:59</span>？</p>
+
+<figure>
+<svg viewBox="0 0 640 260" role="img" xmlns="http://www.w3.org/2000/svg">
+  <title>圖 4：當單次修改成本趨近於零，前期規劃的投資報酬跟著崩掉</title>
+  <defs>
+    <marker id="g4-arrow" markerWidth="9" markerHeight="9" refX="7" refY="3.2" orient="auto">
+      <path d="M0,0 L7,3.2 L0,6.4" fill="var(--muted)"/>
+    </marker>
+  </defs>
+  <!-- 左：舊世界 -->
+  <text x="20" y="30" font-size="16" fill="var(--fg)" font-weight="600">舊世界：改一次很貴</text>
+  <rect x="20" y="46" width="120" height="150" fill="var(--callout-warn)" stroke="var(--accent-warn)" stroke-width="1.5" rx="4"/>
+  <text x="80" y="112" font-size="16" fill="var(--fg)" text-anchor="middle" font-weight="600">前期規劃</text>
+  <text x="80" y="134" font-size="15" fill="var(--muted)" text-anchor="middle">值得投資</text>
+  <rect x="150" y="166" width="120" height="30" fill="var(--surface)" stroke="var(--border)" stroke-width="1.5" rx="4"/>
+  <text x="210" y="186" font-size="15" fill="var(--muted)" text-anchor="middle">少量迭代</text>
+  <line x1="145" y1="205" x2="265" y2="205" stroke="var(--border)" stroke-width="1.5"/>
+  <!-- 中：箭頭 -->
+  <line x1="285" y1="120" x2="345" y2="120" stroke="var(--muted)" stroke-width="2" marker-end="url(#g4-arrow)"/>
+  <text x="315" y="105" font-size="15" fill="var(--muted)" text-anchor="middle">改一次</text>
+  <text x="315" y="146" font-size="15" fill="var(--muted)" text-anchor="middle">的成本</text>
+  <text x="315" y="166" font-size="15" fill="var(--muted)" text-anchor="middle">趨近零</text>
+  <!-- 右：新世界 -->
+  <text x="370" y="30" font-size="16" fill="var(--fg)" font-weight="600">現在：改一次一塊錢</text>
+  <rect x="370" y="176" width="90" height="20" fill="var(--callout-warn)" stroke="var(--accent-warn)" stroke-width="1.5" rx="4"/>
+  <text x="415" y="167" font-size="15" fill="var(--muted)" text-anchor="middle">規劃縮到最小</text>
+  <rect x="470" y="46" width="150" height="150" fill="var(--callout-tip)" stroke="var(--accent)" stroke-width="1.5" rx="4"/>
+  <text x="545" y="112" font-size="16" fill="var(--fg)" text-anchor="middle" font-weight="600">一直改到對為止</text>
+  <text x="545" y="134" font-size="15" fill="var(--muted)" text-anchor="middle">回饋 → 改 → 回饋</text>
+  <line x1="365" y1="205" x2="625" y2="205" stroke="var(--border)" stroke-width="1.5"/>
+  <text x="320" y="238" font-size="15" fill="var(--muted)" text-anchor="middle">方塊面積 ＝ 投入的力氣</text>
+</svg>
+<figcaption>圖 4 · 前期規劃值不值得，取決於改一次要多少錢；當那個價格垮掉，最划算的做法就從「先想清楚」變成「一直改到對為止」 · 作者自繪</figcaption>
+<div class="notesrc"><b>Note：</b>方塊面積為示意比例，非任何量測值；片中沒有給成本數字，只給了一塊錢的假想比喻。<br><b>Source：</b>訪談 <span class="ts">39:59</span>–<span class="ts">41:36</span>。</div>
+</figure>
+
+<blockquote>
+  <p>變更的成本已經跌到接近零，接近到我認為不可能再更低了。那你為什麼還要做昂貴的前期規劃？為什麼不就一直改、改到看起來對為止？</p>
+  <cite>Robert C. Martin · <span class="ts">41:06</span>（他自己補了一句：這個預測我大概會輸）</cite>
+</blockquote>
+</section>
+
+<section id="s9">
+<span class="kicker">【機制】</span>
+<h2>9 · 規格是消耗品；工具不要下載，讓你的 agent 讀完自己造一個</h2>
+<p>主持人問他會不會把規格存進 repo。<em>不會</em>——規格是短暫的，改一改就丟 <span class="ts">43:00</span>。</p>
+<p>他順手點出一個真正的結構空缺：以前<em>原始碼就是最終規格</em>，因為那是人寫的。現在原始碼還在，但寫的人不是我們了。很多人感覺到的失落，來源就在這裡 <span class="ts">42:53</span>。</p>
+<p>他現在的做法是反過來的：不先寫規格定義我要什麼，而是<em>看最終產出，然後說「那個就是規格」</em> <span class="ts">43:21</span>。</p>
+<p>他把 CRAP 工具（Clojure、Java、Go 版）、變異測試器、他自己的 agent harness 都放出來了，但他的建議是：</p>
+<blockquote>
+  <p>別下載那些東西。我是寫給我自己用的。你該做的是把你的 agent 指過去，讓它讀，然後幫你造一個你自己的。</p>
+  <cite>Robert C. Martin · <span class="ts">43:52</span></cite>
+</blockquote>
+<div class="callout tip">
+  <p><span class="lab">順帶講到的一個不對稱 ·</span> 你丟一份龐大規格給人看，命中率也許 20%，可能 5% 更實際；<em>丟給 agent，它真的會讀完</em>。反過來——agent 寫的東西，人不讀。它們期待我們讀完它們寫的每個字，而我們就是不讀 <span class="ts">44:16</span>。（那兩個百分比是主持人隨口舉的，不是引用研究。）</p>
+</div>
+</section>
+
+<section id="s10">
+<span class="kicker">【複盤】</span>
+<h2>10 · 新人要在哪裡長出戰略能力——他說他沒有完美答案</h2>
+<p>框架借自 Ousterhout 的<em>戰術 vs. 戰略</em>：戰術是地上打仗的士官，戰略是指揮戰爭走向的將領 <span class="ts">45:46</span>。兩人同意 agent 在戰術上很強、在戰略上很爛 <span class="ts">46:01</span>。問題是 AI 把戰術層吃掉了，新人要在哪裡長出戰略。</p>
+<p>他的路徑，講的時候反覆說「我不知道，大概是這樣」：</p>
+<ol>
+  <li><b>先真的寫 code，寫一年左右</b>——這樣你才知道 agent 在處理的是什麼 <span class="ts">46:58</span>。</li>
+  <li><b>進公司後，前幾個月被當成一隻 agent 對待</b> <span class="ts">47:29</span>——帶你的人給你跟 agent 一樣的任務，用一樣的確定性工具卡你。你會非常沒有生產力，但學到非常多。走完這道關卡，也許才能被信任去管一隻自己的 agent。</li>
+  <li><b>不能完全失去 code</b>。他拿十年前的老建議類比：沒寫過組合語言的人，該花一個週末寫組合語言，否則你活在幻想世界裡，底下還有你不懂的魔法 <span class="ts">48:17</span>。</li>
+  <li><b>去讀沒人讀的老書</b>：Tom DeMarco、Ed Yourdon、《The Pragmatic Programmer》<span class="ts">51:38</span>。要自己過濾掉過時的部分——很多寫於 70、80 年代——<em>但那正是這些教訓被學會的年代</em>。</li>
+</ol>
+
+<h3>他自己是怎麼發現 agent 出問題的（這題答得最好）</h3>
+<p>早期他是看 code 看到爛東西。<em>但他說那不是重點。</em>重點在下一步：他看著 agent 在掙扎，而他認得那個掙扎，因為他自己掙扎過 <span class="ts">50:59</span>。</p>
+<blockquote>
+  <p>問題就在這裡：新手進來，認不出那個掙扎。</p>
+  <cite>Robert C. Martin · <span class="ts">51:18</span></cite>
+</blockquote>
+<div class="callout tip">
+  <p><span class="lab">主持人補的樂觀面 ·</span> 戰略能力的回饋迴圈傳統上很長——你犯的錯九個月後才炸，跳槽跳得快的人可能永遠學不到。<em>agent 把這個迴圈壓短了</em>，你有機會更早看到自己的錯 <span class="ts">50:40</span>。</p>
+</div>
+</section>
+
+<section id="s11">
+<span class="kicker">【機制】</span>
+<h2>11 · 基本功還重要，因為它是把複雜度整理成「可以被想」的形狀</h2>
+<p>他引 Dijkstra（他自己先聲明「我大概會引錯」）：軟體是人類嘗試過最複雜的事 <span class="ts">53:36</span>。</p>
+<p>所以基本功的角色是：把複雜度組織成一個可以被構想的形狀——<em>不只是人可以構想，模型也可以。因為我們的模型本來就是照人建的</em> <span class="ts">53:46</span>。</p>
+<p>對那些說基本功不重要的人，他的話沒有客氣：他們會學到的，而且是用痛的方式學，而且不會花太久。可能比他以為的久一點，因為 agent 確實不錯——但他撞過那面牆，所以他知道牆在那裡 <span class="ts">54:14</span>。</p>
+<blockquote>
+  <p>你丟掉的那些規則，一年後你會從地上撿回來、拍掉灰塵，然後想起你為什麼需要它們。</p>
+  <cite>Robert C. Martin · <span class="ts">55:37</span></cite>
+</blockquote>
+<p>主持人收在抽象層的歷史上：二進位 → 組合語言 → 編譯器 → 現在是模型。每一層被跨過的時候，下面那層的人都說「這下全毀了、我們沒工作了、五歲小孩都能寫 code 了」——而當年他們講的還是二進位 <span class="ts">55:00</span>。最後他丟了柏拉圖那個「文字會讓人變笨」的老典故當註腳 <span class="ts">55:48</span>。</p>
+</section>
+
+<section id="uncertain">
+<span class="kicker">【複盤】</span>
+<h2>這份整理裡我不確定的地方</h2>
+<p>底下這些是我在整理時就知道有風險的部分。要拿去用之前先看這一段。</p>
+<ul>
+  <li><b>字幕是機器產的，專有名詞被打爛，我照上下文還原。</b>還原可能有錯：Grok、ChatGPT、Gherkin、cyclomatic、Fortran、COBOL、John Ousterhout、Ed Yourdon、Dijkstra、Dex Horthy 這幾個在原始字幕裡全都是錯字。</li>
+  <li><b>CRAP 的全稱片中沒說。</b>他只說「是個縮寫，我能說什麼呢」。本文不代填。</li>
+  <li><b>4 到 5 倍生產力是他的自述</b>，沒有量測方法、沒有對照組、沒說專案規模與語言。</li>
+  <li><b>圖 2、圖 3、圖 4 是我畫的，不是片中的圖。</b>圖 2 的曲線形狀、圖 4 的方塊面積都是示意，沒有任何數值依據；圖 3 的三層切法是我整理的，他沒有這樣分。</li>
+  <li><b>有幾段是兩人交錯發言</b>，自動字幕沒有可靠的說話人標記，我依語氣與內容判斷歸屬，可能有一兩句歸錯人。</li>
+  <li><b>這是一份中文重述，不是逐字翻譯。</b>引號內為片中說法的中譯，時間戳是給你跳回原片核對用的——有疑慮請以原片為準。</li>
+</ul>
+</section>
+
+</article>
+
+<footer>
+  <p>最後更新：2026-08-29 · CC BY 4.0 · 引用請標來源</p>
+  <p>原始影片：<a href="https://www.youtube.com/watch?v=zcLPGC-tvgk" rel="noopener">LIVE: Uncle Bob on Software Fundamentals in the Age of AI</a>（Matt Pocock 頻道，2026-08-19，56:39）。本頁為觀看後的中文整理、拆解與評註，圖表為作者自繪；影片內容著作權屬原作者所有。</p>
+</footer>
+</main>
+</div>
+
+<script>
+  const bar = document.getElementById('progress');
+  window.addEventListener('scroll', () => {
+    const h = document.documentElement;
+    const max = h.scrollHeight - h.clientHeight;
+    const ratio = max > 0 ? h.scrollTop / max : 0;
+    bar.style.transform = 'scaleX(' + ratio + ')';
+  }, { passive: true });
+</script>
+</body>
+</html>
