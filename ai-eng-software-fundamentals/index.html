@@ -1,0 +1,480 @@
+<!DOCTYPE html>
+<html lang="zh-Hant-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>你沒指定的維度，agent 會自己選</title>
+<meta name="description" content="Andrew Ng 談軟體工程基本功：即使全部程式碼由 coding agent 寫，你仍要懂基本功——不是為了自己寫，是為了知道有哪些取捨可以指定。">
+<link rel="canonical" href="https://hale80427.github.io/brain-cards/ai-eng-software-fundamentals/">
+<meta name="author" content="彥皓">
+<meta property="og:type" content="article">
+<meta property="og:title" content="你沒指定的維度，agent 會自己選">
+<meta property="og:description" content="Andrew Ng 談軟體工程基本功：懂基本功不是為了自己寫，是為了知道有哪些取捨可以指定。">
+<meta property="og:url" content="https://hale80427.github.io/brain-cards/ai-eng-software-fundamentals/">
+<meta property="og:image" content="https://hale80427.github.io/brain-cards/og-default.jpg">
+<meta property="og:locale" content="zh_TW">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="你沒指定的維度，agent 會自己選">
+<meta name="twitter:description" content="Andrew Ng 談軟體工程基本功：懂基本功不是為了自己寫，是為了知道有哪些取捨可以指定。">
+<meta name="twitter:image" content="https://hale80427.github.io/brain-cards/og-default.jpg">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "你沒指定的維度，agent 會自己選",
+  "description": "Andrew Ng 談軟體工程基本功：懂基本功不是為了自己寫，是為了知道有哪些取捨可以指定。",
+  "datePublished": "2026-08-30",
+  "dateModified": "2026-08-30",
+  "author": { "@type": "Person", "name": "彥皓" },
+  "url": "https://hale80427.github.io/brain-cards/ai-eng-software-fundamentals/",
+  "inLanguage": "zh-TW",
+  "license": "https://creativecommons.org/licenses/by/4.0/"
+}
+</script>
+</head>
+<style>
+  :root {
+    /* A 編輯雜誌風 token（KB-06 A 方向；色彩事實源為 OKLCH，hex 註解為設計原意） */
+    --bg: oklch(98.2% 0.005 95.0);               /* 暖白（was #fafaf6） */
+    --fg: oklch(21.8% 0 0);                       /* 近黑（was #1a1a1a） */
+    --accent: oklch(38.5% 0.157 29.2);            /* 深紅（was #8B0000） */
+    --accent-warn: oklch(60.5% 0.135 60.0);       /* 赭黃 warn */
+    --muted: oklch(50.2% 0.008 95.0);             /* 暖中灰 */
+    --border: oklch(90.5% 0.010 95.0);            /* 淺暖灰 */
+    --callout-tip: oklch(96.0% 0.012 95.0);       /* 極淺米 */
+    --callout-warn: oklch(96.4% 0.021 78.0);      /* 淺暖砂 */
+    --rule: oklch(83.0% 0.012 95.0);              /* 圖內輔助線灰（比文字淡一個量級） */
+    --fs-meta: 0.85rem;
+    --fs-body: 1.05rem;
+    --fs-h2:   clamp(1.5rem, 3.5vw, 1.75rem);
+    --fs-h1:   clamp(2rem, 5vw, 2.75rem);
+    --font-display: Georgia, "Noto Serif TC", "Songti TC", serif;
+    --font-serif: "Noto Serif TC", "Songti TC", Georgia, serif;
+    --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+    --ease-linear: linear;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: oklch(19.5% 0.004 95.0);
+      --fg: oklch(94.5% 0.010 95.0);
+      --accent: oklch(70.5% 0.135 28.0);
+      --accent-warn: oklch(78.0% 0.150 72.0);
+      --muted: oklch(68.0% 0.008 95.0);
+      --border: oklch(32.5% 0.006 95.0);
+      --callout-tip: oklch(27.0% 0.010 95.0);
+      --callout-warn: oklch(29.5% 0.030 70.0);
+      --rule: oklch(42.0% 0.008 95.0);
+    }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
+  }
+  * { box-sizing: border-box; }
+  body {
+    font-family: var(--font-serif);
+    background: var(--bg);
+    color: var(--fg);
+    line-height: 1.85;
+    font-size: var(--fs-body);
+    margin: 0; padding: 0;
+    -webkit-font-smoothing: antialiased;
+    text-autospace: normal;
+    font-synthesis: none;
+    line-break: strict;
+  }
+  .progress-bar {
+    position: fixed; top: 0; left: 0; height: 3px; width: 100%;
+    background: var(--accent); z-index: 100;
+    transform: scaleX(0); transform-origin: left;
+    transition: transform 0.1s var(--ease-linear);
+  }
+  main, main > article {
+    display: grid;
+    grid-template-columns:
+      [full-start] minmax(1rem, 1fr)
+      [wide-start] minmax(0, 130px)
+      [content-start] minmax(0, 620px) [content-end]
+      minmax(0, 130px) [wide-end]
+      minmax(1rem, 1fr) [full-end];
+  }
+  main { padding: clamp(2rem, 5vw, 4rem) 0; }
+  main > *, main > article > * { grid-column: content; }
+  main > article { grid-column: full; }
+  main > .wide, main > article > .wide { grid-column: wide; }
+  main > .full, main > article > .full { grid-column: full; }
+  @media (max-width: 1000px) {
+    main, main > article {
+      grid-template-columns:
+        [full-start] minmax(1rem, 1fr)
+        [wide-start content-start] minmax(0, 620px) [content-end wide-end]
+        minmax(1rem, 1fr) [full-end];
+    }
+  }
+  h1 { font-family: var(--font-display); font-size: var(--fs-h1); line-height: 1.25; letter-spacing: -0.01em; margin: 0 0 0.5rem; text-wrap: balance; }
+  h2 { font-family: var(--font-display); font-size: var(--fs-h2); line-height: 1.4; margin: 3rem 0 0.75rem; text-wrap: balance; }
+  h3 { font-size: var(--fs-body); font-weight: 700; line-height: 1.5; margin: 2rem 0 0.5rem; color: var(--accent); }
+  p { margin: 0 0 1.35rem; text-wrap: pretty; }
+  a { color: var(--accent); text-underline-offset: 3px; }
+  a:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+  em { font-style: normal; font-weight: 600;
+       text-emphasis: filled dot; text-emphasis-position: under right;
+       -webkit-text-emphasis: filled dot; -webkit-text-emphasis-position: under right; }
+  em:lang(en) { font-style: italic; font-weight: inherit; text-emphasis: none; -webkit-text-emphasis: none; }
+  .deck { font-size: var(--fs-body); color: var(--muted); margin: 0 0 1.5rem; line-height: 1.7; }
+  .bluf { background: var(--callout-tip); border-left: 3px solid var(--accent); padding: 1.25rem 1.5rem; margin: 1.5rem 0 2.5rem; border-radius: 3px; }
+  .bluf strong.label { display: block; font-size: var(--fs-meta); letter-spacing: 0.08em; color: var(--accent); margin-bottom: 0.5rem; text-transform: uppercase; }
+  .bluf p:last-child { margin-bottom: 0; }
+  .callout { padding: 1rem 1.25rem; margin: 1.75rem 0; border-radius: 3px; border-left: 3px solid var(--muted); }
+  .callout.tip { background: var(--callout-tip); border-left-color: var(--accent); }
+  .callout.warn { background: var(--callout-warn); border-left-color: var(--accent-warn); }
+  .callout p:last-child { margin-bottom: 0; }
+  .kicker { display: block; font-size: var(--fs-meta); font-weight: 700; letter-spacing: 0.14em; color: var(--accent); margin: 3rem 0 0; }
+  .kicker + h2 { margin-top: 0.3rem; }
+  .dropcap::first-letter {
+    font-family: var(--font-display); float: left; line-height: 0.82;
+    padding: 0.06em 0.12em 0 0; color: var(--accent); font-weight: 700;
+    font-size: var(--fs-h1);
+  }
+  blockquote.pull { margin: 2.25rem 0; padding: 0 0 0 1.25rem; border-left: 3px solid var(--accent);
+                    font-family: var(--font-display); color: var(--accent); line-height: 1.5; }
+  blockquote.pull p { font-size: var(--fs-h2); margin: 0; text-wrap: balance; }
+  blockquote.src { margin: 1.75rem 0; padding: 0.9rem 1.2rem; background: var(--callout-tip);
+                   border-left: 3px solid var(--rule); border-radius: 3px; }
+  blockquote.src p { margin: 0; font-family: var(--font-mono); font-size: var(--fs-meta); line-height: 1.75; }
+  .notesrc { font-size: var(--fs-meta); color: var(--muted); margin: 0.55rem 0 0; line-height: 1.7; text-align: left; }
+  .notesrc b { color: var(--fg); font-weight: 600; }
+  table { border-collapse: collapse; width: 100%; margin: 0; font-size: var(--fs-body); }
+  th, td { padding: 0.6rem 0.8rem; border: 1px solid var(--border); text-align: left; vertical-align: top; line-height: 1.65; }
+  th { background: var(--callout-tip); font-weight: 700; }
+  code { font-family: var(--font-mono); background: var(--callout-tip); padding: 0.1em 0.4em; border-radius: 3px;
+         font-size: var(--fs-meta); overflow-wrap: anywhere; word-break: break-word; }
+  .tbl { overflow-x: auto; margin: 1.75rem 0; min-width: 0; }
+  .tbl table { min-width: 560px; }
+  .tbl table th:first-child, .tbl table td:first-child { white-space: nowrap; }
+  figure { margin: 2.25rem 0; }
+  figure svg { width: 100%; height: auto; display: block; }
+  figcaption { font-size: var(--fs-meta); color: var(--muted); margin-top: 0.6rem; text-align: left; line-height: 1.7; }
+  figcaption .figconc { color: var(--fg); }
+  figcaption b { color: var(--fg); font-weight: 600; }
+  ul, ol { margin: 0 0 1.35rem; padding-left: 1.4rem; }
+  li { margin-bottom: 0.5rem; }
+  hr.sep { border: none; border-top: 1px solid var(--border); margin: 3rem 0; }
+  footer p { color: var(--muted); font-size: var(--fs-meta); margin-top: 3.5rem; padding-top: 1.5rem; border-top: 1px solid var(--border); line-height: 1.8; }
+  @media print {
+    .progress-bar { display: none; }
+    body { line-height: 1.6; }
+    main { padding: 1cm; }
+  }
+</style>
+<body>
+<div class="progress-bar" id="progress"></div>
+<main>
+<header>
+<h1>你沒指定的維度，agent 會自己選</h1>
+<p class="deck">Andrew Ng 在 2026-08-28 發了一篇談軟體工程基本功的長文。它的結論不是「還是要學寫程式」，而是一句更難的話——你要懂到能指定取捨，甚至要先知道有哪些取捨可以指定。</p>
+<div class="bluf">
+<strong class="label">BLUF</strong>
+<p>不懂軟體基本功的人，用 coding agent 一樣做得出能跑的東西。真正的代價不在那裡。</p>
+<p>代價在延遲、可用性、一致性、可靠性、可維護性、簡潔性、成本這七個維度上——agent 必須落點，你沒指定它就自己選了，而你不知道那裡曾經有一道選擇題。</p>
+</div>
+</header>
+<article>
+<!-- narrative: 物件,細節,矛盾,直接引語 -->
+
+<span class="kicker">定位</span>
+<h2>這是一張技能地圖的第二格，不是一篇勸學文</h2>
+
+<p class="dropcap">這篇的正式標題是 <code>AI Engineering Skills Map: Software engineering fundamentals</code>，2026-08-28 17:23 UTC 由 <code>@AndrewYNg</code> 發出，附一篇 X 長文。</p>
+<p>發文當下的讀數是讚 6133、轉推 981、回覆 178、瀏覽 573776。</p>
+
+<p>它不是獨立的一篇。Andrew Ng 與團隊做了一張 AI Engineering Skills Map，切成四大項，這篇處理第二項。第一項（建構與部署 AI 應用）已經發過，後兩項還沒。</p>
+<p>所以讀這篇的正確姿勢是：它在補一張圖的其中一格，不是在寫一份完整的職涯建議。</p>
+
+<figure>
+<svg viewBox="0 0 340 378" role="img" xmlns="http://www.w3.org/2000/svg">
+  <title>AI Engineering Skills Map 的四大項，以及本篇所在的第二項與其五項子能力</title>
+  <rect x="90" y="2" width="160" height="30" rx="3" fill="var(--callout-tip)" stroke="var(--fg)" stroke-width="1.2"/>
+  <text x="170" y="22" text-anchor="middle" font-size="13" font-weight="700" fill="var(--fg)">AI Engineering</text>
+  <path d="M170,32 L170,40 L20,40 L20,357" fill="none" stroke="var(--rule)" stroke-width="1.2"/>
+  <path d="M20,63 L32,63 M20,103 L32,103 M20,309 L32,309 M20,349 L32,349" stroke="var(--rule)" stroke-width="1.2"/>
+  <rect x="32" y="48" width="306" height="30" rx="3" fill="none" stroke="var(--rule)" stroke-width="1.2"/>
+  <text x="42" y="61" font-size="12" fill="var(--muted)">1 · Building and deploying AI applications</text>
+  <text x="42" y="73" font-size="11" fill="var(--muted)">建構與部署 AI 應用 · 已發文</text>
+  <rect x="32" y="88" width="306" height="30" rx="3" fill="var(--callout-tip)" stroke="var(--accent)" stroke-width="2"/>
+  <text x="42" y="101" font-size="12" font-weight="700" fill="var(--accent)">2 · Software engineering fundamentals</text>
+  <text x="42" y="113" font-size="11" font-weight="700" fill="var(--accent)">軟體工程基本功 · 本篇</text>
+  <path d="M50,118 L50,269" fill="none" stroke="var(--accent)" stroke-width="1.2"/>
+  <path d="M50,141 L62,141 M50,173 L62,173 M50,205 L62,205 M50,237 L62,237 M50,269 L62,269" stroke="var(--accent)" stroke-width="1.2"/>
+  <rect x="62" y="128" width="276" height="26" rx="3" fill="none" stroke="var(--rule)" stroke-width="1"/>
+  <text x="72" y="145" font-size="12" fill="var(--fg)">建全端應用</text>
+  <rect x="62" y="160" width="276" height="26" rx="3" fill="none" stroke="var(--rule)" stroke-width="1"/>
+  <text x="72" y="177" font-size="12" fill="var(--fg)">管理資料</text>
+  <rect x="62" y="192" width="276" height="26" rx="3" fill="none" stroke="var(--rule)" stroke-width="1"/>
+  <text x="72" y="209" font-size="12" fill="var(--fg)">設計系統架構</text>
+  <rect x="62" y="224" width="276" height="26" rx="3" fill="none" stroke="var(--rule)" stroke-width="1"/>
+  <text x="72" y="241" font-size="12" fill="var(--fg)">讓系統安全且可靠</text>
+  <rect x="62" y="256" width="276" height="26" rx="3" fill="none" stroke="var(--rule)" stroke-width="1"/>
+  <text x="72" y="273" font-size="12" fill="var(--fg)">擴展與線上維運</text>
+  <rect x="32" y="294" width="306" height="30" rx="3" fill="none" stroke="var(--rule)" stroke-width="1.2" stroke-dasharray="4 3"/>
+  <text x="42" y="307" font-size="12" fill="var(--muted)">3 · Using coding agents</text>
+  <text x="42" y="319" font-size="11" fill="var(--muted)">使用 coding agent · 未發文</text>
+  <rect x="32" y="334" width="306" height="30" rx="3" fill="none" stroke="var(--rule)" stroke-width="1.2" stroke-dasharray="4 3"/>
+  <text x="42" y="347" font-size="12" fill="var(--muted)">4 · Shaping the build</text>
+  <text x="42" y="359" font-size="11" fill="var(--muted)">形塑建構方向 · 未發文</text>
+</svg>
+<figcaption><span class="figconc">圖 1 · 四大項裡只有兩項發過文，這篇補的是第二格。</span><br>
+<span class="notesrc"><b>Note</b>：虛線框代表截至 2026-08-30 尚未發文的項目。五項子能力的中文為本文所譯，非官方譯名。<br>
+<b>Source</b>：<code>@AndrewYNg</code> 於 X 發布的 Skills Map 系列前兩篇。圖為作者自繪。</span></figcaption>
+</figure>
+<hr class="sep">
+
+<span class="kicker">機制</span>
+<h2>不懂基本功的代價，是那道選擇題你根本沒看見</h2>
+
+<p>全篇最重的一段在開頭，值得逐字看：</p>
+
+<blockquote class="src"><p>A novice who vibe codes without understanding software fundamentals can create simple applications, but this often leads to the coding agent making bad tradeoffs in latency, availability, consistency, reliability, maintainability, simplicity, and/or cost. In such cases, the developer <em lang="en">didn't know such tradeoffs even existed</em> and therefore did not steer the agent to make the right decisions for their application context.</p></blockquote>
+
+<p>拆開來看，這裡有一個容易被讀漏的轉折。他沒有說「做不出來」。他明講簡單應用照樣做得出來。<em>失效的形式是做出來了，而且看起來沒事。</em></p>
+
+<figure>
+<svg viewBox="0 0 340 322" role="img" xmlns="http://www.w3.org/2000/svg">
+  <title>一句模糊的指令，會讓 agent 在七個工程維度上各自落點</title>
+  <defs>
+    <marker id="f2-arrow" markerWidth="7" markerHeight="7" refX="5.5" refY="3" orient="auto">
+      <path d="M0,0 L5.5,3 L0,6 Z" fill="var(--rule)"/>
+    </marker>
+  </defs>
+  <rect x="40" y="2" width="260" height="28" rx="3" fill="var(--callout-tip)" stroke="var(--rule)" stroke-width="1.2"/>
+  <text x="170" y="21" text-anchor="middle" font-size="12" fill="var(--fg)">你說的：做一個能用的東西</text>
+  <line x1="170" y1="30" x2="170" y2="42" stroke="var(--rule)" stroke-width="1.2" marker-end="url(#f2-arrow)"/>
+  <rect x="112" y="46" width="116" height="26" rx="3" fill="none" stroke="var(--fg)" stroke-width="1.2"/>
+  <text x="170" y="63" text-anchor="middle" font-size="12" font-weight="700" fill="var(--fg)">coding agent</text>
+  <line x1="170" y1="72" x2="170" y2="86" stroke="var(--rule)" stroke-width="1.2" marker-end="url(#f2-arrow)"/>
+  <text x="170" y="100" text-anchor="middle" font-size="11" fill="var(--muted)">它必須在這七條軸上各落一個點</text>
+  <text x="56" y="110" font-size="10" fill="var(--muted)">低</text>
+  <text x="286" y="110" text-anchor="end" font-size="10" fill="var(--muted)">高</text>
+  <g stroke="var(--rule)" stroke-width="1.2">
+    <line x1="56" y1="120" x2="286" y2="120"/><line x1="56" y1="148" x2="286" y2="148"/>
+    <line x1="56" y1="176" x2="286" y2="176"/><line x1="56" y1="232" x2="286" y2="232"/>
+    <line x1="56" y1="260" x2="286" y2="260"/><line x1="56" y1="288" x2="286" y2="288"/>
+  </g>
+  <line x1="56" y1="204" x2="286" y2="204" stroke="var(--accent)" stroke-width="1.4"/>
+  <g font-size="11" fill="var(--muted)" text-anchor="end">
+    <text x="48" y="124">延遲</text><text x="48" y="152">可用性</text><text x="48" y="180">一致性</text>
+    <text x="48" y="236">可維護性</text><text x="48" y="264">簡潔性</text><text x="48" y="292">成本</text>
+  </g>
+  <text x="48" y="208" font-size="11" font-weight="700" fill="var(--accent)" text-anchor="end">可靠性</text>
+  <g fill="var(--muted)">
+    <circle cx="212" cy="120" r="5"/><circle cx="118" cy="148" r="5"/><circle cx="252" cy="176" r="5"/>
+    <circle cx="104" cy="232" r="5"/><circle cx="266" cy="260" r="5"/><circle cx="140" cy="288" r="5"/>
+  </g>
+  <circle cx="176" cy="204" r="6.5" fill="var(--accent)"/>
+  <text x="300" y="208" font-size="10" font-weight="700" fill="var(--accent)">你</text>
+  <text x="170" y="314" text-anchor="middle" font-size="11" fill="var(--fg)">你決定 1 條，它替你決定 6 條——而且不會告訴你</text>
+</svg>
+<figcaption><span class="figconc">圖 2 · 取捨不會因為沒人指定就消失，只會換一個人來決定。</span><br>
+<span class="notesrc"><b>Note</b>：七條軸的名稱直接取自原文列舉的七個維度，軸上的點位是示意，非任何實測資料。<br>
+<b>Source</b>：原文段落如上引。圖為作者自繪。</span></figcaption>
+</figure>
+
+<p>為什麼「多寫幾個專案就會了」解不掉這件事？因為練習修正的是<em>做得對不對</em>，而這裡的問題發生在更早一層——你不知道有一件事該被做。缺的不是實作能力，是取捨清單的可見性。</p>
+
+<p>拿一個具體的例子。一個做得出來的內部工具，可能在毫無提示的情況下把使用者狀態放進記憶體、而不是持久層。demo 正常，一個人用正常，直到重啟或第二個人進來。</p>
+<p>工程師不會覺得這是自己的判斷失誤，因為他從未意識到「狀態放哪裡」是一個要他回答的問題。</p>
+
+<blockquote class="pull"><p>他不知道那些取捨存在，所以沒有去指揮 agent。</p></blockquote>
+<hr class="sep">
+
+<span class="kicker">拆解</span>
+<h2>五項子能力不是並列的清單，它們有先後</h2>
+
+<p>原文用五個小節展開軟體工程基本功。表面上是並列，讀完會發現它們互相墊著。</p>
+
+<div class="tbl">
+<table>
+<thead><tr><th>子能力</th><th>它其實在問什麼</th><th>最容易被低估的一句</th></tr></thead>
+<tbody>
+<tr><td>建全端應用</td><td>你懂不懂前後端各層在做什麼</td><td>agentic coding 讓專才可以擔全端，但補的是熟悉度，不是判斷力</td></tr>
+<tr><td>管理資料</td><td>存什麼、存多久、用什麼型態存</td><td>地基相對難改，即使 agent 會幫你做遷移</td></tr>
+<tr><td>設計系統架構</td><td>各層懂了之後，怎麼拼起來</td><td>正確架構是移動標靶，原型的架構撐不到生產</td></tr>
+<tr><td>讓系統安全且可靠</td><td>怎麼設計失敗，以及誰負責安全</td><td>資安左移之後，多數開發者同時是半個資安工程師</td></tr>
+<tr><td>擴展與線上維運</td><td>上線之後誰在看、壞了誰知道</td><td>可觀測性與事故管理不是加分項，是這一層的定義</td></tr>
+</tbody>
+</table>
+</div>
+
+<figure>
+<svg viewBox="0 0 340 262" role="img" xmlns="http://www.w3.org/2000/svg">
+  <title>五項子能力的依賴順序，資料層在最底且最難改</title>
+  <defs>
+    <marker id="f3-arrow" markerWidth="7" markerHeight="7" refX="5.5" refY="3" orient="auto">
+      <path d="M0,0 L5.5,3 L0,6 Z" fill="var(--muted)"/>
+    </marker>
+  </defs>
+  <rect x="8" y="8" width="258" height="38" rx="3" fill="none" stroke="var(--rule)" stroke-width="1.2"/>
+  <text x="20" y="26" font-size="12" font-weight="700" fill="var(--fg)">擴展與線上維運</text>
+  <text x="20" y="39" font-size="10" fill="var(--muted)">壞了誰知道、量得起來嗎</text>
+  <rect x="8" y="52" width="258" height="38" rx="3" fill="none" stroke="var(--rule)" stroke-width="1.2"/>
+  <text x="20" y="70" font-size="12" font-weight="700" fill="var(--fg)">讓系統安全且可靠</text>
+  <text x="20" y="83" font-size="10" fill="var(--muted)">怎麼設計失敗、誰負責安全</text>
+  <rect x="8" y="96" width="258" height="38" rx="3" fill="none" stroke="var(--rule)" stroke-width="1.2"/>
+  <text x="20" y="114" font-size="12" font-weight="700" fill="var(--fg)">設計系統架構</text>
+  <text x="20" y="127" font-size="10" fill="var(--muted)">怎麼拼、拼成什麼形狀</text>
+  <rect x="8" y="140" width="258" height="38" rx="3" fill="none" stroke="var(--rule)" stroke-width="1.2"/>
+  <text x="20" y="158" font-size="12" font-weight="700" fill="var(--fg)">建全端應用</text>
+  <text x="20" y="171" font-size="10" fill="var(--muted)">各層分別在做什麼</text>
+  <rect x="8" y="184" width="258" height="38" rx="3" fill="var(--callout-tip)" stroke="var(--accent)" stroke-width="2"/>
+  <text x="20" y="202" font-size="12" font-weight="700" fill="var(--accent)">管理資料</text>
+  <text x="20" y="215" font-size="10" font-weight="700" fill="var(--accent)">地基。改它的代價高於任何一層</text>
+  <line x1="284" y1="12" x2="284" y2="216" stroke="var(--muted)" stroke-width="1.2" marker-end="url(#f3-arrow)"/>
+  <g font-size="10" fill="var(--muted)" text-anchor="middle">
+    <text x="306" y="76">改</text><text x="306" y="94">動</text><text x="306" y="112">成</text>
+    <text x="306" y="130">本</text><text x="306" y="148">遞</text><text x="306" y="166">增</text>
+  </g>
+  <text x="170" y="248" text-anchor="middle" font-size="11" fill="var(--fg)">上面每一層的決定，都建立在下一層已經選對的前提上</text>
+</svg>
+<figcaption><span class="figconc">圖 3 · 五項裡最先要想清楚的是資料，因為它是唯一一層改起來比其他都貴的。</span><br>
+<span class="notesrc"><b>Note</b>：原文並未把五項畫成階層，這個排序是本文依原文兩處線索所做的解讀——他明說資料是「軟體建立於其上的地基」且相對難改，也明說懂了各層才有資格決定怎麼拼。順序是解讀，不是原文結構。<br>
+<b>Source</b>：原文五個小節。圖為作者自繪。</span></figcaption>
+</figure>
+<hr class="sep">
+
+<span class="kicker">機制</span>
+<h2>資料架構選錯不會報錯，它只是安靜地少給 AI 一段脈絡</h2>
+
+<p>這是全篇唯一給出新機制的一句，而它被埋在第二個小節的中段：</p>
+
+<blockquote class="src"><p>Your AI systems will get their own input context from your data source, so if data architecture is chosen poorly, <em lang="en">the AI doesn't know what it doesn't know</em>.</p></blockquote>
+
+<p>把它拆成三步。第一步，AI 系統的輸入脈絡是從你的資料源長出來的。第二步，資料架構決定了哪些東西進得了那個脈絡。</p>
+<p>第三步——也是真正麻煩的那一步——<em>缺漏不會變成訊號。</em></p>
+
+<figure>
+<svg viewBox="0 0 340 244" role="img" xmlns="http://www.w3.org/2000/svg">
+  <title>傳統軟體的缺漏會拋出例外，AI 系統的缺漏會生成一個看起來完整的答案</title>
+  <defs>
+    <marker id="f4-arrow" markerWidth="7" markerHeight="7" refX="5.5" refY="3" orient="auto">
+      <path d="M0,0 L5.5,3 L0,6 Z" fill="var(--rule)"/>
+    </marker>
+    <marker id="f4-arrow-a" markerWidth="7" markerHeight="7" refX="5.5" refY="3" orient="auto">
+      <path d="M0,0 L5.5,3 L0,6 Z" fill="var(--accent)"/>
+    </marker>
+  </defs>
+  <text x="0" y="10" font-size="11" font-weight="700" fill="var(--muted)">傳統軟體</text>
+  <rect x="0" y="18" width="96" height="36" rx="3" fill="none" stroke="var(--rule)" stroke-width="1.2"/>
+  <text x="48" y="41" text-anchor="middle" font-size="11" fill="var(--fg)">缺一張表</text>
+  <line x1="98" y1="36" x2="110" y2="36" stroke="var(--rule)" stroke-width="1.2" marker-end="url(#f4-arrow)"/>
+  <rect x="112" y="18" width="96" height="36" rx="3" fill="none" stroke="var(--rule)" stroke-width="1.2"/>
+  <text x="160" y="41" text-anchor="middle" font-size="11" fill="var(--fg)">拋出例外</text>
+  <line x1="210" y1="36" x2="222" y2="36" stroke="var(--rule)" stroke-width="1.2" marker-end="url(#f4-arrow)"/>
+  <rect x="224" y="18" width="116" height="36" rx="3" fill="var(--callout-tip)" stroke="var(--rule)" stroke-width="1.2"/>
+  <text x="282" y="41" text-anchor="middle" font-size="11" font-weight="700" fill="var(--fg)">你當場看到</text>
+  <text x="0" y="72" font-size="11" fill="var(--muted)">錯誤有出口，位置明確。</text>
+  <line x1="0" y1="88" x2="340" y2="88" stroke="var(--border)" stroke-width="1"/>
+  <text x="0" y="110" font-size="11" font-weight="700" fill="var(--accent)">AI 系統</text>
+  <rect x="0" y="118" width="96" height="36" rx="3" fill="none" stroke="var(--accent)" stroke-width="1.4"/>
+  <text x="48" y="141" text-anchor="middle" font-size="11" fill="var(--fg)">缺一段脈絡</text>
+  <line x1="98" y1="136" x2="110" y2="136" stroke="var(--accent)" stroke-width="1.4" marker-end="url(#f4-arrow-a)"/>
+  <rect x="112" y="118" width="96" height="36" rx="3" fill="none" stroke="var(--accent)" stroke-width="1.4"/>
+  <text x="160" y="141" text-anchor="middle" font-size="11" fill="var(--fg)">照常生成</text>
+  <line x1="210" y1="136" x2="222" y2="136" stroke="var(--accent)" stroke-width="1.4" marker-end="url(#f4-arrow-a)"/>
+  <rect x="224" y="118" width="116" height="36" rx="3" fill="var(--callout-tip)" stroke="var(--accent)" stroke-width="2"/>
+  <text x="282" y="134" text-anchor="middle" font-size="11" font-weight="700" fill="var(--accent)">一個看起來</text>
+  <text x="282" y="148" text-anchor="middle" font-size="11" font-weight="700" fill="var(--accent)">完整的答案</text>
+  <text x="0" y="172" font-size="11" font-weight="700" fill="var(--accent)">錯誤沒有出口。系統內部沒有任何一處會舉手。</text>
+  <text x="0" y="204" font-size="11" fill="var(--fg)">要察覺它，必須有人從資料源那一端知道</text>
+  <text x="0" y="220" font-size="11" fill="var(--fg)">「這裡本來還有東西」。</text>
+  <text x="0" y="238" font-size="10" fill="var(--muted)">而那個人，通常不在讀輸出的那一邊。</text>
+</svg>
+<figcaption><span class="figconc">圖 4 · 同樣是缺東西，傳統軟體會停下來，AI 會流暢地把缺口填成一個合理的答案。</span><br>
+<span class="notesrc"><b>Note</b>：本圖是對原文那句 <code>doesn't know what it doesn't know</code> 的機制展開，原文只給了結論，沒有給這條路徑。<br>
+<b>Source</b>：原文第二小節。圖為作者自繪。</span></figcaption>
+</figure>
+
+<p>一個具體的樣子。一份只存最終結論、不存推導過程的知識庫，接上檢索之後看起來運作良好。它答得出「結論是什麼」，答不出「為什麼當初排除了另一個選項」——而後者才是複用時真正要問的。</p>
+<p>使用者不會收到錯誤訊息，只會慢慢覺得這套東西沒那麼好用，卻說不出哪裡壞。</p>
+
+<div class="callout tip">
+<p><strong>這個結構在別的地方也見過。</strong>某個欄位長期為零，看起來像「這件事沒發生過」，實際是那條路徑上根本沒有裝儀器。零讀數與沒有儀器，在紀錄上逐字相同。</p>
+<p>資料架構的缺漏在 AI 端也是這樣——「它沒提到」與「它拿不到」，在輸出上無法區分。</p>
+</div>
+
+<p>Andrew Ng 在這裡補了一句時效警告，值得一起收：為 agent（而不是為傳統軟體、也不是為人）設計資料基礎設施，本身是快速演化中的領域。也就是說，這一格的最佳實踐現在還在動。</p>
+<hr class="sep">
+
+<span class="kicker">操作</span>
+<h2>把七個維度變成派工前要補的七句話</h2>
+
+<p>原文停在「你要懂到能指定」，沒有往下寫怎麼指定。這一節是本文的延伸，不是原文內容：把那七個維度各翻成一句可以直接寫進指令的話。</p>
+
+<figure>
+<svg viewBox="0 0 340 232" role="img" xmlns="http://www.w3.org/2000/svg">
+  <title>把七個工程維度翻成派工前要補上的七個問題</title>
+  <text x="0" y="12" font-size="11" font-weight="700" fill="var(--fg)">派工前，把這七句話補進去</text>
+  <g stroke="var(--border)" stroke-width="1">
+    <line x1="0" y1="44" x2="340" y2="44"/><line x1="0" y1="70" x2="340" y2="70"/>
+    <line x1="0" y1="96" x2="340" y2="96"/><line x1="0" y1="122" x2="340" y2="122"/>
+    <line x1="0" y1="148" x2="340" y2="148"/><line x1="0" y1="174" x2="340" y2="174"/>
+  </g>
+  <g font-size="11" font-weight="700" fill="var(--accent)">
+    <text x="0" y="38">延遲</text><text x="0" y="64">可用性</text><text x="0" y="90">一致性</text>
+    <text x="0" y="116">可靠性</text><text x="0" y="142">可維護性</text><text x="0" y="168">簡潔性</text>
+    <text x="0" y="194">成本</text>
+  </g>
+  <g font-size="11" fill="var(--fg)">
+    <text x="76" y="38">使用者等幾秒算可以接受？</text>
+    <text x="76" y="64">掛掉多久才算是一次事故？</text>
+    <text x="76" y="90">讀到三十秒前的舊資料行嗎？</text>
+    <text x="76" y="116">哪一種失敗絕對不能發生？</text>
+    <text x="76" y="142">半年後誰來改這段，他讀得懂嗎？</text>
+    <text x="76" y="168">這個功能值得多一個新元件嗎？</text>
+    <text x="76" y="194">這東西一個月最多能花多少？</text>
+  </g>
+  <text x="0" y="222" font-size="10" fill="var(--muted)">答不出來的那幾條，就是你目前交給 agent 決定的那幾條。</text>
+</svg>
+<figcaption><span class="figconc">圖 5 · 你答不出來的那幾個問題，正是目前由 agent 代你決定的維度。</span><br>
+<span class="notesrc"><b>Note</b>：左欄的七個維度取自原文，右欄的七個問句是本文所寫，原文沒有這一層。問句是示例，實際門檻要按你的應用情境重寫。<br>
+<b>Source</b>：維度清單出自原文首段。圖為作者自繪。</span></figcaption>
+</figure>
+
+<p>Andrew Ng 的收尾也值得逐字放著：</p>
+
+<blockquote class="src"><p>Some parts of coding knowledge — like memorizing coding syntax — are becoming obsolete. But developers who deeply understand how software works vastly outperform those who vibe code without understanding.</p></blockquote>
+
+<p>記語法過時，懂運作方式的人大幅勝出。這句話本身沒有新意——真正有內容的是前面那條機制：<em>勝出的方式，是他看得見那些別人看不見的選擇題。</em></p>
+
+<hr class="sep">
+
+<span class="kicker">邊界</span>
+<h2>這篇的證據強度，撐不起「研究顯示」四個字</h2>
+
+<p>把它當一份有品味的職能盤點骨架可以，當實證結論不行。三個具體的地方：</p>
+
+<div class="callout warn">
+<p><strong>一、沒有樣本、沒有對照組、沒有引用。</strong>作者的措辭是 <code>this often leads to</code> 這一類。整篇是個人經驗歸納，不是量測。</p>
+<p><strong>二、那七個維度是他列的。</strong>沒有任何地方說明這份清單是怎麼來的，也沒有檢驗它是否窮盡。少一個維度，前面那條「你看不見的選擇題」的論證強度就掉一塊。</p>
+<p><strong>三、Skills Map 的方法論至今未公開。</strong>系列前一篇只說地圖來自職缺分析、專家訪談與問卷，沒有給樣本數、抽樣方式、職缺來源地區與時間範圍。這一點決定它是能力盤點的外部基準，還是一份有品味的個人意見。</p>
+</div>
+
+<p>作者歸屬這一項倒是站得住。這篇由 <code>@AndrewYNg</code> 帳號直接發出，貼文時間 2026-08-28 17:23 UTC，內文列的四大項與系列前一篇一致，另經一次獨立檢索交叉確認。</p>
+<p>系列前一篇當時只能標「推定」，這次可以拿掉那個保留。</p>
+</article>
+<footer>
+<p>延伸閱讀：<a href="../uncle-bob-agent-fundamentals/">對 agent 不要用 prompt 講道理，要用跑得起來的工具把它關進迴圈</a>——Robert C. Martin 從「怎麼驗」進場，Andrew Ng 從「怎麼指揮」進場，兩人同時放掉了行、同時守住了取捨與架構。</p>
+<p>最後更新：2026-08-30 · CC BY 4.0 · 引用請標來源<br>
+本文為對 <code>@AndrewYNg</code> 2026-08-28 X 長文 <code>AI Engineering Skills Map: Software engineering fundamentals</code> 的整理與延伸。</p>
+<p>英文引文逐字取自原文；圖 3 的階層排序、圖 4 的機制路徑、圖 5 的七個問句為本文推導，非原文內容，已於各圖 Note 標明。</p>
+</footer>
+</main>
+<script>
+  const bar = document.getElementById('progress');
+  window.addEventListener('scroll', () => {
+    const h = document.documentElement;
+    const max = h.scrollHeight - h.clientHeight;
+    const ratio = max > 0 ? h.scrollTop / max : 0;
+    bar.style.transform = 'scaleX(' + ratio + ')';
+  }, { passive: true });
+</script>
+</body>
+</html>
