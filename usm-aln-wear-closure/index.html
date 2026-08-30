@@ -127,11 +127,23 @@ td.n{font-family:var(--font-mono);white-space:nowrap}
 .stage .static img{width:100%;height:auto;border-radius:5px;border:1px solid var(--border)}
 .scrolltrack{height:2700px}
 .narr-steps{position:relative;margin-top:-2700px;pointer-events:none}
-.narr-steps .step{min-height:900px;display:flex;align-items:center}
-.narr-steps .step span{pointer-events:auto;background:var(--bg);
+/* 圖釘在視窗頂、卡片釘在視窗底 ⇒ 兩者永遠不互相覆蓋。
+   實測：卡片用 align-items:center 會在某些捲動位置正好蓋住資料中段。 */
+.narr-steps .step{height:900px;display:flex;align-items:flex-end;
+ padding:0 1.15rem}
+.narr-steps .step span{position:sticky;bottom:1.25rem;
+ pointer-events:auto;background:var(--bg);
  border:1px solid var(--border);border-radius:6px;padding:0.85rem 1rem;
- font-size:var(--fs-meta);line-height:1.7;max-width:22rem;
+ font-size:var(--fs-meta);line-height:1.9;max-width:22rem;
  box-shadow:0 1px 3px rgba(0,0,0,0.06)}
+/* 步驟卡裡的數字不要用有底色的 chip：實測在 iOS 上底色盒子會壓到上一行 */
+.narr-steps .step .num{background:none;padding:0;border-radius:0}
+/* 窄屏：影片本身近正方，76svh 會留下大片空白且把步驟卡推到圖上。
+   讓 stage 貼合影片高度——sticky 仍成立（釘住的元素比容器矮即可）。 */
+@media (max-width:40rem){
+ .stage{height:auto;padding:0.6rem 0}
+ .stage video{max-height:none}
+}
 @media (prefers-reduced-motion:reduce){
  .stage{position:static;height:auto}
  .stage video{display:none}
@@ -262,8 +274,8 @@ footer{margin-top:4rem;padding-top:1.3rem;border-top:1px solid var(--border);
 
 <div class="narr wide">
 <div class="stage">
- <video class="motion" playsinline preload="auto" muted src="assets/wear.webm"></video>
- <div class="static"><img src="assets/wear-final.png" width="1600" height="892" alt="180 孔逐孔孔徑散布圖：孔 91–180 與 211–300 兩段，後段的滾動標準差明顯較寬"></div>
+ <video class="motion" playsinline preload="auto" muted src="assets/wear.webm?v=2"></video>
+ <div class="static"><img src="assets/wear-final.png?v=2" width="1000" height="857" alt="180 孔逐孔孔徑散布圖：孔 91–180 與 211–300 兩段，後段的滾動標準差明顯較寬"></div>
 </div>
 <div class="scrolltrack"></div>
 <div class="narr-steps">
@@ -334,12 +346,15 @@ footer{margin-top:4rem;padding-top:1.3rem;border-top:1px solid var(--border);
 (function(){
  var stage=document.querySelector('.stage');
  var video=document.querySelector('.stage video');
- var track=document.querySelector('.scrolltrack');
- if(!stage||!video||!track) return;
+ var narr=document.querySelector('.narr');
+ if(!stage||!video||!narr) return;
+ // ⚠ 量的是**外層容器** narr，不是被釘住的 stage。
+ // sticky 元素一旦釘住，它自己的 rect.top 就恆為 0（實測 y=4200～6000 全程 0）
+ // ⇒ 拿它算進度會讓影片永遠停在第一幀，而且**不報錯、readyState=4、console 乾淨**。
  function drive(){
-  var len=track.offsetHeight-window.innerHeight;
-  if(len<=0) return;
-  var p=Math.min(1,Math.max(0,-stage.getBoundingClientRect().top/len));
+  var travel=narr.offsetHeight-stage.offsetHeight;
+  if(travel<=0) return;
+  var p=Math.min(1,Math.max(0,-narr.getBoundingClientRect().top/travel));
   var d=video.duration;
   if(!d||!isFinite(d)) return;
   try{ video.currentTime=p*d; }catch(e){}
