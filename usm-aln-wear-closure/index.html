@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>同一支刀鑽 213 個孔：電性訊號與實體孔品質對得起來，而阻抗實部比功率差更靈敏</title>
+<meta name="description" content="AlN 微鑽孔 88–300 孔的電性×實體閉環：孔徑中位只走 2.45 µm，段內標準差卻放大 2.14 倍；corr(孔徑, ΔR)=+0.354 優於 ΔP 的 +0.309。內部技術版，含完整邊界條件。">
+<link rel="canonical" href="https://hale80427.github.io/brain-cards/usm-aln-wear-closure/">
+<meta name="author" content="彥皓">
+<meta property="og:type" content="article">
+<meta property="og:title" content="同一支刀鑽 213 個孔：電性訊號與實體孔品質對得起來，而阻抗實部比功率差更靈敏">
+<meta property="og:description" content="孔徑中位幾乎不動，散布放大 2.14 倍——磨耗的訊號在散布不在均值。">
+<meta property="og:url" content="https://hale80427.github.io/brain-cards/usm-aln-wear-closure/">
+<meta property="og:image" content="https://hale80427.github.io/brain-cards/usm-aln-wear-closure/assets/wear-final.png">
+<meta property="og:locale" content="zh_TW">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="同一支刀鑽 213 個孔：電性與實體孔品質的閉環">
+<meta name="twitter:description" content="孔徑中位幾乎不動，散布放大 2.14 倍。">
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"Article",
+ "headline":"同一支刀鑽 213 個孔：電性訊號與實體孔品質對得起來，而阻抗實部比功率差更靈敏",
+ "description":"AlN 微鑽孔 88–300 孔的電性×實體閉環，內部技術版。",
+ "datePublished":"2026-08-30","dateModified":"2026-08-30",
+ "author":{"@type":"Person","name":"彥皓"},
+ "url":"https://hale80427.github.io/brain-cards/usm-aln-wear-closure/",
+ "inLanguage":"zh-TW"}
+</script>
+<style>
+:root{
+ --bg:oklch(98.4% 0.004 106.5); --fg:oklch(21.8% 0 0);
+ --accent:oklch(54.3% 0.174 29.7); --muted:oklch(51.0% 0 0);
+ --border:oklch(92.1% 0.007 106.5);
+ --plate-bg:oklch(96.2% 0.005 106.5); --plate-line:oklch(90.5% 0.007 106.5);
+ --plate-fg:oklch(24% 0 0); --plate-dim:oklch(48% 0 0);
+ --sign-down:oklch(88.5% 0.055 62); --sign-up:oklch(48% 0.09 168);
+ --fs-meta:0.85rem; --fs-body:1rem;
+ --fs-h2:clamp(1.28rem,3vw,1.5rem); --fs-h1:clamp(1.6rem,4vw,2.1rem);
+ --font-serif:"Noto Serif TC",Georgia,serif;
+ --font-mono:"JetBrains Mono",ui-monospace,SFMono-Regular,Menlo,monospace;
+}
+@media (prefers-color-scheme:dark){:root{
+ --bg:oklch(21.8% 0 0); --fg:oklch(95.3% 0.011 106.6);
+ --accent:oklch(70% 0.14 30); --muted:oklch(72% 0 0);
+ --border:oklch(32% 0.006 106.5);
+ --plate-bg:oklch(26% 0.004 106.5); --plate-line:oklch(34% 0.006 106.5);
+ --plate-fg:oklch(93% 0 0); --plate-dim:oklch(70% 0 0);
+ --sign-down:oklch(45% 0.07 62); --sign-up:oklch(62% 0.1 168);
+}}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;padding:2.5rem 0 5rem;background:var(--bg);color:var(--fg);
+ font-family:var(--font-serif);font-size:var(--fs-body);line-height:1.75;
+ letter-spacing:0.01em}
+.wrap{max-width:36rem;margin:0 auto;padding:0 1.15rem}
+.wrap-head{margin-bottom:0}
+h1{font-size:var(--fs-h1);line-height:1.35;margin:0 0 0.9rem;letter-spacing:-0.005em}
+h2{font-size:var(--fs-h2);line-height:1.4;margin:3rem 0 0.9rem;
+ padding-top:1.1rem;border-top:1px solid var(--border)}
+p{margin:0 0 1.05rem}
+.meta{font-size:var(--fs-meta);color:var(--muted);margin:0 0 2rem}
+.bluf{background:var(--plate-bg);border-left:3px solid var(--accent);
+ padding:1.1rem 1.15rem;margin:0 0 2.2rem;border-radius:0 5px 5px 0}
+.bluf p:last-child{margin-bottom:0}
+code,.num{font-family:var(--font-mono);font-size:0.92em;
+ background:var(--plate-bg);padding:0.08em 0.32em;border-radius:3px}
+figure{margin:2rem 0}
+figure img{width:100%;height:auto;display:block;border-radius:5px;
+ border:1px solid var(--border);background:#fff}
+figcaption{font-size:var(--fs-meta);color:var(--muted);line-height:1.65;margin-top:0.7rem}
+figcaption b{color:var(--fg);font-weight:700}
+figcaption .src{display:block;margin-top:0.4rem}
+table{width:100%;border-collapse:collapse;font-size:var(--fs-meta);margin:1.4rem 0}
+th,td{text-align:left;padding:0.5rem 0.6rem;border-bottom:1px solid var(--border);
+ vertical-align:top}
+th{font-weight:700;white-space:nowrap}
+td.n{font-family:var(--font-mono);white-space:nowrap}
+.tbl-scroll{overflow-x:auto;-webkit-overflow-scrolling:touch}
+/* ── KB-10 元件 3：機制圖 ── */
+.flow{background:var(--plate-bg);border-radius:6px;padding:1.5rem 1.25rem}
+.flow-track{display:grid;gap:0.5rem;margin-bottom:1.25rem}
+.flow-track:last-of-type{margin-bottom:0}
+.flow-track .path{display:flex;flex-wrap:wrap;align-items:center;gap:0.5rem}
+.flow-track .node{background:var(--plate-line);color:var(--plate-fg);
+ font-size:var(--fs-meta);line-height:1.4;padding:0.4rem 0.7rem;border-radius:4px}
+.flow-track .arrow{flex:0 0 1.4rem;width:1.4rem;height:0.85rem;color:var(--plate-dim)}
+.flow-track .arrow svg{width:100%;height:100%;display:block}
+.flow-track .sign{font-size:var(--fs-meta);font-weight:700;padding:0.4rem 0.7rem;
+ border-radius:4px}
+.flow-track .down{background:var(--sign-down);color:var(--plate-fg)}
+.flow-track .up{background:var(--sign-up);color:var(--plate-bg)}
+.flow-track > .lbl{font-size:var(--fs-meta);color:var(--plate-dim);
+ letter-spacing:0.06em;text-transform:uppercase}
+.flow-legend{display:flex;flex-wrap:wrap;gap:1.25rem;margin-top:1.25rem;
+ padding-top:1rem;border-top:1px solid var(--plate-line);
+ font-size:var(--fs-meta);color:var(--plate-dim)}
+.flow-legend span{display:flex;align-items:center;gap:0.45rem}
+.flow-legend i{width:0.8rem;height:0.8rem;border-radius:2px;display:inline-block}
+.flow-legend .sw-down{background:var(--sign-down)}
+.flow-legend .sw-up{background:var(--sign-up)}
+/* ── KB-10 元件 2：功能列 ── */
+.func-row{display:grid;grid-template-columns:repeat(auto-fit,minmax(11rem,1fr));
+ gap:0.85rem;margin:1.5rem 0}
+.func-row .fn{background:var(--plate-bg);border:1px solid var(--plate-line);
+ border-radius:6px;padding:0.9rem 0.95rem}
+.func-row .fn h3{margin:0 0 0.35rem;font-size:1rem;font-family:var(--font-mono)}
+.func-row .fn .ln{margin:0 0 0.4rem;font-size:var(--fs-meta);line-height:1.6;
+ color:var(--plate-dim)}
+.func-row .fn .ln:last-child{margin-bottom:0}
+.func-row .fn .v{color:var(--plate-fg);font-weight:700}
+/* ── KB-10 元件 5：側欄三卡 ── */
+.side-cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(13rem,1fr));
+ gap:0.85rem;margin:1.6rem 0}
+.side-cards .card{border:1px solid var(--border);border-radius:6px;padding:0.95rem 1rem}
+.side-cards .card h3{margin:0 0 0.5rem;font-size:var(--fs-meta);
+ letter-spacing:0.06em;color:var(--accent)}
+.side-cards .card ul{margin:0;padding-left:1.05rem;font-size:var(--fs-meta);
+ line-height:1.7;color:var(--muted)}
+.side-cards .card li{margin-bottom:0.4rem}
+.side-cards .card li:last-child{margin-bottom:0}
+/* ── KB-11 捲動敘事 ── */
+.narr{margin:2.2rem 0}
+.stage{position:sticky;top:0;height:76svh;display:flex;align-items:center;
+ justify-content:center;background:var(--bg)}
+.stage video{width:100%;height:auto;max-height:72svh;border-radius:5px;
+ border:1px solid var(--border);background:#fff}
+.stage .static{display:none}
+.stage .static img{width:100%;height:auto;border-radius:5px;border:1px solid var(--border)}
+.scrolltrack{height:2700px}
+.narr-steps{position:relative;margin-top:-2700px;pointer-events:none}
+.narr-steps .step{min-height:900px;display:flex;align-items:center}
+.narr-steps .step span{pointer-events:auto;background:var(--bg);
+ border:1px solid var(--border);border-radius:6px;padding:0.85rem 1rem;
+ font-size:var(--fs-meta);line-height:1.7;max-width:22rem;
+ box-shadow:0 1px 3px rgba(0,0,0,0.06)}
+@media (prefers-reduced-motion:reduce){
+ .stage{position:static;height:auto}
+ .stage video{display:none}
+ .stage .static{display:block}
+ .scrolltrack{height:auto}
+ .narr-steps{margin-top:0}
+ .narr-steps .step{min-height:0;margin-bottom:1rem}
+}
+
+/* 寬版圖：讓圖突破 36rem 內文欄。**刻意不用 transform**——transform 的祖先會讓
+   position:sticky 靜默失效（KB-11 F1：不報錯、console 乾淨、只有版面壞掉）。 */
+.wide{width:min(94vw,58rem);margin-left:calc(50% - min(47vw,29rem));max-width:none}
+@media (max-width:40rem){.wide{width:100%;margin-left:0}}
+footer{margin-top:4rem;padding-top:1.3rem;border-top:1px solid var(--border);
+ font-size:var(--fs-meta);color:var(--muted)}
+</style>
+</head>
+<body>
+<!-- narrative: 孔徑中位幾乎不動而散布放大 2.14 倍，定振幅閉環把電流釘死所以負載資訊只走直流端實功，四段趨勢兩升一降一不顯著且 ΔR 比 ΔP 更顯著，孔徑與 ΔR 的相關高於與 ΔP，r 只有 0.35 撐不起換刀判準 -->
+<header class="wrap wrap-head">
+
+<h1>同一支刀鑽 213 個孔：電性訊號與實體孔品質對得起來，而阻抗實部比功率差更靈敏</h1>
+<div class="meta">內部技術版｜AlN 微鑽孔 88–300 孔｜2026-08-30</div>
+</header>
+<main class="wrap" data-narrative="scroll">
+
+<div class="bluf">
+<p>孔徑本身幾乎沒動，動的是散布。孔 91–130 的孔徑中位是 <span class="num">498.00</span> µm，孔 261–300 是 <span class="num">500.45</span> µm——走了 <span class="num">2.45</span> µm。但同一段的段內標準差從 <span class="num">0.543</span> µm 放大到 <span class="num">1.163</span> µm，2.14 倍。</p>
+<p>電性訊號跟得上這件事。孔徑與阻抗實部差 ΔR 的相關是 <span class="num">+0.354</span>（<span class="num">p=1.1×10⁻⁶</span>），比與功率差 ΔP 的 <span class="num">+0.309</span> 高。ΔR 是比較好的那個通道。</p>
+<p>這份文件不主張可以拿來換刀。它主張的是：驅動器既有的電性記錄，與離線量測的孔品質，在磨耗這件事上指向同一個方向。要變成換刀依據還缺什麼，寫在最後一節。</p>
+</div>
+
+<h2>量測配置：訊號是從驅動器來的，不是從主軸來的</h2>
+
+<p>這一點決定了整套方法能不能成立。監測量是超音波換能器的驅動電性——刀尖機械阻抗的代理量，不是主軸馬達電流。刀具是 D0.5 微鑽頭，工件是 4.0 mm 厚的氮化鋁板，超音波頻率 28.6 kHz，走 G83 全退啄鑽。</p>
+
+<figure class="wide">
+<img src="assets/setup.png" width="1693" height="929" data-figure-source="generative"
+     alt="超音波微鑽孔配置剖面圖：由上而下為超音波換能器 28.6 kHz、變幅桿、夾頭、D0.5 微鑽頭，下方為 4.0 mm 厚 AlN 板；鑽頭旁有垂直雙箭頭表示軸向振動">
+<figcaption><b>負載訊號取自最上方那個換能器，而不是主軸——這決定了整套方法量到的是刀尖阻抗。</b>
+<span class="src">Note：本圖為生成式產出（Sol <code>image_gen</code>），經三輪迭代收斂，並由第三方視覺讀者分格放大盲讀驗收。已知未修缺陷：相鄰件剖面線方向未依 ISO 128 交替（要求三輪、三輪未修，判定為執行者能力邊界）。逐項驗收紀錄見 <code>assets/setup.prov.md</code>。</span>
+<span class="src">Source：結構規格 <code>usm-drill-setup</code>（節點 5／邊 4／不變量 1）；`codex-cli 0.144.6` ／ `gpt-5.6-sol`。</span></figcaption>
+</figure>
+
+<h2>機制：閉環鎖幅值，所以負載跑到直流端去了</h2>
+
+<p>驅動器是定振幅閉環。刀尖負載變大時，它會把電流拉住不讓振幅掉——所以電流本身對負載不敏感：全段 ΔI 是 <span class="num">9.62 ± 0.41</span> mA，213 個孔幾乎是一條直線。</p>
+
+<p>負載資訊跑去哪了？跑到相位裡，由 Buck 直流端的實功攜帶。這條鏈是整份文件的地基：</p>
+
+<figure>
+<div class="flow">
+ <div class="flow-track">
+  <span class="lbl">signal path</span>
+  <div class="path">
+   <span class="node">刀尖負載上升</span>
+   <span class="arrow"><svg viewBox="0 0 28 17" role="img" aria-labelledby="ar1"><title id="ar1">導致</title><path d="M1 8.5 H22 M17 3.5 L23 8.5 L17 13.5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+   <span class="node">機械阻抗上升</span>
+   <span class="arrow"><svg viewBox="0 0 28 17" role="img" aria-labelledby="ar2"><title id="ar2">導致</title><path d="M1 8.5 H22 M17 3.5 L23 8.5 L17 13.5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+   <span class="node">Buck 直流端實功 P 上升</span>
+   <span class="sign up">可觀測</span>
+  </div>
+ </div>
+ <div class="flow-track">
+  <span class="lbl">blocked path</span>
+  <div class="path">
+   <span class="node">刀尖負載上升</span>
+   <span class="arrow"><svg viewBox="0 0 28 17" role="img" aria-labelledby="ar3"><title id="ar3">導致</title><path d="M1 8.5 H22 M17 3.5 L23 8.5 L17 13.5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+   <span class="node">閉環把振幅鎖住</span>
+   <span class="arrow"><svg viewBox="0 0 28 17" role="img" aria-labelledby="ar4"><title id="ar4">導致</title><path d="M1 8.5 H22 M17 3.5 L23 8.5 L17 13.5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+   <span class="node">電流 I 被釘死</span>
+   <span class="sign down">量不到</span>
+  </div>
+ </div>
+ <div class="flow-legend">
+  <span><i class="sw-up"></i>負載資訊走得通的路</span>
+  <span><i class="sw-down"></i>被閉環擋掉的路</span>
+ </div>
+</div>
+<figcaption><b>負載資訊只走得通一條路：直流端實功。看電流判負載必敗。</b>
+<span class="src">Note：這條鏈是機制推導，不是量測結果；支持它的讀數是 ΔI 全段 <span class="num">9.62 ± 0.41</span> mA（不動）對照 ΔP 分段有顯著斜率（見下表）。研發部已確認 VFB 欄是振幅設定值不是實測回授、IFB 是 RMS 值。</span>
+<span class="src">Source：`usm-drilling-analysis/holes_all.xlsx`（213 孔）；研發部 2026-06-12 口頭確認。</span></figcaption>
+</figure>
+
+<h2>三個通道各自量到什麼</h2>
+
+<div class="func-row">
+ <div class="fn">
+  <h3>ΔI</h3>
+  <p>切削相與空載相的電流差</p>
+  <p>全段 <span class="num">9.62 ± 0.41</span> mA</p>
+  <p>不敏感——閉環鎖幅值的直接後果</p>
+ </div>
+ <div class="fn">
+  <h3>ΔP</h3>
+  <p>切削相與空載相的 Buck 直流端實功差</p>
+  <p>逐孔取中位數聚合</p>
+  <p>敏感但吵——單取樣突波會拉爆均值</p>
+ </div>
+ <div class="fn">
+  <h3>ΔR</h3>
+  <p><span class="num">P_buck / I²</span>＝阻抗實部 Re(Z) 差</p>
+  <p>與 ΔP 同源（<span class="num">r=0.905</span>）</p>
+  <p>訊噪比較佳——與孔徑的相關也較高</p>
+ </div>
+</div>
+
+<h2>四段趨勢：兩段上升、一段下降、一段不顯著</h2>
+
+<div class="tbl-scroll">
+<table>
+<caption class="meta" style="text-align:left;padding-bottom:0.5rem">ΔP 與 ΔR 對孔號的線性斜率（逐孔中位數聚合）</caption>
+<thead><tr><th>孔段</th><th>n</th><th>ΔP 斜率／孔</th><th>ΔP p 值</th><th>ΔR p 值</th><th>讀法</th></tr></thead>
+<tbody>
+<tr><td class="n">91–120</td><td class="n">30</td><td class="n">−4.44</td><td class="n">0.0164</td><td class="n">0.167</td><td>下降段。成因未定，見待驗證點</td></tr>
+<tr><td class="n">121–180</td><td class="n">60</td><td class="n">+2.11</td><td class="n">0.0030</td><td class="n">0.0003</td><td>負載累積。ΔR 比 ΔP 更顯著</td></tr>
+<tr><td class="n">181–210</td><td class="n">30</td><td class="n">−3.07</td><td class="n">0.376</td><td class="n">0.475</td><td>不顯著。此段走 HMI 鏈，絕對值不可跨鏈比較</td></tr>
+<tr><td class="n">211–300</td><td class="n">90</td><td class="n">+1.58</td><td class="n">0.0357</td><td class="n">0.0243</td><td>負載仍在累積，300 孔未見平台</td></tr>
+</tbody>
+</table>
+</div>
+
+<p>要注意 <span class="num">181–210</span> 那一列：它不是「刀變好了」。那一段的資料來自另一條記錄鏈（HMI 匯出，0.59 s 不規則取樣），跨鏈的絕對值不能直接比。它在表上唯一能讀的是「檔內趨勢不顯著」。</p>
+
+<h2>磨耗長什麼樣：中位數幾乎不動，雲團變胖</h2>
+
+<p>下面這張圖會隨你往下捲逐孔展開。盯著灰色帶的寬度，不要盯著中線。</p>
+
+<div class="narr wide">
+<div class="stage">
+ <video class="motion" playsinline preload="auto" muted src="assets/wear.webm"></video>
+ <div class="static"><img src="assets/wear-final.png" width="1600" height="892" alt="180 孔逐孔孔徑散布圖：孔 91–180 與 211–300 兩段，後段的滾動標準差明顯較寬"></div>
+</div>
+<div class="scrolltrack"></div>
+<div class="narr-steps">
+ <div class="step"><span>孔 91–180（藍）：滾動 20 孔標準差約 <span class="num">0.41</span> µm。雲團很窄。</span></div>
+ <div class="step"><span>孔 181–210 空白：那一段沒有離線孔品質量測。圖上不畫線，因為沒有資料。</span></div>
+ <div class="step"><span>孔 211–300（紅）：中位只上移約 <span class="num">2</span> µm，而滾動標準差最大到 <span class="num">1.54</span> µm。訊號在散布，不在均值。</span></div>
+</div>
+</div>
+
+<figure>
+<figcaption><b>孔徑中位只走了 2.45 µm，段內標準差卻放大 2.14 倍——磨耗先表現為不穩定，不是先表現為變大。</b>
+<span class="src">Note：滾動標準差取 20 孔視窗，兩段各自計算、不跨 181–210 的資料缺口（跨缺口會在沒有資料的地方畫出一條假的水平線）。孔徑為 NEXIV 離線量測，非線上量測。</span>
+<span class="src">Source：`usm-drilling-analysis/hole_quality_join.csv`（180 孔）；影格由 `make_frames.py` 程式化算出，非攝影素材。</span></figcaption>
+</figure>
+
+<h2>電性與實體對得起來，而 ΔR 是比較好的那個通道</h2>
+
+<div class="tbl-scroll">
+<table>
+<thead><tr><th>相關</th><th>r</th><th>p</th><th>n</th></tr></thead>
+<tbody>
+<tr><td>孔徑 × ΔR</td><td class="n">+0.354</td><td class="n">1.1×10⁻⁶</td><td class="n">180</td></tr>
+<tr><td>孔徑 × ΔP</td><td class="n">+0.309</td><td class="n">2.5×10⁻⁵</td><td class="n">180</td></tr>
+</tbody>
+</table>
+</div>
+
+<p>兩個都顯著，而 ΔR 較高。這與 ΔR 在 <span class="num">121–180</span> 段的 p 值（<span class="num">0.0003</span> 對 ΔP 的 <span class="num">0.0030</span>）方向一致。兩條獨立的線指向同一個結論：要選一個通道，選 ΔR。</p>
+
+<p>但這個 <span class="num">r</span> 只有 <span class="num">0.35</span>。它說的是「有關係」，不是「可以用來預測」。<span class="num">0.354²≈0.125</span>——孔徑變異只有約 <span class="num">12.5%</span> 被 ΔR 解釋掉。</p>
+
+<h2>這份文件的三個邊</h2>
+
+<div class="side-cards">
+ <div class="card">
+  <h3>關鍵前提</h3>
+  <ul>
+   <li>追頻參數已鎖共振帶（TrackRange 1000→100）。沒有這一步，電性與負載之間看不到關係。</li>
+   <li>逐孔 ΔP 一律中位數聚合——單取樣突波會拉爆均值（實例：孔 109 一啄 buckP_cut 到 95,631）。</li>
+   <li>切削相＝IFB 低相。定振幅閉環下負載讓電流下降，方向不能搞反。</li>
+  </ul>
+ </div>
+ <div class="card">
+  <h3>邊界條件</h3>
+  <ul>
+   <li>跨儀測鏈的絕對值不可比。181–210 走 HMI 鏈，只能讀檔內趨勢。</li>
+   <li>孔品質是 NEXIV 離線量測，不是線上訊號。這個閉環是事後對刀，不是即時監測。</li>
+   <li>孔 88–90 只錄到 5.7 分鐘（56 啄／3 孔，其他段約 31 啄／孔），該三孔指標信心低。</li>
+   <li>全部讀數來自一支刀、一種材料、一台機。</li>
+  </ul>
+ </div>
+ <div class="card">
+  <h3>待驗證點</h3>
+  <ul>
+   <li>91–120 的下降段成因未定。暖機？重夾？參數？「隔夜重啟暫態」假說已被 210→211 同等 17 h 停機無回落排除（p=0.80）。</li>
+   <li>散布放大是磨耗後段不穩定還是製程變異，本輪分不出來。</li>
+   <li>ΔR 的 <span class="num">r=0.35</span> 撐不起換刀判準。要當判準需要多支刀複現。</li>
+  </ul>
+ </div>
+</div>
+
+</main>
+<footer class="wrap">
+<p>資料與管線：<code>usm-drilling-analysis/</code>（<code>analyze_usm.py</code> v2·213 孔·孔號經 2026-06-12 更正重建）。<br>
+授權：CC BY 4.0。本頁所有數字由單一計算源產出，未手打；圖表為程式化算圖，配置剖面圖為生成式產出並經第三方盲讀驗收（見圖說）。</p>
+</footer>
+<script>
+(function(){
+ var stage=document.querySelector('.stage');
+ var video=document.querySelector('.stage video');
+ var track=document.querySelector('.scrolltrack');
+ if(!stage||!video||!track) return;
+ function drive(){
+  var len=track.offsetHeight-window.innerHeight;
+  if(len<=0) return;
+  var p=Math.min(1,Math.max(0,-stage.getBoundingClientRect().top/len));
+  var d=video.duration;
+  if(!d||!isFinite(d)) return;
+  try{ video.currentTime=p*d; }catch(e){}
+ }
+ // rAF 與 setInterval 併排：不產生畫格的環境（headless／某些預覽器）rAF 一次都不回呼
+ addEventListener('scroll',function(){requestAnimationFrame(drive);},{passive:true});
+ setInterval(drive,40);
+ video.addEventListener('loadedmetadata',drive);
+})();
+</script>
+</body>
+</html>
