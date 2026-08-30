@@ -48,7 +48,7 @@
 }}
 *{box-sizing:border-box}
 html{-webkit-text-size-adjust:100%}
-body{margin:0;padding:2.5rem 0 5rem;background:var(--bg);color:var(--fg);
+body{margin:0;padding:2.5rem 0 5rem;font-variant-numeric:lining-nums tabular-nums;background:var(--bg);color:var(--fg);
  font-family:var(--font-serif);font-size:var(--fs-body);line-height:1.75;
  letter-spacing:0.01em}
 .wrap{max-width:36rem;margin:0 auto;padding:0 1.15rem}
@@ -125,11 +125,11 @@ td.n{font-family:var(--font-mono);white-space:nowrap}
  border:1px solid var(--border);background:#fff}
 .stage .static{display:none}
 .stage .static img{width:100%;height:auto;border-radius:5px;border:1px solid var(--border)}
-.scrolltrack{height:2700px}
-.narr-steps{position:relative;margin-top:-2700px;pointer-events:none}
+.scrolltrack{height:3600px}
+.narr-steps{position:relative;margin-top:-3600px;pointer-events:none}
 /* 圖釘在視窗頂、卡片釘在視窗底 ⇒ 兩者永遠不互相覆蓋。
    實測：卡片用 align-items:center 會在某些捲動位置正好蓋住資料中段。 */
-.narr-steps .step{height:900px;display:flex;align-items:flex-end;
+.narr-steps .step{height:1200px;display:flex;align-items:flex-end;
  padding:0 1.15rem}
 .narr-steps .step span{position:sticky;bottom:1.25rem;
  pointer-events:auto;background:var(--bg);
@@ -143,6 +143,9 @@ td.n{font-family:var(--font-mono);white-space:nowrap}
 @media (max-width:40rem){
  .stage{height:auto;padding:0.6rem 0}
  .stage video{max-height:none}
+ /* agy 兩次盲讀都指出中間有 ~45% 空白 ⇒ 卡片改貼圖下方，不再釘視窗底 */
+ .narr-steps .step{align-items:flex-start}
+ .narr-steps .step span{top:340px;bottom:auto}
 }
 @media (prefers-reduced-motion:reduce){
  .stage{position:static;height:auto}
@@ -274,14 +277,14 @@ footer{margin-top:4rem;padding-top:1.3rem;border-top:1px solid var(--border);
 
 <div class="narr wide">
 <div class="stage">
- <video class="motion" playsinline preload="auto" muted src="assets/wear.webm?v=2"></video>
- <div class="static"><img src="assets/wear-final.png?v=2" width="1000" height="857" alt="180 孔逐孔孔徑散布圖：孔 91–180 與 211–300 兩段，後段的滾動標準差明顯較寬"></div>
+ <video class="motion" playsinline preload="auto" muted src="assets/wear.webm?v=5"></video>
+ <div class="static"><img src="assets/wear-final.png?v=5" width="1000" height="857" alt="180 孔逐孔孔徑散布圖：孔 91–180 與 211–300 兩段，後段的滾動標準差明顯較寬"></div>
 </div>
 <div class="scrolltrack"></div>
 <div class="narr-steps">
  <div class="step"><span>孔 91–180（藍）：滾動 20 孔標準差約 <span class="num">0.41</span> µm。雲團很窄。</span></div>
  <div class="step"><span>孔 181–210 空白：那一段沒有離線孔品質量測。圖上不畫線，因為沒有資料。</span></div>
- <div class="step"><span>孔 211–300（紅）：中位只上移約 <span class="num">2</span> µm，而滾動標準差最大到 <span class="num">1.54</span> µm。訊號在散布，不在均值。</span></div>
+ <div class="step"><span>往後鑽，紅色那一團明顯變胖：中位只上移約 <span class="num">2</span> µm，而滾動標準差最大到 <span class="num">1.54</span> µm。訊號在散布，不在均值。</span></div>
 </div>
 </div>
 
