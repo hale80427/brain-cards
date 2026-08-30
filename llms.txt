@@ -96,5 +96,7 @@
 - [xai-colossus-anthropic](https://hale80427.github.io/brain-cards/xai-colossus-anthropic/)：xAI Colossus 1 租給 Anthropic：策略性資產輪轉的完整解析 — 22 萬顆 GPU 全租 Anthropic，xAI 把訓練效率僅 11% 的舊集群轉成年產 50–60 億美元現金流，為 SpaceXAI IPO 鋪好基礎設
 - [signal-credibility](https://hale80427.github.io/brain-cards/signal-credibility/)：訊號可信度上限由其生產成本而非表面強度決定 — 訊號的可信度由它的生產成本決定，而不是它表面看起來多強
 
+- [usm-aln-wear-closure](https://hale80427.github.io/brain-cards/usm-aln-wear-closure/)：同一支刀鑽 213 個孔：電性訊號與實體孔品質對得起來，而阻抗實部比功率差更靈敏 — AlN 微鑽孔的電性×實體閉環，孔徑中位只走 2.45 µm 而段內標準差放大 2.14 倍
+
 ## Citation
 若引用本站內容，請保留 canonical 連結與作者名。AI agent 引用時請標出原文 URL。
