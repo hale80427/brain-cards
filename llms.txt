@@ -15,6 +15,7 @@
 - 中文與英文 / 數字之間使用半形空格
 
 ## Cards
+- [rick-rubin-creativity](https://hale80427.github.io/brain-cards/rick-rubin-creativity/)：Huberman Lab Essentials 訪 Rick Rubin 的完整拆解——創作唯一可控的是你與作品之間那條連結的清晰度，由此得到一條判準線：削弱那條連結的外部資訊不論真假都有害。含創作四階段各自的時間紀律（deadline 只在完成階段不傷作品，且只對自己設別公開設）、大腦把自己生成的解釋登錄成事實的四步機制、自我懷疑的兩種接線、以及「一個做法有效過只證明它那次有效」對 SOP 沉澱的含意。六張自繪機制圖，附四類邊界（全片零文獻引用、自動字幕、手術錄音宣稱未採用、講者位置條件未被檢視）。
 - [cooling-gel-slippers](https://hale80427.github.io/brain-cards/cooling-gel-slippers/)：HOLA 伊登涼感凝膠 EVA 拖鞋（NT$399）的深度調研——它不製冷，是一塊熱海綿；開冷氣約涼 12 到 28 分鐘，不開冷氣只剩 5 到 10 分鐘，而這個失效門檻是廠商自己寫在注意事項裡的。含熱侵入係數 e = √(k·ρ·c) 的材料數值對照與接觸溫度計算、能量守恆推出的時間估算、七條使用方法、冷藏可行但冷凍會結冰膨脹撐破 TPU 封層的機制辨析、官網與實體標籤七處逐字差異。並澄清兩個常見誤讀：東森新聞那份實測看似打臉實則與廠商立場一致，以及用核心體溫文獻打這雙鞋是稻草人。五張自繪機制圖，附六類查無實據清單。
 - [ai-eng-software-fundamentals](https://hale80427.github.io/brain-cards/ai-eng-software-fundamentals/)：Andrew Ng 的 AI Engineering Skills Map 第二篇（軟體工程基本功）拆解——懂基本功不是為了自己寫程式，是為了知道有哪些取捨可以指定；不懂的失效形式是延遲／可用性／一致性／可靠性／可維護性／簡潔性／成本這七個維度上 agent 替你落點而你不知道有選擇題；全篇唯一的新機制是「資料架構選錯時 AI 不會報錯」——AI 的輸入脈絡從資料源長出來，缺漏不變成訊號而變成一個看起來完整的輸出。含五張自繪機制圖與一份證據強度清單（無樣本數、無對照組、Skills Map 方法論未公開）。
 - [goggins-inner-strength](https://hale80427.github.io/brain-cards/goggins-inner-strength/)：Huberman 訪 David Goggins 2:37 訪談的完整拆解——意志力的訓練訊號是抗拒感不是努力強度（愛冰浴的人做功量翻十倍 aMCC 沒長，怕水的人壓頭下水就長了），且該腦區雙向可塑、停止投入就縮回去，故 Goggins 稱它 a very perishable skill 並每年花三到五個月當空降消防員、放棄數百萬美金維護它；另含「先學會正確地失敗」的時間常數、「腦中要造出第二個聲音」的決策結構、以及他對「善待自己」的反駁與其邊界。六張自繪機制圖，附五類查證缺口（片中所有神經科學陳述零文獻引用、個人數字無外部佐證、n＝1）。
