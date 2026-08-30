@@ -119,14 +119,14 @@ td.n{font-family:var(--font-mono);white-space:nowrap}
 .side-cards .card li:last-child{margin-bottom:0}
 /* ── KB-11 捲動敘事 ── */
 .narr{margin:2.2rem 0}
-.stage{position:sticky;top:0;height:76svh;display:flex;align-items:center;
+.stage{position:sticky;top:0;z-index:2;height:76svh;display:flex;align-items:center;
  justify-content:center;background:var(--bg)}
 .stage video{width:100%;height:auto;max-height:72svh;border-radius:5px;
  border:1px solid var(--border);background:#fff}
 .stage .static{display:none}
 .stage .static img{width:100%;height:auto;border-radius:5px;border:1px solid var(--border)}
 .scrolltrack{height:3600px}
-.narr-steps{position:relative;margin-top:-3600px;pointer-events:none}
+.narr-steps{position:relative;z-index:1;margin-top:-3600px;pointer-events:none}
 /* 圖釘在視窗頂、卡片釘在視窗底 ⇒ 兩者永遠不互相覆蓋。
    實測：卡片用 align-items:center 會在某些捲動位置正好蓋住資料中段。 */
 .narr-steps .step{height:1200px;display:flex;align-items:flex-end;
@@ -277,8 +277,8 @@ footer{margin-top:4rem;padding-top:1.3rem;border-top:1px solid var(--border);
 
 <div class="narr wide">
 <div class="stage">
- <video class="motion" playsinline preload="auto" muted src="assets/wear.webm?v=5"></video>
- <div class="static"><img src="assets/wear-final.png?v=5" width="1000" height="857" alt="180 孔逐孔孔徑散布圖：孔 91–180 與 211–300 兩段，後段的滾動標準差明顯較寬"></div>
+ <video class="motion" playsinline preload="auto" muted src="assets/wear.webm?v=6"></video>
+ <div class="static"><img src="assets/wear-final.png?v=6" width="1000" height="857" alt="180 孔逐孔孔徑散布圖：孔 91–180 與 211–300 兩段，後段的滾動標準差明顯較寬"></div>
 </div>
 <div class="scrolltrack"></div>
 <div class="narr-steps">
