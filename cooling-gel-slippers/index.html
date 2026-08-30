@@ -1,0 +1,645 @@
+<!DOCTYPE html>
+<html lang="zh-Hant-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>涼感凝膠拖鞋只在冷氣房涼十分鐘——而這是廠商自己寫的</title>
+<meta name="description" content="HOLA 伊登涼感凝膠 EVA 拖鞋深度調研：它不製冷，是一塊熱海綿。附熱侵入係數計算、涼感時間估算、正確使用方法，以及噱頭與實證的分界線。">
+
+<link rel="canonical" href="https://hale80427.github.io/brain-cards/cooling-gel-slippers/">
+<meta name="author" content="彥皓">
+
+<meta property="og:type" content="article">
+<meta property="og:title" content="涼感凝膠拖鞋只在冷氣房涼十分鐘——而這是廠商自己寫的">
+<meta property="og:description" content="它不製冷，是一塊熱海綿。附熱侵入係數計算、涼感時間估算、正確使用方法，以及噱頭與實證的分界線。">
+<meta property="og:url" content="https://hale80427.github.io/brain-cards/cooling-gel-slippers/">
+<meta property="og:image" content="https://hale80427.github.io/brain-cards/og-default.jpg">
+<meta property="og:locale" content="zh_TW">
+
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="涼感凝膠拖鞋只在冷氣房涼十分鐘——而這是廠商自己寫的">
+<meta name="twitter:description" content="它不製冷，是一塊熱海綿。附熱侵入係數計算、涼感時間估算、正確使用方法，以及噱頭與實證的分界線。">
+<meta name="twitter:image" content="https://hale80427.github.io/brain-cards/og-default.jpg">
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "涼感凝膠拖鞋只在冷氣房涼十分鐘——而這是廠商自己寫的",
+  "description": "HOLA 伊登涼感凝膠 EVA 拖鞋深度調研：它不製冷，是一塊熱海綿。附熱侵入係數計算、涼感時間估算、正確使用方法，以及噱頭與實證的分界線。",
+  "datePublished": "2026-08-30",
+  "dateModified": "2026-08-30",
+  "author": { "@type": "Person", "name": "彥皓" },
+  "url": "https://hale80427.github.io/brain-cards/cooling-gel-slippers/",
+  "inLanguage": "zh-TW",
+  "license": "https://creativecommons.org/licenses/by/4.0/"
+}
+</script>
+
+<style>
+  :root {
+    /* A 編輯雜誌風 token（KB-06）；OKLCH 為事實源，hex 註解保留設計原意 */
+    --bg: oklch(98.2% 0.006 95.0);                /* 暖白（was #fafaf6） */
+    --fg: oklch(21.8% 0 0);                       /* 近黑（was #1a1a1a） */
+    --accent: oklch(40.5% 0.155 28.5);            /* 深紅（was #8B0000） */
+    --accent-warn: oklch(66.6% 0.157 58.3);       /* 橘黃 warn */
+    --muted: oklch(50.5% 0.008 95.0);             /* 暖中灰 */
+    --border: oklch(91.5% 0.010 95.0);            /* 淺暖灰 */
+    --callout-tip: oklch(95.5% 0.017 95.0);       /* 淺米 */
+    --callout-warn: oklch(96.5% 0.022 72.0);      /* 淺暖橘米 */
+    --grid: oklch(88.0% 0.008 95.0);              /* 圖表軸線／格線（比文字淡一個量級·L4） */
+    --fs-meta: 0.85rem;
+    --fs-body: 1.05rem;
+    --fs-h2:   clamp(1.5rem, 3.5vw, 1.75rem);
+    --fs-h1:   clamp(2rem, 5vw, 2.75rem);
+    --font-serif: "Noto Serif TC", "Songti TC", Georgia, serif;
+    --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+    --ease-linear: linear;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: oklch(20.5% 0.004 95.0);
+      --fg: oklch(94.5% 0.010 95.0);
+      --accent: oklch(70.5% 0.135 28.5);
+      --accent-warn: oklch(76.9% 0.165 70.1);
+      --muted: oklch(69.0% 0.008 95.0);
+      --border: oklch(31.5% 0.006 95.0);
+      --callout-tip: oklch(28.5% 0.012 95.0);
+      --callout-warn: oklch(30.7% 0.034 73.5);
+      --grid: oklch(38.0% 0.006 95.0);
+    }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
+  }
+  * { box-sizing: border-box; }
+  body {
+    font-family: var(--font-serif);
+    background: var(--bg);
+    color: var(--fg);
+    line-height: 1.85;
+    margin: 0;
+    padding: 0;
+    -webkit-font-smoothing: antialiased;
+    text-autospace: normal;
+    font-synthesis: none;
+    line-break: strict;
+  }
+  .progress-bar {
+    position: fixed; top: 0; left: 0; height: 3px; width: 100%;
+    background: var(--accent); z-index: 100;
+    transform: scaleX(0); transform-origin: left;
+    transition: transform 0.1s var(--ease-linear);
+  }
+  main, main > article {
+    display: grid;
+    grid-template-columns:
+      [full-start] minmax(1rem, 1fr)
+      [wide-start] minmax(0, 130px)
+      [content-start] minmax(0, 680px) [content-end]
+      minmax(0, 130px) [wide-end]
+      minmax(1rem, 1fr) [full-end];
+  }
+  main { padding: clamp(2rem, 5vw, 4rem) 0; }
+  main > *, main > article > * { grid-column: content; }
+  main > article { grid-column: full; }
+  main > .wide, main > article > .wide { grid-column: wide; }
+  main > .full, main > article > .full { grid-column: full; }
+  @media (max-width: 1000px) {
+    main, main > article {
+      grid-template-columns:
+        [full-start] minmax(1rem, 1fr)
+        [wide-start content-start] minmax(0, 680px) [content-end wide-end]
+        minmax(1rem, 1fr) [full-end];
+    }
+  }
+  h1 { font-size: var(--fs-h1); line-height: 1.25; margin: 0 0 1rem; letter-spacing: -0.01em; }
+  h2 { font-size: var(--fs-h2); line-height: 1.4; margin: 3rem 0 0.75rem; padding-bottom: 0.5rem; border-bottom: 1px solid var(--border); }
+  h3 { font-size: var(--fs-body); font-weight: 700; line-height: 1.5; margin: 1.75rem 0 0.5rem; color: var(--accent); }
+  p { font-size: var(--fs-body); margin: 0 0 1.25rem; }
+  ul, ol { font-size: var(--fs-body); margin: 0 0 1.25rem; padding-left: 1.4rem; }
+  li { margin: 0 0 0.5rem; font-size: var(--fs-body); }
+  a { color: var(--accent); text-underline-offset: 3px; overflow-wrap: anywhere; }
+  a:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+  em { font-style: normal; font-weight: 600;
+       text-emphasis: filled dot; text-emphasis-position: under right;
+       -webkit-text-emphasis: filled dot; -webkit-text-emphasis-position: under right; }
+  em:lang(en) { font-style: italic; font-weight: inherit;
+                text-emphasis: none; -webkit-text-emphasis: none; }
+  .lead { font-size: var(--fs-body); color: var(--muted); margin: 0 0 1.5rem; }
+  .bluf { font-size: var(--fs-body); background: var(--callout-tip); border-left: 3px solid var(--accent); padding: 1.25rem 1.5rem; margin: 1.5rem 0 2rem; border-radius: 4px; }
+  .bluf strong.label { display: block; font-size: var(--fs-meta); letter-spacing: 0.05em; color: var(--accent); margin-bottom: 0.5rem; text-transform: uppercase; }
+  .bluf p:last-child { margin-bottom: 0; }
+  .callout { padding: 1rem 1.25rem; margin: 1.5rem 0; border-radius: 4px; border-left: 3px solid var(--muted); }
+  .callout.tip { background: var(--callout-tip); border-left-color: var(--accent); }
+  .callout.warn { background: var(--callout-warn); border-left-color: var(--accent-warn); }
+  .callout p:last-child { margin-bottom: 0; }
+  .callout p:first-child { margin-top: 0; }
+  .kicker { display: block; font-size: var(--fs-meta); font-weight: 700;
+            letter-spacing: 0.12em; color: var(--accent); margin: 3rem 0 0; }
+  .kicker + h2 { margin-top: 0.4rem; border-bottom: none; padding-bottom: 0; }
+  .notesrc { font-size: var(--fs-meta); color: var(--muted); margin: 0.5rem 0 0; line-height: 1.7; }
+  .notesrc b { color: var(--fg); font-weight: 600; }
+  blockquote { margin: 1.5rem 0; padding: 0.25rem 0 0.25rem 1.25rem; border-left: 3px solid var(--border); color: var(--fg); font-size: var(--fs-body); }
+  blockquote p:last-child { margin-bottom: 0; }
+  table { border-collapse: collapse; width: 100%; margin: 0; font-size: var(--fs-body); }
+  th, td { padding: 0.6rem 0.8rem; border: 1px solid var(--border); text-align: left; vertical-align: top; line-height: 1.65; }
+  th { background: var(--callout-tip); font-weight: 700; }
+  code { font-family: var(--font-mono); background: var(--callout-tip); padding: 0.1em 0.4em; border-radius: 3px; font-size: var(--fs-body);
+         overflow-wrap: anywhere; word-break: break-word; }
+  .tbl { overflow-x: auto; margin: 1.5rem 0; min-width: 0; }
+  .tbl table { margin: 0; min-width: 480px; }
+  figure { margin: 2rem 0; }
+  figure svg { width: 100%; max-width: 520px; height: auto; display: block; margin: 0 auto; }
+  figcaption { font-size: var(--fs-meta); color: var(--muted); margin-top: 0.6rem; text-align: left; line-height: 1.7; }
+  details { margin: 1.5rem 0; border: 1px solid var(--border); border-radius: 4px; padding: 0.75rem 1rem; }
+  summary { cursor: pointer; font-weight: 700; font-size: var(--fs-body); color: var(--accent); }
+  details[open] summary { margin-bottom: 0.75rem; }
+  footer p { color: var(--muted); font-size: var(--fs-meta); margin-top: 4rem; padding-top: 1.5rem; border-top: 1px solid var(--border); }
+  @media print {
+    .progress-bar { display: none; }
+    body { font-size: 11pt; line-height: 1.6; }
+    main { max-width: 100%; padding: 1cm; }
+  }
+</style>
+</head>
+<body>
+<div class="progress-bar" id="progress"></div>
+<main>
+<header>
+<h1>涼感凝膠拖鞋只在冷氣房涼十分鐘——而這是廠商自己寫的</h1>
+<p class="lead">HOLA 伊登涼感凝膠 EVA 拖鞋 · NT$399 · 商品編號 014421687</p>
+<div class="bluf">
+<strong class="label">BLUF</strong>
+<p><strong>有真實的物理效果，但它不製冷。</strong>它是一塊「熱海綿」，先把你腳底的熱吸進去，再慢慢吐出來。</p>
+<p>吸滿了就不涼。開冷氣時大約撐 12 到 28 分鐘，不開冷氣只剩 5 到 10 分鐘。</p>
+<p>這不是我推論出來的指控。廠商在商品注意事項裡自己寫了：「環境溫度超過 30 度時，商品本身溫度也會相對提高而得不到良好的冷卻效果。」</p>
+</div>
+</header>
+<article>
+<!-- narrative: 矛盾,物件,直接引語,場景,細節 -->
+
+<span class="kicker">【機制】</span>
+<h2>它是熱海綿，不是冷氣機</h2>
+
+<p>先把最容易誤會的地方講清楚。</p>
+
+<p>這雙拖鞋裡沒有任何會製造冷的東西。沒有電池、沒有壓縮機、沒有冰袋槽。它的凝膠成分是丙三醇（甘油）、水、丙烯酸鈉共聚物。說白話，就是一包被 TPU 膜封起來的水。</p>
+
+<p>那它為什麼踩上去會涼？</p>
+
+<p>因為熱從你的腳流進了凝膠。凝膠含水，吸熱能力遠比一般 EVA 發泡鞋底強。熱走得快，你的腳底皮膚溫度就掉得快，大腦把這個叫做「涼」。</p>
+
+<p>但那些熱沒有消失。它只是<em>搬家</em>了——從你的腳搬到凝膠裡。搬完就滿了。</p>
+
+<figure>
+<svg viewBox="0 0 420 432" role="img" xmlns="http://www.w3.org/2000/svg">
+  <title>熱海綿三階段：踩上去吸熱、約十分鐘後吸滿、脫下通風才能重置</title>
+  <defs>
+    <marker id="sponge-in" markerWidth="10" markerHeight="10" refX="8" refY="3.5" orient="auto">
+      <path d="M0,0 L8,3.5 L0,7" fill="var(--accent)"/></marker>
+    <marker id="sponge-out" markerWidth="10" markerHeight="10" refX="8" refY="3.5" orient="auto">
+      <path d="M0,0 L8,3.5 L0,7" fill="var(--muted)"/></marker>
+  </defs>
+
+  <text x="12" y="24" font-size="18" font-weight="700" fill="var(--accent)">① 剛踩上去</text>
+  <rect x="12" y="36" width="132" height="32" rx="4" fill="none" stroke="var(--muted)" stroke-width="1.5"/>
+  <text x="78" y="57" text-anchor="middle" font-size="16" fill="var(--fg)">腳底 33 度</text>
+  <line x1="78" y1="70" x2="78" y2="92" stroke="var(--accent)" stroke-width="3" marker-end="url(#sponge-in)"/>
+  <text x="88" y="86" font-size="15" fill="var(--accent)">熱</text>
+  <rect x="12" y="94" width="132" height="32" rx="4" fill="var(--callout-tip)" stroke="var(--accent)" stroke-width="2"/>
+  <text x="78" y="115" text-anchor="middle" font-size="16" fill="var(--fg)">凝膠 26 度</text>
+  <text x="160" y="68" font-size="20" font-weight="700" fill="var(--fg)">很涼</text>
+  <text x="160" y="93" font-size="15" fill="var(--muted)">溫差約 5 度</text>
+  <text x="160" y="115" font-size="15" fill="var(--muted)">熱一直流進去</text>
+  <line x1="12" y1="146" x2="408" y2="146" stroke="var(--grid)" stroke-width="1"/>
+
+  <text x="12" y="180" font-size="18" font-weight="700" fill="var(--accent)">② 約 10 分鐘後</text>
+  <rect x="12" y="192" width="132" height="32" rx="4" fill="none" stroke="var(--muted)" stroke-width="1.5"/>
+  <text x="78" y="213" text-anchor="middle" font-size="16" fill="var(--fg)">腳底 33 度</text>
+  <line x1="78" y1="226" x2="78" y2="248" stroke="var(--grid)" stroke-width="3" stroke-dasharray="5 4"/>
+  <text x="88" y="242" font-size="15" fill="var(--muted)">停</text>
+  <rect x="12" y="250" width="132" height="32" rx="4" fill="var(--callout-warn)" stroke="var(--accent-warn)" stroke-width="2"/>
+  <text x="78" y="271" text-anchor="middle" font-size="16" fill="var(--fg)">凝膠 31 度</text>
+  <text x="160" y="224" font-size="20" font-weight="700" fill="var(--fg)">不涼了</text>
+  <text x="160" y="249" font-size="15" fill="var(--muted)">溫差被吃光</text>
+  <text x="160" y="271" font-size="15" fill="var(--muted)">凝膠吸滿了</text>
+  <line x1="12" y1="302" x2="408" y2="302" stroke="var(--grid)" stroke-width="1"/>
+
+  <text x="12" y="336" font-size="18" font-weight="700" fill="var(--accent)">③ 脫下通風</text>
+  <rect x="12" y="348" width="132" height="32" rx="4" fill="none" stroke="var(--grid)" stroke-width="1.5" stroke-dasharray="5 4"/>
+  <text x="78" y="369" text-anchor="middle" font-size="16" fill="var(--muted)">腳離開了</text>
+  <line x1="78" y1="404" x2="78" y2="384" stroke="var(--muted)" stroke-width="3" marker-end="url(#sponge-out)"/>
+  <text x="88" y="400" font-size="15" fill="var(--muted)">熱</text>
+  <rect x="12" y="406" width="132" height="26" rx="4" fill="var(--callout-tip)" stroke="var(--accent)" stroke-width="2"/>
+  <text x="78" y="424" text-anchor="middle" font-size="16" fill="var(--fg)">慢慢降溫</text>
+  <text x="160" y="380" font-size="20" font-weight="700" fill="var(--fg)">才能重來</text>
+  <text x="160" y="405" font-size="15" fill="var(--muted)">但吐熱很慢</text>
+  <text x="160" y="427" font-size="15" fill="var(--muted)">一小時仍溫熱</text>
+</svg>
+<figcaption><b>圖 1 ·</b> 涼感結束不是因為凝膠壞了，是因為它吸滿了——而它吐熱比吸熱慢得多，所以連續穿的第二輪不會有第一輪的效果。<br>
+<span class="notesrc"><b>Note：</b>溫度為情境示意值，用於說明機制方向，非實測讀數。實際凝膠溫度取決於室溫。<b>Source：</b>作者自繪。</span></figcaption>
+</figure>
+
+<span class="kicker">【機制】</span>
+<h2>決定「摸起來多涼」的不是導熱，是熱侵入係數</h2>
+
+<p>這裡有一個反直覺的地方，值得花三十秒理解。</p>
+
+<p>室溫下的鐵欄杆和木頭桌面，溫度是<em>一樣的</em>。但你摸鐵會覺得冰，摸木頭不會。</p>
+
+<p>差別在一個叫<strong>熱侵入係數</strong>（thermal effusivity）的東西——材料把熱從你皮膚抽走的速度。公式是：</p>
+
+<p style="text-align:center"><code>e = √(k × ρ × c)</code></p>
+
+<p>其中 k 是導熱係數、ρ 是密度、c 是比熱。三個一起算，不是只看導熱。</p>
+
+<p>把幾個材料的數字排出來，就看得出這雙鞋在做什麼。</p>
+
+<figure>
+<svg viewBox="0 0 420 300" role="img" xmlns="http://www.w3.org/2000/svg">
+  <title>熱侵入係數對照：凝膠約為 EVA 發泡的六倍</title>
+  <text x="12" y="20" font-size="16" fill="var(--muted)">熱侵入係數 e（數字越大，摸起來越冰）</text>
+
+  <text x="12" y="50" font-size="16" fill="var(--fg)">EVA 發泡鞋底</text>
+  <rect x="12" y="58" width="53" height="20" fill="var(--grid)"/>
+  <text x="73" y="74" font-size="15" fill="var(--muted)">約 220</text>
+
+  <text x="12" y="106" font-size="16" fill="var(--fg)">甘油（丙三醇）</text>
+  <rect x="12" y="114" width="223" height="20" fill="var(--callout-warn)" stroke="var(--accent-warn)"/>
+  <text x="243" y="130" font-size="15" fill="var(--muted)">924</text>
+
+  <text x="12" y="162" font-size="16" fill="var(--fg)">你的腳底皮膚</text>
+  <rect x="12" y="170" width="287" height="20" fill="none" stroke="var(--muted)" stroke-dasharray="5 3"/>
+  <text x="307" y="186" font-size="15" fill="var(--muted)">1190</text>
+
+  <text x="12" y="218" font-size="16" font-weight="700" fill="var(--accent)">這雙鞋的凝膠</text>
+  <rect x="12" y="226" width="338" height="20" fill="var(--callout-tip)" stroke="var(--accent)" stroke-width="2"/>
+  <text x="358" y="242" font-size="15" font-weight="700" fill="var(--accent)">1400</text>
+
+  <text x="12" y="274" font-size="16" fill="var(--fg)">純水</text>
+  <rect x="12" y="282" width="383" height="18" fill="var(--grid)"/>
+  <text x="389" y="296" text-anchor="end" font-size="15" fill="var(--bg)">1588</text>
+</svg>
+<figcaption><b>圖 2 ·</b> 凝膠的抽熱能力約為 EVA 發泡的六倍——這就是「換一雙鞋就有感」的全部原因，跟任何特殊科技無關。<br>
+<span class="notesrc"><b>Note：</b>凝膠值 1400 是水與甘油的理想混合外推，非實測；真值應更低，因為聚合物網絡與 TPU 表層都會拉低有效值。皮膚值文獻分歧達 3.6 倍（400 至 1450），此處取常用值 1190。<b>Source：</b>Sgreva et al., <i>Rev. Sci. Instrum.</i> 94:074901 (2023)；Shimazaki &amp; Aisaka, <i>Proceedings</i> 2:278 (2018)；加賀田等，日本機械學會關西支部 (2007)。作者自繪。</span></figcaption>
+</figure>
+
+<p>兩個東西接觸時，接觸面的溫度不是取平均，而是按各自的 e 值加權：</p>
+
+<p style="text-align:center"><code>Tc = (e₁T₁ + e₂T₂) / (e₁ + e₂)</code></p>
+
+<p>Tc 就是接觸面的溫度，也就是你的腳實際感受到的那個溫度。</p>
+
+<p>代進去算，腳底 33 度、室溫 25 度：</p>
+
+<ul>
+<li>踩普通 EVA 鞋底 → 接觸面 31.6 度，只降 1.4 度</li>
+<li>踩這雙的凝膠 → 接觸面 28.4 度，降 4.6 度</li>
+</ul>
+
+<p>差 3.2 度。這個量級人是感覺得到的。</p>
+
+<div class="callout tip">
+<p><strong>所以它沒有騙你。</strong>「踩上去比較涼」是真的，而且算得出來。問題不在有沒有效，在<em>撐多久</em>和<em>什麼條件下</em>。</p>
+</div>
+
+<span class="kicker">【機制】</span>
+<h2>室溫每升一度，就直接吃掉一度涼感</h2>
+
+<p>凝膠沒有製冷機。它靜置久了，溫度必然等於室溫。</p>
+
+<p>這代表涼感完全靠「腳底溫度減掉凝膠溫度」這個溫差。室溫爬上去，溫差就縮小。</p>
+
+<figure>
+<svg viewBox="0 0 420 300" role="img" xmlns="http://www.w3.org/2000/svg">
+  <title>室溫與接觸溫降的關係：三十度以上只剩不到兩度</title>
+  <text x="12" y="18" font-size="16" fill="var(--muted)">踩上去的瞬間，腳底降幾度</text>
+  <line x1="58" y1="34" x2="58" y2="230" stroke="var(--grid)" stroke-width="1.5"/>
+  <line x1="58" y1="230" x2="410" y2="230" stroke="var(--grid)" stroke-width="1.5"/>
+  <line x1="58" y1="44" x2="410" y2="44" stroke="var(--grid)" stroke-width="1" stroke-dasharray="3 4"/>
+  <text x="50" y="49" text-anchor="end" font-size="15" fill="var(--muted)">5°</text>
+  <line x1="58" y1="137" x2="410" y2="137" stroke="var(--grid)" stroke-width="1" stroke-dasharray="3 4"/>
+  <text x="50" y="142" text-anchor="end" font-size="15" fill="var(--muted)">2.5°</text>
+  <text x="50" y="235" text-anchor="end" font-size="15" fill="var(--muted)">0</text>
+
+  <rect x="76" y="48" width="60" height="182" fill="var(--callout-tip)" stroke="var(--accent)" stroke-width="2"/>
+  <text x="106" y="40" text-anchor="middle" font-size="17" font-weight="700" fill="var(--accent)">4.9°</text>
+  <text x="106" y="252" text-anchor="middle" font-size="16" fill="var(--fg)">25 度</text>
+  <text x="106" y="274" text-anchor="middle" font-size="14" fill="var(--muted)">冷氣房</text>
+
+  <rect x="164" y="116" width="60" height="114" fill="var(--callout-tip)" stroke="var(--accent)" stroke-width="1.5"/>
+  <text x="194" y="108" text-anchor="middle" font-size="17" font-weight="700" fill="var(--fg)">3.1°</text>
+  <text x="194" y="252" text-anchor="middle" font-size="16" fill="var(--fg)">28 度</text>
+  <text x="194" y="274" text-anchor="middle" font-size="14" fill="var(--muted)">弱冷氣</text>
+
+  <rect x="252" y="162" width="60" height="68" fill="var(--callout-warn)" stroke="var(--accent-warn)" stroke-width="2"/>
+  <text x="282" y="154" text-anchor="middle" font-size="17" font-weight="700" fill="var(--fg)">1.8°</text>
+  <text x="282" y="252" text-anchor="middle" font-size="16" fill="var(--fg)">30 度</text>
+  <text x="282" y="274" text-anchor="middle" font-size="14" fill="var(--accent-warn)">廠商門檻</text>
+
+  <rect x="340" y="207" width="60" height="23" fill="var(--grid)"/>
+  <text x="370" y="199" text-anchor="middle" font-size="17" font-weight="700" fill="var(--muted)">0.6°</text>
+  <text x="370" y="252" text-anchor="middle" font-size="16" fill="var(--fg)">32 度</text>
+  <text x="370" y="274" text-anchor="middle" font-size="14" fill="var(--muted)">沒冷氣</text>
+</svg>
+<figcaption><b>圖 3 ·</b> 廠商標示的 30 度門檻不是免責話術，是能量守恆算出來的必然結果——溫差被吃掉七成，涼感當然消失。<br>
+<span class="notesrc"><b>Note：</b>以接觸溫度公式計算，假設腳底皮膚 33 度、皮膚 e 值 1190、凝膠與室溫等溫。改用 e=1822 計算結果幾乎相同（4.9／3.2／1.9／0.65）。這是接觸瞬間的溫降，不是持續值。<b>Source：</b>作者依公開材料熱物性自行計算並繪製。</span></figcaption>
+</figure>
+
+<p>注意廠商用的字是「得不到良好的冷卻效果」，不是「失效」。</p>
+
+<p>這個用詞是準確的。被動平衡下，凝膠不會比腳還熱。所以即使在 30 度，它仍然比普通 EVA 鞋底涼一點。只是從 3.2 度縮到 1.2 度，大概到了你感覺不出來的邊緣。</p>
+
+<span class="kicker">【數字】</span>
+<h2>涼感能撐多久：算得出來，答案是十幾分鐘</h2>
+
+<p>這是一道簡單的能量帳。凝膠能吸多少熱，除以你的腳每秒送多少熱進去。</p>
+
+<p>把假設全部攤開：凝膠層厚 3 到 5 公釐、重 36 到 60 克、進入拖鞋的足部熱流約 1.0 到 1.4 瓦。</p>
+
+<figure>
+<svg viewBox="0 0 420 300" role="img" xmlns="http://www.w3.org/2000/svg">
+  <title>涼感衰減：開冷氣約十二到二十八分鐘，不開冷氣只剩五到十分鐘</title>
+  <line x1="58" y1="30" x2="58" y2="210" stroke="var(--grid)" stroke-width="1.5"/>
+  <line x1="58" y1="210" x2="410" y2="210" stroke="var(--grid)" stroke-width="1.5"/>
+  <text x="50" y="42" text-anchor="end" font-size="15" fill="var(--muted)">很涼</text>
+  <text x="50" y="206" text-anchor="end" font-size="15" fill="var(--muted)">沒感覺</text>
+  <line x1="58" y1="176" x2="410" y2="176" stroke="var(--grid)" stroke-width="1" stroke-dasharray="4 4"/>
+
+  <path d="M 58 38 C 118 48, 178 86, 238 128 S 290 168, 314 178" fill="none" stroke="var(--accent)" stroke-width="3"/>
+  <circle cx="314" cy="178" r="5" fill="var(--accent)"/>
+  <path d="M 58 92 C 90 116, 122 150, 154 170 S 176 178, 186 180" fill="none" stroke="var(--accent-warn)" stroke-width="3" stroke-dasharray="7 4"/>
+  <circle cx="186" cy="180" r="5" fill="var(--accent-warn)"/>
+
+  <text x="58" y="230" font-size="15" fill="var(--muted)">踩上去</text>
+  <text x="410" y="230" text-anchor="end" font-size="15" fill="var(--muted)">時間 →</text>
+
+  <rect x="58" y="248" width="16" height="4" fill="var(--accent)"/>
+  <text x="82" y="255" font-size="16" font-weight="700" fill="var(--accent)">12–28 分鐘</text>
+  <text x="196" y="255" font-size="15" fill="var(--muted)">開冷氣 25 度</text>
+  <rect x="58" y="276" width="16" height="4" fill="var(--accent-warn)"/>
+  <text x="82" y="283" font-size="16" font-weight="700" fill="var(--accent-warn)">5–10 分鐘</text>
+  <text x="196" y="283" font-size="15" fill="var(--muted)">沒開冷氣 30 度</text>
+</svg>
+<figcaption><b>圖 4 ·</b> 兩條曲線的差別不在材料而在室溫——同一雙鞋，開不開冷氣決定它是「有點用」還是「幾乎沒用」。<br>
+<span class="notesrc"><b>Note：</b>曲線形狀為示意，實際衰減接近指數。橫軸端點取自能量守恆估算：Q = m·c·ΔT ≈ 2500 至 5400 焦耳，除以足部熱流 1.0 至 1.4 瓦。凝膠厚度與重量為估計值非實測，是本估算最大的不確定來源。★ 這算的是<b>熱力學平衡時間，不是感知消失時間</b>——後者一定更短，走動時更短。<b>Source：</b>足部產熱 4.1 W 出自 Castellani et al., <i>Aviat Space Environ Med</i> 85(4):445–448 (2014)。作者自行計算並繪製。</span></figcaption>
+</figure>
+
+<span class="kicker">【操作】</span>
+<h2>怎麼用才對：七條可以直接照做</h2>
+
+<p>下面每一條都對應到上面某個機制，不是憑感覺給的建議。</p>
+
+<ol>
+<li><strong>只在冷氣房穿。</strong>室溫 26 到 27 度時涼感最明顯。官網明寫「此為室內拖鞋，不適用於戶外及陽台等陽光直射的環境」。</li>
+<li><strong>一次穿 15 到 20 分鐘就脫下。</strong>脫下後鞋底朝上放通風處，讓它把熱吐掉。</li>
+<li><strong>想要一直涼就買第二雙輪替。</strong>這是唯一有效的辦法，沒有別的。</li>
+<li><strong>地面必須乾燥、必須乾淨。</strong>踩到針或玻璃屑就報廢。標籤寫「若發生破損，產品不可繼續使用」。</li>
+<li><strong>可以手洗，不可以機洗。</strong>官網逐字：「請以手洗，不可機洗、漂白、乾洗、烘乾或熨燙。洗後請置於通風處乾燥，不可日曬。」另外禁用有機溶劑，酒精和去漬油都不行。</li>
+<li><strong>不要對折收納。</strong>反覆彎折同一折痕會讓封邊剝離。</li>
+<li><strong>破了整雙丟，別沖進水槽。</strong>聚丙烯酸鈉遇水膨脹會堵水管。</li>
+</ol>
+
+<figure>
+<svg viewBox="0 0 420 400" role="img" xmlns="http://www.w3.org/2000/svg">
+  <title>使用決策流程：先看有沒有開冷氣，再決定穿不穿</title>
+  <defs>
+    <marker id="flow-tip" markerWidth="10" markerHeight="10" refX="8" refY="3.5" orient="auto">
+      <path d="M0,0 L8,3.5 L0,7" fill="var(--muted)"/></marker>
+  </defs>
+
+  <rect x="118" y="8" width="184" height="40" rx="20" fill="var(--callout-tip)" stroke="var(--accent)" stroke-width="2"/>
+  <text x="210" y="34" text-anchor="middle" font-size="17" font-weight="700" fill="var(--fg)">想穿涼感拖鞋</text>
+  <line x1="210" y1="48" x2="210" y2="70" stroke="var(--muted)" stroke-width="2" marker-end="url(#flow-tip)"/>
+
+  <rect x="128" y="76" width="164" height="40" rx="4" fill="none" stroke="var(--muted)" stroke-width="1.5"/>
+  <text x="210" y="102" text-anchor="middle" font-size="17" fill="var(--fg)">冷氣有開嗎？</text>
+
+  <line x1="128" y1="96" x2="72" y2="96" stroke="var(--muted)" stroke-width="2"/>
+  <line x1="72" y1="96" x2="72" y2="146" stroke="var(--muted)" stroke-width="2" marker-end="url(#flow-tip)"/>
+  <text x="100" y="90" text-anchor="middle" font-size="15" fill="var(--muted)">沒開</text>
+  <line x1="292" y1="96" x2="348" y2="96" stroke="var(--muted)" stroke-width="2"/>
+  <line x1="348" y1="96" x2="348" y2="146" stroke="var(--muted)" stroke-width="2" marker-end="url(#flow-tip)"/>
+  <text x="320" y="90" text-anchor="middle" font-size="15" fill="var(--muted)">有開</text>
+
+  <rect x="8" y="152" width="190" height="66" rx="4" fill="var(--callout-warn)" stroke="var(--accent-warn)" stroke-width="2"/>
+  <text x="103" y="178" text-anchor="middle" font-size="17" font-weight="700" fill="var(--fg)">別期待</text>
+  <text x="103" y="202" text-anchor="middle" font-size="15" fill="var(--muted)">溫差只剩不到 2 度</text>
+
+  <rect x="222" y="152" width="190" height="66" rx="4" fill="var(--callout-tip)" stroke="var(--accent)" stroke-width="2"/>
+  <text x="317" y="178" text-anchor="middle" font-size="17" font-weight="700" fill="var(--fg)">穿 15 到 20 分鐘</text>
+  <text x="317" y="202" text-anchor="middle" font-size="15" fill="var(--muted)">想更冰先冷藏 20 分</text>
+
+  <line x1="103" y1="218" x2="103" y2="252" stroke="var(--muted)" stroke-width="2" marker-end="url(#flow-tip)"/>
+  <line x1="317" y1="218" x2="317" y2="252" stroke="var(--muted)" stroke-width="2" marker-end="url(#flow-tip)"/>
+
+  <rect x="8" y="258" width="190" height="66" rx="4" fill="none" stroke="var(--muted)" stroke-width="1.5"/>
+  <text x="103" y="284" text-anchor="middle" font-size="17" fill="var(--fg)">當普通拖鞋穿</text>
+  <text x="103" y="308" text-anchor="middle" font-size="15" fill="var(--muted)">它還是雙好拖鞋</text>
+
+  <rect x="222" y="258" width="190" height="66" rx="4" fill="none" stroke="var(--muted)" stroke-width="1.5"/>
+  <text x="317" y="284" text-anchor="middle" font-size="17" fill="var(--fg)">脫下、鞋底朝上</text>
+  <text x="317" y="308" text-anchor="middle" font-size="15" fill="var(--muted)">放通風處吐熱</text>
+
+  <line x1="317" y1="324" x2="317" y2="352" stroke="var(--muted)" stroke-width="2" marker-end="url(#flow-tip)"/>
+  <rect x="222" y="358" width="190" height="38" rx="4" fill="var(--callout-tip)" stroke="var(--accent)" stroke-width="1.5"/>
+  <text x="317" y="383" text-anchor="middle" font-size="17" font-weight="700" fill="var(--accent)">換第二雙上場</text>
+</svg>
+<figcaption><b>圖 5 ·</b> 這雙鞋唯一的開關是冷氣——沒開冷氣時它跟普通拖鞋的差別小到感覺不出來。<br>
+<span class="notesrc"><b>Note：</b>冷藏建議是從同類凝膠涼墊的官方說明外推，本品官方無任何冰箱相關說明。<b>Source：</b>作者自繪。</span></figcaption>
+</figure>
+
+<span class="kicker">【決策】</span>
+<h2>要不要放冰箱：可以冷藏，絕對不要冷凍</h2>
+
+<div class="tbl">
+<table>
+<thead>
+<tr><th style="width:14%">選項</th><th style="width:40%">做法</th><th style="width:46%">最可能在哪裡失效</th></tr>
+</thead>
+<tbody>
+<tr><td>選項 A</td><td>室溫直接穿</td><td>涼感約 12 到 28 分鐘就沒了</td></tr>
+<tr><td>選項 B<br><span style="color:var(--accent)">← 我推薦這個</span></td><td>裝密封袋、平放冷藏 20 到 30 分鐘再穿</td><td>加大的是<em>起始溫差</em>，不是總熱容——延長的是同一條衰減曲線的前段，不是「涼更久」。EVA 低溫會變硬，回溫才恢復</td></tr>
+</tbody>
+</table>
+</div>
+
+<div class="callout warn">
+<p>冷凍的風險不是網路上說的那個。</p>
+<p>常見說法是「凝膠結晶就報廢」。這個說法查無實據。而且甘油本身就是抗凍劑——「甘油加水加聚丙烯酸鈉」正是可重複冷凍保冷劑的標準配方。</p>
+<p>真正的風險是<strong>水結冰體積膨脹約 9%，會從內部撐開 TPU 封層與焊縫</strong>。那是機械破壞，不可逆。</p>
+</div>
+
+<span class="kicker">【對照】</span>
+<h2>機制站得住，但這雙鞋一個檢測數字都沒有</h2>
+
+<p>這是整份調研最需要講清楚的一段。答案不是「是」或「不是」，而是三塊分開看。</p>
+
+<div class="tbl">
+<table>
+<thead>
+<tr><th style="width:22%">層次</th><th style="width:18%">判定</th><th style="width:60%">理由</th></tr>
+</thead>
+<tbody>
+<tr>
+<td>物理機制<br>凝膠比 EVA 涼</td>
+<td style="color:var(--accent)">站得住</td>
+<td>有公式、有材料數據、可自行復算。熱侵入係數差六倍是真的。</td>
+</tr>
+<tr>
+<td>廠商揭露的失效門檻</td>
+<td style="color:var(--accent)">站得住，而且誠實</td>
+<td>「環境溫度超過 30 度時得不到良好的冷卻效果」是能量守恆算出來的必然結果。它是可操作的量化邊界，比 Q-max 值更有用。</td>
+</tr>
+<tr>
+<td>這雙鞋的檢測數據</td>
+<td style="color:var(--accent-warn)"><strong>完全沒有</strong></td>
+<td>無 Q-max 值、無降溫度數、無涼感持續時間、無凝膠厚度、無檢測標準編號、無第三方報告。官網、momo 官方賣場、官方 Threads、比價站四處交叉查過皆無。</td>
+</tr>
+<tr>
+<td>「腳涼等於人涼」</td>
+<td style="color:var(--muted)"><strong>這是稻草人</strong></td>
+<td>足部降溫買到的是主觀舒適與皮膚溫度，不是核心體溫。但這雙鞋<em>從來沒宣稱過</em>降體溫，拿這個打它不公平。</td>
+</tr>
+</tbody>
+</table>
+</div>
+
+<details>
+<summary>展開：核心體溫那條線為什麼是稻草人</summary>
+<p>手掌與足底降溫（palm cooling）曾被當成降體溫的捷徑。理論基礎是動靜脈吻合（AVA）。這條線的商業化版本有一長串複現失敗紀錄。</p>
+<p>更硬的一份證據是這個實驗：20 度冷水泡腳、38 度環境、連續 6 小時。核心體溫升幅三組分別是 1.1／1.1／1.2 度。兩兩差 <code>0.0 °C [95% CI, −0.1 to 0.1]; P &gt; .99</code>。這是窄信賴區間的真陰性，不是樣本不足。</p>
+<p>但這些研究測的是持續灌流熱沉加負壓這種主動抽熱裝置。它們的目標是降核心體溫與提升運動表現。這雙拖鞋訴求的是主觀涼感，不在同一個靶上。</p>
+<p class="notesrc"><b>Source：</b>Meade RD et al., <i>JAMA</i> 2024;331(3):253–256；O'Connor FK et al., <i>Temperature (Austin)</i> 11(4), DOI 10.1080/23328940.2024.2394341。</p>
+</details>
+
+<span class="kicker">【證據】</span>
+<h2>唯一的第三方實測，看起來在打臉其實立場一致</h2>
+
+<p>台灣目前只有一份獨立實測。那是東森新聞 2026 年 7 月 4 日的獨家報導，標題就叫〈實測太陽下僅涼 5 分鐘〉。</p>
+
+<p>報導測的是「連鎖居家品牌、399 元、建議 90 公斤以下、鞋底灌凝膠」。五個特徵與這雙全部吻合，但全文從未指名品牌——這是強推論，不是官方確認。</p>
+
+<blockquote>
+<p>「依照熱力學定律，鞋子與腳部會逐漸達到溫度平衡，因此涼感不會持續，效果大約只有前幾分鐘。」</p>
+<p class="notesrc">——化學老師張丕白，東森新聞 2026-07-04</p>
+</blockquote>
+
+<p>這句話跟本文第一段講的是同一件事。</p>
+
+<p>但報導有一句常被漏掉，而它會翻轉結論：</p>
+
+<blockquote>
+<p>「比起戶外，在室內冷氣房才能凸顯涼感。」</p>
+</blockquote>
+
+<p>換句話說，這則新聞證偽的是「穿去戶外曬太陽」這個用法——而那正是標籤已經排除的情境。媒體和廠商在這一點上說的是同一件事。</p>
+
+<div class="callout warn">
+<p>一個不能當數據用的地方。報導說「曬半小時後凝膠比鞋面熱」。但它只給了剛到室外的兩個讀數：鞋面 35.4 度、凝膠 38.8 度。</p>
+<p>凝膠一開始就比較高，原文並沒有發生反轉。而半小時與一小時兩個時點，一個數字都沒給。</p>
+</div>
+
+<span class="kicker">【對照】</span>
+<h2>官網和你手上的標籤，有五條不一樣</h2>
+
+<p>把實體標籤和官方商品頁逐字比對，官網多出五條注意事項。其中兩條直接影響你怎麼用。</p>
+
+<div class="tbl">
+<table>
+<thead>
+<tr><th style="width:30%">項目</th><th style="width:35%">實體標籤</th><th style="width:35%">官方網站</th></tr>
+</thead>
+<tbody>
+<tr><td>清洗方式</td><td style="color:var(--muted)">未提及</td><td>「請以手洗，不可機洗、漂白、乾洗、烘乾或熨燙」</td></tr>
+<tr><td>搭配冷氣</td><td style="color:var(--muted)">未提及</td><td>「請搭配空調使用以降低環境溫度」</td></tr>
+<tr><td>有機溶劑</td><td style="color:var(--muted)">未提及</td><td>「請勿以有機溶劑擦拭或清潔」</td></tr>
+<tr><td>泛黃</td><td style="color:var(--muted)">未提及</td><td>「顏色產生泛黃屬正常現象，不影響功能性」</td></tr>
+<tr><td>不適用場合</td><td>「不適用於戶外及場地等場合」<br><span class="notesrc">疑為印製訛誤</span></td><td>「不適用於戶外及陽台等陽光直射的環境」</td></tr>
+<tr><td>破損風險</td><td>「遠離地面濕滑處」</td><td>「如內容物漏出踩踏後可能會滑倒」</td></tr>
+<tr><td style="color:var(--accent)">中底成分</td><td>丙三醇、水、丙烯酸鈉共聚物</td><td style="color:var(--accent)">「丙烯酰胺 / 丙烯」<br><span class="notesrc">句子被截斷</span></td></tr>
+</tbody>
+</table>
+<p class="notesrc"><b>Note：</b>官網欄位由作者於 2026-08-30 直接抓取原始碼取得，逐字未改寫。<b>Source：</b><a href="https://www.hola.com.tw/p/014421687">hola.com.tw/p/014421687</a>；實體標籤照片。</p>
+</div>
+
+<div class="callout warn">
+<p>最後一列值得問一句。「丙烯醯胺」（acrylamide）是神經毒性物質，也是 IARC 2A 級疑似致癌物。「丙烯酸鈉共聚物」是另一種東西。</p>
+<p>我的判斷是官網欄位填寫粗糙或截斷，不是實際成分。判準有二。第一，單體與聚合物是不同東西——聚丙烯醯胺本身安全，危險的是殘留單體。第二，實體標籤是法定標示，優先於網頁欄位。</p>
+<p>但這雙鞋的標籤本身就寫著「內容物沾到皮膚需立刻用清水和肥皂沖洗」。在這個前提下，成分欄對不起來是值得打電話問的。</p>
+</div>
+
+<span class="kicker">【風險】</span>
+<h2>最可能讓你失望的，是沒開冷氣的那些時候</h2>
+
+<p>按「會不會真的發生」排序。</p>
+
+<ol>
+<li><strong>沒開冷氣的台灣夏天室內，它基本上不涼。</strong>而那正是你最想穿涼感拖鞋的時候。宣稱成立的條件，恰好排除了購買動機最強的那個情境。</li>
+<li><strong>有感時間短到會覺得被騙。</strong>而且算出來的是熱力學平衡時間，實際感知消失更早。</li>
+<li><strong>它熱起來以後降不回去。</strong>東森逐字：「散熱時間極長，回到冷氣房，一小時後依舊溫熱。」高熱容是雙面刃。</li>
+<li>腳汗會抵銷體感。TPU 表面不吸濕不透氣。而研究顯示鞋墊材質真正能改善的是濕度不是溫度——這雙鞋在這一軸上是<em>負向</em>的。</li>
+<li>0.5 公斤一雙，對室內拖鞋偏重。</li>
+<li>濕地防滑是未量測的風險。液態凝膠夾層踩上去會產生剪切位移，等於在腳與鞋底之間多一層會動的介面。</li>
+<li>睡前穿可能反效果。末梢變暖是快速入睡最好的生理預測因子。外部冷卻腳掌會觸發血管收縮，反而關掉散熱通道。這是推論不是實測，但機制鏈完整。</li>
+</ol>
+
+<p class="notesrc"><b>Source：</b>鞋墊濕度研究出自 Ning K, Yick KL, Yu A, Yip J, <i>Applied Ergonomics</i> 104:103803 (2022)。入睡機制出自 Kräuchi K et al., <i>Nature</i> 401:36–37 (1999)。</p>
+
+<span class="kicker">【誠實】</span>
+<h2>六件我查不到的事，第一件是零則使用者評價</h2>
+
+<p>把洞攤開講，比假裝沒有洞有用。</p>
+
+<ul>
+<li>使用者評價：零則。HOLA 官網沒有評論區，momo 官方館逐字顯示「商品評價(0) 尚無評價」。PTT、Dcard、Mobile01、蝦皮全部查無此品項討論。</li>
+<li>甘油濃度與凝膠重量：官方未揭露。沒有這個數字，就無法算它在 −18 度到底會不會結冰。</li>
+<li>可否冷藏：官方零說明。本文所有冷藏建議都是從凝膠坐墊、涼墊外推。</li>
+<li>防滑係數：無任何實測。也沒有機構測過液態凝膠中底對重心轉換穩定性的影響。</li>
+<li>壽命與保固：零資料。引用的「EVA 12 到 24 個月」是鞋墊材質比較文的數字。</li>
+<li>同儕審查文獻：沒有任何研究測過被動式凝膠室內拖鞋的完整成品。相鄰的相變材料鞋墊研究存在，但機制不同，不可外推。</li>
+</ul>
+
+<div class="callout tip">
+<p>最短的補洞路徑是一通電話。和樂家居免付費專線 <code>0800-003-888</code>，三個問題可以全部閉合：</p>
+<p>①中底凝膠可否冷藏，上限幾分鐘？②官網材質欄寫「丙烯酰胺」、實體標籤寫「丙烯酸鈉共聚物」，哪個是對的？③甘油與水的比例是多少？</p>
+<p><strong>第 2 題最值得問。</strong></p>
+</div>
+
+<span class="kicker">【方法】</span>
+<h2>這份調研動用 31 個代理，其中 24 條主張被派人試圖推翻</h2>
+
+<p>六個平行調研軸：產品身分、物理機制、凝膠配方、使用實務、使用者評價、第三方文獻。共 31 個代理、72 條發現。每條高信心主張再派獨立查核者<em>試圖推翻它</em>，共 24 條經對抗查核。</p>
+
+<p>另派一組獨立第二票做 X 社群輿情與物理推導交叉驗證。</p>
+
+<details>
+<summary>展開：對抗查核推翻了什麼</summary>
+<ul>
+<li>「HOLA 對凝膠款藏數字」被推翻。隔壁 SNOW TOUCH 那組 Q-max 0.454 是<em>布料測試</em>。同一組數字逐字複製在 1,290 元的靠墊上。而且引用的 ASTM D7024 已於 2013 年被撤回，方法本來就不適用凝膠。是「無量化證據」，不是「證明隱瞞」。</li>
+<li>「冷凍會讓凝膠結晶報廢」被推翻。該說法唯一來源自標為 AI 生成內容，且甘油是抗凍劑。真正的機制是結冰膨脹撐破封層。</li>
+<li>「東森實測證明凝膠比鞋面熱」被推翻。那兩個數字是起點基線，不是曬後讀數，原文沒有發生反轉。</li>
+<li>「伊登是 HOLA 自有品牌」被推翻。它只是商品命名前綴。HOLA 官方自報的自有系列是 HOLA design／home／selection。同類前綴「奧可利」有 396 筆，比伊登還多。</li>
+</ul>
+</details>
+
+<p>所有引用的論文 DOI 逐一過 CrossRef 註冊庫驗證存在。9 篇全數通過，另修正一處被誤植的作者掛名。東森報導與 HOLA 官網由作者親自抓取原始頁面逐字比對。</p>
+
+</article>
+<footer>
+<p>最後更新：2026-08-30 · CC BY 4.0 · 引用請標來源<br>
+本文為個人調研整理，非產品檢測報告，也非商業合作內容。所有價格與網頁內容以查證當日為準。</p>
+</footer>
+</main>
+<script>
+  const bar = document.getElementById('progress');
+  window.addEventListener('scroll', () => {
+    const h = document.documentElement;
+    const max = h.scrollHeight - h.clientHeight;
+    const ratio = max > 0 ? h.scrollTop / max : 0;
+    bar.style.transform = 'scaleX(' + ratio + ')';
+  }, { passive: true });
+</script>
+</body>
+</html>
