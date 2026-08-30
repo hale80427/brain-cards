@@ -121,8 +121,8 @@ td.n{font-family:var(--font-mono);white-space:nowrap}
 .narr{margin:2.2rem 0}
 .stage{position:sticky;top:0;z-index:2;height:76svh;display:flex;align-items:center;
  justify-content:center;background:var(--bg)}
-.stage video{width:100%;height:auto;max-height:72svh;border-radius:5px;
- border:1px solid var(--border);background:#fff}
+.stage .motion{width:100%;height:auto;max-height:72svh;border-radius:5px;
+ border:1px solid var(--border);background:#fff;display:block}
 .stage .static{display:none}
 .stage .static img{width:100%;height:auto;border-radius:5px;border:1px solid var(--border)}
 .scrolltrack{height:3600px}
@@ -142,14 +142,14 @@ td.n{font-family:var(--font-mono);white-space:nowrap}
    讓 stage 貼合影片高度——sticky 仍成立（釘住的元素比容器矮即可）。 */
 @media (max-width:40rem){
  .stage{height:auto;padding:0.6rem 0}
- .stage video{max-height:none}
+ .stage .motion{max-height:none}
  /* agy 兩次盲讀都指出中間有 ~45% 空白 ⇒ 卡片改貼圖下方，不再釘視窗底 */
  .narr-steps .step{align-items:flex-start}
  .narr-steps .step span{top:340px;bottom:auto}
 }
 @media (prefers-reduced-motion:reduce){
  .stage{position:static;height:auto}
- .stage video{display:none}
+ .stage .motion{display:none}
  .stage .static{display:block}
  .scrolltrack{height:auto}
  .narr-steps{margin-top:0}
@@ -277,8 +277,9 @@ footer{margin-top:4rem;padding-top:1.3rem;border-top:1px solid var(--border);
 
 <div class="narr wide">
 <div class="stage">
- <video class="motion" playsinline preload="auto" muted src="assets/wear.webm?v=6"></video>
- <div class="static"><img src="assets/wear-final.png?v=6" width="1000" height="857" alt="180 孔逐孔孔徑散布圖：孔 91–180 與 211–300 兩段，後段的滾動標準差明顯較寬"></div>
+ <img class="motion" id="seq" src="assets/seq/s01.webp" width="900" height="772" decoding="async"
+      alt="180 孔逐孔孔徑散布圖：孔 91–180 與 211–300 兩段，後段的滾動標準差明顯較寬">
+ <div class="static"><img src="assets/wear-final.png?v=6" width="1000" height="857" alt="同上，最終狀態的靜態版"></div>
 </div>
 <div class="scrolltrack"></div>
 <div class="narr-steps">
@@ -347,25 +348,31 @@ footer{margin-top:4rem;padding-top:1.3rem;border-top:1px solid var(--border);
 </footer>
 <script>
 (function(){
- var stage=document.querySelector('.stage');
- var video=document.querySelector('.stage video');
- var narr=document.querySelector('.narr');
- if(!stage||!video||!narr) return;
- // ⚠ 量的是**外層容器** narr，不是被釘住的 stage。
- // sticky 元素一旦釘住，它自己的 rect.top 就恆為 0（實測 y=4200～6000 全程 0）
- // ⇒ 拿它算進度會讓影片永遠停在第一幀，而且**不報錯、readyState=4、console 乾淨**。
+ // ★★ 2026-08-31：從「捲動 seek 影片」改成「捲動換圖」。
+ //   原因是 iOS Safari 對**從未播放過的 video** 設 currentTime **不會重繪那一幀**
+ //   ——彥皓兩張手機截圖：卡片有跟著捲動換、而圖完全一樣。
+ //   Chrome（含 headless）會重繪，所以四道閘＋我的探針全部綠燈，驗的是一個不會出事的瀏覽器。
+ //   圖片序列沒有解碼器、沒有 seek 語意：設 src 瀏覽器就一定畫。
+ var N=45, PAD=function(i){return (i<10?'0':'')+i;};
+ var stage=document.querySelector('.stage'), narr=document.querySelector('.narr'),
+     seq=document.getElementById('seq');
+ if(!stage||!narr||!seq) return;
+ var urls=[];
+ for(var i=1;i<=N;i++){ urls.push('assets/seq/s'+PAD(i)+'.webp'); }
+ // 全部預載（45 幀合計約 658 KB）——不預載的話第一次捲會閃白
+ urls.forEach(function(u){ var im=new Image(); im.src=u; });
+ var last=-1;
  function drive(){
   var travel=narr.offsetHeight-stage.offsetHeight;
   if(travel<=0) return;
   var p=Math.min(1,Math.max(0,-narr.getBoundingClientRect().top/travel));
-  var d=video.duration;
-  if(!d||!isFinite(d)) return;
-  try{ video.currentTime=p*d; }catch(e){}
+  var k=Math.min(N-1,Math.max(0,Math.round(p*(N-1))));
+  if(k!==last){ last=k; seq.src=urls[k]; }
  }
- // rAF 與 setInterval 併排：不產生畫格的環境（headless／某些預覽器）rAF 一次都不回呼
+ // rAF 與 setInterval 併排：不產生畫格的環境 rAF 一次都不回呼
  addEventListener('scroll',function(){requestAnimationFrame(drive);},{passive:true});
  setInterval(drive,40);
- video.addEventListener('loadedmetadata',drive);
+ drive();
 })();
 </script>
 </body>
