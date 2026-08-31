@@ -235,6 +235,19 @@
   .badge .no  { background: var(--border);       color: var(--muted); }
   table code { white-space: nowrap; }
 
+  /* 兩欄表在 375px 能完整顯示，不必橫捲——第二欄是承重內容，切掉就沒用了 */
+  .tbl.narrow table { min-width: 0; }
+  .tbl.narrow td:first-child { white-space: nowrap; }
+  .tbl.narrow td:first-child code { white-space: nowrap; }
+
+  /* 兩欄對照表：不指定欄寬時自動佈局會把空間全給長欄，短欄被壓到一行 3 字 */
+  .tbl table th.c1, .tbl table td:first-child:has(~ td:last-child) { }
+  .tbl table th.c1 { width: 34%; }
+  .tbl table th.c1 ~ th { width: 66%; }
+
+  /* table-layout: auto 下 width 只是建議，欄寬仍會被長內容搶走 ⇒ 必須 fixed */
+  .tbl.wide2 table { min-width: 660px; table-layout: fixed; }
+
   /* === 明早清單 === */
   /* ⚠ 不可用 grid：CSS Grid 會把 ::before 與緊接的文字合併成同一個匿名格線項，
      一起塞進 1.4rem 的第一欄 ⇒ 手機上一個字一行。改絕對定位（同 KB-10 窄視窗清單做法）。 */
@@ -461,7 +474,7 @@
 <dt>為什麼別讓疲勞吃掉這一場</dt><dd>全天唯一給投資與採用地圖的一場，與你的投資分析視角同一個座標系。而它排在第 8 小時。</dd>
 <dt>他不是純顧問，是做過的人</dt><dd>NUS 學士與博士、Johns Hopkins 博士後。McKinsey 新加坡 associate partner → <em>GlobalFoundries 全球數位製造主管</em>（從零建立內部 AI 策略與新加坡 AI 卓越中心，任內 GF 新加坡 300mm 廠拿下世界經濟論壇燈塔工廠）→ Lavorro → 2026 年才加入 Bain。他當 Bain 合夥人不到一年，明天可能是他掛 Bain 名片的首批公開場合之一。</dd>
 <dt>那把刀</dt><dd>摘要逐字：「<code>Yet 'highly automated' is not 'autonomous.' Automation follows fixed rules in structured environments; autonomy requires machines that perceive, reason, and act under variable conditions with little human direction.</code>」<em>他排在最後，等於在為前面十二場下判決。</em></dd>
-<dt>沙漏模型（與你直接相關）</dt><dd>Bain 2026 年 4 月的《Industrial Automation: From Control to Intelligence》說：價值往兩端集中——上端軟體與資料平台、下端智慧場域裝置，<em>中間控制層被擠壓</em>。台灣的設備廠大多正好站在那一格。</dd>
+<dt>沙漏模型（與你直接相關）</dt><dd>Bain 2026 年 4 月的《Industrial Automation: From Control to Intelligence》說：價值往兩端集中——上端軟體與資料平台、下端智慧場域裝置，<em>中間控制層被擠壓</em>。<br>⚠ <em>但你自己的 Vault 對同一層給出相反定價</em>，見下方「衝突」節——現場請帶著那個歧義去問。</dd>
 <dt>問他</dt><dd>「套到半導體設備供應鏈，被擠壓的中間層具體是誰——是設備整合商，還是廠內自動化系統商？」他若答得出來，你拿到的是一張自己產業的定位圖。</dd>
 <dt>會後去找</dt><dd>《Industrial Automation: From Control to Intelligence》（2026-04-07）與《Humanoid Robots: From Demos to Deployment》（2025），都在 <code>bain.com</code> 免費。這兩份是他這場演講的公開底稿。</dd>
 </dl>
@@ -529,6 +542,108 @@
 </div>
 
 <p>聽每一場時問自己一句：他說的自主，是這張表的哪一層。答得出來就抓到了他的框架；答不出來，那場多半是型錄。</p>
+
+<span class="kicker">你自己的尺</span>
+<h2>你的第二大腦在 2026-07-21 就寫下了這場論壇的第一性原理</h2>
+
+<div class="callout tip">
+<p><strong class="label">背壓（back pressure）</strong>
+「<em>自主權的上限是能被便宜可靠驗證的量，而非生成能力</em>。自主權不是模型多強就能給多少，而是<em>驗證多便宜可靠就能給多少</em>的函數，多一吋都不行。」</p>
+<p class="notesrc"><b>Note：</b>該段的來源是 Addy Osmani 文章的二手 INGEST，MOC 自己標了可信度警示——它是好用的框架，不是被驗證的定律。<br><b>Source：</b>你的 <code>MOC AI Agent 工程與架構</code>「明廠與暗廠」段，2026-07-21 補入。</p>
+</div>
+
+<p>這句話能把明天十三場重排，而且解釋了一件光看議程解釋不了的事——<em>為什麼十三個人對「自主」的定義沒有一個相同</em>：他們各自在攻同一個驗證成本函數的不同項。</p>
+
+<div class="tbl narrow">
+<table>
+<thead><tr><th>場次</th><th>他讓哪一種驗證變便宜了</th></tr></thead>
+<tbody>
+<tr><td><code>09:15</code>&#32;<br>TSMC</td><td>用領域知識讓輸出更可驗（護城河在領域不在模型）</td></tr>
+<tr><td><code>09:40</code>&#32;<br>NVIDIA</td><td>把驗證變成資料飛輪的一環</td></tr>
+<tr><td><code>10:05</code>&#32;<br>Applied Materials</td><td>驗證便宜到可以接上 MES hold 自動執行</td></tr>
+<tr><td><code>10:40</code>&#32;<br>Lam Research</td><td>把驗證從實體成本換成算力成本</td></tr>
+<tr><td><code>11:05</code>&#32;<br>Merck</td><td>降低「取得驗證所需事實」的成本</td></tr>
+<tr><td><code>11:30</code>&#32;<br>Analog Devices</td><td>在物理層提供可驗證的訊號</td></tr>
+<tr><td><code>13:40</code>&#32;<br>Micron</td><td>合成缺陷生成＝製造驗證素材</td></tr>
+<tr><td><code>14:05</code>&#32;<br>Siemens</td><td>把驗證前移到執行前的便宜時點</td></tr>
+<tr><td><code>14:30</code>&#32;<br>STMicroelectronics</td><td>同 ADI，在物理層供訊號</td></tr>
+<tr><td><code>15:05</code>&#32;<br>ThirdAI</td><td>降低人做驗證的認知成本</td></tr>
+<tr><td><code>15:30</code>&#32;<br>萬潤科技</td><td>把驗證做進設備本身，降低單次驗證成本</td></tr>
+<tr><td><code>15:55</code>&#32;<br>Intel</td><td>讓驗證所需的事實跨組織可得</td></tr>
+<tr><td><code>16:20</code>&#32;<br>Bain</td><td><em>反過來說</em>：自動化沒提高驗證能力，所以換不到自主權</td></tr>
+</tbody>
+</table>
+</div>
+
+<h3>現場只要問這一句</h3>
+
+<p><em>他讓哪一種驗證變便宜了？便宜了多少？</em></p>
+
+<p>答得出來，那場有實質。只有能力展示而答不出來，那場沒有換到自主權，只是換了個名字叫自主。Bain 排最後那句就是這個判準的白話版。</p>
+
+<span class="kicker">開獎</span>
+<h2>你有一張卡預先註冊了觀察點，明天有三場開獎</h2>
+
+<p>你那張 <code>多數人關注 AI 認知引擎平權但更上游的是物理現實摩擦力資料的稀缺性</code>，自己寫下了失效條件：</p>
+
+<div class="callout warn">
+<p>「當具身智能加廉價感測器加自動化實體實驗站普及，個體採集 Ground Truth 的成本優勢會被擠壓。<em>觀察點：是否出現『平價可量產的物理實驗 Agent』改變實體迴圈摩擦係數。</em>」</p>
+</div>
+
+<ul class="todo">
+<li><code>11:30</code> <strong>ADI</strong>——AMR、協作機器人、具身 AI，而且用自家 fab 當 testbed。等他報出哪座廠、哪個工序、什麼數字</li>
+<li><code>14:30</code> <strong>ST</strong>——機器人平台與 Physical AI，2026 年 3 月起與 NVIDIA 合作。等他講哪個客戶的機器人真的量產了</li>
+<li><code>16:20</code> <strong>Bain</strong>——逐項給「目前站在哪」。他們 2025 年報告已有時間表：感知距人類水準 3 到 5 年、靈巧操作約 5 年、電池動力 10 年以上</li>
+</ul>
+
+<p>你可以在散場前把那張卡的失效條件從假說更新成有讀數的判斷。<em>若 Bain 的時間表成立，你那條護城河的價值窗口至少還有 3 到 5 年</em>——那是可以拿來做決策的數字，不是安慰。</p>
+
+<p>同一張卡還留了一個未答的問題：「如果把所有工作流替換成全自動 Agent，在它撞毀實體機台之前，唯一需要人類按下 Approve 的精準節點在哪？<em>這個節點的設計本身就是另一條 Card 的雛形。</em>」——<strong>AMAT（10:05）整場就是在答這題</strong>，Micron 的 RL agent rollback 是同一題的排程版。</p>
+
+<span class="kicker">衝突</span>
+<h2>Bain 的自主定義與你自己的卡直接相反，而這是你最有資格問的問題</h2>
+
+<div class="schema-wall">
+  <div class="card">
+    <span class="lbl">Bain 的定義</span>
+    <dl>
+      <dt>官方摘要逐字</dt><dd>autonomy requires machines that perceive, reason, and act under variable conditions <em>with little human direction</em></dd>
+      <dt class="sep">意思是</dt><dd>人的指導少，是自主的定義要件</dd>
+    </dl>
+  </div>
+  <div class="card">
+    <span class="lbl">你的卡</span>
+    <dl>
+      <dt>逐字</dt><dd>決定結果正負號的不是迴路的構造，而是操作者帶不帶判斷進去。迴路不知道差別，人知道</dd>
+      <dt class="sep">意思是</dt><dd>人持續帶判斷，是不出事的唯一條件</dd>
+    </dl>
+  </div>
+</div>
+
+<p>兩者能並存嗎？能——<em>如果判斷從「逐步指導」搬到「迴圈設計與驗收」</em>。你的卡其實已經指出這條路：槓桿點移動了，需要的判斷沒有變少，反而更集中。</p>
+
+<p><em>但明天沒有任何一場在講這個轉移怎麼做。</em>十三場講的都是機器那一側。這是你在現場最有資格提、而且沒有人會問的問題。</p>
+
+<h3>另外四組衝突，是掃描 1,744 張卡之後才浮出來的</h3>
+
+<div class="tbl wide2">
+<table>
+<thead><tr><th class="c1">論壇這樣說</th><th>你的卡這樣說</th></tr></thead>
+<tbody>
+<tr><td><strong>Bain 沙漏</strong>：中間控制整合層被擠壓</td><td><code>台灣硬體—軟體系統整合能力是 AI 時代被低估的結構性資產</code>——同一層<em>相反定價</em>。該卡說「同時懂硬體物理限制加軟體抽象加量產工程」的整合能力，正從劣勢資產被重新定價，並點名「AI vision 加機台控制整合」是可下注位置之一。<br><em>歧義在「整合」的定義</em>：Bain 可能指被商品化的通用控制層，你的卡指硬體物理綁定的 co-design 層。<strong>這一句值得當面問他。</strong></td></tr>
+<tr><td><strong>自主的階梯</strong>：五格遞進，價值隨級數上升</td><td><code>自動化未達百分之百就幾乎沒有價值因為最後一哩才是能被信任的門檻</code>——原文「跨過門檻前，95% 和 0% 在『能不能不看著它跑』這件事上幾乎等價」。若成立，<em>第一到第三格可能是負價值區，不是墊腳石</em></td></tr>
+<tr><td><strong>ThirdAI</strong>：更可解釋就更能落地</td><td><code>AI 透明度揭露過少與過載皆會破壞信任呈 U 型而非單調關係</code>——揭露過載會讓人失去判斷力。⚠ 該卡語境是顧客信任不是工程師的技術信任，跨域要轉譯</td></tr>
+<tr><td><strong>萬潤與 Bain</strong>：保留人的審批＝保留控制</td><td><code>當逐項人工審批退化成橡皮圖章自動化分類器反而比人工更安全</code>——高通過率下人的注意力必然鈍化，正解是換掉審查的承載者而非加強人工審查</td></tr>
+</tbody>
+</table>
+</div>
+
+<p class="notesrc"><b>Note：</b>四組由獨立掃描員掃 1,744 張卡後回報，主 session 未逐張複核卡片原文，僅核對了引文格式與 tags 存在性。<br><b>Source：</b>你的 Obsidian Vault <code>1 Cards/</code>，2026-08-31 現查。</p>
+
+<div class="callout tip">
+<p><strong class="label">你不是來學的</strong>
+你的 MOC 有一整段叫「明廠與暗廠」——<code>暗廠</code>（lights-out factory）本來就是製造業術語，你把它借去講 AI agent，明天你會看到本尊。那段還逐字寫著：這套業界框架「正是彥皓 /orchestrate 四閘加 dispatch 負面清單的業界對標版，且<em>他的個人實作在接地這一塊比文章更完整</em>」。</p>
+</div>
 
 <span class="kicker">對打</span>
 <h2>四組真正的分歧，而不是十三場各說各話</h2>
