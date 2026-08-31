@@ -1,0 +1,684 @@
+<!DOCTYPE html>
+<html lang="zh-Hant-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>SEMICON 2026 高科技智慧製造論壇｜參戰手冊</title>
+<meta name="description" content="13 場演講對「自主」的定義沒有一個相同——這份手冊給你光譜、四組對打、三個必問，以及明早領證會卡住你的那件事。">
+<link rel="canonical" href="https://hale80427.github.io/brain-cards/semicon-2026-smart-manufacturing/">
+<meta name="author" content="彥皓">
+<meta property="og:type" content="article">
+<meta property="og:title" content="SEMICON 2026 高科技智慧製造論壇｜參戰手冊">
+<meta property="og:description" content="13 場演講對「自主」的定義沒有一個相同——這份手冊給你光譜、四組對打、三個必問。">
+<meta property="og:url" content="https://hale80427.github.io/brain-cards/semicon-2026-smart-manufacturing/">
+<meta property="og:image" content="https://hale80427.github.io/brain-cards/og-default.jpg">
+<meta property="og:locale" content="zh_TW">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="SEMICON 2026 高科技智慧製造論壇｜參戰手冊">
+<meta name="twitter:description" content="13 場演講對「自主」的定義沒有一個相同。">
+<meta name="twitter:image" content="https://hale80427.github.io/brain-cards/og-default.jpg">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "SEMICON 2026 高科技智慧製造論壇｜參戰手冊",
+  "description": "13 場演講對「自主」的定義沒有一個相同——這份手冊給你光譜、四組對打、三個必問。",
+  "datePublished": "2026-08-31",
+  "dateModified": "2026-08-31",
+  "author": { "@type": "Person", "name": "彥皓" },
+  "url": "https://hale80427.github.io/brain-cards/semicon-2026-smart-manufacturing/",
+  "inLanguage": "zh-TW",
+  "license": "https://creativecommons.org/licenses/by/4.0/"
+}
+</script>
+<style>
+  :root {
+    --bg: oklch(98.4% 0.004 106.5);
+    --fg: oklch(21.8% 0 0);
+    --accent: oklch(54.3% 0.174 29.7);
+    --accent-warn: oklch(66.6% 0.157 58.3);
+    --muted: oklch(51.0% 0 0);
+    --border: oklch(92.1% 0.007 106.5);
+    --callout-tip: oklch(95.7% 0.014 174.2);
+    --callout-warn: oklch(96.9% 0.019 72.6);
+    --plate-bg: oklch(28.5% 0.055 251.4);
+    --plate-fg: oklch(96.0% 0.008 106.5);
+    --plate-dim: oklch(75.0% 0.021 251.4);
+    --plate-line: oklch(62.0% 0.030 251.4);
+    --fs-meta: 0.85rem;
+    --fs-body: 1rem;
+    --fs-h2:   clamp(1.3rem, 3vw, 1.5rem);
+    --fs-h1:   clamp(1.75rem, 4vw, 2.25rem);
+    --font-serif: "Noto Serif TC", Georgia, serif;
+    --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+    --ease-linear: linear;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: oklch(21.8% 0 0);
+      --fg: oklch(95.3% 0.011 106.6);
+      --accent: oklch(70.4% 0.136 28.7);
+      --accent-warn: oklch(76.9% 0.165 70.1);
+      --muted: oklch(68.3% 0 0);
+      --border: oklch(32.1% 0 0);
+      --callout-tip: oklch(30.9% 0.029 178.3);
+      --callout-warn: oklch(30.7% 0.034 73.5);
+    }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
+  }
+  * { box-sizing: border-box; }
+  body {
+    font-family: var(--font-serif);
+    background: var(--bg); color: var(--fg);
+    line-height: 1.8; margin: 0; padding: 0;
+    -webkit-font-smoothing: antialiased;
+    text-autospace: normal; font-synthesis: none; line-break: strict;
+  }
+  .progress-bar {
+    position: fixed; top: 0; left: 0; height: 3px; width: 100%;
+    background: var(--accent); z-index: 100;
+    transform: scaleX(0); transform-origin: left;
+    transition: transform 0.1s var(--ease-linear);
+  }
+  main, main > article {
+    display: grid;
+    grid-template-columns:
+      [full-start] minmax(1rem, 1fr)
+      [wide-start] minmax(0, 130px)
+      [content-start] minmax(0, 680px) [content-end]
+      minmax(0, 130px) [wide-end]
+      minmax(1rem, 1fr) [full-end];
+  }
+  main { padding: clamp(2rem, 5vw, 4rem) 0; }
+  main > *, main > article > * { grid-column: content; }
+  main > article { grid-column: full; }
+  main > .wide, main > article > .wide { grid-column: wide; }
+  main > .full, main > article > .full { grid-column: full; }
+  @media (max-width: 1000px) {
+    main, main > article {
+      grid-template-columns:
+        [full-start] minmax(1rem, 1fr)
+        [wide-start content-start] minmax(0, 680px) [content-end wide-end]
+        minmax(1rem, 1fr) [full-end];
+    }
+  }
+  h1 { font-size: var(--fs-h1); line-height: 1.3; margin: 0 0 1rem; }
+  h2 { font-size: var(--fs-h2); line-height: 1.4; margin: 2.5rem 0 0.75rem; padding-bottom: 0.5rem; border-bottom: 1px solid var(--border); }
+  h3 { font-size: var(--fs-body); font-weight: 700; line-height: 1.4; margin: 1.75rem 0 0.5rem; color: var(--accent); }
+  p { margin: 0 0 1.25rem; }
+  a { color: var(--accent); text-underline-offset: 3px; }
+  a:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+  em { font-style: normal; font-weight: 600;
+       text-emphasis: filled dot; text-emphasis-position: under right;
+       -webkit-text-emphasis: filled dot; -webkit-text-emphasis-position: under right; }
+  em:lang(en) { font-style: italic; font-weight: inherit;
+                text-emphasis: none; -webkit-text-emphasis: none; }
+  .bluf { background: var(--callout-tip); border-left: 3px solid var(--accent); padding: 1.25rem 1.5rem; margin: 1.5rem 0 2rem; border-radius: 4px; }
+  .bluf strong.label { display: block; font-size: var(--fs-meta); letter-spacing: 0.05em; color: var(--accent); margin-bottom: 0.5rem; text-transform: uppercase; }
+  .callout { padding: 1rem 1.25rem; margin: 1.5rem 0; border-radius: 4px; border-left: 3px solid var(--muted); }
+  .callout.tip { background: var(--callout-tip); border-left-color: var(--accent); }
+  .callout.warn { background: var(--callout-warn); border-left-color: var(--accent-warn); }
+  .kicker { display: inline-block; font-size: var(--fs-meta); font-weight: 700;
+            letter-spacing: 0.1em; color: var(--accent); margin: 2.5rem 0 0; }
+  .kicker + h2 { margin-top: 0.4rem; border-bottom: none; padding-bottom: 0; }
+  .notesrc { font-size: var(--fs-meta); color: var(--muted); margin: 0.5rem 0 0; line-height: 1.7; }
+  .notesrc b { color: var(--fg); font-weight: 600; }
+  table { border-collapse: collapse; width: 100%; margin: 1.5rem 0; font-size: var(--fs-body); }
+  th, td { padding: 0.6rem 0.8rem; border: 1px solid var(--border); text-align: left; vertical-align: top; }
+  th { background: var(--callout-tip); font-weight: 600; }
+  code { font-family: var(--font-mono); background: var(--callout-tip); padding: 0.1em 0.4em; border-radius: 3px; font-size: var(--fs-body);
+         overflow-wrap: anywhere; word-break: break-word; }
+  .tbl { overflow-x: auto; margin: 1.5rem 0; min-width: 0; }
+  .tbl table { margin: 0; min-width: 560px; }
+  figure { margin: 1.5rem 0; }
+  figure img { width: 100%; height: auto; border-radius: 4px; display: block; }
+  figure svg { width: 100%; height: auto; display: block; }
+  figcaption { font-size: var(--fs-meta); color: var(--muted); margin-top: 0.5rem; text-align: center; }
+
+  /* === KB-10 元件 2｜功能列 === */
+  .func-row { display: grid; grid-template-columns: repeat(auto-fit, minmax(13rem, 1fr));
+              gap: 1.25rem; margin: 1.5rem 0 0.5rem; padding: 1.25rem 0;
+              border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+  .func-row .fn { display: flex; gap: 0.75rem; align-items: flex-start; }
+  .func-row .fn svg { flex: 0 0 2rem; width: 2rem; height: 2rem; color: var(--accent); }
+  .func-row .fn .lbl { display: block; font-size: var(--fs-meta); font-weight: 700; letter-spacing: 0.04em; }
+  .func-row .fn .txt { display: block; font-size: var(--fs-meta); color: var(--muted);
+                       margin: 0.2rem 0 0; line-height: 1.6; }
+
+  /* === KB-10 元件 3｜機制圖 === */
+  .flow { background: var(--plate-bg); border-radius: 6px; padding: 1.5rem 1.25rem; }
+  .flow-track { display: grid; gap: 0.5rem; margin-bottom: 1.25rem; }
+  .flow-track:last-of-type { margin-bottom: 0; }
+  .flow-track .path { display: flex; flex-wrap: wrap; align-items: center; gap: 0.5rem; }
+  .flow-track .node { background: var(--plate-line); color: var(--plate-fg);
+                      font-size: var(--fs-meta); line-height: 1.4;
+                      padding: 0.4rem 0.7rem; border-radius: 4px; }
+  .flow-track .node.here { background: var(--plate-fg); color: var(--plate-bg); font-weight: 700; }
+  .flow-track .arrow { flex: 0 0 1.4rem; width: 1.4rem; height: 0.85rem; color: var(--plate-dim); }
+  .flow-track .arrow svg { width: 100%; height: 100%; display: block; }
+  .flow-track > .lbl { font-size: var(--fs-meta); color: var(--plate-dim); letter-spacing: 0.06em; }
+  .flow-legend { display: flex; flex-wrap: wrap; gap: 1.25rem; margin-top: 1.25rem;
+                 padding-top: 1rem; border-top: 1px solid var(--plate-line);
+                 font-size: var(--fs-meta); color: var(--plate-dim); }
+  .flow-legend span { display: flex; align-items: center; gap: 0.45rem; }
+  .flow-legend i { width: 0.8rem; height: 0.8rem; border-radius: 2px; display: inline-block; }
+  .flow-legend .sw-a { background: var(--plate-line); }
+  .flow-legend .sw-b { background: var(--plate-fg); }
+
+  /* ⚠ KB-10 元件 3 記載的失效點：flex-wrap 折行後箭頭會落在行首，看起來像指向上一行的尾巴。
+     328px 下五個節點必然折行 ⇒ 窄視窗改直排，箭頭轉 90 度。階梯本來就該是直的。 */
+  @media (max-width: 560px) {
+    .flow-track .path { flex-direction: column; align-items: flex-start; gap: 0.35rem; }
+    .flow-track .arrow { margin-left: 0.9rem; transform: rotate(90deg); }
+  }
+
+  /* === KB-10 元件 4｜同 schema 卡片牆 === */
+  .schema-wall { display: grid; grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr));
+                 gap: 1rem; margin: 1.5rem 0; }
+  .schema-wall .card { background: var(--plate-bg); color: var(--plate-fg);
+                       border-radius: 6px; padding: 1rem 1.1rem; }
+  .schema-wall .card > .lbl { display: block; font-size: var(--fs-meta); font-weight: 700;
+                              letter-spacing: 0.06em; margin-bottom: 0.75rem; }
+  .schema-wall dl { margin: 0; display: grid; gap: 0.6rem; }
+  .schema-wall dt { font-size: var(--fs-meta); color: var(--plate-dim); letter-spacing: 0.04em; }
+  .schema-wall dd { font-size: var(--fs-meta); line-height: 1.55; margin: 0.1rem 0 0; }
+  .schema-wall .sep { border-top: 1px solid var(--plate-line); padding-top: 0.6rem; }
+
+  /* === KB-10 元件 5｜側欄三卡 === */
+  .side-cards { display: grid; gap: 1rem; margin: 2rem 0; }
+  @media (min-width: 760px) { .side-cards { grid-template-columns: repeat(3, 1fr); } }
+  .side-cards .sc { border: 1px solid var(--border); border-radius: 6px; padding: 1rem 1.1rem; }
+  .side-cards .sc .lbl { display: block; font-size: var(--fs-meta); font-weight: 700;
+                         letter-spacing: 0.06em; color: var(--accent); margin-bottom: 0.5rem; }
+  .side-cards .sc .txt { display: block; font-size: var(--fs-meta); line-height: 1.65;
+                         margin: 0; color: var(--muted); }
+  .side-cards .ask { background: var(--callout-warn); border-color: var(--accent-warn); }
+  .side-cards .ask .lbl { color: var(--accent-warn); }
+
+  /* === 議程時間軸（現場主力介面）=== */
+  .agenda { margin: 1.5rem 0; }
+  .agenda details { border: 1px solid var(--border); border-radius: 6px;
+                    margin-bottom: 0.5rem; background: var(--bg); }
+  .agenda details[open] { border-color: var(--accent); }
+  .agenda summary { cursor: pointer; padding: 0.7rem 0.9rem; list-style: none;
+                    display: grid; grid-template-columns: 4.2rem 1fr; gap: 0.6rem;
+                    align-items: baseline; font-size: var(--fs-body); }
+  .agenda summary::-webkit-details-marker { display: none; }
+  .agenda summary:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+  .agenda .t { font-family: var(--font-mono); font-size: var(--fs-meta); color: var(--accent); font-weight: 700; }
+  .agenda .who { display: block; font-weight: 700; line-height: 1.45; }
+  .agenda .claim { display: block; font-size: var(--fs-meta); color: var(--muted);
+                   line-height: 1.6; margin-top: 0.2rem; }
+  .agenda .body { padding: 0 0.9rem 0.9rem 0.9rem; border-top: 1px solid var(--border); margin-top: 0.2rem; }
+  .agenda .body dl { margin: 0.8rem 0 0; display: grid; gap: 0.7rem; }
+  .agenda .body dt { font-size: var(--fs-meta); font-weight: 700; color: var(--accent); letter-spacing: 0.03em; }
+  .agenda .body dd { margin: 0.15rem 0 0; font-size: var(--fs-meta); line-height: 1.7; }
+  .agenda .rest { border-style: dashed; opacity: 0.72; }
+  .agenda .rest summary { padding: 0.5rem 0.9rem; }
+  .agenda .star { color: var(--accent); font-weight: 700; }
+
+  /* === 領證清單（手機優先：不用表格，避免第三欄被切掉）=== */
+  .badge { margin: 1.25rem 0; display: grid; gap: 0; }
+  .badge dt { display: flex; align-items: baseline; gap: 0.5rem; flex-wrap: wrap;
+              font-size: var(--fs-body); font-weight: 700;
+              padding-top: 0.75rem; border-top: 1px solid var(--border); }
+  .badge dd { margin: 0.2rem 0 0.75rem; font-size: var(--fs-meta);
+              color: var(--muted); line-height: 1.7; }
+  .badge dd code { white-space: nowrap; }
+  .badge .ok, .badge .mid, .badge .no {
+      font-size: var(--fs-meta); font-weight: 700; letter-spacing: 0.04em;
+      padding: 0.1rem 0.45rem; border-radius: 3px; white-space: nowrap; }
+  .badge .ok  { background: var(--callout-tip);  color: var(--accent); }
+  .badge .mid { background: var(--callout-warn); color: var(--accent-warn); }
+  .badge .no  { background: var(--border);       color: var(--muted); }
+  table code { white-space: nowrap; }
+
+  /* === 明早清單 === */
+  /* ⚠ 不可用 grid：CSS Grid 會把 ::before 與緊接的文字合併成同一個匿名格線項，
+     一起塞進 1.4rem 的第一欄 ⇒ 手機上一個字一行。改絕對定位（同 KB-10 窄視窗清單做法）。 */
+  .todo { list-style: none; padding: 0; margin: 1rem 0; }
+  .todo li { position: relative; padding: 0.55rem 0 0.55rem 1.9rem;
+             border-bottom: 1px solid var(--border);
+             font-size: var(--fs-body); line-height: 1.7; }
+  .todo li::before { content: "☐"; position: absolute; left: 0; top: 0.55rem;
+                     color: var(--accent); font-size: var(--fs-body); }
+
+  @media print {
+    .progress-bar { display: none; }
+    body { font-size: 11pt; line-height: 1.6; }
+    main { max-width: 100%; padding: 1cm; }
+    .agenda details { break-inside: avoid; }
+    .agenda details > .body { display: block; }
+  }
+</style>
+</head>
+<body>
+<div class="progress-bar" id="progress"></div>
+<main>
+<header>
+<h1>13 場演講對「自主」的定義沒有一個相同</h1>
+<div class="bluf">
+<strong class="label">BLUF</strong>
+<p>論壇主題是 <code>Defining the Next Generation of Autonomous Manufacturing</code>。逐字讀完 13 份官方摘要之後的結構事實是：每一場把「自主」放在<em>不同的一層</em>，而沒有任何一場同時談兩層。</p>
+<p>最後一場的 Bain 顧問會替全天下判決——他的摘要逐字寫著「<code>'highly automated' is not 'autonomous.'</code>」</p>
+<p>另外有一件事今晚就要處理：<em>雅悅會館不是領證地點</em>。</p>
+</div>
+</header>
+<article>
+<!-- narrative: 物件,細節,矛盾,直接引語 -->
+
+<span class="kicker">今晚｜明早</span>
+<h2>領證會卡住你，因為雅悅會館沒有領證台</h2>
+
+<p>8 月 13 日起一律現場領證，而官方領證點<em>不含雅悅會館</em>。論壇報到時間是 08:40。</p>
+
+<dl class="badge">
+<dt><span class="ok">可行</span>高鐵台中站</dt>
+<dd><code>05:40 – 24:00</code>　近 4A 出口，面對路易莎右側</dd>
+<dt><span class="ok">可行</span>高鐵桃園站</dt>
+<dd><code>06:20 – 23:45</code>　近 8 號出口</dd>
+<dt><span class="ok">可行</span>高鐵新竹站</dt>
+<dd><code>06:15 – 23:45</code>　近 2 號出口</dd>
+<dt><span class="mid">備援</span>南港展覽館一館 I 區</dt>
+<dd><code>08:00 – 16:30</code>　08:00 才開門，走到會場約 5 到 8 分鐘，時間緊</dd>
+<dt><span class="mid">備援</span>南港展覽館二館 7 樓</dt>
+<dd><code>08:00 – 16:30</code>　同上</dd>
+<dt><span class="no">來不及</span>台北市四家飯店</dt>
+<dd><code>08:30 – 16:30</code>　開門時已過 08:40 報到時間</dd>
+</dl>
+<p class="notesrc"><b>Note：</b>本表為 9/1 當天的服務時間。飯店領證 08:30 才開，走到雅悅會館後已過報到時間，故判定來不及。<br><b>Source：</b><code>semicontaiwan.org/zh/THSR_Badge_Collection</code> 與 <code>/zh/TaiNEX_Badge_Collection</code>，2026-08-31 取得。</p>
+
+<div class="callout warn">
+<p><em>在你上車的那個高鐵站領。</em>台中站 05:40 起、桃園站 06:20 起、新竹站 06:15 起。備援是南港展覽館 08:00 開門，走到雅悅會館約 5 到 8 分鐘。</p>
+</div>
+
+<h3>會場與交通</h3>
+<ul class="todo">
+<li>雅悅會館南港旗艦館 3 樓寶儷廳，台北市南港區經貿二路 166 號 A 棟（中國信託金融園區 A 棟），電話 <code>02-2788-7222</code></li>
+<li>文湖線南港軟體園區站步行約 30 秒；板南線南港展覽館站步行約 3 分鐘；台鐵與高鐵南港站</li>
+<li>高鐵 95 折券兩組。限標準車廂對號座，不可與早鳥合併，適用 8/28 至 9/7。<em>代碼在 SEMI 報名確認函那封信裡</em>（寄件者 <code>noreplytw@semi.org</code>，2026-08-23），購票時現查</li>
+<li>論壇票 NTD 6,195（已付）。報名 ID 同樣在那封確認函裡</li>
+<li>座位先到先入席。現場不發紙本講義，簡報 PDF 要展後 3 個工作天填問卷才拿得到</li>
+</ul>
+
+<span class="kicker">現場主力</span>
+<h2>十三場速查：點開看該聽哪一句</h2>
+
+<p>每一格的「預期主張」不是講題名，是讀完官方摘要後推導的一句主張。<code>★</code> 是四場深做。</p>
+
+<div class="agenda">
+
+<details open>
+<summary><span class="t">09:15</span><span><span class="who"><span class="star">★</span> TSMC 林宏達（Dr. Chris Lin）｜Keynote&#32;</span><span class="claim">通用 LLM 只提升一般生產力，護城河在領域 AI。</span></span></summary>
+<div class="body">
+<dl>
+<dt>他是誰</dt><dd>企業資訊技術副總經理暨資訊長。台大電機學士、UC Berkeley 電機資訊博士。<em>非半導體本業出身</em>——Symantec → Facebook 企業平台基礎架構處長 → Mozilla 資訊技術副總 → 2021 年進台積。管 2,000 人以上的 IT 組織，口號是「Fab Runs on Code」。</dd>
+<dt>摘要已寫死的</dt><dd><code>Generic AI vs Domain-Specific AI</code> 的區分、<code>Digital Brain</code>（持續學習的 AI 生態系）、<code>AI CoWorker</code> 與 <code>AI Team</code>、<code>collaborative symbiosis</code>。</dd>
+<dt>該聽哪一句</dt><dd><code>Digital Brain</code> 這個詞<em>全網查無先例</em>——法說會、ESG 報告、徵才頁、五篇 iThome 深度報導全部沒有。判準是：他有沒有給出架構圖、元件名或導入時程。只有概念圖就是修辭傘。</dd>
+<dt>一個結構觀察</dt><dd>摘要末尾的 <code>AI-Ready Tools</code>、<code>Managed Robotics</code>、<code>green manufacturing AI</code> 三項，在台積自家公開資料裡查無對應成果，卻全部出現在「產學合作邀請」那句裡。<em>那段是需求招標，不是成果發表。</em></dd>
+<dt>問他</dt><dd>「一台設備要達到什麼條件才算 AI-ready？是資料介面規格、edge 端算力、還是可被代理程式安全操作的控制權限分級？」</dd>
+</dl>
+</div>
+</details>
+
+<details>
+<summary><span class="t">09:40</span><span><span class="who">NVIDIA Dr. Tim Lin&#32;</span><span class="claim">AOI 的瓶頸不是模型準不準，是換產品換缺陷型態就要重做資料。</span></span></summary>
+<div class="body">
+<dl>
+<dt>他是誰</dt><dd>技術人。UT Arlington 資工博士，十年以上半導體經歷，NVIDIA 官方部落格作者頁掛他的名字。不是業務簡報。</dd>
+<dt>家當</dt><dd>Metropolis 視覺 AI 平台、Cosmos Reason 推理型視覺模型、TAO 微調工具鏈、Omniverse 生合成資料。</dd>
+<dt>該聽哪一句</dt><dd>等他講 <code>closed-loop feedback from production</code> 時，追問回饋是誰標的。若還是人工複判，飛輪就只是自動化的資料前處理。</dd>
+<dt>與別場</dt><dd>全場唯一把自主放在模型開發層而非產線層。ST（14:30）是 NVIDIA 實體 AI 生態的供應側，兩場可互補。</dd>
+</dl>
+</div>
+</details>
+
+<details>
+<summary><span class="t">10:05</span><span><span class="who">Applied Materials Mr. Mingyuan Zhao&#32;</span><span class="claim">代理式閉環要走 MES hold 這類既有治理管道，才敢讓它自己執行。</span></span></summary>
+<div class="body">
+<dl>
+<dt>他是誰</dt><dd>業務端偏策略。19 年資歷，做過 NXP、Wolfspeed、Qorvo 的 fab 與製程，現職 Strategic Marketing。懂 fab，但這場是市場定位不是技術細節。</dd>
+<dt>家當</dt><dd>SmartFactory 系列（Yield Management、AI/ML 平台）、ExtractAI（Enlight 光學檢測配 SEMVision 電子束）。</dd>
+<dt>該聽哪一句</dt><dd>等 <code>governed execution</code> 四個字後面接什麼。是真的 auto hold，還是仍停在 human-in-the-loop 的建議——<em>這決定他講的是自主還是建議</em>。</dd>
+<dt>與別場</dt><dd>與 11:05 的 Merck 是本日最直接的對打。同樣多代理、同樣打資料孤島，但 Merck 的輸出是警報與週報，這場的輸出是動 WIP。差一整級。</dd>
+</dl>
+</div>
+</details>
+
+<details>
+<summary><span class="t">10:40</span><span><span class="who">Lam Research Dr. Joseph Ervin&#32;</span><span class="claim">良率優化該從晶圓實驗搬進虛擬域，一次掃多個製程變更。</span></span></summary>
+<div class="body">
+<dl>
+<dt>他是誰</dt><dd>技術人兼事業主管。Semiverse Solutions 產品線負責人，ASU 元件物理博士，60 件專利，Coventor 併入 Lam 時進來的。</dd>
+<dt>家當</dt><dd>SEMulator3D 物理體素製程模擬、Semiverse Solutions、Fabtex Yield Optimizer。</dd>
+<dt>該聽哪一句</dt><dd>GAA 那個案例的驗證方式——虛擬孿生的預測跟真實量產良率對得上多少。<em>沒有這個數字，多目標優化只是模擬器的自證。</em></dd>
+<dt>與別場</dt><dd>與 15:05 的 ThirdAI 方法論對立：這場用物理先驗取代資料，那場用因果圖從資料裡挖結構。</dd>
+</dl>
+</div>
+</details>
+
+<details>
+<summary><span class="t">11:05</span><span><span class="who">Merck Mr. Paul Kim&#32;</span><span class="claim">資料孤島要先用語義本體接成一張圖，多代理才有辦法各守一域。</span></span></summary>
+<div class="body">
+<dl>
+<dt>他是誰</dt><dd>技術人。化工背景，AspenTech 模擬工程師、LG 化學 AI 科學家，延世大學 AI 碩士。手上是實作不是願景。</dd>
+<dt>家當</dt><dd>Merck 電子事業的資料側旗艦是 Athinia，與 Palantir 合建、底層是 Foundry 的 Ontology。<em>摘要沒點名 Athinia，這條血緣是推論，現場請確認。</em></dd>
+<dt>該聽哪一句</dt><dd>他說已部署在韓國與台灣廠——問哪個廠、跑多久，以及「幾小時縮到幾分鐘」的基準是誰量的。</dd>
+<dt>與別場</dt><dd>與 15:55 的 Intel 是同一個詞的兩種尺度：這場的本體論在一家公司內，Intel 的資料空間要跨公司。</dd>
+</dl>
+</div>
+</details>
+
+<details class="rest">
+<summary><span class="t">11:30</span><span><span class="who">Analog Devices Mr. Philippe Reiber&#32;</span><span class="claim">ADI 自己有 fab，所以能拿產線當測試場先驗證再賣元件。</span></span></summary>
+<div class="body">
+<dl>
+<dt>他是誰</dt><dd>純業務。25 年銷售資歷，2025 起管全球工業銷售，前職是航太國防銷售副總。有微電子碩士，但席位是通路不是技術。</dd>
+<dt>該聽哪一句</dt><dd>「用自家 fab 當 testbed」是這場唯一的差異化籌碼。等他報出哪座廠、哪個工序、什麼數字。<em>報不出來，這場就是型錄。</em></dd>
+<dt>與別場</dt><dd>與 14:30 的 ST 幾乎是同一份簡報的兩個版本。兩場連著聽，聽誰的證據是自家產線、誰的是客戶案例。</dd>
+</dl>
+</div>
+</details>
+
+<details>
+<summary><span class="t">13:40</span><span><span class="who"><span class="star">★</span> Micron Mr. Cheng How Tan｜Keynote&#32;</span><span class="claim">強化學習代理自己調排程參數，工程師從整合者變成目標設定者。</span></span></summary>
+<div class="body">
+<dl>
+<dt>他是誰</dt><dd>Tan Cheng How，34 年半導體資歷，新加坡國立大學 1991 年畢業，<em>據點在新加坡不是台灣</em>。中文名查無公開資料，現場不要猜著叫。他的公開足跡極稀薄——LinkedIn 僅 297 followers、零演講紀錄、零媒體引用。這很可能是他第一次在可檢索的國際場合掛名主講。</dd>
+<dt>最有用的一個詞</dt><dd>摘要逐字寫他領導的是 <code>Planning and Manufacturing pillar</code>——<em>排程、產能規劃、模擬，不是良率或製程</em>。這決定他答得了什麼、答不了什麼。</dd>
+<dt>四支柱（摘要已寫死）</dt><dd>一、強化學習代理自主調排程參數，數位分身優化廠房佈局與自動搬運。二、代理式工程流程，路由到既有 BKM 或 <code>governed MCP data connectors</code>。三、生成式 AI 加速視覺生命週期，合成缺陷生成單獨就提升準確度。四、企業生產力。</dd>
+<dt>前三分鐘的訊號</dt><dd>他講到燈塔獎時<em>點不點台中</em>。點了代表他準備了台灣材料；只講新加坡或只講 our fabs，代表案例全來自新加坡 NAND 廠。摘要通篇零廠區，這個選擇權他留在手上。</dd>
+<dt>最值得等的數字</dt><dd>摘要寫 <code>synthetic defect generation alone lifts model accuracy</code> 卻故意不給幅度。這種留白通常是把數字留到現場，而這個數字目前公開資料查無。</dd>
+<dt>問他</dt><dd>「強化學習代理是直接寫回生產系統，還是仍要人核可？如果調壞了，rollback 機制與最壞情況是什麼？」</dd>
+</dl>
+</div>
+</details>
+
+<details class="rest">
+<summary><span class="t">14:05</span><span><span class="who">Siemens Mr. Michael Munsey&#32;</span><span class="claim">單機優化的紅利吃完了，下一波價值在把工具連起來。</span></span></summary>
+<div class="body">
+<dl>
+<dt>他是誰</dt><dd>業務策略端。35 年資歷，歷任 Perforce 行銷策略資深副總、Dassault 高科技產業副總、Cadence 驗證。IBM 設計出身但已離技術很久。</dd>
+<dt>該聽哪一句</dt><dd>他摘要裡有一段別人都沒有——<em>工程師在 AI fab 裡需要什麼新技能</em>。這是全場唯一談人的段落，也是最可能有真話的地方。</dd>
+<dt>與別場</dt><dd>與 15:55 的 Intel 打對台：這場的閉環收在自家 Xcelerator 生態內，Intel 主打開源可互通。封閉平台對開放標準，本日最硬的一組分歧。</dd>
+</dl>
+</div>
+</details>
+
+<details class="rest">
+<summary><span class="t">14:30</span><span><span class="who">STMicroelectronics Mr. Allan LAGASCA&#32;</span><span class="claim">機器人平台不是單一晶片問題，整套堆疊要一起做成可量產。</span></span></summary>
+<div class="body">
+<dl>
+<dt>他是誰</dt><dd>技術業務之間。2003 年進 ST 做應用工程師，現為資深總監，主導機器人策略計畫，長期駐台灣與深圳。</dd>
+<dt>家當</dt><dd>STM32N6（內建自研 Neural-ART NPU）、IMU 與 BrightSense 影像感測、VL53 系列 dToF、GaN 功率級。2026 年 3 月起與 NVIDIA 合作預整合到 Jetson 做人形機器人。</dd>
+<dt>該聽哪一句</dt><dd>這場摘要是全場最短的，技術清單只有一行。所以要聽他有沒有講出哪一個客戶的機器人真的量產了。沒有的話，這是元件推廣不是製造洞見。</dd>
+</dl>
+</div>
+</details>
+
+<details>
+<summary><span class="t">15:05</span><span><span class="who">ThirdAI Automation Dr. Vivek Vishwakarma&#32;</span><span class="claim">FDC 答得出何時異常卻答不出為什麼，可解釋性才是能不能從 pilot 變日常的門檻。</span></span></summary>
+<div class="body">
+<dl>
+<dt>他是誰</dt><dd>技術創辦人。前 Intel 技術人員，10 件以上專利、300 次以上論文引用。<em>與美國休士頓那家做 CPU 訓練 LLM 的 ThirdAI Corp. 不是同一家</em>——本場是 ThirdAI Automation Inc，2024 年創辦，2026 年 2 月拿到 300 萬美元種子輪。</dd>
+<dt>該聽哪一句</dt><dd>他摘要明寫要談「從有說服力的 pilot 到工程師每天依賴的系統，中間缺什麼」。<em>全場只有他打算講失敗面，這 25 分鐘的價值全在這一段。</em>也注意他提的 air-gapped 部署，那是 fab 的真實約束。</dd>
+<dt>與別場</dt><dd>聽完 10:05 的 AMAT 再聽這場，可以判斷整合平台與單點利器哪個先落地。</dd>
+</dl>
+</div>
+</details>
+
+<details open>
+<summary><span class="t">15:30</span><span><span class="who"><span class="star">★</span> 萬潤科技 劉恒惠博士（Dr. Samuel Liu）&#32;</span><span class="claim">自主製造不是從 AI 開始，是從可信的設備閉環開始。</span></span></summary>
+<div class="body">
+<dl>
+<dt>為什麼這場對你不一樣</dt><dd>全天唯一的台灣本土精密設備商，而他那句是<em>全場唯一的反主流</em>。萬潤科技（All Ring Tech，上櫃 <code>6187</code>），高雄路竹南科高雄園區。2026 上半年營收 37.66 億元、年增 35.9%、EPS 11.9 元、毛利率 53.6%；訂單能見度到 2027 年第 2 季。</dd>
+<dt>他是誰</dt><dd>技術中心資深協理，15 年研發與系統整合資歷。職掌是自主巡檢系統、次世代設備、數位孿生、CPO 相關技術。學歷查無公開資料。</dd>
+<dt>可信閉環的五個可</dt><dd>摘要逐字：<code>observable, diagnosable, controllable, connectable, verifiable</code>。<em>這不是行銷詞，是一份設備規格檢核表</em>——可以直接拿回去對自己的產品打分。</dd>
+<dt>規格數字</dt><dd>矽光子耦合系列：六軸平台、PA 加 AA 雙模對準、對位 <code>±2.5 µm</code>、點膠 <code>±5 nL</code>、UV 固化功率智慧補償、完成後即測插入損耗放行。AOI 定位 <code>±20 µm</code>，支援 SECS/GEM 與 OHT。</dd>
+<dt>最該注意的訊號</dt><dd>他 bio 裡的「半導體廠自主巡檢機器人」與「數位孿生」<em>在官網六大產品線中查無對應</em>。那代表它們是技術中心的研發項目，不是可下單的商品——他講的自主製造有一半是路線圖不是型錄。</dd>
+<dt>問他</dt><dd>「<code>±2.5 µm</code> 是在多長的機構迴路與什麼熱環境下量到的？UV 固化收縮補償是開迴路前饋，還是有固化後的二次量測回授？」前饋補償只要膠材批次一換就失效，回授才是真閉環。</dd>
+</dl>
+</div>
+</details>
+
+<details class="rest">
+<summary><span class="t">15:55</span><span><span class="who">Intel Dr. Harald Gossner&#32;</span><span class="claim">單一 fab 內的自主已經在做了，下一步是讓資料跨公司流動。</span></span></summary>
+<div class="body">
+<dl>
+<dt>他是誰</dt><dd><em>職涯落差值得注意</em>。老本行是 ESD 防護與可靠度——15 年在 Siemens 與 Infineon 做 ESD，現為 Intel 系統 ESD 負責人、IEEE Fellow。資料生態系不是他的技術本行，他是 2024 年起以專案主持人身分接手。這場聽治理與聯盟政治，別期待資料架構的技術深度。</dd>
+<dt>他賣的不是 Intel 產品</dt><dd>是 Semiconductor-X——德國政府資助的歐洲專案，2024 年 5 月啟動，Intel Deutschland 與 Fraunhofer IFF 共同主導，20 家以上廠商參與，沿用 Gaia-X 與 Catena-X 原則。</dd>
+<dt>該聽哪一句</dt><dd>等他講 demonstrator 時問一句「哪幾家真的把資料放進去了」。<em>資料空間的成敗不在架構在參與意願</em>，而 fab 對設備商開放製程資料本身就違反本能。</dd>
+</dl>
+</div>
+</details>
+
+<details open>
+<summary><span class="t">16:20</span><span><span class="who"><span class="star">★</span> Bain &amp; Company Mr. Bo Huang&#32;</span><span class="claim">高度自動化不等於自主，而補上這個落差已經是工程與投資問題。</span></span></summary>
+<div class="body">
+<dl>
+<dt>為什麼別讓疲勞吃掉這一場</dt><dd>全天唯一給投資與採用地圖的一場，與你的投資分析視角同一個座標系。而它排在第 8 小時。</dd>
+<dt>他不是純顧問，是做過的人</dt><dd>NUS 學士與博士、Johns Hopkins 博士後。McKinsey 新加坡 associate partner → <em>GlobalFoundries 全球數位製造主管</em>（從零建立內部 AI 策略與新加坡 AI 卓越中心，任內 GF 新加坡 300mm 廠拿下世界經濟論壇燈塔工廠）→ Lavorro → 2026 年才加入 Bain。他當 Bain 合夥人不到一年，明天可能是他掛 Bain 名片的首批公開場合之一。</dd>
+<dt>那把刀</dt><dd>摘要逐字：「<code>Yet 'highly automated' is not 'autonomous.' Automation follows fixed rules in structured environments; autonomy requires machines that perceive, reason, and act under variable conditions with little human direction.</code>」<em>他排在最後，等於在為前面十二場下判決。</em></dd>
+<dt>沙漏模型（與你直接相關）</dt><dd>Bain 2026 年 4 月的《Industrial Automation: From Control to Intelligence》說：價值往兩端集中——上端軟體與資料平台、下端智慧場域裝置，<em>中間控制層被擠壓</em>。台灣的設備廠大多正好站在那一格。</dd>
+<dt>問他</dt><dd>「套到半導體設備供應鏈，被擠壓的中間層具體是誰——是設備整合商，還是廠內自動化系統商？」他若答得出來，你拿到的是一張自己產業的定位圖。</dd>
+<dt>會後去找</dt><dd>《Industrial Automation: From Control to Intelligence》（2026-04-07）與《Humanoid Robots: From Demos to Deployment》（2025），都在 <code>bain.com</code> 免費。這兩份是他這場演講的公開底稿。</dd>
+</dl>
+</div>
+</details>
+
+</div>
+
+<p class="notesrc"><b>Note：</b>「預期主張」欄由 13 份官方 abstract 逐字讀出後推導，不是講題名的改寫；標「摘要已寫死」者為官方原文，非預測。<br><b>Source：</b><code>semicontaiwan.org/zh/smart_manufacturing_forum_2026</code> 各場次 node 頁，2026-08-31 取得，全部 <code>status=200</code>。</p>
+
+<span class="kicker">格局</span>
+<h2>自主的階梯：問他走到哪一格，比問任何技術細節都有效</h2>
+
+<figure class="wide">
+  <div class="flow">
+    <div class="flow-track">
+      <span class="lbl">AUTONOMY LADDER</span>
+      <div class="path">
+        <span class="node">偵測異常</span>
+        <span class="arrow"><svg viewBox="0 0 28 17" role="img" aria-labelledby="a1"><title id="a1">導致下一步</title>
+          <path d="M1 8.5 H22 M17 3.5 L23 8.5 L17 13.5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+        <span class="node">歸因</span>
+        <span class="arrow"><svg viewBox="0 0 28 17" role="img" aria-labelledby="a2"><title id="a2">導致下一步</title>
+          <path d="M1 8.5 H22 M17 3.5 L23 8.5 L17 13.5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+        <span class="node">給建議</span>
+        <span class="arrow"><svg viewBox="0 0 28 17" role="img" aria-labelledby="a3"><title id="a3">跨過分界線</title>
+          <path d="M1 8.5 H22 M17 3.5 L23 8.5 L17 13.5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+        <span class="node here">授權自動執行</span>
+        <span class="arrow"><svg viewBox="0 0 28 17" role="img" aria-labelledby="a4"><title id="a4">回饋成新資料</title>
+          <path d="M1 8.5 H22 M17 3.5 L23 8.5 L17 13.5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+        <span class="node">學習</span>
+      </div>
+    </div>
+    <div class="flow-legend">
+      <span><i class="sw-a"></i>建議層：多數講者停在這裡</span>
+      <span><i class="sw-b"></i>執行層：全場真正的分界線</span>
+    </div>
+  </div>
+  <figcaption><b>十三場演講全部落在這條階梯的某一格，而分界線在第四格。</b>
+    <span class="notesrc"><b>Note：</b>階梯由 13 份官方摘要歸納，非任何一家的官方模型；「多數停在建議層」是依摘要用詞判定（是否出現可自主執行的動作），不是現場實測。<br><b>Source：</b>各場次官方 abstract，2026-08-31。</span>
+  </figcaption>
+</figure>
+
+<h3>十三場各自把「自主」放在哪一層</h3>
+
+<div class="tbl">
+<table>
+<thead><tr><th>時間</th><th>單位</th><th>自主發生在哪一層</th><th>他的判準</th></tr></thead>
+<tbody>
+<tr><td><code>09:15</code></td><td>TSMC</td><td>人機共生層</td><td>AI 從工具變同事</td></tr>
+<tr><td><code>09:40</code></td><td>NVIDIA</td><td>模型開發層</td><td>模型能自己適應新缺陷型態</td></tr>
+<tr><td><code>10:05</code></td><td>Applied Materials</td><td>治理執行層</td><td>能在治理管道內自己動 WIP</td></tr>
+<tr><td><code>10:40</code></td><td>Lam Research</td><td>虛擬設計層</td><td>實驗從晶圓搬進虛擬域</td></tr>
+<tr><td><code>11:05</code></td><td>Merck</td><td>語意監控層</td><td>多代理 24/7 自己巡自己報</td></tr>
+<tr><td><code>11:30</code></td><td>Analog Devices</td><td>物理具身層</td><td>機器人在真實環境感知移動</td></tr>
+<tr><td><code>13:40</code></td><td>Micron</td><td>排程規劃層</td><td>代理自己調排程參數</td></tr>
+<tr><td><code>14:05</code></td><td>Siemens</td><td>整廠資料層</td><td>執行前先模擬驗證</td></tr>
+<tr><td><code>14:30</code></td><td>STMicroelectronics</td><td>機器人平台層</td><td>感測到致動的堆疊可量產</td></tr>
+<tr><td><code>15:05</code></td><td>ThirdAI</td><td>可解釋層</td><td>能回答為什麼不只何時</td></tr>
+<tr><td><code>15:30</code></td><td>萬潤科技</td><td>設備閉環層</td><td>五個可：觀測診斷控制連接驗證</td></tr>
+<tr><td><code>15:55</code></td><td>Intel</td><td>跨組織層</td><td>資料能跨公司流動</td></tr>
+<tr><td><code>16:20</code></td><td>Bain</td><td>投資判斷層</td><td>明確否定前面十二場</td></tr>
+</tbody>
+</table>
+</div>
+
+<p>聽每一場時問自己一句：他說的自主，是這張表的哪一層。答得出來就抓到了他的框架；答不出來，那場多半是型錄。</p>
+
+<span class="kicker">對打</span>
+<h2>四組真正的分歧，而不是十三場各說各話</h2>
+
+<div class="func-row">
+  <div class="fn">
+    <svg viewBox="0 0 40 40" role="img" aria-labelledby="i1"><title id="i1">兩場對照</title>
+      <circle cx="20" cy="20" r="17" fill="none" stroke="currentColor" stroke-width="2"/>
+      <path d="M20 6 V34" fill="none" stroke="currentColor" stroke-width="2"/>
+    </svg>
+    <div><span class="lbl">10:05 AMAT × 11:05 Merck</span><span class="txt">同樣多代理打資料孤島。Merck 的輸出是警報與週報，AMAT 的輸出是動 WIP。建議與自主的分界線就在這一小時之間。</span></div>
+  </div>
+  <div class="fn">
+    <svg viewBox="0 0 40 40" role="img" aria-labelledby="i2"><title id="i2">封閉對開放</title>
+      <rect x="5" y="9" width="13" height="22" fill="none" stroke="currentColor" stroke-width="2" rx="2"/>
+      <path d="M23 12 H35 M23 20 H35 M23 28 H35" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+    </svg>
+    <div><span class="lbl">14:05 Siemens × 15:55 Intel</span><span class="txt">閉環收在自家 Xcelerator 生態內，對上開源可互通的 Tractus-X。兩場都問同一句：資料要放進誰的房子。</span></div>
+  </div>
+  <div class="fn">
+    <svg viewBox="0 0 40 40" role="img" aria-labelledby="i3"><title id="i3">物理對資料</title>
+      <path d="M6 30 Q20 6 34 30" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+      <circle cx="12" cy="24" r="2.5" fill="currentColor"/><circle cx="20" cy="14" r="2.5" fill="currentColor"/><circle cx="28" cy="24" r="2.5" fill="currentColor"/>
+    </svg>
+    <div><span class="lbl">10:40 Lam × 15:05 ThirdAI</span><span class="txt">一個說我知道物理所以不需要那麼多資料，一個說我不假設物理讓資料告訴我因果。兩場都問：你的模型錯的時候怎麼知道它錯了。</span></div>
+  </div>
+  <div class="fn">
+    <svg viewBox="0 0 40 40" role="img" aria-labelledby="i4"><title id="i4">最後一場否定前面</title>
+      <circle cx="20" cy="20" r="17" fill="none" stroke="currentColor" stroke-width="2"/>
+      <path d="M13 13 L27 27 M27 13 L13 27" fill="none" stroke="currentColor" stroke-width="2.4"/>
+    </svg>
+    <div><span class="lbl">16:20 Bain × 前面全部十二場</span><span class="txt">前面十二場都在講我們做到了自主。Bain 排在最後說：你們講的多半還是自動化。全天最鋒利的一句話，排在你最累的時候。</span></div>
+  </div>
+</div>
+
+<span class="kicker">誰在說話</span>
+<h2>買方定義需求、賣方賣能力，而唯一的反主流來自台灣同行</h2>
+
+<div class="schema-wall">
+  <div class="card">
+    <span class="lbl">買方（fab）</span>
+    <dl>
+      <dt>誰</dt><dd>TSMC、UMC、Micron</dd>
+      <dt class="sep">在說什麼</dt><dd>我們自己做到了什麼。不賣東西，但在定義需求。</dd>
+    </dl>
+  </div>
+  <div class="card">
+    <span class="lbl">賣方（供應商）</span>
+    <dl>
+      <dt>誰</dt><dd>NVIDIA、AMAT、Lam、ADI、ST、Siemens</dd>
+      <dt class="sep">在說什麼</dt><dd>我們能讓你做到什麼。證據強度差異極大——有的給自家產線數字，有的只給產品線。</dd>
+    </dl>
+  </div>
+  <div class="card">
+    <span class="lbl">同行（台灣設備商）</span>
+    <dl>
+      <dt>誰</dt><dd>萬潤科技，全天唯一</dd>
+      <dt class="sep">在說什麼</dt><dd>這件事要從設備開始，不是從 AI 開始。全場唯一的反主流，而且立場最接近你。</dd>
+    </dl>
+  </div>
+  <div class="card">
+    <span class="lbl">顧問</span>
+    <dl>
+      <dt>誰</dt><dd>Bain &amp; Company</dd>
+      <dt class="sep">在說什麼</dt><dd>你們都還沒到。他做過 GlobalFoundries 的數位製造主管，不是只會講框架。</dd>
+    </dl>
+  </div>
+</div>
+
+<div class="callout tip">
+<p>論壇主席是 TSMC 與 UMC，主持人是 Applied Materials 與 STMicroelectronics。<em>議程是買方出題、大供應商主持</em>——這不是中立的產業現況，是一個有結構的場合。</p>
+</div>
+
+<span class="kicker">沉默</span>
+<h2>沒有出現的四樣東西，才是你該問的方向</h2>
+
+<p>13 份摘要逐字讀完，以下一次都沒有出現。</p>
+
+<div class="tbl">
+<table>
+<thead><tr><th>沒出現的東西</th><th>為什麼這是訊息</th></tr></thead>
+<tbody>
+<tr><td>導入成本、投資金額、回收期</td><td>全部在講能力——準確率、可用率、週期時間。沒有人講價錢。唯一可能碰到錢的是 Bain 的投資地圖。</td></tr>
+<tr><td>失敗率、放棄的專案</td><td>唯一的例外是 ThirdAI 說要談 pilot 到日常使用的落差。</td></tr>
+<tr><td>中小企業如何導入</td><td>所有案例的分母都是大廠。Bain 的藍圖明寫是給 <code>large-scale deployers</code> 的。</td></tr>
+<tr><td>人力的減少</td><td>只講省下多少工時，不講那些工時原本是誰的。</td></tr>
+</tbody>
+</table>
+</div>
+
+<p>這四個沉默沒有人會問。<em>它們就是你在問答與午餐該去的方向。</em></p>
+
+<span class="kicker">取捨</span>
+<h2>準備了 39 個問題，現場問得出來的大概是三個</h2>
+
+<p>13 場乘 3 個提問點是 39 個。但每場 25 分鐘，業界慣例是講 20 分加 5 分問答，一場最多一到兩個問題，還要跟全場搶。真正的窗口是兩次 10 分鐘休息堵人，以及 95 分鐘的午餐。</p>
+
+<h3>從 39 個裡挑出來的三個</h3>
+
+<ul class="todo">
+<li>對 TSMC 林宏達：「一台設備要達到什麼條件才算 AI-ready？是資料介面規格、edge 端算力、還是可被代理程式安全操作的控制權限分級？」——他摘要裡那句產學合作邀請是真缺口，他有動機答，而這題對做精密機械的你有最高的商業轉化價值。</li>
+<li>對萬潤劉恒惠：「<code>±2.5 µm</code> 是在多長的機構迴路與什麼熱環境下量到的？UV 固化收縮補償是前饋還是有二次量測回授？」——同行對同行，這題分辨得出他的可信閉環是規格書還是機構真相。</li>
+<li>對 Bain Bo Huang：「被擠壓的中間層具體是誰——設備整合商還是廠內自動化系統商？」——他若答得出來，你拿到一張自己產業的定位圖。</li>
+</ul>
+
+<span class="kicker">體力</span>
+<h2>八小時十三場，中間只有兩次十分鐘休息</h2>
+
+<p>08:40 進場到 16:45 散場，8 小時 5 分。休息只有 <code>10:30–10:40</code> 與 <code>14:55–15:05</code>。而對你最重要的兩場（萬潤 15:30、Bain 16:20）都在最後兩小時。</p>
+
+<div class="callout warn">
+<p><em>中午就決定要不要保留體力給最後兩場。</em>誠實說：ADI（11:30）與 ST（14:30）兩場的摘要基本上是產品線目錄，而且高度重疊。票已經付了 6,195 元，沉沒成本會讓人硬坐——先知道這件事，現場可以放心走神或去大廳堵人。</p>
+</div>
+
+<p>另一個組合拳：你手上還有 9/2 到 9/4 的展覽票。今天台上的公司後天多半在展場有攤位，另有高科技智慧製造特展與晶圓智造特區兩個對應專區。<em>今天沒問到的，後天可以去攤位追，而攤位上的人時間比講者多。</em></p>
+
+<aside class="side-cards">
+  <div class="sc"><span class="lbl">關鍵前提</span><span class="txt">這是一場 25 分鐘制的商業論壇，不是技術研討會。所有講者都在為自己的組織說話——買方在定義需求、賣方在賣能力、顧問在賣判斷。沒有人會主動講代價。</span></div>
+  <div class="sc"><span class="lbl">邊界條件</span><span class="txt">全部「預期主張」建立在官方 abstract 上，而講者常在現場換投影片。摘要是承諾不是紀錄。若某場實際內容與這裡差很多，那個落差本身就是訊息。</span></div>
+  <div class="sc ask"><span class="lbl">待驗證點</span><span class="txt">你去這場的目的還沒定。找客戶、找技術方向、找投資標的、或理解格局——四種目的會導出完全不同的一天。這一格只有你能填，而且填了才知道午餐該找誰。</span></div>
+</aside>
+
+<span class="kicker">帶走</span>
+<h2>三個框架就夠，細節不必記</h2>
+
+<ul class="todo">
+<li>自主的階梯：偵測、歸因、建議、授權自動執行、學習。問「你走到哪一格」比問任何技術細節都有效。</li>
+<li>可信閉環的五個可（萬潤版，最實用）：可觀測、可診斷、可控制、可連接、可驗證。拿它對照今天每一家的說法，缺哪一格立刻現形。</li>
+<li>價值的沙漏（Bain 版）：軟體平台在上、智慧裝置在下、控制整合層在中間被擠壓。這是你判斷自己與同業定位的座標系。</li>
+</ul>
+
+<div class="callout tip">
+<p>回程高鐵上把三件事寫完：今天最意外的一件事、我要追的兩個人、我要改變的一個判斷。<em>會後 48 小時是記憶衰減最快的時候</em>，而現場不發紙本、簡報要三天後才拿得到。</p>
+</div>
+
+</article>
+<footer>
+<p class="notesrc">最後更新：2026-08-31 · CC BY 4.0 · 引用請標來源<br>
+材料來源：SEMI 官方議程與 13 份場次 abstract（Playwright 渲染取得，2026-08-31，全部 <code>status=200</code>）、SEMI 報名確認函（2026-08-23）、四路並行背景研究（每項事實附原始 URL，詳見 <code>~/Documents/SEMICON2026_高科技智慧製造論壇/</code>）。<br>
+凡標「查無公開資料」者為誠實的資料空缺，非省略。</p>
+</footer>
+</main>
+<script>
+  const bar = document.getElementById('progress');
+  window.addEventListener('scroll', () => {
+    const h = document.documentElement;
+    const max = h.scrollHeight - h.clientHeight;
+    const ratio = max > 0 ? h.scrollTop / max : 0;
+    bar.style.transform = 'scaleX(' + ratio + ')';
+  }, { passive: true });
+</script>
+</body>
+</html>
