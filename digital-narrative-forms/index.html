@@ -1,0 +1,363 @@
+<!doctype html>
+<html lang="zh-Hant-TW">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>捲動不是數位敘事的同義詞——19 種形式裡只有 6 種需要它</title>
+<link rel="canonical" href="https://hale80427.github.io/brain-cards/digital-narrative-forms/">
+<meta property="og:title" content="捲動不是數位敘事的同義詞——19 種形式裡只有 6 種需要它">
+<meta property="og:description" content="六軌調研：頂級媒體數位敘事的形式分類、工程技術棧，與一張按實際題材分佈排序的兩層路由表。">
+<meta property="og:image" content="https://hale80427.github.io/brain-cards/digital-narrative-forms/og.png">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://hale80427.github.io/brain-cards/digital-narrative-forms/">
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"Article",
+"headline":"捲動不是數位敘事的同義詞——盤點 19 種形式，只有 6 種需要它",
+"datePublished":"2026-08-31","inLanguage":"zh-Hant-TW",
+"author":{"@type":"Organization","name":"獨立調研"},
+"description":"六軌調研：頂級媒體數位敘事的形式分類、工程技術棧，與一張按實際題材分佈排序的兩層路由表。"}
+</script>
+<style>
+:root{
+  --bg:#fbfaf8; --fg:#1a1a1a; --muted:#5f5f5f; --line:#dedbd5;
+  --accent:#b0472e; --accent-soft:#f0d9d2; --track:#e8e5df; --grey-bar:#9b968d;
+  --card:#ffffff; --warn:#8a6d1f; --warn-bg:#fdf6e0;
+  --fs-h1:1.7rem; --fs-h2:1.2rem; --fs-body:1.0625rem; --fs-small:1rem;
+  --mono:ui-monospace,SFMono-Regular,"SF Mono",Menlo,monospace;
+  --sans:-apple-system,BlinkMacSystemFont,"Segoe UI","Noto Sans TC","PingFang TC",sans-serif;
+}
+:root:not([data-theme="light"]){
+  @media (prefers-color-scheme: dark){
+    --bg:#16151a; --fg:#eceae6; --muted:#a5a29b; --line:#33313a;
+    --accent:#e08a6e; --accent-soft:#3d2a24; --track:#2a2831; --grey-bar:#7c7789;
+    --card:#1e1d23; --warn:#d9bd6a; --warn-bg:#2c2718;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#16151a; --fg:#eceae6; --muted:#a5a29b; --line:#33313a;
+  --accent:#e08a6e; --accent-soft:#3d2a24; --track:#2a2831; --grey-bar:#7c7789;
+  --card:#1e1d23; --warn:#d9bd6a; --warn-bg:#2c2718;
+}
+*{box-sizing:border-box}
+body{
+  background:var(--bg); color:var(--fg); font-family:var(--sans);
+  line-height:1.85; margin:0; font-size:17px;
+  text-autospace:normal; font-synthesis:none;
+  -webkit-text-size-adjust:100%;
+}
+.wrap{max-width:36em; margin:0 auto; padding:2.5rem 1.15rem 6rem}
+h1{font-size:var(--fs-h1); line-height:1.45; letter-spacing:-.01em; margin:.2em 0 .5em; font-weight:700}
+h2{font-size:var(--fs-h2); line-height:1.75; margin:3.2rem 0 .9rem; font-weight:700;
+   padding-top:1.1rem; border-top:2px solid var(--fg)}
+h3{font-size:var(--fs-h2); margin:2rem 0 .6rem; font-weight:700}
+p{margin:0 0 1.1em}
+.kicker{font-family:var(--mono); font-size:var(--fs-small); letter-spacing:.1em;
+  text-transform:uppercase; color:var(--muted); margin-bottom:.8rem}
+.bluf{border-left:3px solid var(--accent); padding:.1rem 0 .1rem 1.1rem; margin:1.8rem 0 2.4rem}
+.bluf p{margin-bottom:.7em}
+.bluf p:last-child{margin-bottom:0}
+strong{font-weight:700}
+em{font-style:normal; text-emphasis:filled dot; text-emphasis-position:under right;
+   -webkit-text-emphasis:filled dot}
+code{font-family:var(--mono); font-size:var(--fs-small); background:var(--accent-soft);
+  padding:.1em .34em; border-radius:3px; word-break:break-word}
+.num{font-variant-numeric:lining-nums tabular-nums}
+
+figure{margin:2.2rem 0}
+figcaption{font-size:var(--fs-small); line-height:1.75; color:var(--fg); margin-top:.9rem;
+  padding-left:0; font-weight:600}
+.note,.source{font-size:var(--fs-small); line-height:1.75; color:var(--muted); margin-top:.5rem}
+.note b,.source b{font-family:var(--mono); font-size:var(--fs-small); letter-spacing:.04em}
+
+/* 橫條圖：純 CSS，零 SVG 座標，中文全在 HTML 層可 grep */
+.bars{margin:0; padding:0; list-style:none}
+.bars li{display:grid; grid-template-columns:6.6em 1fr 3.4em; gap:.55rem;
+  align-items:center; margin-bottom:.5rem; font-size:var(--fs-small)}
+.bars .lbl{text-align:right; color:var(--fg); line-height:1.35}
+.bars .track{background:var(--track); height:1.35rem; border-radius:2px; overflow:hidden}
+.bars .fill{background:var(--grey-bar); height:100%; display:block}
+.bars li.hot .fill{background:var(--accent)}
+.bars .val{font-family:var(--mono); font-size:var(--fs-small); color:var(--muted);
+  font-variant-numeric:tabular-nums}
+.bars li.hot .val{color:var(--accent); font-weight:700}
+
+.dual{display:grid; grid-template-columns:1fr; gap:1.6rem; margin:1.4rem 0}
+@media(min-width:640px){ .dual{grid-template-columns:1fr 1fr; gap:2rem} }
+.chart-title{font-size:var(--fs-small); font-family:var(--mono); letter-spacing:.06em;
+  text-transform:uppercase; color:var(--muted); margin:0 0 .9rem; font-weight:600}
+
+.tblwrap{overflow-x:auto; margin:1.4rem 0; -webkit-overflow-scrolling:touch}
+table{border-collapse:collapse; width:100%; font-size:var(--fs-small); min-width:30em}
+th,td{text-align:left; padding:.6rem .7rem; border-bottom:1px solid var(--line);
+  vertical-align:top; line-height:1.6}
+th{font-weight:700; border-bottom:2px solid var(--fg); white-space:nowrap; font-size:var(--fs-small)}
+td.pct{font-family:var(--mono); font-variant-numeric:tabular-nums; white-space:nowrap}
+tr.hot td{background:var(--accent-soft)}
+
+.warn{background:var(--warn-bg); border-left:3px solid var(--warn);
+  padding:.9rem 1.1rem; margin:1.5rem 0; font-size:var(--fs-body); line-height:1.72}
+.warn p:last-child{margin-bottom:0}
+.warn .tag{font-family:var(--mono); font-size:var(--fs-small); letter-spacing:.06em;
+  color:var(--warn); font-weight:700; display:block; margin-bottom:.4rem}
+
+.card{background:var(--card); border:1px solid var(--line); border-radius:6px;
+  padding:1.1rem 1.2rem; margin:1.2rem 0}
+.card h3{margin:0 0 .5rem; font-size:var(--fs-h2)}
+.card p:last-child{margin-bottom:0}
+
+ul,ol{padding-left:1.35em; margin:0 0 1.2em}
+li{margin-bottom:.55em; line-height:1.78}
+
+.ledger{display:grid; grid-template-columns:1fr; gap:1.2rem; margin:1.4rem 0}
+@media(min-width:640px){ .ledger{grid-template-columns:1fr 1fr} }
+.ledger>div{border:1px solid var(--line); border-radius:6px; padding:1rem 1.1rem}
+.col-title{margin:0 0 .7rem; font-size:var(--fs-small); line-height:1.5}
+.ledger ol{margin:0; padding-left:1.2em; font-size:var(--fs-small)}
+.tally{font-family:var(--mono); font-size:var(--fs-h2); text-align:center;
+  margin:1.2rem 0 0; color:var(--accent); font-weight:700}
+
+footer{margin-top:4rem; padding-top:1.4rem; border-top:1px solid var(--line);
+  font-size:var(--fs-small); color:var(--muted); line-height:1.7}
+</style>
+</head>
+<body>
+<div class="wrap">
+<header>
+<p class="kicker">2026-08-31 · 六軌調研</p>
+
+<h1>捲動不是數位敘事的同義詞——盤點 19 種形式，只有 6 種需要它</h1>
+
+<div class="bluf">
+<p>常見的問題是「是不是只有漸進式轉變的題材能用數位敘事」。<strong>答案是不是——但缺口不在直覺以為的地方。</strong></p>
+<p>掃了一位獨立工作者實際處理的 <span class="num">88</span> 筆題材，「連續變化」（捲動敘事解的那一格）只佔 <span class="num">11.4%</span>。佔將近一半的是「離散對照」——在幾個選項之間拍板——而那一格目前只有「表格」一個答案。</p>
+<p>所以要補的不是「捲動敘事還能用在哪」，是那 <span class="num">45.5%</span> 根本沒有對應形式。</p>
+</div>
+</header>
+
+<main>
+<article>
+<!-- narrative: 衝突, 轉折, 證據, 反例, 收束 -->
+
+<h2>一、供需錯配：需求最大的那一格，外部形式最少</h2>
+
+<figure>
+<div class="dual">
+<div>
+<p class="chart-title">實際題材分佈（88 筆）</p>
+<ul class="bars">
+<li class="hot"> <span class="lbl">離散對照</span> <span class="track"><span class="fill" style="width:100%"></span></span> <span class="val">45.5%</span></li>
+<li> <span class="lbl">結構拆解</span> <span class="track"><span class="fill" style="width:42%"></span></span> <span class="val">19.3%</span></li>
+<li> <span class="lbl">連續變化</span> <span class="track"><span class="fill" style="width:25%"></span></span> <span class="val">11.4%</span></li>
+<li> <span class="lbl">個體與群體</span> <span class="track"><span class="fill" style="width:15%"></span></span> <span class="val">6.8%</span></li>
+<li> <span class="lbl">因果鏈</span> <span class="track"><span class="fill" style="width:13%"></span></span> <span class="val">5.7%</span></li>
+<li> <span class="lbl">其他</span> <span class="track"><span class="fill" style="width:10%"></span></span> <span class="val">4.5%</span></li>
+<li> <span class="lbl">規模對比</span> <span class="track"><span class="fill" style="width:7%"></span></span> <span class="val">3.4%</span></li>
+<li> <span class="lbl">空間分佈</span> <span class="track"><span class="fill" style="width:5%"></span></span> <span class="val">2.3%</span></li>
+<li> <span class="lbl">時序事件</span> <span class="track"><span class="fill" style="width:2%"></span></span> <span class="val">1.1%</span></li>
+</ul>
+</div>
+<div>
+<p class="chart-title">外部找到的形式數（19 條）</p>
+<ul class="bars">
+<li class="hot"> <span class="lbl">離散對照</span> <span class="track"><span class="fill" style="width:67%"></span></span> <span class="val">2 條</span></li>
+<li> <span class="lbl">結構拆解</span> <span class="track"><span class="fill" style="width:67%"></span></span> <span class="val">2 條</span></li>
+<li> <span class="lbl">連續變化</span> <span class="track"><span class="fill" style="width:100%"></span></span> <span class="val">3 條</span></li>
+<li> <span class="lbl">個體與群體</span> <span class="track"><span class="fill" style="width:67%"></span></span> <span class="val">2 條</span></li>
+<li> <span class="lbl">因果鏈</span> <span class="track"><span class="fill" style="width:67%"></span></span> <span class="val">2 條</span></li>
+<li> <span class="lbl">其他</span> <span class="track"><span class="fill" style="width:67%"></span></span> <span class="val">2 條</span></li>
+<li> <span class="lbl">規模對比</span> <span class="track"><span class="fill" style="width:33%"></span></span> <span class="val">1 條</span></li>
+<li> <span class="lbl">空間分佈</span> <span class="track"><span class="fill" style="width:100%"></span></span> <span class="val">3 條</span></li>
+<li> <span class="lbl">時序事件</span> <span class="track"><span class="fill" style="width:67%"></span></span> <span class="val">2 條</span></li>
+</ul>
+</div>
+</div>
+<figcaption>需求最大的兩格（離散對照、結構拆解）各只找到 2 條形式；幾乎沒有需求的「空間分佈」反而有 3 條——外部供給的形狀跟實際需求形狀對不上。</figcaption>
+<p class="note"><b>Note</b>：左圖分母是實地掃描的 88 筆題材，切分單位是「一條可交付的工作軌」；改用「照章節切」重數 5 份，倍率是 <span class="num">7.2×</span>，且組成會往「流程結構」偏——本圖採前者。右圖是外部盤點到的形式條數，不是「業界有多少種形式」。</p>
+<p class="source"><b>Source</b>：題材母體軌（88 筆實際題材盤點）與 A 軌（歐美媒體 19 條形式，全部附可打開的作品頁與 view-source 證據）。</p>
+</figure>
+
+<div class="warn">
+<span class="tag">⚠ 取樣偏差 · 引用這張圖時必須一起帶</span>
+<p>那 19 條形式全部出自 The Pudding、ProPublica、FT、Guardian 四家——不是因為這四家做得好，是<strong>只有這四家沒擋爬蟲</strong>。紐時、彭博、路透、華郵、南華早報、國家地理、明鏡、FiveThirtyEight 八家全部撞牆，主表零條。所以右圖是「可爬取的媒體做了什麼」，不是「頂級媒體做了什麼」。</p>
+</div>
+
+<h2>二、捲動不是數位敘事的同義詞</h2>
+
+<p>19 條形式裡，讀者動作含「捲」的<strong>只有 6 條</strong>。其餘 13 條是拖、點、輸入。</p>
+
+<p>「圖釘住、隨捲動連續變形」這條路綁的其實不是「題材難不難」，是<em>素材有沒有一條可以被捲動索引的軸</em>——時間、磨耗、距離。沒有那條軸，捲動就沒有東西可以對應。</p>
+
+<h3>最直接可搬的一條，技術棧比捲動敘事更簡單</h3>
+
+<div class="card">
+<h3>The Pudding〈Dicing an Onion〉——拉桿改參數，圖形即時重算</h3>
+<p>9 個 <code>&lt;input type="range"&gt;</code> 綁參數、Canvas 2D 與 SVG 混用即時重繪、<strong>零捲動</strong>。我親自抓了那頁驗過：<code>type="range"</code> 剛好 9 個，<code>scrollama</code> 與 <code>sticky</code> 都是 <span class="num">0</span>。</p>
+<p>它對上的是「參數如何影響結構」這種問題——製程題、機構題、參數實驗直接可搬。讀者自己轉參數看幾何怎麼變，比捲動給他看更貼近他要問的事。</p>
+<p class="source"><b>Source</b>：<code>https://pudding.cool/2025/08/onions/</code>（主 session 親自 fetch，HTTP <span class="num">200</span>，<span class="num">719,659</span> bytes）</p>
+</div>
+
+<h2>三、兩層路由：第一層縮小候選，第二層四道濾網</h2>
+
+<p>第一層問「這份材料的主結構是哪一格」，第二層問「這四道過不過」。第一層只給候選集，不給答案。</p>
+
+<div class="tblwrap">
+<table>
+<thead><tr><th>題材結構</th><th class="pct">母體佔比</th><th>第一順位</th><th>其他候選</th></tr></thead>
+<tbody>
+<tr class="hot"><td>離散對照</td><td class="pct">45.5%</td><td>可排序可篩選表 ＋ 旁邊一張圖</td><td>參數掃描小倍數／捲動排名重排／Illustrator→ai2html 靜態</td></tr>
+<tr><td>結構拆解</td><td class="pct">19.3%</td><td>拉桿改參數、即時重算</td><td>標註式圖解／縮圖矩陣</td></tr>
+<tr><td>連續變化</td><td class="pct">11.4%</td><td>捲動敘事·圖片序列</td><td>黏住的圖＋分段文字卡／捲動 scrub 影片</td></tr>
+<tr><td>個體與群體</td><td class="pct">6.8%</td><td>縮圖矩陣·每個個體一張真圖</td><td>可點播剪輯庫／群體到個體收斂鏡頭</td></tr>
+<tr><td>因果鏈</td><td class="pct">5.7%</td><td>手繪 SVG 機制圖＋註解層</td><td>分支決策·選了才看到後果／影響網絡</td></tr>
+<tr><td>規模對比</td><td class="pct">3.4%</td><td>ai2html 靜態</td><td>重新對齊座標軸</td></tr>
+<tr><td>空間分佈</td><td class="pct">2.3%</td><td>輸入地址查所在那一格</td><td>捲動地圖圖層切換／GPU 散點</td></tr>
+<tr><td>時序事件</td><td class="pct">1.1%</td><td>第一人稱影片＋地圖時序</td><td>全幅影音長文</td></tr>
+<tr><td>檔案／名冊檢索</td><td class="pct">新增</td><td>個體檔案檢索</td><td>持續更新的追蹤看板</td></tr>
+<tr><td>其他</td><td class="pct">4.5%</td><td colspan="2">停下來，不要硬套——這一格的內容是偵測面，它會顯示這個值域還缺什麼</td></tr>
+</tbody>
+</table>
+</div>
+
+<p class="note"><b>Note</b>：「檔案／名冊檢索」是這一輪新增的第十格。兩支獨立的軌（歐美形式軌與題材母體軌）各自指出原本九格全部在描述資料之間的關係，沒有一格描述「不敘事、只提供查詢」的結構。</p>
+
+<div class="warn">
+<span class="tag">⚠ 密度低不等於重要性低</span>
+<p>「因果鏈」只佔 <span class="num">5.7%</span>，但那 5 筆全是該母體中最專業的機制題。而先前一次量測顯示：因果鏈章節的漏圖率是 <span class="num">83%</span>，而且沒有任何偵測機制。<strong>這一格不該按佔比分配注意力。</strong></p>
+</div>
+
+<h3>第二層：四道濾網，依序套</h3>
+
+<ol>
+<li>手機上讀不讀得完——本案的使用現場只有一個：傳連結過去，對方自己在手機上滑。</li>
+<li>素材我生不生得出來——程式化算圖與現成資料可行；實拍、3D、檔案影像要另外的條件。</li>
+<li>單檔 HTML 裝不裝得下——實測 30 條技術棧裡，需 build 的 15 條、需 CDN 的 12 條、真正零依賴的只有 3 條。</li>
+<li>這份東西能不能公開——GitHub Pages 上的單檔<em>就是全文公開，沒有權限層</em>。</li>
+</ol>
+
+<div class="warn">
+<span class="tag">⚠ 第一道濾網有硬證據，而且方向偏向保守</span>
+<p><strong>日經在手機上直接關掉捲動敘事。</strong>它的團隊技術文逐字寫著：「スマートフォン画面ではスクロールテリングを用いず、地図、写真、本文が縦に並ぶレイアウトになっています」——手機版不用捲動敘事，改成地圖、照片、內文縱向排列。</p>
+<p>頂級日媒沒有把捲動敘事在小螢幕修好，是在小螢幕換成另一個形式。而手機是本案唯一的使用現場。</p>
+</div>
+
+<h2>四、三個常被引用的數字，這一輪查證掉了</h2>
+
+<div class="tblwrap">
+<table>
+<thead><tr><th>常被引的說法</th><th>查證結果</th></tr></thead>
+<tbody>
+<tr><td>「只有 15% 讀者會點／85% 會忽略」，常掛在紐時 Archie Tse 名下</td><td>錯誤歸屬，而且含意被扭曲。下載他 2016 年原始投影片 PDF 轉成文字（103 行全文），裡面一個百分比都沒有。真源是 Gregor Aisch，而他 2017 年親自撰文更正過：那個數字量的是「某兩張 2015 年的圖裡多少人點了一顆按鈕」——那 85% 的讀者沒有忽略圖，只是沒點按鈕。</td></tr>
+<tr><td>視差傷害閱讀的「40%／超過 50%」，出處寫「WebAIM 調查」</td><td>確認虛構。WebAIM 已發表的調查只有螢幕閱讀器、從業者、低視力、肢體障礙、薪資五類，沒有前庭或動暈類。⚠ 搜尋引擎的摘要層會主動吐出這個假數字而且不附網址——那正是幻影引用的形狀。</td></tr>
+<tr><td>「Snow Fall 十六個人做六個月」</td><td>灌水版。製作者本人受訪時說掛名 14 人，而且「很多人有很長時間沒怎麼花時間在上面」。</td></tr>
+</tbody>
+</table>
+</div>
+
+<p>另有一條方向相反的更正：WCAG 2.3.3（互動動畫可停用）是 AAA 級不是 AA。所以「因為無障礙法規所以不能做視差」這個理由對一般網站不成立——AAA 從來不是通用目標。</p>
+
+<h2>五、效度邊界：把偏誤方向排開，比數是 3 比 4</h2>
+
+<div class="ledger">
+<div>
+<p class="col-title">讓「該用更多形式」更容易成立的</p>
+<ol>
+<li>19 條全來自沒擋爬蟲的四家，八家主表零條——樣本是「可爬取的媒體」不是「頂級媒體」。</li>
+<li>清單天生偏互動：靜態圖不會被當成數位敘事作品收進任何清單，所以靜態在樣本裡結構性缺席。</li>
+<li>六支軌裡只有一支被要求找「不該做的理由」，其餘五支的指令都是「找形式」。</li>
+</ol>
+</div>
+<div>
+<p class="col-title">讓「該用更多形式」更難成立的</p>
+<ol>
+<li>JAMIA 2024 回顧 181 篇機率視覺化研究，24 篇用互動或動畫，<strong>四類手法全部沒有穩定勝過靜態</strong>。</li>
+<li>日經在手機上關掉捲動敘事，而手機是本案唯一的使用現場。</li>
+<li>成本論證在一人作業下放大：產業基線一則長篇六個人。</li>
+<li>Distill.pub 2021 停止收稿，官方投稿頁逐字寫「often takes 100+ hours」，編輯另需 20 到 80 小時。⚠ 常被轉述的「等於 3 到 5 篇普通論文」<strong>查無出處</strong>，這一輪逐條回查官方公告、投稿規範、編輯復盤與作者原文都沒有——<strong>不能拿來當成本係數</strong>。</li>
+</ol>
+</div>
+</div>
+
+<p class="tally">3 : 4 — 方向偏保守</p>
+
+<p>這張表不是「應該多做互動」的證據。它是「手上這份材料有哪幾個選項」的清單。</p>
+
+<h2>六、最可操作的一條：那 45.5% 不該用捲動，該用步進器</h2>
+
+<p>Robert Kosara 2016 年對捲動敘事的批評，列了七種常見失敗，<strong>第一條就是「用連續捲動承載離散步驟」</strong>。他的判準可以直接搬：</p>
+
+<div class="card">
+<h3>若故事本質是離散的審核步驟，就用步進器</h3>
+<p>要有<strong>總步數、目前位置、可返回、可直接跳轉</strong>。只有在狀態確實連續、而且一般捲動仍然可預期的時候，才用捲動當控制軸。</p>
+<p class="source"><b>Source</b>：<code>eagereyes.org/blog/2016/the-scrollytelling-scourge</code></p>
+</div>
+
+<p>「離散對照」佔 45.5%，而那一格<em>按定義就是離散步驟</em>。所以它不只是「沒有對應形式」——它是<strong>用錯了形式會踩到 Kosara 第一條</strong>。</p>
+
+<h3>一人做這種東西要多久：三個尺度，不能平均也不能互換</h3>
+
+<div class="tblwrap">
+<table>
+<thead><tr><th>尺度</th><th>讀數</th><th>證據強度</th></tr></thead>
+<tbody>
+<tr><td>縮題的實驗</td><td>1 到 3 週。Explorables Jam 官方頁明列一批「3 weeks or less」完成的範例</td><td>一手·官方頁</td></tr>
+<tr><td>完整工具型互動解釋</td><td>3 個月。Nicky Case 在 LOOPY 發布文明說支持者陪他做「the last three months」</td><td>一手·作者自述</td></tr>
+<tr><td>Distill 級學術互動文章</td><td>官方明說 often takes 100+ hours，另加編輯 20 到 80 小時</td><td>一手·官方投稿頁</td></tr>
+</tbody>
+</table>
+</div>
+
+<p class="note"><b>Note</b>：Bartosz Ciechanowski 的單篇工時<strong>未公開</strong>——他的 archive 只能確認發布節奏（2021 年 3 篇、2022 年 3 篇、2023 年 1 篇、2024 年 2 篇），不能據此宣稱每篇花幾個月。他的製作評論全文在 Patreon 付費區，沒讀就沒引。</p>
+
+<p>另有兩條可以直接搬的做法，來自 Red Blob Games 的 Amit Patel：一般專案<strong>固定範圍、時間可變</strong>，實驗性專案<strong>固定時間、範圍可變</strong>，目標一週結束；技術上<em>能用 SVG 就優先用 SVG</em>，效能或影像需求才動 Canvas 與 WebGL，頁面採「互動島」，並讓沒有 JavaScript 時仍有靜態內容。</p>
+
+<h2>七、短期內會踩到的地雷</h2>
+
+<div class="card">
+<h3>MapLibre GL JS v6.0.0（2026-07-22）拿掉了 UMD build</h3>
+<p><code>main</code>、<code>browser</code>、<code>unpkg</code>、<code>jsdelivr</code> 四個欄位全是 <code>null</code>，<code>dist/</code> 只剩 <code>.mjs</code>。<strong>所有舊教學的 <code>&lt;script src&gt;</code> 寫法在 v6 直接失效。</strong>要做地圖，得釘死 <code>v5.24.0</code>，或改寫 importmap。three.js 的 <code>build/</code> 同樣只剩 ESM。</p>
+</div>
+
+<div class="card">
+<h3>D3 與 Observable Plot 都進入發版凍結</h3>
+<p>D3 最後一個 release 是 v7.9.0，2024-03-12（兩年半前）；Observable Plot 是 v0.6.17，2025-02-14，版號還在 0.6.x。兩者由同一批人維護，Plot 沒有取代 D3——分工是 Plot 打標準圖、D3 打自訂圖。</p>
+</div>
+
+<div class="card">
+<h3>誰的東西現在還抄得到</h3>
+<p>路透是現在真正在動的那家（鷹架、元件庫、發佈 CLI、Illustrator 橋接、QA harness 整條鏈，最後 push 2026-08-27）。The Pudding 的 <code>svelte-starter</code> 是 MIT，授權最乾淨。</p>
+<p>而 FT 已經凍結（元件庫的內容變更停在 2021，2025 那批 push 全是 CI 版本升級）、衛報的「圖表元件開源」實際上只有一個 1 顆星的元件庫、紐時 2024 年公開發佈的 repo 數是零。</p>
+</div>
+
+<h2>八、中文這一層：七分之七的共識</h2>
+
+<p>掃了 15 個中日韓文新聞頁，其中 7 個實際 render 過的頁面，<code>&lt;svg&gt;&lt;text&gt;</code> 的總數<strong>全部是 0</strong>——日經三頁、報導者、READr、NHK、中央日報。三條不同路線收斂到同一個結果：字留在 HTML 蓋在圖上、圖連字一起輸出成點陣圖、大標轉成外框路徑。</p>
+
+<p>NHK 甚至逐字命中常見的例外條款：它的 SVG 裡有日文，但只在 <code>aria-label</code>，渲染層零中日文。</p>
+
+<p>所以「圖裡不放字」這個核心設計決定，<strong>不是一家偏好，是七分之七的共識。</strong></p>
+
+<div class="warn">
+<span class="tag">⚠ 但中文字型有一個硬衝突</span>
+<p>報導者一個專題載了 5 個字重的思源系字型，實測合計 15.90 MB，零切片。而韓文的 Noto Sans KR 只要 0.19 MB——<span class="num">7.1</span> 倍的結構優勢，韓國站的字型做法不能照抄。</p>
+<p>Google Fonts 的 Noto Sans TC 有 105 個切片，每片 5 KB 到 33.5 KB——所以豆腐框是自己切的產物，不是切片機制的產物。但切片要連網，「self-contained 單檔」與「指定中文字型」在繁中是硬衝突。日經、NHK、端傳媒三家的解法都是不指定，用系統字，下載量零。</p>
+</div>
+
+<h2>九、這份報告本身在測這張表</h2>
+
+<p>這份東西的題材結構是「離散對照」——把幾種形式並排比。按表上第一順位，它該做成「可排序可篩選表 ＋ 旁邊一張圖」，而且四道濾網要全過。</p>
+
+<p>所以這一頁：一張純 CSS 橫條圖（零 SVG 座標，中文全在 HTML 層可以 grep）、幾張可橫向捲動的表、零外部依賴、沒有任何不能公開的數字。它是這次結論的第一個實例，也是第一次驗收。</p>
+
+</article>
+</main>
+
+<footer>
+<p>2026-08-31 · 六軌調研（歐美形式／工程技術棧／CJK 媒體／實際題材母體／反題軌／學術母體）＋ 一票異質模型的盲態掃描。</p>
+<p>六支軌的原始產出（19 條歐美形式／30 條技術棧／15 條 CJK 頁面／88 筆題材母體／26 條反題發現／學術分類學對照）保留在本地，未隨本頁公開。</p>
+<p>2026-08-31 · CC BY-NC 4.0 · 內部知識文件</p>
+<p><strong>本表零實戰使用</strong>——「第一順位」欄目前是推薦不是讀數。第一次真正的驗收，是拿一份真材料走一次判別式。</p>
+</footer>
+
+</div>
+</body>
+</html>
