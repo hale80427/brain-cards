@@ -1,0 +1,585 @@
+<!DOCTYPE html>
+<html lang="zh-Hant-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>階級差異的本質是七種可分別累積的資本</title>
+<meta name="description" content="《慣習》把隱形的階級差距拆成七種可分別觀測與累積的資本。拆解本身有用，但其中三軸其實共用同一條訊號經濟學。">
+<link rel="canonical" href="https://hale80427.github.io/brain-cards/habitus-seven-capitals/">
+<meta name="author" content="彥皓">
+<meta property="og:type" content="article">
+<meta property="og:title" content="階級差異的本質是七種可分別累積的資本">
+<meta property="og:description" content="《慣習》把隱形的階級差距拆成七種可分別觀測與累積的資本。拆解本身有用，但其中三軸其實共用同一條訊號經濟學。">
+<meta property="og:url" content="https://hale80427.github.io/brain-cards/habitus-seven-capitals/">
+<meta property="og:image" content="https://hale80427.github.io/brain-cards/og-default.jpg">
+<meta property="og:locale" content="zh_TW">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="階級差異的本質是七種可分別累積的資本">
+<meta name="twitter:description" content="《慣習》把隱形的階級差距拆成七種可分別觀測與累積的資本。拆解本身有用，但其中三軸其實共用同一條訊號經濟學。">
+<meta name="twitter:image" content="https://hale80427.github.io/brain-cards/og-default.jpg">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "階級差異的本質是七種可分別累積的資本",
+  "description": "《慣習》把隱形的階級差距拆成七種可分別觀測與累積的資本。拆解本身有用，但其中三軸其實共用同一條訊號經濟學。",
+  "datePublished": "2026-08-31",
+  "dateModified": "2026-08-31",
+  "author": { "@type": "Person", "name": "彥皓" },
+  "url": "https://hale80427.github.io/brain-cards/habitus-seven-capitals/",
+  "inLanguage": "zh-TW",
+  "license": "https://creativecommons.org/licenses/by/4.0/"
+}
+</script>
+<style>
+  :root {
+    --bg: oklch(98.4% 0.004 106.5);
+    --fg: oklch(21.8% 0 0);
+    --accent: oklch(54.3% 0.174 29.7);
+    --accent-warn: oklch(66.6% 0.157 58.3);
+    --muted: oklch(51.0% 0 0);
+    --border: oklch(92.1% 0.007 106.5);
+    --callout-tip: oklch(95.7% 0.014 174.2);
+    --callout-warn: oklch(96.9% 0.019 72.6);
+    --plate-bg: oklch(28.5% 0.055 251.4);
+    --plate-fg: oklch(96.0% 0.008 106.5);
+    --plate-dim: oklch(75.0% 0.021 251.4);
+    --plate-line: oklch(62.0% 0.030 251.4);
+    --sign-down: oklch(48.0% 0.140 25.0);
+    --sign-up: oklch(78.0% 0.130 155.0);
+    --fs-meta: 0.85rem;
+    --fs-body: 1rem;
+    --fs-h2:   clamp(1.3rem, 3vw, 1.5rem);
+    --fs-h1:   clamp(1.75rem, 4vw, 2.25rem);
+    --font-serif: "Noto Serif TC", Georgia, serif;
+    --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+    --ease-linear: linear;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: oklch(21.8% 0 0);
+      --fg: oklch(95.3% 0.011 106.6);
+      --accent: oklch(70.4% 0.136 28.7);
+      --accent-warn: oklch(76.9% 0.165 70.1);
+      --muted: oklch(68.3% 0 0);
+      --border: oklch(32.1% 0 0);
+      --callout-tip: oklch(30.9% 0.029 178.3);
+      --callout-warn: oklch(30.7% 0.034 73.5);
+    }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
+  }
+  * { box-sizing: border-box; }
+  body {
+    font-family: var(--font-serif);
+    background: var(--bg);
+    color: var(--fg);
+    line-height: 1.8;
+    margin: 0;
+    padding: 0;
+    -webkit-font-smoothing: antialiased;
+    text-autospace: normal;
+    font-synthesis: none;
+    line-break: strict;
+  }
+  .progress-bar {
+    position: fixed; top: 0; left: 0; height: 3px; width: 100%;
+    background: var(--accent); z-index: 100;
+    transform: scaleX(0); transform-origin: left;
+    transition: transform 0.1s var(--ease-linear);
+  }
+  main, main > article {
+    display: grid;
+    grid-template-columns:
+      [full-start] minmax(1rem, 1fr)
+      [wide-start] minmax(0, 130px)
+      [content-start] minmax(0, 680px) [content-end]
+      minmax(0, 130px) [wide-end]
+      minmax(1rem, 1fr) [full-end];
+  }
+  main { padding: clamp(2rem, 5vw, 4rem) 0; }
+  main > *, main > article > * { grid-column: content; }
+  main > article { grid-column: full; }
+  main > .wide, main > article > .wide { grid-column: wide; }
+  main > .full, main > article > .full { grid-column: full; }
+  @media (max-width: 1000px) {
+    main, main > article {
+      grid-template-columns:
+        [full-start] minmax(1rem, 1fr)
+        [wide-start content-start] minmax(0, 680px) [content-end wide-end]
+        minmax(1rem, 1fr) [full-end];
+    }
+  }
+  h1 { font-size: var(--fs-h1); line-height: 1.3; margin: 0 0 1rem; }
+  h2 { font-size: var(--fs-h2); line-height: 1.4; margin: 2.5rem 0 0.75rem; padding-bottom: 0.5rem; border-bottom: 1px solid var(--border); }
+  h3 { font-size: var(--fs-body); font-weight: 700; line-height: 1.4; margin: 1.75rem 0 0.5rem; color: var(--accent); }
+  p { margin: 0 0 1.25rem; }
+  a { color: var(--accent); text-underline-offset: 3px; }
+  a:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+  em { font-style: normal; font-weight: 600;
+       text-emphasis: filled dot; text-emphasis-position: under right;
+       -webkit-text-emphasis: filled dot; -webkit-text-emphasis-position: under right; }
+  em:lang(en) { font-style: italic; font-weight: inherit;
+                text-emphasis: none; -webkit-text-emphasis: none; }
+  .bluf { background: var(--callout-tip); border-left: 3px solid var(--accent); padding: 1.25rem 1.5rem; margin: 1.5rem 0 2rem; border-radius: 4px; }
+  .bluf strong.label { display: block; font-size: var(--fs-meta); letter-spacing: 0.05em; color: var(--accent); margin-bottom: 0.5rem; text-transform: uppercase; }
+  .callout { padding: 1rem 1.25rem; margin: 1.5rem 0; border-radius: 4px; border-left: 3px solid var(--muted); }
+  .callout.tip { background: var(--callout-tip); border-left-color: var(--accent); }
+  .callout.warn { background: var(--callout-warn); border-left-color: var(--accent-warn); }
+  .kicker { display: inline-block; font-size: var(--fs-meta); font-weight: 700;
+            letter-spacing: 0.1em; color: var(--accent); margin: 2.5rem 0 0; }
+  .kicker + h2 { margin-top: 0.4rem; border-bottom: none; padding-bottom: 0; }
+  .meta { font-size: var(--fs-meta); color: var(--muted); margin: 0 0 1.5rem; line-height: 1.7; }
+  .notesrc { font-size: var(--fs-meta); color: var(--muted); margin: 0.5rem 0 0; line-height: 1.7; }
+  .notesrc b { color: var(--fg); font-weight: 600; }
+  table { border-collapse: collapse; width: 100%; margin: 1.5rem 0; font-size: var(--fs-body); }
+  th, td { padding: 0.6rem 0.8rem; border: 1px solid var(--border); text-align: left; vertical-align: top; }
+  th { background: var(--callout-tip); font-weight: 600; }
+  code { font-family: var(--font-mono); background: var(--callout-tip); padding: 0.1em 0.4em; border-radius: 3px; font-size: var(--fs-body);
+         overflow-wrap: anywhere; word-break: break-word; }
+  .tbl { overflow-x: auto; margin: 1.5rem 0; min-width: 0; }
+  .tbl table { margin: 0; min-width: 560px; }
+  figure { margin: 1.5rem 0; }
+  figure img { width: 100%; height: auto; border-radius: 4px; display: block; }
+  figure svg { width: 100%; height: auto; display: block; }
+  figcaption { font-size: var(--fs-meta); color: var(--muted); margin-top: 0.5rem; text-align: center; }
+
+  /* === KB-10 元件 2：功能列 === */
+  .func-row { display: grid; grid-template-columns: repeat(auto-fit, minmax(13rem, 1fr));
+              gap: 1.25rem; margin: 1.5rem 0 0.5rem; padding: 1.25rem 0;
+              border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+  .func-row .fn { display: flex; gap: 0.75rem; align-items: flex-start; }
+  .func-row .fn svg { flex: 0 0 2rem; width: 2rem; height: 2rem; color: var(--accent); }
+  .func-row .fn .lbl { display: block; font-size: var(--fs-meta);
+                       letter-spacing: 0.06em; font-weight: 700; }
+  .func-row .fn .txt { display: block; font-size: var(--fs-meta); color: var(--muted);
+                       margin: 0.2rem 0 0; line-height: 1.6; }
+
+  /* === KB-10 元件 3：機制圖 === */
+  .flow { background: var(--plate-bg); border-radius: 6px; padding: 1.5rem 1.25rem; }
+  .flow-track { display: grid; gap: 0.5rem; margin-bottom: 1.25rem; }
+  .flow-track:last-of-type { margin-bottom: 0; }
+  .flow-track .path { display: flex; flex-wrap: wrap; align-items: center; gap: 0.5rem; }
+  .flow-track .node { background: var(--plate-line); color: var(--plate-fg);
+                      font-size: var(--fs-meta); line-height: 1.4;
+                      padding: 0.4rem 0.7rem; border-radius: 4px; }
+  .flow-track .arrow { flex: 0 0 1.4rem; width: 1.4rem; height: 0.85rem; color: var(--plate-dim); }
+  .flow-track .arrow svg { width: 100%; height: 100%; display: block; }
+  .flow-track .sign { font-size: var(--fs-meta); font-weight: 700;
+                      padding: 0.4rem 0.7rem; border-radius: 4px; }
+  .flow-track .down { background: var(--sign-down); color: var(--plate-fg); }
+  .flow-track .up   { background: var(--sign-up);   color: var(--plate-bg); }
+  .flow-track > .lbl { font-size: var(--fs-meta); color: var(--plate-dim);
+                       letter-spacing: 0.06em; font-weight: 700; }
+  .flow-legend { display: flex; flex-wrap: wrap; gap: 1.25rem; margin-top: 1.25rem;
+                 padding-top: 1rem; border-top: 1px solid var(--plate-line);
+                 font-size: var(--fs-meta); color: var(--plate-dim); }
+  .flow-legend span { display: flex; align-items: center; gap: 0.45rem; }
+  .flow-legend i { width: 0.8rem; height: 0.8rem; border-radius: 2px; display: inline-block; }
+  .flow-legend .sw-down { background: var(--sign-down); }
+  .flow-legend .sw-up { background: var(--sign-up); }
+
+  /* === KB-10 元件 4：同 schema 卡片牆 === */
+  .schema-wall { display: grid; grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr));
+                 gap: 1rem; margin: 1.5rem 0; }
+  .schema-wall .card { background: var(--plate-bg); color: var(--plate-fg);
+                       border-radius: 6px; padding: 1rem 1.1rem; }
+  .schema-wall .card > .lbl { display: block; font-size: var(--fs-meta);
+                              letter-spacing: 0.06em; font-weight: 700; margin-bottom: 0.75rem; }
+  .schema-wall .card > .num { float: right; font-size: var(--fs-meta); color: var(--plate-dim); }
+  .schema-wall dl { margin: 0; display: grid; gap: 0.6rem; }
+  .schema-wall dt { font-size: var(--fs-meta); color: var(--plate-dim); letter-spacing: 0.04em; }
+  .schema-wall dd { font-size: var(--fs-meta); line-height: 1.55; margin: 0.1rem 0 0; }
+  .schema-wall .sep { border-top: 1px solid var(--plate-line); padding-top: 0.6rem; }
+
+  /* === KB-10 元件 5：側欄三卡 === */
+  .side-cards { display: grid; gap: 1rem; margin: 2rem 0; }
+  @media (min-width: 760px) { .side-cards { grid-template-columns: repeat(3, 1fr); } }
+  .side-cards .sc { border: 1px solid var(--border); border-radius: 6px; padding: 1rem 1.1rem; }
+  .side-cards .sc .lbl { display: block; font-size: var(--fs-meta); letter-spacing: 0.06em;
+                         font-weight: 700; color: var(--accent); margin-bottom: 0.5rem; }
+  .side-cards .sc .txt { display: block; font-size: var(--fs-meta); line-height: 1.65;
+                         margin: 0; color: var(--muted); }
+  .side-cards .ask { background: var(--callout-warn); border-color: var(--accent-warn); }
+  .side-cards .ask .lbl { color: var(--accent-warn); }
+
+  /* === 圖表：圖說標籤層（零 CJK 在 SVG 內，全部走 HTML）=== */
+  .chart-legend { display: flex; flex-wrap: wrap; gap: 1.25rem; margin-top: 0.75rem;
+                  font-size: var(--fs-meta); color: var(--muted); }
+  .chart-legend span { display: flex; align-items: center; gap: 0.45rem; }
+  .chart-legend i { width: 1.4rem; height: 0.2rem; border-radius: 2px; display: inline-block; }
+  .chart-legend .sw-cap { background: var(--sign-up); }
+  .chart-legend .sw-hab { background: var(--accent); }
+  .chart-legend .sw-gap { background: var(--plate-line); height: 0.8rem; width: 0.8rem; }
+  .axis-note { display: flex; justify-content: space-between; font-size: var(--fs-meta);
+               color: var(--muted); margin-top: 0.4rem; }
+  footer p { color: var(--muted); font-size: var(--fs-meta); margin-top: 4rem;
+             padding-top: 1.5rem; border-top: 1px solid var(--border); }
+  @media print {
+    .progress-bar { display: none; }
+    body { line-height: 1.6; }
+    main { padding: 1cm; }
+  }
+</style>
+</head>
+<body>
+<div class="progress-bar" id="progress"></div>
+<main>
+<header>
+<h1>階級差異的本質是七種可分別累積的資本</h1>
+<div class="meta">2026-08-31 ・ 素材：《慣習》說書影片（下一本讀什麼，24 分鐘）＋ 第二大腦既有卡群跨域合成 ・ 全篇約 4,200 字</div>
+<div class="bluf">
+<strong class="label">BLUF</strong>
+<p>「氣質不一樣」這種描述準確但不能操作。《慣習》把它拆成七個可分別觀測與累積的資本，拆解本身就是全部的價值——差距從一句感嘆變成一張可逐項打分的清單。</p>
+<p>但把七軸逐一對照之後浮出一件框架自己沒說的事：<em>其中至少三軸共用同一條規則</em>，那條規則是訊號的說服力由生產成本定價，與音量無關。這代表在那條規則上投資一次，三軸同時受益；而分別在三軸上做表面動作，一軸都不會累積。</p>
+</div>
+</header>
+<article>
+<!-- narrative: 矛盾, 物件, 直接引語, 細節 -->
+
+<span class="kicker">【框架】</span>
+<h2>七種資本：把隱形的東西變成清單</h2>
+
+<p>《慣習》這個書名是把「習慣」兩字倒過來寫，指的不是同一件事。</p>
+
+<p>它的定義是：一個人在特定社會環境中形成的<em>思維模式、行為習慣與價值觀念</em>。書的核心操作，是把這組看不見的東西拆成七個可以分別累積的資本項。</p>
+
+<p>拆解為什麼有用？因為它讓「我跟他差在哪」從整體降到分量。整體無法行動，分量可以。</p>
+
+<p>判斷一個分類法有沒有價值，看三件事：各軸能不能分別觀測、能不能分別累積、注意力分佈跟重要性有沒有錯配。七軸三項都過。</p>
+
+<div class="schema-wall">
+  <div class="card">
+    <span class="num">01</span><span class="lbl">知識資本</span>
+    <dl>
+      <dt>內涵</dt><dd>專業能力、學歷背景、解決問題的能力</dd>
+      <dt class="sep">為什麼常被高估</dt><dd>它是唯一從小被教、被考、被打分的一軸，所以注意力天然集中在這裡</dd>
+    </dl>
+  </div>
+  <div class="card">
+    <span class="num">02</span><span class="lbl">物質資本</span>
+    <dl>
+      <dt>內涵</dt><dd>金錢、房產、投資等有形財富</dd>
+      <dt class="sep">關鍵限定</dt><dd>它是七軸裡唯一能高速換成其他任何一軸的資本，所以角色是媒介而非目的</dd>
+    </dl>
+  </div>
+  <div class="card">
+    <span class="num">03</span><span class="lbl">社會資本</span>
+    <dl>
+      <dt>內涵</dt><dd>人脈網絡、社交圈子、人際關係</dd>
+      <dt class="sep">機制</dt><dd>周遭的人會改寫你的默認值——別人覺得什麼正常、什麼值得追求，會傳染</dd>
+    </dl>
+  </div>
+  <div class="card">
+    <span class="num">04</span><span class="lbl">文化資本</span>
+    <dl>
+      <dt>內涵</dt><dd>品味、審美、對藝術與文化的理解</dd>
+      <dt class="sep">反直覺處</dt><dd>它幾乎不花錢，但花時間；而且水位越高越不外顯</dd>
+    </dl>
+  </div>
+  <div class="card">
+    <span class="num">05</span><span class="lbl">身體資本</span>
+    <dl>
+      <dt>內涵</dt><dd>外表、健康狀況、運動能力</dd>
+      <dt class="sep">真正的機制</dt><dd>它有效不是因為體能本身，是因為那個承諾偽造不了</dd>
+    </dl>
+  </div>
+  <div class="card">
+    <span class="num">06</span><span class="lbl">語言溝通資本</span>
+    <dl>
+      <dt>內涵</dt><dd>表達能力、說話技巧、溝通魅力</dd>
+      <dt class="sep">被忽略程度</dt><dd>七軸裡最常被跳過的一項，而它決定前面幾軸能不能被別人看見</dd>
+    </dl>
+  </div>
+  <div class="card">
+    <span class="num">07</span><span class="lbl">心理資本</span>
+    <dl>
+      <dt>內涵</dt><dd>自信心、韌性、對未來的掌控感</dd>
+      <dt class="sep">位階</dt><dd>其他六軸的建立都需要它當驅動力；不相信能改變，知道方法也不會動</dd>
+    </dl>
+  </div>
+</div>
+
+<p>影片點出的分佈問題比七軸本身更值得記：多數人只操作知識與物質兩軸，其餘五軸「有時候還更重要」。</p>
+
+<p>這解釋了隱形資本之所以隱形——<em>它們沒有被納入任何評量制度</em>，所以在成長環境裡從來沒有反饋訊號。不是神秘，是沒人量。</p>
+
+<div class="callout warn">
+<p><strong>七分法不是學界共識。</strong>Bourdieu 的原始框架通常談三到四種資本（經濟、文化、社會、象徵）。七分是這本書的擴充。它的價值在可操作性，不在理論地位——當行動清單成立，當學術引用不成立。</p>
+</div>
+
+<span class="kicker">【機制】</span>
+<h2>三軸其實是同一條訊號經濟學</h2>
+
+<p>把七軸逐一對照之後，會發現書把三件事放在三個不同的資本項下，各給一套說法，但三者算的是同一筆帳。</p>
+
+<div class="func-row">
+  <div class="fn">
+    <svg viewBox="0 0 40 40" role="img" aria-labelledby="i1"><title id="i1">知識資本的訊號規則</title>
+      <circle cx="20" cy="20" r="17" fill="none" stroke="currentColor" stroke-width="2"/>
+      <path d="M13 20 H27 M20 13 V27" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/>
+    </svg>
+    <div><span class="lbl">知識資本｜不張揚功績</span><span class="txt">功績清單可以誇大，所以可信度低；慣習無法臨時演出，所以可信度高。</span></div>
+  </div>
+  <div class="fn">
+    <svg viewBox="0 0 40 40" role="img" aria-labelledby="i2"><title id="i2">身體資本的訊號規則</title>
+      <circle cx="20" cy="20" r="17" fill="none" stroke="currentColor" stroke-width="2"/>
+      <path d="M12 24 L18 14 L24 26 L29 17" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+    <div><span class="lbl">身體資本｜馬拉松</span><span class="txt">它有效不是因為體能可觀，是因為那段訓練的成本無法在事後補付。</span></div>
+  </div>
+  <div class="fn">
+    <svg viewBox="0 0 40 40" role="img" aria-labelledby="i3"><title id="i3">語言溝通資本的訊號規則</title>
+      <circle cx="20" cy="20" r="17" fill="none" stroke="currentColor" stroke-width="2"/>
+      <path d="M12 17 H28 M12 23 H23" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/>
+    </svg>
+    <div><span class="lbl">語言溝通資本｜具體讚賞</span><span class="txt">「你做得很好」任何人都說得出口；指名到動作與影響的那一句，要求你真的看過。</span></div>
+  </div>
+</div>
+
+<p>三軸的操作建議之所以長得不一樣，只是因為它們在三個不同的載體上執行同一條規則：<em>訊號的說服力由它的生產成本定價，與它的音量無關</em>。</p>
+
+<p>書把這條規則切成了三塊互不相認的碎片，而三塊碎片各自都對。</p>
+
+<p>這對框架的使用方式有直接後果。七軸看起來像七條各自獨立的努力路線，於是最自然的用法是逐項打勾。</p>
+
+<p>但若其中三軸共用同一條上游規則，那麼在那條規則上投資一次，三軸同時受益。</p>
+
+<p>反過來，分別在三軸上做表面動作——背幾句讚美台詞、報名一場馬拉松、練習謙虛的措辭——則一軸都不會累積。那些動作的生產成本恰好被壓到最低，也就同時把訊號價值壓到最低。</p>
+
+<span class="kicker">【機制】</span>
+<h2>慣習有遲滯：資本一夜到位，身分不會</h2>
+
+<p>全片機制含量最高的一句在最後：<em>提升到上一個階層時，你必須在那裡生活一段時間，才能內化那個階層的慣習</em>。書把它叫做遲滯現象。</p>
+
+<p>它的結構很乾淨。外部資本是<strong>事件型變數</strong>——錄取通知、成交、升遷令都是離散事件，狀態切換不需要時間。</p>
+
+<p>慣習是<strong>存量型變數</strong>。它由長期重複的環境輸入累積而成，只能積分、不能賦值。</p>
+
+<p>兩者速度不同，中間必然出現一段「資本已到、慣習未到」的窗口。</p>
+
+<figure class="wide">
+  <svg viewBox="0 0 880 380" role="img" aria-labelledby="ft1 fd1">
+    <title id="ft1">資本與慣習兩條曲線的更新速度落差示意圖</title>
+    <desc id="fd1">橫軸是時間，縱軸是水位。綠色線代表外部資本，它在躍遷時刻垂直跳升到高位並保持水平。紅色線代表慣習，它從躍遷時刻開始緩慢斜向上升，經過一段時間後才追上綠線。兩線之間的灰色區域就是遲滯期，也就是不適應窗口。圖上另有一條垂直虛線標示躍遷發生的時刻。</desc>
+    <rect x="0" y="0" width="880" height="380" fill="var(--plate-bg)"/>
+    <g fill="none" stroke="var(--plate-line)" stroke-width="1">
+      <path d="M90 320 H820"/>
+      <path d="M90 320 V50"/>
+    </g>
+    <g fill="none" stroke="var(--plate-line)" stroke-width="0.7" stroke-dasharray="3 5" opacity="0.55">
+      <path d="M90 110 H820"/><path d="M90 215 H820"/>
+    </g>
+    <path d="M300 40 V345" fill="none" stroke="var(--plate-dim)" stroke-width="1.4" stroke-dasharray="6 5"/>
+    <path d="M90 290 L300 290 L300 110 L820 110" fill="none" stroke="var(--sign-up)" stroke-width="3.2" stroke-linejoin="round"/>
+    <path d="M90 290 L300 290 C420 288 540 200 640 130 C690 118 740 112 820 110" fill="none" stroke="var(--accent)" stroke-width="3.2" stroke-linejoin="round"/>
+    <path d="M300 290 L300 110 L820 110 C740 112 690 118 640 130 C540 200 420 288 300 290 Z" fill="var(--plate-line)" opacity="0.30"/>
+    <g fill="var(--plate-fg)">
+      <circle cx="300" cy="110" r="4.5"/><circle cx="300" cy="290" r="4.5"/><circle cx="700" cy="114" r="4.5"/>
+    </g>
+    <circle cx="300" cy="358" r="13" fill="var(--plate-fg)"/>
+    <text x="300" y="363" font-size="16" text-anchor="middle" fill="var(--plate-bg)">1</text>
+    <circle cx="490" cy="205" r="13" fill="var(--plate-fg)"/>
+    <text x="490" y="210" font-size="16" text-anchor="middle" fill="var(--plate-bg)">2</text>
+    <circle cx="700" cy="72" r="13" fill="var(--plate-fg)"/>
+    <text x="700" y="77" font-size="16" text-anchor="middle" fill="var(--plate-bg)">3</text>
+  </svg>
+  <div class="chart-legend">
+    <span><i class="sw-cap"></i>外部資本：事件型，一步到位</span>
+    <span><i class="sw-hab"></i>慣習：存量型，只能積分</span>
+    <span><i class="sw-gap"></i>遲滯期＝不適應窗口</span>
+  </div>
+  <div class="axis-note"><span>時間 →</span><span>① 躍遷時刻　② 落差最大處　③ 內化完成</span></div>
+  <figcaption><b>不適應期不是能力不足的證據，是兩個變數更新速度不同造成的必然落差。</b>
+    <span class="notesrc"><b>Note：</b>本圖為機制示意，不是量測數據。兩條曲線的形狀（資本為階躍、慣習為飽和上升）是從「事件型 vs 存量型」這組定義推導的，橫軸沒有真實時間刻度，縱軸沒有單位。遲滯期的實際長度未知，書與影片都未給出任何量化區間。</span>
+    <span class="notesrc"><b>Source：</b>遲滯概念出自《慣習》，經下一本讀什麼 YouTube 影片轉述（2026-08-29）；曲線形狀與雙變數拆解為本文推導。</span>
+  </figcaption>
+</figure>
+
+<p>這條的實用價值在於改變歸因。同一段不適應期，讀成「我不屬於這裡」會導致退回原位；讀成「更新中，需要時間」才會撐過去。</p>
+
+<p>兩種讀法產生完全相反的行動，而遲滯這個概念決定你採哪一種。</p>
+
+<p>還有兩條推論值得留下。</p>
+
+<p>其一，遲滯期<em>無法靠努力縮短到零，只能靠曝露時間</em>。想加速的正確動作，是增加在新環境的實際生活時間與互動密度，不是更用力表現。</p>
+
+<p>其二，<em>跳級越大，遲滯越長</em>。緩慢爬升的人每級落差都小到不被察覺；一次跳兩級的人會體驗到最劇烈的不適應。</p>
+
+<p>這也解釋了為什麼「暴富者的痛苦」與「快速晉升者的冒牌者感」在現象上長得一樣——它們是同一個機制。</p>
+
+<span class="kicker">【機制】</span>
+<h2>阻力來自同層，而且方向是可預測的</h2>
+
+<p>開始追求成長時遇到的阻力，主要不來自上層的守門，而來自身邊同層的人。影片用<strong>螃蟹效應</strong>描述它：桶裡的螃蟹本來爬得出去，但其他螃蟹會盡全力把它拉下來。</p>
+
+<p>這個現象常被誤讀成人性醜陋或運氣不好。它其實有一個乾淨的機制，而那個機制決定了正確的應對方式。</p>
+
+<p>同層的人不是在阻止你變好。是<em>你的改變重寫了他們的參照座標</em>。</p>
+
+<figure class="wide">
+  <div class="flow">
+    <div class="flow-track">
+      <span class="lbl">路徑一｜為什麼阻力來自同層</span>
+      <div class="path">
+        <span class="node">你開始移動</span>
+        <span class="arrow"><svg viewBox="0 0 28 17" role="img" aria-labelledby="a1"><title id="a1">導致</title>
+          <path d="M1 8.5 H22 M17 3.5 L23 8.5 L17 13.5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+        <span class="node">「這裡就是能到的地方」失效</span>
+        <span class="arrow"><svg viewBox="0 0 28 17" role="img" aria-labelledby="a2"><title id="a2">導致</title>
+          <path d="M1 8.5 H22 M17 3.5 L23 8.5 L17 13.5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+        <span class="node">留下的人失去解釋</span>
+        <span class="arrow"><svg viewBox="0 0 28 17" role="img" aria-labelledby="a3"><title id="a3">導致</title>
+          <path d="M1 8.5 H22 M17 3.5 L23 8.5 L17 13.5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+        <span class="node">把你拉回來是較便宜的選項</span>
+        <span class="sign down">對移動者為負</span>
+      </div>
+    </div>
+    <div class="flow-track">
+      <span class="lbl">路徑二｜為什麼上層反而不擋</span>
+      <div class="path">
+        <span class="node">你開始移動</span>
+        <span class="arrow"><svg viewBox="0 0 28 17" role="img" aria-labelledby="a4"><title id="a4">導致</title>
+          <path d="M1 8.5 H22 M17 3.5 L23 8.5 L17 13.5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+        <span class="node">上層的參照座標未被觸動</span>
+        <span class="arrow"><svg viewBox="0 0 28 17" role="img" aria-labelledby="a5"><title id="a5">導致</title>
+          <path d="M1 8.5 H22 M17 3.5 L23 8.5 L17 13.5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+        <span class="node">多一個同類反而有利</span>
+        <span class="sign up">對移動者為正</span>
+      </div>
+    </div>
+    <div class="flow-track">
+      <span class="lbl">路徑三｜正確的對策不是說服</span>
+      <div class="path">
+        <span class="node">換掉參照系</span>
+        <span class="arrow"><svg viewBox="0 0 28 17" role="img" aria-labelledby="a6"><title id="a6">導致</title>
+          <path d="M1 8.5 H22 M17 3.5 L23 8.5 L17 13.5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+        <span class="node">新環境的默認值重新積分</span>
+        <span class="arrow"><svg viewBox="0 0 28 17" role="img" aria-labelledby="a7"><title id="a7">導致</title>
+          <path d="M1 8.5 H22 M17 3.5 L23 8.5 L17 13.5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+        <span class="node">慣習被引導到期望的方向</span>
+        <span class="sign up">對移動者為正</span>
+      </div>
+    </div>
+    <div class="flow-legend">
+      <span><i class="sw-down"></i>對向上流動為負</span>
+      <span><i class="sw-up"></i>對向上流動為正</span>
+    </div>
+  </div>
+  <figcaption><b>勸說沒有用，因為你不可能靠說服讓對方接受一個會讓他難受的證據——換座標才有用。</b>
+    <span class="notesrc"><b>Note：</b>三條路徑皆為機制推導，非實證測量。「阻力主要來自同層而非上層」這個方向性是本文最強也最未經驗證的一條，尚未找到獨立來源支持。</span>
+    <span class="notesrc"><b>Source：</b>螃蟹效應與「身邊都是正確的榜樣」的對策出自《慣習》經影片轉述；三條路徑的拆解為本文推導。</span>
+  </figcaption>
+</figure>
+
+<div class="callout warn">
+<p><strong>這條有一張太方便的免責卡，要先拆掉。</strong>影片的說法是「真正有見識的人會支持你，批評你的人是因為你的改變讓他們不安」。這句話在機制上成立，但用它解釋所有批評，會把有價值的反對意見一併過濾掉。</p>
+<p>判準應該是<em>內容而非位置</em>——看那個批評有沒有指出具體的失效點，不看它從哪一層來。有，就聽；沒有，那多半在講他自己。</p>
+</div>
+
+<span class="kicker">【對照】</span>
+<h2>兩句互相矛盾的話，其實是分層沒對齊</h2>
+
+<p>《慣習》說沒有不能改變的慣習，人是會蛻變的。而另一條在成長主題上同樣站得住的說法是：可塑性有天生邊界，翻轉本質的邊際報酬趨近於零，槓桿在對位而非改造。兩句並排讀是直接衝突。</p>
+
+<p>化解的方式是把「可改變性」拆成兩層。</p>
+
+<div class="tbl">
+<table>
+<thead><tr><th>層</th><th>指什麼</th><th>可改變性</th><th>改變的方式</th></tr></thead>
+<tbody>
+<tr><td><strong>生物層</strong>（設定點）</td><td>敏感度、人格傾向、韌性上限</td><td>有硬邊界，只能界內微調</td><td>對位情境——把這塊料放到讓它最值錢的地方</td></tr>
+<tr><td><strong>社會層</strong>（慣習）</td><td>特定環境形成的思維模式、行為習慣、價值觀念</td><td>可被重寫，無硬上界</td><td>換環境，讓新的輸入重新積分</td></tr>
+</tbody>
+</table>
+</div>
+
+<p>兩張說法各自說對了自己那一層。衝突來自雙方都用了「本質」這個詞去指不同的東西。</p>
+
+<p>分層一旦成立，遲滯那一段就補上了缺的時間軸——社會層雖可重寫，但重寫的方式只有一種：在新環境裡實際待著。</p>
+
+<p>三段接起來是一條完整的因果鏈：<em>社會層可改（機制）→ 只能靠曝露時間改（成本）→ 舊環境會在那段時間裡把你往回拉（阻力）</em>。</p>
+
+<p>所以換環境不是加速手段。它是這條鏈能不能跑完的前提。</p>
+
+<div class="callout tip">
+<p><strong>這個分層是推論，不是發現。</strong>它可以被一個乾淨的反例推翻——找到一個確實被快速重寫的生物層特質，或一個怎麼曝露都改不動的社會層慣習。</p>
+<p>在拿到那個反例之前，它只能當作對兩句衝突的暫定調解，不得引用為結論。</p>
+</div>
+
+<span class="kicker">【複盤】</span>
+<h2>影片裡最不該照抄的兩個數字</h2>
+
+<p>這份材料的可信度是三層結構，每層不同：書中原始主張（經說書人轉述、未回讀原書）、書中引用的研究與統計（雙重二手，且影片未給任何出處）、說書人自己的體悟（觀點非證據）。</p>
+
+<p>第二層有兩處必須點名。</p>
+
+<h3>其一：開頭那個心理實驗</h3>
+
+<p>實驗設計是把家庭與教育環境較差的大學新生分兩組。一組教「你成績不好可能有哪些原因、怎麼解決」，另一組教學生分析自己的家庭背景。</p>
+
+<p>影片說第二組學年結束時成績變好，甚至與中上階層同學一樣優秀。</p>
+
+<p>問題在於<em>影片根本沒有報第一組的結果</em>。只有一組結果的實驗無法排除其他解釋。</p>
+
+<p>加上無研究者姓名、無樣本數、無出處，這個案例不足以支撐「意識到出身劣勢就能提升成績」這個因果。</p>
+
+<h3>其二：70% 對 3% 的訂目標數據</h3>
+
+<p>影片引述：70% 的有錢人每年至少訂下一個重大目標，只有 3% 的窮人會訂目標。據此推論，有錢人財務收穫更多是因為遵循計劃，不是因為更聰明。</p>
+
+<p>這組數字沒有出處、沒有抽樣方式、沒有「有錢／窮」的操作型定義。</p>
+
+<p>而且最關鍵的<em>反向因果從未被排除</em>——是訂目標讓人變有錢，還是有餘裕的人才訂得起目標？</p>
+
+<p>在一個明天的收入還不確定的處境裡，訂年度目標本身就是一種奢侈品。</p>
+
+<div class="callout warn">
+<p><strong>這兩項一律不得進任何對外文件。</strong>它們在影片裡承擔了最重的說服功能——一個證明「出身可以克服」，一個證明「差別在計劃不在智商」——而恰好是兩處最經不起追問的地方。要用，得先回到一手研究。</p>
+</div>
+
+<aside class="side-cards">
+  <div class="sc"><span class="lbl">關鍵前提</span><span class="txt">「慣習」是把習慣兩字倒過來寫，不是同一件事。它指特定社會環境寫進個人身上的默認設定，包含思維模式、行為習慣與價值觀念三者。不先接受這個定義，整篇會讀成勵志文。</span></div>
+  <div class="sc"><span class="lbl">邊界條件</span><span class="txt">「不張揚才是高位標記」綁定特定文化。在需要主動自薦的市場、或明確以成果排序的環境，壓抑功績可能直接被讀成沒有成果。這一條書與影片都沒處理。</span></div>
+  <div class="sc ask"><span class="lbl">待驗證點</span><span class="txt">如果隱形資本的價值來自稀缺，那大規模教人累積它會不會讓它貶值？這本書的讀者設定（為中等階層而寫、不是為前 3% 精英）恰好把這個問題推到最前面，而全片沒有碰它。</span></div>
+</aside>
+
+<span class="kicker">【收束】</span>
+<h2>可以只帶走三句</h2>
+
+<p><strong>第一，七軸清單裡有三件是同一件事。</strong>那件事不是任何一種技巧，是讓別人看到的東西真的有付出過代價。</p>
+
+<p>對已經在做實事的人來說，缺的往往只是讓它被看見的最後一步，而不是再多學一套展現方法。</p>
+
+<p><strong>第二，錢的數字只設上限，兌換才決定報酬。</strong>未兌換的物質資本只是待機的購買力。</p>
+
+<p>買奢侈品是平價交換：付出購買力，換回一個折舊中的物件。</p>
+
+<p>買課程、請教練、旅行體驗、進入高品質的場合則是跨資本兌換——購買力減少，但另外幾軸有存量增加。</p>
+
+<p><strong>第三，那段彆扭是計時器在跑，不是判決書已下。</strong>每進一個新領域都是一次跨場域移動，每次都會經歷一段資本已到、慣習未到的窗口。</p>
+
+<p>這條的用處不是加速那段窗口，是在窗口裡認得出它是什麼。</p>
+
+<p>因為人在那時最容易做的事，是把「我在這裡很彆扭」讀成「我不配在這裡」，然後主動退回去——而退回去恰好中止了唯一能消除遲滯的東西：待著。</p>
+
+<p>影片最後拋了一個問題，值得原樣留下：<em>如果可以重新設計自己的人生，你會優先提升哪一種資本？為什麼？</em></p>
+
+</article>
+<footer>
+<p>最後更新：2026-08-31 ・ CC BY 4.0 ・ 引用請標來源<br>
+素材來源：YouTube 影片《階級差異的本質是什麼？》（下一本讀什麼，2026-08-29，24 分鐘，人工字幕 zh-TW）。書名原文與作者姓名影片全程未報，故本文所有《慣習》相關敘述皆為二手轉述、未回讀原書。</p>
+</footer>
+</main>
+<script>
+  const bar = document.getElementById('progress');
+  window.addEventListener('scroll', () => {
+    const h = document.documentElement;
+    const max = h.scrollHeight - h.clientHeight;
+    const ratio = max > 0 ? h.scrollTop / max : 0;
+    bar.style.transform = 'scaleX(' + ratio + ')';
+  }, { passive: true });
+</script>
+</body>
+</html>
