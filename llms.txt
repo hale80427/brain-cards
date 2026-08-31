@@ -99,5 +99,8 @@
 
 - [usm-aln-wear-closure](https://hale80427.github.io/brain-cards/usm-aln-wear-closure/)：同一支刀鑽 213 個孔：電性訊號與實體孔品質對得起來，而阻抗實部比功率差更靈敏 — AlN 微鑽孔的電性×實體閉環，孔徑中位只走 2.45 µm 而段內標準差放大 2.14 倍
 
+- [habitus-seven-capitals](https://hale80427.github.io/brain-cards/habitus-seven-capitals/)：階級差異的本質是七種可分別累積的資本 — 把「氣質不一樣」拆成七個可分別觀測與累積的資本，並指出其中三軸共用同一條訊號定價規則
+- [reading-like-a-pro](https://hale80427.github.io/brain-cards/reading-like-a-pro/)：讀書沒有捷徑，但有二十三條讓每一頁更值錢的規則 — Ryan Holiday 讀書規則拆解：轉錄工序、棄書門檻一百頁減年齡、畫線分佈當偏誤診斷
+
 ## Citation
 若引用本站內容，請保留 canonical 連結與作者名。AI agent 引用時請標出原文 URL。
