@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>製程步驟越多，變異就越難壓：自己拉拉看</title>
+<meta name="description" content="拖三根滑桿，看製程步驟數與單步變異怎麼合成總變異與製程能力。">
+<style>
+:root{
+  --bg:#fbfaf8; --ink:#1c1a17; --ink-2:#57524a; --ink-3:#746e64;
+  --line:#d9d3c8; --card:#ffffff; --card-2:#f4f1ea;
+  --accent:#8a5a2b; --good:#2f6b4f; --bad:#8a2f2f;
+  --curve:#8a5a2b; --spec:#2f6b4f; --fill:rgba(138,90,43,.16);
+  color-scheme:light dark;
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --bg:#14130f; --ink:#eeeae2; --ink-2:#b3ab9d; --ink-3:#8f8779;
+    --line:#37332c; --card:#1c1a15; --card-2:#242019;
+    --accent:#d8a56a; --good:#7fc9a2; --bad:#d88a8a;
+    --curve:#d8a56a; --spec:#7fc9a2; --fill:rgba(216,165,106,.20);
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#14130f; --ink:#eeeae2; --ink-2:#b3ab9d; --ink-3:#8f8779;
+  --line:#37332c; --card:#1c1a15; --card-2:#242019;
+  --accent:#d8a56a; --good:#7fc9a2; --bad:#d88a8a;
+  --curve:#d8a56a; --spec:#7fc9a2; --fill:rgba(216,165,106,.20);
+}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{
+  margin:0; background:var(--bg); color:var(--ink);
+  font:400 17px/1.75 "Noto Sans TC","PingFang TC","Hiragino Sans CJK TC","Microsoft JhengHei",system-ui,sans-serif;
+  text-wrap:pretty;
+}
+.wrap{max-width:44rem; margin:0 auto; padding:2rem 1.1rem 5rem}
+.kicker{font-size:.82rem; letter-spacing:.09em; text-transform:uppercase; color:var(--ink-3); margin:0 0 .6rem}
+h1{font-size:1.62rem; line-height:1.35; letter-spacing:-.01em; margin:0 0 .5rem; text-wrap:balance}
+h2{font-size:1.12rem; margin:2.4rem 0 .7rem; text-wrap:balance}
+p{margin:0 0 1rem}
+.bluf{background:var(--card-2); border-left:3px solid var(--accent); padding:.85rem 1rem; border-radius:0 6px 6px 0; margin:1.3rem 0 1.8rem}
+.bluf p{margin:0}
+
+/* ── 圖：canvas 只畫線，所有中文在 HTML 層 ─── */
+figure{margin:1.6rem 0 2rem}
+.stage{position:relative; background:var(--card); border:1px solid var(--line); border-radius:10px; padding:.9rem .8rem .5rem}
+canvas{display:block; width:100%; height:200px}
+.stage{padding-bottom:.7rem}
+.axrow{display:flex; justify-content:space-between; align-items:baseline;
+  font-size:.74rem; color:var(--ink-3); padding:0 .1rem}
+.axrow.top{margin:0 0 .3rem}
+.axrow.bot{margin:.15rem 0 0}
+/* 標籤全部走流內 flex，不用絕對定位 ⇒ 結構上不可能互相碰撞 */
+.axrow.bot span.spec{color:var(--spec)}
+.axrow.bot{gap:.5rem}
+
+/* ── 控制列：手機上一根一列，觸控目標夠大 ─── */
+.controls{margin:1.1rem 0 0; padding:0; border:0}
+.ctl{display:block; margin:0 0 1.15rem}
+.ctl .row{display:flex; justify-content:space-between; align-items:baseline; gap:.6rem; margin:0 0 .3rem}
+.ctl .name{font-size:.92rem; color:var(--ink-2)}
+.ctl .val{font-variant-numeric:tabular-nums; font-weight:600; font-size:1rem}
+input[type=range]{
+  -webkit-appearance:none; appearance:none; width:100%; height:44px;
+  background:transparent; margin:0; display:block; cursor:pointer;
+}
+input[type=range]::-webkit-slider-runnable-track{height:4px; background:var(--line); border-radius:2px}
+input[type=range]::-moz-range-track{height:4px; background:var(--line); border-radius:2px}
+input[type=range]::-webkit-slider-thumb{
+  -webkit-appearance:none; appearance:none; width:26px; height:26px; border-radius:50%;
+  background:var(--accent); border:3px solid var(--card); margin-top:-11px;
+  box-shadow:0 1px 4px rgba(0,0,0,.22);
+}
+input[type=range]::-moz-range-thumb{
+  width:20px; height:20px; border-radius:50%; background:var(--accent);
+  border:3px solid var(--card); box-shadow:0 1px 4px rgba(0,0,0,.22);
+}
+input[type=range]:focus-visible{outline:2px solid var(--accent); outline-offset:4px}
+
+/* ── 讀數與對答案 ───────────────────── */
+.readout{display:grid; grid-template-columns:1fr 1fr; gap:.55rem; margin:.4rem 0 0}
+.cell{background:var(--card-2); border-radius:8px; padding:.6rem .7rem}
+.cell .lab{font-size:.76rem; color:var(--ink-3); display:block; margin-bottom:.15rem}
+.cell .num{font-variant-numeric:tabular-nums; font-size:1.22rem; font-weight:600; line-height:1.3}
+.cell .num.good{color:var(--good)} .cell .num.bad{color:var(--bad)}
+.cell .unit{font-size:.78rem; font-weight:400; color:var(--ink-3); margin-left:.15rem}
+
+.check{margin:1.4rem 0 0; padding:.85rem 1rem; border:1px dashed var(--line); border-radius:8px; background:var(--card)}
+.check h3{margin:0 0 .45rem; font-size:.95rem}
+.check p{margin:0 0 .5rem; font-size:.9rem; color:var(--ink-2)}
+.check .verdict{font-size:.92rem; font-weight:600}
+.check .verdict.pass{color:var(--good)} .check .verdict.fail{color:var(--bad)}
+button.reset{
+  font:inherit; font-size:.86rem; padding:.42rem .8rem; min-height:38px;
+  background:var(--card-2); color:var(--ink); border:1px solid var(--line);
+  border-radius:6px; cursor:pointer;
+}
+button.reset:hover{border-color:var(--accent)}
+
+figcaption{font-size:.9rem; line-height:1.65; color:var(--ink-2); margin-top:.9rem}
+.notesrc{font-size:.78rem; line-height:1.7; color:var(--ink-3); margin:.55rem 0 0}
+.notesrc b{color:var(--ink-2); font-weight:600}
+hr{border:0; border-top:1px solid var(--line); margin:2.4rem 0}
+.foot{font-size:.8rem; color:var(--ink-3); line-height:1.75}
+code{font-family:ui-monospace,SFMono-Regular,Menlo,monospace; font-size:.86em; background:var(--card-2); padding:.05em .3em; border-radius:3px}
+.nojs{background:var(--card-2); border-left:3px solid var(--bad); padding:.8rem 1rem; border-radius:0 6px 6px 0}
+
+@media (max-width:420px){
+  body{font-size:16px}
+  .wrap{padding:1.4rem .85rem 4rem}
+  h1{font-size:1.42rem}
+  .readout{grid-template-columns:1fr}
+}
+@media (prefers-reduced-motion:reduce){*{animation:none!important; transition:none!important}}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<p class="kicker">參數可調解釋器骨架 · 首例</p>
+<h1>製程步驟每多一道，總變異就往外推一點——而規格窗不會跟著變寬</h1>
+
+<div class="bluf">
+<p>Lam Research 在論壇上說製程複雜度是良率的主要限制之一。這一頁把那句話變成<strong>你可以拉的三根滑桿</strong>：把步驟數往上拉，看總變異怎麼吃掉規格窗。</p>
+</div>
+
+<figure>
+<div class="stage">
+  <p class="axrow top"><span>縱軸：機率密度</span></p>
+  <canvas id="cv" width="800" height="400" role="img"
+    aria-label="常態分佈曲線與規格上下限，隨滑桿參數即時重畫"></canvas>
+  <p class="axrow bot">
+    <span class="spec">◂ 規格下限</span>
+    <span>橫軸：量測值偏差</span>
+    <span class="spec">規格上限 ▸</span>
+  </p>
+</div>
+
+<noscript><p class="nojs">這一頁的圖需要 JavaScript 才會動。關閉時你看到的是空白畫布——這是已知限制，見下方失效點 F4。</p></noscript>
+
+<fieldset class="controls">
+  <label class="ctl" for="n">
+    <span class="row"><span class="name">製程步驟數</span><span class="val" id="nOut">3</span></span>
+    <input type="range" id="n" min="1" max="24" step="1" value="3">
+  </label>
+  <label class="ctl" for="s">
+    <span class="row"><span class="name">單一步驟的標準差 σ</span><span class="val" id="sOut">1.00</span></span>
+    <input type="range" id="s" min="0.1" max="2" step="0.05" value="1">
+  </label>
+  <label class="ctl" for="t">
+    <span class="row"><span class="name">規格半寬 T</span><span class="val" id="tOut">6.00</span></span>
+    <input type="range" id="t" min="1" max="12" step="0.1" value="6">
+  </label>
+</fieldset>
+
+<div class="readout">
+  <div class="cell"><span class="lab">總標準差 σ<sub>總</sub></span><span class="num" id="stOut">1.7321</span></div>
+  <div class="cell"><span class="lab">製程能力 Cp</span><span class="num" id="cpOut">1.1547</span></div>
+  <div class="cell"><span class="lab">落在規格內</span><span class="num" id="yOut">99.9468<span class="unit">%</span></span></div>
+  <div class="cell"><span class="lab">每百萬件不良</span><span class="num" id="ppmOut">532<span class="unit">ppm</span></span></div>
+</div>
+
+<div class="check">
+  <h3>對答案（這一格是骨架的驗收面，不是裝飾）</h3>
+  <p>已知算例：步驟數 3、單步 σ = 1.00、規格半寬 T = 6.00 時，
+     σ<sub>總</sub> = √3 = <strong>1.7321</strong>、Cp = 6 ÷ (3 × 1.7321) = <strong>1.1547</strong>。</p>
+  <p class="verdict" id="checkOut">—</p>
+  <button class="reset" id="reset" type="button">回到已知算例</button>
+</div>
+
+<figcaption><strong>把步驟數從 3 拉到 12，總變異變成 2 倍，而規格窗一動也沒動——這就是「製程複雜度限制良率」那句話的形狀。</strong></figcaption>
+
+<p class="notesrc"><b>Note：</b>本頁用的是最簡模型——假設各步驟變異獨立、同分佈、常態，總變異取平方和開根號（σ<sub>總</sub> = σ√n）。<b>真實製程不滿足這三個假設</b>：步驟之間有耦合、分佈常有偏態、且有系統性偏移。良率用 2Φ(3Cp) − 1 計算，只算變異不算中心偏移（未計 Cpk）。<b>這是骨架的示範資料，不是任何一家 fab 的真實讀數。</b></p>
+<p class="notesrc"><b>Source：</b>模型出發點取自 Joseph Ervin（Lam Research）於 SEMICON 2026 高科技智慧製造論壇談製程複雜度與變異的段落。<b>逐字引文留在本機轉錄稿，未上公開網</b>——該場錄音未經官方釋出，公開頁只保留出處不引原句。數值全部由本頁即時計算，無外部資料。</p>
+</figure>
+
+<hr>
+
+<p class="foot">這一頁是<strong>參數可調解釋器骨架</strong>的首例。骨架本體與失效點清單見 <code>KB-15_parameter-explorer-skeleton.md</code>。<code>canvas</code> 內<strong>零中文</strong>——所有中文標籤都在 HTML 層絕對定位，可以 <code>grep</code>、改字不必重畫、不隨畫布縮放被壓成 7px。</p>
+
+</div>
+
+<script>
+(function(){
+  "use strict";
+  var cv=document.getElementById("cv"), ctx=cv.getContext("2d");
+  var el={n:document.getElementById("n"),s:document.getElementById("s"),t:document.getElementById("t")};
+  var out={n:document.getElementById("nOut"),s:document.getElementById("sOut"),t:document.getElementById("tOut"),
+           st:document.getElementById("stOut"),cp:document.getElementById("cpOut"),
+           y:document.getElementById("yOut"),ppm:document.getElementById("ppmOut"),
+           chk:document.getElementById("checkOut")};
+
+  // 標準常態累積分佈：Abramowitz & Stegun 26.2.17，絕對誤差 < 7.5e-8
+  function Phi(x){
+    var s=x<0?-1:1; x=Math.abs(x)/Math.SQRT2;
+    var t=1/(1+0.3275911*x);
+    var y=1-(((((1.061405429*t-1.453152027)*t)+1.421413741)*t-0.284496736)*t+0.254829592)*t*Math.exp(-x*x);
+    return 0.5*(1+s*y);
+  }
+
+  function css(v){return getComputedStyle(document.documentElement).getPropertyValue(v).trim();}
+
+  function draw(sTot,T){
+    var dpr=Math.min(window.devicePixelRatio||1,2);
+    var w=cv.clientWidth, h=cv.clientHeight;
+    if(cv.width!==Math.round(w*dpr)){cv.width=Math.round(w*dpr); cv.height=Math.round(h*dpr);}
+    ctx.setTransform(dpr,0,0,dpr,0,0);
+    ctx.clearRect(0,0,w,h);
+
+    var padB=26, padT=8, padX=10;
+    // x 軸固定視野：規格半寬與分佈寬度取大者，留 1.25 倍餘裕
+    var half=Math.max(T,sTot*3.2)*1.15;
+    var x2px=function(x){return padX+(x+half)/(2*half)*(w-2*padX);};
+    var peak=1/(sTot*Math.sqrt(2*Math.PI));
+    var y2px=function(y){return h-padB-(y/peak)*(h-padB-padT);};
+
+    // 基線
+    ctx.strokeStyle=css("--line"); ctx.lineWidth=1;
+    ctx.beginPath(); ctx.moveTo(padX,h-padB); ctx.lineTo(w-padX,h-padB); ctx.stroke();
+
+    // 分佈曲線與規格內填色
+    var pts=[],i,x,y;
+    for(i=0;i<=240;i++){
+      x=-half+(2*half)*i/240;
+      y=Math.exp(-0.5*Math.pow(x/sTot,2))/(sTot*Math.sqrt(2*Math.PI));
+      pts.push([x2px(x),y2px(y),x]);
+    }
+    ctx.beginPath(); ctx.moveTo(x2px(-T),h-padB);
+    for(i=0;i<pts.length;i++){if(pts[i][2]>=-T&&pts[i][2]<=T)ctx.lineTo(pts[i][0],pts[i][1]);}
+    ctx.lineTo(x2px(T),h-padB); ctx.closePath();
+    ctx.fillStyle=css("--fill"); ctx.fill();
+
+    ctx.beginPath();
+    for(i=0;i<pts.length;i++){i?ctx.lineTo(pts[i][0],pts[i][1]):ctx.moveTo(pts[i][0],pts[i][1]);}
+    ctx.strokeStyle=css("--curve"); ctx.lineWidth=2; ctx.stroke();
+
+    // 規格線
+    ctx.strokeStyle=css("--spec"); ctx.lineWidth=2; ctx.setLineDash([5,4]);
+    [-T,T].forEach(function(v){
+      ctx.beginPath(); ctx.moveTo(x2px(v),padT); ctx.lineTo(x2px(v),h-padB); ctx.stroke();
+    });
+    ctx.setLineDash([]);
+
+    // 刻度數字：只有拉丁數字，canvas 內零中文（承 KB-10 的設計決定）
+    ctx.fillStyle=css("--ink-3"); ctx.font="11px ui-monospace,Menlo,monospace"; ctx.textAlign="center";
+    [-T,0,T].forEach(function(v){ctx.fillText(v.toFixed(1),x2px(v),h-padB+15);});
+  }
+
+  function update(){
+    var n=+el.n.value, s=+el.s.value, T=+el.t.value;
+    var sTot=s*Math.sqrt(n);
+    var cp=T/(3*sTot);
+    var inSpec=2*Phi(T/sTot)-1;
+    var ppm=Math.max(0,(1-inSpec)*1e6);
+
+    out.n.textContent=n;
+    out.s.textContent=s.toFixed(2);
+    out.t.textContent=T.toFixed(2);
+    out.st.textContent=sTot.toFixed(4);
+    out.cp.textContent=cp.toFixed(4);
+    out.y.innerHTML=(inSpec*100).toFixed(4)+'<span class="unit">%</span>';
+    out.ppm.innerHTML=(ppm<1?ppm.toFixed(2):Math.round(ppm))+'<span class="unit">ppm</span>';
+    out.cp.className="num "+(cp>=1.33?"good":cp<1?"bad":"");
+
+    // 對答案：只在已知算例的參數上判定，其餘顯示「不在算例上」
+    var atCase=(n===3 && Math.abs(s-1)<1e-9 && Math.abs(T-6)<1e-9);
+    if(atCase){
+      var ok=(sTot.toFixed(4)==="1.7321" && cp.toFixed(4)==="1.1547");
+      out.chk.textContent=ok?"通過：算出 1.7321 與 1.1547，與已知算例相符。":"不通過：算出 "+sTot.toFixed(4)+" 與 "+cp.toFixed(4)+"，與已知算例不符。";
+      out.chk.className="verdict "+(ok?"pass":"fail");
+    }else{
+      out.chk.textContent="目前不在已知算例的參數上（按下方按鈕回去）。";
+      out.chk.className="verdict";
+    }
+    draw(sTot,T);
+  }
+
+  ["input","change"].forEach(function(ev){
+    el.n.addEventListener(ev,update); el.s.addEventListener(ev,update); el.t.addEventListener(ev,update);
+  });
+  document.getElementById("reset").addEventListener("click",function(){
+    el.n.value=3; el.s.value=1; el.t.value=6; update();
+  });
+  window.addEventListener("resize",update);
+  if(window.matchMedia)window.matchMedia("(prefers-color-scheme:dark)").addEventListener("change",update);
+  update();
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>同一批工具，一半團隊只快 3 倍：那條機制鏈</title>
+<meta name="description" content="Amazon 50 支團隊裂成兩半的因果鏈，逐環標證據強度。">
+<style>
+:root{
+  --bg:#fbfaf8; --ink:#1c1a17; --ink-2:#57524a; --ink-3:#746e64;
+  --line:#d9d3c8; --rail-c:#8a8378; --card:#ffffff; --card-2:#f4f1ea;
+  --accent:#8a5a2b;
+  --s-measured:#2f6b4f; --s-measured-bg:#e6f2ea;
+  --s-reported:#8a5a2b; --s-reported-bg:#f6ecdf;
+  --s-inferred:#5a5a8a; --s-inferred-bg:#eceaf6;
+  --s-unverified:#8a2f2f; --s-unverified-bg:#f6e6e6;
+  --rail:2px;
+  color-scheme:light dark;
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --bg:#14130f; --ink:#eeeae2; --ink-2:#b3ab9d; --ink-3:#8f8779;
+    --line:#37332c; --rail-c:#847d70; --card:#1c1a15; --card-2:#242019;
+    --accent:#d8a56a;
+    --s-measured:#7fc9a2; --s-measured-bg:#172a20;
+    --s-reported:#d8a56a; --s-reported-bg:#2c2214;
+    --s-inferred:#a3a1d8; --s-inferred-bg:#1f1e2c;
+    --s-unverified:#d88a8a; --s-unverified-bg:#2c1a1a;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#14130f; --ink:#eeeae2; --ink-2:#b3ab9d; --ink-3:#8f8779;
+  --line:#37332c; --rail-c:#847d70; --card:#1c1a15; --card-2:#242019;
+  --accent:#d8a56a;
+  --s-measured:#7fc9a2; --s-measured-bg:#172a20;
+  --s-reported:#d8a56a; --s-reported-bg:#2c2214;
+  --s-inferred:#a3a1d8; --s-inferred-bg:#1f1e2c;
+  --s-unverified:#d88a8a; --s-unverified-bg:#2c1a1a;
+}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{
+  margin:0; background:var(--bg); color:var(--ink);
+  font:400 17px/1.75 "Noto Sans TC","PingFang TC","Hiragino Sans CJK TC","Microsoft JhengHei",system-ui,sans-serif;
+  text-wrap:pretty;
+}
+.wrap{max-width:44rem; margin:0 auto; padding:2rem 1.1rem 5rem}
+h1{font-size:1.62rem; line-height:1.35; letter-spacing:-.01em; margin:0 0 .5rem; text-wrap:balance}
+.kicker{font-size:.82rem; letter-spacing:.09em; text-transform:uppercase; color:var(--ink-3); margin:0 0 .6rem}
+.bluf{background:var(--card-2); border-left:3px solid var(--accent); padding:.85rem 1rem; border-radius:0 6px 6px 0; margin:1.3rem 0 2rem}
+.bluf p{margin:0; font-size:1.02rem}
+h2{font-size:1.18rem; line-height:1.4; margin:2.6rem 0 .8rem; text-wrap:balance}
+p{margin:0 0 1rem}
+
+/* ── 圖例 ───────────────────────────── */
+.legend{display:flex; flex-wrap:wrap; gap:.4rem .5rem; margin:0 0 1.4rem; padding:0; list-style:none}
+.legend li{display:flex; align-items:center; gap:.35rem; font-size:.8rem; color:var(--ink-2)}
+.dot{width:.62rem; height:.62rem; border-radius:50%; flex:0 0 auto}
+.dot.measured{background:var(--s-measured)} .dot.reported{background:var(--s-reported)}
+.dot.inferred{background:var(--s-inferred)} .dot.unverified{background:var(--s-unverified)}
+
+/* ── 鏈本體：純 CSS，零 SVG 座標 ───────── */
+.chain,.fork{list-style:none; margin:0; padding:0}
+.link{position:relative; padding-left:1.55rem}
+/* 直線由左側軌道畫出，不用 SVG，故任何寬度都不會壞 */
+.link::before{
+  content:""; position:absolute; left:.38rem; top:.55rem; bottom:-.2rem;
+  width:var(--rail); background:var(--rail-c);
+}
+.link:last-child::before{bottom:auto; height:1.1rem}
+.link::after{
+  content:""; position:absolute; left:0; top:.5rem;
+  width:.82rem; height:.82rem; border-radius:50%;
+  background:var(--card); border:var(--rail) solid var(--rail-c);
+}
+.link[data-strength="measured"]::after{border-color:var(--s-measured)}
+.link[data-strength="reported"]::after{border-color:var(--s-reported)}
+.link[data-strength="inferred"]::after{border-color:var(--s-inferred)}
+.link[data-strength="unverified"]::after{border-color:var(--s-unverified)}
+
+.node{background:var(--card); border:1px solid var(--line); border-radius:8px; padding:.8rem .9rem; margin:0 0 .2rem}
+.node > p{margin:0; font-size:1rem; line-height:1.7}
+.node .num{color:var(--ink-3); font-size:.78rem; letter-spacing:.06em; display:block; margin-bottom:.25rem}
+.chip{
+  display:inline-block; font-size:.72rem; line-height:1.5; padding:.05rem .45rem;
+  border-radius:4px; margin-left:.35rem; vertical-align:.08em; white-space:nowrap;
+}
+.chip.measured{color:var(--s-measured); background:var(--s-measured-bg)}
+.chip.reported{color:var(--s-reported); background:var(--s-reported-bg)}
+.chip.inferred{color:var(--s-inferred); background:var(--s-inferred-bg)}
+.chip.unverified{color:var(--s-unverified); background:var(--s-unverified-bg)}
+
+/* 機制標籤：掛在兩個節點之間的那一段線上 */
+.via{padding:.45rem 0 .55rem; font-size:.88rem; color:var(--ink-2)}
+.via b{font-weight:600; color:var(--ink); font-style:normal}
+
+/* 證據層：預設收合，手機上不佔位 */
+details.ev{margin:.5rem 0 0; font-size:.88rem}
+details.ev > summary{cursor:pointer; color:var(--ink-2); list-style:none; padding:.15rem 0}
+details.ev > summary::-webkit-details-marker{display:none}
+details.ev > summary::before{content:"▸ "; color:var(--ink-3)}
+details.ev[open] > summary::before{content:"▾ "}
+details.ev blockquote{
+  margin:.5rem 0 .35rem; padding:.45rem .7rem; border-left:2px solid var(--line);
+  background:var(--card-2); border-radius:0 4px 4px 0;
+  font-size:.86rem; line-height:1.65; color:var(--ink-2);
+  overflow-wrap:anywhere;
+}
+details.ev .src{margin:0; font-size:.78rem; color:var(--ink-3)}
+
+/* 分岔：手機上垂直堆，不並排 */
+.fork{margin:.35rem 0 0}
+.fork > li{position:relative; padding-left:1.1rem; margin-bottom:.9rem}
+.fork > li::before{
+  content:""; position:absolute; left:.1rem; top:.95rem; width:.7rem; height:var(--rail); background:var(--rail-c);
+}
+.fork .node{background:var(--card-2)}
+.forkhead{font-size:.84rem; color:var(--ink-3); margin:.5rem 0 .1rem}
+
+figure{margin:1.6rem 0 2rem}
+figcaption{font-size:.9rem; line-height:1.65; color:var(--ink-2); margin-top:.9rem}
+.notesrc{font-size:.78rem; line-height:1.7; color:var(--ink-3); margin:.55rem 0 0}
+.notesrc b{color:var(--ink-2); font-weight:600}
+
+hr{border:0; border-top:1px solid var(--line); margin:2.4rem 0}
+.foot{font-size:.8rem; color:var(--ink-3); line-height:1.75}
+code{font-family:ui-monospace,SFMono-Regular,Menlo,monospace; font-size:.86em; background:var(--card-2); padding:.05em .3em; border-radius:3px}
+
+@media (max-width:420px){
+  body{font-size:16px}
+  .wrap{padding:1.4rem .85rem 4rem}
+  h1{font-size:1.42rem}
+  .link{padding-left:1.4rem}
+}
+@media (prefers-reduced-motion:reduce){
+  *{animation:none!important; transition:none!important}
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<p class="kicker">機制鏈骨架 · 首例</p>
+<h1>同一批工具下，一半的團隊只快不到 3 倍，另一半快 4.5 倍</h1>
+
+<div class="bluf">
+<p>50 支團隊、90% 都在用同一套工具。裂成兩半的原因不是工具，是其中一半<strong>刻意改掉了工作方式</strong>。下面把那條因果鏈拆開，<strong>每一環標上證據強度</strong>——因為這整套數字都出自同一家公司的自報，沒有外部複現。</p>
+</div>
+
+<ul class="legend">
+  <li><span class="dot measured"></span>實測</li>
+  <li><span class="dot reported"></span>自報（Amazon 內部）</li>
+  <li><span class="dot inferred"></span>推論</li>
+  <li><span class="dot unverified"></span>未驗證</li>
+</ul>
+
+<figure>
+<ol class="chain">
+
+  <li class="link" data-strength="reported">
+    <div class="node">
+      <span class="num">起點</span>
+      <p>50 支普通團隊，做的是既有程式庫不是綠地專案，<strong>90% 都在用同一套工具</strong><span class="chip reported">自報</span></p>
+    </div>
+    <details class="ev">
+      <summary>證據</summary>
+      <blockquote>90% of these teams used Kiro, among other internal tools that we have, and what they found was it wasn't about the tools, it was about the way that they worked.</blockquote>
+      <p class="src">逐字稿 07:06–07:18</p>
+    </details>
+    <p class="via">觀察大半年，量的是<b>部署到生產環境的速度</b>，不是 commit 數</p>
+  </li>
+
+  <li class="link" data-strength="reported">
+    <div class="node">
+      <span class="num">分岔</span>
+      <p>同一批工具下，結果裂成兩半<span class="chip reported">自報</span></p>
+    </div>
+    <p class="forkhead">兩條路各自的終點（在手機上由上往下讀，不是左右並排）：</p>
+    <ul class="fork">
+      <li>
+        <div class="node"><p><strong>把工具灑在既有工作方式上面</strong> → 提升<strong>低於 3 倍</strong></p></div>
+      </li>
+      <li>
+        <div class="node"><p><strong>刻意改掉工作方式</strong> → 中位數 <strong>4.5 倍</strong>，部分超過 10 倍</p></div>
+      </li>
+    </ul>
+    <p class="via"><b>刻意改工作方式</b>那條路的內部機制如下——五個習慣如何合起來讓人離開迴圈</p>
+  </li>
+
+  <li class="link" data-strength="reported">
+    <div class="node">
+      <span class="num">習慣 1＋2</span>
+      <p>把腦中的隱性知識寫進 agent 的脈絡檔，並回頭投資程式庫本身<span class="chip reported">自報</span></p>
+    </div>
+    <details class="ev">
+      <summary>證據與代價</summary>
+      <blockquote>In almost every team that was interviewed, they reported that their productivity actually went down as they intentionally adopted a new way of working.</blockquote>
+      <p class="src">逐字稿 09:41–09:49</p>
+    </details>
+    <p class="via">因為要先改錯誤訊息、蓋 MCP server、重構目錄、甚至<b>換掉沒有型別的語言</b>，agent 才導航得動</p>
+  </li>
+
+  <li class="link" data-strength="inferred">
+    <div class="node">
+      <span class="num">習慣 3</span>
+      <p>不要盯著 agent，要餵它<strong>兩件事</strong>：它需要什麼、以及<strong>它怎麼自我驗證</strong><span class="chip inferred">推論</span></p>
+    </div>
+    <details class="ev">
+      <summary>為什麼這一環是整條鏈的樞紐</summary>
+      <blockquote>If you are having a back-and-forth conversation with your agent all day long, of course you're not going to see four to five x productivity improvements because you are in the loop the entire time.</blockquote>
+      <p class="src">逐字稿 11:21–11:35。標「推論」是因為講者用的是機制論證而非量測：他沒有給「盯 vs 餵」的對照組數字。</p>
+    </details>
+    <p class="via">給了自我驗證條件，agent 才能<b>連跑好幾小時而不回來問你</b></p>
+  </li>
+
+  <li class="link" data-strength="reported">
+    <div class="node">
+      <span class="num">習慣 4＋5</span>
+      <p>先在文件上把意圖講清楚，再讓它寫；同時把測試左移成<strong>本機、確定性的 mock</strong><span class="chip reported">自報</span></p>
+    </div>
+    <details class="ev">
+      <summary>兩句機制</summary>
+      <blockquote>It is less productive to iterate with the agent on code when the intent itself was incorrect.</blockquote>
+      <blockquote>The more that your agent can get fast feedback means the more loops that it can do.</blockquote>
+      <p class="src">逐字稿 13:15 與 15:10–15:17</p>
+    </details>
+    <p class="via">意圖錯的時候，<b>在一份文件上迭代比在散落整個程式庫的改動上迭代便宜</b>；而快回饋決定 agent 能跑幾圈</p>
+  </li>
+
+  <li class="link" data-strength="inferred">
+    <div class="node">
+      <span class="num">匯流</span>
+      <p>人離開迴圈 → 可以同時跑多個 agent → 產出跳一個量級<span class="chip inferred">推論</span></p>
+    </div>
+    <p class="via">而這個匯流點<b>同時打開了兩條副作用鏈</b></p>
+  </li>
+
+  <li class="link" data-strength="reported">
+    <div class="node">
+      <span class="num">副作用</span>
+      <p>並行跑 agent 讓認知負荷上升，而<strong>審查 AI 的產出對資淺工程師比自己寫還累</strong><span class="chip reported">自報</span></p>
+    </div>
+    <details class="ev">
+      <summary>為什麼是資淺的人先撐不住</summary>
+      <blockquote>Senior engineers have already spent a large portion of their career reviewing others code. But early career engineers don't have that muscle yet.</blockquote>
+      <p class="src">逐字稿 16:26–16:43</p>
+    </details>
+    <p class="via">加上熬夜調 prompt 想讓 agent 整夜跑，<b>過勞是講者點名的風險</b></p>
+  </li>
+
+  <li class="link" data-strength="inferred">
+    <div class="node">
+      <span class="num">終點</span>
+      <p>寫程式碼不再是瓶頸之後，<strong>決策速度變成新的瓶頸</strong><span class="chip inferred">推論</span></p>
+    </div>
+    <details class="ev">
+      <summary>他給的量化對比</summary>
+      <blockquote>When it used to take 9 to 12 months to build a new product, it didn't matter so much if it took two months to make the decision. But now those are the bottlenecks.</blockquote>
+      <p class="src">逐字稿 19:21–19:37。標「推論」是因為這是講者對自己組織的觀察，沒有跨組織資料。</p>
+    </details>
+  </li>
+
+</ol>
+
+<figcaption><strong>整條鏈的樞紐在「習慣 3」——它是唯一一個把人移出迴圈的環，其餘四個習慣都是為了讓那一環成立。</strong></figcaption>
+
+<p class="notesrc"><b>Note：</b>證據強度四態由本頁作者標註，不是講者的分級。「自報」指數字出自 Amazon 內部量測且無外部複現；「推論」指講者給的是機制論證而非量測。三個案例的量測尺不同——Bedrock Mantle 與 Prime Video 量 commit 數，50 支團隊那組量部署到生產的速度，<b>「4.5 倍」與「20 倍」不是同一把尺量出來的</b>。</p>
+<p class="notesrc"><b>Source：</b>Clare Liguori（AWS），<em>From AI-Assisted to AI-Native: Building a Frontier Development Team</em>，AI Engineer，2026-08-28。逐字稿由 YouTube 自動字幕取得（en-orig，509 段）。時間戳可跳回原片查證。</p>
+</figure>
+
+<hr>
+
+<p class="foot">這一頁是<strong>機制鏈骨架</strong>的首例。骨架本體與失效點清單見 <code>KB-14_causal-chain-skeleton.md</code>。連接線全部由 CSS 畫出，<strong>沒有任何 SVG 座標</strong>，所以任何視窗寬度都不會壞；中文全部在 HTML 層，可以 <code>grep</code>、改字不必重畫。</p>
+
+</div>
+</body>
+</html>
