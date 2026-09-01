@@ -1,0 +1,887 @@
+<!DOCTYPE html>
+<html lang="zh-Hant-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>十三場對「自主」的定義沒有一個相同｜SEMICON 2026 智慧製造論壇內容地圖</title>
+<meta name="description" content="高科技智慧製造論壇十三場的自主定義光譜、四組真正的對打、九場逐場輪廓。會場手機速查用。">
+<link rel="canonical" href="https://hale80427.github.io/brain-cards/semicon2026-autonomy-map/">
+<meta name="author" content="彥皓">
+<meta name="robots" content="noindex, nofollow">
+<meta property="og:type" content="article">
+<meta property="og:title" content="十三場對「自主」的定義沒有一個相同">
+<meta property="og:description" content="高科技智慧製造論壇十三場的自主定義光譜、四組真正的對打、九場逐場輪廓。">
+<meta property="og:url" content="https://hale80427.github.io/brain-cards/semicon2026-autonomy-map/">
+<meta property="og:image" content="https://hale80427.github.io/brain-cards/og-default.jpg">
+<meta property="og:locale" content="zh_TW">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="十三場對「自主」的定義沒有一個相同">
+<meta name="twitter:description" content="高科技智慧製造論壇十三場的自主定義光譜、四組真正的對打、九場逐場輪廓。">
+<meta name="twitter:image" content="https://hale80427.github.io/brain-cards/og-default.jpg">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "十三場對「自主」的定義沒有一個相同",
+  "description": "高科技智慧製造論壇十三場的自主定義光譜、四組真正的對打、九場逐場輪廓。",
+  "datePublished": "2026-09-01",
+  "dateModified": "2026-09-01",
+  "author": { "@type": "Person", "name": "彥皓" },
+  "url": "https://hale80427.github.io/brain-cards/semicon2026-autonomy-map/",
+  "inLanguage": "zh-TW",
+  "license": "https://creativecommons.org/licenses/by/4.0/"
+}
+</script>
+<style>
+  :root {
+    --bg: oklch(98.4% 0.004 106.5);
+    --fg: oklch(21.8% 0 0);
+    --accent: oklch(54.3% 0.174 29.7);
+    --accent-warn: oklch(66.6% 0.157 58.3);
+    --muted: oklch(51.0% 0 0);
+    --border: oklch(92.1% 0.007 106.5);
+    --callout-tip: oklch(95.7% 0.014 174.2);
+    --callout-warn: oklch(96.9% 0.019 72.6);
+    --plate-bg: oklch(28.5% 0.055 251.4);
+    --plate-fg: oklch(96.0% 0.008 106.5);
+    --plate-dim: oklch(75.0% 0.021 251.4);
+    --plate-line: oklch(62.0% 0.030 251.4);
+    --sign-down: oklch(48.0% 0.130 29.7);
+    --sign-up: oklch(80.0% 0.110 160.0);
+    --fs-meta: 0.85rem;
+    --fs-body: 1rem;
+    --fs-h2:   clamp(1.3rem, 3vw, 1.5rem);
+    --fs-h1:   clamp(1.75rem, 4vw, 2.25rem);
+    --font-serif: "Noto Serif TC", Georgia, serif;
+    --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+    --ease-linear: linear;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: oklch(21.8% 0 0);
+      --fg: oklch(95.3% 0.011 106.6);
+      --accent: oklch(70.4% 0.136 28.7);
+      --accent-warn: oklch(76.9% 0.165 70.1);
+      --muted: oklch(68.3% 0 0);
+      --border: oklch(32.1% 0 0);
+      --callout-tip: oklch(30.9% 0.029 178.3);
+      --callout-warn: oklch(30.7% 0.034 73.5);
+      --sign-up: oklch(72.0% 0.110 160.0);
+    }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
+  }
+  * { box-sizing: border-box; }
+  body {
+    font-family: var(--font-serif);
+    background: var(--bg);
+    color: var(--fg);
+    line-height: 1.8;
+    margin: 0;
+    padding: 0;
+    -webkit-font-smoothing: antialiased;
+    text-autospace: normal;
+    font-synthesis: none;
+    line-break: strict;
+  }
+  .progress-bar {
+    position: fixed; top: 0; left: 0; height: 3px; width: 100%;
+    background: var(--accent); z-index: 100;
+    transform: scaleX(0); transform-origin: left;
+    transition: transform 0.1s var(--ease-linear);
+  }
+  main, main > article {
+    display: grid;
+    grid-template-columns:
+      [full-start] minmax(1rem, 1fr)
+      [wide-start] minmax(0, 130px)
+      [content-start] minmax(0, 680px) [content-end]
+      minmax(0, 130px) [wide-end]
+      minmax(1rem, 1fr) [full-end];
+  }
+  main { padding: clamp(2rem, 5vw, 4rem) 0; }
+  main > *, main > article > * { grid-column: content; }
+  main > article { grid-column: full; }
+  main > .wide, main > article > .wide { grid-column: wide; }
+  main > .full, main > article > .full { grid-column: full; }
+  @media (max-width: 1000px) {
+    main, main > article {
+      grid-template-columns:
+        [full-start] minmax(1rem, 1fr)
+        [wide-start content-start] minmax(0, 680px) [content-end wide-end]
+        minmax(1rem, 1fr) [full-end];
+    }
+  }
+  h1 { font-size: var(--fs-h1); line-height: 1.3; margin: 0 0 1rem; }
+  h2 { font-size: var(--fs-h2); line-height: 1.4; margin: 2.5rem 0 0.75rem; padding-bottom: 0.5rem; border-bottom: 1px solid var(--border); }
+  h3 { font-size: var(--fs-body); font-weight: 700; line-height: 1.4; margin: 1.75rem 0 0.5rem; color: var(--accent); }
+  p { margin: 0 0 1.25rem; }
+  a { color: var(--accent); text-underline-offset: 3px; }
+  a:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+  em { font-style: normal; font-weight: 600;
+       text-emphasis: filled dot; text-emphasis-position: under right;
+       -webkit-text-emphasis: filled dot; -webkit-text-emphasis-position: under right; }
+  em:lang(en) { font-style: italic; font-weight: inherit;
+                text-emphasis: none; -webkit-text-emphasis: none; }
+  .meta { font-size: var(--fs-meta); color: var(--muted); margin: 0 0 1.5rem; line-height: 1.7; }
+  .bluf { background: var(--callout-tip); border-left: 3px solid var(--accent); padding: 1.25rem 1.5rem; margin: 1.5rem 0 2rem; border-radius: 4px; }
+  .bluf strong.label { display: block; font-size: var(--fs-meta); letter-spacing: 0.05em; color: var(--accent); margin-bottom: 0.5rem; text-transform: uppercase; }
+  .callout { padding: 1rem 1.25rem; margin: 1.5rem 0; border-radius: 4px; border-left: 3px solid var(--muted); }
+  .callout.tip { background: var(--callout-tip); border-left-color: var(--accent); }
+  .callout.warn { background: var(--callout-warn); border-left-color: var(--accent-warn); }
+  .kicker { display: inline-block; font-size: var(--fs-meta); font-weight: 700;
+            letter-spacing: 0.1em; color: var(--accent); margin: 2.5rem 0 0; }
+  .kicker + h2 { margin-top: 0.4rem; border-bottom: none; padding-bottom: 0; }
+  .notesrc { font-size: var(--fs-meta); color: var(--muted); margin: 0.5rem 0 0; line-height: 1.7; }
+  .notesrc b { color: var(--fg); font-weight: 600; }
+  table { border-collapse: collapse; width: 100%; margin: 1.5rem 0; font-size: var(--fs-body); }
+  th, td { padding: 0.6rem 0.8rem; border: 1px solid var(--border); text-align: left; vertical-align: top; }
+  th { background: var(--callout-tip); font-weight: 600; }
+  code { font-family: var(--font-mono); background: var(--callout-tip); padding: 0.1em 0.4em; border-radius: 3px; font-size: var(--fs-body);
+         overflow-wrap: anywhere; word-break: break-word; }
+  .tbl { overflow-x: auto; margin: 1.5rem 0; min-width: 0; }
+  .tbl table { margin: 0; min-width: 560px; }
+  figure { margin: 1.5rem 0; }
+  figure img { width: 100%; height: auto; border-radius: 4px; display: block; }
+  figure svg { width: 100%; height: auto; display: block; }
+  figcaption { font-size: var(--fs-meta); color: var(--muted); margin-top: 0.5rem; text-align: left; line-height: 1.7; }
+  figcaption b { color: var(--fg); font-weight: 600; }
+  figcaption .src { display: block; margin-top: 0.35rem; }
+
+  /* === 篩選控制列（KB-13 離散對照第一順位：可排序可篩選表）=== */
+  .filterbar { display: flex; flex-wrap: wrap; gap: 0.45rem; align-items: center;
+               margin: 1.25rem 0 0.5rem; }
+  .filterbar .grp { display: flex; flex-wrap: wrap; gap: 0.4rem; align-items: center; }
+  .filterbar .glabel { font-size: var(--fs-meta); color: var(--muted); letter-spacing: 0.04em;
+                       margin-right: 0.15rem; }
+  .filterbar button { font-family: inherit; font-size: var(--fs-meta); line-height: 1.4;
+                      padding: 0.35rem 0.7rem; border-radius: 999px;
+                      border: 1px solid var(--border); background: transparent;
+                      color: var(--fg); cursor: pointer; }
+  .filterbar button:hover { border-color: var(--accent); }
+  .filterbar button:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+  .filterbar button[aria-pressed="true"] { background: var(--accent); color: var(--bg);
+                                           border-color: var(--accent); font-weight: 600; }
+  .hitcount { font-size: var(--fs-meta); color: var(--muted); margin: 0.35rem 0 0; }
+
+  /* === 光譜表：桌面是表、375px 塌成卡片（Kosara：離散步驟不用捲動）=== */
+  .spectrum th button { font-family: inherit; font-size: var(--fs-body); font-weight: 600;
+                        background: none; border: none; padding: 0; cursor: pointer;
+                        color: var(--fg); text-align: left; }
+  .spectrum th button:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+  .spectrum th button::after { content: " ↕"; color: var(--muted); font-weight: 400; }
+  .spectrum th button[data-dir="asc"]::after { content: " ↑"; color: var(--accent); }
+  .spectrum th button[data-dir="desc"]::after { content: " ↓"; color: var(--accent); }
+  .spectrum tr[hidden] { display: none; }
+  .spectrum .slot { white-space: nowrap; font-family: var(--font-mono); font-size: var(--fs-meta); }
+  .spectrum .layer { font-weight: 600; }
+  .spectrum .tagcell { font-size: var(--fs-meta); color: var(--muted); white-space: nowrap; }
+  .spectrum .star td { background: var(--callout-warn); }
+  @media (max-width: 620px) {
+    .tbl.cards { overflow-x: visible; }
+    .tbl.cards table, .tbl.cards tbody, .tbl.cards tr, .tbl.cards td { display: block; width: 100%; min-width: 0; }
+    .tbl.cards caption { display: block; width: 100%; min-width: 0; }
+    .tbl.cards thead { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+    .tbl.cards tr { border: 1px solid var(--border); border-radius: 6px; margin-bottom: 0.75rem; padding: 0.35rem 0; }
+    .tbl.cards td { border: none; padding: 0.3rem 0.85rem; }
+    .tbl.cards td::before { content: attr(data-th) "　"; color: var(--muted); font-size: var(--fs-meta); }
+    .tbl.cards td.slot::before { content: none; }
+    .tbl.cards td.slot { font-weight: 700; color: var(--accent); }
+    .roles td:first-child::before { content: none; }
+    .roles td:first-child { font-weight: 700; color: var(--accent); }
+  }
+
+  /* === KB-10 元件 2：功能列 === */
+  .func-row { display: grid; grid-template-columns: repeat(auto-fit, minmax(13rem, 1fr));
+              gap: 1.25rem; margin: 1.5rem 0 0.5rem; padding: 1.25rem 0;
+              border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+  .func-row .fn { display: flex; gap: 0.75rem; align-items: flex-start; }
+  .func-row .fn svg { flex: 0 0 2rem; width: 2rem; height: 2rem; color: var(--accent); }
+  .func-row .fn .lbl { display: block; font-size: var(--fs-meta); font-weight: 700;
+                       letter-spacing: 0.04em; }
+  .func-row .fn .txt { display: block; font-size: var(--fs-meta); color: var(--muted);
+                       margin: 0.2rem 0 0; line-height: 1.6; }
+
+  /* === KB-10 元件 3：機制圖 === */
+  .flow { background: var(--plate-bg); border-radius: 6px; padding: 1.5rem 1.25rem; }
+  .flow-track { display: grid; gap: 0.5rem; margin-bottom: 1.25rem; }
+  .flow-track:last-of-type { margin-bottom: 0; }
+  .flow-track .path { display: flex; flex-wrap: wrap; align-items: center; gap: 0.5rem; }
+  .flow-track .node { background: var(--plate-line); color: var(--plate-fg);
+                      font-size: var(--fs-meta); line-height: 1.4;
+                      padding: 0.4rem 0.7rem; border-radius: 4px; }
+  .flow-track .node.hot { background: var(--sign-down); }
+  .flow-track .arrow { flex: 0 0 1.4rem; width: 1.4rem; height: 0.85rem; color: var(--plate-dim); }
+  .flow-track .arrow svg { width: 100%; height: 100%; display: block; }
+  .flow-track .sign { font-size: var(--fs-meta); font-weight: 700;
+                      padding: 0.4rem 0.7rem; border-radius: 4px; }
+  .flow-track .down { background: var(--sign-down); color: var(--plate-fg); }
+  .flow-track .up   { background: var(--sign-up);   color: var(--plate-bg); }
+  .flow-track > .lbl { font-size: var(--fs-meta); color: var(--plate-dim);
+                       letter-spacing: 0.06em; }
+  .flow-legend { display: flex; flex-wrap: wrap; gap: 1.25rem; margin-top: 1.25rem;
+                 padding-top: 1rem; border-top: 1px solid var(--plate-line);
+                 font-size: var(--fs-meta); color: var(--plate-dim); }
+  .flow-legend span { display: flex; align-items: center; gap: 0.45rem; }
+  .flow-legend i { width: 0.8rem; height: 0.8rem; border-radius: 2px; display: inline-block; }
+  .flow-legend .sw-down { background: var(--sign-down); }
+  .flow-legend .sw-up { background: var(--sign-up); }
+
+  /* === KB-10 元件 4：同 schema 卡片牆 === */
+  .schema-wall { display: grid; grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr));
+                 gap: 1rem; margin: 1.5rem 0; }
+  .schema-wall .card { background: var(--plate-bg); color: var(--plate-fg);
+                       border-radius: 6px; padding: 1rem 1.1rem; }
+  .schema-wall .card > .lbl { display: block; font-size: var(--fs-meta); font-weight: 700;
+                              letter-spacing: 0.04em; margin-bottom: 0.75rem; }
+  .schema-wall dl { margin: 0; display: grid; gap: 0.6rem; }
+  .schema-wall dt { font-size: var(--fs-meta); color: var(--plate-dim); letter-spacing: 0.04em; }
+  .schema-wall dd { font-size: var(--fs-meta); line-height: 1.55; margin: 0.1rem 0 0; }
+  .schema-wall .sep { border-top: 1px solid var(--plate-line); padding-top: 0.6rem; }
+  .schema-wall .ask { display: block; font-size: var(--fs-meta); color: var(--sign-up);
+                      margin-top: 0.75rem; line-height: 1.55; }
+
+  /* === 堆疊層圖（HTML 盒子，零 SVG 座標）=== */
+  .stack { background: var(--plate-bg); border-radius: 6px; padding: 1.25rem 1.1rem;
+           display: grid; gap: 0.5rem; }
+  .stack .band { display: grid; grid-template-columns: 5.5rem 1fr; gap: 0.75rem;
+                 align-items: center; padding: 0.55rem 0.7rem; border-radius: 4px;
+                 background: var(--plate-line); }
+  .stack .band .lbl { font-size: var(--fs-meta); font-weight: 700; color: var(--plate-fg);
+                      letter-spacing: 0.04em; }
+  .stack .band .who { font-size: var(--fs-meta); color: var(--plate-fg); line-height: 1.5; }
+  .stack .band.squeeze { background: var(--sign-down); }
+  .stack .band.you { outline: 2px solid var(--sign-up); outline-offset: 2px; }
+  .stack .youtag { display: block; font-size: var(--fs-meta); color: var(--sign-up);
+                   font-weight: 700; margin-top: 0.15rem; }
+  @media (max-width: 480px) {
+    .stack .band { grid-template-columns: 1fr; gap: 0.2rem; }
+  }
+
+  /* === 九場輪廓：details stepper === */
+  .brief { border: 1px solid var(--border); border-radius: 6px; margin: 0.6rem 0;
+           background: var(--bg); }
+  .brief > summary { cursor: pointer; padding: 0.75rem 1rem; list-style: none;
+                     display: grid; grid-template-columns: 4.2rem 1fr; gap: 0.6rem;
+                     align-items: baseline; }
+  .brief > summary::-webkit-details-marker { display: none; }
+  .brief > summary:focus-visible { outline: 2px solid var(--accent); outline-offset: -2px; }
+  .brief > summary .slot { font-family: var(--font-mono); font-size: var(--fs-meta);
+                           color: var(--accent); font-weight: 700; }
+  .brief > summary .who { font-size: var(--fs-body); font-weight: 600; }
+  .brief > summary .one { display: block; font-size: var(--fs-meta); color: var(--muted);
+                          font-weight: 400; line-height: 1.6; margin-top: 0.15rem; }
+  .brief[open] > summary { border-bottom: 1px solid var(--border); }
+  .brief .body { padding: 0.9rem 1rem 1rem; display: grid; gap: 0.7rem; }
+  .brief .body .row { display: grid; gap: 0.15rem; }
+  .brief .body .k { font-size: var(--fs-meta); font-weight: 700; color: var(--accent);
+                    letter-spacing: 0.04em; }
+  .brief .body .v { font-size: var(--fs-meta); color: var(--fg); line-height: 1.7; }
+  .brief .body .v.q { color: var(--fg); }
+  .brief .body .warnrow { background: var(--callout-warn); border-radius: 4px;
+                          padding: 0.6rem 0.75rem; }
+  .expandall { font-family: inherit; font-size: var(--fs-meta); padding: 0.35rem 0.7rem;
+               border-radius: 999px; border: 1px solid var(--border); background: transparent;
+               color: var(--fg); cursor: pointer; margin: 0.5rem 0 0.75rem; }
+  .expandall:hover { border-color: var(--accent); }
+  .expandall:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+
+  @media print {
+    .progress-bar, .filterbar, .expandall { display: none; }
+    body { font-size: 11pt; line-height: 1.6; }
+    main { max-width: 100%; padding: 1cm; }
+    .brief .body { display: grid !important; }
+  }
+</style>
+</head>
+<body>
+<div class="progress-bar" id="progress"></div>
+<main>
+<header>
+<h1>十三場對「自主」的定義沒有一個相同</h1>
+<div class="meta">高科技智慧製造論壇｜2026-09-01（二）08:40–16:45｜雅悅會館 3 樓寶儷廳｜主題 <code>Defining the Next Generation of Autonomous Manufacturing</code></div>
+<div class="bluf">
+<strong class="label">BLUF</strong>
+逐字讀完十三份官方摘要之後的結構事實是：<em>每一場都把「自主」發生的位置放在不同的一層，而沒有任何一場同時談兩層</em>。所以聽每一場時只要問一句「他說的自主，是哪一層」，答得出來就抓到了他的框架，答不出來那場多半是型錄。這一頁是那張光譜表加上九場的逐場輪廓。
+</div>
+</header>
+<article>
+<!-- narrative: 物件,細節,矛盾,直接引語 -->
+
+<div class="callout tip">
+<span class="lbl" style="display:block;font-weight:700;font-size:var(--fs-meta);letter-spacing:0.04em;">這一頁與參戰手冊的分工</span>
+<span class="txt" style="display:block;font-size:var(--fs-meta);line-height:1.7;margin-top:0.3rem;">這一頁是<em>內容地圖</em>——十三場之間的結構關係。要現場動線、領證、時程與問題清單，看另一份 <a href="https://hale80427.github.io/brain-cards/semicon-2026-smart-manufacturing/">參戰手冊</a>。</span>
+</div>
+
+<span class="kicker">對照</span>
+<h2>十三場的自主定義光譜：按層篩，按身分篩</h2>
+
+<p>下面這張表可以按欄排序、按堆疊層與身分篩選。<em>它是這一頁唯一需要在會場反覆查的東西</em>，其餘章節看過一次就好。</p>
+
+<div class="filterbar" role="group" aria-label="光譜表篩選">
+  <span class="glabel">堆疊層</span>
+  <div class="grp" id="f-layer">
+    <button type="button" data-f="all" aria-pressed="true">全部</button>
+    <button type="button" data-f="商業層" aria-pressed="false">商業層</button>
+    <button type="button" data-f="決策層" aria-pressed="false">決策層</button>
+    <button type="button" data-f="模型層" aria-pressed="false">模型層</button>
+    <button type="button" data-f="資料層" aria-pressed="false">資料層</button>
+    <button type="button" data-f="執行層" aria-pressed="false">執行層</button>
+  </div>
+</div>
+<div class="filterbar" role="group" aria-label="光譜表身分篩選">
+  <span class="glabel">身分</span>
+  <div class="grp" id="f-role">
+    <button type="button" data-f="all" aria-pressed="true">全部</button>
+    <button type="button" data-f="買方" aria-pressed="false">買方</button>
+    <button type="button" data-f="賣方" aria-pressed="false">賣方</button>
+    <button type="button" data-f="同行" aria-pressed="false">同行</button>
+    <button type="button" data-f="顧問" aria-pressed="false">顧問</button>
+  </div>
+</div>
+<div class="hitcount" id="hitcount" role="status" aria-live="polite">顯示 13 / 13 場</div>
+
+<div class="tbl cards wide">
+<table class="spectrum" id="spectrum">
+<caption class="notesrc" style="text-align:left;caption-side:bottom;">
+<b>Note：</b>「自主發生在哪一層」是逐字讀十三份官方 abstract 之後的歸類，不是講者自己的用語；堆疊層與身分同為歸類欄位。<br>
+<b>Source：</b>SEMI 官方議程頁與十三份官方 abstract，2026-08-31 以 Playwright 實際渲染取得。
+</caption>
+<thead>
+<tr>
+<th scope="col"><button type="button" data-sort="slot" data-dir="asc">時間</button></th>
+<th scope="col">講者．單位</th>
+<th scope="col"><button type="button" data-sort="layer">自主在哪一層</button></th>
+<th scope="col">他的自主判準</th>
+<th scope="col"><button type="button" data-sort="stack">堆疊</button></th>
+<th scope="col">身分</th>
+</tr>
+</thead>
+<tbody>
+<tr data-layer="商業層" data-role="買方" data-slot="0915" data-stack="1">
+  <td class="slot" data-th="時間">09:15</td>
+  <td data-th="講者">林宏達．TSMC</td>
+  <td class="layer" data-th="自主在哪一層">人機共生層</td>
+  <td data-th="判準">AI 從工具變同事（AI CoWorker → AI Team）</td>
+  <td class="tagcell" data-th="堆疊">商業層</td>
+  <td class="tagcell" data-th="身分">買方</td>
+</tr>
+<tr data-layer="模型層" data-role="賣方" data-slot="0940" data-stack="3">
+  <td class="slot" data-th="時間">09:40</td>
+  <td data-th="講者">Tim Lin．NVIDIA</td>
+  <td class="layer" data-th="自主在哪一層">模型開發層</td>
+  <td data-th="判準">視覺模型能自己適應新產品、新缺陷型態</td>
+  <td class="tagcell" data-th="堆疊">模型層</td>
+  <td class="tagcell" data-th="身分">賣方</td>
+</tr>
+<tr data-layer="決策層" data-role="賣方" data-slot="1005" data-stack="2">
+  <td class="slot" data-th="時間">10:05</td>
+  <td data-th="講者">Mingyuan Zhao．Applied Materials</td>
+  <td class="layer" data-th="自主在哪一層">治理執行層</td>
+  <td data-th="判準">能在既有治理管道內自己動 WIP</td>
+  <td class="tagcell" data-th="堆疊">決策層</td>
+  <td class="tagcell" data-th="身分">賣方</td>
+</tr>
+<tr data-layer="模型層" data-role="賣方" data-slot="1040" data-stack="3">
+  <td class="slot" data-th="時間">10:40</td>
+  <td data-th="講者">Joseph Ervin．Lam Research</td>
+  <td class="layer" data-th="自主在哪一層">虛擬設計層</td>
+  <td data-th="判準">把實驗從晶圓搬進虛擬域</td>
+  <td class="tagcell" data-th="堆疊">模型層</td>
+  <td class="tagcell" data-th="身分">賣方</td>
+</tr>
+<tr data-layer="資料層" data-role="賣方" data-slot="1105" data-stack="4">
+  <td class="slot" data-th="時間">11:05</td>
+  <td data-th="講者">Paul Kim．Merck</td>
+  <td class="layer" data-th="自主在哪一層">語意監控層</td>
+  <td data-th="判準">多代理 24/7 自己巡、自己發警報</td>
+  <td class="tagcell" data-th="堆疊">資料層</td>
+  <td class="tagcell" data-th="身分">賣方</td>
+</tr>
+<tr data-layer="執行層" data-role="賣方" data-slot="1130" data-stack="5">
+  <td class="slot" data-th="時間">11:30</td>
+  <td data-th="講者">Philippe Reiber．Analog Devices</td>
+  <td class="layer" data-th="自主在哪一層">物理具身層</td>
+  <td data-th="判準">機器人在真實環境中感知、移動、適應</td>
+  <td class="tagcell" data-th="堆疊">執行層</td>
+  <td class="tagcell" data-th="身分">賣方</td>
+</tr>
+<tr data-layer="決策層" data-role="買方" data-slot="1340" data-stack="2">
+  <td class="slot" data-th="時間">13:40</td>
+  <td data-th="講者">Cheng How Tan．Micron</td>
+  <td class="layer" data-th="自主在哪一層">排程規劃層</td>
+  <td data-th="判準">RL agent 自己調排程參數</td>
+  <td class="tagcell" data-th="堆疊">決策層</td>
+  <td class="tagcell" data-th="身分">買方</td>
+</tr>
+<tr data-layer="資料層" data-role="賣方" data-slot="1405" data-stack="4">
+  <td class="slot" data-th="時間">14:05</td>
+  <td data-th="講者">Michael Munsey．Siemens</td>
+  <td class="layer" data-th="自主在哪一層">整廠資料層</td>
+  <td data-th="判準">IT／OT 匯流後，執行前先模擬驗證</td>
+  <td class="tagcell" data-th="堆疊">資料層</td>
+  <td class="tagcell" data-th="身分">賣方</td>
+</tr>
+<tr data-layer="執行層" data-role="賣方" data-slot="1430" data-stack="5">
+  <td class="slot" data-th="時間">14:30</td>
+  <td data-th="講者">Allan LAGASCA．STMicroelectronics</td>
+  <td class="layer" data-th="自主在哪一層">機器人平台層</td>
+  <td data-th="判準">感測到致動的整套堆疊可量產</td>
+  <td class="tagcell" data-th="堆疊">執行層</td>
+  <td class="tagcell" data-th="身分">賣方</td>
+</tr>
+<tr data-layer="模型層" data-role="賣方" data-slot="1505" data-stack="3">
+  <td class="slot" data-th="時間">15:05</td>
+  <td data-th="講者">Vivek Vishwakarma．ThirdAI Automation</td>
+  <td class="layer" data-th="自主在哪一層">可解釋層</td>
+  <td data-th="判準">能回答「為什麼」不只「何時」</td>
+  <td class="tagcell" data-th="堆疊">模型層</td>
+  <td class="tagcell" data-th="身分">賣方</td>
+</tr>
+<tr class="star" data-layer="執行層" data-role="同行" data-slot="1530" data-stack="5">
+  <td class="slot" data-th="時間">15:30</td>
+  <td data-th="講者">劉恒惠．萬潤</td>
+  <td class="layer" data-th="自主在哪一層">設備閉環層</td>
+  <td data-th="判準">五個「可」：可觀測、可診斷、可控制、可連接、可驗證</td>
+  <td class="tagcell" data-th="堆疊">執行層</td>
+  <td class="tagcell" data-th="身分">同行</td>
+</tr>
+<tr data-layer="資料層" data-role="賣方" data-slot="1555" data-stack="4">
+  <td class="slot" data-th="時間">15:55</td>
+  <td data-th="講者">Harald Gossner．Intel</td>
+  <td class="layer" data-th="自主在哪一層">跨組織層</td>
+  <td data-th="判準">資料能跨公司流動</td>
+  <td class="tagcell" data-th="堆疊">資料層</td>
+  <td class="tagcell" data-th="身分">賣方</td>
+</tr>
+<tr class="star" data-layer="商業層" data-role="顧問" data-slot="1620" data-stack="1">
+  <td class="slot" data-th="時間">16:20</td>
+  <td data-th="講者">Bo Huang．Bain</td>
+  <td class="layer" data-th="自主在哪一層">投資判斷層</td>
+  <td data-th="判準">明確否定前面十二場：高度自動化 ≠ 自主</td>
+  <td class="tagcell" data-th="堆疊">商業層</td>
+  <td class="tagcell" data-th="身分">顧問</td>
+</tr>
+</tbody>
+</table>
+</div>
+
+<div class="callout warn">
+<span class="lbl" style="display:block;font-weight:700;font-size:var(--fs-meta);letter-spacing:0.04em;">表上沒有的兩個人</span>
+<span class="txt" style="display:block;font-size:var(--fs-meta);line-height:1.7;margin-top:0.3rem;">論壇共同主席是 TSMC 的 Scott Yu 與 UMC 的 James Lin，主持人是 Applied Materials 的 Chao-pei Lu 與 STMicroelectronics 的 Polly Yang。<em>他們四位沒有演講場次</em>，所以不在這張十三列的表上——但 UMC 在場，代表買方視角。</span>
+</div>
+
+<span class="kicker">結構</span>
+<h2>價值往兩端集中，而台灣設備廠正好站在被擠壓的那一格</h2>
+
+<figure class="wide">
+<div class="stack">
+  <div class="band">
+    <span class="lbl">商業層</span>
+    <span class="who">Bain（投資地圖）／TSMC（價值創造）</span>
+  </div>
+  <div class="band">
+    <span class="lbl">決策層</span>
+    <span class="who">Applied Materials（治理閉環）／Micron（RL 排程）</span>
+  </div>
+  <div class="band squeeze">
+    <span class="lbl">模型層</span>
+    <span class="who">NVIDIA（視覺）／ThirdAI（因果）／Lam（物理加 ML 孿生）</span>
+  </div>
+  <div class="band squeeze">
+    <span class="lbl">資料層</span>
+    <span class="who">Merck（本體論）／Siemens（IT/OT 情境化層）／Intel（跨公司資料空間）</span>
+  </div>
+  <div class="band you">
+    <span class="lbl">執行層</span>
+    <span class="who">ADI（元件到 AMR）／ST（機器人平台）／萬潤（設備閉環）
+      <span class="youtag">← 你的位置在這一層</span></span>
+  </div>
+</div>
+<figcaption><b>Bain 的沙漏模型說價值往最上端的軟體平台與最下端的智慧場域裝置集中，中間的控制與整合層被擠壓——而台灣的設備廠大多正好站在被擠壓的那一格。</b>紅色兩帶是被擠壓的中間層，綠框是你所在的位置。
+<span class="src"><b>Note：</b>五層分法是把十三場依「他在賣什麼」歸類的結果，不是官方分類；沙漏模型出自 Bain 該場摘要，紅色標示是本頁作者的疊加判讀，不是 Bain 原圖。</span>
+<span class="src"><b>Source：</b>十三份官方 abstract；Bain 沙漏模型見 16:20 該場的深做筆記。</span>
+</figcaption>
+</figure>
+
+<p>這是為什麼 Bain 那場對你不是「最後一場」，是<em>最重要的一場</em>。而它排在 16:20，也就是你最累的時候。</p>
+
+<span class="kicker">機制</span>
+<h2>問「你走到哪一格」比問任何技術細節都有效</h2>
+
+<figure class="wide">
+<div class="flow">
+  <div class="flow-track">
+    <span class="lbl">自主的階梯｜十三場都落在這條階梯的某一格</span>
+    <div class="path">
+      <span class="node">偵測</span>
+      <span class="arrow"><svg viewBox="0 0 28 17" role="img" aria-labelledby="a1"><title id="a1">推進到下一格</title>
+        <path d="M1 8.5 H22 M17 3.5 L23 8.5 L17 13.5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+      <span class="node">歸因</span>
+      <span class="arrow"><svg viewBox="0 0 28 17" role="img" aria-labelledby="a2"><title id="a2">推進到下一格</title>
+        <path d="M1 8.5 H22 M17 3.5 L23 8.5 L17 13.5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+      <span class="node">建議</span>
+      <span class="arrow"><svg viewBox="0 0 28 17" role="img" aria-labelledby="a3"><title id="a3">推進到下一格</title>
+        <path d="M1 8.5 H22 M17 3.5 L23 8.5 L17 13.5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+      <span class="node hot">授權自動執行</span>
+      <span class="arrow"><svg viewBox="0 0 28 17" role="img" aria-labelledby="a4"><title id="a4">推進到下一格</title>
+        <path d="M1 8.5 H22 M17 3.5 L23 8.5 L17 13.5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+      <span class="node">學習</span>
+    </div>
+  </div>
+  <div class="flow-track">
+    <span class="lbl">可信閉環的五個可｜萬潤版，最實用</span>
+    <div class="path">
+      <span class="node">可觀測</span>
+      <span class="arrow"><svg viewBox="0 0 28 17" role="img" aria-labelledby="a5"><title id="a5">推進到下一格</title>
+        <path d="M1 8.5 H22 M17 3.5 L23 8.5 L17 13.5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+      <span class="node">可診斷</span>
+      <span class="arrow"><svg viewBox="0 0 28 17" role="img" aria-labelledby="a6"><title id="a6">推進到下一格</title>
+        <path d="M1 8.5 H22 M17 3.5 L23 8.5 L17 13.5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+      <span class="node">可控制</span>
+      <span class="arrow"><svg viewBox="0 0 28 17" role="img" aria-labelledby="a7"><title id="a7">推進到下一格</title>
+        <path d="M1 8.5 H22 M17 3.5 L23 8.5 L17 13.5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+      <span class="node">可連接</span>
+      <span class="arrow"><svg viewBox="0 0 28 17" role="img" aria-labelledby="a8"><title id="a8">推進到下一格</title>
+        <path d="M1 8.5 H22 M17 3.5 L23 8.5 L17 13.5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+      <span class="node">可驗證</span>
+      <span class="sign up">缺一格立刻現形</span>
+    </div>
+  </div>
+  <div class="flow-legend">
+    <span><i class="sw-down"></i>advisory 與 autonomy 的真正分界就在這一格</span>
+    <span><i class="sw-up"></i>拿它去對照今天每一家的說法</span>
+  </div>
+</div>
+<figcaption><b>十三場全部落在「偵測到學習」這條階梯上，而 advisory 與 autonomy 的分界只在「授權自動執行」那一格。</b>第二條是萬潤版的五個可，用來反過來檢核任何一家的設備閉環完不完整。
+<span class="src"><b>Note：</b>階梯五格是本頁作者從十三場歸納的框架，不是任一講者的原話；五個可是萬潤該場摘要的逐字五個形容詞（observable、diagnosable、controllable、connectable、verifiable）的中譯。</span>
+<span class="src"><b>Source：</b>萬潤 15:30 場官方 abstract；階梯歸納見 <code>08_全景合成.md</code>。</span>
+</figcaption>
+</figure>
+
+<span class="kicker">對照</span>
+<h2>四組真正的對打，而不是十三場各說各話</h2>
+
+<div class="schema-wall">
+  <div class="card">
+    <span class="lbl">一｜同一件事，差一整級</span>
+    <dl>
+      <dt>Applied Materials 10:05</dt>
+      <dd>輸出是<em>動 WIP</em>——發現問題就自己下 MES hold、自己 reroute。</dd>
+      <dt class="sep">Merck 11:05</dt>
+      <dd>輸出是<em>警報與週報</em>——發現問題，然後告訴人。</dd>
+    </dl>
+    <span class="ask">🎧 聽 AMAT 時等 <code>governed execution</code> 後面接什麼；聽 Merck 時等它的輸出到底停在哪。</span>
+  </div>
+  <div class="card">
+    <span class="lbl">二｜資料要放進誰的房子</span>
+    <dl>
+      <dt>Siemens 14:05</dt>
+      <dd>閉環收在自家 Xcelerator／Opcenter 生態內。</dd>
+      <dt class="sep">Intel 15:55</dt>
+      <dd>主打 Tractus-X／Eclipse 開源可互通、AAS 數位孿生、跨公司資料空間。</dd>
+    </dl>
+    <span class="ask">🎧 兩場都問同一句：資料要放進誰的房子？這是整個工業軟體產業十年來的主線。</span>
+  </div>
+  <div class="card">
+    <span class="lbl">三｜方法論對立</span>
+    <dl>
+      <dt>Lam 10:40</dt>
+      <dd>用<em>物理先驗</em>取代資料——我知道物理，所以我不需要那麼多資料。</dd>
+      <dt class="sep">ThirdAI 15:05</dt>
+      <dd>用<em>因果圖從資料裡挖結構</em>——我不假設物理，我讓資料告訴我因果。</dd>
+    </dl>
+    <span class="ask">🎧 兩場都問同一句：你的模型錯的時候，怎麼知道它錯了？</span>
+  </div>
+  <div class="card">
+    <span class="lbl">四｜最後一場為全天下判決</span>
+    <dl>
+      <dt>Bain 16:20</dt>
+      <dd>摘要逐字：<em lang="en">「Yet 'highly automated' is not 'autonomous.'」</em>自動化是在結構化環境裡照固定規則走；自主是機器在變動條件下自己感知、推理、行動。</dd>
+      <dt class="sep">前面十二場</dt>
+      <dd>全都在講「我們（或我們的產品）做到了自主」。</dd>
+    </dl>
+    <span class="ask">🎧 全天最鋒利的一句話，而它排在你最累的時候。</span>
+  </div>
+</div>
+
+<span class="kicker">對照</span>
+<h2>唯一的反主流來自台灣同行，而且是唯一說「AI 不是起點」的一場</h2>
+
+<div class="tbl cards">
+<table class="roles">
+<caption class="notesrc" style="text-align:left;caption-side:bottom;">
+<b>Note：</b>四種身分是依「他為什麼站在台上」歸類，不是官方分組；「證據強度差異極大」是逐份讀完九份 abstract 後的判讀。<br>
+<b>Source：</b>十三份官方 abstract，2026-08-31 取得。
+</caption>
+<thead><tr><th scope="col">身分</th><th scope="col">誰</th><th scope="col">他們在說什麼</th></tr></thead>
+<tbody>
+<tr><td data-th="身分">買方（fab）</td><td data-th="誰">TSMC、UMC、Micron</td><td data-th="他們在說什麼">「我們自己做到了什麼」——展示規模與方法論，不賣東西，但在定義需求</td></tr>
+<tr><td data-th="身分">賣方（供應商）</td><td data-th="誰">NVIDIA、Applied Materials、Lam、ADI、ST、Siemens</td><td data-th="他們在說什麼">「我們能讓你做到什麼」——產品能力，證據強度差異極大</td></tr>
+<tr><td data-th="身分">同行（台灣設備商）</td><td data-th="誰">萬潤</td><td data-th="他們在說什麼">「這件事要從設備開始，不是從 AI 開始」</td></tr>
+<tr><td data-th="身分">顧問</td><td data-th="誰">Bain</td><td data-th="他們在說什麼">「你們都還沒到」</td></tr>
+</tbody>
+</table>
+</div>
+
+<blockquote class="callout tip">
+<span class="lbl" style="display:block;font-weight:700;font-size:var(--fs-meta);letter-spacing:0.04em;">萬潤摘要逐字</span>
+<span class="txt" style="display:block;font-size:var(--fs-body);line-height:1.8;margin-top:0.4rem;">Autonomous manufacturing does <em lang="en">not</em> begin with AI alone; it requires trusted equipment loops that are observable, diagnosable, controllable, connectable, and verifiable.</span>
+</blockquote>
+
+<p>全場十三場，只有這一句在說「AI 不是起點」。而它來自唯一的台灣本土設備商，講者是技術中心的人不是業務。對做精密機械的你，這是全場立場最接近你的一句話——而那五個形容詞<em>不是行銷詞，是一份設備規格檢核表</em>，可以直接拿回去對自己的產品打分。</p>
+
+<span class="kicker">對照</span>
+<h2>四樣一次都沒出現的東西，就是你在 Q&amp;A 該問的方向</h2>
+
+<div class="func-row">
+  <div class="fn">
+    <svg viewBox="0 0 40 40" role="img" aria-labelledby="s1"><title id="s1">全場未出現</title>
+      <circle cx="20" cy="20" r="17" fill="none" stroke="currentColor" stroke-width="2"/>
+      <path d="M13 13 L27 27 M27 13 L13 27" fill="none" stroke="currentColor" stroke-width="2.4"/></svg>
+    <div><span class="lbl">導入成本、投資金額、回收期</span><span class="txt">全部在講能力（accuracy／availability／cycle time），沒有人講價錢。</span></div>
+  </div>
+  <div class="fn">
+    <svg viewBox="0 0 40 40" role="img" aria-labelledby="s2"><title id="s2">全場未出現</title>
+      <circle cx="20" cy="20" r="17" fill="none" stroke="currentColor" stroke-width="2"/>
+      <path d="M13 13 L27 27 M27 13 L13 27" fill="none" stroke="currentColor" stroke-width="2.4"/></svg>
+    <div><span class="lbl">失敗率、放棄的專案</span><span class="txt">唯一的例外是 ThirdAI 說要談 pilot 到 daily 的落差。</span></div>
+  </div>
+  <div class="fn">
+    <svg viewBox="0 0 40 40" role="img" aria-labelledby="s3"><title id="s3">全場未出現</title>
+      <circle cx="20" cy="20" r="17" fill="none" stroke="currentColor" stroke-width="2"/>
+      <path d="M13 13 L27 27 M27 13 L13 27" fill="none" stroke="currentColor" stroke-width="2.4"/></svg>
+    <div><span class="lbl">中小企業如何導入</span><span class="txt">所有案例的分母都是大廠。Bain 的藍圖明寫是給 large-scale deployers。</span></div>
+  </div>
+  <div class="fn">
+    <svg viewBox="0 0 40 40" role="img" aria-labelledby="s4"><title id="s4">全場未出現</title>
+      <circle cx="20" cy="20" r="17" fill="none" stroke="currentColor" stroke-width="2"/>
+      <path d="M13 13 L27 27 M27 13 L13 27" fill="none" stroke="currentColor" stroke-width="2.4"/></svg>
+    <div><span class="lbl">人力的減少</span><span class="txt">只講「省下多少工時」，不講那些工時原本是誰的。</span></div>
+  </div>
+</div>
+
+<p>這四個沉默就是你在 Q&amp;A 與午餐該問的方向——<em>因為沒有人會問</em>。</p>
+
+<span class="kicker">檢索</span>
+<h2>九場逐場輪廓：點開看該聽哪一句</h2>
+
+<p>下面九張卡片一場一張，每張三十秒讀完。<em>四場深做（TSMC 09:15、Micron 13:40、萬潤 15:30、Bain 16:20）不在這裡</em>，它們有各自的獨立檔案。</p>
+
+<button type="button" class="expandall" id="expandall" aria-expanded="false">全部展開</button>
+
+<details class="brief">
+<summary><span class="slot">09:40</span><span class="who">NVIDIA｜Tim Lin
+<span class="one">AOI 的瓶頸不是模型準不準，是換產品就要重做資料。</span></span></summary>
+<div class="body">
+  <div class="row"><span class="k">公司在這題的家當</span><span class="v">Metropolis（視覺 AI 平台加工廠版 VSS blueprint）、Cosmos Reason（推理型視覺模型）、TAO 微調工具鏈、Omniverse 數位孿生生合成資料。摘要自列技術是「Digital Twin to Synthetic Data Generation」與「vision-model data flywheels」，四條線都在。</span></div>
+  <div class="row"><span class="k">講者是誰</span><span class="v">技術人。UT Arlington 資工博士，十年以上半導體經歷，NVIDIA 官方部落格作者頁掛他的名字。不是業務簡報。</span></div>
+  <div class="row warnrow"><span class="k">🎧 該聽哪一句</span><span class="v q">等他講 <code>closed-loop feedback from production</code> 時，追問<em>回饋是誰標的</em>——如果還是人工複判，飛輪就只是自動化的資料前處理。</span></div>
+  <div class="row"><span class="k">與別場的關係</span><span class="v">全場唯一把「自主」放在模型開發層而非產線層。與 Applied Materials 互補不重疊；ST 與 NVIDIA 已在 Physical AI 結盟，可對照兩邊講法。</span></div>
+</div>
+</details>
+
+<details class="brief">
+<summary><span class="slot">10:05</span><span class="who">Applied Materials｜Mingyuan Zhao
+<span class="one">良率異常今天仍是人工跨系統對訊號；答案是一條會自己執行的閉環。</span></span></summary>
+<div class="body">
+  <div class="row"><span class="k">公司在這題的家當</span><span class="v">SmartFactory 系列（Yield Management、AI/ML 平台）與 ExtractAI（Enlight 光學檢測配 SEMVision 電子束）。摘要點名要串 MES／FDC／SPC／APC／recipe／dispatch，正是 Applied SmartFactory 的產品面。</span></div>
+  <div class="row"><span class="k">講者是誰</span><span class="v">業務端偏策略。19 年資歷，做過 NXP／Wolfspeed／Qorvo 的 fab 與製程，現職 Strategic Marketing。懂 fab，但這場是市場定位不是技術細節。</span></div>
+  <div class="row warnrow"><span class="k">🎧 該聽哪一句</span><span class="v q">等 <code>governed execution</code> 四個字後面接什麼——是真的 auto hold，還是仍停在 human-in-the-loop 的建議。<em>這決定他講的是 autonomy 還是 advisory</em>。</span></div>
+  <div class="row"><span class="k">與別場的關係</span><span class="v">與 Merck 是本日最直接的對打——同樣多代理、同樣打資料孤島，但 Merck 的輸出是警報與週報，AMAT 的輸出是動 WIP。兩場對「自主」的定義差一整級。</span></div>
+</div>
+</details>
+
+<details class="brief">
+<summary><span class="slot">10:40</span><span class="who">Lam Research｜Joseph Ervin
+<span class="one">別再靠一次動一個參數的晶圓實驗；搬進虛擬域就能同時掃多個變更。</span></span></summary>
+<div class="body">
+  <div class="row"><span class="k">公司在這題的家當</span><span class="v">SEMulator3D（物理體素製程模擬）與 Semiverse Solutions 產品線，外加 Fabtex Yield Optimizer——官方描述就是「SEMulator3D 建虛擬矽孿生、以實際 fab 資料校驗、物理模型配機器學習」。</span></div>
+  <div class="row"><span class="k">講者是誰</span><span class="v">技術人兼事業主管。Semiverse Solutions 產品線負責人，ASU 元件物理博士，60 件專利，Coventor 併入 Lam 時進來的。</span></div>
+  <div class="row warnrow"><span class="k">🎧 該聽哪一句</span><span class="v q">GAA 那個案例的<em>驗證方式</em>——虛擬孿生的預測跟真實 HVM 良率對得上多少？沒有這個數字，多目標優化只是模擬器的自證。</span></div>
+  <div class="row"><span class="k">與別場的關係</span><span class="v">與 Siemens 是同一種「先模擬再執行」哲學的兩個尺度（Lam 在製程整合層，Siemens 在整廠營運層）。與 ThirdAI 相反——Lam 用物理先驗取代資料，ThirdAI 用因果圖從資料裡挖結構。</span></div>
+</div>
+</details>
+
+<details class="brief">
+<summary><span class="slot">11:05</span><span class="who">Merck｜Paul Kim
+<span class="one">孤島要先用語義本體接成一張圖，多代理才走得動。</span></span></summary>
+<div class="body">
+  <div class="row"><span class="k">公司在這題的家當</span><span class="v">Merck 電子事業的資料側旗艦是 Athinia，與 Palantir 合建、底層就是 Foundry 的 Ontology——這正是講題 <code>Operational Ontology Layer</code> 的血緣。</span></div>
+  <div class="row warnrow"><span class="k">⚠ 這條是推論不是摘要說的</span><span class="v">摘要本身沒點名 Athinia，這條血緣是執行者的推論，<em>現場請確認</em>。</span></div>
+  <div class="row"><span class="k">講者是誰</span><span class="v">技術人。化工背景，AspenTech 模擬工程師、LG 化學 AI 科學家，延世大學 AI 碩士。手上是實作不是願景。</span></div>
+  <div class="row warnrow"><span class="k">🎧 該聽哪一句</span><span class="v q">他說<em>已部署在韓國與台灣廠</em>——問哪個廠、跑多久。以及「幾小時縮到幾分鐘」的基準是誰量的。</span></div>
+  <div class="row"><span class="k">與別場的關係</span><span class="v">與 Applied Materials 對打。與 Intel 是同一個詞的兩種尺度：Merck 的本體論在一家公司內，Intel 的資料空間要跨公司。</span></div>
+</div>
+</details>
+
+<details class="brief">
+<summary><span class="slot">11:30</span><span class="who">Analog Devices｜Philippe Reiber
+<span class="one">既賣半導體也自己開 fab，所以能拿自家產線當測試場。</span></span></summary>
+<div class="body">
+  <div class="row"><span class="k">公司在這題的家當</span><span class="v">不是軟體是矽——精密感測、機器視覺、馬達與運動控制、功能安全、工業連結（IO-Link、10BASE-T1L）、邊緣 AI。摘要自己畫的價值鏈是 sensing → connectivity → motion → edge AI → autonomous fab。</span></div>
+  <div class="row"><span class="k">講者是誰</span><span class="v">純業務。25 年銷售資歷，2025 起管全球工業銷售，前職是航太國防銷售 VP。有微電子碩士，但席位是通路不是技術。</span></div>
+  <div class="row warnrow"><span class="k">🎧 該聽哪一句</span><span class="v q">「用自家 fab 當 testbed」是這場<em>唯一的差異化籌碼</em>——等他報出哪座廠、哪個工序、跑出什麼數字。</span></div>
+  <div class="row"><span class="k">與別場的關係</span><span class="v">與 ST 幾乎是同一份簡報的兩個版本（都賣感測加運動控制加邊緣 AI 給機器人）。差別在 ADI 有 fab、ST 講題更偏機器人本體。這兩場連著聽，聽誰的證據是自家產線、誰的是客戶案例。</span></div>
+</div>
+</details>
+
+<details class="brief">
+<summary><span class="slot">14:05</span><span class="who">Siemens｜Michael Munsey
+<span class="one">單機優化的紅利吃完了，下一波價值在把工具連起來。</span></span></summary>
+<div class="body">
+  <div class="row"><span class="k">公司在這題的家當</span><span class="v">Opcenter Execution Semiconductor（半導體 MES）為底，往上是 Xcelerator 內的工業分析與 comprehensive digital twin，主打 IT／OT 匯流與 virtual commissioning。</span></div>
+  <div class="row"><span class="k">講者是誰</span><span class="v">業務策略端。35 年資歷，Siemens DISW 半導體產業全球副總；歷任 Perforce 行銷策略 SVP、Dassault 高科技產業 VP、Cadence 驗證。IBM 設計出身但已離技術很久。</span></div>
+  <div class="row warnrow"><span class="k">🎧 該聽哪一句</span><span class="v q">他摘要裡有一段別人都沒有——<em>「工程師在 AI fab 裡需要什麼新技能」</em>。這是全場唯一談人的段落，也是最可能有真話的地方。</span></div>
+  <div class="row"><span class="k">與別場的關係</span><span class="v">與 Lam 同哲學不同層。與 Intel 打對台：Siemens 的閉環收在自家 Xcelerator 生態內，Intel 的資料空間主打開源可互通——封閉平台對開放標準，這是本日最硬的一組分歧。</span></div>
+</div>
+</details>
+
+<details class="brief">
+<summary><span class="slot">14:30</span><span class="who">STMicroelectronics｜Allan LAGASCA
+<span class="one">機器人平台不是單一晶片問題，要整套堆疊一起做成可量產。</span></span></summary>
+<div class="body">
+  <div class="row"><span class="k">公司在這題的家當</span><span class="v">STM32N6（內建自研 Neural-ART NPU 的旗艦 MCU）、IMU 與 BrightSense 影像感測、VL53 系列 dToF、場向控制馬達驅動與 GaN 功率級；2026 年 3 月起與 NVIDIA 合作把這些預整合到 Jetson 上做人形機器人。</span></div>
+  <div class="row"><span class="k">講者是誰</span><span class="v">技術業務之間。2003 年進 ST 做應用工程師，現為資深總監，主導 Robotics Segment 策略計畫。25 年資歷，長期駐台灣與深圳。</span></div>
+  <div class="row warnrow"><span class="k">🎧 該聽哪一句</span><span class="v q">這場摘要是<em>全場最短的</em>（技術清單只有一行）。所以要聽他有沒有講出「哪一個客戶的機器人真的量產了」。</span></div>
+  <div class="row"><span class="k">與別場的關係</span><span class="v">與 ADI 直接重疊。與 NVIDIA 有實質關聯——ST 是 NVIDIA Physical AI 生態的供應側，兩場可互相補完感知到致動的鏈。</span></div>
+</div>
+</details>
+
+<details class="brief">
+<summary><span class="slot">15:05</span><span class="who">ThirdAI Automation｜Vivek Vishwakarma
+<span class="one">全場只有他打算講失敗面：pilot 到日常之間缺什麼。</span></span></summary>
+<div class="body">
+  <div class="row warnrow"><span class="k">⚠ 不要認錯公司</span><span class="v">已確認與美國休士頓那家做 CPU 訓練 LLM 的 ThirdAI Corp.（Rice 大學 Anshumali Shrivastava 創辦，2021）是<em>不同公司</em>。</span></div>
+  <div class="row"><span class="k">公司在這題的家當</span><span class="v">ThirdAI Automation Inc，2024 年由 Vivek Vishwakarma 與 Sainyam Galhotra 創辦，舊金山與印度雙據點，2026 年 2 月由 Endiya 與 Capria 領投拿到 300 萬美元種子輪，產品是因果 AI 根因分析 copilot。</span></div>
+  <div class="row"><span class="k">講者是誰</span><span class="v">技術創辦人。前 Intel 技術人員，10 件以上專利、300 次以上論文引用，跨半導體與電池領域。</span></div>
+  <div class="row warnrow"><span class="k">🎧 該聽哪一句</span><span class="v q">他摘要明寫要談「從有說服力的 pilot 到工程師每天依賴的系統，中間缺什麼」。<em>全場只有他打算講失敗面，這 25 分鐘的價值全在這一段</em>。也注意他提的 air-gapped 部署，那是 fab 的真實約束。</span></div>
+  <div class="row"><span class="k">與別場的關係</span><span class="v">與 Lam 方法論對立（物理先驗對資料因果）。與 Applied Materials 是同一個問題的大小兩解。聽完 AMAT 再聽這場，可以判斷「整合平台」與「單點利器」哪個先落地。</span></div>
+</div>
+</details>
+
+<details class="brief">
+<summary><span class="slot">15:55</span><span class="who">Intel｜Harald Gossner
+<span class="one">全場唯一把自主的邊界畫在單一 fab 之外的一場。</span></span></summary>
+<div class="body">
+  <div class="row"><span class="k">公司在這題的家當</span><span class="v">這場賣的不是 Intel 產品，是 Semiconductor-X——德國政府資助的歐洲專案，2024 年 5 月啟動，由 Intel Deutschland 與 Fraunhofer IFF 共同主導，20 家以上半導體與供應鏈廠商參與；架構沿用 Gaia-X／Catena-X 原則，技術棧點名 AAS 數位孿生與 Tractus-X／Eclipse 開源生態。</span></div>
+  <div class="row warnrow"><span class="k">⚠ 職涯落差值得注意</span><span class="v">他的老本行是 ESD 防護與可靠度——15 年在 Siemens／Infineon 做 ESD，現為 Intel 系統 ESD 負責人、IEEE Fellow。<em>資料生態系不是他的技術本行</em>，他是 2024 年起以專案主持人身分接手。這場聽治理與聯盟政治，別期待資料架構的技術深度。</span></div>
+  <div class="row warnrow"><span class="k">🎧 該聽哪一句</span><span class="v q">等他講 demonstrator 時問一句<em>「哪幾家真的把資料放進去了」</em>。資料空間的成敗不在架構在參與意願，而 fab 對設備商開放製程資料本身就違反本能。</span></div>
+  <div class="row"><span class="k">與別場的關係</span><span class="v">與 Siemens 是本日最硬的分歧（封閉生態對開源標準）。與 Merck 是同概念的跨公司版本。也是全場唯一把「自主」的邊界畫在單一 fab 之外的一場——其餘八場的自主都停在圍牆內。</span></div>
+</div>
+</details>
+
+<span class="kicker">機制</span>
+<h2>三個框架就夠，細節不必記</h2>
+
+<ol>
+<li><strong>自主的階梯</strong>：偵測 → 歸因 → 建議 → 授權自動執行 → 學習。十三場都落在某一格。問「你走到哪一格」比問任何技術細節都有效。</li>
+<li><strong>可信閉環的五個可</strong>（萬潤版）：可觀測 → 可診斷 → 可控制 → 可連接 → 可驗證。拿它去對照今天每一家的說法，缺哪一格立刻現形。</li>
+<li><strong>價值的沙漏</strong>（Bain 版）：軟體平台在上、智慧裝置在下、控制整合層在中間被擠壓。這是你判斷自己與同業定位的座標系。</li>
+</ol>
+
+<div class="callout warn">
+<span class="lbl" style="display:block;font-weight:700;font-size:var(--fs-meta);letter-spacing:0.04em;">這一頁的效度邊界</span>
+<span class="txt" style="display:block;font-size:var(--fs-meta);line-height:1.7;margin-top:0.3rem;">所有「預期主張」與「該聽哪一句」都是<em>會前依官方 abstract 做的推測</em>，不是現場實況。九場輪廓由 subagent 於 2026-08-31 產出、逐份改用官方 abstract 撰寫而非從講題名猜；公司家當與講者背景來自公開資料查證，講者判讀（技術人／業務端）是推論。<em>現場聽到與這頁不符時，以現場為準。</em></span>
+</div>
+
+</article>
+<footer>
+<div class="meta" style="margin-top: 4rem; padding-top: 1.5rem; border-top: 1px solid var(--border);">
+最後更新：2026-09-01 · 材料來源 <code>08_全景合成.md</code> 與 <code>04_其餘九場_輪廓.md</code> · CC BY 4.0 · 引用請標來源
+</div>
+</footer>
+</main>
+
+<script type="application/json" id="form-routing-3-7">
+{"3.7a":{"cell":"離散對照","carrier":"可排序可篩選表 ＋ 旁邊一張圖（KB-13 第一順位 A09）"},
+ "3.7b":{"sections":[{"h":"十三場的自主定義光譜：按層篩，按身分篩","structural":false},
+                     {"h":"價值往兩端集中，而台灣設備廠正好站在被擠壓的那一格","structural":true},
+                     {"h":"問「你走到哪一格」比問任何技術細節都有效","structural":true},
+                     {"h":"四組真正的對打，而不是十三場各說各話","structural":true},
+                     {"h":"唯一的反主流來自台灣同行，而且是唯一說「AI 不是起點」的一場","structural":false},
+                     {"h":"四樣一次都沒出現的東西，就是你在 Q&A 該問的方向","structural":true},
+                     {"h":"九場逐場輪廓：點開看該聽哪一句","structural":false},
+                     {"h":"三個框架就夠，細節不必記","structural":false}]},
+ "3.7c":{"continuous":false},
+ "3.7d":{"needed":false}}
+</script>
+
+<script>
+  const bar = document.getElementById('progress');
+  window.addEventListener('scroll', () => {
+    const h = document.documentElement;
+    const max = h.scrollHeight - h.clientHeight;
+    const ratio = max > 0 ? h.scrollTop / max : 0;
+    bar.style.transform = 'scaleX(' + ratio + ')';
+  }, { passive: true });
+
+  (function () {
+    const tbody = document.querySelector('#spectrum tbody');
+    if (!tbody) return;
+    const rows = Array.from(tbody.rows);
+    const hit = document.getElementById('hitcount');
+    const state = { layer: 'all', role: 'all' };
+
+    function apply() {
+      let n = 0;
+      rows.forEach(r => {
+        const ok = (state.layer === 'all' || r.dataset.layer === state.layer)
+                && (state.role  === 'all' || r.dataset.role  === state.role);
+        r.hidden = !ok;
+        if (ok) n++;
+      });
+      hit.textContent = '顯示 ' + n + ' / ' + rows.length + ' 場';
+    }
+
+    function wire(groupId, key) {
+      const grp = document.getElementById(groupId);
+      if (!grp) return;
+      grp.addEventListener('click', e => {
+        const btn = e.target.closest('button');
+        if (!btn) return;
+        state[key] = btn.dataset.f;
+        grp.querySelectorAll('button').forEach(b => {
+          b.setAttribute('aria-pressed', String(b === btn));
+        });
+        apply();
+      });
+    }
+    wire('f-layer', 'layer');
+    wire('f-role', 'role');
+
+    const order = { slot: r => r.dataset.slot, layer: r => r.dataset.layer,
+                    stack: r => r.dataset.stack + r.dataset.slot };
+    document.querySelectorAll('#spectrum th button').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const key = btn.dataset.sort;
+        const dir = btn.dataset.dir === 'asc' ? 'desc' : 'asc';
+        document.querySelectorAll('#spectrum th button').forEach(b => b.removeAttribute('data-dir'));
+        btn.dataset.dir = dir;
+        const f = order[key];
+        const sorted = rows.slice().sort((a, b) => {
+          const va = f(a), vb = f(b);
+          return dir === 'asc' ? (va < vb ? -1 : va > vb ? 1 : 0)
+                               : (va > vb ? -1 : va < vb ? 1 : 0);
+        });
+        sorted.forEach(r => tbody.appendChild(r));
+      });
+    });
+    apply();
+  })();
+
+  (function () {
+    const btn = document.getElementById('expandall');
+    if (!btn) return;
+    const items = Array.from(document.querySelectorAll('details.brief'));
+    btn.addEventListener('click', () => {
+      const open = btn.getAttribute('aria-expanded') !== 'true';
+      items.forEach(d => { d.open = open; });
+      btn.setAttribute('aria-expanded', String(open));
+      btn.textContent = open ? '全部收合' : '全部展開';
+    });
+  })();
+</script>
+</body>
+</html>
