@@ -278,10 +278,16 @@ code{font-family:ui-monospace,SFMono-Regular,Menlo,monospace; font-size:.86em; b
     });
     ctx.setLineDash([]);
 
+    // 驅動頻率：實線只畫到曲線上的操作點，點以上改極淡虛線。
+    // 原本整條畫滿高度，讀者會誤以為那個高度就是振幅（第 218 跑 agy 盲讀兩度判 HIGH）。
+    var dx=x2px(df), dy=y2px(amp(df,w));
     ctx.strokeStyle=css("--drive"); ctx.lineWidth=2;
-    ctx.beginPath(); ctx.moveTo(x2px(df),padT); ctx.lineTo(x2px(df),ch-padB); ctx.stroke();
+    ctx.beginPath(); ctx.moveTo(dx,ch-padB); ctx.lineTo(dx,dy); ctx.stroke();
+    ctx.globalAlpha=0.28; ctx.setLineDash([3,4]);
+    ctx.beginPath(); ctx.moveTo(dx,dy); ctx.lineTo(dx,padT); ctx.stroke();
+    ctx.setLineDash([]); ctx.globalAlpha=1;
     ctx.fillStyle=css("--drive");
-    ctx.beginPath(); ctx.arc(x2px(df),y2px(amp(df,w)),4,0,2*Math.PI); ctx.fill();
+    ctx.beginPath(); ctx.arc(dx,dy,4.5,0,2*Math.PI); ctx.fill();
 
     // 刻度只標「軸的範圍」。半高邊界的位置由虛線表示、數值由讀數區的「容許漂移」給，
     // 不在軸的兩端冒充邊界（第 218 跑修掉的假宣稱）。

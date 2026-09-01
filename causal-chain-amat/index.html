@@ -67,7 +67,7 @@ p{margin:0 0 1rem}
   content:""; position:absolute; left:.38rem; top:.55rem; bottom:-.2rem;
   width:var(--rail); background:var(--rail-c);
 }
-.link:last-child::before{bottom:auto; height:1.1rem}
+.link:last-child::before{bottom:auto; height:.95rem}
 .link::after{
   content:""; position:absolute; left:0; top:.5rem;
   width:.82rem; height:.82rem; border-radius:50%;
@@ -91,6 +91,9 @@ p{margin:0 0 1rem}
 .chip.inferred{color:var(--s-inferred); background:var(--s-inferred-bg)}
 .chip.unverified{color:var(--s-unverified); background:var(--s-unverified-bg)}
 
+.nw{white-space:nowrap}
+.ladderhead{font-size:.86rem; color:var(--ink-2); margin:.6rem 0 .1rem}
+.ladder .chip{margin-left:.3rem}
 .via{padding:.45rem 0 .55rem; font-size:.88rem; color:var(--ink-2)}
 .via b{font-weight:600; color:var(--ink); font-style:normal}
 
@@ -180,7 +183,7 @@ code{font-family:ui-monospace,SFMono-Regular,Menlo,monospace; font-size:.86em; b
   <li class="link" data-strength="reported">
     <div class="node">
       <span class="num">起點</span>
-      <p>異常發生時，資訊散在多個系統裡：SPC 管制圖、缺陷偵測、recipe 變更紀錄、晶圓圖<span class="chip reported">講者陳述</span></p>
+      <p>異常發生時，資訊散在多個系統裡：SPC 管制圖、缺陷偵測、recipe 變更紀錄、<span class="nw">晶圓圖</span><span class="chip reported">講者陳述</span></p>
     </div>
     <details class="ev">
       <summary>講者怎麼說</summary>
@@ -206,7 +209,7 @@ code{font-family:ui-monospace,SFMono-Regular,Menlo,monospace; font-size:.86em; b
   <li class="link" data-strength="reported">
     <div class="node">
       <span class="num">分岔</span>
-      <p>凌晨兩點，關鍵機台被判定異常，系統建議下機台，而熟悉該應用的專家叫不到人<span class="chip reported">講者陳述</span></p>
+      <p>凌晨兩點，關鍵機台被判定異常，系統建議下機台，而熟悉該應用的專家<span class="nw">叫不到人</span><span class="chip reported">講者陳述</span></p>
     </div>
     <p class="forkhead">從這個時點往下，兩條路各自的終點：</p>
     <ul class="fork">
@@ -217,13 +220,13 @@ code{font-family:ui-monospace,SFMono-Regular,Menlo,monospace; font-size:.86em; b
         <div class="node"><p><strong>由被治理過的系統給判斷</strong>（講者要去的地方）→ 同一個異常得到同一套處置</p></div>
       </li>
     </ul>
-    <p class="via">走第一條路時，講者點名三個代價：恢復更慢、決策不一致，而<b>專家的判斷無法規模化</b></p>
+    <p class="via"><b>接下來的第 4 到第 6 環追的是第一條路的後果</b>（第二條路是講者的提案，在第 7 環）。走第一條路時，他點名三個代價：恢復更慢、決策不一致，而<b>專家的判斷無法規模化</b></p>
   </li>
 
   <li class="link" data-strength="reported">
     <div class="node">
       <span class="num">後果 A</span>
-      <p>作業面：復機被延後、生產週期被打斷<span class="chip reported">講者陳述</span></p>
+      <p>作業面：復機被延後、生產週期<span class="nw">被打斷</span><span class="chip reported">講者陳述</span></p>
     </div>
     <p class="via">這一層的損失是<b>一次性的</b>——這次慢了，下次未必</p>
   </li>
@@ -231,7 +234,7 @@ code{font-family:ui-monospace,SFMono-Regular,Menlo,monospace; font-size:.86em; b
   <li class="link" data-strength="reported">
     <div class="node pivot">
       <span class="num">後果 B ★ 樞紐</span>
-      <p>知識面：解法停在<strong>某一位工程師的瀏覽器分頁裡，或某一個團隊裡</strong>，沒有進到平台<span class="chip reported">講者陳述</span></p>
+      <p>知識面：解法停在<strong>某一位工程師的瀏覽器分頁裡，或某一個團隊裡</strong>，沒有<span class="nw">進到平台</span><span class="chip reported">講者陳述</span></p>
     </div>
     <details class="ev">
       <summary>為什麼這一環是整條鏈的樞紐</summary>
@@ -272,17 +275,15 @@ code{font-family:ui-monospace,SFMono-Regular,Menlo,monospace; font-size:.86em; b
       <span class="num">終點</span>
       <p>自主權是<strong>逐階賺來的</strong>：五個階段各有各的規則，<strong>當前階段先證明自己有效，下一階才解鎖</strong><span class="chip reported">講者陳述</span></p>
     </div>
-    <details class="ev">
-      <summary>五階梯與他說的現況</summary>
-      <ol class="ladder">
+    <p class="ladderhead">五階梯與他說的現況（<span class="nw">不收合</span>——本頁的 Note 會指涉它）</p>
+    <ol class="ladder">
         <li data-now="1">建議型：AI 給建議，<strong>決策仍由工程師做</strong><span class="tag">講者說多數半導體廠目前在這一階</span></li>
-        <li data-now="1">輔助工作流：AI 的預測交由實際結果驗證<span class="tag">講者說部分先進廠與試作在探索中</span></li>
-        <li>影子模式：AI 全程跟跑但不出手，持續被實際結果對答案</li>
+        <li data-now="1">輔助工作流：AI 的預測交由實際結果驗證<span class="chip unverified">未驗證</span><span class="tag">講者說部分先進廠與試作在探索中。<strong>第 2 與第 3 階的界線在逐字稿中辨識不清，這個拆法是作者依上下文還原</strong></span></li>
+        <li>影子模式：AI 全程跟跑但不出手，持續被實際結果對答案<span class="chip unverified">未驗證</span><span class="tag">同上：作者還原，可能與講者原意不符</span></li>
         <li>受限行動：AI 在被界定的限度內自行動作<span class="tag">講者定位為願景</span></li>
         <li>適應性學習：處置結果回頭訓練既有模型與規則<span class="tag">講者定位為最終目標</span></li>
       </ol>
-      <p class="src">逐字稿第 13 至 15 段。階段 2 與 3 的界線在逐字稿中辨識不清（原文把兩者併在一句裡講），此處的拆法是本頁作者依上下文還原，<strong>可能與講者原意不符</strong>。</p>
-    </details>
+      <p class="src">逐字稿第 13 至 15 段。</p>
   </li>
 
 </ol>
@@ -290,7 +291,7 @@ code{font-family:ui-monospace,SFMono-Regular,Menlo,monospace; font-size:.86em; b
 <figcaption><strong>整條鏈的樞紐在「知識停在個人層級」——它是唯一一個把單次事故變成重複事故的環，講者提的五階梯與驗證閘全都是為了讓那一環改變。</strong></figcaption>
 
 <p class="notesrc"><b>Note：</b>證據強度四態由本頁作者標註，不是講者的分級。本頁<strong>沒有任何一環標到「實測」</strong>，因為整場演講零量化數據——全文數字掃描只命中議程編號。「講者陳述」在此指「講者在台上說的、無外部佐證」，強度低於首例的「自報」（後者至少有企業內部量測）。<strong>來源是現場錄音的自動語音辨識稿</strong>，專有名詞辨識錯誤密集，故證據層放重述與段落定位，不放逐字引文；每一環都可能因辨識錯誤而偏離原意。五階梯的第 2 與第 3 階拆法是作者還原，未經查證。</p>
-<p class="notesrc"><b>Source：</b>Applied Materials 策略行銷 Ming Zhao，《Yield Management》，SEMICON 高科技智慧製造論壇上午場第 4 場，2026-08-31。逐字稿由本機語音辨識產出（<code>04_AMAT_MingyuanZhao_YieldManagement.txt</code>，14,153 位元組），<strong>未經官方釋出、不含逐字引文</strong>。</p>
+<p class="notesrc"><b>Source：</b>Applied Materials 策略行銷 Mingyuan Zhao，《Yield Management》，SEMICON 高科技智慧製造論壇上午場第 4 場，2026-08-31。逐字稿由本機語音辨識產出（<code>04_AMAT_MingyuanZhao_YieldManagement.txt</code>，14,153 位元組），<strong>未經官方釋出、不含逐字引文</strong>。</p>
 </figure>
 
 <hr>
