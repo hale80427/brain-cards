@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>共振頻率幾乎不動，尖銳度卻差了 8 倍——會咬人的是後者</title>
+<meta name="description" content="拖滑桿看超音波刀柄的共振尖銳度 Q 怎麼決定「頻率漂一點點」會損失多少振幅。">
+<style>
+:root{
+  --bg:#fbfaf8; --ink:#1c1a17; --ink-2:#57524a; --ink-3:#746e64;
+  --line:#d9d3c8; --card:#ffffff; --card-2:#f4f1ea;
+  --accent:#8a5a2b; --good:#2f6b4f; --bad:#8a2f2f;
+  --curve:#8a5a2b; --spec:#2f6b4f; --drive:#5a5a8a; --fill:rgba(138,90,43,.16);
+  color-scheme:light dark;
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --bg:#14130f; --ink:#eeeae2; --ink-2:#b3ab9d; --ink-3:#8f8779;
+    --line:#37332c; --card:#1c1a15; --card-2:#242019;
+    --accent:#d8a56a; --good:#7fc9a2; --bad:#d88a8a;
+    --curve:#d8a56a; --spec:#7fc9a2; --drive:#a3a1d8; --fill:rgba(216,165,106,.20);
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#14130f; --ink:#eeeae2; --ink-2:#b3ab9d; --ink-3:#8f8779;
+  --line:#37332c; --card:#1c1a15; --card-2:#242019;
+  --accent:#d8a56a; --good:#7fc9a2; --bad:#d88a8a;
+  --curve:#d8a56a; --spec:#7fc9a2; --drive:#a3a1d8; --fill:rgba(216,165,106,.20);
+}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{
+  margin:0; background:var(--bg); color:var(--ink);
+  font:400 17px/1.75 "Noto Sans TC","PingFang TC","Hiragino Sans CJK TC","Microsoft JhengHei",system-ui,sans-serif;
+  text-wrap:pretty;
+}
+.wrap{max-width:44rem; margin:0 auto; padding:2rem 1.1rem 5rem}
+.kicker{font-size:.82rem; letter-spacing:.09em; text-transform:uppercase; color:var(--ink-3); margin:0 0 .6rem}
+h1{font-size:1.62rem; line-height:1.35; letter-spacing:-.01em; margin:0 0 .5rem; text-wrap:balance}
+h2{font-size:1.12rem; margin:2.4rem 0 .7rem; text-wrap:balance}
+p{margin:0 0 1rem}
+.bluf{background:var(--card-2); border-left:3px solid var(--accent); padding:.85rem 1rem; border-radius:0 6px 6px 0; margin:1.3rem 0 1.8rem}
+.bluf p{margin:0}
+
+figure{margin:1.6rem 0 2rem}
+.stage{position:relative; background:var(--card); border:1px solid var(--line); border-radius:10px; padding:.9rem .8rem .7rem}
+canvas{display:block; width:100%; height:200px}
+.axrow{display:flex; justify-content:space-between; align-items:baseline;
+  font-size:.74rem; color:var(--ink-3); padding:0 .1rem; gap:.5rem}
+.axrow.top{margin:0 0 .3rem}
+.axrow.bot{margin:.15rem 0 0}
+.axrow .spec{color:var(--spec)}
+.axrow .drive{color:var(--drive)}
+
+.picker{margin:1.1rem 0 .2rem}
+.picker label{display:block; font-size:.86rem; color:var(--ink-2); margin:0 0 .3rem}
+.picker select{
+  font:inherit; font-size:.94rem; width:100%; min-height:44px;
+  padding:.4rem .6rem; color:var(--ink); background:var(--card);
+  border:1px solid var(--line); border-radius:6px;
+}
+.picker select:focus-visible{outline:2px solid var(--accent); outline-offset:2px}
+
+.controls{margin:1.1rem 0 0; padding:0; border:0}
+.ctl{display:block; margin:0 0 1.15rem}
+.ctl .row{display:flex; justify-content:space-between; align-items:baseline; gap:.6rem; margin:0 0 .3rem}
+.ctl .name{font-size:.92rem; color:var(--ink-2)}
+.ctl .val{font-variant-numeric:tabular-nums; font-weight:600; font-size:1rem}
+input[type=range]{
+  -webkit-appearance:none; appearance:none; width:100%; height:44px;
+  background:transparent; margin:0; display:block; cursor:pointer;
+}
+input[type=range]::-webkit-slider-runnable-track{height:4px; background:var(--line); border-radius:2px}
+input[type=range]::-moz-range-track{height:4px; background:var(--line); border-radius:2px}
+input[type=range]::-webkit-slider-thumb{
+  -webkit-appearance:none; appearance:none; width:26px; height:26px; border-radius:50%;
+  background:var(--accent); border:3px solid var(--card); margin-top:-11px;
+  box-shadow:0 1px 4px rgba(0,0,0,.22);
+}
+input[type=range]::-moz-range-thumb{
+  width:20px; height:20px; border-radius:50%; background:var(--accent);
+  border:3px solid var(--card); box-shadow:0 1px 4px rgba(0,0,0,.22);
+}
+input[type=range]:focus-visible{outline:2px solid var(--accent); outline-offset:4px}
+.hint{font-size:.76rem; color:var(--ink-3); margin:-.7rem 0 1.15rem}
+
+.readout{display:grid; grid-template-columns:1fr 1fr; gap:.55rem; margin:.4rem 0 0}
+.cell{background:var(--card-2); border-radius:8px; padding:.6rem .7rem}
+.cell .lab{font-size:.76rem; color:var(--ink-3); display:block; margin-bottom:.15rem}
+.cell .num{font-variant-numeric:tabular-nums; font-size:1.22rem; font-weight:600; line-height:1.3}
+.cell .num.good{color:var(--good)} .cell .num.bad{color:var(--bad)}
+.cell .unit{font-size:.78rem; font-weight:400; color:var(--ink-3); margin-left:.15rem}
+
+.check{margin:1.4rem 0 0; padding:.85rem 1rem; border:1px dashed var(--line); border-radius:8px; background:var(--card)}
+.check h3{margin:0 0 .45rem; font-size:.95rem}
+.check p{margin:0 0 .5rem; font-size:.9rem; color:var(--ink-2)}
+.check .verdict{font-size:.92rem; font-weight:600; margin:0 0 .7rem}
+.check .verdict.pass{color:var(--good)} .check .verdict.fail{color:var(--bad)}
+.btnrow{display:flex; flex-wrap:wrap; gap:.45rem}
+button.reset{
+  font:inherit; font-size:.86rem; padding:.42rem .8rem; min-height:38px;
+  background:var(--card-2); color:var(--ink); border:1px solid var(--line);
+  border-radius:6px; cursor:pointer;
+}
+button.reset:hover{border-color:var(--accent)}
+
+figcaption{font-size:.9rem; line-height:1.65; color:var(--ink-2); margin-top:.9rem}
+.notesrc{font-size:.78rem; line-height:1.7; color:var(--ink-3); margin:.55rem 0 0}
+.notesrc b{color:var(--ink-2); font-weight:600}
+hr{border:0; border-top:1px solid var(--line); margin:2.4rem 0}
+.foot{font-size:.8rem; color:var(--ink-3); line-height:1.75}
+code{font-family:ui-monospace,SFMono-Regular,Menlo,monospace; font-size:.86em; background:var(--card-2); padding:.05em .3em; border-radius:3px}
+.nojs{background:var(--card-2); border-left:3px solid var(--bad); padding:.8rem 1rem; border-radius:0 6px 6px 0}
+
+@media (max-width:420px){
+  body{font-size:16px}
+  .wrap{padding:1.4rem .85rem 4rem}
+  h1{font-size:1.42rem}
+  .readout{grid-template-columns:1fr}
+}
+@media (prefers-reduced-motion:reduce){*{animation:none!important; transition:none!important}}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<p class="kicker">參數可調解釋器骨架 · 第二例</p>
+<h1>共振頻率幾乎不動，尖銳度卻差了 8 倍——會咬人的是後者</h1>
+
+<div class="bluf">
+<p>同一支超音波刀柄掃了十次頻。共振頻率只在 <code>28520</code> 到 <code>28760</code> Hz 之間動，<strong>總共 0.84%</strong>；但共振的尖銳度 Q 從 <strong>12.774</strong> 一路跳到 <strong>106.519</strong>，<strong>差 8.3 倍</strong>。這一頁把那件事變成你可以拉的滑桿：Q 越高，驅動頻率只要漂一點點，振幅就掉一大塊。</p>
+</div>
+
+<figure>
+<div class="stage">
+  <p class="axrow top"><span>縱軸：相對振幅</span><span class="drive">━ 驅動頻率</span></p>
+  <canvas id="cv" width="800" height="400" role="img"
+    aria-label="共振響應曲線與半高全寬邊界，驅動頻率以直線標示，隨滑桿即時重畫"></canvas>
+  <p class="axrow bot">
+    <span class="spec">◂ 半高邊界</span>
+    <span>橫軸：頻率（Hz）</span>
+    <span class="spec">半高邊界 ▸</span>
+  </p>
+</div>
+
+<noscript><p class="nojs">這一頁的圖需要 JavaScript 才會動。關閉時你看到的是空白畫布，而讀數區顯示的是第一次掃描的真實量測值。</p></noscript>
+
+<div class="picker">
+  <label for="scan">跳到某一次真實掃描（十次全部來自同一支刀柄）</label>
+  <select id="scan">
+    <option value="0" selected>Scan_001　Q 12.774　FWHM 2235 Hz</option>
+    <option value="1">Scan_002　Q 15.482　FWHM 1845 Hz</option>
+    <option value="2">Scan_003　Q 79.597　FWHM 360 Hz</option>
+    <option value="3">Scan_004　Q 19.173　FWHM 1500 Hz</option>
+    <option value="4">Scan_005　Q 106.519　FWHM 270 Hz</option>
+    <option value="5">Scan_006　Q 15.747　FWHM 1815 Hz</option>
+    <option value="6">Scan_007　Q 15.658　FWHM 1830 Hz</option>
+    <option value="7">Scan_008　Q 23.967　FWHM 1200 Hz</option>
+    <option value="8">Scan_009　Q 95.067　FWHM 300 Hz</option>
+    <option value="9">Scan_010　Q 73.744　FWHM 390 Hz</option>
+  </select>
+</div>
+
+<fieldset class="controls">
+  <label class="ctl" for="f">
+    <span class="row"><span class="name">共振頻率 f</span><span class="val" id="fOut">28550</span></span>
+    <input type="range" id="f" min="28400" max="28900" step="5" value="28550">
+  </label>
+  <label class="ctl" for="w">
+    <span class="row"><span class="name">半高全寬 FWHM</span><span class="val" id="wOut">2235</span></span>
+    <input type="range" id="w" min="200" max="2400" step="5" value="2235">
+  </label>
+  <label class="ctl" for="d">
+    <span class="row"><span class="name">驅動頻率離共振多遠 Δf</span><span class="val" id="dOut">0</span></span>
+    <input type="range" id="d" min="0" max="1500" step="0.5" value="0">
+  </label>
+  <p class="hint">把 Δf 拉到 FWHM 的一半，相對振幅正好掉到 0.7071——這是半高的定義，也是本頁的第二個驗收案例。</p>
+</fieldset>
+
+<div class="readout">
+  <div class="cell"><span class="lab">共振尖銳度 Q</span><span class="num" id="qOut">12.7740</span></div>
+  <div class="cell"><span class="lab">相對振幅</span><span class="num" id="aOut">1.0000</span></div>
+  <div class="cell"><span class="lab">振幅損失</span><span class="num" id="lossOut">0.00<span class="unit">%</span></span></div>
+  <div class="cell"><span class="lab">掉到半高的容許漂移</span><span class="num" id="tolOut">1117.5<span class="unit">Hz</span></span></div>
+</div>
+
+<div class="check">
+  <h3>對答案（這一格是骨架的驗收面，不是裝飾）</h3>
+  <p><strong>算例一（真讀數）</strong>：<code>Scan_001</code> 量到 f = 28550.0 Hz、FWHM = 2235.0 Hz，
+     則 Q = 28550.0 ÷ 2235.0 = <strong>12.7740</strong>。原始檔記錄的 Q 是
+     <code>12.774049217002236</code>，十次掃描逐列相符到 1e-12。</p>
+  <p><strong>算例二（模型恆等式）</strong>：Δf = FWHM ÷ 2 時，相對振幅 = 1 ÷ √2 = <strong>0.7071</strong>。</p>
+  <p class="verdict" id="checkOut">—</p>
+  <div class="btnrow">
+    <button class="reset" id="reset" type="button">回到算例一</button>
+    <button class="reset" id="half" type="button">跳到算例二</button>
+  </div>
+</div>
+
+<figcaption><strong>把 FWHM 從 2235 拉到 270（也就是從 Scan_001 換成 Scan_005），同樣漂移 300 Hz，振幅損失從 3.42% 變成 58.96%——共振越尖，機台越禁不起漂。</strong></figcaption>
+
+<p class="notesrc"><b>Note：</b>圖上的曲線是<strong>單一自由度的勞倫茲響應模型</strong>（相對振幅 = 1 ÷ √(1 + (2Δf ÷ FWHM)²)），不是量到的波形——量到的只有每次掃描的峰位與半高全寬兩個數，中間的形狀是模型補的。<strong>三個假設真實刀柄都不完全滿足</strong>：只有單一共振模態、響應對稱、且負載不改變 FWHM。更要緊的是這批資料自己的限制：十次掃描的峰突出度只有基線的 <strong>5.17% 到 10.34%</strong>，在這麼弱的峰上估半高全寬本來就不穩，<strong>所以那 8.3 倍的 Q 值散布有多少來自物理、多少來自量測雜訊，這批資料答不了</strong>。原始檔 <code>sweep_features_20260622.csv</code> 的 <code>synth</code> 關鍵字現查為 <strong>0</strong>，十列皆為真實掃描。</p>
+<p class="notesrc"><b>Source：</b>超音波石英鑽孔專案的刀柄掃頻量測，<code>usm-drilling-analysis/quartz/sweep_features_20260622.csv</code>（10 列，2026-06-22）。Q 欄由該檔既有欄位讀入，未經本頁重新定義；本頁的相對振幅與容許漂移為即時計算。</p>
+</figure>
+
+<hr>
+
+<p class="foot">這一頁是<strong>參數可調解釋器骨架的第二個實例</strong>，用來檢驗它換一份真讀數材料還套不套得上。骨架本體與失效點清單見 <code>KB-15_parameter-explorer-skeleton.md</code>；首例見 <code>parameter_explorer_example/</code>，那一份用的是合成示範資料。<code>canvas</code> 內<strong>零中文</strong>，所有中文標籤都在 HTML 層。</p>
+
+</div>
+
+<script>
+(function(){
+  "use strict";
+  var SCANS=[
+    {n:"Scan_001",f:28550,w:2235,q:12.774049217002236},
+    {n:"Scan_002",f:28565,w:1845,q:15.482384823848239},
+    {n:"Scan_003",f:28655,w:360, q:79.59722222222223},
+    {n:"Scan_004",f:28760,w:1500,q:19.173333333333332},
+    {n:"Scan_005",f:28760,w:270, q:106.51851851851852},
+    {n:"Scan_006",f:28580,w:1815,q:15.746556473829202},
+    {n:"Scan_007",f:28655,w:1830,q:15.658469945355192},
+    {n:"Scan_008",f:28760,w:1200,q:23.966666666666665},
+    {n:"Scan_009",f:28520,w:300, q:95.06666666666666},
+    {n:"Scan_010",f:28760,w:390, q:73.74358974358974}
+  ];
+
+  var cv=document.getElementById("cv"), ctx=cv.getContext("2d");
+  var el={f:document.getElementById("f"),w:document.getElementById("w"),d:document.getElementById("d"),
+          scan:document.getElementById("scan")};
+  var out={f:document.getElementById("fOut"),w:document.getElementById("wOut"),d:document.getElementById("dOut"),
+           q:document.getElementById("qOut"),a:document.getElementById("aOut"),
+           loss:document.getElementById("lossOut"),tol:document.getElementById("tolOut"),
+           chk:document.getElementById("checkOut")};
+
+  function css(v){return getComputedStyle(document.documentElement).getPropertyValue(v).trim();}
+  function amp(df,w){return 1/Math.sqrt(1+Math.pow(2*df/w,2));}
+
+  function draw(f0,w,df){
+    var dpr=Math.min(window.devicePixelRatio||1,2);
+    var cw=cv.clientWidth, ch=cv.clientHeight;
+    if(cv.width!==Math.round(cw*dpr)){cv.width=Math.round(cw*dpr); cv.height=Math.round(ch*dpr);}
+    ctx.setTransform(dpr,0,0,dpr,0,0);
+    ctx.clearRect(0,0,cw,ch);
+
+    var padB=26, padT=8, padX=10;
+    var half=Math.max(w*1.9, df*1.3, 350);
+    var x2px=function(x){return padX+(x+half)/(2*half)*(cw-2*padX);};
+    var y2px=function(y){return ch-padB-y*(ch-padB-padT);};
+
+    ctx.strokeStyle=css("--line"); ctx.lineWidth=1;
+    ctx.beginPath(); ctx.moveTo(padX,ch-padB); ctx.lineTo(cw-padX,ch-padB); ctx.stroke();
+
+    var pts=[],i,x,y;
+    for(i=0;i<=260;i++){
+      x=-half+(2*half)*i/260;
+      pts.push([x2px(x),y2px(amp(x,w)),x]);
+    }
+    ctx.beginPath(); ctx.moveTo(x2px(-w/2),ch-padB);
+    for(i=0;i<pts.length;i++){if(pts[i][2]>=-w/2&&pts[i][2]<=w/2)ctx.lineTo(pts[i][0],pts[i][1]);}
+    ctx.lineTo(x2px(w/2),ch-padB); ctx.closePath();
+    ctx.fillStyle=css("--fill"); ctx.fill();
+
+    ctx.beginPath();
+    for(i=0;i<pts.length;i++){i?ctx.lineTo(pts[i][0],pts[i][1]):ctx.moveTo(pts[i][0],pts[i][1]);}
+    ctx.strokeStyle=css("--curve"); ctx.lineWidth=2; ctx.stroke();
+
+    ctx.strokeStyle=css("--spec"); ctx.lineWidth=2; ctx.setLineDash([5,4]);
+    [-w/2,w/2].forEach(function(v){
+      ctx.beginPath(); ctx.moveTo(x2px(v),padT); ctx.lineTo(x2px(v),ch-padB); ctx.stroke();
+    });
+    ctx.setLineDash([]);
+
+    ctx.strokeStyle=css("--drive"); ctx.lineWidth=2;
+    ctx.beginPath(); ctx.moveTo(x2px(df),padT); ctx.lineTo(x2px(df),ch-padB); ctx.stroke();
+    ctx.fillStyle=css("--drive");
+    ctx.beginPath(); ctx.arc(x2px(df),y2px(amp(df,w)),4,0,2*Math.PI); ctx.fill();
+
+    ctx.fillStyle=css("--ink-3"); ctx.font="11px ui-monospace,Menlo,monospace"; ctx.textAlign="center";
+    [[-half*0.72,f0-half*0.72],[0,f0],[half*0.72,f0+half*0.72]].forEach(function(p){
+      ctx.fillText(Math.round(p[1]),x2px(p[0]),ch-padB+15);
+    });
+  }
+
+  function update(){
+    var f0=+el.f.value, w=+el.w.value, df=+el.d.value;
+    var q=f0/w, a=amp(df,w);
+
+    out.f.textContent=f0;
+    out.w.textContent=w;
+    out.d.textContent=df;
+    out.q.textContent=q.toFixed(4);
+    out.a.textContent=a.toFixed(4);
+    out.loss.innerHTML=((1-a)*100).toFixed(2)+'<span class="unit">%</span>';
+    out.tol.innerHTML=(w/2).toFixed(1)+'<span class="unit">Hz</span>';
+    out.a.className="num "+(a>=0.9?"good":a<0.7071?"bad":"");
+
+    var msgs=[];
+    if(f0===28550 && w===2235){
+      msgs.push(q.toFixed(4)==="12.7740"
+        ? "算例一通過：Q 算出 12.7740，與 Scan_001 原始檔相符。"
+        : "算例一不通過：Q 算出 "+q.toFixed(4)+"，與 Scan_001 原始檔的 12.7740 不符。");
+    }
+    if(df>0 && Math.abs(df-w/2)<1e-9){
+      msgs.push(a.toFixed(4)==="0.7071"
+        ? "算例二通過：Δf 等於半高全寬的一半，相對振幅算出 0.7071。"
+        : "算例二不通過：相對振幅算出 "+a.toFixed(4)+"，應為 0.7071。");
+    }
+    if(msgs.length){
+      out.chk.textContent=msgs.join("　");
+      out.chk.className="verdict "+(msgs.join("").indexOf("不通過")>=0?"fail":"pass");
+    }else{
+      out.chk.textContent="目前不在任何一個已知算例的參數上（用下面兩個按鈕跳回去）。";
+      out.chk.className="verdict";
+    }
+
+    var mi=-1;
+    for(var i=0;i<SCANS.length;i++){ if(SCANS[i].f===f0 && SCANS[i].w===w){mi=i; break;} }
+    el.scan.selectedIndex=mi>=0?mi:-1;
+
+    draw(f0,w,df);
+  }
+
+  ["input","change"].forEach(function(ev){
+    el.f.addEventListener(ev,update); el.w.addEventListener(ev,update); el.d.addEventListener(ev,update);
+  });
+  el.scan.addEventListener("change",function(){
+    var s=SCANS[+el.scan.value]; if(!s)return;
+    el.f.value=s.f; el.w.value=s.w; update();
+  });
+  document.getElementById("reset").addEventListener("click",function(){
+    el.f.value=28550; el.w.value=2235; el.d.value=0; update();
+  });
+  document.getElementById("half").addEventListener("click",function(){
+    el.d.value=String(+el.w.value/2); update();
+  });
+  window.addEventListener("resize",update);
+  if(window.matchMedia)window.matchMedia("(prefers-color-scheme:dark)").addEventListener("change",update);
+  update();
+})();
+</script>
+</body>
+</html>

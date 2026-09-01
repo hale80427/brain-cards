@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>每個系統都自動化了，工廠還是得靠工程師手動把資訊拼起來</title>
+<meta name="description" content="半導體廠異常處理的因果鏈：碎片化如何讓學習迴圈永遠閉不起來，逐環標證據強度。">
+<style>
+:root{
+  --bg:#fbfaf8; --ink:#1c1a17; --ink-2:#57524a; --ink-3:#746e64;
+  --line:#d9d3c8; --rail-c:#8a8378; --card:#ffffff; --card-2:#f4f1ea;
+  --accent:#8a5a2b;
+  --s-measured:#2f6b4f; --s-measured-bg:#e6f2ea;
+  --s-reported:#8a5a2b; --s-reported-bg:#f6ecdf;
+  --s-inferred:#5a5a8a; --s-inferred-bg:#eceaf6;
+  --s-unverified:#8a2f2f; --s-unverified-bg:#f6e6e6;
+  --rail:2px;
+  color-scheme:light dark;
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --bg:#14130f; --ink:#eeeae2; --ink-2:#b3ab9d; --ink-3:#8f8779;
+    --line:#37332c; --rail-c:#847d70; --card:#1c1a15; --card-2:#242019;
+    --accent:#d8a56a;
+    --s-measured:#7fc9a2; --s-measured-bg:#172a20;
+    --s-reported:#d8a56a; --s-reported-bg:#2c2214;
+    --s-inferred:#a3a1d8; --s-inferred-bg:#1f1e2c;
+    --s-unverified:#d88a8a; --s-unverified-bg:#2c1a1a;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#14130f; --ink:#eeeae2; --ink-2:#b3ab9d; --ink-3:#8f8779;
+  --line:#37332c; --rail-c:#847d70; --card:#1c1a15; --card-2:#242019;
+  --accent:#d8a56a;
+  --s-measured:#7fc9a2; --s-measured-bg:#172a20;
+  --s-reported:#d8a56a; --s-reported-bg:#2c2214;
+  --s-inferred:#a3a1d8; --s-inferred-bg:#1f1e2c;
+  --s-unverified:#d88a8a; --s-unverified-bg:#2c1a1a;
+}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{
+  margin:0; background:var(--bg); color:var(--ink);
+  font:400 17px/1.75 "Noto Sans TC","PingFang TC","Hiragino Sans CJK TC","Microsoft JhengHei",system-ui,sans-serif;
+  text-wrap:pretty;
+}
+.wrap{max-width:44rem; margin:0 auto; padding:2rem 1.1rem 5rem}
+h1{font-size:1.62rem; line-height:1.35; letter-spacing:-.01em; margin:0 0 .5rem; text-wrap:balance}
+.kicker{font-size:.82rem; letter-spacing:.09em; text-transform:uppercase; color:var(--ink-3); margin:0 0 .6rem}
+.bluf{background:var(--card-2); border-left:3px solid var(--accent); padding:.85rem 1rem; border-radius:0 6px 6px 0; margin:1.3rem 0 2rem}
+.bluf p{margin:0; font-size:1.02rem}
+.warn{background:var(--s-unverified-bg); border-left:3px solid var(--s-unverified); padding:.8rem 1rem; border-radius:0 6px 6px 0; margin:1.3rem 0 2rem}
+.warn p{margin:0; font-size:.92rem; line-height:1.7; color:var(--ink-2)}
+.warn b{color:var(--ink)}
+h2{font-size:1.18rem; line-height:1.4; margin:2.6rem 0 .8rem; text-wrap:balance}
+p{margin:0 0 1rem}
+
+.legend{display:flex; flex-wrap:wrap; gap:.4rem .5rem; margin:0 0 1.4rem; padding:0; list-style:none}
+.legend li{display:flex; align-items:center; gap:.35rem; font-size:.8rem; color:var(--ink-2)}
+.dot{width:.62rem; height:.62rem; border-radius:50%; flex:0 0 auto}
+.dot.measured{background:var(--s-measured)} .dot.reported{background:var(--s-reported)}
+.dot.inferred{background:var(--s-inferred)} .dot.unverified{background:var(--s-unverified)}
+
+.chain,.fork{list-style:none; margin:0; padding:0}
+.link{position:relative; padding-left:1.55rem}
+.link::before{
+  content:""; position:absolute; left:.38rem; top:.55rem; bottom:-.2rem;
+  width:var(--rail); background:var(--rail-c);
+}
+.link:last-child::before{bottom:auto; height:1.1rem}
+.link::after{
+  content:""; position:absolute; left:0; top:.5rem;
+  width:.82rem; height:.82rem; border-radius:50%;
+  background:var(--card); border:var(--rail) solid var(--rail-c);
+}
+.link[data-strength="measured"]::after{border-color:var(--s-measured)}
+.link[data-strength="reported"]::after{border-color:var(--s-reported)}
+.link[data-strength="inferred"]::after{border-color:var(--s-inferred)}
+.link[data-strength="unverified"]::after{border-color:var(--s-unverified)}
+
+.node{background:var(--card); border:1px solid var(--line); border-radius:8px; padding:.8rem .9rem; margin:0 0 .2rem}
+.node > p{margin:0; font-size:1rem; line-height:1.7}
+.node .num{color:var(--ink-3); font-size:.78rem; letter-spacing:.06em; display:block; margin-bottom:.25rem}
+.node.pivot{border-color:var(--accent); border-width:2px}
+.chip{
+  display:inline-block; font-size:.72rem; line-height:1.5; padding:.05rem .45rem;
+  border-radius:4px; margin-left:.35rem; vertical-align:.08em; white-space:nowrap;
+}
+.chip.measured{color:var(--s-measured); background:var(--s-measured-bg)}
+.chip.reported{color:var(--s-reported); background:var(--s-reported-bg)}
+.chip.inferred{color:var(--s-inferred); background:var(--s-inferred-bg)}
+.chip.unverified{color:var(--s-unverified); background:var(--s-unverified-bg)}
+
+.via{padding:.45rem 0 .55rem; font-size:.88rem; color:var(--ink-2)}
+.via b{font-weight:600; color:var(--ink); font-style:normal}
+
+details.ev{margin:.5rem 0 0; font-size:.88rem}
+details.ev > summary{cursor:pointer; color:var(--ink-2); list-style:none; padding:.15rem 0}
+details.ev > summary::-webkit-details-marker{display:none}
+details.ev > summary::before{content:"▸ "; color:var(--ink-3)}
+details.ev[open] > summary::before{content:"▾ "}
+details.ev .para{
+  margin:.5rem 0 .35rem; padding:.45rem .7rem; border-left:2px solid var(--line);
+  background:var(--card-2); border-radius:0 4px 4px 0;
+  font-size:.86rem; line-height:1.65; color:var(--ink-2);
+  overflow-wrap:anywhere;
+}
+details.ev .src{margin:0; font-size:.78rem; color:var(--ink-3)}
+
+.fork{margin:.35rem 0 0}
+.fork > li{position:relative; padding-left:1.1rem; margin-bottom:.9rem}
+.fork > li::before{
+  content:""; position:absolute; left:.1rem; top:.95rem; width:.7rem; height:var(--rail); background:var(--rail-c);
+}
+.fork .node{background:var(--card-2)}
+.forkhead{font-size:.84rem; color:var(--ink-3); margin:.5rem 0 .1rem}
+
+.ladder{list-style:none; margin:1rem 0 0; padding:0; counter-reset:st}
+.ladder li{
+  position:relative; padding:.55rem .9rem .55rem 2.5rem; margin:0 0 .35rem;
+  background:var(--card-2); border:1px solid var(--line); border-radius:6px;
+  font-size:.92rem; line-height:1.65;
+}
+.ladder li::before{
+  counter-increment:st; content:counter(st);
+  position:absolute; left:.75rem; top:.62rem;
+  width:1.15rem; height:1.15rem; border-radius:50%;
+  background:var(--rail-c); color:var(--card);
+  font-size:.72rem; line-height:1.15rem; text-align:center; font-weight:600;
+}
+.ladder li[data-now="1"]{border-color:var(--accent)}
+.ladder li[data-now="1"]::before{background:var(--accent)}
+.ladder .tag{display:block; font-size:.76rem; color:var(--ink-3); margin-top:.15rem}
+
+figure{margin:1.6rem 0 2rem}
+figcaption{font-size:.9rem; line-height:1.65; color:var(--ink-2); margin-top:.9rem}
+.notesrc{font-size:.78rem; line-height:1.7; color:var(--ink-3); margin:.55rem 0 0}
+.notesrc b{color:var(--ink-2); font-weight:600}
+
+hr{border:0; border-top:1px solid var(--line); margin:2.4rem 0}
+.foot{font-size:.8rem; color:var(--ink-3); line-height:1.75}
+code{font-family:ui-monospace,SFMono-Regular,Menlo,monospace; font-size:.86em; background:var(--card-2); padding:.05em .3em; border-radius:3px}
+
+@media (max-width:420px){
+  body{font-size:16px}
+  .wrap{padding:1.4rem .85rem 4rem}
+  h1{font-size:1.42rem}
+  .link{padding-left:1.4rem}
+  .ladder li{padding-left:2.35rem}
+}
+@media (prefers-reduced-motion:reduce){
+  *{animation:none!important; transition:none!important}
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<p class="kicker">機制鏈骨架 · 第二例</p>
+<h1>每個系統都自動化了，工廠還是得靠工程師手動把資訊拼起來</h1>
+
+<div class="bluf">
+<p>異常發生時，SPC、缺陷偵測、recipe、機台紀錄各自都有高度自動化的系統。但它們<strong>彼此不相連</strong>，所以彙整、比對、找出真兇這幾件事仍然是人在做。講者的主張是：真正的損失不在那一次的慢，而在<strong>知識停在個人層級、學習迴圈永遠閉不起來</strong>。下面把那條因果鏈拆開，逐環標證據強度。</p>
+</div>
+
+<div class="warn">
+<p><b>這一頁的證據層與首例不同，請先看這一段。</b>首例的每一環都掛得出逐字引文與可跳回原片的時間戳。這份材料是<b>現場錄音的自動語音辨識稿</b>——沒有時間戳，且專有名詞辨識錯誤很多（Applied Materials 被聽成 <code>Pai Material</code>、TSMC 成 <code>KSMC</code>、agentic 成 <code>genetic</code>、fab 成 <code>file</code>）。因此本頁的證據層放的是<b>重述與段落定位，不是逐字引文</b>；每一環都可能因辨識錯誤而偏離講者原意。<b>沒有任何一環達到「實測」等級。</b></p>
+</div>
+
+<ul class="legend">
+  <li><span class="dot measured"></span>實測</li>
+  <li><span class="dot reported"></span>講者陳述</li>
+  <li><span class="dot inferred"></span>推論</li>
+  <li><span class="dot unverified"></span>未驗證</li>
+</ul>
+
+<figure>
+<ol class="chain">
+
+  <li class="link" data-strength="reported">
+    <div class="node">
+      <span class="num">起點</span>
+      <p>異常發生時，資訊散在多個系統裡：SPC 管制圖、缺陷偵測、recipe 變更紀錄、晶圓圖<span class="chip reported">講者陳述</span></p>
+    </div>
+    <details class="ev">
+      <summary>講者怎麼說</summary>
+      <p class="para">他刻意不從技術講起，改從一次真實異常講起：問的是「異常發生時，自動化系統會做什麼、工程師又會做什麼」。他列出的資訊來源包含 SPC、缺陷偵測、recipe 與晶圓圖等。</p>
+      <p class="src">逐字稿第 5 段（議程之後、第一個場景）。無時間戳。</p>
+    </details>
+    <p class="via">每一個系統各自都<b>高度自動化</b>，這一點講者自己先承認了</p>
+  </li>
+
+  <li class="link" data-strength="reported">
+    <div class="node">
+      <span class="num">第一因</span>
+      <p>這些系統<strong>不相連、不對話、不互相學習</strong>——講者稱之為碎片化<span class="chip reported">講者陳述</span></p>
+    </div>
+    <details class="ev">
+      <summary>他自己提的那個問句</summary>
+      <p class="para">他把問題寫成一句反問：每個系統都已經高度自動化了，為什麼工廠還需要大量工程師人力去手動處理資訊？他給的答案是碎片化——自動化散佈在整個工廠，但彼此之間沒有連起來。</p>
+      <p class="src">逐字稿第 6 段。無時間戳。</p>
+    </details>
+    <p class="via">於是<b>彙整、比對、鎖定真兇</b>這三件事只剩下人工這條路</p>
+  </li>
+
+  <li class="link" data-strength="reported">
+    <div class="node">
+      <span class="num">分岔</span>
+      <p>凌晨兩點，關鍵機台被判定異常，系統建議下機台，而熟悉該應用的專家叫不到人<span class="chip reported">講者陳述</span></p>
+    </div>
+    <p class="forkhead">從這個時點往下，兩條路各自的終點：</p>
+    <ul class="fork">
+      <li>
+        <div class="node"><p><strong>夜班自己翻紀錄找答案</strong> → 不同的人、不同的班別，<strong>得到不同的答案</strong></p></div>
+      </li>
+      <li>
+        <div class="node"><p><strong>由被治理過的系統給判斷</strong>（講者要去的地方）→ 同一個異常得到同一套處置</p></div>
+      </li>
+    </ul>
+    <p class="via">走第一條路時，講者點名三個代價：恢復更慢、決策不一致，而<b>專家的判斷無法規模化</b></p>
+  </li>
+
+  <li class="link" data-strength="reported">
+    <div class="node">
+      <span class="num">後果 A</span>
+      <p>作業面：復機被延後、生產週期被打斷<span class="chip reported">講者陳述</span></p>
+    </div>
+    <p class="via">這一層的損失是<b>一次性的</b>——這次慢了，下次未必</p>
+  </li>
+
+  <li class="link" data-strength="reported">
+    <div class="node pivot">
+      <span class="num">後果 B ★ 樞紐</span>
+      <p>知識面：解法停在<strong>某一位工程師的瀏覽器分頁裡，或某一個團隊裡</strong>，沒有進到平台<span class="chip reported">講者陳述</span></p>
+    </div>
+    <details class="ev">
+      <summary>為什麼這一環是整條鏈的樞紐</summary>
+      <p class="para">講者用「知識停留在部落層級」形容這個狀態：處置方案被提出、被用過，然後留在原地，不成為整個平台日後的參考。於是同一類異常再發生時，整套推理要從頭跑一次——他的說法是「學習迴圈在這裡沒有閉合」。</p>
+      <p class="src">逐字稿第 8 段。標為樞紐是本頁作者的判斷，不是講者的分級。</p>
+    </details>
+    <p class="via">把這一環拿掉，前面的慢與不一致就只是<b>一次事故</b>；有了它，同一套推理才會被反覆重跑</p>
+  </li>
+
+  <li class="link" data-strength="inferred">
+    <div class="node">
+      <span class="num">匯流</span>
+      <p>作業面的不一致往上放大，成為工廠層級的財務損失<span class="chip inferred">推論</span></p>
+    </div>
+    <details class="ev">
+      <summary>為什麼標「推論」不標「講者陳述」</summary>
+      <p class="para">講者確實說了作業面的後果會反映在財務表現上，但<strong>整場演講沒有給出任何一個數字</strong>——沒有損失金額、沒有復機時數、沒有復發率。這一環的因果方向是他說的，量級則完全沒有量測支撐。</p>
+      <p class="src">逐字稿第 9 段。全文數字掃描：只命中議程編號。</p>
+    </details>
+    <p class="via">要讓這條鏈反過來變成價值，講者說<b>工廠學習能力是那座橋</b>——它壓低損失的規模、持續時間與復發率</p>
+  </li>
+
+  <li class="link" data-strength="reported">
+    <div class="node">
+      <span class="num">他的解</span>
+      <p>在既有工作流上補一段<strong>監控與評估</strong>：<strong>只有被驗證過的處置才進學習引擎</strong><span class="chip reported">講者陳述</span></p>
+    </div>
+    <details class="ev">
+      <summary>這一段補在哪裡</summary>
+      <p class="para">他的說法是：現行工作流已經在決策與回應兩個步驟接進了代理式 AI；他要加的是「監控與評估」這個代理——處置實施之後，結果必須被監控與評估，確認成功之後才被學習引擎吸收，進而改變日後面對類似情境時的反應方式。</p>
+      <p class="src">逐字稿第 12 段。這是他提案的核心結構。</p>
+    </details>
+    <p class="via">沒有這道驗證，學習引擎會把<b>沒被驗證過的處置也一起學進去</b>——那會讓錯誤處置變成往後的預設值</p>
+  </li>
+
+  <li class="link" data-strength="reported">
+    <div class="node">
+      <span class="num">終點</span>
+      <p>自主權是<strong>逐階賺來的</strong>：五個階段各有各的規則，<strong>當前階段先證明自己有效，下一階才解鎖</strong><span class="chip reported">講者陳述</span></p>
+    </div>
+    <details class="ev">
+      <summary>五階梯與他說的現況</summary>
+      <ol class="ladder">
+        <li data-now="1">建議型：AI 給建議，<strong>決策仍由工程師做</strong><span class="tag">講者說多數半導體廠目前在這一階</span></li>
+        <li data-now="1">輔助工作流：AI 的預測交由實際結果驗證<span class="tag">講者說部分先進廠與試作在探索中</span></li>
+        <li>影子模式：AI 全程跟跑但不出手，持續被實際結果對答案</li>
+        <li>受限行動：AI 在被界定的限度內自行動作<span class="tag">講者定位為願景</span></li>
+        <li>適應性學習：處置結果回頭訓練既有模型與規則<span class="tag">講者定位為最終目標</span></li>
+      </ol>
+      <p class="src">逐字稿第 13 至 15 段。階段 2 與 3 的界線在逐字稿中辨識不清（原文把兩者併在一句裡講），此處的拆法是本頁作者依上下文還原，<strong>可能與講者原意不符</strong>。</p>
+    </details>
+  </li>
+
+</ol>
+
+<figcaption><strong>整條鏈的樞紐在「知識停在個人層級」——它是唯一一個把單次事故變成重複事故的環，講者提的五階梯與驗證閘全都是為了讓那一環改變。</strong></figcaption>
+
+<p class="notesrc"><b>Note：</b>證據強度四態由本頁作者標註，不是講者的分級。本頁<strong>沒有任何一環標到「實測」</strong>，因為整場演講零量化數據——全文數字掃描只命中議程編號。「講者陳述」在此指「講者在台上說的、無外部佐證」，強度低於首例的「自報」（後者至少有企業內部量測）。<strong>來源是現場錄音的自動語音辨識稿</strong>，專有名詞辨識錯誤密集，故證據層放重述與段落定位，不放逐字引文；每一環都可能因辨識錯誤而偏離原意。五階梯的第 2 與第 3 階拆法是作者還原，未經查證。</p>
+<p class="notesrc"><b>Source：</b>Applied Materials 策略行銷 Ming Zhao，《Yield Management》，SEMICON 高科技智慧製造論壇上午場第 4 場，2026-08-31。逐字稿由本機語音辨識產出（<code>04_AMAT_MingyuanZhao_YieldManagement.txt</code>，14,153 位元組），<strong>未經官方釋出、不含逐字引文</strong>。</p>
+</figure>
+
+<hr>
+
+<p class="foot">這一頁是<strong>機制鏈骨架的第二個實例</strong>，用來檢驗它換一份材料還套不套得上。骨架本體與失效點清單見 <code>KB-14_causal-chain-skeleton.md</code>；首例見 <code>causal_chain_example/</code>。連接線全部由 CSS 畫出，<strong>沒有任何 SVG 座標</strong>，任何視窗寬度都不會壞。</p>
+
+</div>
+</body>
+</html>
