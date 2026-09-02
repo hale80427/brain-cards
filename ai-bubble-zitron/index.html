@@ -1,0 +1,751 @@
+<!DOCTYPE html>
+<html lang="zh-Hant-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>他說 AI 產業的錢在同一個圈子裡轉，而 2027 年這個迴圈會斷</title>
+<meta name="description" content="Ed Zitron 在 Diary of a CEO 的兩個半小時訪談：循環金流、補貼出來的需求、跟達康泡沫的資產差異，以及一份可以被回頭驗證的崩盤時間表。">
+
+<link rel="canonical" href="https://hale80427.github.io/brain-cards/ai-bubble-zitron/">
+<meta name="author" content="彥皓">
+
+<meta property="og:type" content="article">
+<meta property="og:title" content="他說 AI 產業的錢在同一個圈子裡轉，而 2027 年這個迴圈會斷">
+<meta property="og:description" content="Ed Zitron 在 Diary of a CEO 的兩個半小時訪談：循環金流、補貼出來的需求、跟達康泡沫的資產差異，以及一份可以被回頭驗證的崩盤時間表。">
+<meta property="og:url" content="https://hale80427.github.io/brain-cards/ai-bubble-zitron/">
+<meta property="og:image" content="https://hale80427.github.io/brain-cards/ai-bubble-zitron/og.png">
+<meta property="og:locale" content="zh_TW">
+
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="他說 AI 產業的錢在同一個圈子裡轉，而 2027 年這個迴圈會斷">
+<meta name="twitter:description" content="Ed Zitron 在 Diary of a CEO 的兩個半小時訪談：循環金流、補貼出來的需求、跟達康泡沫的資產差異。">
+<meta name="twitter:image" content="https://hale80427.github.io/brain-cards/ai-bubble-zitron/og.png">
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "他說 AI 產業的錢在同一個圈子裡轉，而 2027 年這個迴圈會斷",
+  "description": "Ed Zitron 在 Diary of a CEO 的兩個半小時訪談整理：循環金流、補貼出來的需求、跟達康泡沫的資產差異，以及一份可以被回頭驗證的崩盤時間表。",
+  "datePublished": "2026-09-02",
+  "dateModified": "2026-09-02",
+  "author": { "@type": "Person", "name": "彥皓" },
+  "url": "https://hale80427.github.io/brain-cards/ai-bubble-zitron/",
+  "inLanguage": "zh-TW",
+  "license": "https://creativecommons.org/licenses/by/4.0/"
+}
+</script>
+
+<style>
+  :root {
+    --bg: oklch(98.4% 0.004 106.5);
+    --fg: oklch(21.8% 0 0);
+    --accent: oklch(54.3% 0.174 29.7);
+    --accent-warn: oklch(66.6% 0.157 58.3);
+    --muted: oklch(51.0% 0 0);
+    --border: oklch(92.1% 0.007 106.5);
+    --callout-tip: oklch(95.7% 0.014 174.2);
+    --callout-warn: oklch(96.9% 0.019 72.6);
+    --plate-bg: oklch(28.5% 0.055 251.4);
+    --plate-fg: oklch(96.0% 0.008 106.5);
+    --plate-dim: oklch(75.0% 0.021 251.4);
+    --plate-line: oklch(62.0% 0.030 251.4);
+    --sign-down: oklch(54.3% 0.174 29.7);
+    --sign-up: oklch(75.0% 0.021 251.4);
+    --fs-meta: 0.85rem;
+    --fs-body: 1rem;
+    --fs-h2: clamp(1.3rem, 3vw, 1.5rem);
+    --fs-h1: clamp(1.75rem, 4vw, 2.25rem);
+    --font-sans: "Helvetica Neue", "PingFang TC", "Microsoft JhengHei", system-ui, sans-serif;
+    --font-mono: ui-monospace, SFMono-Regular, Menlo, monospace;
+    --ease-linear: linear;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: oklch(21.8% 0 0);
+      --fg: oklch(95.3% 0.011 106.6);
+      --accent: oklch(70.4% 0.136 28.7);
+      --accent-warn: oklch(76.9% 0.165 70.1);
+      --muted: oklch(72.0% 0 0);
+      --border: oklch(32.0% 0.005 106.5);
+      --callout-tip: oklch(28.0% 0.024 174.2);
+      --callout-warn: oklch(30.0% 0.032 72.6);
+      --sign-up: oklch(75.0% 0.021 251.4);
+    }
+  }
+
+  * { box-sizing: border-box; }
+  html { -webkit-text-size-adjust: 100%; }
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--fg);
+    font-family: var(--font-sans);
+    font-size: var(--fs-body);
+    line-height: 1.85;
+  }
+  main { max-width: 40rem; margin: 0 auto; padding: 0 1.15rem 5rem; }
+  header.top { max-width: 40rem; margin: 0 auto; padding: 3rem 1.15rem 0; }
+
+  h1 {
+    font-size: var(--fs-h1);
+    line-height: 1.35;
+    letter-spacing: -0.01em;
+    margin: 0 0 1rem;
+  }
+  h2 {
+    font-size: var(--fs-h2);
+    line-height: 1.45;
+    margin: 3.25rem 0 1rem;
+    padding-top: 1.25rem;
+    border-top: 1px solid var(--border);
+  }
+  h3 {
+    font-size: var(--fs-body);
+    font-weight: 700;
+    margin: 2rem 0 0.5rem;
+    letter-spacing: 0.01em;
+  }
+  p { margin: 0 0 1.1rem; }
+  a { color: var(--accent); }
+
+  .meta {
+    font-size: var(--fs-meta);
+    color: var(--muted);
+    line-height: 1.7;
+    margin: 0 0 2rem;
+  }
+  .meta span { display: inline-block; margin-right: 0.9rem; }
+
+  .bluf {
+    background: var(--callout-tip);
+    border-left: 3px solid var(--accent);
+    border-radius: 0 6px 6px 0;
+    padding: 1.15rem 1.25rem;
+    margin: 0 0 2rem;
+  }
+  .bluf strong.label {
+    display: block;
+    font-size: var(--fs-meta);
+    letter-spacing: 0.08em;
+    color: var(--accent);
+    margin-bottom: 0.5rem;
+  }
+  .bluf p:last-child { margin-bottom: 0; }
+
+  .callout {
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 1rem 1.15rem;
+    margin: 1.75rem 0;
+    font-size: var(--fs-meta);
+    line-height: 1.75;
+    color: var(--muted);
+  }
+  .callout.warn {
+    background: var(--callout-warn);
+    border-color: var(--accent-warn);
+  }
+  .callout .lbl {
+    display: block;
+    font-size: var(--fs-meta);
+    letter-spacing: 0.06em;
+    color: var(--accent-warn);
+    margin-bottom: 0.4rem;
+  }
+  .callout .txt { display: block; margin: 0 0 0.7rem; }
+  .callout .txt:last-child { margin-bottom: 0; }
+
+  blockquote {
+    margin: 1.75rem 0;
+    padding: 0 0 0 1.15rem;
+    border-left: 3px solid var(--border);
+    font-size: var(--fs-body);
+    line-height: 1.8;
+    color: var(--fg);
+  }
+  blockquote .who {
+    display: block;
+    font-size: var(--fs-meta);
+    color: var(--muted);
+    margin-top: 0.5rem;
+  }
+
+  .tbl-wrap { overflow-x: auto; margin: 1.5rem 0; }
+  table {
+    border-collapse: collapse;
+    width: 100%;
+    font-size: var(--fs-meta);
+    line-height: 1.65;
+  }
+  th, td {
+    text-align: left;
+    padding: 0.6rem 0.7rem;
+    border-bottom: 1px solid var(--border);
+    vertical-align: top;
+  }
+  th {
+    font-size: var(--fs-meta);
+    font-weight: 700;
+    color: var(--muted);
+    letter-spacing: 0.03em;
+    white-space: nowrap;
+  }
+  td.num { font-family: var(--font-mono); white-space: nowrap; }
+
+  figure { margin: 2rem 0; }
+  figcaption {
+    font-size: var(--fs-meta);
+    line-height: 1.7;
+    color: var(--muted);
+    margin-top: 0.85rem;
+  }
+  figcaption b { color: var(--fg); }
+  figcaption .src {
+    display: block;
+    margin-top: 0.4rem;
+    font-size: var(--fs-meta);
+  }
+
+  /* 元件：機制圖 */
+  .flow { background: var(--plate-bg); border-radius: 6px; padding: 1.5rem 1.25rem; }
+  .flow-track { display: grid; gap: 0.5rem; margin-bottom: 1.25rem; }
+  .flow-track:last-of-type { margin-bottom: 0; }
+  .flow-track .path { display: flex; flex-wrap: wrap; align-items: center; gap: 0.5rem; }
+  .flow-track .node {
+    background: var(--plate-line); color: var(--plate-fg);
+    font-size: var(--fs-meta); line-height: 1.4;
+    padding: 0.4rem 0.7rem; border-radius: 4px;
+  }
+  .flow-track .arrow { flex: 0 0 1.4rem; width: 1.4rem; height: 0.85rem; color: var(--plate-dim); }
+  .flow-track .arrow svg { width: 100%; height: 100%; display: block; }
+  .flow-track .sign {
+    font-size: var(--fs-meta); font-weight: 700;
+    padding: 0.4rem 0.7rem; border-radius: 4px;
+  }
+  .flow-track .down { background: var(--sign-down); color: var(--plate-fg); }
+  .flow-track .up { background: var(--sign-up); color: var(--plate-bg); }
+  .flow-track > .lbl {
+    font-size: var(--fs-meta); color: var(--plate-dim);
+    letter-spacing: 0.06em;
+  }
+  .flow-legend {
+    display: flex; flex-wrap: wrap; gap: 1.25rem; margin-top: 1.25rem;
+    padding-top: 1rem; border-top: 1px solid var(--plate-line);
+    font-size: var(--fs-meta); color: var(--plate-dim);
+  }
+  .flow-legend span { display: flex; align-items: center; gap: 0.45rem; }
+  .flow-legend i { width: 0.8rem; height: 0.8rem; border-radius: 2px; display: inline-block; }
+  .flow-legend .sw-down { background: var(--sign-down); }
+  .flow-legend .sw-up { background: var(--sign-up); }
+
+  /* 元件：功能列 */
+  .func-row {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(13rem, 1fr));
+    gap: 1.25rem; margin: 1.5rem 0 0.5rem; padding: 1.25rem 0;
+    border-top: 1px solid var(--border); border-bottom: 1px solid var(--border);
+  }
+  .func-row .fn { display: flex; gap: 0.75rem; align-items: flex-start; }
+  .func-row .fn svg { flex: 0 0 2rem; width: 2rem; height: 2rem; color: var(--accent); }
+  .func-row .fn .lbl {
+    display: block; font-size: var(--fs-meta);
+    letter-spacing: 0.04em; font-weight: 700;
+  }
+  .func-row .fn .txt {
+    display: block; font-size: var(--fs-meta); color: var(--muted);
+    margin: 0.2rem 0 0; line-height: 1.65;
+  }
+
+  /* 元件：側欄三卡 */
+  .side-cards { display: grid; gap: 1rem; margin: 2rem 0; }
+  @media (min-width: 760px) { .side-cards { grid-template-columns: repeat(3, 1fr); } }
+  .side-cards .sc { border: 1px solid var(--border); border-radius: 6px; padding: 1rem 1.1rem; }
+  .side-cards .sc .lbl {
+    display: block; font-size: var(--fs-meta); letter-spacing: 0.06em;
+    color: var(--accent); margin-bottom: 0.5rem; font-weight: 700;
+  }
+  .side-cards .sc .txt {
+    display: block; font-size: var(--fs-meta); line-height: 1.7;
+    margin: 0; color: var(--muted);
+  }
+  .side-cards .ask { background: var(--callout-warn); border-color: var(--accent-warn); }
+  .side-cards .ask .lbl { color: var(--accent-warn); }
+
+  /* 長條對比（純 CSS，無 SVG 文字） */
+  .bars { margin: 0; }
+  .bars .row { margin-bottom: 1.15rem; }
+  .bars .row:last-child { margin-bottom: 0; }
+  .bars .cap {
+    display: flex; justify-content: space-between; align-items: baseline;
+    gap: 0.75rem; font-size: var(--fs-meta); margin-bottom: 0.3rem;
+  }
+  .bars .cap .k { color: var(--fg); }
+  .bars .cap .v { font-family: var(--font-mono); color: var(--muted); white-space: nowrap; }
+  .bars .track { background: var(--border); border-radius: 3px; height: 1.15rem; overflow: hidden; }
+  .bars .fill { height: 100%; background: var(--plate-line); border-radius: 3px; }
+  .bars .fill.hot { background: var(--accent); }
+
+  /* 斜率圖容器 */
+  .plate { background: var(--plate-bg); border-radius: 6px; padding: 1.25rem; }
+  .plate svg { display: block; width: 100%; height: auto; }
+
+  .toc {
+    border: 1px solid var(--border); border-radius: 6px;
+    padding: 1rem 1.15rem; margin: 2rem 0;
+    font-size: var(--fs-meta); line-height: 1.9;
+  }
+  .toc .lbl {
+    display: block; letter-spacing: 0.06em; color: var(--muted);
+    margin-bottom: 0.4rem; font-size: var(--fs-meta);
+  }
+  .toc ol { margin: 0; padding-left: 1.3rem; }
+
+  ul, ol { margin: 0 0 1.1rem; padding-left: 1.4rem; }
+  li { margin-bottom: 0.5rem; }
+
+  footer {
+    max-width: 40rem; margin: 0 auto; padding: 2rem 1.15rem 4rem;
+    border-top: 1px solid var(--border);
+    font-size: var(--fs-meta); color: var(--muted); line-height: 1.8;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    * { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
+  }
+</style>
+</head>
+<body>
+
+<header class="top">
+  <h1>他說 AI 產業的錢在同一個圈子裡轉，而 2027 年這個迴圈會斷</h1>
+  <div class="meta">
+    <span>Ed Zitron × Steven Bartlett</span>
+    <span>The Diary Of A CEO</span>
+    <span>2026-08-27 · 2 小時 28 分</span>
+    <span>整理於 2026-09-02</span>
+  </div>
+</header>
+
+<main>
+<article>
+<!-- narrative: 物件,細節,矛盾,直接引語,場景 -->
+
+  <div class="bluf">
+    <strong class="label">一句話</strong>
+    <p>他的主張不是「AI 沒用」。他說的是一件可以查的事：這個產業的營收，有很大一部分是同一批公司互相把錢轉來轉去轉出來的——三大雲投錢給 OpenAI 與 Anthropic，這兩家再拿這筆錢回頭買三大雲的算力。錢繞了一圈回到原處，兩邊帳上都出現成長。</p>
+  </div>
+
+  <div class="callout warn">
+    <span class="lbl">看之前先知道這件事</span>
+    <span class="txt">底下所有財務數字都是他在對話中口述的，影片裡沒有出示任何一份文件。他自陳沒有金融背景，而且靠這個立場維生。要拿去做決定之前必須逐條回查。</span>
+  </div>
+
+  <nav class="toc">
+    <span class="lbl">這頁講什麼</span>
+    <ol>
+      <li>錢怎麼在同一個圈子裡轉</li>
+      <li>你付的二十美元，不是它的價格</li>
+      <li>「大家都在用」為什麼不能當證據</li>
+      <li>這次跟達康泡沫差在哪一格</li>
+      <li>他預測的骨牌，以及倒下的順序</li>
+      <li>他讓步的地方</li>
+      <li>主持人最強的一擊，他沒有回答</li>
+      <li>什麼會讓他承認自己錯了</li>
+    </ol>
+  </nav>
+
+  <h2>錢怎麼在同一個圈子裡轉</h2>
+
+  <p>正常情況下，一條營收線在成長，代表市場上有獨立的人願意用自己的錢換這個產品。那是需求訊號。</p>
+
+  <p>但如果 A 公司投資 B 公司，B 拿這筆錢買 A 的產品，那麼 A 的帳上會出現營收——而那筆錢是 A 自己出的。淨現金是流出的，會計上卻是成長。</p>
+
+  <p>Zitron 指出這件事在兩個層次同時發生。</p>
+
+  <figure>
+    <div class="flow">
+      <div class="flow-track">
+        <span class="lbl">迴路一 · 雲廠商與模型公司</span>
+        <div class="path">
+          <span class="node">三大雲投資</span>
+          <span class="arrow"><svg viewBox="0 0 28 17" role="img" aria-labelledby="a1"><title id="a1">資金流向</title>
+            <path d="M1 8.5 H22 M17 3.5 L23 8.5 L17 13.5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+          <span class="node">OpenAI 與 Anthropic</span>
+          <span class="arrow"><svg viewBox="0 0 28 17" role="img" aria-labelledby="a2"><title id="a2">資金流向</title>
+            <path d="M1 8.5 H22 M17 3.5 L23 8.5 L17 13.5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+          <span class="node">回頭買算力</span>
+          <span class="sign down">帳上算營收</span>
+        </div>
+      </div>
+      <div class="flow-track">
+        <span class="lbl">迴路二 · 晶片商與租卡商</span>
+        <div class="path">
+          <span class="node">Nvidia 投資</span>
+          <span class="arrow"><svg viewBox="0 0 28 17" role="img" aria-labelledby="a3"><title id="a3">資金流向</title>
+            <path d="M1 8.5 H22 M17 3.5 L23 8.5 L17 13.5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+          <span class="node">CoreWeave</span>
+          <span class="arrow"><svg viewBox="0 0 28 17" role="img" aria-labelledby="a4"><title id="a4">資金流向</title>
+            <path d="M1 8.5 H22 M17 3.5 L23 8.5 L17 13.5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+          <span class="node">Nvidia 租回同一批卡</span>
+          <span class="sign down">合約變成借款依據</span>
+        </div>
+      </div>
+      <div class="flow-legend">
+        <span><i class="sw-down"></i>標紅處＝錢繞回原處後在帳上留下的東西</span>
+      </div>
+    </div>
+    <figcaption><b>兩條迴路的共同特徵是「付錢的人，錢是這個賣家給的」。</b>迴路二特別完整：CoreWeave 拿著「我有客戶」的合約去銀行借錢，而那個客戶就是賣它 GPU 的人，買 GPU 的錢是跟銀行借的。
+      <span class="src">Note：兩條迴路由受訪者口述，本圖依其描述繪製，未經財報核對。金額詳見下表。</span>
+      <span class="src">Source：The Diary Of A CEO 訪談 Ed Zitron，2026-08-27，時間戳 04:37 與 01:59:41。</span>
+    </figcaption>
+  </figure>
+
+  <h3>他報出的數字</h3>
+
+  <div class="tbl-wrap">
+    <table>
+      <caption class="visually-hidden"></caption>
+      <thead>
+        <tr><th>項目</th><th>金額</th><th>時間戳</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>Amazon 投給 OpenAI（今年）</td><td class="num">$50B</td><td class="num">04:57</td></tr>
+        <tr><td>Amazon 投給 Anthropic</td><td class="num">$5B</td><td class="num">05:01</td></tr>
+        <tr><td>Google 投給 Anthropic</td><td class="num">$10B</td><td class="num">05:03</td></tr>
+        <tr><td>三大雲 AI 營收中來自這兩家的比例</td><td class="num">70%</td><td class="num">04:44</td></tr>
+        <tr><td>Microsoft FY2026 AI 總營收</td><td class="num">$34.33B</td><td class="num">18:21</td></tr>
+        <tr><td>其中來自 OpenAI</td><td class="num">$24.1B</td><td class="num">18:21</td></tr>
+        <tr><td>Microsoft 同年資本支出</td><td class="num">$115B</td><td class="num">18:31</td></tr>
+        <tr><td>OpenAI 去年虧損</td><td class="num">$20.9B</td><td class="num">13:26</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <p>他認為最能說明問題的是規模比例。已經花掉的錢，跟真正從外面收進來的錢，不在同一個數量級。</p>
+
+  <figure>
+    <div class="bars">
+      <div class="row">
+        <div class="cap"><span class="k">全業界已投入的資本支出</span><span class="v">&gt; $1,000B</span></div>
+        <div class="track"><div class="fill" style="width:100%"></div></div>
+      </div>
+      <div class="row">
+        <div class="cap"><span class="k">扣掉那兩家後，全球一年的 AI 營收</span><span class="v">約 $22B</span></div>
+        <div class="track"><div class="fill hot" style="width:2.2%"></div></div>
+      </div>
+      <div class="row">
+        <div class="cap"><span class="k">Microsoft 一年的外部 AI 營收</span><span class="v">約 $10B</span></div>
+        <div class="track"><div class="fill hot" style="width:1%"></div></div>
+      </div>
+    </div>
+    <figcaption><b>把兩家模型公司拿掉之後，全世界一年付給 AI 的錢，只有已投入資本的百分之二。</b>這是他整場訪談最重的一個對比，而它不需要任何預測就能檢查。
+      <span class="src">Note：條長為線性比例，非對數。$22B 是他所稱的「OpenAI 與 Anthropic 以外的全球 AI 營收」，$10B 由 $34.33B 減 $24.1B 得出。三個數字皆為受訪者口述、未出示文件。</span>
+      <span class="src">Source：同上訪談，時間戳 07:50、19:11、18:21。</span>
+    </figcaption>
+  </figure>
+
+  <h3>他用來推論的那個工具</h3>
+
+  <p>這些是上市公司。有好消息一定會講。而它們全都不拆分揭露 AI 分項營收。</p>
+
+  <p>他的推論是：不講，本身就說明了很多。而偶爾要講的時候，用的是一個叫 <span class="num">annualized run rate</span>（年化執行率）的數字——</p>
+
+  <blockquote>
+    它從來沒被定義過。可以是某個月乘以十二，可以是第十三個月，可以是最近四週乘以十三。每次都不一樣，而他們從不定義。
+    <span class="who">Ed Zitron · 05:44</span>
+  </blockquote>
+
+  <p>同一招他用在晶片上：官方講「效率十倍」「每兆瓦更多美元」，就是不講「和客戶一起把單位成本降了多少」。而如果那是真的，那是全世界最容易講的一句話。</p>
+
+  <h2>你付的二十美元，不是它的價格</h2>
+
+  <p>需求這個詞在經濟學裡本來就含價格——「在某個價格下的需求量」。脫離價格談需求量，等於拿掉定義的一半。</p>
+
+  <p>他引一份分析機構的估算：訂閱制之下，使用者能燒掉的成本遠高於他付的錢。</p>
+
+  <div class="tbl-wrap">
+    <table>
+      <thead>
+        <tr><th>訂閱方案</th><th>可燒掉的 token 價值</th><th>倍率</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>ChatGPT $200 / 月</td><td class="num">約 $14,000</td><td class="num">約 70×</td></tr>
+        <tr><td>Anthropic $200 / 月</td><td class="num">約 $8,000</td><td class="num">約 40×</td></tr>
+        <tr><td>一般 $20 / 月</td><td class="num">約 $400</td><td class="num">約 20×</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <p>倍率的大小決定了訊號被扭曲的程度。如果補貼是百分之二十，使用量還帶著偏好資訊。如果是二十倍，使用量跟真實需求之間幾乎沒有可以推論的關係。</p>
+
+  <h3>而這個實驗真的做過一次</h3>
+
+  <p>2026 年 3 月左右，OpenAI 把一百五十人以上的企業客戶轉成按 token 實付。他描述的落差是這樣的：</p>
+
+  <p>轉換之前，AI 是史上最有生產力的東西、改變了一切。真的要付錢的那一刻，同一批人的第一反應是「我們得把成本降下來」。有一家共乘平台三個月燒完全年的 token 預算。</p>
+
+  <p>他因此把「大家都愛用」這個論證，換成一個可以驗證的問題：<b>如果按每百萬 token 的實際價格付費，同一批人還會用同樣多嗎？</b></p>
+
+  <div class="callout">
+    <span class="txt">他自己給了支持方可以主動取得的證據形式——如果人們每做一件事付三、四塊美金還是很開心，那才是一個論證。</span>
+  </div>
+
+  <h2>「大家都在用」為什麼不能當證據</h2>
+
+  <p>主持人的數據很強：ChatGPT 六十天破一億活躍用戶，而同一個里程碑短影音平台花了九個月、照片社群花了兩年半、全球資訊網花了大約七年。</p>
+
+  <p>Zitron 不否認這些數字，他攻的是「採用率」這個指標本身。而他指出的兩個扭曲源是<b>各自獨立</b>的——一個降低使用的成本，一個提高不使用的成本。</p>
+
+  <div class="func-row">
+    <div class="fn">
+      <svg viewBox="0 0 40 40" role="img" aria-labelledby="i1"><title id="i1">價格被壓低</title>
+        <circle cx="20" cy="20" r="17" fill="none" stroke="currentColor" stroke-width="2"/>
+        <path d="M20 11 V29 M13 22 L20 29 L27 22" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+      <div>
+        <span class="lbl">扭曲源一 · 使用的成本被壓低</span>
+        <span class="txt">補貼讓使用量膨脹，而膨脹的那一部分不含偏好資訊——它只說明便宜的東西大家會多拿。</span>
+      </div>
+    </div>
+    <div class="fn">
+      <svg viewBox="0 0 40 40" role="img" aria-labelledby="i2"><title id="i2">不使用的代價被提高</title>
+        <circle cx="20" cy="20" r="17" fill="none" stroke="currentColor" stroke-width="2"/>
+        <path d="M20 29 V11 M13 18 L20 11 L27 18" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+      <div>
+        <span class="lbl">扭曲源二 · 不使用的代價被提高</span>
+        <span class="txt">功能被預設塞進你本來就要用的軟體，而且在某些公司，不宣稱自己因為 AI 更有生產力是有職業後果的。</span>
+      </div>
+    </div>
+  </div>
+
+  <p>他的用詞是「史上規模最大的非自願技術推送」。而他最有力的一句是歷史對照——</p>
+
+  <blockquote>
+    你不會看到到處都是文章說，如果你不上網你就會被拋下。也沒有職業上的後果。這在網際網路的時代沒有發生過。
+    <span class="who">Ed Zitron · 01:26:31</span>
+  </blockquote>
+
+  <p>這一段的價值不在於它證明了什麼，而在於它讓一個指標失效。支持方與反對方都在引用採用率，而<b>它現在兩邊都不能用</b>。</p>
+
+  <h2>這次跟達康泡沫差在哪一格</h2>
+
+  <p>主持人的框架是標準的：達康泡沫 90% 的東西歸零，但誕生了改變世界的公司。泡沫就是這樣運作的。</p>
+
+  <p>Zitron 的反駁不是「這次不會有贏家」。他指出的是資產性質的差異，而這個差異可以拆成三格去查。</p>
+
+  <p>當年那個「泡沫後被救回」的故事，主角是暗光纖——以為網路需求每九十天翻倍（實際是六到十二個月），於是大量超建。後來需求真的來了，那些沒被點亮的光纖被接上，成為之後二十年的基礎。</p>
+
+  <p>他的問題是：那個結局能不能複製，取決於<b>等待的成本由誰付、每天付多少</b>。</p>
+
+  <div class="tbl-wrap">
+    <table>
+      <thead>
+        <tr><th>變數</th><th>暗光纖</th><th>AI 資料中心</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>閒置期間的成本</td><td>趨近於零，埋下去就不再花錢</td><td>電力、冷卻、維運持續發生</td></tr>
+        <tr><td>技術折舊速度</td><td>慢，光纖本身沒有過時</td><td>快，每一代顯著更好</td></tr>
+        <tr><td>能不能挪作他用</td><td>高，任何網路流量都能走</td><td>低，專為生成式 AI 訓練與推論</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <figure>
+    <div class="plate">
+      <svg viewBox="0 0 640 260" role="img" aria-labelledby="s1t s1d">
+        <title id="s1t">等待期間的累積成本：暗光纖與 AI 資料中心的兩條斜率</title>
+        <desc id="s1d">橫軸是閒置等待的時間，縱軸是累積成本。暗光纖那條線在建置完成後近乎水平，代表等待幾乎不花錢；AI 資料中心那條線持續上升，代表每一天的等待都在累積電力與維運支出。兩條線之間的距離隨時間拉開。</desc>
+        <line x1="56" y1="216" x2="608" y2="216" stroke="var(--plate-line)" stroke-width="1.5"/>
+        <line x1="56" y1="28" x2="56" y2="216" stroke="var(--plate-line)" stroke-width="1.5"/>
+        <path d="M56 150 L608 132" fill="none" stroke="var(--plate-dim)" stroke-width="3" stroke-linecap="round"/>
+        <path d="M56 150 L608 44" fill="none" stroke="var(--sign-down)" stroke-width="3" stroke-linecap="round"/>
+        <circle cx="608" cy="132" r="5" fill="var(--plate-dim)"/>
+        <circle cx="608" cy="44" r="5" fill="var(--sign-down)"/>
+        <circle cx="56" cy="150" r="5" fill="var(--plate-fg)"/>
+        <g fill="none" stroke="var(--plate-line)" stroke-width="1" stroke-dasharray="3 4">
+          <line x1="608" y1="44" x2="608" y2="132"/>
+        </g>
+      </svg>
+    </div>
+    <figcaption><b>暗光纖能等，是因為等待幾乎不花錢；GPU 資料中心的每一天等待都在燒錢，所以它可能撐不到需求出現。</b>兩條線的起點相同（建置完成），差別全在斜率。右側虛線標的是兩者的差距，也就是「等下去要多付多少」。
+      <span class="src">Note：本圖是機制示意，不是實測數據。斜率為概念性描繪，未帶入任何具體電價或折舊率。</span>
+      <span class="src">Source：依受訪者於時間戳 45:05 至 46:54 的論述繪製。</span>
+    </figcaption>
+  </figure>
+
+  <p>這一段的好處是它把「這次跟上次像不像」從印象之爭，變成三個可以真的去查的變數。任何說「這次也會有好結局」的論述，都可以拿這三格去對。</p>
+
+  <aside class="side-cards">
+    <div class="sc">
+      <span class="lbl">關鍵前提</span>
+      <span class="txt">他攻的是「泡沫後基礎設施會被後續需求救回」這個故事，不是「AI 沒有價值」。這兩件事被混在一起討論時，雙方會各說各話。</span>
+    </div>
+    <div class="sc">
+      <span class="lbl">邊界條件</span>
+      <span class="txt">三格全部建立在「沒有大幅降低單位推論能耗的突破」這個前提上。他自己也說，硬體突破是會讓他改變想法的條件之一。</span>
+    </div>
+    <div class="sc ask">
+      <span class="lbl">待驗證點</span>
+      <span class="txt">舊卡降階承接推論負載、以及 GPU 的第二市場，這兩條路他沒有處理。它們不是理論上不可能，只是目前沒有證據在發生。</span>
+    </div>
+  </aside>
+
+  <h2>他預測的骨牌，以及倒下的順序</h2>
+
+  <p>他的預測有時間戳，這是它最好的地方——2027 是可以被回頭檢查的。</p>
+
+  <figure>
+    <div class="flow">
+      <div class="flow-track">
+        <span class="lbl">起點 · 現金耗盡</span>
+        <div class="path">
+          <span class="node">上市延後</span>
+          <span class="arrow"><svg viewBox="0 0 28 17" role="img" aria-labelledby="b1"><title id="b1">導致</title>
+            <path d="M1 8.5 H22 M17 3.5 L23 8.5 L17 13.5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+          <span class="node">募資變困難</span>
+          <span class="arrow"><svg viewBox="0 0 28 17" role="img" aria-labelledby="b2"><title id="b2">導致</title>
+            <path d="M1 8.5 H22 M17 3.5 L23 8.5 L17 13.5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+          <span class="node">現金撐不住</span>
+          <span class="sign down">2027</span>
+        </div>
+      </div>
+      <div class="flow-track">
+        <span class="lbl">第一張倒下的 · 持股方</span>
+        <div class="path">
+          <span class="node">帳上約 $100B 股票變不了現</span>
+          <span class="arrow"><svg viewBox="0 0 28 17" role="img" aria-labelledby="b3"><title id="b3">導致</title>
+            <path d="M1 8.5 H22 M17 3.5 L23 8.5 L17 13.5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+          <span class="node">控股公司大幅縮水</span>
+          <span class="sign down">SoftBank</span>
+        </div>
+      </div>
+      <div class="flow-track">
+        <span class="lbl">第二張 · 單一客戶依賴</span>
+        <div class="path">
+          <span class="node">未來全押在一個客戶</span>
+          <span class="arrow"><svg viewBox="0 0 28 17" role="img" aria-labelledby="b4"><title id="b4">導致</title>
+            <path d="M1 8.5 H22 M17 3.5 L23 8.5 L17 13.5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+          <span class="node">通膨調整後營收已 15 年持平</span>
+          <span class="sign down">Oracle</span>
+        </div>
+      </div>
+      <div class="flow-track">
+        <span class="lbl">第三張 · 成長指引</span>
+        <div class="path">
+          <span class="node">三大雲被迫下修財測</span>
+          <span class="arrow"><svg viewBox="0 0 28 17" role="img" aria-labelledby="b5"><title id="b5">導致</title>
+            <path d="M1 8.5 H22 M17 3.5 L23 8.5 L17 13.5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+          <span class="node">市場改用航空公司的方式估值</span>
+          <span class="sign down">退休金縮水 20% 至 40%</span>
+        </div>
+      </div>
+      <div class="flow-legend">
+        <span><i class="sw-down"></i>標紅處＝他預測的結果，全部尚未發生</span>
+      </div>
+    </div>
+    <figcaption><b>他認為這不是單一公司倒閉，而是有好幾家公司的存續綁在同一家公司身上。</b>他也說明了為什麼不能紓困：理論上可以灌錢撐一陣子，但兩家模型公司加起來是 1.1 兆美金的承諾，那不是紓困能填的洞。
+      <span class="src">Note：全為受訪者的預測，非已發生事實。時間點 2027 由他明確指出，其餘骨牌順序依其論述排列。</span>
+      <span class="src">Source：同上訪談，時間戳 02:08:29 至 02:18:51。</span>
+    </figcaption>
+  </figure>
+
+  <p>被問到一般人該怎麼辦時，他說自己手上全是現金，市場是被媒體吹起來的賭場，然後自己收回了一句：「我不太適合給財務建議。」</p>
+
+  <p>他真正給的只有一句——不要相信那些承諾，相信他們會說能讓股價跑起來的話，而不是實際在發生的事。</p>
+
+  <h2>他讓步的地方</h2>
+
+  <p>只讀前面幾段會誤解他。他明確承認有用的地方是這些：</p>
+
+  <div class="tbl-wrap">
+    <table>
+      <thead>
+        <tr><th>場景</th><th>他的說法</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>技術支援與除錯</td><td>把一大坨疑難排解日誌丟進去問哪裡壞了，它說「這裡壞了」——超好用。他說這是他唯一會辯護的用例。</td></tr>
+        <tr><td>軟體工程</td><td>「我承認，軟體工程它有變好。」</td></tr>
+        <tr><td>有確定性資料源的查詢</td><td>金融終端機的查詢助理，因為看得到資料從哪來。但他仍然三重複核。</td></tr>
+        <tr><td>小腳本</td><td>引一位軟體工程師的判準：它讓簡單的事更簡單，讓困難的事更困難。</td></tr>
+        <tr><td>他自己的一手經驗</td><td>用它修兒子的遊戲模組——還是花了半小時，而且一直搞錯。</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <p>他的立場前後一致：這些用途是真的，但它們不值一兆美金。他的原話是——那有用嗎？超有用。那值一兆美金嗎？不。那是一家兩兆美金的公司嗎？不。</p>
+
+  <h2>主持人最強的一擊，他沒有回答</h2>
+
+  <p>Bartlett 提出了一個 Zitron 沒有真正反駁的論證：</p>
+
+  <blockquote>
+    在一個人人都能用這些工具的世界，工具能做的事都會被商品化。工具做不到的——人的品味、判斷、人際能力——反而變成最有價值的，因為稀缺與困難在歷史上一直是價值所在。
+    <span class="who">Steven Bartlett · 01:28:06</span>
+  </blockquote>
+
+  <p>他推到寫作上：如果你用 AI 寫社群貼文，它們就會是社群貼文，因為大家都在用同一套。而一篇好貼文現在反而是不用那些工具的人寫的——更深、更私人、有只有一個人才有的親身經歷。</p>
+
+  <p>Zitron 的回應是換角度同意：那些人本來就在半吊子做他們的工作，現在只是他們有了半吊子機器。</p>
+
+  <p>但他沒有處理「稀缺性會轉移到哪裡」這個問題。而那正是這場對話裡，對<b>個人</b>最有可操作性的一段。</p>
+
+  <h2>什麼會讓他承認自己錯了</h2>
+
+  <p>主持人直接問了。他的答案有四條，而最後一條最尖：</p>
+
+  <ol>
+    <li>成本要有硬體突破，降到千分之一——「而那沒有在發生，因為他們都在試」</li>
+    <li>資料中心的蓋法要改——燃氣渦輪、社區被強加、噪音</li>
+    <li>產品要真的能自主做事，要「與魔法無法區分」</li>
+    <li><b>而這個高標準是他們自己訂的</b></li>
+  </ol>
+
+  <p>他附帶了一條很尖銳的規則：如果他能監管這些公司，他會禁止他們用未來式講話。只能講今天，最多給兩週的未來。因為如果只能講今天正在發生的事，他們聽起來會像瘋子。</p>
+
+  <p>他也主動指出這場對話本身的不對稱——當你是懷疑論者，被放在烤架上的是你，不是那些花了一兆美金的人。</p>
+
+  <h2>這份整理裡我不確定的</h2>
+
+  <p>逐字稿是自動字幕，人名幾乎全部打錯，本頁的還原是依上下文推論的，可能有誤。以下幾個至今沒有還原成功，需要查證：一家程式碼工具公司的名字、一份高盛報告的作者姓名、一位被引用的部落格作者、一款自研晶片的代號。</p>
+
+  <p>數字方面：所有財務數字都是口述，影片中沒有出示任何文件。「三大雲七成 AI 營收來自那兩家」是全篇最重的一個數字，而他<b>沒有說出處</b>。他提到某城市用電時把功率單位當成能量單位，那可能是口誤，也可能是字幕漏字。</p>
+
+  <p>他自己的三個矛盾，這裡也標出來：</p>
+
+  <ul>
+    <li>他說白領工作沒被取代、生產力沒提升，同時說老闆在逼員工用、員工得幫工作「洗上 AI」。兩件事可以都真，但他沒處理張力——如果真的完全沒用，強迫使用的壓力為什麼撐得住三年？</li>
+    <li>他承認軟體工程有變好，卻同時說軟體品質全面下降。這兩點他沒有調和。</li>
+    <li>他攻擊某位批評者「還握著股票所以有既得利益」。同一種論證適用於他自己——他靠這個立場維生。這不使他錯，但這條標準要兩邊都套。</li>
+  </ul>
+
+  <div class="callout">
+    <span class="txt">值得單獨記下的一點：他主動端出了對自己不利的歷史對照。1998 年有經濟學家說網路的影響不會比傳真機大，1995 年有人在雜誌上說線上資料庫不會取代報紙。而他接著說明其中有些判斷是對的。那是這場訪談裡他學術誠信最好的一刻。</span>
+  </div>
+
+</article>
+</main>
+
+<footer>
+  <p>來源影片：The Man Who Calls BS On AI: They're LYING About AI, 2027 Is When It All Breaks!｜The Diary Of A CEO｜2026-08-27｜2 小時 27 分 50 秒｜逐字稿來源為 YouTube 自動字幕。</p>
+  <p>本頁是讀完完整逐字稿後的機制整理，不是逐字翻譯。所有時間戳可回原片查證。</p>
+  <p>整理於 2026-09-02｜授權 <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a>｜整理者：彥皓</p>
+</footer>
+
+<script type="application/json" id="form-routing-3-7">
+{"3.7a":{"cell":"因果鏈","carrier":"手繪 SVG 機制圖 ＋ 註解層（KB-09 M9 / KB-10 元件 3）"},
+ "3.7b":{"sections":[{"h":"錢怎麼在同一個圈子裡轉","structural":true},
+                     {"h":"你付的二十美元，不是它的價格","structural":true},
+                     {"h":"「大家都在用」為什麼不能當證據","structural":true},
+                     {"h":"這次跟達康泡沫差在哪一格","structural":true},
+                     {"h":"他預測的骨牌，以及倒下的順序","structural":true},
+                     {"h":"他讓步的地方","structural":false},
+                     {"h":"主持人最強的一擊，他沒有回答","structural":false},
+                     {"h":"什麼會讓他承認自己錯了","structural":false},
+                     {"h":"這份整理裡我不確定的","structural":false}]},
+ "3.7c":{"continuous":false},
+ "3.7d":{"needed":false}}
+</script>
+
+</body>
+</html>

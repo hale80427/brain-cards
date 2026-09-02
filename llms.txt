@@ -15,6 +15,7 @@
 - 中文與英文 / 數字之間使用半形空格
 
 ## Cards
+- [ai-bubble-zitron](https://hale80427.github.io/brain-cards/ai-bubble-zitron/)：他說 AI 產業的錢在同一個圈子裡轉，而 2027 年這個迴圈會斷 — Ed Zitron 在 The Diary Of A CEO 訪談的完整拆解。循環金流的兩條迴路、補貼把需求訊號打壞的倍率（$20 訂閱可燒 $400 token）、採用率被補貼與強制推送兩個獨立扭曲源污染、以及這次與達康泡沫的資產性質差異（暗光纖能等是因為埋下去就不再花錢，GPU 資料中心每天等待都在燒錢）。附 2027 骨牌預測與他明確讓步的五個用例。全部財務數字為受訪者口述、未出示文件，最重的那個 70% 沒有出處。
 - [digital-narrative-forms](https://hale80427.github.io/brain-cards/digital-narrative-forms/)：捲動不是數位敘事的同義詞——盤點 19 種形式只有 6 種需要它 — 六軌調研：19 種歐美媒體數位敘事形式（各附作品頁與 view-source 證據）、30 條工程技術棧現況、15 個 CJK 新聞頁實測，合成「題材結構 → 形式」兩層路由表。查證掉三個常被引用的數字（15%／85% 是錯誤歸屬、WebAIM 40% 確認虛構、Snow Fall 16 人是灌水版），並記錄兩顆 2026 年新埋的單檔 HTML 地雷。
 - [semicon-2026-smart-manufacturing](https://hale80427.github.io/brain-cards/semicon-2026-smart-manufacturing/)：13 場演講對「自主」的定義沒有一個相同：SEMICON 2026 高科技智慧製造論壇參戰手冊 — SEMICON Taiwan 2026 高科技智慧製造論壇的 13 場演講逐字讀完後：每一場把「自主」放在不同的一層，而最後一場的 Bain 顧問說「高度自動化不等於自主」
 - [rick-rubin-creativity](https://hale80427.github.io/brain-cards/rick-rubin-creativity/)：Huberman Lab Essentials 訪 Rick Rubin 的完整拆解——創作唯一可控的是你與作品之間那條連結的清晰度，由此得到一條判準線：削弱那條連結的外部資訊不論真假都有害。含創作四階段各自的時間紀律（deadline 只在完成階段不傷作品，且只對自己設別公開設）、大腦把自己生成的解釋登錄成事實的四步機制、自我懷疑的兩種接線、以及「一個做法有效過只證明它那次有效」對 SOP 沉澱的含意。六張自繪機制圖，附四類邊界（全片零文獻引用、自動字幕、手術錄音宣稱未採用、講者位置條件未被檢視）。
