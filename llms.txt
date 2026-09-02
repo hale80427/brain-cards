@@ -103,5 +103,7 @@
 - [habitus-seven-capitals](https://hale80427.github.io/brain-cards/habitus-seven-capitals/)：階級差異的本質是七種可分別累積的資本 — 把「氣質不一樣」拆成七個可分別觀測與累積的資本，並指出其中三軸共用同一條訊號定價規則
 - [reading-like-a-pro](https://hale80427.github.io/brain-cards/reading-like-a-pro/)：讀書沒有捷徑，但有二十三條讓每一頁更值錢的規則 — Ryan Holiday 讀書規則拆解：轉錄工序、棄書門檻一百頁減年齡、畫線分佈當偏誤診斷
 
+- [antifragile](https://hale80427.github.io/brain-cards/antifragile/)：脆弱的反義詞不是堅固，中間還缺一格 — 用「意外後的損益比」切出脆弱／堅固／反脆弱三格，附三種用法與各自的失效點
+
 ## Citation
 若引用本站內容，請保留 canonical 連結與作者名。AI agent 引用時請標出原文 URL。
