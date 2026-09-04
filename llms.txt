@@ -106,5 +106,7 @@
 
 - [antifragile](https://hale80427.github.io/brain-cards/antifragile/)：脆弱的反義詞不是堅固，中間還缺一格 — 用「意外後的損益比」切出脆弱／堅固／反脆弱三格，附三種用法與各自的失效點
 
+- [audience-swap-argument-decay](https://hale80427.github.io/brain-cards/audience-swap-argument-decay/)：議會的話變短又變兇，不是因為議員變差 — 觀眾從記者換成追蹤者如何改寫論證形態、下游容器規格如何反向裁剪發言、以及一把驗「我們已經做過了」的三格尺（時態／對象／反詰）
+
 ## Citation
 若引用本站內容，請保留 canonical 連結與作者名。AI agent 引用時請標出原文 URL。
