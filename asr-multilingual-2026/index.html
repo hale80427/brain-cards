@@ -1,0 +1,746 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>多語言夾雜語音轉錄：問題主要不在模型</title>
+<meta name="description" content="第 227 跑調研。中英台日夾雜轉錄的升級路徑，以及一個躺了三天沒被發現的管線 bug。">
+<link rel="canonical" href="https://hale80427.github.io/brain-cards/asr-multilingual-2026/">
+<meta property="og:title" content="多語言夾雜語音轉錄：問題主要不在模型">
+<meta property="og:description" content="中英台日夾雜轉錄的升級路徑，以及一個躺了三天沒被發現的管線 bug。">
+<meta property="og:url" content="https://hale80427.github.io/brain-cards/asr-multilingual-2026/">
+<meta property="og:image" content="https://hale80427.github.io/brain-cards/asr-multilingual-2026/index.html">
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"TechArticle",
+ "headline":"多語言夾雜語音轉錄：問題主要不在模型",
+ "datePublished":"2026-09-04","inLanguage":"zh-Hant",
+ "description":"第 227 跑調研。中英台日夾雜轉錄的升級路徑，以及一個躺了三天沒被發現的管線 bug。"}
+</script>
+<style>
+:root{
+  --bg:#fbfaf8; --fg:#1c1a17; --muted:#5d574e; --line:#e0dad0;
+  --accent:#8c3a2b; --accent-soft:#f4ece8;
+  --ok:#2d6a4f; --warn:#9a6a10; --bad:#a4342a;
+  --card:#ffffff; --code-bg:#f2efe9;
+  --maxw:44rem;
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --bg:#16181c; --fg:#e8e6e1; --muted:#a09a91; --line:#2e3238;
+    --accent:#e8917c; --accent-soft:#2a2320;
+    --ok:#79c9a4; --warn:#e0b35c; --bad:#f08a7d;
+    --card:#1d2026; --code-bg:#23272e;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#16181c; --fg:#e8e6e1; --muted:#a09a91; --line:#2e3238;
+  --accent:#e8917c; --accent-soft:#2a2320;
+  --ok:#79c9a4; --warn:#e0b35c; --bad:#f08a7d;
+  --card:#1d2026; --code-bg:#23272e;
+}
+*{box-sizing:border-box}
+body{
+  margin:0; background:var(--bg); color:var(--fg);
+  font-family:"Iowan Old Style","Source Han Serif TC","Noto Serif TC",Georgia,"PingFang TC",serif;
+  font-size:17px; line-height:1.85;
+  -webkit-text-size-adjust:100%;
+}
+.wrap{max-width:var(--maxw); margin:0 auto; padding:2.5rem 1.15rem 5rem}
+h1,h2,h3{
+  font-family:"Helvetica Neue","PingFang TC","Noto Sans TC",system-ui,sans-serif;
+  line-height:1.35; text-wrap:balance;
+}
+h1{font-size:1.95rem; margin:0 0 .5rem; letter-spacing:-.01em}
+h2{font-size:1.32rem; margin:3.2rem 0 .9rem; padding-top:1.1rem; border-top:2px solid var(--line)}
+h3{font-size:17px; margin:2rem 0 .6rem; color:var(--accent)}
+p{margin:0 0 1.05rem; text-wrap:pretty}
+.dek{color:var(--muted); font-size:17px; margin:0 0 1.6rem; line-height:1.7}
+.meta{
+  font-family:ui-monospace,SFMono-Regular,Menlo,monospace; font-size:.86rem;
+  color:var(--muted); letter-spacing:.02em; margin:0 0 2.2rem;
+  padding-bottom:1.2rem; border-bottom:1px solid var(--line);
+}
+.bluf{
+  background:var(--accent-soft); border-left:4px solid var(--accent);
+  padding:1.15rem 1.25rem; margin:0 0 2rem; border-radius:0 6px 6px 0;
+}
+.bluf p:last-child{margin-bottom:0}
+.bluf strong{color:var(--accent)}
+.callout{
+  border:1px solid var(--line); border-left:4px solid var(--warn);
+  background:var(--card); padding:1rem 1.15rem; margin:1.6rem 0; border-radius:0 6px 6px 0;
+  font-size:13.76px; line-height:1.75;
+}
+.callout.bad{border-left-color:var(--bad)}
+.callout.ok{border-left-color:var(--ok)}
+.callout p:last-child{margin-bottom:0}
+.callout .tag{
+  display:block; font-family:ui-monospace,Menlo,monospace; font-size:.72rem;
+  letter-spacing:.08em; color:var(--muted); margin-bottom:.4rem; text-transform:uppercase;
+}
+code,kbd{
+  font-family:ui-monospace,SFMono-Regular,Menlo,monospace; font-size:.86em;
+  background:var(--code-bg); padding:.12em .38em; border-radius:3px;
+  word-break:break-word;
+}
+pre{
+  background:var(--code-bg); padding:.95rem 1.05rem; border-radius:6px;
+  overflow-x:auto; font-size:.82rem; line-height:1.65; margin:1.2rem 0;
+  border:1px solid var(--line);
+}
+pre code{background:none; padding:0; font-size:1em}
+.tbl-wrap{overflow-x:auto; margin:1.3rem 0; -webkit-overflow-scrolling:touch}
+table{border-collapse:collapse; width:100%; font-size:13.76px; line-height:1.6}
+th,td{padding:.55rem .6rem; text-align:left; vertical-align:top; border-bottom:1px solid var(--line)}
+th{
+  font-family:"Helvetica Neue","PingFang TC",system-ui,sans-serif; font-weight:600;
+  font-size:13.76px; color:var(--muted); white-space:nowrap;
+  border-bottom:2px solid var(--line); background:var(--bg);
+  position:sticky; top:0; z-index:2;
+}
+tbody tr:hover{background:var(--accent-soft)}
+.y{color:var(--ok); font-weight:600}
+.n{color:var(--bad); font-weight:600}
+.q{color:var(--warn); font-weight:600}
+.prov{
+  display:block; font-size:13.76px; color:var(--muted); line-height:1.5;
+  font-family:ui-monospace,Menlo,monospace; margin-top:.2rem;
+}
+figure{margin:2rem 0}
+figcaption{
+  font-size:.85rem; color:var(--muted); line-height:1.65; margin-top:.8rem;
+  padding-top:.7rem; border-top:1px solid var(--line);
+}
+figcaption b{color:var(--fg); font-weight:600; display:block; margin-bottom:.35rem; font-size:.92rem}
+figcaption .src{display:block; margin-top:.3rem}
+
+/* ── KB-10 機制圖（flow）：中文全在 HTML 層，SVG 內零 CJK ── */
+.flow{background:var(--card); border:1px solid var(--line); border-radius:8px; padding:1.2rem 1rem}
+.flow-track{display:flex; flex-direction:column; gap:.85rem}
+.flow-track > .lbl{
+  font-family:"Helvetica Neue","PingFang TC",system-ui,sans-serif; font-size:.78rem;
+  letter-spacing:.06em; color:var(--muted); text-transform:uppercase;
+}
+.path{display:flex; flex-wrap:wrap; align-items:center; gap:.45rem}
+.node{
+  background:var(--bg); border:1px solid var(--line); border-radius:5px;
+  padding:.32rem .6rem; font-size:.84rem; line-height:1.45;
+  font-family:"Helvetica Neue","PingFang TC",system-ui,sans-serif;
+}
+.node.hit{border-color:var(--bad); color:var(--bad); font-weight:600}
+.node.fix{border-color:var(--ok); color:var(--ok); font-weight:600}
+.arrow{display:inline-flex; align-items:center; flex:0 0 auto}
+.arrow svg{width:26px; height:15px; fill:none; stroke:var(--muted); stroke-width:1.6}
+.flow-legend{
+  display:flex; flex-wrap:wrap; gap:1rem; margin-top:.4rem; padding-top:.7rem;
+  border-top:1px dashed var(--line); font-size:.78rem; color:var(--muted);
+}
+.flow-legend i{display:inline-block; width:.7rem; height:.7rem; border-radius:2px; margin-right:.3rem; vertical-align:-1px}
+.sw-bad{background:var(--bad)}
+.sw-ok{background:var(--ok)}
+
+/* ── 可篩選表（A09）：JS 失效時全部可見 ── */
+.filters{
+  display:flex; flex-wrap:wrap; gap:.4rem; margin:1.1rem 0 .5rem;
+}
+.filters button{
+  font-family:"Helvetica Neue","PingFang TC",system-ui,sans-serif; font-size:.8rem;
+  padding:.32rem .7rem; border:1px solid var(--line); background:var(--card);
+  color:var(--fg); border-radius:99px; cursor:pointer; line-height:1.5;
+}
+.filters button[aria-pressed="true"]{background:var(--accent); color:#fff; border-color:var(--accent)}
+.filters-note{font-size:13.76px; color:var(--muted); margin:.2rem 0 0}
+/* ★ 預設全部可見。只有 JS 成功掛上 body.js 之後，才可能被隱藏。
+   JS 被沙盒擋掉 ⇒ 這條規則不匹配 ⇒ 讀者看到完整的表，不是空白。 */
+body.js tr[data-hide="1"]{display:none}
+body:not(.js) .filters{display:none}
+th[data-sort]{cursor:pointer; user-select:none}
+body:not(.js) th[data-sort]{cursor:default}
+th[data-sort]::after{content:" ⇅"; opacity:.35; font-size:.85em}
+body:not(.js) th[data-sort]::after{content:""}
+
+.side-cards{display:grid; grid-template-columns:repeat(auto-fit,minmax(15rem,1fr)); gap:.9rem; margin:2.2rem 0}
+.side-cards .card{background:var(--card); border:1px solid var(--line); border-top:3px solid var(--accent); border-radius:6px; padding:.95rem 1rem}
+.side-cards .lbl{display:block; font-family:"Helvetica Neue","PingFang TC",system-ui,sans-serif; font-size:.8rem; letter-spacing:.05em; color:var(--accent); font-weight:600; margin-bottom:.45rem}
+.side-cards p{margin:0; font-size:13.76px; line-height:1.7}
+.side-cards em{font-style:normal; border-bottom:1.5px solid var(--accent); padding-bottom:1px}
+.foot{
+  margin-top:4rem; padding-top:1.4rem; border-top:2px solid var(--line);
+  font-size:.86rem; color:var(--muted); line-height:1.7;
+}
+ul,ol{margin:0 0 1.05rem; padding-left:1.35rem}
+li{margin-bottom:.5rem}
+li > ul{margin-top:.5rem}
+hr{border:none; border-top:1px solid var(--line); margin:2.5rem 0}
+a{color:var(--accent); text-underline-offset:2px}
+@media (max-width:520px){
+  .wrap{padding:1.8rem .9rem 4rem}
+  h1{font-size:1.6rem}
+  th,td{padding:.45rem .45rem}
+}
+</style>
+</head>
+<body>
+<!-- narrative: 觸發物是一張英文基準的排行榜, 真正的失效在管線不在模型, 四個痛點分屬四種問題性質, 已落地的四項改動與一個單變數實驗, 三層方案與明確的未回答清單 -->
+<main class="wrap">
+
+<header>
+<h1>多語言夾雜語音轉錄：問題主要不在模型</h1>
+<p class="dek">中文、英文、台語、日語混在同一段錄音裡。找一個更強的模型解決不了其中三種——而現有管線裡有一個躺了三天、沒有任何症狀的 bug，它讓語言偵測從來沒有真正生效過。</p>
+<p class="meta">第 227 跑編排｜2026-09-04｜五路平行調研＋本機讀碼＋端到端煙測｜base commit b443d73 → d9172cc</p>
+</header>
+
+<div class="bluf">
+<p><strong>這次調研最強的結論，跟出發點相反。</strong>支持它的是兩個獨立來源的收斂：一個是讀現有程式碼，一個是一個沒看過那些程式碼、只拿到需求描述的獨立審查。</p>
+<p>四個痛點分屬四種不同性質的問題，<strong>只有一個是模型問題</strong>：中英夾雜是架構問題、台語是規格問題、日語是路由問題、專業術語是先驗問題。無論哪個模型贏了橫評，其餘三格照壞。</p>
+</div>
+
+<h2>一個沒有症狀的 bug，讓語言偵測從來沒生效過</h2>
+
+<p>現有管線 <code>tools/semicon-transcribe/transcribe.py</code> 會先抽一段音檔讓模型自報語言，再用那個語言跑全檔。這個設計是對的。問題出在它拿到答案之後。</p>
+
+<p>模型印出來的是<strong>語言全名</strong>（<code>Detected language: Japanese</code>），腳本取小寫得到 <code>"japanese"</code>，然後拿去比對 <code>det in ("zh", "en")</code>。</p>
+
+<p><strong>那個條件恆為 False。</strong>於是「不在支援清單，退回英文」這條路，每一支音檔都會走。</p>
+
+<div class="callout bad">
+<span class="tag">逐字證據，躺在 out/_result.json 三天</span>
+<pre><code>lang = 'en' | lang_how = '探針偵測 english → 不在支援清單，退回 en'</code></pre>
+<p>它<strong>偵測對了</strong>（english），然後把結果丟掉。若那批錄音裡有中文場，全部會被以 <code>--language en</code> 轉錄——那正是已知事故的鏡像：對錯的語言硬下指令，模型會崩成重複迴圈，而且結束代碼是 0、檔案齊全、字數看起來正常。</p>
+</div>
+
+<figure>
+<div class="flow">
+  <div class="flow-track">
+    <span class="lbl">舊路徑｜偵測正確，結果被丟掉</span>
+    <div class="path">
+      <span class="node">日語錄音</span>
+      <span class="arrow"><svg viewBox="0 0 28 17" role="img" aria-labelledby="a1"><title id="a1">送進語言探針</title><path d="M1 8.5h22M18 3.5l5 5-5 5"/></svg></span>
+      <span class="node">探針回報 japanese</span>
+      <span class="arrow"><svg viewBox="0 0 28 17" role="img" aria-labelledby="a2"><title id="a2">比對支援清單</title><path d="M1 8.5h22M18 3.5l5 5-5 5"/></svg></span>
+      <span class="node hit">不在 zh／en 清單</span>
+      <span class="arrow"><svg viewBox="0 0 28 17" role="img" aria-labelledby="a3"><title id="a3">因此退回</title><path d="M1 8.5h22M18 3.5l5 5-5 5"/></svg></span>
+      <span class="node hit">當成英文轉錄</span>
+      <span class="arrow"><svg viewBox="0 0 28 17" role="img" aria-labelledby="a4"><title id="a4">同時導致</title><path d="M1 8.5h22M18 3.5l5 5-5 5"/></svg></span>
+      <span class="node hit">餵英文術語提示</span>
+    </div>
+    <span class="lbl">新路徑｜偵測值直接使用，配不上就不猜</span>
+    <div class="path">
+      <span class="node">日語錄音</span>
+      <span class="arrow"><svg viewBox="0 0 28 17" role="img" aria-labelledby="a5"><title id="a5">送進語言探針</title><path d="M1 8.5h22M18 3.5l5 5-5 5"/></svg></span>
+      <span class="node">探針回報 japanese</span>
+      <span class="arrow"><svg viewBox="0 0 28 17" role="img" aria-labelledby="a6"><title id="a6">查表轉成語言碼</title><path d="M1 8.5h22M18 3.5l5 5-5 5"/></svg></span>
+      <span class="node fix">轉成語言碼 ja</span>
+      <span class="arrow"><svg viewBox="0 0 28 17" role="img" aria-labelledby="a7"><title id="a7">因此</title><path d="M1 8.5h22M18 3.5l5 5-5 5"/></svg></span>
+      <span class="node fix">以日語轉錄</span>
+      <span class="arrow"><svg viewBox="0 0 28 17" role="img" aria-labelledby="a8"><title id="a8">同時</title><path d="M1 8.5h22M18 3.5l5 5-5 5"/></svg></span>
+      <span class="node fix">配不上就不餵提示</span>
+    </div>
+  </div>
+  <div class="flow-legend">
+    <span><i class="sw-bad"></i>結束代碼是 0，沒有任何症狀</span>
+    <span><i class="sw-ok"></i>修正後的路徑</span>
+  </div>
+</div>
+<figcaption>
+<b>偵測值被丟掉的那一步不會報錯，所以它躺了三天。</b>
+<span class="src">Note：兩條路徑的差別只在第三個節點。舊路徑的每一步單獨看都合理——探針跑了、有防呆清單、有降級行為，而錯的是清單裡放的是語言碼、探針回的是語言全名。修法是新增一張全名對語言碼的對照表，來源取自實際安裝的套件（現查 112 條），不寫死在腳本裡。</span>
+<span class="src">Source：<code>tools/semicon-transcribe/transcribe.py</code>，commit <code>d9172cc</code>；證據取自 <code>~/dev/semicon-transcribe/out/_result.json</code>。</span>
+</figcaption>
+</figure>
+
+<div class="callout">
+<span class="tag">這裡的教訓比 bug 本身重要</span>
+<p>修完前三項改動之後，資格檢是 <strong>25 項全綠</strong>。那 25 項餵給函式的是<strong>語言碼</strong>——我以為的介面。真實輸入是<strong>語言全名</strong>——真的介面。</p>
+<p>抓到它的是一段 <strong>6 秒的合成日語端到端煙測</strong>。單元測試驗的是我以為的東西，煙測驗的是真的東西。</p>
+</div>
+
+<h2>那張排行榜量的是英文，而且兩個數字被併錯了</h2>
+
+<p>觸發這次調研的是一張 Artificial Analysis 的圖，顯示 Meta 的 Muse Voice Transcribe 以 3.1% 詞錯率排名第一。</p>
+
+<p>查證結果：<strong>那個基準的三個資料集沒有一個是非英文。</strong></p>
+
+<ul>
+<li>資料集規格逐字寫著 <code>Subset: English</code></li>
+<li>文字正規化器逐字寫著 <code>building on Whisper's English normalizer</code></li>
+<li>額外規則包含 <code>US / UK English spelling equivalences</code></li>
+</ul>
+
+<p>沒有中文、沒有日文、沒有台語、沒有任何跨語言混合語料。而 Artificial Analysis 上<strong>找不到任何非英文的語音辨識排行榜</strong>——不是沒找到數字，是那張表不存在。</p>
+
+<div class="callout bad">
+<span class="tag">數字校正</span>
+<p>「3.1% 詞錯率於 0.16 秒」是<strong>把兩張不同的圖併在一起</strong>。官方圖上 0.16 秒對應的是 <strong>3.0%</strong>。</p>
+<p class="prov">3.1%〔基準：Meta 官方圖表，宣稱依 Artificial Analysis 排名｜語料語言：英文｜模式：串流最終轉錄〕<br>3.0% @ 0.16 秒〔基準：Meta 官方延遲—準確度圖｜語料語言：英文｜模式：串流〕</p>
+</div>
+
+<h3>Muse 對這個用途有三個硬阻塞</h3>
+
+<div class="tbl-wrap">
+<table>
+<thead><tr><th>項目</th><th>查證結果</th></tr></thead>
+<tbody>
+<tr><th scope="row">資料保留政策</th><td>官方文件的資料政策頁<span class="n">回 404</span>。保留多久、會不會用於訓練、零保留模式怎麼開通——全部未公布。而「一般內容可上雲」這個決定需要這一格，它是空的。</td></tr>
+<tr><th scope="row">台灣可及性</th><td>官方只寫 <code>expanded global access</code>，<span class="q">沒有國家清單</span>。第三方稱早期為美國限定，時序較早且與官方現況衝突。未確認。</td></tr>
+<tr><th scope="row">一小時無需後處理</th><td>官方部落格這樣寫，但介面文件的硬限制是 <code>Audio exceeds 10 minutes</code> 會被拒絕，處置是 <code>Split the recording into clips of 10 minutes or less.</code><span class="n">切段再拼就是後處理。</span>官方沒有解釋這兩句怎麼相容。</td></tr>
+<tr><th scope="row">台語</th><td><span class="n">不在 25 種驗證語言裡。</span>整份發布文搜尋 Hokkien／Min Nan／Taiwanese 皆 0 次。是否在未列舉的「70 多種訓練語言」內，無法判定。</td></tr>
+<tr><th scope="row">中文</th><td>清單只寫 <code>Mandarin Chinese</code>，<span class="q">未區分繁簡</span>。官方示範逐字稿是簡體。</td></tr>
+<tr><th scope="row">一個有利的發現</th><td>官方逐字寫 <code>supports 25 languages with code-switching</code>——明文宣稱支援句內夾雜。<span class="q">但這是供應商自報、無數字、無第三方實測。</span></td></tr>
+</tbody>
+</table>
+</div>
+
+<h2>四個痛點分屬四種問題，只有一個是模型問題</h2>
+
+<div class="tbl-wrap">
+<table>
+<thead><tr><th>痛點</th><th>問題性質</th><th>為什麼換模型解不了</th></tr></thead>
+<tbody>
+<tr><td>中英句內夾雜</td><th scope="row">架構</th><td>Whisper 對每個 30 秒窗只發一個語言標記。句內切換時它只能二選一：翻譯掉，或丟掉。<span class="y">四個裡只有這格真的是模型問題。</span></td></tr>
+<tr><td>台語整段丟失</td><th scope="row">規格</th><td>致命的不是模型爛，是沒有指定輸出正字法——要漢字、台羅、還是直接翻成華語？沒有這個決定，「台語準確率」不可定義也不可測量。</td></tr>
+<tr><td>日語辨識不出</td><th scope="row">路由</th><td>模型的日語能力本身很好，失效在那個窗被標成中文。<span class="y">現有模型加對的路由就能做。</span></td></tr>
+<tr><td>術語與人名寫錯</td><th scope="row">先驗</th><td>人名與冷門術語不在音訊的確定性資訊裡，而在先驗裡。再完美的模型也解不了——一個聽力完美但不懂該領域的人類逐字稿員一樣會寫錯。</td></tr>
+</tbody>
+</table>
+</div>
+
+<div class="callout">
+<span class="tag">獨立審查指出的一件事，兩邊原本都沒看到</span>
+<p><strong>對四種語言的錯誤偵測成本是不對稱的。</strong>中英讀一遍就抓得到錯。日語混在中文裡，若讀者不通日文，<strong>錯誤是不可見的</strong>。</p>
+<p>所以台語和日語被列為痛點，是因為它們<strong>吵鬧地失敗</strong>——整段消失、變成亂中文。<strong>安靜地錯</strong>（台語被寫成似是而非的華語、日語被寫成同音中文詞）不會被計入，因為不知道。</p>
+<p>推論：對無法稽核的語言，要的不是準確率，是<strong>舉手</strong>。一份沒標記卻寫錯的段落，比一段空白更糟——空白會去補聽，錯誤會直接引用。</p>
+</div>
+
+<h2>已經做完的四項改動</h2>
+
+<p>這四項全部是改自己的程式碼，不換任何模型、不下載任何東西、不付任何費用。</p>
+
+<div class="tbl-wrap">
+<table>
+<thead><tr><th>改動</th><th>對應痛點</th></tr></thead>
+<tbody>
+<tr><td>移除語言白名單。接受模型支援的全部 100 種語言；探針失敗時改成不指定語言（由模型逐段自行偵測），而不是硬退回英文。</td><td>日語辨識不出</td></tr>
+<tr><td>術語提示的語言必須與轉錄語言一致，配不上寧可不餵。舊版寫的是「是中文就給中文提示，否則給英文提示」——日語錄音會拿到英文的半導體術語提示。</td><td>術語錯、中英掉字、日語</td></tr>
+<tr><td>術語提示參數化。新增 <code>--domain</code>／<code>--prompt</code>／<code>--prompt-file</code>，預設值從半導體改為通用。</td><td>術語與人名寫錯</td></tr>
+<tr><td>覆蓋率指標。每次轉錄算出「字元數除以秒數」並記錄，刻意不設攔截門檻。</td><td>靜默吃掉內容</td></tr>
+</tbody>
+</table>
+</div>
+
+<div class="callout">
+<span class="tag">為什麼覆蓋率指標刻意不設門檻</span>
+<p>本機基線只有 11 個樣本，而且全部是同一場論壇的英文演講（9.28 到 15.58 字每秒，中位 11.59）。<strong>中文與日文的基線不存在。</strong></p>
+<p>中文一個字承載的資訊量遠高於一個英文字元，跨語言套同一個門檻必然誤判。已經有過一次教訓：抄來的門檻可能形同虛設，而且看不出來。訂門檻的時機是每個語言各累積 8 個以上正常樣本之後。</p>
+<p class="prov">11 個樣本〔基準：本機 out 目錄實測｜語料語言：英文｜模式：批次長音檔〕</p>
+</div>
+
+<h3>一個單變數實驗，推翻了一條抄來的規則</h3>
+
+<p>外部文獻說術語提示「注意力偏重尾端，重要的放最後」。用同一支合成音檔測了四個條件：</p>
+
+<div class="tbl-wrap">
+<table>
+<thead><tr><th>條件</th><th>「微鑽孔」</th><th>「磨耗」</th><th>其他觀察</th></tr></thead>
+<tbody>
+<tr><td>術語放中間</td><td class="y">正確</td><td class="n">錯成「模號」</td><td>—</td></tr>
+<tr><td>術語放最後</td><td class="y">正確</td><td class="n">錯成「模號」</td><td>與上一列逐字相同</td></tr>
+<tr><td>只放該術語一個詞</td><td class="n">錯成「為鑽孔」</td><td class="n">錯成「模號」</td><td>產出出現亂碼</td></tr>
+<tr><td>完全不餵提示</td><td class="n">錯成「爲鑽孔」</td><td class="n">錯成「模號」</td><td>觸發簡轉繁 12 字</td></tr>
+</tbody>
+</table>
+</div>
+
+<ul>
+<li>「重要的放尾端」在這個樣本上無效——前兩列對該術語的結果逐字相同。這條規則未被本機證實。</li>
+<li>那個術語四個條件全錯，連只放它一個詞都救不回來。這一類同音錯誤不是提示能解的，需要後處理層。</li>
+<li>但提示確實有效：另一個術語被前兩個條件救回、後兩個錯；且不餵提示時觸發了 12 字簡轉繁。</li>
+</ul>
+
+<p class="prov">實驗規格〔基準：本機單變數對照｜語料語言：中文含英文術語｜模式：批次〕｜n=1、macOS 合成語音、未算字元錯誤率。<strong>相對差異可信，絕對率不可信。</strong></p>
+
+<h2>候選方案比較</h2>
+
+<p class="filters-note">下面三張表可以按欄位排序、按條件篩選。<strong>沒有這些互動也讀得到完整內容</strong>——篩選按鈕只在能用時才出現。</p>
+
+<h3>雲端方案：八家橫評</h3>
+
+<div class="filters" data-target="t-cloud">
+  <button type="button" data-filter="all" aria-pressed="true">全部</button>
+  <button type="button" data-filter="cs" aria-pressed="false">有官方句內混語條文</button>
+  <button type="button" data-filter="hant" aria-pressed="false">明確支援繁體</button>
+  <button type="button" data-filter="notrain" aria-pressed="false">明確不用於訓練</button>
+</div>
+
+<div class="tbl-wrap">
+<table id="t-cloud">
+<thead><tr>
+  <th data-sort="text">供應商</th>
+  <th data-sort="text">繁體中文</th>
+  <th data-sort="text">句內混語</th>
+  <th data-sort="text">術語表容量</th>
+  <th data-sort="num">單價</th>
+  <th data-sort="text">資料政策</th>
+</tr></thead>
+<tbody>
+<tr data-cs="1" data-hant="1" data-notrain="1">
+  <th scope="row">Speechmatics</th>
+  <td class="y">可選繁簡輸出，官方點名台灣口音</td>
+  <td class="y">官方雙語代碼 <code>cmn_en</code>，唯一把中英混講做成產品的</td>
+  <td>1000 詞，支援發音提示</td>
+  <td data-num="99">讀數衝突</td>
+  <td>未加入訓練折扣則不用於訓練，批次 7 天刪</td>
+</tr>
+<tr data-cs="1" data-hant="0" data-notrain="1">
+  <th scope="row">Soniox v5</th>
+  <td class="q">只寫 zh，繁簡未載明</td>
+  <td class="y">逐字標語言標籤，官方明說句中切換</td>
+  <td class="y">8000 詞元（約為 Whisper 的 35 倍）</td>
+  <td data-num="0.10">每小時 0.10 美元</td>
+  <td class="y">音檔與逐字稿永不用於訓練，30 天自動刪</td>
+</tr>
+<tr data-cs="0" data-hant="1" data-notrain="1">
+  <th scope="row">Deepgram Nova-3</th>
+  <td class="y">語言代碼直接寫出繁體變體</td>
+  <td class="n">有多語模式，但中文不在其 10 語清單內</td>
+  <td>關鍵詞提示</td>
+  <td data-num="0.258">每小時約 0.26 美元</td>
+  <td>訓練需主動加入，預設不訓練</td>
+</tr>
+<tr data-cs="0" data-hant="0" data-notrain="0">
+  <th scope="row">ElevenLabs Scribe v2</th>
+  <td class="q">繁簡未載明</td>
+  <td class="q">行銷頁稱有，官方文件無條文</td>
+  <td>1000 詞</td>
+  <td data-num="0.22">每小時 0.22 美元</td>
+  <td class="q">有零保留模式需啟用，是否訓練未載明</td>
+</tr>
+<tr data-cs="0" data-hant="0" data-notrain="0">
+  <th scope="row">AssemblyAI</th>
+  <td class="q">繁簡未載明</td>
+  <td class="n">文件只承認西英混語</td>
+  <td>1000 詞</td>
+  <td data-num="0.27">每小時 0.27 美元</td>
+  <td class="n">預設可能用於訓練須自行退出，非同步預設無限期保留</td>
+</tr>
+<tr data-cs="1" data-hant="0" data-notrain="0">
+  <th scope="row">Gemini 3.5 Transcribe</th>
+  <td class="n">語言表只有簡體與粵語，無繁體台灣</td>
+  <td class="y">官方寫明支援會話中混語</td>
+  <td>1000 詞，但與說話者分離二選一</td>
+  <td data-num="0.30">每小時約 0.30 美元</td>
+  <td class="q">未親驗</td>
+</tr>
+<tr data-cs="0" data-hant="1" data-notrain="1">
+  <th scope="row">Google Cloud 語音轉文字</th>
+  <td class="y">繁體台灣正式支援</td>
+  <td class="q">文件未載明</td>
+  <td>語音調適</td>
+  <td data-num="0.18">每小時約 0.18 美元</td>
+  <td>記錄預設關閉</td>
+</tr>
+<tr data-cs="0" data-hant="1" data-notrain="1">
+  <th scope="row">OpenAI 轉錄介面</th>
+  <td class="y">支援繁體區域代碼</td>
+  <td class="q">有複數語言參數但未明說句內混合</td>
+  <td class="n">224 詞元上限</td>
+  <td data-num="0.27">每小時 0.27 美元</td>
+  <td>預設不訓練、保留 30 天，零保留需申請</td>
+</tr>
+</tbody>
+</table>
+</div>
+
+<div class="callout bad">
+<span class="tag">這張表最重要的讀數是一個負面斷言</span>
+<p><strong>八家裡符合三欄標註要求的中文或中英混語效能數字：零筆。</strong></p>
+<p>有官方句內混語條文的 4 家，有中英混語實測數字的 <strong>0 家</strong>。唯二的量化宣稱都是供應商自報且缺語料語言或模式欄，依本次調研的凍結判準不得進比較表。</p>
+<p>台語：八家的官方語言清單全部沒有。這是八份清單的一致缺席，不是查不到；也沒有一家正式聲明不支援。<strong>雲端這條路目前解不掉台語。</strong></p>
+</div>
+
+<h3>本機方案：可在這台機器上跑的候選</h3>
+
+<div class="filters" data-target="t-local">
+  <button type="button" data-filter="all" aria-pressed="true">全部</button>
+  <button type="button" data-filter="ready" aria-pressed="false">十分鐘內裝得起來</button>
+  <button type="button" data-filter="cs" aria-pressed="false">有中英混語數字</button>
+</div>
+
+<div class="tbl-wrap">
+<table id="t-local">
+<thead><tr>
+  <th data-sort="text">候選</th>
+  <th data-sort="text">授權</th>
+  <th data-sort="text">本機可跑性</th>
+  <th data-sort="text">中文</th>
+  <th data-sort="text">句內混語</th>
+  <th data-sort="text">日語</th>
+</tr></thead>
+<tbody>
+<tr data-ready="1" data-cs="1">
+  <th scope="row">Breeze-ASR-25<br><span class="prov">　聯發科創新基地</span></th>
+  <td class="y">Apache 2.0</td>
+  <td class="y">最低摩擦，改一個字串</td>
+  <td class="y">專為台灣華語調校</td>
+  <td class="y">中英混語詞錯率 13.01，對照組 29.49</td>
+  <td class="n">無數字，模型也沒宣稱</td>
+</tr>
+<tr data-ready="1" data-cs="0">
+  <th scope="row">Qwen3-ASR-1.7B<br><span class="prov">　阿里</span></th>
+  <td class="y">Apache 2.0</td>
+  <td class="y">一行安裝指令</td>
+  <td class="y">繁體語料詞錯率 3.77</td>
+  <td class="q">技術報告無專門混語表</td>
+  <td class="y">日語詞錯率 11.64</td>
+</tr>
+<tr data-ready="1" data-cs="0">
+  <th scope="row">Breeze-ASR-26<br><span class="prov">　聯發科創新基地</span></th>
+  <td class="y">Apache 2.0</td>
+  <td class="y">同上，模型已確認存在</td>
+  <td class="q">輸出華語漢字</td>
+  <td class="y">訓練資料含台華混語</td>
+  <td class="n">無</td>
+</tr>
+<tr data-ready="0" data-cs="0">
+  <th scope="row">GLM-ASR-Nano</th>
+  <td class="y">MIT</td>
+  <td class="q">權重在，執行器未確認</td>
+  <td class="q">未明列繁體</td>
+  <td class="q">官方文件未提</td>
+  <td class="q">未明列</td>
+</tr>
+<tr data-ready="0" data-cs="0">
+  <th scope="row">FireRedASR2<br><span class="prov">　小紅書</span></th>
+  <td class="y">Apache 2.0</td>
+  <td class="n">查不到任何本機執行路徑</td>
+  <td class="y">普通話字錯率 2.89，本批最佳</td>
+  <td class="q">未提</td>
+  <td class="q">未提</td>
+</tr>
+<tr data-ready="0" data-cs="1">
+  <th scope="row">SenseVoiceSmall</th>
+  <td class="q">自訂授權，非標準開源</td>
+  <td class="q">第三方轉檔，需自建切段</td>
+  <td class="q">輸出簡體</td>
+  <td class="q">只有微調後的第三方數字</td>
+  <td class="y">支援</td>
+</tr>
+<tr data-ready="0" data-cs="0">
+  <th scope="row">Voxtral Mini 即時版<br><span class="prov">　Mistral</span></th>
+  <td class="y">Apache 2.0</td>
+  <td class="q">有轉檔，但為串流設計</td>
+  <td class="q">13 語含中文，無逐項數字</td>
+  <td class="n">未宣稱</td>
+  <td class="q">列在支援語言內，無數字</td>
+</tr>
+<tr data-ready="0" data-cs="1">
+  <th scope="row">Parakeet 中英混語版<br><span class="prov">　NVIDIA</span></th>
+  <td class="q">轉檔為 CC-BY</td>
+  <td class="n">需自寫原生程式串三段流程，固定 15 秒窗</td>
+  <td class="n">輸出簡體</td>
+  <td class="y">模型本身即中英混語訓練</td>
+  <td class="n">無</td>
+</tr>
+<tr data-ready="1" data-cs="0">
+  <th scope="row">Whisper large-v3-turbo<br><span class="prov">　現況基準</span></th>
+  <td class="y">MIT</td>
+  <td class="y">已在跑</td>
+  <td>基準本身</td>
+  <td class="n">無專門優化</td>
+  <td class="y">支援</td>
+</tr>
+</tbody>
+</table>
+</div>
+
+<div class="callout">
+<span class="tag">兩個今天就能裝的候選，押的賭注不同</span>
+<pre><code># 候選一：改一個字串，其餘參數全部沿用
+~/dev/mlx-whisper-env/bin/mlx_whisper "audio.wav" \
+  --model eoleedi/Breeze-ASR-25-mlx
+
+# 候選二：有內建語言辨識，不必先宣告單一語言
+uv pip install qwen3-asr-mlx     # 現查 0.2.0，需 Python 3.10 至 3.13
+# 模型：mlx-community/Qwen3-ASR-1.7B-bf16</code></pre>
+<p>四個候選倉庫都已用真實請求確認存在，並跑過一個捏造名稱的對照組確認這個檢查有鑑別力。</p>
+<p><strong>不是二選一</strong>：前者押台灣華語與句內中英混合，後者押多語自動辨識與術語偏置——剛好對應四個痛點的不同兩半。</p>
+</div>
+
+<div class="callout bad">
+<span class="tag">三個必須知道的但書</span>
+<ul>
+<li>那個中英混語的相對改善是在短音檔上量的，而同一份評測的長音檔那一格是退步的：長篇課程語料 9.94 對上基準的 9.50。而這裡的實際場景是 30 分鐘到 2 小時。<span class="prov">〔基準：開發團隊自報｜語料語言：中英夾雜與台灣華語｜模式：批次，短音檔與長音檔分列〕</span></li>
+<li>官方的對照組是舊版模型，不是現在正在跑的版本。那個相對改善幅度不能直接讀成「換了會進步這麼多」。</li>
+<li>台語模型輸出的是華語漢字，不是台語。論文逐字寫著它把台語音訊對應到華語文字——拿到的是譯文，不是原話。</li>
+</ul>
+</div>
+
+<h3>台語：六個方案，全部有代價</h3>
+
+<div class="tbl-wrap">
+<table id="t-taigi">
+<thead><tr>
+  <th data-sort="text">方案</th>
+  <th data-sort="text">授權</th>
+  <th data-sort="text">輸出形式</th>
+  <th data-sort="text">準確度</th>
+  <th data-sort="text">台華夾雜</th>
+</tr></thead>
+<tbody>
+<tr><th scope="row">Breeze-ASR-26<br><span class="prov">　聯發科創新基地</span></th><td class="y">Apache 2.0</td><td class="q">華語漢字，非台語文</td><td>字錯率 30.13<span class="prov">〔基準：開發團隊自跑｜語料：30 筆公益廣告｜模式：批次〕</span></td><td class="y">訓練資料明文含台華混語</td></tr>
+<tr><th scope="row">Taiwan-Tongues<br><span class="prov">　數位發展部計畫</span></th><td class="y">MIT</td><td class="y">繁體漢字，含後處理</td><td class="n">無任何公開數字<br><span class="prov">　政府計畫模型無公開評測，這件事本身是紅旗</span></td><td class="y">支援多語混合訓練</td></tr>
+<tr><th scope="row">CLiFT-ASR<br><span class="prov">　台師大與業界</span></th><td class="q">論文未載明</td><td class="q">先台羅拼音再轉台語漢字</td><td>字錯率 20.94<span class="prov">〔基準：研究團隊自跑｜語料：純台語測試集｜模式：批次〕</span></td><td class="n">論文明文不涵蓋</td></tr>
+<tr><th scope="row">台南大學微調版</th><td class="n">禁商用</td><td class="y">漢字</td><td class="n">無公開數字</td><td class="q">無評測</td></tr>
+<tr><th scope="row">個人開發者微調版</th><td class="y">Apache 2.0</td><td class="n">拼音羅馬字</td><td class="n">詞錯率 70.22<span class="prov">〔基準：作者自報｜語料：公開語音集｜模式：批次〕</span></td><td class="n">無資料</td></tr>
+<tr><th scope="row">雅婷<br><span class="prov">　台達研究院，商用</span></th><td class="n">商用付費</td><td class="y">漢字</td><td>字錯率 32.11<span class="prov">〔基準：第三方跑，非原廠自報｜語料：同上 30 筆｜模式：批次〕</span></td><td class="q">未載明</td></tr>
+</tbody>
+</table>
+</div>
+
+<div class="callout">
+<span class="tag">一個現查確認的事實</span>
+<p>Whisper 的語言清單裡<strong>沒有閩南語代碼</strong>。直接抓官方原始碼驗證：語言清單共 100 條，有中文、有粵語，<strong>沒有閩南語</strong>。</p>
+<p>所以「用閩南語參數跑 Whisper」會直接報錯，不是效果差的問題。網路上標示閩南語的模型都是微調版自改的清單。</p>
+<p>本機獨立驗證了同一件事——直接讀實際安裝的套件，同樣是 100 條、同樣沒有。<strong>兩個獨立通道收斂。</strong></p>
+</div>
+
+<h2>後處理層：一個實測警告</h2>
+
+<p>「把逐字稿丟給語言模型改一改」是最直覺的解法。實測結果是它<strong>會把好的弄壞</strong>。</p>
+
+<div class="tbl-wrap">
+<table>
+<thead><tr><th>條件</th><th>詞錯率</th></tr></thead>
+<tbody>
+<tr><td>原始基準</td><td class="y">2.2%</td></tr>
+<tr><td>最大的模型零樣本校正</td><td class="n">8.8%</td></tr>
+<tr><td>中型模型零樣本校正</td><td class="n">16.7%</td></tr>
+<tr><td>小型模型零樣本校正</td><td class="n">32.0%</td></tr>
+</tbody>
+</table>
+</div>
+
+<p class="prov">〔基準：學術論文作者自跑｜語料語言：英語標準朗讀語料｜模式：批次〕論文作者結論逐字：<code>all LLMs degrade the baseline ASR</code>。</p>
+
+<p>有效的做法要三段：錯誤預先偵測 → 受限校正 → 推理驗證。這樣做的實測相對改善約 9% 到 21%。</p>
+
+<p>落到實作上：<strong>不要讓模型自由改寫全文</strong>。要它先標出可疑段落，只對可疑段提候選修改，並<strong>輸出差異對照讓人逐條否決</strong>。術語表放在提示裡當白名單，不是當改寫授權。</p>
+
+<h2>三層方案</h2>
+
+<h3>第 0 層｜不換模型（已完成）</h3>
+<p>四項改動已落地並提交。資格檢從 9 項擴充到 33 項全過，四支端到端煙測全通過：日語逐字正確、中文正常、舊行為向後相容、自訂術語表生效。</p>
+
+<h3>第 1 層｜本機軌（敏感內容只能走這條）</h3>
+<p>並排跑兩個候選與現況基準，用同一份代表性錄音。裝設成本都在十分鐘內，需下載約 6.5 GB。</p>
+
+<h3>第 2 層｜雲端軌（一般內容）</h3>
+<p>兩家值得考慮：一家把中英混講做成正式產品且可選繁簡輸出；另一家逐字標語言標籤、術語表容量是 Whisper 的 35 倍、明確承諾永不用於訓練、每小時 0.10 美元。</p>
+<p>Meta Muse 不建議進第一順位——理由不是它不好，是它的資料保留政策頁是 404，而「一般內容可上雲」這個判斷需要那一格。</p>
+
+
+<aside class="side-cards">
+  <div class="card">
+    <span class="lbl">關鍵前提</span>
+    <p>轉錄的用途是事後閱讀與引用，不是即時字幕。所有「串流延遲」的排名對這個用途<em>價值為零</em>——被拿來排名的那張圖，優化的正是延遲。</p>
+  </div>
+  <div class="card">
+    <span class="lbl">邊界條件</span>
+    <p>本文所有效能數字都來自別人的基準，語料多為 10 到 30 秒的片段。實際場景是 30 分鐘到 2 小時的長錄音，<em>這個外推沒有任何一筆證據支持</em>。</p>
+  </div>
+  <div class="card">
+    <span class="lbl">待驗證點</span>
+    <p>在自己的錄音上並排跑三個候選，用同一份材料。這件事還沒做——而在做之前，任何「哪個比較準」的說法都是轉述別人的實驗。</p>
+  </div>
+</aside>
+
+<h2>這份調研沒有回答什麼</h2>
+
+<div class="callout bad">
+<ol>
+<li>沒有任何候選在 30 分鐘到 2 小時真實長檔上的實測。一個都沒有。所有官方數字都是 10 秒到 30 秒級片段語料。而「靜默吃掉一半內容」那類事故，這批文獻完全回答不了。</li>
+<li>沒有在自己的錄音上驗證過任何東西。本次選擇了先調研後建測試集，所以全部是別人的基準。</li>
+<li>五路調研沒有一路實機跑過任何候選模型。倉庫存在性經過驗證，執行結果沒有。</li>
+<li>Meta 的資料保留政策與台灣可及性——官方頁面 404 與無國家清單，兩條通道都試過，未閉合。</li>
+<li>Qwen 系列輸出繁體還是簡體——沒有任何文件說明，要實跑才知道。</li>
+<li>那個中英混語模型的日語能力——完全沒有數字，模型也沒宣稱。</li>
+<li>單變數實驗是 n 等於 1 的合成語音，相對差異可信，絕對率不可信。</li>
+</ol>
+</div>
+
+<footer class="foot">
+<p><strong>第 227 跑編排</strong>｜五路平行調研（Meta 事實查證、雲端橫評、本機開放權重、台語與後處理、框架攻擊）＋本機讀碼現查＋端到端煙測。</p>
+<p>凍結判準 10 條，其中第 7 條規定所有比較數字必須標明〔誰跑的基準／什麼語料語言／串流或批次〕，缺任一欄不得進比較表——雲端軌因此判定為零筆合格效能數字。</p>
+<p>完整編排紀錄：<code>docs/superpowers/orchestration-ledger_asr-multilingual-upgrade_2026-09-04.md</code>｜程式碼變更：commit <code>d9172cc</code></p>
+<p>建立於 2026-09-04。內部技術紀錄，引用時請連同效度邊界一併引用；本文數字的授權與出處以各段標註為準。</p>
+</footer>
+
+</main>
+
+<script type="application/json" id="form-routing-3-7">
+{"3.7a":{"cell":"離散對照","carrier":"可排序可篩選表 ＋ 旁邊一張圖（KB-13 A09 第一順位）"},
+ "3.7b":{"sections":[
+   {"h":"一個沒有症狀的 bug，讓語言偵測從來沒生效過","structural":true},
+   {"h":"那張排行榜量的是英文，而且兩個數字被併錯了","structural":false},
+   {"h":"四個痛點分屬四種問題，只有一個是模型問題","structural":false},
+   {"h":"已經做完的四項改動","structural":false},
+   {"h":"候選方案比較","structural":false},
+   {"h":"後處理層：一個實測警告","structural":false},
+   {"h":"三層方案","structural":false},
+   {"h":"這份調研沒有回答什麼","structural":false}]},
+ "3.7c":{"continuous":false},
+ "3.7d":{"needed":false}}
+</script>
+
+<script>
+// ★ 這一行是整份互動的開關：JS 跑得起來才加 body.js。
+//   CSS 把所有隱藏規則掛在 .js 底下 ⇒ JS 被沙盒擋掉時，讀者看到的是完整的表，不是空白。
+document.body.classList.add('js');
+
+// ── 篩選 ──
+document.querySelectorAll('.filters').forEach(function (bar) {
+  var table = document.getElementById(bar.dataset.target);
+  if (!table) return;
+  bar.addEventListener('click', function (e) {
+    var btn = e.target.closest('button[data-filter]');
+    if (!btn) return;
+    var key = btn.dataset.filter;
+    bar.querySelectorAll('button').forEach(function (b) {
+      b.setAttribute('aria-pressed', String(b === btn));
+    });
+    table.querySelectorAll('tbody tr').forEach(function (tr) {
+      var show = (key === 'all') || (tr.dataset[key] === '1');
+      if (show) { tr.removeAttribute('data-hide'); }
+      else { tr.setAttribute('data-hide', '1'); }
+    });
+  });
+});
+
+// ── 排序 ──
+document.querySelectorAll('th[data-sort]').forEach(function (th) {
+  th.addEventListener('click', function () {
+    var table = th.closest('table');
+    var tbody = table.querySelector('tbody');
+    var idx = Array.prototype.indexOf.call(th.parentNode.children, th);
+    var numeric = th.dataset.sort === 'num';
+    var asc = th.dataset.dir !== 'asc';
+    th.parentNode.querySelectorAll('th').forEach(function (o) { delete o.dataset.dir; });
+    th.dataset.dir = asc ? 'asc' : 'desc';
+    var rows = Array.prototype.slice.call(tbody.querySelectorAll('tr'));
+    rows.sort(function (a, b) {
+      var ca = a.children[idx], cb = b.children[idx];
+      var va, vb;
+      if (numeric) {
+        va = parseFloat(ca.dataset.num !== undefined ? ca.dataset.num : ca.textContent) || 0;
+        vb = parseFloat(cb.dataset.num !== undefined ? cb.dataset.num : cb.textContent) || 0;
+        return asc ? va - vb : vb - va;
+      }
+      va = ca.textContent.trim(); vb = cb.textContent.trim();
+      return asc ? va.localeCompare(vb, 'zh-Hant') : vb.localeCompare(va, 'zh-Hant');
+    });
+    rows.forEach(function (r) { tbody.appendChild(r); });
+  });
+});
+</script>
+</body>
+</html>
