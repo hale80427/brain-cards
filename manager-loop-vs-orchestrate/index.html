@@ -1,0 +1,463 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>三套迴圈撞到同一批坑：Manager Loop、MEA loop 與指揮官系統的定位比對</title>
+<link rel="canonical" href="https://hale80427.github.io/brain-cards/manager-loop-vs-orchestrate/">
+<meta property="og:title" content="三套迴圈撞到同一批坑：Manager Loop、MEA loop 與指揮官系統的定位比對">
+<meta property="og:description" content="貼文裡的 Manager Loop 與論文裡的 MEA loop 是撞名。三方八軸比對，四條該搬四條不該搬，證據強度逐條分級。">
+<meta property="og:image" content="https://hale80427.github.io/brain-cards/manager-loop-vs-orchestrate/og.png">
+<meta property="og:url" content="https://hale80427.github.io/brain-cards/manager-loop-vs-orchestrate/">
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"AnalysisNewsArticle","headline":"三套迴圈撞到同一批坑","datePublished":"2026-09-04","inLanguage":"zh-Hant","author":{"@type":"Person","name":"彥皓"}}
+</script>
+<style>
+:root{
+  --bg:#faf9f7; --fg:#1c1b19; --muted:#5a5751; --border:#ddd9d2;
+  --accent:#8a4b2a; --accent-warn:#8a6a1a;
+  --callout-warn:#fdf6e3; --callout-note:#f2f4f7;
+  --plate-bg:oklch(28.5% 0.055 251.4);
+  --plate-fg:oklch(96.0% 0.008 106.5);
+  --plate-dim:oklch(75.0% 0.021 251.4);
+  --plate-line:oklch(62.0% 0.030 251.4);
+  --sign-down:oklch(48% 0.13 25); --sign-up:oklch(80% 0.13 145);
+  --fs-meta:0.9375rem;
+  --maxw:46rem;
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --bg:#161513; --fg:#eceae6; --muted:#a5a099; --border:#33302b;
+    --accent:#d9955f; --accent-warn:#d4ad52;
+    --callout-warn:#2a2313; --callout-note:#1e2126;
+  }
+}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{
+  margin:0; background:var(--bg); color:var(--fg);
+  font-family:"Noto Serif TC","Songti TC",Georgia,"Times New Roman",serif;
+  font-size:17px; line-height:1.85;
+  overflow-wrap:break-word;
+}
+.wrap{max-width:var(--maxw); margin:0 auto; padding:2.5rem 1.15rem 5rem}
+h1,h2,h3{font-family:-apple-system,"PingFang TC","Noto Sans TC",system-ui,sans-serif; line-height:1.4; letter-spacing:-0.01em}
+h1{font-size:1.85rem; margin:0 0 0.5rem; text-wrap:balance}
+h2{font-size:1.3rem; margin:3.2rem 0 0.9rem; padding-top:1.4rem; border-top:1px solid var(--border); text-wrap:balance}
+h3{font-size:1.06rem; margin:2rem 0 0.6rem; text-wrap:balance}
+p{margin:0 0 1.1rem; text-wrap:pretty}
+a{color:var(--accent)}
+.meta{font-family:-apple-system,"PingFang TC",system-ui,sans-serif; font-size:var(--fs-meta); color:var(--muted); margin:0 0 2rem; line-height:1.7}
+.bluf{background:var(--callout-note); border-left:3px solid var(--accent); padding:1.15rem 1.25rem; margin:0 0 2rem; border-radius:0 4px 4px 0}
+.bluf p:last-child{margin-bottom:0}
+.note{background:var(--callout-note); border:1px solid var(--border); border-radius:4px; padding:1rem 1.15rem; margin:1.5rem 0; font-size:var(--fs-meta); line-height:1.7}
+.warn{background:var(--callout-warn); border:1px solid var(--accent-warn); border-radius:4px; padding:1rem 1.15rem; margin:1.5rem 0; font-size:var(--fs-meta); line-height:1.7}
+.note p:last-child,.warn p:last-child{margin-bottom:0}
+figure{margin:2rem 0}
+figure.wide{margin-left:calc(50% - 50vw); margin-right:calc(50% - 50vw); padding:0 1.15rem}
+@media (min-width:56rem){ figure.wide{margin-left:-4.5rem; margin-right:-4.5rem; padding:0} }
+figcaption{font-family:-apple-system,"PingFang TC",system-ui,sans-serif; font-size:var(--fs-meta); color:var(--muted); line-height:1.65; margin-top:0.85rem}
+figcaption b{color:var(--fg)}
+.src{display:block; margin-top:0.4rem; font-size:0.875rem}
+code{font-family:ui-monospace,"SF Mono",Menlo,monospace; font-size:0.875em; background:var(--callout-note); padding:0.12em 0.35em; border-radius:3px; overflow-wrap:anywhere}
+blockquote{margin:1.3rem 0; padding:0.15rem 0 0.15rem 1.1rem; border-left:3px solid var(--border); color:var(--muted); font-style:normal}
+blockquote p{margin:0 0 0.6rem}
+blockquote p:last-child{margin:0}
+
+/* ── 機制圖（KB-10 元件 3）───────────────────── */
+.flow{background:var(--plate-bg); border-radius:6px; padding:1.5rem 1.25rem}
+.flow-track{display:grid; gap:0.5rem; margin-bottom:1.25rem}
+.flow-track:last-of-type{margin-bottom:0}
+.flow-track .path{display:flex; flex-wrap:wrap; align-items:center; gap:0.5rem}
+.flow-track .node{background:var(--plate-line); color:var(--plate-fg); font-family:-apple-system,"PingFang TC",system-ui,sans-serif; font-size:var(--fs-meta); line-height:1.4; padding:0.4rem 0.7rem; border-radius:4px}
+.flow-track .arrow{flex:0 0 1.4rem; width:1.4rem; height:0.85rem; color:var(--plate-dim)}
+.flow-track .arrow svg{width:100%; height:100%; display:block}
+.flow-track .sign{font-family:-apple-system,"PingFang TC",system-ui,sans-serif; font-size:var(--fs-meta); font-weight:700; padding:0.4rem 0.7rem; border-radius:4px}
+.flow-track .down{background:var(--sign-down); color:var(--plate-fg)}
+.flow-track .up{background:var(--sign-up); color:var(--plate-bg)}
+.flow-track>.lbl{font-family:-apple-system,"PingFang TC",system-ui,sans-serif; font-size:var(--fs-meta); color:var(--plate-dim); letter-spacing:0.06em}
+.flow-legend{display:flex; flex-wrap:wrap; gap:1.25rem; margin-top:1.25rem; padding-top:1rem; border-top:1px solid var(--plate-line); font-family:-apple-system,"PingFang TC",system-ui,sans-serif; font-size:var(--fs-meta); color:var(--plate-dim)}
+.flow-legend span{display:flex; align-items:center; gap:0.45rem}
+.flow-legend i{width:0.8rem; height:0.8rem; border-radius:2px; display:inline-block}
+.flow-legend .sw-down{background:var(--sign-down)}
+.flow-legend .sw-up{background:var(--sign-up)}
+
+/* ── 功能列（KB-10 元件 2）──────────────────── */
+.func-row{display:grid; grid-template-columns:repeat(auto-fit,minmax(13rem,1fr)); gap:1.25rem; margin:1.5rem 0 0.5rem; padding:1.25rem 0; border-top:1px solid var(--border); border-bottom:1px solid var(--border)}
+.func-row .fn{display:flex; gap:0.75rem; align-items:flex-start}
+.func-row .fn svg{flex:0 0 2rem; width:2rem; height:2rem; color:var(--accent)}
+.func-row .fn .lbl{display:block; font-family:-apple-system,"PingFang TC",system-ui,sans-serif; font-size:var(--fs-meta); letter-spacing:0.04em}
+.func-row .fn .txt{display:block; font-family:-apple-system,"PingFang TC",system-ui,sans-serif; font-size:var(--fs-meta); color:var(--muted); margin:0.2rem 0 0; line-height:1.6}
+
+/* ── 側欄三卡（KB-10 元件 5）─────────────────── */
+.side-cards{display:grid; gap:1rem; margin:2rem 0}
+@media (min-width:47rem){ .side-cards{grid-template-columns:repeat(3,1fr)} }
+.side-cards .sc{border:1px solid var(--border); border-radius:6px; padding:1rem 1.1rem}
+.side-cards .sc .lbl{display:block; font-family:-apple-system,"PingFang TC",system-ui,sans-serif; font-size:var(--fs-meta); letter-spacing:0.06em; color:var(--accent); margin-bottom:0.5rem}
+.side-cards .sc .txt{display:block; font-family:-apple-system,"PingFang TC",system-ui,sans-serif; font-size:var(--fs-meta); line-height:1.65; margin:0; color:var(--muted)}
+.side-cards .ask{background:var(--callout-warn); border-color:var(--accent-warn)}
+.side-cards .ask .lbl{color:var(--accent-warn)}
+
+/* ── 比對表：預設完整可見，JS 只加篩選排序 ───────── */
+.tbl-tools{display:none; gap:0.5rem; flex-wrap:wrap; align-items:center; margin:1.25rem 0 0.75rem; font-family:-apple-system,"PingFang TC",system-ui,sans-serif; font-size:var(--fs-meta)}
+body.js .tbl-tools{display:flex}
+.tbl-tools button{font:inherit; color:var(--fg); background:transparent; border:1px solid var(--border); border-radius:99px; padding:0.3rem 0.85rem; cursor:pointer}
+.tbl-tools button[aria-pressed="true"]{background:var(--accent); color:var(--bg); border-color:var(--accent)}
+.tbl-tools button:focus-visible{outline:2px solid var(--accent); outline-offset:2px}
+.tbl-scroll{overflow-x:auto; margin:0.5rem 0 0; -webkit-overflow-scrolling:touch}
+table{border-collapse:collapse; width:100%; font-family:-apple-system,"PingFang TC",system-ui,sans-serif; font-size:var(--fs-meta); line-height:1.6}
+th,td{text-align:left; vertical-align:top; padding:0.7rem 0.75rem; border-bottom:1px solid var(--border)}
+thead th{border-bottom:2px solid var(--fg); white-space:nowrap; font-weight:700}
+tbody tr.dim{display:none}
+td .ax{display:block; font-size:0.8125rem; color:var(--accent); letter-spacing:0.04em; margin-bottom:0.2rem}
+.v-yes{color:var(--accent)} .v-no{color:var(--muted)}
+@media (max-width:46rem){
+  .tbl-scroll table{min-width:40rem}
+}
+/* 該搬清單 */
+.moves{list-style:none; margin:1.5rem 0; padding:0; display:grid; gap:1rem}
+.moves li{border:1px solid var(--border); border-left-width:3px; border-radius:0 5px 5px 0; padding:1rem 1.1rem; font-family:-apple-system,"PingFang TC",system-ui,sans-serif; font-size:var(--fs-meta); line-height:1.7}
+.moves li.take{border-left-color:var(--accent)}
+.moves li.skip{border-left-color:var(--muted)}
+.moves .verdict{display:block; letter-spacing:0.04em; margin-bottom:0.3rem; color:var(--accent)}
+.moves li.skip .verdict{color:var(--muted)}
+.moves .claim{display:block; font-weight:700; margin-bottom:0.25rem}
+.moves .where{display:block; margin-top:0.5rem; font-size:0.875rem; color:var(--muted)}
+</style>
+</head>
+<body>
+<div class="wrap">
+<header>
+
+<h1>三套迴圈撞到同一批坑，而其中兩套互不知道對方存在</h1>
+
+<div class="meta">
+第 229 跑編排產出　·　2026-09-04　·　一手來源逐字，證據強度逐條分級
+</div>
+
+<div class="bluf">
+<p><b>三件事先講。</b></p>
+<p><b>一、貼文裡的「Manager Loop」與論文裡的機制是兩個東西，是搜尋摘要把它們黏起來的。</b>對論文 HTML、abs、PDF 全文與 GitHub README 四處跑 <code>grep -i "manager[ _-]?loop"</code>，全部回 0；論文自己的詞是 <code>Manage-Execute-Audit (MEA) loop</code>。但兩者不是無關——它們是同一個底層 pattern 的獨立實例。</p>
+<p><b>二、貼文說「一週內建構了完美無瑕的曼哈頓」，而作者自己的長文說它還在進行中。</b>「完美無瑕」與「建構了」是轉述時加上去的。</p>
+<p><b>三、真正值得看的不是曼哈頓，是那篇論文——它的三角色分工與你的四閘高度重疊，而它有兩樣你沒有的牙齒。</b></p>
+<p><b>還有第四件，是異質票逼出來的：你這個委託本身接受了貼文的因果敘事。</b>貼文是三件套（新模型、Manager Loop、遊戲引擎），而委託只把中間那一件抽出來研究。這件事寫在下面第三節。</p>
+</header>
+<main>
+<!-- narrative: 一句主張當標題, 證據強度逐條分級, 三方八軸比對, 可轉移性未證, 我簡化掉了什麼 -->
+
+<h2>Manager Loop 是一個人的工程實務，不是一套發表過的方法</h2>
+
+<p>它出自 Matt Shumer 2026-09-03 的貼文與同期的個人 review 頁。</p><p>定義是他自己下的，逐字：</p>
+
+<blockquote><p>"I'm calling this the Manager Loop: one agent keeps the project moving, while another does the work."</p></blockquote>
+
+<p>形狀是三句話。coordinator 先訪談使用者直到目標達成共識，把目標變成一份 checklist。</p><p>然後在另一個 Codex session 起一個 implementer——他特別強調那不是 sub-agent：</p>
+
+<blockquote><p>"It turns that into a checklist of to-dos, then starts an implementer in a separate Codex session… a completely separate agent, not a sub-agent."</p>
+<p>"The implementer is <b>not</b> the coordinator's sub-agent."</p></blockquote>
+
+<p>兩者之間只傳兩樣東西，他畫成 <code>Phase + goal →</code> 與 <code>← Completion + evidence</code>。</p><p>coordinator 用 <code>goal mode</code> 讓 implementer 持續朝該階段的終點線工作，做完就推進下一個階段。</p>
+
+<p>它疊在既有的東西上，不是憑空的。往上追是 <b>Ralph Wiggum loop</b>（Geoffrey Huntley，2025 年中）：<code>while :; do cat PROMPT.md | agent ; done</code>，記憶不放 context、放檔案系統與 git 歷史。</p>
+
+<div class="warn">
+<p><b>作者自己標的限制，逐字兩句：</b>「I still wouldn't call long-running autonomous work solved.」／「Ambitious long runs still need lots of coordination and can asymptote if they aren't set up very carefully.」</p>
+<p>那個 <code>asymptote</code>（趨近水平、再怎麼跑也上不去）是他自己的用詞，不是我加的批評。</p>
+</div>
+
+<h2>證據強度必須逐條分級，因為這幾條差很多</h2>
+
+<div class="tbl-scroll">
+<table>
+<caption class="sr-only"></caption>
+<thead><tr><th scope="col">主張</th><th scope="col">強度</th><th scope="col">憑什麼</th></tr></thead>
+<tbody>
+<tr><td>GPT-6 Astra 存在、2026-09-03 發布</td><td class="v-yes">硬</td><td>OpenAI 官方頁加六家一手媒體同日報導</td></tr>
+<tr><td>Manager Loop 的機制描述</td><td>中·單源自述</td><td>只有作者本人的 review 頁。X 原文經 syndication 通道取得，並跑過捏造 ID 負控（真 ID 回 200／假 ID 回 404，通道有鑑別力）</td></tr>
+<tr><td>「一週建完曼哈頓」</td><td class="v-no">弱·且自相矛盾</td><td>同一作者的 review 頁逐字「still very much in progress」「a massive amount left to build」</td></tr>
+<tr><td><code>/goal</code> 就是 Ralph loop</td><td class="v-no">待查證</td><td>我取的 OpenAI 官方部落格沒有提 <code>/goal</code>，只有 <code>/plan</code> 與 durable project memory。這個等式目前只有第三方部落格在講</td></tr>
+<tr><td>MEA loop 的機制與讀數</td><td class="v-yes">硬</td><td>arXiv 2608.01964 全文加開源 repo 原始碼，逐字引文可回查</td></tr>
+<tr><td>context 越長模型越笨</td><td class="v-yes">硬</td><td>Chroma 測 18 個前沿模型全部退化，且在 context 沒滿時就開始退化</td></tr>
+<tr><td>「60–70% 是笨區」這個數字</td><td class="v-no">弱</td><td>部落格說法，未見一手實驗支撐這個特定百分比</td></tr>
+</tbody>
+</table>
+</div>
+
+<div class="note">
+<p>Note：作者有 2024 年 Reflection 70B 的前科（宣稱開源模型超越 GPT-4，後被查出是包裝別家 API）。Gary Marcus 有一篇公開批評，但它罵的是他另一則貼文，不是曼哈頓這則——不能混用。前科成立，但不構成本次為假的證據。</p>
+<p>Source：OpenAI 官方發布頁；<code>x.com/mattshumer_/status/2095609734845927525</code>；<code>somethingbig.ai/astra-review</code>；<code>arxiv.org/html/2608.01964</code>；<code>trychroma.com/research/context-rot</code>；<code>garymarcus.substack.com</code>。</p>
+</div>
+
+<h2>貼文是三件套，而這個委託只抽出了中間那一件</h2>
+
+<p>這一節不是我想到的。本輪派了兩票 Grok，其中一票刻意不指定攻擊對象，只問「這個委託有沒有問錯」。它交回的第一件事就是這個，而它成立。</p>
+
+<div class="func-row">
+  <div class="fn">
+    <svg viewBox="0 0 40 40" role="img" aria-labelledby="t1"><title id="t1">因素一</title><circle cx="20" cy="20" r="17" fill="none" stroke="currentColor" stroke-width="2"/><text x="20" y="26" font-size="17" text-anchor="middle" fill="currentColor">1</text></svg>
+    <div><span class="lbl">剛發布的新模型</span><span class="txt">GPT-6 Astra，發布當天。OpenAI 自己說它是第一個觸及「critical」網安門檻的模型。</span></div>
+  </div>
+  <div class="fn">
+    <svg viewBox="0 0 40 40" role="img" aria-labelledby="t2"><title id="t2">因素二</title><circle cx="20" cy="20" r="17" fill="none" stroke="currentColor" stroke-width="2"/><text x="20" y="26" font-size="17" text-anchor="middle" fill="currentColor">2</text></svg>
+    <div><span class="lbl">Manager Loop 這個方法</span><span class="txt">委託唯一指名要研究的那一件。</span></div>
+  </div>
+  <div class="fn">
+    <svg viewBox="0 0 40 40" role="img" aria-labelledby="t3"><title id="t3">因素三</title><circle cx="20" cy="20" r="17" fill="none" stroke="currentColor" stroke-width="2"/><text x="20" y="26" font-size="17" text-anchor="middle" fill="currentColor">3</text></svg>
+    <div><span class="lbl">遊戲引擎這個產物</span><span class="txt">城在不在、樓缺不缺，當下就看得見、改得掉、回滾得了。</span></div>
+  </div>
+</div>
+
+<p>異質票的原話：「委託把方法單獨抽出來，等於先接受了貼文的因果敘事。三樣各貢獻多少，題目裡沒問。」</p>
+
+<p>它接著指出可遷移性的問題，逐字：</p>
+
+<blockquote><p>「城在不在、樓缺不缺，當下就能看見。一筆投資判斷、一個人資決定、一套策略對不對，沒有同等的當下閉環。能搬的是『多輪編排』這個空殼，不是讓那座城出現的那組條件。」</p></blockquote>
+
+<div class="warn">
+<p>而它預告的兩條失敗結局，都不是「研究做得不好」：</p>
+<p>〔一〕你把差異當缺口清單，開始把 Manager Loop 的角色與節奏嵌進治理協定，以為這是升級。它逐字：「你為了追別人的展示條件，會把這層抗體改瘦。」</p>
+<p>〔二〕你讀到「方向一致、你更偏治理」，安心了。它逐字：「這不是改錯系統，是用對標買到了不診斷的許可。」</p>
+</div>
+
+<p>它提出的替代問題，我照抄：「我現有系統真正缺的，是編排方法，還是同等強度的檢驗閉環？」</p>
+
+<p>而這一題，本輪的研究剛好答得出來——是後者。下一節的三角色分工證明：那篇論文真正貢獻的不是編排，是一個獨立的檢驗閉環。</p>
+
+<h2>論文那套的三個角色，每一個都被拿掉了某樣東西</h2>
+
+<p>LongHorizon-Harness（2026-08-03 投稿，29 頁）把一輪拆成三段，而分工的關鍵不在誰做什麼，在誰被禁止做什麼。</p>
+
+<figure class="wide">
+<div class="flow">
+  <div class="flow-track">
+    <span class="lbl">MANAGE</span>
+    <div class="path">
+      <span class="node">讀 task state 與歷次稽核報告</span>
+      <span class="arrow"><svg viewBox="0 0 28 17" role="img" aria-labelledby="a1"><title id="a1">產出</title><path d="M1 8.5 H22 M17 3.5 L23 8.5 L17 13.5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+      <span class="node">開一份有界的子任務契約</span>
+      <span class="sign down">看不到環境</span>
+    </div>
+  </div>
+  <div class="flow-track">
+    <span class="lbl">EXECUTE</span>
+    <div class="path">
+      <span class="node">全新 context 開一集</span>
+      <span class="arrow"><svg viewBox="0 0 28 17" role="img" aria-labelledby="a2"><title id="a2">導致</title><path d="M1 8.5 H22 M17 3.5 L23 8.5 L17 13.5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+      <span class="node">改變環境，交一份執行報告</span>
+      <span class="sign up">唯一能寫的角色</span>
+    </div>
+  </div>
+  <div class="flow-track">
+    <span class="lbl">AUDIT</span>
+    <div class="path">
+      <span class="node">全新 context，拿不到執行者的軌跡</span>
+      <span class="arrow"><svg viewBox="0 0 28 17" role="img" aria-labelledby="a3"><title id="a3">導致</title><path d="M1 8.5 H22 M17 3.5 L23 8.5 L17 13.5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+      <span class="node">直接看環境本身下判定</span>
+      <span class="sign down">唯讀，動了就記違規</span>
+    </div>
+  </div>
+  <div class="flow-legend">
+    <span><i class="sw-down"></i>被拿掉的能力</span>
+    <span><i class="sw-up"></i>被授予的能力</span>
+  </div>
+</div>
+<figcaption><b>三個角色的分工不是「誰做什麼」，是「誰被禁止做什麼」——manager 看不到環境，auditor 不能改環境，只有 executor 能寫。</b>每輪結束，executor 的原始互動軌跡就被丟掉，只有 task state 與稽核報告跨輪存活。
+<span class="src">Note：權限不是靠 prompt 交代的，是 harness 在工具層強制的——DeepSeek backend 逐字給 executor <code>workspace-write</code>、給 manager 與 auditor <code>read-only</code>。</span>
+<span class="src">Source：arXiv 2608.01964 §2.1–2.4 逐字；<code>src/lh_harness/auditor_agent.py</code>。</span>
+</figcaption>
+</figure>
+
+<p>兩句逐字引文承載了整套設計的重量：</p>
+
+<blockquote><p>"The report <i>o<sub>i</sub></i> describes the executor's outcome but does not establish that the contract has been completed."</p>
+<p>"audit conclusions must be supported by evidence obtained directly from the environment rather than by the executor's completion claim."</p></blockquote>
+
+<p>你的系統裡有一句話跟它幾乎同義：執行者的「我做完了」是意圖不是事實。兩邊獨立寫下同一件事。</p>
+
+<div class="func-row">
+  <div class="fn">
+    <svg viewBox="0 0 40 40" role="img" aria-labelledby="i1"><title id="i1">程式化</title><circle cx="20" cy="20" r="17" fill="none" stroke="currentColor" stroke-width="2"/><path d="M12 20 L18 26 L28 14" fill="none" stroke="currentColor" stroke-width="2.4"/></svg>
+    <div><span class="lbl">稽核前拍快照</span><span class="txt">harness 在稽核期間監看工作區，偵測到 auditor 改動就還原，並記成完整性違規；那份報告不得支撐「已完成」。</span></div>
+  </div>
+  <div class="fn">
+    <svg viewBox="0 0 40 40" role="img" aria-labelledby="i2"><title id="i2">程式化</title><circle cx="20" cy="20" r="17" fill="none" stroke="currentColor" stroke-width="2"/><path d="M12 20 L18 26 L28 14" fill="none" stroke="currentColor" stroke-width="2.4"/></svg>
+    <div><span class="lbl">三行控制頭</span><span class="txt">auditor 的輸出必須有可被程式解析的 <code>Status:</code>／<code>Integrity:</code>／<code>Contract audit:</code> 三行，缺頭整份不採信、不從內文猜。</span></div>
+  </div>
+  <div class="fn">
+    <svg viewBox="0 0 40 40" role="img" aria-labelledby="i3"><title id="i3">未程式化</title><circle cx="20" cy="20" r="17" fill="none" stroke="currentColor" stroke-width="2"/><path d="M13 13 L27 27 M27 13 L13 27" fill="none" stroke="currentColor" stroke-width="2.4"/></svg>
+    <div><span class="lbl">task state 沒有 schema</span><span class="txt">論文寫得像結構化記錄（requirement／artifact／fact 加四態），實作裡是 manager 每輪重寫的一段自然語言，只有小節順序被規定。</span></div>
+  </div>
+</div>
+
+<h2>八個軸的三方比對，跨軸不並列</h2>
+
+<p>下表每一列標了它屬於哪個軸。不同軸的東西不能並排當成平行選項——那會產出一張看起來整齊、實際上蘋果對橘子的表。</p>
+
+<div class="tbl-tools">
+  <span>只看：</span>
+  <button type="button" data-f="all" aria-pressed="true">全部</button>
+  <button type="button" data-f="gap" aria-pressed="false">你缺的</button>
+  <button type="button" data-f="edge" aria-pressed="false">你贏的</button>
+</div>
+
+<div class="tbl-scroll">
+<table id="cmp">
+<thead><tr>
+  <th scope="col">軸與問題</th>
+  <th scope="col">Manager Loop</th>
+  <th scope="col">MEA loop</th>
+  <th scope="col">你的 /orchestrate</th>
+</tr></thead>
+<tbody>
+<tr data-k="edge"><td><span class="ax">軸 1｜解的問題</span>它究竟在治什麼</td><td>讓一個長專案不停下來</td><td>context 飽和讓長任務做不完</td><td>自我評分閉環——出題、改考卷、決定畢業是同一個</td></tr>
+<tr data-k="gap"><td><span class="ax">軸 2｜狀態存在哪</span>跨輪存活的是什麼</td><td>coordinator 手上的 checklist</td><td>顯式 task state，四態加稽核證據引用</td><td>run ledger：判準表加證據指針</td></tr>
+<tr data-k="gap"><td><span class="ax">軸 3｜執行者的權限邊界</span>誰能寫、靠什麼擋</td><td>獨立 session，非 sub-agent</td><td>程式化：executor 可寫、manager 與 auditor 唯讀</td><td>prompt 級：review agent 唯讀，主 session 全權</td></tr>
+<tr data-k="edge"><td><span class="ax">軸 4｜驗收由誰做</span>誰說了算</td><td>implementer 自己交 evidence</td><td>獨立 auditor，全新 context，拿不到執行軌跡，但預設同一個底層模型</td><td>主 session 外部跑，加一票非同家族模型</td></tr>
+<tr data-k="edge"><td><span class="ax">軸 5｜人介入的時點</span>人什麼時候必須在</td><td>開跑前訪談定目標，之後幾乎不介入</td><td>只在 <code>ask</code> 態（需要資訊或授權）</td><td>開跑前凍判準必問，改判準算協定修訂要重新核可</td></tr>
+<tr data-k="edge"><td><span class="ax">軸 6｜停止條件</span>什麼時候該收手</td><td>階段做完就進下一個，作者自承會 asymptote</td><td>四出口：達標／無可推進／需人／輪數用盡（上限 25）</td><td>四出口：達標／連兩輪無淨增／岔路／輪數上限（預設 3）</td></tr>
+<tr data-k="edge"><td><span class="ax">軸 7｜適用領域</span>錯了能不能收回來</td><td>純軟體，可逆</td><td>桌面與 CLI 任務，可逆</td><td>跨領域，含不可逆（Vault 寫入、對外定稿）</td></tr>
+<tr data-k="gap"><td><span class="ax">軸 8｜完整性防護</span>檢查者自己作弊怎麼辦</td><td>無</td><td>工作區快照加變動偵測，動了就記違規</td><td>查無同等機制</td></tr>
+<tr data-k="gap"><td><span class="ax">軸 9｜委派規模</span>一輪可以同時開幾路</td><td>作者把額度推到 96（自註「didn't always use that many」）</td><td>單一 executor，未提供並行</td><td>沒有對應的計數單位——你的不變式綁在「這輪被宣稱通過的判準」，不綁葉節點數</td></tr>
+</tbody>
+</table>
+</div>
+
+<figcaption style="margin-top:0.85rem"><b>三套系統在軸 1 上就分家了：兩套外來的在治吞吐，你的在治信任。</b>會落在同一張表上，是因為它們在軸 2 到軸 6 上獨立收斂到相似的答案。
+<span class="src">Note：「你的 /orchestrate」欄位取自本機 <code>Skills/orchestrate/SKILL.md</code> 現查，非記憶。軸 8 的「查無」是跑過 grep 之後的結論。</span>
+<span class="src">Source：三方一手材料，逐條見上方證據強度表。</span>
+</figcaption>
+
+<h2>四條該搬、四條不該搬，其中兩條被異質票改寫過</h2>
+
+<ul class="moves">
+<li class="take"><span class="verdict">該搬 ①·已被異質票改寫</span><span class="claim">先決定模式切換規則，再談要不要把 fresh-context 提到監督式預設。</span>我原本寫的是「直接提上來」。盲審票把它改了，理由成立且更準：你的自主段已經長得像精簡版的 Manager Loop（短 context、ledger 當磁碟記憶、goal-based 單 session），而 Manager Loop 的預設迴圈長得像你明文只准在人不在場時用的那一檔。它逐字問：「你要比的是兩套系統，還是同一套系統裡的兩種模式？」<span class="where">本系統既有位置：<code>Skills/orchestrate/SKILL.md:481</code>。⚠ 這意味著你已經有兩種模式，但沒有寫下切換規則——那才是缺口。支撐 fresh-context 的機制證據（Chroma 18 模型、退化在 context 沒滿時就開始）不變，變的是它該落在哪。</span></li>
+
+<li class="take"><span class="verdict">該搬 ②</span><span class="claim">讓驗收者看環境本身，不是看執行者的報告。</span>MEA 的 auditor 拿不到 executor 的原始軌跡，只能自己去看檔案、視窗、日誌。你的 review agent 拿到的通常是 subagent 的轉述——而你自己的教訓庫裡已經記過摘要會丟掉會翻轉結論的那一段。<span class="where">本系統既有位置：閘四「驗收永遠主 session 外部跑」。缺的是「看什麼」的規定。</span></li>
+
+<li class="take"><span class="verdict">該搬 ③</span><span class="claim">驗收者自己被改過的東西不算數。</span>MEA 在稽核期間監看工作區，auditor 動了就記完整性違規、報告作廢。你的七道收官閘沒有任何一道在問「跑這道閘的過程有沒有改到被驗的東西」。<span class="where">查無。這是本次比對找到的最乾淨的缺口。</span></li>
+
+<li class="take"><span class="verdict">該搬 ④</span><span class="claim">驗收輸出要有機器可解析的控制頭，缺頭整份不採信。</span>MEA 的 auditor 必須交出三行固定格式，harness 逐字寫著「不會從內文猜」。你的閘目前驗的是欄位在不在——而你自己已經量到，那擋得住「整步消失」、擋不住「填表過閘」。控制頭不解決後者，但它把「格式對了」變成可程式判定的前提。<span class="where">本系統既有位置：<code>form_routing_check.py</code> 等七道閘。這是強化不是新增。</span></li>
+
+<li class="skip"><span class="verdict">不該搬 ⑤·問題被異質票拆細了</span><span class="claim">「換成獨立 session」是問錯粒度——先問你要隔離哪一層。</span>盲審票把它拆成三層：〔行程／session〕〔工作記憶／context〕〔裁決權：誰有權宣布完成〕。Manager Loop 把前兩層捆在同一個獨立 session 上；你只有第三層（主控端外部驗收），而 session 層查無。它逐字警告：不拆開的話，「你會以為要抄 A 的 session 模型才能得到 B 想要的『不信自報』，或以為 B 已經有 A 的隔離」。<span class="where">維持不搬的理由不變（換獨立 session 會丟掉 <code>Agent</code> tool 的完成通知，而你已量到檔案輪詢當完成訊號是假的）。但這條現在是待決策不是已否決——你要的若只是第二層，有比換 session 更便宜的做法。</span></li>
+
+<li class="skip"><span class="verdict">不該搬 ⑧·異質票獨有</span><span class="claim">把委派額度推到 96 路。</span>這一軸我完全沒看到，是盲審票撈出來的，而它的論證我判成立：你的驗收不變式是「每條通過帶可指認證據指針、每輪至少一票異質審核」，而那個不變式的負載單位是「這輪被宣稱通過的判準」，不是葉節點任務數。它逐字：「96 路並行會讓指針變成抽樣劇場……你的停損數的是輪次與判準通過數淨增，數不到『swarm 內部互相覆蓋、最後交一份綠的』。」<span class="where">查無對應計數單位。這是本次比對找到的第二個乾淨缺口，而且方向與直覺相反——它不是你該加的能力，是你該拒絕的能力。</span></li>
+
+<li class="skip"><span class="verdict">不該搬 ⑥</span><span class="claim">用同一個底層模型當 auditor。</span>論文預設三個角色同一個 backbone，而且它說明了理由——逐字「ensuring that the comparison reflects the effect of task-state management rather than differences in model capability」。那是實驗控制變因，不是生產建議。照搬會讓 auditor 繼承 executor 的盲點。你的異質票紀律在這一格是對的。<span class="where">本系統既有位置：閘四「至少一票非 Claude 家族」。不動。</span></li>
+
+<li class="skip"><span class="verdict">不該搬 ⑦</span><span class="claim">輪數上限 25。</span>論文的任務是可逆的桌面操作，多跑幾輪成本只是 token。你的迴圈會碰不可逆動作，而且你有「連兩輪無淨增就停」這個邊際偵測——那比一個固定大數字更適合你的任務類型。<span class="where">本系統既有位置：閘三。不動。</span></li>
+</ul>
+
+<h2>盲審票對你系統的四個指控，其中一個是選擇效應</h2>
+
+<p>第一票拿到的是兩份去識別化材料，不知道哪一份是我方的，也沒拿到我的預判。它對兩邊各列了盲點。以下四條是它對你的系統提的，我逐條判過。</p>
+
+<ul class="moves">
+<li class="take"><span class="verdict">成立·而且最重</span><span class="claim">凍結判準會系統性懲罰探索性工作，而這個代價從系統內部看起來像「治理的必要成本」。</span>它逐字：「軟體（以及 B 自己列入的研究／投資）常有『做過一輪才知道判準寫錯了』……設計者不容易看見自己在篩選『開跑前就能寫死完成條件』的任務。」<span class="where">這是選擇效應不是機制錯誤——被篩掉的任務不會出現在任何 ledger 上，所以沒有任何讀數會顯示它。</span></li>
+
+<li class="take"><span class="verdict">成立</span><span class="claim">異質票的規格仍然是同一份任務文本。</span>它逐字：「相關失敗若寫在任務裡（共同的錯誤世界模型、共同的假證據型態），攻堅票會用同一副眼鏡。」<span class="where">★ 這一條在本輪被當場證實：本輪唯一沒有被指定對象的那一票（第二票），抓到的東西最大。第一票預測了它，第二票演示了它。</span></li>
+
+<li class="take"><span class="verdict">部分成立·待驗</span><span class="claim">短回合本身也會造出假完成。</span>它的論證：你的監督式關掉連續自跑、預設 3 輪，而「被打斷的實作交出來的 ledger 指針仍可 exit 0……驗收看到的可能是短回合拼出來的表面綠」。<span class="where">機制講得通，但它沒有讀數，我也沒有。列為待驗，不列為已知缺陷。</span></li>
+
+<li class="skip"><span class="verdict">已被既有條文涵蓋</span><span class="claim">「執行者是不是獨立 session」沒成為協定條款。</span>這條與上面「不該搬 ⑤」是同一件事，已在那裡處理。<span class="where">重複列出會讓缺口數看起來比實際多。</span></li>
+</ul>
+
+<div class="warn">
+<p>而所有這些「該搬」與「盲點」都要先過一道篩子，那道篩子本輪不存在。</p>
+<p>第二票逐字：「差異不是缺口。沒有『我現在死在哪』當篩子，每一列都同樣有趣，也就同樣不必動。」</p>
+<p>它問了你一題，我照抄：「你這套系統最近一次真正失敗或卡住，是哪一件事？用實例講。」——這題答不出來，上面那四條該搬沒有落地點。</p>
+</div>
+
+<h2>最有價值的一段是論文自己承認的限制，因為你早就撞過同一批</h2>
+
+<p>這篇論文沒有獨立的 limitations 節，限制散在分析段與附錄。其中三條與你系統裡已經記過的坑，是同一件事的兩次獨立發現。</p>
+
+<div class="tbl-scroll">
+<table>
+<thead><tr><th scope="col">論文逐字</th><th scope="col">你系統裡對應的那條</th></tr></thead>
+<tbody>
+<tr><td>"a misinterpreted contract can still lead to a confidently verified wrong answer"</td><td>恆真式家族——尺跑綠了，而它量的不是你以為的那件事</td></tr>
+<tr><td>"if newly supplied information does not override stale evidence, the verifier may confirm an outdated state"</td><td>歷史失效已修好而記載留著，一條死掉的缺陷與一條活的在檔案裡逐字同形</td></tr>
+<tr><td>"Independent auditing can detect an incorrect result and initiate recovery, but it cannot supply a capability that the model does not possess"</td><td>有效鑑別項——地板與天花板都會把讀數鎖成平手</td></tr>
+<tr><td>"Without such closure, plausible evidence can be mistaken for completed evidence"</td><td>閘只驗欄位在不在，分不出真做了與填了字</td></tr>
+</tbody>
+</table>
+</div>
+
+<figcaption style="margin-top:0.85rem"><b>兩套獨立發展的系統撞到同一批坑，是這批坑屬於問題本身、不屬於任何一套實作的證據。</b>
+<span class="src">Note：右欄是我對你既有條文的歸納，用的是條文的語義不是逐字標題；左欄是論文原文照抄。兩欄的證據等級不同。</span>
+<span class="src">Source：arXiv 2608.01964 §3.3 與 Appendix B。</span>
+</figcaption>
+
+<h2>那些數字要怎麼讀</h2>
+
+<p>論文最漂亮的一組是 WeaveBench 上 <code>51.8 → 80.7</code>。這一組是同模型對照——同一個 Qwen 3.7-Plus，一邊跑原生 harness、一邊跑 LongHorizon，作者自跑，可比。</p>
+
+<p>但另外幾組不是。OSWorld 2.0 的 baseline 是官方報告值，而工具面不對等。</p><p>LongHorizon 用 GUI 加 CLI 的混合工具池，官方 baseline 逐字「typically rely only on GUI actions」。WeaveBench 的官方最佳參考點也不是 matched，作者自標「Our runs use root privileges inside the task virtual machine, whereas the official results use a regular user account」。</p>
+
+<div class="warn">
+<p>還有一個論文自己的內部不一致。摘要寫 <code>from 20.0% to 34.3%</code>，正文表格與附錄寫 <code>20.6 → 35.3</code>。我親自把全文抓下來 grep，六個數字全部存在於文件裡。我照抄不調和。</p>
+</div>
+
+<p>成本那一格更值得看，因為它推翻了「加稽核就是固定加幾倍」這個直覺。</p><p>三個 benchmark 上分別是 <code>2.3×</code>、<code>3.6×</code>、以及少 24%。論文自己的解釋是：強模型能用更少的稽核與重規劃輪次滿足契約，弱模型得花額外推理反覆執行與復原。稽核本身在三個 benchmark 上吃掉 <code>19.4%</code> 到 <code>38.1%</code> 的 token。</p>
+
+<aside class="side-cards">
+  <div class="sc"><span class="lbl">關鍵前提</span><span class="txt">這三套解的不是同一個問題。把它們並排比「誰比較完整」會得到錯的答案——軸 1 就分家了。</span></div>
+  <div class="sc"><span class="lbl">邊界條件</span><span class="txt">論文的全部讀數都在可逆的桌面與 CLI 任務上取得。你的迴圈會碰 Vault 寫入與對外定稿，那個領域沒有任何一組讀數涵蓋。</span></div>
+  <div class="sc ask"><span class="lbl">待驗證點</span><span class="txt">全新的只有兩條：稽核者自己改過的東西不算數（該搬 ③），以及 96 路委派要拒絕（不該搬 ⑧）。其餘都是把既有的東西擴大作用域或加硬——而那類改動有已知的失效方式：改完沒有東西會在它被漏掉時叫。</span></div>
+</aside>
+
+<h2>我簡化掉了什麼</h2>
+
+<p>三件事必須明說。</p>
+
+<p>一、Manager Loop 那半的證據基礎就是一個人的自述。沒有第三方複現、沒有技術細節、沒有可跑的程式碼。我能做的最強驗證是取到原文並確認它確實是那個帳號在那個時間寫的——那證明貼文為真，不證明貼文的內容為真。</p>
+
+<p>二、我沒有跑過任何一套。這份比對全部建立在文件與原始碼閱讀上。論文的 <code>51.8 → 80.7</code> 我沒有複現，也沒有能力複現。</p>
+
+<p>三、右欄那個「你的系統」是我讀你的 <code>SKILL.md</code> 歸納的。條文寫著的和實際跑起來的可能不同——你的系統自己記過一組數字：純散文紀律的落地率是 54.6%，有機器面的是 95.5%。這張表比的是條文，不是行為。</p>
+
+<p>四、三件套的歸因，我沒有做，也做不了。異質票指出貼文把新模型、方法、遊戲引擎綁在一起賣，而委託只抽出方法。要拆開它需要對照組——同一個模型不用 Manager Loop、或同一個方法配舊模型——那個對照組不存在，也不是我能造的。所以「Manager Loop 有沒有用」這一題，本報告從頭到尾沒有回答，只回答了「它是什麼、它跟你的東西怎麼對位」。</p>
+
+<p>五、這份東西本身就可能是第二票預告的那個失敗。它逐字警告的其中一條是：這份備忘錄被收進成文紀律，成為第 N 份外部方法誌，「系統更完整了，行為沒變」。我沒有能力排除這一條，只能把它寫在這裡。</p>
+
+<script type="application/json" id="form-routing-3-7">
+{"3.7a":{"cell":"離散對照","carrier":"可排序可篩選表 ＋ 機制圖（A09）"},
+ "3.7b":{"sections":[
+   {"h":"Manager Loop 是一個人的工程實務，不是一套發表過的方法","structural":false},
+   {"h":"證據強度必須逐條分級，因為這幾條差很多","structural":false},
+   {"h":"貼文是三件套，而這個委託只抽出了中間那一件","structural":true},
+   {"h":"論文那套的三個角色，每一個都被拿掉了某樣東西","structural":true},
+   {"h":"八個軸的三方比對，跨軸不並列","structural":false},
+   {"h":"四條該搬、四條不該搬，其中兩條被異質票改寫過","structural":false},
+   {"h":"盲審票對你系統的四個指控，其中一個是選擇效應","structural":false},
+   {"h":"最有價值的一段是論文自己承認的限制，因為你早就撞過同一批","structural":false},
+   {"h":"那些數字要怎麼讀","structural":false},
+   {"h":"我簡化掉了什麼","structural":false}]},
+ "3.7c":{"continuous":false},
+ "3.7d":{"needed":false,"tier":null}}
+</script>
+
+<script>
+document.body.classList.add('js');
+(function(){
+  var tools=document.querySelector('.tbl-tools');
+  if(!tools) return;
+  var rows=Array.prototype.slice.call(document.querySelectorAll('#cmp tbody tr'));
+  var btns=Array.prototype.slice.call(tools.querySelectorAll('button'));
+  btns.forEach(function(b){
+    b.addEventListener('click',function(){
+      var f=b.getAttribute('data-f');
+      btns.forEach(function(x){x.setAttribute('aria-pressed', x===b ? 'true':'false');});
+      rows.forEach(function(r){
+        r.classList.toggle('dim', f!=='all' && r.getAttribute('data-k')!==f);
+      });
+    });
+  });
+})();
+</script>
+
+</main>
+<footer><p>2026-09-04　第 229 跑編排產出　·　內部研究筆記，引用請連同「我簡化掉了什麼」一節一起引用，勿單引結論。</p></footer>
+</div>
+</body>
+</html>
