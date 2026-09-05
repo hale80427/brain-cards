@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>石英鑽孔的三道解析度牆</title>
+<style>
+:root{
+  --ink:#16181d; --ink-soft:#4a5058; --line:#c9ced6; --rule:#e3e7ec;
+  --bg:#fbfbfa; --card:#ffffff; --accent:#8a3324; --accent-soft:#f0e3df;
+  --cut:#8a3324; --idle:#dfe3e8; --bore:#eceff3; --path:#1f4e79;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --ink:#e8eaed; --ink-soft:#a8b0ba; --line:#4a525d; --rule:#2c323a;
+    --bg:#14161a; --card:#1c1f25; --accent:#e08a72; --accent-soft:#3a2622;
+    --cut:#e08a72; --idle:#333a43; --bore:#232830; --path:#7fb3e0;
+  }
+}
+:root[data-theme="dark"]{
+  --ink:#e8eaed; --ink-soft:#a8b0ba; --line:#4a525d; --rule:#2c323a;
+  --bg:#14161a; --card:#1c1f25; --accent:#e08a72; --accent-soft:#3a2622;
+  --cut:#e08a72; --idle:#333a43; --bore:#232830; --path:#7fb3e0;
+}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--ink);
+  font-family:"Noto Sans TC","PingFang TC","Hiragino Sans TC",system-ui,sans-serif;
+  line-height:1.85;margin:0;padding:0}
+main{max-width:760px;margin:0 auto;padding:56px 22px 96px}
+h1{font-size:1.92rem;line-height:1.4;letter-spacing:-.01em;margin:0 0 8px}
+h2{font-size:1.28rem;line-height:1.5;margin:52px 0 14px;
+  padding-top:22px;border-top:1px solid var(--rule)}
+h3{font-size:1.04rem;margin:30px 0 8px;color:var(--ink)}
+p{margin:0 0 16px}
+.dek{color:var(--ink-soft);font-size:1.02rem;margin:0 0 34px}
+.bluf{background:var(--card);border-left:3px solid var(--accent);
+  padding:20px 22px;margin:0 0 38px;border-radius:0 6px 6px 0}
+.bluf p:last-child{margin-bottom:0}
+figure{margin:34px 0;padding:0}
+figwrap{display:block}
+.figwrap{overflow-x:auto;-webkit-overflow-scrolling:touch;
+  background:var(--card);border:1px solid var(--rule);border-radius:6px}
+.figwrap svg{display:block;min-width:880px;width:100%;height:auto}
+@media (min-width:820px){.figwrap svg{min-width:0}}
+.swipe{font-size:.78rem;color:var(--ink-soft);margin:6px 0 0}
+@media (min-width:820px){.swipe{display:none}}
+figcaption{font-size:.94rem;color:var(--ink);margin-top:12px;font-weight:600;
+  line-height:1.6}
+.note,.source{font-size:.83rem;color:var(--ink-soft);margin-top:8px;line-height:1.65}
+.note strong,.source strong{color:var(--ink)}
+.standing{display:inline-block;font-size:.78rem;letter-spacing:.04em;
+  background:var(--accent-soft);color:var(--accent);border-radius:3px;
+  padding:2px 8px;margin-right:7px;font-weight:600}
+table{border-collapse:collapse;width:100%;font-size:.92rem;margin:20px 0}
+th,td{text-align:left;padding:9px 10px;border-bottom:1px solid var(--rule)}
+th{border-bottom:2px solid var(--line);font-weight:600}
+.tw{overflow-x:auto}
+code{font-family:ui-monospace,"SF Mono",Menlo,monospace;font-size:.88em;
+  background:var(--card);padding:1px 5px;border-radius:3px;border:1px solid var(--rule);
+  overflow-wrap:anywhere;word-break:break-word}
+p,li,td,th,figcaption,.note,.source{overflow-wrap:anywhere;text-wrap:pretty}
+.big{font-variant-numeric:tabular-nums;font-weight:700;color:var(--accent)}
+footer{margin-top:64px;padding-top:22px;border-top:1px solid var(--rule);
+  font-size:.83rem;color:var(--ink-soft)}
+/* 圖內樣式 */
+.bore-wall{fill:var(--bore);stroke:var(--line);stroke-width:1}
+.bore-mouth{fill:none;stroke:var(--line);stroke-width:1.4}
+.bore-floor{fill:none;stroke:var(--line);stroke-width:1.2;stroke-dasharray:3 3}
+.bore-step{fill:none;stroke:var(--line);stroke-width:.7;opacity:.55}
+.datum{stroke:var(--rule);stroke-width:1;stroke-dasharray:4 4}
+.peck-path{fill:none;stroke:var(--path);stroke-width:1.5;stroke-linejoin:round}
+.peck-dot{fill:var(--accent);stroke:var(--card);stroke-width:1.5}
+.leader{stroke:var(--line);stroke-width:1;stroke-dasharray:2 3}
+.lbl,.lane-lbl,.axis-end,.step-count{fill:var(--ink-soft);font-size:14px;
+  font-family:"Noto Sans TC","PingFang TC",system-ui,sans-serif}
+.lane-lbl{fill:var(--ink);font-size:14.5px}
+.axis{stroke:var(--line);stroke-width:1.2}
+.tick,.step-tick{stroke:var(--path);stroke-width:1.6}
+.cut-band{fill:var(--cut);opacity:.82}
+.idle-band{fill:var(--idle)}
+.claim{fill:var(--ink);font-size:15px;font-weight:600;
+  font-family:"Noto Sans TC","PingFang TC",system-ui,sans-serif}
+.claim-sub{fill:var(--ink-soft);font-size:14px;
+  font-family:"Noto Sans TC","PingFang TC",system-ui,sans-serif}
+</style>
+</head>
+<body>
+<main>
+<h1>石英鑽孔的訊號沒有變弱，是儀器來不及看</h1>
+<p class="dek">同一台驅動器在氮化鋁上量得到刀具磨耗，換成石英就什麼都讀不出來。
+把原始波形攤開之後，三道牆各自吃掉一部分訊號，而它們都不在材料那一側。</p>
+
+<div class="bluf">
+<p><strong>一句話：</strong>一個 <span class="big">0.5</span> 秒的切削相，
+落在它裡面的獨立讀數是 <span class="big">0.5</span> 個——
+不是一個，是半個。</p>
+<p>驅動器每 0.501 秒寫一列，看起來剛好夠；
+但相鄰兩列有 52.7% 一字不差，值其實每
+1.0 秒才換一次。再加上電流欄位是整數，
+鑽孔段一共只用到 18 個階。</p>
+<p><strong>所以「石英切削阻力太小」這個假設不成立</strong>——
+聚合層的負載調變其實有 15–20%，是被解析度糊掉的。</p>
+</div>
+
+<h2>孔是被四十次咬出來的，不是一刀鑽到底</h2>
+<p>G83 全退啄鑽的意思是：刀尖切進 0.1 mm 就整支退出孔外排屑，
+再切進比上次深 0.1 mm 的位置。孔深 4.0 mm，
+所以一個孔要往返 40 次。</p>
+<p>這個形狀決定了後面所有事：<strong>真正在切的那一小段，每次只有
+0.5 秒。</strong></p>
+
+<figure>
+<div class="figwrap"><svg viewBox="0 0 880 560" width="100%" role="img" aria-labelledby="t4458513104 d4457994400" preserveAspectRatio="xMidYMid meet"><title id="t4458513104">石英孔的啄鑽路徑</title><desc id="d4457994400">左邊是一個無尺度示意的圓孔，右邊是同一條深度軸上攤開的鋸齒路徑；鋸齒有四十個齒，齒尖一個比一個深，最後一齒抵達孔底。第一齒、第二十齒與第四十齒各標了一個點。</desc><path d="M 110.0 96.0 L 110.0 456.0 A 62 22 0 0 0 234.0 456.0 L 234.0 96.0 Z" class="bore-wall"/><ellipse cx="172.0" cy="96.0" rx="62" ry="22" class="bore-mouth"/><path d="M 110.0 105.0 A 62 22 0 0 0 234.0 105.0" class="bore-step"/><path d="M 110.0 114.0 A 62 22 0 0 0 234.0 114.0" class="bore-step"/><path d="M 110.0 123.0 A 62 22 0 0 0 234.0 123.0" class="bore-step"/><path d="M 110.0 132.0 A 62 22 0 0 0 234.0 132.0" class="bore-step"/><path d="M 110.0 141.0 A 62 22 0 0 0 234.0 141.0" class="bore-step"/><path d="M 110.0 150.0 A 62 22 0 0 0 234.0 150.0" class="bore-step"/><path d="M 110.0 159.0 A 62 22 0 0 0 234.0 159.0" class="bore-step"/><path d="M 110.0 168.0 A 62 22 0 0 0 234.0 168.0" class="bore-step"/><path d="M 110.0 177.0 A 62 22 0 0 0 234.0 177.0" class="bore-step"/><path d="M 110.0 186.0 A 62 22 0 0 0 234.0 186.0" class="bore-step"/><path d="M 110.0 195.0 A 62 22 0 0 0 234.0 195.0" class="bore-step"/><path d="M 110.0 204.0 A 62 22 0 0 0 234.0 204.0" class="bore-step"/><path d="M 110.0 213.0 A 62 22 0 0 0 234.0 213.0" class="bore-step"/><path d="M 110.0 222.0 A 62 22 0 0 0 234.0 222.0" class="bore-step"/><path d="M 110.0 231.0 A 62 22 0 0 0 234.0 231.0" class="bore-step"/><path d="M 110.0 240.0 A 62 22 0 0 0 234.0 240.0" class="bore-step"/><path d="M 110.0 249.0 A 62 22 0 0 0 234.0 249.0" class="bore-step"/><path d="M 110.0 258.0 A 62 22 0 0 0 234.0 258.0" class="bore-step"/><path d="M 110.0 267.0 A 62 22 0 0 0 234.0 267.0" class="bore-step"/><path d="M 110.0 276.0 A 62 22 0 0 0 234.0 276.0" class="bore-step"/><path d="M 110.0 285.0 A 62 22 0 0 0 234.0 285.0" class="bore-step"/><path d="M 110.0 294.0 A 62 22 0 0 0 234.0 294.0" class="bore-step"/><path d="M 110.0 303.0 A 62 22 0 0 0 234.0 303.0" class="bore-step"/><path d="M 110.0 312.0 A 62 22 0 0 0 234.0 312.0" class="bore-step"/><path d="M 110.0 321.0 A 62 22 0 0 0 234.0 321.0" class="bore-step"/><path d="M 110.0 330.0 A 62 22 0 0 0 234.0 330.0" class="bore-step"/><path d="M 110.0 339.0 A 62 22 0 0 0 234.0 339.0" class="bore-step"/><path d="M 110.0 348.0 A 62 22 0 0 0 234.0 348.0" class="bore-step"/><path d="M 110.0 357.0 A 62 22 0 0 0 234.0 357.0" class="bore-step"/><path d="M 110.0 366.0 A 62 22 0 0 0 234.0 366.0" class="bore-step"/><path d="M 110.0 375.0 A 62 22 0 0 0 234.0 375.0" class="bore-step"/><path d="M 110.0 384.0 A 62 22 0 0 0 234.0 384.0" class="bore-step"/><path d="M 110.0 393.0 A 62 22 0 0 0 234.0 393.0" class="bore-step"/><path d="M 110.0 402.0 A 62 22 0 0 0 234.0 402.0" class="bore-step"/><path d="M 110.0 411.0 A 62 22 0 0 0 234.0 411.0" class="bore-step"/><path d="M 110.0 420.0 A 62 22 0 0 0 234.0 420.0" class="bore-step"/><path d="M 110.0 429.0 A 62 22 0 0 0 234.0 429.0" class="bore-step"/><path d="M 110.0 438.0 A 62 22 0 0 0 234.0 438.0" class="bore-step"/><path d="M 110.0 447.0 A 62 22 0 0 0 234.0 447.0" class="bore-step"/><path d="M 110.0 456.0 A 62 22 0 0 0 234.0 456.0" class="bore-step"/><ellipse cx="172.0" cy="456.0" rx="62" ry="22" class="bore-floor"/><text x="172.0" y="58.0" class="lbl" text-anchor="middle">孔（直徑未量·示意）</text><line x1="110.0" y1="96.0" x2="712.0" y2="96.0" class="datum"/><text x="720.0" y="101.0" class="lbl">孔口</text><line x1="110.0" y1="456.0" x2="712.0" y2="456.0" class="datum"/><text x="720.0" y="461.0" class="lbl">孔底</text><polyline points="330.0,64.5 334.8,105.0 339.7,64.5 344.5,114.0 349.3,64.5 354.2,123.0 359.0,64.5 363.8,132.0 368.7,64.5 373.5,141.0 378.4,64.5 383.2,150.0 388.0,64.5 392.9,159.0 397.7,64.5 402.5,168.0 407.4,64.5 412.2,177.0 417.0,64.5 421.9,186.0 426.7,64.5 431.5,195.0 436.4,64.5 441.2,204.0 446.1,64.5 450.9,213.0 455.7,64.5 460.6,222.0 465.4,64.5 470.2,231.0 475.1,64.5 479.9,240.0 484.7,64.5 489.6,249.0 494.4,64.5 499.2,258.0 504.1,64.5 508.9,267.0 513.7,64.5 518.6,276.0 523.4,64.5 528.3,285.0 533.1,64.5 537.9,294.0 542.8,64.5 547.6,303.0 552.4,64.5 557.3,312.0 562.1,64.5 566.9,321.0 571.8,64.5 576.6,330.0 581.4,64.5 586.3,339.0 591.1,64.5 595.9,348.0 600.8,64.5 605.6,357.0 610.5,64.5 615.3,366.0 620.1,64.5 625.0,375.0 629.8,64.5 634.6,384.0 639.5,64.5 644.3,393.0 649.1,64.5 654.0,402.0 658.8,64.5 663.6,411.0 668.5,64.5 673.3,420.0 678.2,64.5 683.0,429.0 687.8,64.5 692.7,438.0 697.5,64.5 702.3,447.0 707.2,64.5 712.0,456.0" class="peck-path"/><circle cx="334.8" cy="105.0" r="4.5" class="peck-dot"/><text x="334.8" y="127.0" class="lbl" text-anchor="middle">第 1 啄</text><circle cx="518.6" cy="276.0" r="4.5" class="peck-dot"/><text x="518.6" y="298.0" class="lbl" text-anchor="middle">第 20 啄</text><circle cx="712.0" cy="456.0" r="4.5" class="peck-dot"/><text x="702.0" y="444.0" class="lbl" text-anchor="end">第 40 啄</text><text x="330.0" y="514" class="claim">40 個齒，每齒往下 0.1 mm，退到孔口外排屑再切下一齒</text></svg></div>
+<p class="swipe">↔ 圖可橫向捲動</p>
+<figcaption>孔深 4.0 mm 被拆成 40 次往返，
+每次真正切削只有 0.5 秒。</figcaption>
+<p class="note"><span class="standing">示意</span><strong>Note：</strong>
+這張圖畫的是加工設定值推出來的路徑，不是對成品孔的量測。
+<strong>鑽頭直徑未量</strong>——`quartz/` 全庫查無，故孔畫成無尺度示意、不標直徑，
+橫向的往返幅度是為了看得出重疊而拉開的，不代表刀具真的橫移。</p>
+<p class="source"><strong>Source：</strong>加工參數取自影片 <code>IMG_7773.MOV</code>
+逐格判讀與 NC 程式，記於 <code>usm-drilling-analysis/quartz/README.md</code>。
+路徑由 <code>build_page.py</code> 從 <code>stats.json</code> 的加工常數算出。</p>
+</figure>
+
+<h2>第一道牆：切削相只有半秒，而那是驅動器的一個取樣格</h2>
+<p>切削相 = 每啄進給 ÷ 切削進給 = 0.1 ÷
+0.2 = <strong>0.5 秒</strong>。
+驅動器的寫出間隔實測中位數是 0.501 秒
+（22814 列、跨 190.1 分鐘）。</p>
+<p>兩個數字幾乎相等。這代表<strong>一個切削相剛好對上一格</strong>——
+沒有第二個點可以拿來比較，任何「切削中 vs 空切」的門檻法在這裡都無效。</p>
+
+<h2>第二道牆：一半的列是上一列的複本</h2>
+<p>把相鄰兩列的五個波形欄位整列比對，
+<strong>52.7%</strong> 完全一樣
+（12012 對／22813 對）。
+值真正改變的那些列彼此相隔中位數 1.0 秒。</p>
+<p>於是有效取樣間隔不是 0.501 秒而是
+1.0 秒，剛好差
+<strong>1.996 倍</strong>。</p>
+
+<figure>
+<div class="figwrap"><svg viewBox="0 0 880 330" width="100%" role="img" aria-labelledby="t4458416928 d4457995600" preserveAspectRatio="xMidYMid meet"><title id="t4458416928">切削相與取樣節奏的時間對位</title><desc id="d4457995600">三條橫向時間軸並排。最上一條是加工循環，每個循環的前段以深色標出切削相；中間一條是驅動器寫出的列，刻度密集；最下一條是值真正更新的時刻，刻度只有中間那條的一半。</desc><text x="28" y="67" class="lane-lbl">加工循環</text><line x1="124" y1="62" x2="852" y2="62" class="axis"/><text x="28" y="145" class="lane-lbl">驅動器寫出的列</text><line x1="124" y1="140" x2="852" y2="140" class="axis"/><text x="28" y="211" class="lane-lbl">值真的更新</text><line x1="124" y1="206" x2="852" y2="206" class="axis"/><rect x="124.0" y="46" width="87.4" height="32" class="cut-band"/><rect x="211.4" y="46" width="155.3" height="32" class="idle-band"/><rect x="366.7" y="46" width="87.4" height="32" class="cut-band"/><rect x="454.0" y="46" width="155.3" height="32" class="idle-band"/><rect x="609.3" y="46" width="87.4" height="32" class="cut-band"/><rect x="696.7" y="46" width="155.3" height="32" class="idle-band"/><line x1="124.0" y1="127" x2="124.0" y2="153" class="tick"/><line x1="211.5" y1="127" x2="211.5" y2="153" class="tick"/><line x1="299.1" y1="127" x2="299.1" y2="153" class="tick"/><line x1="386.6" y1="127" x2="386.6" y2="153" class="tick"/><line x1="474.1" y1="127" x2="474.1" y2="153" class="tick"/><line x1="561.7" y1="127" x2="561.7" y2="153" class="tick"/><line x1="649.2" y1="127" x2="649.2" y2="153" class="tick"/><line x1="736.7" y1="127" x2="736.7" y2="153" class="tick"/><line x1="824.3" y1="127" x2="824.3" y2="153" class="tick"/><line x1="124.0" y1="193" x2="124.0" y2="219" class="tick"/><line x1="298.7" y1="193" x2="298.7" y2="219" class="tick"/><line x1="473.4" y1="193" x2="473.4" y2="219" class="tick"/><line x1="648.2" y1="193" x2="648.2" y2="219" class="tick"/><line x1="822.9" y1="193" x2="822.9" y2="219" class="tick"/><text x="28" y="268" class="claim">一個 0.5 秒的切削相，落在裡面的獨立讀數是 0.5 個</text><text x="28" y="294" class="claim-sub">寫出來的列有 0.998 個，但相鄰兩列有 52.7% 一字不差</text></svg></div>
+<p class="swipe">↔ 圖可橫向捲動</p>
+<figcaption>寫出來的列夠密，但值每 1.0 秒才換一次，
+於是切削相拿到的獨立讀數不到一個。</figcaption>
+<p class="note"><span class="standing">證據</span><strong>Note：</strong>
+「值真的更新」那一條是把整列五欄相同的列判為複本之後留下的時刻。
+成對重複率是對整個鑽孔段算的，不是某一段的抽樣。
+圖上只畫三個循環是為了看得清楚，循環長度取自切削佔比 0.36。</p>
+<p class="source"><strong>Source：</strong>
+<code>session2_350holes_20260616111719_OperationReport.xlsx</code> 的
+<code>OperationWaveform</code>，由 <code>extract_stats.py</code> 計算。</p>
+</figure>
+
+<h2>第三道牆：負載要擠進十幾個整數階裡</h2>
+<p>換能器電流 IFB 與直流端電流 Buck_IO 都是整數欄位，階高 1。
+鑽孔段裡 IFB 實際只用到 <strong>18 個</strong>不同的值
+（81–98 mA），Buck_IO 只用到
+<strong>12 個</strong>（6–17）。</p>
+<p>逐啄的負載擺動如果小於一個階，它在記錄裡就完全不存在。</p>
+
+<figure>
+<div class="figwrap"><svg viewBox="0 0 880 300" width="100%" role="img" aria-labelledby="t4458516272 d4458425312" preserveAspectRatio="xMidYMid meet"><title id="t4458516272">鑽孔段實際用到的整數階</title><desc id="d4458425312">兩條水平刻度尺，各自畫出該欄在鑽孔段用到的所有整數值。刻度數量少，兩端標出最小值與最大值。</desc><text x="28" y="97" class="lane-lbl">換能器電流 IFB</text><line x1="146" y1="92" x2="852" y2="92" class="axis"/><line x1="146.0" y1="77" x2="146.0" y2="107" class="step-tick"/><line x1="187.5" y1="77" x2="187.5" y2="107" class="step-tick"/><line x1="229.1" y1="77" x2="229.1" y2="107" class="step-tick"/><line x1="270.6" y1="77" x2="270.6" y2="107" class="step-tick"/><line x1="312.1" y1="77" x2="312.1" y2="107" class="step-tick"/><line x1="353.6" y1="77" x2="353.6" y2="107" class="step-tick"/><line x1="395.2" y1="77" x2="395.2" y2="107" class="step-tick"/><line x1="436.7" y1="77" x2="436.7" y2="107" class="step-tick"/><line x1="478.2" y1="77" x2="478.2" y2="107" class="step-tick"/><line x1="519.8" y1="77" x2="519.8" y2="107" class="step-tick"/><line x1="561.3" y1="77" x2="561.3" y2="107" class="step-tick"/><line x1="602.8" y1="77" x2="602.8" y2="107" class="step-tick"/><line x1="644.4" y1="77" x2="644.4" y2="107" class="step-tick"/><line x1="685.9" y1="77" x2="685.9" y2="107" class="step-tick"/><line x1="727.4" y1="77" x2="727.4" y2="107" class="step-tick"/><line x1="768.9" y1="77" x2="768.9" y2="107" class="step-tick"/><line x1="810.5" y1="77" x2="810.5" y2="107" class="step-tick"/><line x1="852.0" y1="77" x2="852.0" y2="107" class="step-tick"/><text x="146" y="132" class="axis-end">81</text><text x="852" y="132" class="axis-end" text-anchor="end">98</text><text x="852" y="66" class="step-count" text-anchor="end">18 個階</text><text x="28" y="183" class="lane-lbl">直流端電流 Buck_IO</text><line x1="146" y1="178" x2="852" y2="178" class="axis"/><line x1="146.0" y1="163" x2="146.0" y2="193" class="step-tick"/><line x1="210.2" y1="163" x2="210.2" y2="193" class="step-tick"/><line x1="274.4" y1="163" x2="274.4" y2="193" class="step-tick"/><line x1="338.5" y1="163" x2="338.5" y2="193" class="step-tick"/><line x1="402.7" y1="163" x2="402.7" y2="193" class="step-tick"/><line x1="466.9" y1="163" x2="466.9" y2="193" class="step-tick"/><line x1="531.1" y1="163" x2="531.1" y2="193" class="step-tick"/><line x1="595.3" y1="163" x2="595.3" y2="193" class="step-tick"/><line x1="659.5" y1="163" x2="659.5" y2="193" class="step-tick"/><line x1="723.6" y1="163" x2="723.6" y2="193" class="step-tick"/><line x1="787.8" y1="163" x2="787.8" y2="193" class="step-tick"/><line x1="852.0" y1="163" x2="852.0" y2="193" class="step-tick"/><text x="146" y="218" class="axis-end">6</text><text x="852" y="218" class="axis-end" text-anchor="end">17</text><text x="852" y="152" class="step-count" text-anchor="end">12 個階</text><text x="28" y="248" class="claim">負載的變化要擠進 18 個整數階裡表達</text></svg></div>
+<p class="swipe">↔ 圖可橫向捲動</p>
+<figcaption>整個鑽孔段的負載變化只能用 18 個整數階表達，
+小於一階的擺動不留下任何痕跡。</figcaption>
+<p class="note"><span class="standing">證據</span><strong>Note：</strong>
+階數是鑽孔段內實際出現過的相異值個數，不是欄位的理論值域。
+刻度在圖上等距排開只是為了數得清楚，不代表這些值在時間上均勻分布。</p>
+<p class="source"><strong>Source：</strong>同上，
+<code>extract_stats.py</code> 的 <code>quantisation_stats()</code>。</p>
+</figure>
+
+<h2>為什麼一張立體、兩張平面</h2>
+<p>判準只有一句：<strong>我要讀者從這張圖讀出一個數字嗎？</strong>
+要，就不該用立體——深度線索會讓數值判讀變差。</p>
+<div class="tw">
+<table>
+<thead><tr><th>圖</th><th>讀者要拿到什麼</th><th>表示法</th></tr></thead>
+<tbody>
+<tr><td>啄鑽路徑</td><td><strong>形狀</strong>：孔是四十次咬出來的</td><td>立體</td></tr>
+<tr><td>時間對位</td><td><strong>數字</strong>：0.5 秒對上
+1.0 秒</td><td>平面</td></tr>
+<tr><td>量化階梯</td><td><strong>數字</strong>：18 個階</td><td>平面</td></tr>
+</tbody>
+</table>
+</div>
+<p>同一份材料裡兩種表示法並存是正常的，各走各的判準。</p>
+
+<h2>三道牆裡有兩道在記錄層，不在材料</h2>
+<div class="tw">
+<table>
+<thead><tr><th>牆</th><th>能不能從驅動器端解</th><th>剩下的路</th></tr></thead>
+<tbody>
+<tr><td>① 切削相 0.5 秒</td><td>能——把每啄進給加大</td>
+<td>但那會改變加工條件，要先確認石英崩邊可接受</td></tr>
+<tr><td>② 有效取樣 1.0 秒</td><td>不能</td>
+<td>UD7 記錄層寫死，要更快只能繞過它接類比 DAQ</td></tr>
+<tr><td>③ 整數量化</td><td>不能改階高，但能拉大訊號</td>
+<td>提高振幅到 15–20%：掃頻已證突出量從 5 升到 9.5 mA</td></tr>
+</tbody>
+</table>
+</div>
+<p>三道牆裡有兩道在記錄層、不在材料。這就是為什麼
+「石英阻力太小所以量不到」這個直覺會把人帶錯方向。</p>
+
+<footer>
+<p>資料：session2_350holes_20260616111719_OperationReport.xlsx（22814 列、190.1 分鐘連續鑽孔段）。
+頁面上每個數字都由 <code>extract_stats.py</code> 從原始檔算出，寫進
+<code>stats.json</code>，再由 <code>build_page.py</code> 代入——本頁不含手打數字。</p>
+<p>已知未量：鑽頭直徑。立體圖因此不帶尺度。</p>
+</footer>
+</main>
+</body>
+</html>
