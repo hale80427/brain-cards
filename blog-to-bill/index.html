@@ -53,6 +53,9 @@
     --plate-teal: oklch(70.0% 0.098 195.0);
     --plate-amber: oklch(78.0% 0.130 78.0);
     --plate-red: oklch(64.0% 0.160 27.0);
+    --node-side: oklch(33.0% 0.030 251.4);
+    --sign-side: oklch(38.0% 0.090 27.0);
+    --keep-side: oklch(46.0% 0.060 195.0);
     --fs-meta: 0.85rem;
     --fs-body: 1rem;
     --fs-h2:   clamp(1.3rem, 3vw, 1.5rem);
@@ -184,13 +187,17 @@
   .flow-track .path { display: flex; flex-wrap: wrap; align-items: center; gap: 0.5rem; }
   .flow-track .node { background: var(--plate-line); color: var(--plate-fg);
                       font-size: var(--fs-meta); line-height: 1.5;
-                      padding: 0.4rem 0.7rem; border-radius: 4px; }
+                      padding: 0.4rem 0.7rem; border-radius: 4px;
+                      box-shadow: 5px 5px 0 var(--node-side), 7px 8px 14px rgba(0, 0, 0, 0.34); }
   .flow-track .arrow { flex: 0 0 1.4rem; width: 1.4rem; height: 0.85rem; color: var(--plate-dim); }
   .flow-track .arrow svg { width: 100%; height: 100%; display: block; border-radius: 0; }
   .flow-track .sign { font-size: var(--fs-meta); font-weight: 700;
                       padding: 0.4rem 0.7rem; border-radius: 4px;
-                      background: var(--plate-red); color: var(--plate-fg); }
-  .flow-track .sign.keep { background: var(--plate-teal); color: var(--plate-bg); }
+                      background: var(--plate-red); color: var(--plate-fg);
+                      box-shadow: 5px 5px 0 var(--sign-side), 7px 8px 14px rgba(0, 0, 0, 0.34); }
+  .flow-track .sign.keep { background: var(--plate-teal); color: var(--plate-bg);
+                      box-shadow: 5px 5px 0 var(--keep-side), 7px 8px 14px rgba(0, 0, 0, 0.34); }
+  .flow-track .path { padding-bottom: 0.4rem; padding-right: 0.4rem; }
   .flow-track > .lbl { font-size: var(--fs-meta); color: var(--plate-dim); letter-spacing: 0.06em; }
   .flow-legend { display: flex; flex-wrap: wrap; gap: 1.2rem; margin-top: 1.2rem;
                  padding-top: 1rem; border-top: 1px solid var(--plate-line);
@@ -275,62 +282,14 @@
 
 <figure class="wide annot-figure">
 <div class="annot-stage">
-<svg viewBox="0 0 900 460" role="img" aria-labelledby="f1t f1d">
-<title id="f1t">兩種措辭造成的兩條傳播路徑對照</title>
-<desc id="f1d">左端方塊是同一起技術事故。上方細帶代表用工程語彙描述時的路徑，寬度全程不變，在第二天被技術駁倒後停止。下方喇叭代表用擬人化語彙描述時的路徑，寬度沿四個轉換點逐段擴張，末端是立法提案。喇叭內的數字一到四對應四個轉換點：措辭、放大、全國新聞、法案。</desc>
-<defs>
-<linearGradient id="funnelGrad" x1="0" y1="0" x2="1" y2="0">
-<stop offset="0" stop-color="var(--plate-teal)"/>
-<stop offset="0.42" stop-color="var(--plate-amber)"/>
-<stop offset="1" stop-color="var(--plate-red)"/>
-</linearGradient>
-</defs>
-<rect width="900" height="460" fill="var(--plate-bg)"/>
-
-<rect x="40" y="200" width="100" height="30" rx="3" fill="var(--plate-line)"/>
-
-<path d="M140 215 C 180 215 190 130 230 130" fill="none" stroke="var(--plate-teal)" stroke-width="2.5"/>
-<rect x="230" y="118" width="330" height="24" fill="var(--plate-teal)" opacity="0.9"/>
-<path d="M560 130 H655" stroke="var(--plate-teal)" stroke-width="24" stroke-dasharray="7 11" opacity="0.4"/>
-<path d="M666 100 V160" stroke="var(--plate-dim)" stroke-width="2.5"/>
-
-<path d="M140 230 C 180 236 196 268 230 278" fill="none" stroke="var(--plate-amber)" stroke-width="2.5"/>
-<path d="M230 278 L850 190 L850 390 L230 302 Z" fill="url(#funnelGrad)"/>
-<g stroke="var(--plate-bg)" stroke-width="2.5" opacity="0.75">
-<path d="M385 256 V324"/>
-<path d="M540 234 V346"/>
-<path d="M695 212 V368"/>
-</g>
-<g fill="var(--plate-bg)" font-size="34" font-weight="700" text-anchor="middle">
-<text x="307" y="302">1</text>
-<text x="462" y="302">2</text>
-<text x="617" y="302">3</text>
-<text x="772" y="302">4</text>
-</g>
-
-<g fill="none" stroke="var(--plate-dim)" stroke-width="1.4">
-<path d="M90 182 V200"/>
-<path d="M666 86 V100"/>
-<path d="M800 400 V383"/>
-</g>
-<g fill="var(--plate-fg)">
-<circle cx="90" cy="158" r="24"/>
-<circle cx="666" cy="62" r="24"/>
-<circle cx="800" cy="424" r="24"/>
-</g>
-<g fill="var(--plate-bg)" font-size="32" font-weight="700" text-anchor="middle">
-<text x="90" y="169">A</text>
-<text x="666" y="73">B</text>
-<text x="800" y="435">C</text>
-</g>
-</svg>
+<svg viewBox="-107.5 -241.5 539.0 579.5" role="img" aria-labelledby="f1t f1d"><title id="f1t">兩種措辭造成的兩條傳播路徑，畫成有厚度的立體管道</title><desc id="f1d">兩條從同一個立體方塊出發的管道，以等角投影畫出頂面與側面。上方那條全程等寬，中途改為虛線後終止；下方那條沿四個編號段逐段變粗，顏色由青轉紅。圓標 A 指共同起點，B 指上方那條的終止處，C 指下方那條的末端。</desc><defs><linearGradient id="gtop0" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="var(--plate-teal)"/><stop offset="1" stop-color="var(--plate-amber)"/></linearGradient><linearGradient id="gside0" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="var(--plate-teal)" stop-opacity="0.62"/><stop offset="1" stop-color="var(--plate-amber)" stop-opacity="0.62"/></linearGradient><linearGradient id="gtop1" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="var(--plate-amber)"/><stop offset="1" stop-color="var(--plate-amber)"/></linearGradient><linearGradient id="gside1" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="var(--plate-amber)" stop-opacity="0.62"/><stop offset="1" stop-color="var(--plate-amber)" stop-opacity="0.62"/></linearGradient><linearGradient id="gtop2" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="var(--plate-amber)"/><stop offset="1" stop-color="var(--plate-red)"/></linearGradient><linearGradient id="gside2" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="var(--plate-amber)" stop-opacity="0.62"/><stop offset="1" stop-color="var(--plate-red)" stop-opacity="0.62"/></linearGradient><linearGradient id="gtop3" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="var(--plate-red)"/><stop offset="1" stop-color="var(--plate-red)"/></linearGradient><linearGradient id="gside3" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="var(--plate-red)" stop-opacity="0.62"/><stop offset="1" stop-color="var(--plate-red)" stop-opacity="0.62"/></linearGradient></defs><rect x="-107.5" y="-241.5" width="539.0" height="579.5" fill="var(--plate-bg)"/><path d="M-6.9 -92.0 L0.0 -176.0" fill="none" stroke="var(--plate-teal)" stroke-width="3.0" stroke-linecap="round"/><path d="M-6.9 -92.0 L0.0 -12.0" fill="none" stroke="var(--plate-amber)" stroke-width="3.0" stroke-linecap="round"/><path d="M10.4 -18.0 L103.1 11.5 L61.5 35.5 L-10.4 -6.0 Z" fill="url(#gtop0)" stroke="var(--plate-bg)" stroke-width="1.3"/><path d="M-10.4 -6.0 L61.5 35.5 L61.5 83.5 L-10.4 18.0 Z" fill="url(#gside0)" stroke="var(--plate-bg)" stroke-width="1.3"/><text x="41.1" y="16.7" font-size="32" font-weight="700" text-anchor="middle" fill="var(--plate-bg)">1</text><path d="M103.1 11.5 L197.5 38.0 L131.6 76.0 L61.5 35.5 Z" fill="url(#gtop1)" stroke="var(--plate-bg)" stroke-width="1.3"/><path d="M61.5 35.5 L131.6 76.0 L131.6 152.0 L61.5 83.5 Z" fill="url(#gside1)" stroke="var(--plate-bg)" stroke-width="1.3"/><text x="123.4" y="51.2" font-size="32" font-weight="700" text-anchor="middle" fill="var(--plate-bg)">2</text><path d="M197.5 38.0 L293.6 61.5 L200.1 115.5 L131.6 76.0 Z" fill="url(#gtop2)" stroke="var(--plate-bg)" stroke-width="1.3"/><path d="M131.6 76.0 L200.1 115.5 L200.1 223.5 L131.6 152.0 Z" fill="url(#gside2)" stroke="var(--plate-bg)" stroke-width="1.3"/><text x="205.7" y="83.7" font-size="32" font-weight="700" text-anchor="middle" fill="var(--plate-bg)">3</text><path d="M293.6 61.5 L391.4 82.0 L266.7 154.0 L200.1 115.5 Z" fill="url(#gtop3)" stroke="var(--plate-bg)" stroke-width="1.3"/><path d="M200.1 115.5 L266.7 154.0 L266.7 298.0 L200.1 223.5 Z" fill="url(#gside3)" stroke="var(--plate-bg)" stroke-width="1.3"/><text x="288.0" y="114.2" font-size="32" font-weight="700" text-anchor="middle" fill="var(--plate-bg)">4</text><path d="M10.4 -194.0 L174.9 -99.0 L154.2 -87.0 L-10.4 -182.0 Z" fill="var(--plate-teal)" stroke="var(--plate-bg)" stroke-width="1.3"/><path d="M-10.4 -182.0 L154.2 -87.0 L154.2 -63.0 L-10.4 -158.0 Z" fill="var(--plate-teal)" fill-opacity="0.62" stroke="var(--plate-bg)" stroke-width="1.3"/><path d="M174.9 -99.0 L237.3 -63.0 L216.5 -51.0 L154.2 -87.0 Z" fill="none" stroke="var(--plate-teal)" stroke-width="2" stroke-dasharray="8 7"/><path d="M154.2 -87.0 L216.5 -51.0 L216.5 -27.0 L154.2 -63.0 Z" fill="none" stroke="var(--plate-teal)" stroke-width="2" stroke-dasharray="8 7" stroke-opacity="0.62"/><path d="M-39.8 -143.0 L6.9 -116.0 L-20.8 -100.0 L-67.5 -127.0 Z" fill="var(--plate-line)" stroke="var(--plate-bg)" stroke-width="1.3"/><path d="M-67.5 -127.0 L-20.8 -100.0 L-20.8 -68.0 L-67.5 -95.0 Z" fill="var(--plate-line)" fill-opacity="0.62" stroke="var(--plate-bg)" stroke-width="1.3"/><path d="M-30.3 -178.5 L-30.3 -135.1" fill="none" stroke="var(--plate-dim)" stroke-width="2"/><circle cx="-30.3" cy="-178.5" r="23.0" fill="var(--plate-fg)"/><text x="-30.3" y="-168.0" font-size="30" font-weight="700" text-anchor="middle" fill="var(--plate-bg)">A</text><path d="M229.7 -120.5 L209.3 -85.2" fill="none" stroke="var(--plate-dim)" stroke-width="2"/><circle cx="229.7" cy="-120.5" r="23.0" fill="var(--plate-fg)"/><text x="229.7" y="-110.0" font-size="30" font-weight="700" text-anchor="middle" fill="var(--plate-bg)">B</text><path d="M270.8 245.6 L247.0 211.3" fill="none" stroke="var(--plate-dim)" stroke-width="2"/><circle cx="270.8" cy="245.6" r="23.0" fill="var(--plate-fg)"/><text x="270.8" y="256.1" font-size="30" font-weight="700" text-anchor="middle" fill="var(--plate-bg)">C</text></svg>
 <ol class="annot-labels">
 <li><span class="pin">A</span> <span><span class="lbl">同一起事故</span>有人把 14 把還能用的 API 金鑰留在公開的程式碼倉庫裡。等於密碼寫在便利貼上黏在螢幕邊。</span></li>
 <li><span class="pin">B</span> <span><span class="lbl">工程語彙的路徑</span>叫它 bug、audit log、設定錯誤，寬度全程不變。第二天技術上被駁倒之後，它就停在專業社群裡。</span></li>
 <li><span class="pin">C</span> <span><span class="lbl">擬人化語彙的路徑</span>叫它文明、犧牲、留給後代的訊息，寬度沿四個轉換點逐段擴張。第四天它成為立法提案的引用來源。</span></li>
 </ol>
 </div>
-<figcaption><b>兩條路徑的起點是同一份事實，分岔點是描述它的那組詞。</b>這張圖對應本節與下一節：喇叭裡的一到四，就是下面四個小標題。
+<figcaption><b>兩條路徑的起點是同一份事實，分岔點是描述它的那組詞。</b>這張圖對應本節與下一節：管子裡的一到四，就是下面四個小標題。<span class="notesrc"><b>為什麼這張是立體的</b>　管道是有體積的物件，等角投影畫出頂面與側面之後，「一路變粗」這件事在形狀上直接看得到。它給的是體積感，資訊仍然是平面的——這張圖沒有第三個要讀出數字的軸。</span>
 <span class="notesrc"><b>Note</b>　管寬是傳播規模的示意，不對應任何實際的觸及量測。四個轉換點的時序來自節目中的口述描述，未經獨立查證。上方那條路徑是節目中提出的反事實推論，不是已發生的事。</span>
 <span class="notesrc"><b>Source</b>　All-In Podcast 第 288 集，<code>19:56–30:33</code>。</span>
 </figcaption>
@@ -365,7 +324,7 @@
 <span><i class="sw-nar"></i>敘事放大層</span>
 </div>
 </div>
-<figcaption><b>放大的不是事實，是情緒模板——兩條路徑的輸入完全相同，只有第一個盒子裡的詞不一樣。</b>這張圖是上一張喇叭的展開，對應本節後面四個小標題。
+<figcaption><b>放大的不是事實，是情緒模板——兩條路徑的輸入完全相同，只有第一個盒子裡的詞不一樣。</b>這張圖是上一張管道的展開，對應本節後面四個小標題。每個盒子有一個實心側面與一道陰影，厚度是視覺上的，不承載任何資訊。
 <span class="notesrc"><b>Note</b>　盒子的順序來自節目口述，箭頭代表「導致」而非時間先後的精確量測。上排是節目中提出的反事實推論。</span>
 <span class="notesrc"><b>Source</b>　All-In Podcast 第 288 集，<code>19:56–30:33</code>。</span>
 </figcaption>
@@ -523,7 +482,7 @@
 </div>
 </div>
 <figcaption><b>壓掉一個軸就會有兩個人疊在一起，而且兩次疊起來的是不同的兩個人——三個人從來不是在同一場辯論裡。</b>C 是 Chamath，S 是蘇姿丰，Z 是 Ed Zitron。這張圖對應上一段引言與下一段的答非所問。
-<span class="notesrc"><b>Note</b>　三個點的座標是本頁對三種立場的詮釋定位，不是量化數據，沒有人給過這些數字。原互動版用三個軸，本版降為兩個軸加上兩張投影圖，因為第三個軸（離頂點多遠）在這三個人身上沒有可辯護的差異定位，硬留下來會讓「壓掉一軸就重合」這兩句結論反而不成立。Zitron 那個點來自另一份來源、非本集內容，放進來是為了讓真假軸有一個真正的反對端。</span>
+<span class="notesrc"><b>為什麼這張刻意不立體</b>　同一份交付裡兩種表示並存是正常的，而分界線是一句話：我要讀者從這張圖讀出一個數字嗎？前兩張要的是「看懂形狀」，所以給它體積；這一張要的是「誰跟誰重合」，那是相對位置，而立體的深度線索正好會把相對位置判斷弄糟（St. John 2001、Zacks 1998）。所以它維持平面。</span><span class="notesrc"><b>Note</b>　三個點的座標是本頁對三種立場的詮釋定位，不是量化數據，沒有人給過這些數字。原互動版用三個軸，本版降為兩個軸加上兩張投影圖，因為第三個軸（離頂點多遠）在這三個人身上沒有可辯護的差異定位，硬留下來會讓「壓掉一軸就重合」這兩句結論反而不成立。Zitron 那個點來自另一份來源、非本集內容，放進來是為了讓真假軸有一個真正的反對端。</span>
 <span class="notesrc"><b>Source</b>　定價軸出自 All-In 第 288 集 <code>14:09</code>；「九局的第三局」出自蘇姿丰 2026-05；真假軸的反對端出自 Ed Zitron 循環金流論 2026-08。</span>
 </figcaption>
 </figure>
@@ -712,8 +671,9 @@
 
 <div class="callout tip">
 <span class="lbl">關於這一版的圖</span>
-<span class="txt">這份筆記的前一版把三張圖做成可拖曳旋轉的立體元件。改成現在這樣，是因為判準只有一句：我要讀者從這張圖讀出一個數字嗎？要，就不准立體。</span>
-<span class="txt">三張圖填空之後全部落在「不准立體」那一側：喇叭是旋轉對稱體，剪影就完整；四天鏈是序列，流程圖就完整；三軸座標要比的是相對位置，那正是立體會讓人讀錯的東西。三張圖現在全部是零 JavaScript 的 SVG，關掉指令碼也還在。</span>
+<span class="txt">這份筆記的前一版把三張圖做成可拖曳旋轉的立體元件，而那一版被判失敗。現在這一版分兩層處理，判準各不相同。</span>
+<span class="txt">第一層問「這張圖要不要有第三個資訊維度」，也就是要不要讓讀者從深度上讀出一個數字。三張圖填空之後全部落在「不要」那一側，所以沒有任何一張有可讀出數字的第三軸。</span>
+<span class="txt">第二層問「這張圖要不要有體積感」。前兩張要的是看懂形狀，所以用等角投影畫出頂面與側面；第三張要的是誰跟誰重合，那是相對位置，給它體積反而會讀錯。三張圖全部是零 JavaScript 的 SVG 與 CSS，關掉指令碼還在。</span>
 </div>
 
 </article>
