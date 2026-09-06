@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="zh-Hant-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>四種立體，同一張圖</title>
+<meta name="description" content="同一張訊號放大管道圖的四種立體做法並排：SVG 等角實體、CSS 3D 分層、可拖曳的 canvas 投影，以及一格對照。用來讓彥皓指出他要的立體是哪一種。">
+<link rel="canonical" href="https://hale80427.github.io/brain-cards/dim-probe/">
+<meta name="author" content="彥皓">
+<meta property="og:type" content="article">
+<meta property="og:title" content="四種立體，同一張圖">
+<meta property="og:description" content="同一張圖的四種立體做法並排，用來指出要的是哪一種。">
+<meta property="og:url" content="https://hale80427.github.io/brain-cards/dim-probe/">
+<meta property="og:image" content="https://hale80427.github.io/brain-cards/og-default.jpg">
+<meta property="og:locale" content="zh_TW">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="四種立體，同一張圖">
+<meta name="twitter:description" content="同一張圖的四種立體做法並排，用來指出要的是哪一種。">
+<meta name="twitter:image" content="https://hale80427.github.io/brain-cards/og-default.jpg">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "四種立體，同一張圖",
+  "description": "同一張圖的四種立體做法並排，用來指出要的是哪一種。",
+  "datePublished": "2026-09-06",
+  "dateModified": "2026-09-06",
+  "author": { "@type": "Person", "name": "彥皓" },
+  "url": "https://hale80427.github.io/brain-cards/dim-probe/",
+  "inLanguage": "zh-TW",
+  "license": "https://creativecommons.org/licenses/by/4.0/"
+}
+</script>
+<style>
+  :root {
+    --bg: oklch(98.4% 0.004 106.5);
+    --fg: oklch(21.8% 0 0);
+    --accent: oklch(54.3% 0.174 29.7);
+    --accent-warn: oklch(66.6% 0.157 58.3);
+    --muted: oklch(51.0% 0 0);
+    --border: oklch(92.1% 0.007 106.5);
+    --callout-tip: oklch(95.7% 0.014 174.2);
+    --callout-warn: oklch(96.9% 0.019 72.6);
+    --plate-bg: oklch(28.5% 0.055 251.4);
+    --plate-fg: oklch(96.0% 0.008 106.5);
+    --plate-dim: oklch(75.0% 0.021 251.4);
+    --plate-line: oklch(48.0% 0.030 251.4);
+    --plate-teal: oklch(70.0% 0.098 195.0);
+    --plate-amber: oklch(78.0% 0.130 78.0);
+    --plate-red: oklch(64.0% 0.160 27.0);
+    --fs-meta: 0.85rem;
+    --fs-body: 1rem;
+    --fs-h2:   clamp(1.3rem, 3vw, 1.5rem);
+    --fs-h1:   clamp(1.75rem, 4vw, 2.25rem);
+    --font-serif: "Noto Serif TC", "Songti TC", Georgia, serif;
+    --font-mono: ui-monospace, SFMono-Regular, Menlo, monospace;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: oklch(21.8% 0 0);
+      --fg: oklch(95.3% 0.011 106.6);
+      --accent: oklch(70.4% 0.136 28.7);
+      --accent-warn: oklch(76.9% 0.165 70.1);
+      --muted: oklch(68.3% 0 0);
+      --border: oklch(32.1% 0 0);
+      --callout-tip: oklch(30.9% 0.029 178.3);
+      --callout-warn: oklch(30.7% 0.034 73.5);
+      --plate-bg: oklch(22.0% 0.040 251.4);
+    }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
+  }
+  * { box-sizing: border-box; }
+  body {
+    font-family: var(--font-serif); background: var(--bg); color: var(--fg);
+    line-height: 1.8; margin: 0; padding: 0; -webkit-font-smoothing: antialiased;
+    text-autospace: normal; font-synthesis: none; line-break: strict;
+  }
+  main, main > article {
+    display: grid;
+    grid-template-columns:
+      [full-start] minmax(1rem, 1fr)
+      [wide-start] minmax(0, 130px)
+      [content-start] minmax(0, 680px) [content-end]
+      minmax(0, 130px) [wide-end]
+      minmax(1rem, 1fr) [full-end];
+  }
+  main { padding: clamp(2rem, 5vw, 4rem) 0; }
+  main > *, main > article > * { grid-column: content; }
+  main > article { grid-column: full; }
+  main > .wide, main > article > .wide { grid-column: wide; }
+  @media (max-width: 1000px) {
+    main, main > article {
+      grid-template-columns:
+        [full-start] minmax(1rem, 1fr)
+        [wide-start content-start] minmax(0, 680px) [content-end wide-end]
+        minmax(1rem, 1fr) [full-end];
+    }
+  }
+  h1 { font-size: var(--fs-h1); line-height: 1.3; margin: 0 0 1rem; }
+  h2 { font-size: var(--fs-h2); line-height: 1.4; margin: 2.5rem 0 0.75rem; padding-bottom: 0.5rem; border-bottom: 1px solid var(--border); }
+  h3 { font-size: var(--fs-body); font-weight: 700; line-height: 1.4; margin: 1.75rem 0 0.5rem; color: var(--accent); }
+  p { margin: 0 0 1.25rem; }
+  a { color: var(--accent); text-underline-offset: 3px; }
+  em { font-style: normal; font-weight: 600; text-emphasis: filled dot; text-emphasis-position: under right;
+       -webkit-text-emphasis: filled dot; -webkit-text-emphasis-position: under right; }
+  .bluf { background: var(--callout-tip); border-left: 3px solid var(--accent); padding: 1.25rem 1.5rem; margin: 1.5rem 0 2rem; border-radius: 4px; }
+  .bluf strong.label { display: block; font-size: var(--fs-meta); letter-spacing: 0.05em; color: var(--accent); margin-bottom: 0.5rem; text-transform: uppercase; }
+  .callout { padding: 1rem 1.25rem; margin: 1.5rem 0; border-radius: 4px; border-left: 3px solid var(--muted); }
+  .callout.tip { background: var(--callout-tip); border-left-color: var(--accent); }
+  .callout .lbl { display: block; font-size: var(--fs-meta); font-weight: 700; letter-spacing: 0.06em; color: var(--accent); margin-bottom: 0.4rem; }
+  .callout .txt { display: block; font-size: var(--fs-body); line-height: 1.8; margin: 0 0 0.7rem; }
+  .callout .txt:last-child { margin-bottom: 0; }
+  .notesrc { display: block; font-size: var(--fs-meta); color: var(--muted); margin: 0.5rem 0 0; line-height: 1.7; }
+  .notesrc .lb { color: var(--fg); font-weight: 600; letter-spacing: 0.04em; }
+  code { font-family: var(--font-mono); background: var(--callout-tip); padding: 0.1em 0.4em; border-radius: 3px;
+         font-size: var(--fs-body); overflow-wrap: anywhere; word-break: break-word; }
+  figure { margin: 2.5rem 0 3rem; }
+  figcaption { font-size: var(--fs-meta); color: var(--muted); margin-top: 0.75rem; line-height: 1.75; }
+  .probe-head { display: flex; align-items: baseline; gap: 0.7rem; margin-bottom: 0.6rem; }
+  .pn-big { font-family: var(--font-mono); font-size: var(--fs-h2); color: var(--accent); font-weight: 700; }
+  .hint { font-size: var(--fs-meta); color: var(--muted); }
+  .stage { background: var(--plate-bg); border-radius: 6px; overflow: hidden; }
+  .stage svg { display: block; width: 100%; height: auto; }
+  .stage canvas { display: block; width: 100%; height: auto; aspect-ratio: 900 / 470; touch-action: pan-y; }
+  .ns { color: var(--plate-fg); padding: 1.5rem; font-size: var(--fs-body); margin: 0; }
+  /* 臂 ②：CSS 3D 分層。零 JS，靠 perspective 與 translateZ 疊出深度。 */
+  .deck { perspective: var(--persp); height: 470px; display: flex; align-items: center; justify-content: center; }
+  .deck-inner { position: relative; width: 1px; height: 1px; transform-style: preserve-3d;
+                transform: translateX(-58px) rotateX(11deg) rotateY(-20deg); }
+  .deck .plate { position: absolute; width: var(--w); height: var(--h);
+                 margin-left: calc(var(--w) / -2); margin-top: calc(var(--h) / -2);
+                 transform: translateX(var(--tx)) translateZ(var(--z)); border: 1px solid var(--plate-fg); border-radius: 6px;
+                 display: flex; align-items: center; justify-content: center; }
+  .deck .p1 { background: color-mix(in srgb, var(--plate-teal) 82%, transparent); }
+  .deck .p2 { background: color-mix(in srgb, var(--plate-amber) 76%, transparent); }
+  .deck .p3 { background: color-mix(in srgb, var(--plate-amber) 88%, transparent); }
+  .deck .p4 { background: color-mix(in srgb, var(--plate-red) 84%, transparent); }
+  .deck .pn { font-family: var(--font-mono); font-size: var(--fs-h2); font-weight: 700; color: var(--plate-bg); }
+  .deck .eng { position: absolute; width: 156px; height: 46px; margin-left: -78px; margin-top: -23px;
+               transform: translateY(-158px) translateZ(40px);
+               background: color-mix(in srgb, var(--plate-teal) 55%, transparent);
+               border: 1px dashed var(--plate-fg); border-radius: 5px;
+               display: flex; align-items: center; justify-content: center; }
+  @media (max-width: 760px) {
+    .deck { height: 300px; }
+    .deck-inner { transform: scale(0.46) rotateX(11deg) rotateY(-20deg); }
+    .stage canvas { aspect-ratio: 5 / 4; }
+  }
+  footer { font-size: var(--fs-meta); color: var(--muted); margin-top: 3rem; padding-top: 1.5rem; border-top: 1px solid var(--border); }
+  footer p { margin: 0 0 0.6rem; line-height: 1.75; }
+</style>
+</head>
+<body>
+<main>
+<header>
+<h1>四種立體，同一張圖</h1>
+<div class="bluf">
+<strong class="label">BLUF</strong>
+<p>下面四格畫的是同一張圖，內容、文字、圖說逐字相同，只有立體的做法不同。這一頁不是交付物，是一次單變數實驗：我要知道你說的「立體」指的是哪一種，因為那個詞在規格裡只被操作化成其中一種，而那一種被判準擋掉了。看完四格之後挑一個，並說一句為什麼。</p>
+</div>
+</header>
+<article>
+<!-- narrative: 物件,細節,矛盾 -->
+<p>四格的差別只在一件事：怎麼把第三個維度放進去。</p>
+<p>第一格有厚度、有三個面、有明暗，但資訊仍然是平面的。第二格把四個轉換點沿深度排開，前面的擋住後面的。第三格可以用手指拖曳旋轉。第四格不告訴你它是什麼，你自己看。</p>
+<p>挑一個之前先滑完四格。順序不代表推薦。</p>
+
+<figure class="wide">
+<div class="probe-head"><span class="pn-big">①</span></div>
+<div class="stage"><svg viewBox="-89.2 -212.0 506.7 536.0" role="img" aria-labelledby="tA dA"><title id="tA">訊號放大管道的等角實體圖</title><desc id="dA">兩條從同一個方塊出發的立體管道。上方那條全程等寬，中途改為虛線後終止；下方那條沿四個編號段逐段變粗，顏色由青轉紅。</desc><defs><linearGradient id="gtA0" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="var(--plate-teal)"/><stop offset="1" stop-color="var(--plate-amber)"/></linearGradient><linearGradient id="gsA0" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="var(--plate-teal)" stop-opacity="0.62"/><stop offset="1" stop-color="var(--plate-amber)" stop-opacity="0.62"/></linearGradient><linearGradient id="gtA1" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="var(--plate-amber)"/><stop offset="1" stop-color="var(--plate-amber)"/></linearGradient><linearGradient id="gsA1" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="var(--plate-amber)" stop-opacity="0.62"/><stop offset="1" stop-color="var(--plate-amber)" stop-opacity="0.62"/></linearGradient><linearGradient id="gtA2" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="var(--plate-amber)"/><stop offset="1" stop-color="var(--plate-red)"/></linearGradient><linearGradient id="gsA2" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="var(--plate-amber)" stop-opacity="0.62"/><stop offset="1" stop-color="var(--plate-red)" stop-opacity="0.62"/></linearGradient><linearGradient id="gtA3" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="var(--plate-red)"/><stop offset="1" stop-color="var(--plate-red)"/></linearGradient><linearGradient id="gsA3" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="var(--plate-red)" stop-opacity="0.62"/><stop offset="1" stop-color="var(--plate-red)" stop-opacity="0.62"/></linearGradient></defs><path d="M10.4 -18.0 L103.1 11.5 L61.5 35.5 L-10.4 -6.0 Z" fill="url(#gtA0)" stroke="var(--plate-bg)" stroke-width="1.2"/><path d="M-10.4 -6.0 L61.5 35.5 L61.5 83.5 L-10.4 18.0 Z" fill="url(#gsA0)" stroke="var(--plate-bg)" stroke-width="1.2"/><text x="41.1" y="15.7" font-size="30" font-weight="700" text-anchor="middle" fill="var(--plate-bg)">1</text><path d="M103.1 11.5 L197.5 38.0 L131.6 76.0 L61.5 35.5 Z" fill="url(#gtA1)" stroke="var(--plate-bg)" stroke-width="1.2"/><path d="M61.5 35.5 L131.6 76.0 L131.6 152.0 L61.5 83.5 Z" fill="url(#gsA1)" stroke="var(--plate-bg)" stroke-width="1.2"/><text x="123.4" y="50.2" font-size="30" font-weight="700" text-anchor="middle" fill="var(--plate-bg)">2</text><path d="M197.5 38.0 L293.6 61.5 L200.1 115.5 L131.6 76.0 Z" fill="url(#gtA2)" stroke="var(--plate-bg)" stroke-width="1.2"/><path d="M131.6 76.0 L200.1 115.5 L200.1 223.5 L131.6 152.0 Z" fill="url(#gsA2)" stroke="var(--plate-bg)" stroke-width="1.2"/><text x="205.7" y="82.7" font-size="30" font-weight="700" text-anchor="middle" fill="var(--plate-bg)">3</text><path d="M293.6 61.5 L391.4 82.0 L266.7 154.0 L200.1 115.5 Z" fill="url(#gtA3)" stroke="var(--plate-bg)" stroke-width="1.2"/><path d="M200.1 115.5 L266.7 154.0 L266.7 298.0 L200.1 223.5 Z" fill="url(#gsA3)" stroke="var(--plate-bg)" stroke-width="1.2"/><text x="288.0" y="113.2" font-size="30" font-weight="700" text-anchor="middle" fill="var(--plate-bg)">4</text><path d="M10.4 -186.0 L174.9 -91.0 L154.2 -79.0 L-10.4 -174.0 Z" fill="var(--plate-teal)" opacity="0.92" stroke="var(--plate-bg)" stroke-width="1.2"/><path d="M-10.4 -174.0 L154.2 -79.0 L154.2 -55.0 L-10.4 -150.0 Z" fill="var(--plate-teal)" opacity="0.55" stroke="var(--plate-bg)" stroke-width="1.2"/><path d="M174.9 -91.0 L233.8 -57.0 L213.0 -45.0 L154.2 -79.0 Z" fill="none" stroke="var(--plate-teal)" stroke-width="1.6" stroke-dasharray="7 6"/><path d="M154.2 -79.0 L213.0 -45.0 L213.0 -21.0 L154.2 -55.0 Z" fill="none" stroke="var(--plate-teal)" stroke-width="1.6" stroke-dasharray="7 6" opacity="0.7"/><path d="M-37.2 -135.5 L7.8 -109.5 L-18.2 -94.5 L-63.2 -120.5 Z" fill="var(--plate-line)"/><path d="M-63.2 -120.5 L-18.2 -94.5 L-18.2 -64.5 L-63.2 -90.5 Z" fill="var(--plate-line)" opacity="0.65"/></svg></div>
+<figcaption>同一起事故沿四個轉換點被逐段放大，而換一組詞描述它的那條路全程不變寬、中途就終止。四格畫的是同一張圖，內容與文字逐字相同，只有立體的做法不同。<span class="notesrc"><span class="lb">Note</span>　管寬是傳播規模的示意，不對應任何實際的觸及量測；四個轉換點的時序來自節目口述，未經獨立查證。上方那條管是節目中提出的反事實推論，不是已發生的事。</span><span class="notesrc"><span class="lb">Source</span>　All-In Podcast 第 288 集，<code>19:56–30:33</code>。</span></figcaption>
+</figure>
+
+<figure class="wide">
+<div class="probe-head"><span class="pn-big">②</span></div>
+<div class="stage"><div class="deck" style="--persp:900px"><div class="deck-inner"><div class="plate p1" style="--z:-93px;--tx:-228px;--w:142px;--h:108px"><span class="pn">1</span></div><div class="plate p2" style="--z:-31px;--tx:-76px;--w:176px;--h:134px"><span class="pn">2</span></div><div class="plate p3" style="--z:31px;--tx:76px;--w:210px;--h:160px"><span class="pn">3</span></div><div class="plate p4" style="--z:93px;--tx:228px;--w:244px;--h:186px"><span class="pn">4</span></div><div class="eng"><span class="pn">A</span></div></div></div></div>
+<figcaption>同一起事故沿四個轉換點被逐段放大，而換一組詞描述它的那條路全程不變寬、中途就終止。四格畫的是同一張圖，內容與文字逐字相同，只有立體的做法不同。<span class="notesrc"><span class="lb">Note</span>　管寬是傳播規模的示意，不對應任何實際的觸及量測；四個轉換點的時序來自節目口述，未經獨立查證。上方那條管是節目中提出的反事實推論，不是已發生的事。</span><span class="notesrc"><span class="lb">Source</span>　All-In Podcast 第 288 集，<code>19:56–30:33</code>。</span></figcaption>
+</figure>
+
+<figure class="wide">
+<div class="probe-head"><span class="pn-big">③</span><span class="hint">可以用手指左右拖曳</span></div>
+<div class="stage"><canvas id="c3" width="900" height="470" aria-label="可拖曳旋轉的立體管道圖"></canvas><noscript><p class="ns">這一格需要 JavaScript 才會出現。其餘三格不需要。</p></noscript></div>
+<figcaption>同一起事故沿四個轉換點被逐段放大，而換一組詞描述它的那條路全程不變寬、中途就終止。四格畫的是同一張圖，內容與文字逐字相同，只有立體的做法不同。<span class="notesrc"><span class="lb">Note</span>　管寬是傳播規模的示意，不對應任何實際的觸及量測；四個轉換點的時序來自節目口述，未經獨立查證。上方那條管是節目中提出的反事實推論，不是已發生的事。</span><span class="notesrc"><span class="lb">Source</span>　All-In Podcast 第 288 集，<code>19:56–30:33</code>。</span></figcaption>
+</figure>
+
+<figure class="wide">
+<div class="probe-head"><span class="pn-big">④</span></div>
+<div class="stage"><svg viewBox="-89.2 -212.0 506.7 536.0" role="img" aria-labelledby="tD dD"><title id="tD">訊號放大管道的等角實體圖</title><desc id="dD">兩條從同一個方塊出發的立體管道。上方那條全程等寬，中途改為虛線後終止；下方那條沿四個編號段逐段變粗，顏色由青轉紅。</desc><defs><linearGradient id="gtD0" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="var(--plate-teal)"/><stop offset="1" stop-color="var(--plate-amber)"/></linearGradient><linearGradient id="gsD0" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="var(--plate-teal)" stop-opacity="0.62"/><stop offset="1" stop-color="var(--plate-amber)" stop-opacity="0.62"/></linearGradient><linearGradient id="gtD1" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="var(--plate-amber)"/><stop offset="1" stop-color="var(--plate-amber)"/></linearGradient><linearGradient id="gsD1" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="var(--plate-amber)" stop-opacity="0.62"/><stop offset="1" stop-color="var(--plate-amber)" stop-opacity="0.62"/></linearGradient><linearGradient id="gtD2" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="var(--plate-amber)"/><stop offset="1" stop-color="var(--plate-red)"/></linearGradient><linearGradient id="gsD2" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="var(--plate-amber)" stop-opacity="0.62"/><stop offset="1" stop-color="var(--plate-red)" stop-opacity="0.62"/></linearGradient><linearGradient id="gtD3" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="var(--plate-red)"/><stop offset="1" stop-color="var(--plate-red)"/></linearGradient><linearGradient id="gsD3" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="var(--plate-red)" stop-opacity="0.62"/><stop offset="1" stop-color="var(--plate-red)" stop-opacity="0.62"/></linearGradient></defs><path d="M10.4 -18.0 L103.1 11.5 L61.5 35.5 L-10.4 -6.0 Z" fill="url(#gtD0)" stroke="var(--plate-bg)" stroke-width="1.2"/><path d="M-10.4 -6.0 L61.5 35.5 L61.5 83.5 L-10.4 18.0 Z" fill="url(#gsD0)" stroke="var(--plate-bg)" stroke-width="1.2"/><text x="41.1" y="15.7" font-size="30" font-weight="700" text-anchor="middle" fill="var(--plate-bg)">1</text><path d="M103.1 11.5 L197.5 38.0 L131.6 76.0 L61.5 35.5 Z" fill="url(#gtD1)" stroke="var(--plate-bg)" stroke-width="1.2"/><path d="M61.5 35.5 L131.6 76.0 L131.6 152.0 L61.5 83.5 Z" fill="url(#gsD1)" stroke="var(--plate-bg)" stroke-width="1.2"/><text x="123.4" y="50.2" font-size="30" font-weight="700" text-anchor="middle" fill="var(--plate-bg)">2</text><path d="M197.5 38.0 L293.6 61.5 L200.1 115.5 L131.6 76.0 Z" fill="url(#gtD2)" stroke="var(--plate-bg)" stroke-width="1.2"/><path d="M131.6 76.0 L200.1 115.5 L200.1 223.5 L131.6 152.0 Z" fill="url(#gsD2)" stroke="var(--plate-bg)" stroke-width="1.2"/><text x="205.7" y="82.7" font-size="30" font-weight="700" text-anchor="middle" fill="var(--plate-bg)">3</text><path d="M293.6 61.5 L391.4 82.0 L266.7 154.0 L200.1 115.5 Z" fill="url(#gtD3)" stroke="var(--plate-bg)" stroke-width="1.2"/><path d="M200.1 115.5 L266.7 154.0 L266.7 298.0 L200.1 223.5 Z" fill="url(#gsD3)" stroke="var(--plate-bg)" stroke-width="1.2"/><text x="288.0" y="113.2" font-size="30" font-weight="700" text-anchor="middle" fill="var(--plate-bg)">4</text><path d="M10.4 -186.0 L174.9 -91.0 L154.2 -79.0 L-10.4 -174.0 Z" fill="var(--plate-teal)" opacity="0.92" stroke="var(--plate-bg)" stroke-width="1.2"/><path d="M-10.4 -174.0 L154.2 -79.0 L154.2 -55.0 L-10.4 -150.0 Z" fill="var(--plate-teal)" opacity="0.55" stroke="var(--plate-bg)" stroke-width="1.2"/><path d="M174.9 -91.0 L233.8 -57.0 L213.0 -45.0 L154.2 -79.0 Z" fill="none" stroke="var(--plate-teal)" stroke-width="1.6" stroke-dasharray="7 6"/><path d="M154.2 -79.0 L213.0 -45.0 L213.0 -21.0 L154.2 -55.0 Z" fill="none" stroke="var(--plate-teal)" stroke-width="1.6" stroke-dasharray="7 6" opacity="0.7"/><path d="M-37.2 -135.5 L7.8 -109.5 L-18.2 -94.5 L-63.2 -120.5 Z" fill="var(--plate-line)"/><path d="M-63.2 -120.5 L-18.2 -94.5 L-18.2 -64.5 L-63.2 -90.5 Z" fill="var(--plate-line)" opacity="0.65"/></svg></div>
+<figcaption>同一起事故沿四個轉換點被逐段放大，而換一組詞描述它的那條路全程不變寬、中途就終止。四格畫的是同一張圖，內容與文字逐字相同，只有立體的做法不同。<span class="notesrc"><span class="lb">Note</span>　管寬是傳播規模的示意，不對應任何實際的觸及量測；四個轉換點的時序來自節目口述，未經獨立查證。上方那條管是節目中提出的反事實推論，不是已發生的事。</span><span class="notesrc"><span class="lb">Source</span>　All-In Podcast 第 288 集，<code>19:56–30:33</code>。</span></figcaption>
+</figure>
+
+<div class="callout tip">
+<span class="lbl">挑完之後請回一句</span>
+<span class="txt">哪一格最接近你要的立體，以及為什麼。理由那一句比選項本身重要——它會決定接下來是改判準、改題材，還是改技術路線。</span>
+<span class="txt">如果四格裡沒有一格對，那也是答案，請直接說沒有。這一頁刻意留了「都不是」這個出口。</span>
+</div>
+</article>
+<footer>
+<p>2026-09-06 建立。這是第 252 跑 R2 的原型頁，不是對外交付物，未列入合輯首頁與 llms.txt。</p>
+<p>四格的幾何全部由同一支腳本算出：`build_probe.py`，真尺寸集中在規格來源區。</p>
+<p>授權 CC BY 4.0。作者：彥皓。</p>
+</footer>
+</main>
+<script type="application/json" id="form-routing-3-7">
+{"3.7a":{"cell":"其他","note":"這一頁不是交付物，是一次形式選型的並排實驗——十格值域描述的是題材結構，而這一頁的結構是「同一份內容的四種呈現」，不屬於任何一格。依 KB-13 第 10 格規定：停下來，不要硬套。"},
+ "3.7b":{"sections":[],"sections_none_reason":"本頁刻意零個 <h2>——四格之間任何標題文字都會變成暗示，而這一頁要量的正是無暗示下的偏好。四格的說明文字逐字相同。"},
+ "3.7c":{"continuous":false},
+ "3.7d":{"needed":false,"tier":"none"}}
+</script>
+<script>
+
+(function(){
+  var cv=document.getElementById('c3'); if(!cv) return;
+  var ctx=cv.getContext('2d'), yaw=0.72, drag=false, lx=0, W=0, H=0;
+  var SX=[0.0, 95.0, 190.0, 285.0, 380.0], SN=[12.0, 24.0, 38.0, 54.0, 72.0], EH=12.0, ES=190.0, EF=258.0, EL=168.0;
+  var TILT=0.34, PAD=26, sc=1, ox=0, oy=0;
+  function cs(v){return getComputedStyle(document.documentElement).getPropertyValue(v).trim();}
+  function raw(x,y,z){
+    var cy=Math.cos(yaw), sy=Math.sin(yaw);
+    var X=x*cy - y*sy, Z=x*sy + y*cy;
+    return [X, Z*TILT - z];
+  }
+  function P(p){ return [ox + p[0]*sc, oy + p[1]*sc]; }
+  function rawFaces(x0,x1,s0,s1,lift){
+    return [[raw(x0,-s0,s0+lift),raw(x1,-s1,s1+lift),raw(x1,s1,s1+lift),raw(x0,s0,s0+lift)],
+            [raw(x0,s0,s0+lift),raw(x1,s1,s1+lift),raw(x1,s1,-s1+lift),raw(x0,s0,-s0+lift)]];
+  }
+  function allFaces(){
+    var out=[];
+    out.push({f:rawFaces(0,ES,EH,EH,EL), kind:'eng'});
+    out.push({f:rawFaces(ES,EF,EH,EH,EL), kind:'fade'});
+    for(var i=0;i<4;i++) out.push({f:rawFaces(SX[i],SX[i+1],SN[i],SN[i+1],0), kind:'seg', i:i});
+    return out;
+  }
+  function fit(list){
+    var xs=[], ys=[];
+    list.forEach(function(o){o.f.forEach(function(q){q.forEach(function(p){xs.push(p[0]);ys.push(p[1]);});});});
+    var x0=Math.min.apply(null,xs), x1=Math.max.apply(null,xs);
+    var y0=Math.min.apply(null,ys), y1=Math.max.apply(null,ys);
+    sc=Math.min((W-2*PAD)/(x1-x0), (H-2*PAD)/(y1-y0));
+    ox=(W-(x1-x0)*sc)/2 - x0*sc;
+    oy=(H-(y1-y0)*sc)/2 - y0*sc;
+  }
+  function poly(p){ctx.beginPath();ctx.moveTo(p[0][0],p[0][1]);
+    for(var i=1;i<p.length;i++)ctx.lineTo(p[i][0],p[i][1]);ctx.closePath();}
+  function quad(q,fill,alpha){var p=q.map(P);ctx.globalAlpha=alpha;poly(p);
+    ctx.fillStyle=fill;ctx.fill();ctx.globalAlpha=1;
+    ctx.strokeStyle=cs('--plate-bg');ctx.lineWidth=1.2;ctx.stroke();return p;}
+  function draw(){
+    ctx.clearRect(0,0,W,H);
+    var list=allFaces(); fit(list);
+    var cols=[cs('--plate-teal'),cs('--plate-amber'),cs('--plate-amber'),cs('--plate-red')];
+    var teal=cs('--plate-teal');
+    list.forEach(function(o){
+      if(o.kind==='eng'){ quad(o.f[1],teal,0.58); quad(o.f[0],teal,0.92); }
+      else if(o.kind==='fade'){
+        ctx.save();ctx.setLineDash([7,6]);ctx.strokeStyle=teal;ctx.lineWidth=1.6;
+        poly(o.f[0].map(P));ctx.stroke();poly(o.f[1].map(P));ctx.stroke();ctx.restore();
+      } else {
+        quad(o.f[1],cols[o.i],0.62);
+        var p=quad(o.f[0],cols[o.i],1);
+        var cx=(p[0][0]+p[1][0]+p[2][0]+p[3][0])/4, cyy=(p[0][1]+p[1][1]+p[2][1]+p[3][1])/4;
+        ctx.fillStyle=cs('--plate-bg');ctx.font='700 24px ui-monospace,monospace';
+        ctx.textAlign='center';ctx.textBaseline='middle';ctx.fillText(String(o.i+1),cx,cyy);
+      }
+    });
+  }
+  function size(){var r=cv.getBoundingClientRect();var d=window.devicePixelRatio||1;
+    W=r.width;H=r.height;
+    cv.width=Math.round(W*d);cv.height=Math.round(H*d);
+    ctx.setTransform(d,0,0,d,0,0);
+    draw();}
+  cv.addEventListener('pointerdown',function(e){drag=true;lx=e.clientX;cv.setPointerCapture(e.pointerId);});
+  cv.addEventListener('pointermove',function(e){if(!drag)return;yaw+=(e.clientX-lx)*0.006;lx=e.clientX;draw();});
+  cv.addEventListener('pointerup',function(){drag=false;});
+  window.addEventListener('resize',size);
+  size();
+})();
+
+</script>
+</body>
+</html>
+
