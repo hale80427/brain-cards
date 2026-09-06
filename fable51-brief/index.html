@@ -479,6 +479,10 @@ footer{border-top:1px solid var(--line); margin-top:56px; padding:28px 0 60px;
             <th>這一類涵蓋十六條中的幾條</th>
             <td>3</td><td>11</td><td>7</td><td>2</td><td>7</td><td>1</td><td>1</td><td class="mg">—</td>
           </tr>
+          <tr>
+            <th>這一欄誰動得了</th>
+            <td>你</td><td>你</td><td class="down">Anthropic</td><td>你</td><td>混合</td><td>—</td><td>你</td><td class="mg">—</td>
+          </tr>
         </tfoot>
       </table>
     </div>
@@ -487,16 +491,18 @@ footer{border-top:1px solid var(--line); margin-top:56px; padding:28px 0 60px;
       <span><i class="swatch sw-on"></i>這條差異落在這一類處置</span>
       <span><i class="swatch sw-hot"></i>你系統目前沒有對應機制的六條</span>
     </div>
-    <figcaption>大部分處置是加一段系統提示，不是改架構——十六條裡有十一條落在同一欄。</figcaption>
-    <p class="fig-note">Note：「你已有等價機制」那一欄由主 session 逐條比對 <code>CLAUDE.md</code> 全文判定，並對其中六條跑了關鍵詞程式驗，讀數見 §5。這一欄的判定有兩種成因在表上長得一樣：真的有等價機制，或是我把官方原文讀寬了、把不同的東西判成同一件事。一列可落多欄，故底列小計加總大於 16。</p>
+    <figcaption>十一條的處置只是加一段系統提示；但另外七條落在你動不了的那一欄。</figcaption>
+    <p class="fig-note">Note：底部第二列是這張表最重要的限定，而它是<strong>異質票攻出來的，不是我原本畫的</strong>。官方這十六條的收件人是自建 harness 的 API 整合者，他們控制 beta header、<code>tool_choice</code>、messages 陣列。你是 Claude Code 的使用者，控制的是 <code>CLAUDE.md</code>、hook 與 skill。所以「改 harness 呼叫方式」那七條，你一條都動不了——那不是行動清單，是願望清單。</p>
+    <p class="fig-note">Note 之二：「你已有等價機制」那一欄有兩種成因在表上長得一樣，一是真的有，二是我把官方原文讀寬了。異質票逐條攻完的結果是<strong>推翻 2、削弱 4、未成立 1</strong>，修正後的判定見 §5。一列可落多欄，故底列小計加總大於 16。</p>
     <p class="fig-src">Source：左欄十六條取自 Anthropic 官方 <span class="en">「Prompting Claude Fable 5.1」</span> 指南的十六個主題段，全文 53,572 字元已落盤逐段核對。<span class="src src-o">官方</span> 右側處置分類與「已有」判定為本次調研的推論。<span class="src src-i">推論</span></p>
   </figure>
 
   <h3>怎麼讀這張表</h3>
   <ul class="tight">
-    <li>底列的 11 是這張表最重要的數字。多數差異不需要改架構，一段系統提示就處理掉了。</li>
-    <li>「你已有」那欄的 7，說明你的系統已經走在前面。其中幾條是你自己實測出來的，不是抄官方的。</li>
-    <li>淡色底的六列是缺口。它們的共同特徵是：全都是這一代才出現的新症狀，不是通用紀律。系統裡沒有它們是正常的，不是疏漏。</li>
+    <li>底列的 11 是好消息。多數差異不需要改架構，一段系統提示就處理掉了，而系統提示你自己改得動。</li>
+    <li>底部第二列是壞消息。「改 harness 呼叫方式」那 7 條落在 Anthropic 手上，你只能等。</li>
+    <li>「你已有」那欄的 7，<strong>不能讀成「你的系統已經走在前面」</strong>。異質票查完之後，其中三條的實體其實在 Claude Code 裡，不在你的 repo。詳見 §5。</li>
+    <li>淡色底的六列是缺口。它們全都是這一代才出現的新症狀，不是通用紀律。系統裡沒有它們是正常的，不是疏漏。</li>
   </ul>
 </section>
 
@@ -552,11 +558,11 @@ footer{border-top:1px solid var(--line); margin-top:56px; padding:28px 0 60px;
 
 <section id="actions">
   <p class="sec-num">§5</p>
-  <h2>立即可改的六條</h2>
-  <p class="sec-sub">§3 那張表裡淡色底的六列。每條附官方逐字建議與可直接複製的提示句。</p>
+  <h2>六個缺口，以及各自誰動得了</h2>
+  <p class="sec-sub">§3 那張表裡淡色底的六列。每條標了「你能不能自己改」——這一欄是異質票逼出來的，我原本的標題寫「立即可改」，那三個字是錯的。</p>
 
   <details>
-    <summary><span class="tag tag-new">缺</span> <span>02 · 工具呼叫之間幾乎不寫字，使用者看到它靜默好幾分鐘</span></summary>
+    <summary><span class="tag tag-new">半條你能改</span> <span>02 · 工具呼叫之間幾乎不寫字，使用者看到它靜默好幾分鐘</span></summary>
     <div class="det-body">
       <p>官方怎麼說：</p>
       <blockquote class="en"><p>Claude Fable 5.1's default behavior is to write fewer user-facing updates during long tool-calling turns than Claude Fable 5 does. This becomes more pronounced at higher effort and in longer tool chains.</p></blockquote>
@@ -570,7 +576,7 @@ footer{border-top:1px solid var(--line); margin-top:56px; padding:28px 0 60px;
   </details>
 
   <details>
-    <summary><span class="tag tag-new">判定下修</span> <span>06 · 你的「不要」型規則，可能正往錯的方向壓</span></summary>
+    <summary><span class="tag tag-have">你能改·已下修</span> <span>06 · 你的「不要」型規則，可能正往錯的方向壓</span></summary>
     <div class="det-body">
       <p>官方怎麼說：</p>
       <blockquote class="en"><p>Earlier models overused bullets and bold in chat, and many prompts carry anti-formatting rules written to hold that down. Claude Fable 5.1 leans the other way: it uses bold less and is less likely to reach for headers, lists, or quotation marks. If your prompt contains anti-formatting language, remove it or replace it with a rule that says when specific formatting is appropriate.</p></blockquote>
@@ -582,7 +588,7 @@ footer{border-top:1px solid var(--line); margin-top:56px; padding:28px 0 60px;
   </details>
 
   <details>
-    <summary><span class="tag tag-new">缺</span> <span>09 · client 端壓縮摘要會掉約束與決定</span></summary>
+    <summary><span class="tag tag-new">你動不了</span> <span>09 · client 端壓縮摘要會掉約束與決定</span></summary>
     <div class="det-body">
       <p>你有 <code>handoff_check.py</code> 的七欄接手包 schema，但那是人寫的。模型自己做壓縮摘要時，沒有對應的指令。</p>
       <p>官方給了一段完整的 summarization instruction，六件事逐條點名：</p>
@@ -594,7 +600,7 @@ footer{border-top:1px solid var(--line); margin-top:56px; padding:28px 0 60px;
   </details>
 
   <details>
-    <summary><span class="tag tag-new">缺</span> <span>11 · 低 effort 時它憑記憶回答，不去搜尋</span></summary>
+    <summary><span class="tag tag-have">你能改</span> <span>11 · 低 effort 時它憑記憶回答，不去搜尋</span></summary>
     <div class="det-body">
       <p>官方怎麼說：</p>
       <blockquote class="en"><p>At <code>low</code> effort, Claude Fable 5.1 is less likely than Claude Fable 5 to call a search or retrieval tool, and more likely to answer from memory.</p></blockquote>
@@ -608,7 +614,7 @@ footer{border-top:1px solid var(--line); margin-top:56px; padding:28px 0 60px;
   </details>
 
   <details>
-    <summary><span class="tag tag-new">缺</span> <span>12 · 良性的 coding 請求被安全分類器誤擋</span></summary>
+    <summary><span class="tag tag-new">半條你能改</span> <span>12 · 良性的 coding 請求被安全分類器誤擋</span></summary>
     <div class="det-body">
       <p>被擋時會回 <code>stop_reason: "refusal"</code>。官方點名三個會提高誤擋機率的情境：</p>
       <ul>
@@ -622,7 +628,7 @@ footer{border-top:1px solid var(--line); margin-top:56px; padding:28px 0 60px;
   </details>
 
   <details>
-    <summary><span class="tag tag-new">缺</span> <span>13 · 小改動卻整檔重寫</span></summary>
+    <summary><span class="tag tag-have">你能改</span> <span>13 · 小改動卻整檔重寫</span></summary>
     <div class="det-body">
       <p>官方怎麼說：結果通常一樣，但除非檔案很短或大部分都要改，重寫會多花輸出 token 與時間。</p>
       <p class="pre-lab">官方建議的提示句，逐字</p>
@@ -632,27 +638,39 @@ footer{border-top:1px solid var(--line); margin-top:56px; padding:28px 0 60px;
     </div>
   </details>
 
-  <h3>另外七條：你的系統已經有了</h3>
+  <h3>另外七條：「已有」要拆成三種</h3>
+  <p>異質票逐條攻完的結果是推翻 2、削弱 4、未成立 1。下表是修正後的版本。</p>
   <details>
-    <summary><span class="tag tag-have">已有</span><span>展開看七條各自對應到你系統的哪個機制</span></summary>
+    <summary><span class="tag tag-have">已修正</span> <span>展開看七條各自的實體在哪、以及哪兩條被推翻</span></summary>
     <div class="det-body">
       <div class="tw"><table>
-        <thead><tr><th>官方條目</th><th>你系統裡的對應</th><th>程式驗</th></tr></thead>
+        <thead><tr><th>官方條目</th><th>實體在哪</th><th>修正後的判定</th></tr></thead>
         <tbody>
-          <tr><td>03 · 工具呼叫要批次</td><td>系統提示已有「獨立的工具呼叫可以在同一則回應裡平行發出」</td><td>—</td></tr>
-          <tr><td>05 · 散文變密</td><td>「中文單句超過 40 字就拆」，加上比喻的承重測試</td><td class="up">命中 2</td></tr>
-          <tr><td>07 · 引文不標記</td><td>已有硬閘 <code>quote_leak_check.py</code>，其存在理由逐字引的就是這條官方句</td><td class="up">檔案存在，官方句命中 1</td></tr>
-          <tr><td>08 · 提早結束回合</td><td><code>anti_laziness</code> 段，加上系統提示的 Delivering work 段</td><td class="up">命中 2</td></tr>
-          <tr><td>10 · 做了沒被要求的事</td><td><code>proportionality_and_audit</code> 段</td><td class="up">命中 2</td></tr>
-          <tr><td>15 · 主 agent 空等</td><td><code>Agent</code> tool 本身就是背景非同步，完成才通知</td><td>結構層</td></tr>
-          <tr><td>16 · 視覺要裁切工具</td><td>你自己實測出來的分格放大盲讀紀律</td><td class="up">命中 2，<code>tile_sweep.py</code> 存在</td></tr>
+          <tr><td>03 · 工具呼叫要批次</td><td class="down">Claude Code 內建提示</td><td>削弱。官方的解法形狀是「每一輪重貼一次」，靜態系統提示對不上。而且那句話不在你的 repo 裡。</td></tr>
+          <tr><td>05 · 散文變密</td><td>你的 output style 檔</td><td class="up">未成立，這條真的有。異質票原本要攻它，實查後自己撤回。但實體在 <code>decision-first.md</code>，換 output style 就沒了。</td></tr>
+          <tr><td>07 · 引文不標記</td><td>你的 repo，硬閘</td><td>削弱。官方治的是行為，用 few-shot 改所有摘要回應。你的閘抓的是交付物，且只在「對外文件加有外部來源」時跑。平常對話零覆蓋。</td></tr>
+          <tr><td>08 · 提早結束回合</td><td>一半 <code>CLAUDE.md</code>、一半 Claude Code</td><td>削弱。官方逐字說「兩段都要上」。第二段的實體在 harness，而且官方自己點名它會讓模型更少追問模糊需求——那與你的需求釐清協議直接衝突。</td></tr>
+          <tr><td>10 · 做了沒被要求的事</td><td class="down">Claude Code，不在你的 repo</td><td class="down">推翻。官方的受詞是程式碼範圍與測試檔。你的 <code>proportionality_and_audit</code> 管的是自檢層數、限定詞與 blast radius。<code>CLAUDE.md</code> 搜「測試檔」與「順手修 nearby code」命中都是 <strong>0</strong>。</td></tr>
+          <tr><td>15 · 主 agent 空等</td><td class="down">Claude Code 的 Agent tool</td><td>削弱。官方要三件事，你的 harness 有前兩件，第三件「給它一個想等時才呼叫的工具」未驗。官方自己也說模型常常還是選擇等。</td></tr>
+          <tr><td>16 · 視覺要裁切工具</td><td>你的 repo，但方向相反</td><td class="down">推翻。見下方卡片。</td></tr>
         </tbody>
-      </table></div><p class="scroll-hint">↔ 這張表可以橫向捲動</p>
-      <div class="card good">
-        <p class="card-h">第 16 條是獨立收斂，值得單獨講</p>
-        <p>2026-08-30，你的系統靠一次實測得出「分格放大才讀得出來」。三張已知畫錯的圖，五種讀法的對照讀數是：主 session 原尺寸目視 0/3，執行者自證 0/3，盲讀全圖封閉題 0/3，盲讀全圖開放題 1/3，分格放大開放題 <strong>3/3</strong>。</p>
-        <p>2026-09-01，官方在指南裡寫了同一件事，並附上 crop tool 的參考實作。<strong>兩條路徑互不知情，結論相同</strong>。</p>
-        <p>官方逐字：<span class="en">「an image-cropping tool alone delivers most of the uplift: a tool that returns a chosen region of the image, cropped and enlarged, lets the model examine specific details in more depth and scales test-time compute with image tokens.」</span></p>
+      </table></div>
+      <p class="scroll-hint">↔ 這張表可以橫向捲動</p>
+
+      <div class="card bad">
+        <p class="card-h">第 16 條被推翻，而推翻它的證據就寫在你自己的腳本裡</p>
+        <p>我原本寫的是「兩條路徑互不知情，結論相同」。異質票指出方向相反：官方講的是<strong>讀進來的圖</strong>，讓模型自己 crop 使用者餵進來的密集圖表；你的 <code>tile_sweep.py</code> 是<strong>產出去的圖</strong>的驗收協定，把我方畫的圖切格派人盲讀。</p>
+        <p>我去讀了那支腳本的 docstring，它自己寫著：</p>
+        <blockquote><p>當初真正抓到它的組合是〔4× 放大〕加〔換讀者〕——而放大有一個沒被寫下來的前提：<strong>你要先知道往哪裡裁</strong>。那個前提在生產環境不成立。</p></blockquote>
+        <p>官方那條補的正是這一格。crop 工具是<strong>讓模型自己決定裁哪裡、而且可以迭代裁</strong>，那個「先知道往哪裡裁」的前提就不需要了。</p>
+        <p>所以正確的說法是：<strong>原理獨立收斂了，但官方點名的那格仍然是空的</strong>。你丟一張密集圖表進來時，這裡沒有 crop 工具。而這件事是可以做的。</p>
+      </div>
+
+      <div class="card warn">
+        <p class="card-h">異質票最重的一擊，是關於證據標準</p>
+        <p>它指出：這七條裡有幾條的實體是純 prose，而你自己量過純 prose 的落地率是 <strong>54.6%</strong>，有症狀的機制是 <strong>95.5%</strong>。</p>
+        <p>我在原版寫的「程式驗：命中 2」是<strong>關鍵詞命中</strong>——正是你的系統判定為「不算證據」的那一類。</p>
+        <p>逐字引它的話：<strong>這份報告對受審系統用的證據標準，低於那個系統對自己用的標準。</strong></p>
       </div>
     </div>
   </details>
@@ -732,6 +750,19 @@ footer{border-top:1px solid var(--line); margin-top:56px; padding:28px 0 60px;
     <p><strong>錯的是我的程式</strong>。本頁一律採用另一條通道的配對。這件事寫在這裡，是因為「我方儀器指控他方出錯」在你的系統裡已經是有編號的教訓，而它今天又發生了一次。</p>
   </div>
 
+  <h3>異質票攻下來的三件事</h3>
+  <div class="card">
+    <p>報告寫完後派了一票獨立的第三方，spec 刻意<strong>不指定它該攻哪裡</strong>，只說「我問的問題本身可能就是錯的」，並強制它至少要有一條標「我攻不下來」，防它配合我的期待。</p>
+    <p>它交回來的第一句就推翻了我的問題：<strong>問題不在我讀寬了官方原文，在那張矩陣的分類軸選錯了</strong>。</p>
+    <ul class="tight">
+      <li>官方那十六條的收件人是自建 harness 的 API 整合者。你是 Claude Code 的使用者。「改 harness 呼叫方式」那七條，你一條都動不了。我原本的 §5 標題寫「立即可改」，那三個字是錯的。</li>
+      <li>「你已有等價機制」七條裡，至少三條的實體在 Claude Code 的內建提示與 <code>Agent</code> tool 裡。它引了你自己寫過的一條教訓：那些東西「隨 CLI 版本走、不可版控、消失無警告」。一個你不擁有、不能版控、消失沒有症狀的機制，不叫「你已經有了」。</li>
+      <li>我的「程式驗：命中 2」是關鍵詞命中，而那正是你的系統判定為「不算證據」的那一類。</li>
+    </ul>
+    <p>逐條結果是推翻 2、削弱 4、未成立 1。<strong>頁面已依此改過</strong>，矩陣底部多了一列「這一欄誰動得了」，§5 的七條表多了「實體在哪」欄，第 10 條與第 16 條的判定被改掉。</p>
+    <p>那條「未成立」值得記一下：它原本要攻我對第 5 條的判定，實際去查了 output style 檔之後<strong>自己撤回</strong>。這是它沒有在配合我的證據。</p>
+  </div>
+
   <h3>本報告的效度邊界</h3>
   <ul class="tight">
     <li>「你已有等價機制」那七條是我的判定，不是量測。其中六條跑了關鍵詞程式驗，命中數見 §5，但關鍵詞命中不等於機制等價。我可能把官方原文讀寬了。</li>
@@ -762,7 +793,7 @@ footer{border-top:1px solid var(--line); margin-top:56px; padding:28px 0 60px;
                      {"h":"官方沒說的那一半","structural":false},
                      {"h":"十六條行為差異","structural":true},
                      {"h":"對你的系統直接咬人的三條","structural":false},
-                     {"h":"立即可改的六條","structural":false},
+                     {"h":"六個缺口","structural":false},
                      {"h":"effort 檔位怎麼選","structural":false},
                      {"h":"我怎麼知道這些是真的","structural":false}]},
  "3.7c":{"continuous":false},
