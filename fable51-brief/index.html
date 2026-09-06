@@ -159,6 +159,56 @@ table.mx tr.hot td.on{background:var(--accent)}
 .swatch{width:15px; height:15px; border-radius:3px; display:inline-block; flex:none}
 .sw-on{background:var(--cell)} .sw-hot{background:var(--accent-soft); box-shadow:inset 4px 0 0 0 var(--accent)}
 
+/* ─── 捲動敘事：sticky 圖 ＋ 捲動觸發聚焦 ─── */
+.scrolly{position:relative; margin:22px 0 8px}
+@media (min-width:721px){
+  body.js .scrolly{display:grid; grid-template-columns:1fr; gap:0}
+  body.js .scrolly-fig{position:sticky; top:14px; z-index:2; background:var(--bg);
+                       padding:8px 0 12px; margin-bottom:8px}
+  body.js .scrolly-steps{padding-bottom:24px}
+  body.js .step{min-height:62vh; display:flex; align-items:center}
+  body.js .step > div{background:var(--paper); border:1px solid var(--line);
+                      border-left:4px solid var(--line-2); border-radius:5px;
+                      padding:16px 20px; transition:border-left-color .3s, opacity .3s; opacity:.5}
+  body.js .step.on > div{border-left-color:var(--accent); opacity:1}
+}
+.step > div > p:last-child{margin-bottom:0}
+/* 無 JS 或窄視窗：全部正常顯示，零隱藏 */
+.step{margin-bottom:14px}
+.step > div{background:var(--paper); border:1px solid var(--line);
+            border-left:4px solid var(--line-2); border-radius:5px; padding:16px 20px}
+
+/* 矩陣聚焦：沒有 data-focus 時全部 opacity 1 ⇒ JS 失效即全可見 */
+table.mx tbody td, table.mx tfoot td{transition:opacity .28s}
+table.mx[data-focus] tbody td:not(.mg), table.mx[data-focus] tfoot td{opacity:.16}
+table.mx[data-focus="a"] tbody td:nth-child(2), table.mx[data-focus="a"] tfoot td:nth-child(2),
+table.mx[data-focus="b"] tbody td:nth-child(3), table.mx[data-focus="b"] tfoot td:nth-child(3),
+table.mx[data-focus="c"] tbody td:nth-child(4), table.mx[data-focus="c"] tfoot td:nth-child(4),
+table.mx[data-focus="e"] tbody td:nth-child(6), table.mx[data-focus="e"] tfoot td:nth-child(6){opacity:1}
+table.mx[data-focus="hot"] tbody tr.hot td:not(.mg){opacity:1}
+table.mx[data-focus="hot"] tfoot td{opacity:.45}
+table.mx[data-focus] tbody tr:not(.hot) th{opacity:.45; transition:opacity .28s}
+table.mx[data-focus="hot"] tbody tr.hot th{opacity:1}
+table.mx[data-focus="a"] tbody th, table.mx[data-focus="b"] tbody th,
+table.mx[data-focus="c"] tbody th, table.mx[data-focus="e"] tbody th{opacity:1}
+
+/* 手機／無 JS 的替代操作面：按鈕列 */
+.mx-picker{display:flex; flex-wrap:wrap; gap:7px; margin:14px 0 4px}
+.mx-picker button{font:inherit; font-size:var(--fs-4); font-weight:600; padding:7px 14px;
+  cursor:pointer; background:var(--paper); color:var(--ink-2);
+  border:1px solid var(--line-2); border-radius:20px}
+.mx-picker button[aria-pressed="true"]{background:var(--accent); color:#fff; border-color:var(--accent)}
+body:not(.js) .mx-picker{display:none}
+
+/* 判別式互動：你的工作負載是哪一種 */
+.verdict-out{background:var(--paper); border:1px solid var(--line);
+             border-left:4px solid var(--accent); border-radius:4px; padding:16px 20px; margin-top:12px}
+.verdict-out p:last-child{margin-bottom:0}
+body.js .verdict-out[hidden]{display:none}
+.big-n{font-size:var(--fs-2); font-weight:800; color:var(--accent);
+       font-variant-numeric:tabular-nums; line-height:1.3}
+.big-n.is-bad{color:var(--bad)}
+
 .scroll-hint{font-size:var(--fs-4); color:var(--ink-3); margin:-14px 0 20px; line-height:1.6}
 figure{margin:26px 0}
 figcaption{font-size:var(--fs-3); color:var(--ink); margin-top:12px; line-height:1.7; font-weight:700}
@@ -291,13 +341,21 @@ footer{border-top:1px solid var(--line); margin-top:56px; padding:28px 0 60px;
   <p class="sec-sub">全部取自官方發布頁與 212 頁 System Card，已逐字回查原始 HTML 核對。</p>
 
   <figure>
-    <div class="bars">
+    <div class="picker" id="bmPicker" role="group" aria-label="選擇 benchmark">
+      <button type="button" data-b="tbs" aria-pressed="true">科學工作流</button>
+      <button type="button" data-b="tb4" aria-pressed="false">終端機 coding</button>
+      <button type="button" data-b="auto" aria-pressed="false">辦公自動化</button>
+      <button type="button" data-b="cursor" aria-pressed="false">agentic coding</button>
+      <button type="button" data-b="hle" aria-pressed="false">人類最後測驗</button>
+      <button type="button" data-b="fc" aria-pressed="false">FrontierCode</button>
+    </div>
+    <div class="bars" id="bmBars">
       <div class="bar-row"><div class="bar-lab">Fable 5.1</div><div class="bar-track"><div class="bar-fill f51" style="width:52.6%">52.6%</div></div></div>
       <div class="bar-row"><div class="bar-lab">Opus 5</div><div class="bar-track"><div class="bar-fill o5" style="width:29%">29.0%</div></div></div>
       <div class="bar-row"><div class="bar-lab">Fable 5</div><div class="bar-track"><div class="bar-fill f5" style="width:24.7%">24.7%</div></div></div>
       <div class="bar-row"><div class="bar-lab">GPT-5.6 Sol</div><div class="bar-track"><div class="bar-fill o5" style="width:22.4%">22.4%</div></div></div>
     </div>
-    <figcaption>在複雜科學工作流上，Fable 5.1 一次跨過了前一代與 Opus 5 加起來的距離。</figcaption>
+    <figcaption id="bmCap">在複雜科學工作流上，Fable 5.1 一次跨過了前一代與 Opus 5 加起來的距離。</figcaption>
     <p class="fig-note">Note：Terminal-Bench-Science 0.1，官方自報標準誤 ±3.5 到 4.5 個百分點。52.6 與 24.7 的差距遠大於誤差。但同一張總表上的小差距，例如 SWE-bench Multilingual 的 89.1 對 89.5，不可過度解讀。測試設定為 <code>max effort</code>、五次平均。</p>
     <p class="fig-src">Source：Anthropic 官方發布頁與 System Card 第 172 頁。<span class="src src-o">官方</span></p>
   </figure>
@@ -364,7 +422,29 @@ footer{border-top:1px solid var(--line); margin-top:56px; padding:28px 0 60px;
       </tbody>
     </table></div><p class="scroll-hint">↔ 這張表可以橫向捲動</p>
     <p>兩者不矛盾：<strong>單價降了，用量升了</strong>。官方沒說錯，但只讀官方會得到相反的預期。</p>
-    <p>判別式：你的工作負載若是「重複讀同一份快取前綴」，例如長 agentic session、每輪重送整份對話，你省。若是「每題都要長輸出」，你可能更貴。</p>
+    <p><strong>判別式：那要看你的工作負載長什麼樣。</strong>點一個看它對你是省還是貴。</p>
+
+    <div class="picker" id="wlPicker" role="group" aria-label="選擇你的工作負載形狀">
+      <button type="button" data-w="cache" aria-pressed="false">長 session，每輪重送整份對話</button>
+      <button type="button" data-w="output" aria-pressed="false">每題都要長輸出</button>
+      <button type="button" data-w="both" aria-pressed="false">兩者都有</button>
+    </div>
+
+    <div class="verdict-out" data-w="cache">
+      <p class="big-n">你省，而且省很多</p>
+      <p>快取讀取從每百萬 token $1 降到 $0.25。官方逐字：「Long agentic sessions that re-read a cached prefix pay a quarter of the Claude Fable 5 rate.」</p>
+      <p>你的指揮官系統正是這個形狀——每輪重送整份對話、系統提示與 hook 注入的內容都在快取前綴裡。Cognition 的說法（取不到原文、只有轉述）是部分 coding job 的快取讀取佔 token 逾 95%。</p>
+    </div>
+    <div class="verdict-out" data-w="output">
+      <p class="big-n is-bad">你可能更貴，大約 +20%</p>
+      <p>輸出價格沒變，仍是每百萬 token $50。而 Artificial Analysis 實測它用約 1.7 倍的輸出 token，於是每題總成本從 $3.13 升到 $3.76。</p>
+      <p>官方那句「便宜 25%」在這個形狀下不成立，因為它算的是單價不是每題。</p>
+    </div>
+    <div class="verdict-out" data-w="both">
+      <p class="big-n">要自己量，這裡沒有答案</p>
+      <p>兩個效應方向相反，誰贏取決於你的快取命中率與輸出長度的比例。官方與第三方都沒有給這個混合情境的數字。</p>
+      <p>可量的做法：在你的真實工作負載上跑一批，讀 <code>usage.cache_read_input_tokens</code> 與 <code>output_tokens</code>，算每題成本，而不是每 token 成本。<strong>判斷單位是每個完成的任務，不是每次請求。</strong></p>
+    </div>
   </div>
 
   <h3>官方 System Card 自己承認的退步</h3>
@@ -443,8 +523,17 @@ footer{border-top:1px solid var(--line); margin-top:56px; padding:28px 0 60px;
   <p class="sec-sub">官方 prompting 指南列了十六條。這張表回答的是：每一條落在哪一類處置，以及哪一類承擔最多。</p>
 
   <figure>
+    <div class="scrolly">
+    <div class="scrolly-fig">
+    <div class="mx-picker" id="mxPicker" role="group" aria-label="矩陣聚焦">
+      <button type="button" data-f="" aria-pressed="true">全部</button>
+      <button type="button" data-f="b" aria-pressed="false">加系統提示句</button>
+      <button type="button" data-f="c" aria-pressed="false">你動不了的那欄</button>
+      <button type="button" data-f="hot" aria-pressed="false">六個缺口</button>
+      <button type="button" data-f="e" aria-pressed="false">說是已有的七條</button>
+    </div>
     <div class="matrix-wrap">
-      <table class="mx">
+      <table class="mx" id="mxTable">
         <thead>
           <tr>
             <th class="rowhead">官方列出的行為差異</th>
@@ -489,6 +578,31 @@ footer{border-top:1px solid var(--line); margin-top:56px; padding:28px 0 60px;
       </table>
     </div>
     <p class="scroll-hint">↔ 這張表可以橫向捲動</p>
+    </div>
+
+    <div class="scrolly-steps">
+      <div class="step" data-f="b"><div>
+        <p><strong>底列的 11 是好消息。</strong>十六條差異裡有十一條，處置就只是在系統提示裡加一段話。不必改架構、不必動 harness，而系統提示你自己改得動。</p>
+        <p>這也是為什麼官方那份指南裡，超過一半的篇幅是可以直接複製貼上的 prompt 片段。</p>
+      </div></div>
+      <div class="step" data-f="c"><div>
+        <p><strong>但底部第二列是壞消息。</strong>「改 harness 呼叫方式」那七條落在 Anthropic 手上——beta header、<code>tool_choice</code>、<code>thinking.display</code>、messages 陣列，你一個都碰不到。</p>
+        <p>這一欄是異質票攻出來的，不是我原本畫的。我原本把它們寫進「立即可改」，那是願望清單不是行動清單。</p>
+      </div></div>
+      <div class="step" data-f="hot"><div>
+        <p><strong>左側有色條的六列，是你系統目前沒有對應機制的。</strong>它們的共同特徵是全部都是這一代才出現的新症狀，不是通用紀律——系統裡沒有它們是正常的，不是疏漏。</p>
+        <p>但其中只有三條你能自己動手，另外三條要嘛只有半條、要嘛完全動不了。§5 逐條標了。</p>
+      </div></div>
+      <div class="step" data-f="e"><div>
+        <p><strong>「你已有等價機制」那欄的 7，不能讀成「你的系統走在前面」。</strong>異質票查完之後，其中三條的實體其實在 Claude Code 的內建提示與 <code>Agent</code> tool 裡，不在你的 repo。</p>
+        <p>一個你不擁有、不能版控、消失沒有症狀的機制，不叫「你已經有了」。</p>
+      </div></div>
+      <div class="step" data-f=""><div>
+        <p>四個視角疊起來，這張表講的是一句話：<strong>能改的部分不難，難的是分清楚哪些不歸你管。</strong></p>
+      </div></div>
+    </div>
+    </div>
+
     <div class="mx-legend">
       <span><i class="swatch sw-on"></i>這條差異落在這一類處置</span>
       <span><i class="swatch sw-hot"></i>左側有色條的六列＝你系統目前沒有對應機制</span>
@@ -499,13 +613,6 @@ footer{border-top:1px solid var(--line); margin-top:56px; padding:28px 0 60px;
     <p class="fig-src">Source：左欄十六條取自 Anthropic 官方 <span class="en">「Prompting Claude Fable 5.1」</span> 指南的十六個主題段，全文 53,572 字元已落盤逐段核對。<span class="src src-o">官方</span> 右側處置分類與「已有」判定為本次調研的推論。<span class="src src-i">推論</span></p>
   </figure>
 
-  <h3>怎麼讀這張表</h3>
-  <ul class="tight">
-    <li>底列的 11 是好消息。多數差異不需要改架構，一段系統提示就處理掉了，而系統提示你自己改得動。</li>
-    <li>底部第二列是壞消息。「改 harness 呼叫方式」那 7 條落在 Anthropic 手上，你只能等。</li>
-    <li>「你已有」那欄的 7，<strong>不能讀成「你的系統已經走在前面」</strong>。異質票查完之後，其中三條的實體其實在 Claude Code 裡，不在你的 repo。詳見 §5。</li>
-    <li>淡色底的六列是缺口。它們全都是這一代才出現的新症狀，不是通用紀律。系統裡沒有它們是正常的，不是疏漏。</li>
-  </ul>
 </section>
 
 <hr>
@@ -815,6 +922,8 @@ footer{border-top:1px solid var(--line); margin-top:56px; padding:28px 0 60px;
 
 <script>
 document.body.classList.add('js');
+
+/* ── ① effort 檔位切換 ── */
 (function(){
   var picker = document.getElementById('effortPicker');
   if(!picker) return;
@@ -833,6 +942,101 @@ document.body.classList.add('js');
     if(b) show(b.getAttribute('data-e'));
   });
   show('high');
+})();
+
+/* ── ② benchmark 可切換長條圖（資料全部來自官方發布頁與 System Card） ── */
+(function(){
+  var picker = document.getElementById('bmPicker');
+  var bars = document.getElementById('bmBars');
+  var cap = document.getElementById('bmCap');
+  if(!picker || !bars || !cap) return;
+  var DATA = {
+    tbs: {max:60, cap:'在複雜科學工作流上，Fable 5.1 一次跨過了前一代與 Opus 5 加起來的距離。',
+      rows:[['Fable 5.1',52.6,'f51'],['Opus 5',29.0,'o5'],['Fable 5',24.7,'f5'],['GPT-5.6 Sol',22.4,'o5']]},
+    tb4: {max:70, cap:'終端機 agentic coding：Fable 5.1 領先前一代 13.8 個百分點，也超過 Opus 5。',
+      rows:[['Mythos 5.1',60.9,'f51'],['Fable 5.1',55.8,'f51'],['Opus 5',52.3,'o5'],['Fable 5',42.0,'f5'],['GPT-5.6 Sol',37.3,'o5']]},
+    auto: {max:40, cap:'跨應用的多步驟辦公任務：從 17.1% 升到 31.4%，接近翻倍。',
+      rows:[['Fable 5.1',31.4,'f51'],['Opus 5',26.9,'o5'],['GPT-5.6 Sol',19.6,'o5'],['Fable 5',17.1,'f5']]},
+    cursor: {max:80, cap:'agentic coding 上領先幅度只有 2.9 個百分點——這一格的差距遠小於長時程題型。',
+      rows:[['Fable 5.1',73.4,'f51'],['Fable 5',70.5,'f5'],['Opus 5',70.0,'o5'],['GPT-5.6 Sol',67.2,'o5']]},
+    hle: {max:70, cap:'人類最後測驗（無工具）：領先 3.1 個百分點，是本頁所有 benchmark 裡最小的正向差距之一。',
+      rows:[['Fable 5.1',60.9,'f51'],['Fable 5',57.8,'f5'],['Opus 5',56.6,'o5']]},
+    fc: {max:70, cap:'FrontierCode 1.1 是官方自己列出的退步——而且對照臂的 effort 還不一樣。',
+      rows:[['Fable 5 · xhigh',64.9,'f5'],['Fable 5.1 · medium',63.6,'f51'],['Fable 5 · xhigh（Main）',53.5,'f5'],['Fable 5.1 · medium（Main）',50.9,'f51']]}
+  };
+  function draw(key){
+    var d = DATA[key]; if(!d) return;
+    var html = '';
+    d.rows.forEach(function(r){
+      var pct = (r[1] / d.max * 100).toFixed(1);
+      html += '<div class="bar-row"><div class="bar-lab">' + r[0] + '</div>' +
+              '<div class="bar-track"><div class="bar-fill ' + r[2] +
+              '" style="width:' + pct + '%">' + r[1].toFixed(1) + '%</div></div></div>';
+    });
+    bars.innerHTML = html;
+    cap.textContent = d.cap;
+    Array.prototype.forEach.call(picker.querySelectorAll('button'), function(b){
+      b.setAttribute('aria-pressed', b.getAttribute('data-b') === key ? 'true' : 'false');
+    });
+  }
+  picker.addEventListener('click', function(e){
+    var b = e.target.closest('button[data-b]');
+    if(b) draw(b.getAttribute('data-b'));
+  });
+})();
+
+/* ── ③ 成本判別式：預設全部可見，JS 接手後才收合 ── */
+(function(){
+  var picker = document.getElementById('wlPicker');
+  if(!picker) return;
+  var outs = Array.prototype.slice.call(document.querySelectorAll('.verdict-out'));
+  outs.forEach(function(o){ o.hidden = true; });
+  picker.addEventListener('click', function(e){
+    var b = e.target.closest('button[data-w]');
+    if(!b) return;
+    var key = b.getAttribute('data-w');
+    outs.forEach(function(o){ o.hidden = (o.getAttribute('data-w') !== key); });
+    Array.prototype.forEach.call(picker.querySelectorAll('button'), function(x){
+      x.setAttribute('aria-pressed', x.getAttribute('data-w') === key ? 'true' : 'false');
+    });
+  });
+})();
+
+/* ── ④ 矩陣捲動敘事：捲到哪一段，圖就把那一欄／那幾列亮起來 ── */
+(function(){
+  var table = document.getElementById('mxTable');
+  var picker = document.getElementById('mxPicker');
+  var steps = Array.prototype.slice.call(document.querySelectorAll('.scrolly-steps .step'));
+  if(!table) return;
+
+  function setFocus(f){
+    if(f){ table.setAttribute('data-focus', f); } else { table.removeAttribute('data-focus'); }
+    if(picker){
+      Array.prototype.forEach.call(picker.querySelectorAll('button'), function(b){
+        b.setAttribute('aria-pressed', (b.getAttribute('data-f') || '') === (f || '') ? 'true' : 'false');
+      });
+    }
+  }
+  if(picker){
+    picker.addEventListener('click', function(e){
+      var b = e.target.closest('button[data-f]');
+      if(b) setFocus(b.getAttribute('data-f'));
+    });
+  }
+
+  /* 捲動觸發只在寬螢幕啟用——窄螢幕 sticky 會吃掉太多高度，改用上面的按鈕列 */
+  if(!steps.length || !window.IntersectionObserver) return;
+  if(!window.matchMedia || !window.matchMedia('(min-width:721px)').matches) return;
+
+  var io = new IntersectionObserver(function(entries){
+    entries.forEach(function(en){
+      if(en.isIntersecting){
+        steps.forEach(function(s){ s.classList.toggle('on', s === en.target); });
+        setFocus(en.target.getAttribute('data-f'));
+      }
+    });
+  }, { rootMargin: '-45% 0px -45% 0px', threshold: 0 });
+  steps.forEach(function(s){ io.observe(s); });
 })();
 </script>
 
