@@ -114,5 +114,7 @@
 
 - [dimensional-playbook](https://hale80427.github.io/brain-cards/dimensional-playbook/)：立體化敘事怎麼用才會成功 — 把「立體」拆成資訊維度與視覺深度兩層判準，附三種手法、四個觸發動作與七道閘的盲區
 
+- [physicsnet-layers](https://hale80427.github.io/brain-cards/physicsnet-layers/)：PhysicsNet 讓影像和機台參數各走各的 — 晚期融合的六階段維度流，用零 JavaScript 的 CSS 3D 分層板畫成階梯；數字逐個對得上實作程式碼
+
 ## Citation
 若引用本站內容，請保留 canonical 連結與作者名。AI agent 引用時請標出原文 URL。
