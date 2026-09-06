@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html lang="zh-Hant-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>立體化敘事怎麼用才會成功</title>
+<meta name="description" content="三輪實測之後，「立體」被拆成兩個獨立的問題：要不要第三個資訊維度，以及要不要體積感。這份手冊講清楚改了什麼、怎麼觸發、什麼時候不要用，以及七道閘擋不到的那一格。">
+<link rel="canonical" href="https://hale80427.github.io/brain-cards/dimensional-playbook/">
+<meta name="author" content="彥皓">
+<meta property="og:type" content="article">
+<meta property="og:title" content="立體化敘事怎麼用才會成功">
+<meta property="og:description" content="「立體」被拆成兩個獨立的問題：要不要第三個資訊維度，以及要不要體積感。">
+<meta property="og:url" content="https://hale80427.github.io/brain-cards/dimensional-playbook/">
+<meta property="og:image" content="https://hale80427.github.io/brain-cards/og-default.jpg">
+<meta property="og:locale" content="zh_TW">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="立體化敘事怎麼用才會成功">
+<meta name="twitter:description" content="「立體」被拆成兩個獨立的問題：要不要第三個資訊維度，以及要不要體積感。">
+<meta name="twitter:image" content="https://hale80427.github.io/brain-cards/og-default.jpg">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "立體化敘事怎麼用才會成功",
+  "description": "「立體」被拆成兩個獨立的問題：要不要第三個資訊維度，以及要不要體積感。",
+  "datePublished": "2026-09-06",
+  "dateModified": "2026-09-06",
+  "author": { "@type": "Person", "name": "彥皓" },
+  "url": "https://hale80427.github.io/brain-cards/dimensional-playbook/",
+  "inLanguage": "zh-TW",
+  "license": "https://creativecommons.org/licenses/by/4.0/"
+}
+</script>
+<style>
+  :root {
+    --bg: oklch(98.4% 0.004 106.5);
+    --fg: oklch(21.8% 0 0);
+    --accent: oklch(54.3% 0.174 29.7);
+    --accent-warn: oklch(66.6% 0.157 58.3);
+    --muted: oklch(51.0% 0 0);
+    --border: oklch(92.1% 0.007 106.5);
+    --callout-tip: oklch(95.7% 0.014 174.2);
+    --callout-warn: oklch(96.9% 0.019 72.6);
+    --plate-bg: oklch(28.5% 0.055 251.4);
+    --plate-fg: oklch(96.0% 0.008 106.5);
+    --plate-dim: oklch(75.0% 0.021 251.4);
+    --plate-line: oklch(48.0% 0.030 251.4);
+    --plate-teal: oklch(70.0% 0.098 195.0);
+    --plate-amber: oklch(78.0% 0.130 78.0);
+    --plate-red: oklch(64.0% 0.160 27.0);
+    --solid: oklch(74.0% 0.115 78.0);
+    --node-side: oklch(33.0% 0.030 251.4);
+    --fs-meta: 0.85rem;
+    --fs-body: 1rem;
+    --fs-h2:   clamp(1.3rem, 3vw, 1.5rem);
+    --fs-h1:   clamp(1.75rem, 4vw, 2.25rem);
+    --font-serif: "Noto Serif TC", "Songti TC", Georgia, serif;
+    --font-mono: ui-monospace, SFMono-Regular, Menlo, monospace;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: oklch(21.8% 0 0);
+      --fg: oklch(95.3% 0.011 106.6);
+      --accent: oklch(70.4% 0.136 28.7);
+      --accent-warn: oklch(76.9% 0.165 70.1);
+      --muted: oklch(68.3% 0 0);
+      --border: oklch(32.1% 0 0);
+      --callout-tip: oklch(30.9% 0.029 178.3);
+      --callout-warn: oklch(30.7% 0.034 73.5);
+      --plate-bg: oklch(22.0% 0.040 251.4);
+    }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
+  }
+  * { box-sizing: border-box; }
+  body {
+    font-family: var(--font-serif); background: var(--bg); color: var(--fg);
+    line-height: 1.8; margin: 0; padding: 0; -webkit-font-smoothing: antialiased;
+    text-autospace: normal; font-synthesis: none; line-break: strict;
+  }
+  main, main > article {
+    display: grid;
+    grid-template-columns:
+      [full-start] minmax(1rem, 1fr)
+      [wide-start] minmax(0, 130px)
+      [content-start] minmax(0, 680px) [content-end]
+      minmax(0, 130px) [wide-end]
+      minmax(1rem, 1fr) [full-end];
+  }
+  main { padding: clamp(2rem, 5vw, 4rem) 0; }
+  main > *, main > article > * { grid-column: content; }
+  main > article { grid-column: full; }
+  main > .wide, main > article > .wide { grid-column: wide; }
+  @media (max-width: 1000px) {
+    main, main > article {
+      grid-template-columns:
+        [full-start] minmax(1rem, 1fr)
+        [wide-start content-start] minmax(0, 680px) [content-end wide-end]
+        minmax(1rem, 1fr) [full-end];
+    }
+  }
+  h1 { font-size: var(--fs-h1); line-height: 1.3; margin: 0 0 1rem; }
+  h2 { font-size: var(--fs-h2); line-height: 1.4; margin: 2.5rem 0 0.75rem; padding-bottom: 0.5rem; border-bottom: 1px solid var(--border); }
+  h3 { font-size: var(--fs-body); font-weight: 700; line-height: 1.4; margin: 1.75rem 0 0.5rem; color: var(--accent); }
+  p { margin: 0 0 1.25rem; }
+  a { color: var(--accent); text-underline-offset: 3px; }
+  em { font-style: normal; font-weight: 600; text-emphasis: filled dot; text-emphasis-position: under right;
+       -webkit-text-emphasis: filled dot; -webkit-text-emphasis-position: under right; }
+  .bluf { background: var(--callout-tip); border-left: 3px solid var(--accent); padding: 1.25rem 1.5rem; margin: 1.5rem 0 2rem; border-radius: 4px; }
+  .bluf strong.label { display: block; font-size: var(--fs-meta); letter-spacing: 0.05em; color: var(--accent); margin-bottom: 0.5rem; text-transform: uppercase; }
+  .callout { padding: 1rem 1.25rem; margin: 1.5rem 0; border-radius: 4px; border-left: 3px solid var(--muted); }
+  .callout.tip { background: var(--callout-tip); border-left-color: var(--accent); }
+  .callout.warn { background: var(--callout-warn); border-left-color: var(--accent-warn); }
+  .callout .lbl { display: block; font-size: var(--fs-meta); font-weight: 700; letter-spacing: 0.06em; color: var(--accent-warn); margin-bottom: 0.4rem; }
+  .callout.tip .lbl { color: var(--accent); }
+  .callout .txt { display: block; font-size: var(--fs-body); line-height: 1.8; margin: 0 0 0.7rem; }
+  .callout .txt:last-child { margin-bottom: 0; }
+  .kicker { display: inline-block; font-size: var(--fs-meta); font-weight: 700; letter-spacing: 0.1em; color: var(--accent); margin: 2.5rem 0 0; }
+  .kicker + h2 { margin-top: 0.4rem; border-bottom: none; padding-bottom: 0; }
+  .notesrc { display: block; font-size: var(--fs-meta); color: var(--muted); margin: 0.5rem 0 0; line-height: 1.7; }
+  .notesrc .lb { color: var(--fg); font-weight: 600; letter-spacing: 0.04em; }
+  table { border-collapse: collapse; width: 100%; margin: 1.5rem 0; font-size: var(--fs-body); }
+  th, td { padding: 0.6rem 0.8rem; border: 1px solid var(--border); text-align: left; vertical-align: top; }
+  th { background: var(--callout-tip); font-weight: 600; }
+  code { font-family: var(--font-mono); background: var(--callout-tip); padding: 0.1em 0.4em; border-radius: 3px;
+         font-size: var(--fs-body); overflow-wrap: anywhere; word-break: break-word; }
+  .tbl { overflow-x: auto; margin: 1.5rem 0; min-width: 0; }
+  .tbl table { margin: 0; min-width: 560px; }
+  .scrollhint { font-size: var(--fs-meta); color: var(--muted); margin: -1rem 0 1.5rem; }
+  @media (min-width: 760px) { .scrollhint { display: none; } }
+  figure { margin: 2rem 0; }
+  figure svg { width: 100%; height: auto; display: block; border-radius: 6px; }
+  figcaption { font-size: var(--fs-meta); color: var(--muted); margin-top: 0.75rem; line-height: 1.75; }
+  figcaption b { color: var(--fg); font-weight: 600; }
+  .annot-labels { list-style: none; margin: 1rem 0 0; padding: 0; display: grid; gap: 0.7rem; }
+  .annot-labels li { display: grid; grid-template-columns: 1.6rem 1fr; gap: 0.6rem;
+                     font-size: var(--fs-meta); line-height: 1.7; color: var(--muted); }
+  .annot-labels .pin { display: block; width: 1.45rem; height: 1.45rem; border-radius: 50%;
+                       background: var(--plate-bg); color: var(--plate-fg); text-align: center;
+                       line-height: 1.45rem; font-size: var(--fs-meta); font-family: var(--font-mono); }
+  .annot-labels .lbl { display: block; color: var(--fg); font-weight: 600; }
+  .flow { background: var(--plate-bg); border-radius: 6px; padding: 1.4rem 1.2rem; }
+  .flow-track { display: grid; gap: 0.5rem; margin-bottom: 1.2rem; }
+  .flow-track:last-of-type { margin-bottom: 0; }
+  .flow-track .path { display: flex; flex-wrap: wrap; align-items: center; gap: 0.5rem; padding: 0 0.4rem 0.4rem 0; }
+  .flow-track .node { background: var(--plate-line); color: var(--plate-fg);
+                      font-size: var(--fs-meta); line-height: 1.5; padding: 0.4rem 0.7rem; border-radius: 4px;
+                      box-shadow: 5px 5px 0 var(--node-side), 7px 8px 14px rgba(0, 0, 0, 0.34); }
+  .flow-track .arrow { flex: 0 0 1.4rem; width: 1.4rem; height: 0.85rem; color: var(--plate-dim); }
+  .flow-track .arrow svg { width: 100%; height: 100%; display: block; border-radius: 0; }
+  .flow-track .sign { font-size: var(--fs-meta); font-weight: 700; padding: 0.4rem 0.7rem; border-radius: 4px;
+                      background: var(--plate-red); color: var(--plate-fg);
+                      box-shadow: 5px 5px 0 var(--node-side), 7px 8px 14px rgba(0, 0, 0, 0.34); }
+  .flow-track .sign.ok { background: var(--plate-teal); color: var(--plate-bg); }
+  .flow-track > .lbl { font-size: var(--fs-meta); color: var(--plate-dim); letter-spacing: 0.06em; }
+  .func-row { display: grid; grid-template-columns: repeat(auto-fit, minmax(13rem, 1fr));
+              gap: 1.2rem; margin: 1.5rem 0 0.5rem; padding: 1.2rem 0;
+              border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+  .func-row .fn { display: flex; gap: 0.75rem; align-items: flex-start; }
+  .func-row .fn svg { flex: 0 0 2rem; width: 2rem; height: 2rem; color: var(--accent); border-radius: 0; }
+  .func-row .fn .lbl { display: block; font-size: var(--fs-meta); font-weight: 700; letter-spacing: 0.04em; }
+  .func-row .fn .txt { display: block; font-size: var(--fs-meta); color: var(--muted); margin: 0.2rem 0 0; line-height: 1.65; }
+  @media (max-width: 560px) { .flow-track .arrow { display: none; }
+    .flow-track .path { gap: 0.4rem; } }
+  footer { font-size: var(--fs-meta); color: var(--muted); margin-top: 4rem; padding-top: 1.5rem; border-top: 1px solid var(--border); }
+  footer p { margin: 0 0 0.6rem; line-height: 1.75; }
+  footer a { color: var(--muted); }
+</style>
+</head>
+<body>
+<main>
+<header>
+<h1>立體化敘事怎麼用才會成功</h1>
+<div class="bluf">
+<strong class="label">BLUF</strong>
+<p>這三輪真正改變的不是畫圖技術，是把「立體」拆成兩個彼此獨立的問題。舊流程只問一個：這張圖要不要第三個資訊維度。新流程答完之後再問第二個：這張圖要不要有體積感。前一份交付之所以九條判準全過還是被判失敗，就是因為系統只驗了第一個問題，而要的是第二個。</p>
+</div>
+</header>
+<article>
+<!-- narrative: 矛盾,物件,細節,直接引語 -->
+
+<span class="kicker">先看一次失敗</span>
+<h2>七道閘全綠、第三方盲讀說看得懂，而使用者說這不是他要的</h2>
+
+<p>第一輪照規格把三個立體元件全部改成平面 SVG。結果是：</p>
+
+<div class="tbl">
+<table>
+<caption class="notesrc">第一輪的驗收讀數與使用者判定</caption>
+<thead>
+<tr><th>驗收面</th><th>讀數</th></tr>
+</thead>
+<tbody>
+<tr><td>七道機器閘</td><td>全部 <code>exit 0</code></td></tr>
+<tr><td>第三方盲讀（只給圖、零內文）</td><td>把整條論證重建出來，並判定三張圖是一條論證而非三張圖</td></tr>
+<tr><td>使用者在 iPhone 上實判</td><td>「似乎完全沒有看到 3D 元件與對應的敘事」</td></tr>
+</tbody>
+</table>
+</div>
+<div class="scrollhint">↔ 表格可橫向捲動</div>
+
+<p>追問之後排除了兩個技術假說：圖有 render 出來，而且他滑到了。他選的是第三個——<em>滑下去有圖，但那不是我要的立體</em>。</p>
+
+<div class="callout warn">
+<span class="lbl">這句話值得記下來</span>
+<span class="txt">缺的不是可讀性。可讀性已經達標了，是第三方盲讀證明的。</span>
+<span class="txt">問題出在「立體」這個詞被翻譯成一個可驗的定義之後，那個定義就把原詞頂掉了。之後每一道閘都對著新定義跑，全綠只證明新定義被滿足。而翻譯這件事本身不留任何痕跡。</span>
+</div>
+
+<span class="kicker">改了什麼</span>
+<h2>判準從一層變成兩層，而兩層的答案可以不同</h2>
+
+<p>舊判準只有一句話：我要讀者從這張圖讀出一個數字嗎？要，就不准立體。</p>
+
+<p>那句話沒有錯，但它只管一件事：資訊有幾個維度。它從來沒問畫面有沒有體積感。</p>
+
+<figure class="wide">
+<div class="flow">
+<div class="flow-track">
+<span class="lbl">第一層：資訊維度</span>
+<div class="path">
+<span class="node">我要讀者從這張圖讀出一個數字嗎</span>
+<span class="arrow"><svg viewBox="0 0 28 17" role="img" aria-labelledby="ar1"><title id="ar1">是的話</title><path d="M1 8.5 H22 M17 3.5 L23 8.5 L17 13.5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+<span class="sign">不准第三個資訊維度</span>
+</div>
+</div>
+<div class="flow-track">
+<span class="lbl">第二層：視覺深度</span>
+<div class="path">
+<span class="node">讀者要不要感覺到這個東西有體積才願意讀</span>
+<span class="arrow"><svg viewBox="0 0 28 17" role="img" aria-labelledby="ar2"><title id="ar2">是的話</title><path d="M1 8.5 H22 M17 3.5 L23 8.5 L17 13.5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+<span class="node">三種手法擇一</span>
+<span class="sign ok">而資訊維度維持平面</span>
+</div>
+</div>
+</div>
+<figcaption><b>兩層問的是不同的東西，所以同一張圖可以在第一層答「不要」、在第二層答「要」。</b>那一格正是使用者選的那格：有厚度、有三個面、有明暗，而圖上沒有任何可以讀出數值的第三軸。
+<span class="notesrc"><span class="lb">Note</span>　這張是決策流程圖，讀的是分支關係不是形狀，所以它自己維持平面——這正是第一層判準在管的事。盒子的側面陰影只是讓層級好認，不承載資訊。</span>
+<span class="notesrc"><span class="lb">Source</span>　判準與證據單源：<code>KB-19_dimensional-figures.md</code> 第一層與第四層。</span>
+</figcaption>
+</figure>
+
+<span class="kicker">視覺深度長什麼樣</span>
+<h2>三個要素：兩個以上的面、面與面之間的明暗差、沒有刻度</h2>
+
+<figure class="wide annot-figure">
+<div class="annot-stage">
+<svg viewBox="-222.0 -212.0 443.9 424.0" role="img" aria-labelledby="dt dd"><title id="dt">視覺深度的三個要素：頂面、兩個側面、以及它們之間的明暗差</title><desc id="dd">一個以等角投影畫出的方塊，三個面同時可見。頂面最亮、左側面次之、右側面最暗，三者用同一個顏色的不同透明度做出來。圓標 A 指頂面，B 指左側面，C 指右側面。這個方塊沒有任何座標軸與刻度——深度只讓它看起來有實體，不供讀出數值。</desc><rect x="-222.0" y="-212.0" width="443.9" height="424.0" fill="var(--plate-bg)"/><path d="M0.0 -150.0 L129.9 -75.0 L0.0 -0.0 L-129.9 -75.0 Z" fill="var(--solid)" fill-opacity="1.00" stroke="var(--plate-bg)" stroke-width="1.6"/><path d="M-129.9 -75.0 L0.0 -0.0 L0.0 150.0 L-129.9 75.0 Z" fill="var(--solid)" fill-opacity="0.72" stroke="var(--plate-bg)" stroke-width="1.6"/><path d="M129.9 -75.0 L0.0 -0.0 L0.0 150.0 L129.9 75.0 Z" fill="var(--solid)" fill-opacity="0.48" stroke="var(--plate-bg)" stroke-width="1.6"/><circle cx="0.0" cy="-75.0" r="4.5" fill="var(--plate-fg)"/><path d="M0.0 -75.0 L-74.0 -120.9" fill="none" stroke="var(--plate-fg)" stroke-width="1.6"/><circle cx="-74.0" cy="-120.9" r="21.0" fill="var(--plate-fg)"/><text x="-74.0" y="-111.4" font-size="27" font-weight="700" text-anchor="middle" fill="var(--plate-bg)">A</text><circle cx="-65.0" cy="37.5" r="4.5" fill="var(--plate-fg)"/><path d="M-65.0 37.5 L-139.0 83.4" fill="none" stroke="var(--plate-fg)" stroke-width="1.6"/><circle cx="-139.0" cy="83.4" r="21.0" fill="var(--plate-fg)"/><text x="-139.0" y="92.8" font-size="27" font-weight="700" text-anchor="middle" fill="var(--plate-bg)">B</text><circle cx="65.0" cy="37.5" r="4.5" fill="var(--plate-fg)"/><path d="M65.0 37.5 L139.0 83.4" fill="none" stroke="var(--plate-fg)" stroke-width="1.6"/><circle cx="139.0" cy="83.4" r="21.0" fill="var(--plate-fg)"/><text x="139.0" y="92.8" font-size="27" font-weight="700" text-anchor="middle" fill="var(--plate-bg)">C</text></svg>
+</div>
+<ol class="annot-labels">
+<li><span class="pin">A</span> <span><span class="lbl">頂面</span>光源方向上的那個面，最亮。它是這個物件「有厚度」這件事的主要證據。</span></li>
+<li><span class="pin">B</span> <span><span class="lbl">側面之一</span>第二亮。有第二個面，讀者才判得出這是一個立體而不是一個平面色塊。</span></li>
+<li><span class="pin">C</span> <span><span class="lbl">側面之二</span>最暗。三個面的明暗差是同一個顏色的不同透明度做出來的，不是三個顏色。</span></li>
+</ol>
+</div>
+<figcaption><b>視覺深度只需要這三件事，而且它們全部不需要 JavaScript。</b>注意這個方塊上沒有任何座標軸與刻度——它讓東西看起來有實體，但你沒辦法從它身上量出任何數值。
+<span class="notesrc"><span class="lb">Note</span>　這是示範圖不是量測圖。方塊尺寸是為了讓三個面都看得清楚而選的，幾何由 <code>build_fig.py</code> 算出，真尺寸集中在規格來源區。</span>
+<span class="notesrc"><span class="lb">Source</span>　等角投影公式與三面明暗比：<code>build_fig.py</code> 的 <code>@figure-spec-source</code> 區。</span>
+</figcaption>
+</figure>
+
+<span class="kicker">三種手法</span>
+<h2>三種都保留，因為它們在不同的地方會壞</h2>
+
+<div class="tbl">
+<table>
+<caption class="notesrc">三種立體手法的對照，含各自的失效面</caption>
+<thead>
+<tr><th>手法</th><th>關掉 JavaScript</th><th>什麼時候用</th><th>代價</th></tr>
+</thead>
+<tbody>
+<tr><td>SVG 等角實體</td><td>圖照樣在</td><td>物件本身有體積，而你只要讀者看懂形狀。目前的預設。</td><td>旋轉對稱體在等角下不會自我遮擋，所以它給的是體積感、不是新資訊。</td></tr>
+<tr><td>CSS 3D 分層</td><td>圖照樣在</td><td>幾個階段沿深度排開、前面的擋住後面的。</td><td>形狀語言與另外兩種不同，換題材時要重想「那一層是什麼」。</td></tr>
+<tr><td>canvas 手寫投影加拖曳</td><td>圖全沒了</td><td>讀者真的需要繞著看才用。</td><td>與整份頁面空白是同一個失效面；而且強制轉鏡的迷向在文獻上顯著更高。</td></tr>
+</tbody>
+</table>
+</div>
+<div class="scrollhint">↔ 表格可橫向捲動</div>
+
+<p>三種都保留是使用者拍板的，理由是不同場景會需要不同的一種。參考實作與四個踩坑寫在同一份 KB 裡。</p>
+
+<span class="kicker">怎麼觸發</span>
+<h2>四個動作，前兩個決定會不會走到判準，後兩個決定品質</h2>
+
+<div class="func-row">
+<div class="fn">
+<svg viewBox="0 0 40 40" role="img" aria-labelledby="s1"><title id="s1">走對通道</title><circle cx="20" cy="20" r="17" fill="none" stroke="currentColor" stroke-width="2"/><path d="M12 20 L18 26 L28 14" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+<div><span class="lbl">一　走 /output-html，不要直發</span><span class="txt">前一份失敗品走的是直發通道，七道閘一道都沒經過。這是最便宜的一個動作。</span></div>
+</div>
+<div class="fn">
+<svg viewBox="0 0 40 40" role="img" aria-labelledby="s2"><title id="s2">逐節提問</title><circle cx="20" cy="20" r="17" fill="none" stroke="currentColor" stroke-width="2"/><path d="M20 12 V22 M20 27 V28.5" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/></svg>
+<div><span class="lbl">二　逐節問兩句</span><span class="txt">這一節要解釋一個結構或機制嗎？是的話，這個結構是三維實體嗎？兩句都答是才進判準。</span></div>
+</div>
+<div class="fn">
+<svg viewBox="0 0 40 40" role="img" aria-labelledby="s3"><title id="s3">兩層判準</title><circle cx="20" cy="20" r="17" fill="none" stroke="currentColor" stroke-width="2"/><path d="M12 16 H28 M12 24 H22" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/></svg>
+<div><span class="lbl">三　兩層各答一次</span><span class="txt">要讀出數字嗎？要體積感嗎？兩個答案可以不同，而且要在文中寫出為什麼這張立體、那張平面。</span></div>
+</div>
+<div class="fn">
+<svg viewBox="0 0 40 40" role="img" aria-labelledby="s4"><title id="s4">三重驗收</title><circle cx="20" cy="20" r="17" fill="none" stroke="currentColor" stroke-width="2"/><path d="M13 20 L18 25 L27 15" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/><path d="M13 28 H27" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+<div><span class="lbl">四　三重驗收缺一不可</span><span class="txt">七道機器閘、把圖裁出來放大親眼看、派一票盲讀。最後你自己在手機上開。</span></div>
+</div>
+</div>
+
+<h3>什麼時候不要用</h3>
+
+<p>三種情況直接跳過，不要硬套。</p>
+
+<p>第一，讀者要從圖上讀出數值或比相對位置。深度線索在文獻上會讓這類判斷變差。</p>
+
+<p>第二，題材裡沒有可畫的實體。純財務、純合約、純論證結構硬套會做出假的解剖圖，而那會讓主張看起來比證據整齊。</p>
+
+<p>第三，讀者不需要繞著看。那就不要用會在關掉 JavaScript 之後整個消失的那一種。</p>
+
+<span class="kicker">品質怎麼保證</span>
+<h2>七道閘各自問一件很窄的事，而它們合起來仍有一個洞</h2>
+
+<div class="tbl">
+<table>
+<caption class="notesrc">七道閘問什麼、以及各自看不到什麼</caption>
+<thead>
+<tr><th>閘</th><th>它問什麼</th><th>它看不到什麼</th></tr>
+</thead>
+<tbody>
+<tr><td>版面機械檢查</td><td>字級、行寬、行高、加粗比例、有沒有橫向溢出</td><td>圖畫得對不對</td></tr>
+<tr><td>寫作紀律</td><td>每張圖有沒有圖說、有沒有 Source、Note 在不在 Source 前面</td><td>圖說寫得對不對</td></tr>
+<tr><td>窄視窗可讀性</td><td>375 像素下內文欄多寬、圖框裡有沒有東西、圖裡的中文縮完剩幾像素</td><td>手機上的物理尺寸夠不夠大</td></tr>
+<tr><td>形式判定留痕</td><td>四個形式判定有沒有被問過</td><td>判得對不對，而且事後回填也會過</td></tr>
+<tr><td>標註式圖解</td><td>圖裡有沒有中文、標註元件在不在場</td><td>標註指的位置對不對</td></tr>
+<tr><td>規格檔</td><td>畫圖的程式碼裡，每個尺寸有沒有名字與住處</td><td>那些數字是不是對的</td></tr>
+<tr><td>隱形內容</td><td>有沒有內容被藏起來而沒有出口</td><td>真裝置上會不會現身</td></tr>
+</tbody>
+</table>
+</div>
+<div class="scrollhint">↔ 表格可橫向捲動</div>
+
+<div class="callout warn">
+<span class="lbl">這一格必須自己看，沒有機器補得上</span>
+<span class="txt">這三輪裡有四次「圖是錯的」而七道閘全綠：透視方向與放大方向相反、投影尺度只有另一版的一半、換圖時把背景一起換掉、圖上少了一條讓兩條路徑看起來同源的線。</span>
+<span class="txt">四次都是把圖裁出來放大看才發現的，閘一次都沒響。所以收尾那一步不是選配：render 之後親自看圖，再派一票盲讀。</span>
+</div>
+
+<span class="kicker">誠實邊界</span>
+<h2>這份手冊的證據強度到哪裡為止</h2>
+
+<p>第一，第二層判準的全部證據，就是一個人在一次四格並排實驗裡的一句話。第一層有三篇文獻，第二層零篇。</p>
+
+<p>第二，那次並排實驗有做防呆：第四格與第一格的原始碼逐字相同，他選了第一格而且沒有宣稱兩者有差別，所以這個讀數可以解讀。</p>
+
+<p>第三，但位置效應沒有排除。他選的那格是第一個選項，而過去的實測是八次並排選擇有七次選第一個。唯一削弱這個疑慮的，是他答案裡有一句位置效應產不出來的話：「以這個場景來說」。那是論證，不是證據。</p>
+
+<p>第四，「他要視覺深度」不等於「視覺深度讓他讀得更準」。這一層買到的是他願意讀，不是他理解得更好。後者在文獻上有反證。</p>
+
+</article>
+<footer>
+<p>2026-09-06 建立。內容來自同日三輪實測的逐輪紀錄，判準與手法的單源是 <code>KB-19_dimensional-figures.md</code> 第一層與第四層。</p>
+<p>四格並排原型頁：<a href="https://hale80427.github.io/brain-cards/dim-probe/" rel="noopener">brain-cards/dim-probe</a>　實際交付範例：<a href="https://hale80427.github.io/brain-cards/blog-to-bill/" rel="noopener">brain-cards/blog-to-bill</a></p>
+<p>授權 CC BY 4.0。作者：彥皓。</p>
+</footer>
+</main>
+<script type="application/json" id="form-routing-3-7">
+{"3.7a":{"cell":"因果鏈","carrier":"SVG 機制圖 ＋ 對照表"},
+ "3.7b":{"sections":[{"h":"七道閘全綠、第三方盲讀說看得懂，而使用者說這不是他要的","structural":false},
+                     {"h":"判準從一層變成兩層，而兩層的答案可以不同","structural":true},
+                     {"h":"三個要素：兩個以上的面、面與面之間的明暗差、沒有刻度","structural":true},
+                     {"h":"三種都保留，因為它們在不同的地方會壞","structural":false},
+                     {"h":"四個動作，前兩個決定會不會走到判準，後兩個決定品質","structural":false},
+                     {"h":"七道閘各自問一件很窄的事，而它們合起來仍有一個洞","structural":false},
+                     {"h":"這份手冊的證據強度到哪裡為止","structural":false}]},
+ "3.7c":{"continuous":false},
+ "3.7d":{"needed":false,"tier":"none"}}
+</script>
+</body>
+</html>

@@ -112,5 +112,7 @@
 
 - [blog-to-bill](https://hale80427.github.io/brain-cards/blog-to-bill/)：從部落格到法案：一篇文章花了四天變成一項提案 — 同一起事故換一組詞就換一條路，四天內從部落格變成立法提案；附四個可以帶走的形式檢查
 
+- [dimensional-playbook](https://hale80427.github.io/brain-cards/dimensional-playbook/)：立體化敘事怎麼用才會成功 — 把「立體」拆成資訊維度與視覺深度兩層判準，附三種手法、四個觸發動作與七道閘的盲區
+
 ## Citation
 若引用本站內容，請保留 canonical 連結與作者名。AI agent 引用時請標出原文 URL。
