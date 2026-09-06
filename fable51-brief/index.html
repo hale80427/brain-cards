@@ -150,14 +150,14 @@ table.mx tfoot td, table.mx tfoot th{
   font-variant-numeric:tabular-nums; background:var(--accent-soft); font-size:var(--fs-4);
 }
 table.mx tfoot th{text-align:left; padding-left:12px}
-table.mx tr.hot th{background:var(--accent-soft)}
+table.mx tr.hot th{background:var(--accent-soft); box-shadow:inset 5px 0 0 0 var(--accent)}
 table.mx tr.hot td:not(.mg){background:var(--accent-soft)}
 table.mx tr.hot td.on{background:var(--accent)}
 .mx-legend{display:flex; flex-wrap:wrap; gap:8px 20px; font-size:var(--fs-4); color:var(--ink-2);
            margin:12px 0 4px; line-height:1.7}
 .mx-legend span{display:flex; align-items:center; gap:6px}
 .swatch{width:15px; height:15px; border-radius:3px; display:inline-block; flex:none}
-.sw-on{background:var(--cell)} .sw-hot{background:var(--accent-soft); border:1px solid var(--accent)}
+.sw-on{background:var(--cell)} .sw-hot{background:var(--accent-soft); box-shadow:inset 4px 0 0 0 var(--accent)}
 
 .scroll-hint{font-size:var(--fs-4); color:var(--ink-3); margin:-14px 0 20px; line-height:1.6}
 figure{margin:26px 0}
@@ -490,7 +490,7 @@ footer{border-top:1px solid var(--line); margin-top:56px; padding:28px 0 60px;
     <p class="scroll-hint">↔ 這張表可以橫向捲動</p>
     <div class="mx-legend">
       <span><i class="swatch sw-on"></i>這條差異落在這一類處置</span>
-      <span><i class="swatch sw-hot"></i>你系統目前沒有對應機制的六條</span>
+      <span><i class="swatch sw-hot"></i>左側有色條的六列＝你系統目前沒有對應機制</span>
     </div>
     <figcaption>十一條的處置只是加一段系統提示；但另外七條落在你動不了的那一欄。</figcaption>
     <p class="fig-note">Note：底部第二列是這張表最重要的限定，而它是<strong>異質票攻出來的，不是我原本畫的</strong>。官方這十六條的收件人是自建 harness 的 API 整合者，他們控制 beta header、<code>tool_choice</code>、messages 陣列。你是 Claude Code 的使用者，控制的是 <code>CLAUDE.md</code>、hook 與 skill。所以「改 harness 呼叫方式」那七條，你一條都動不了——那不是行動清單，是願望清單。</p>
