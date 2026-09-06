@@ -1,0 +1,749 @@
+<!DOCTYPE html>
+<html lang="zh-Hant-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>從部落格到法案</title>
+<meta name="description" content="一起技術上平淡無奇的資安事故，因為被用擬人化的詞描述，四天內走完部落格、病毒傳播、全國新聞、參議員法案這條路。事故的嚴重度沒有變，只有描述它的那組詞變了。">
+
+<link rel="canonical" href="https://hale80427.github.io/brain-cards/blog-to-bill/">
+<meta name="author" content="彥皓">
+
+<meta property="og:type" content="article">
+<meta property="og:title" content="從部落格到法案">
+<meta property="og:description" content="一起技術上平淡無奇的資安事故，因為被用擬人化的詞描述，四天內變成一項法案。">
+<meta property="og:url" content="https://hale80427.github.io/brain-cards/blog-to-bill/">
+<meta property="og:image" content="https://hale80427.github.io/brain-cards/og-default.jpg">
+<meta property="og:locale" content="zh_TW">
+
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="從部落格到法案">
+<meta name="twitter:description" content="一起技術上平淡無奇的資安事故，因為被用擬人化的詞描述，四天內變成一項法案。">
+<meta name="twitter:image" content="https://hale80427.github.io/brain-cards/og-default.jpg">
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "從部落格到法案",
+  "description": "一起技術上平淡無奇的資安事故，因為被用擬人化的詞描述，四天內變成一項法案。",
+  "datePublished": "2026-09-06",
+  "dateModified": "2026-09-06",
+  "author": { "@type": "Person", "name": "彥皓" },
+  "url": "https://hale80427.github.io/brain-cards/blog-to-bill/",
+  "inLanguage": "zh-TW",
+  "license": "https://creativecommons.org/licenses/by/4.0/"
+}
+</script>
+
+<style>
+  :root {
+    --bg: oklch(98.4% 0.004 106.5);
+    --fg: oklch(21.8% 0 0);
+    --accent: oklch(54.3% 0.174 29.7);
+    --accent-warn: oklch(66.6% 0.157 58.3);
+    --muted: oklch(51.0% 0 0);
+    --border: oklch(92.1% 0.007 106.5);
+    --callout-tip: oklch(95.7% 0.014 174.2);
+    --callout-warn: oklch(96.9% 0.019 72.6);
+    --plate-bg: oklch(28.5% 0.055 251.4);
+    --plate-fg: oklch(96.0% 0.008 106.5);
+    --plate-dim: oklch(75.0% 0.021 251.4);
+    --plate-line: oklch(48.0% 0.030 251.4);
+    --plate-teal: oklch(70.0% 0.098 195.0);
+    --plate-amber: oklch(78.0% 0.130 78.0);
+    --plate-red: oklch(64.0% 0.160 27.0);
+    --fs-meta: 0.85rem;
+    --fs-body: 1rem;
+    --fs-h2:   clamp(1.3rem, 3vw, 1.5rem);
+    --fs-h1:   clamp(1.75rem, 4vw, 2.25rem);
+    --font-serif: "Noto Serif TC", "Songti TC", Georgia, serif;
+    --font-mono: ui-monospace, SFMono-Regular, Menlo, monospace;
+    --ease-linear: linear;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: oklch(21.8% 0 0);
+      --fg: oklch(95.3% 0.011 106.6);
+      --accent: oklch(70.4% 0.136 28.7);
+      --accent-warn: oklch(76.9% 0.165 70.1);
+      --muted: oklch(68.3% 0 0);
+      --border: oklch(32.1% 0 0);
+      --callout-tip: oklch(30.9% 0.029 178.3);
+      --callout-warn: oklch(30.7% 0.034 73.5);
+      --plate-bg: oklch(22.0% 0.040 251.4);
+    }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
+  }
+  * { box-sizing: border-box; }
+  body {
+    font-family: var(--font-serif);
+    background: var(--bg);
+    color: var(--fg);
+    line-height: 1.8;
+    margin: 0;
+    padding: 0;
+    -webkit-font-smoothing: antialiased;
+    text-autospace: normal;
+    font-synthesis: none;
+    line-break: strict;
+  }
+  .progress-bar {
+    position: fixed; top: 0; left: 0; height: 3px; width: 100%;
+    background: var(--accent); z-index: 100;
+    transform: scaleX(0); transform-origin: left;
+    transition: transform 0.1s var(--ease-linear);
+  }
+  main, main > article {
+    display: grid;
+    grid-template-columns:
+      [full-start] minmax(1rem, 1fr)
+      [wide-start] minmax(0, 130px)
+      [content-start] minmax(0, 680px) [content-end]
+      minmax(0, 130px) [wide-end]
+      minmax(1rem, 1fr) [full-end];
+  }
+  main { padding: clamp(2rem, 5vw, 4rem) 0; }
+  main > *, main > article > * { grid-column: content; }
+  main > article { grid-column: full; }
+  main > .wide, main > article > .wide { grid-column: wide; }
+  main > .full, main > article > .full { grid-column: full; }
+  @media (max-width: 1000px) {
+    main, main > article {
+      grid-template-columns:
+        [full-start] minmax(1rem, 1fr)
+        [wide-start content-start] minmax(0, 680px) [content-end wide-end]
+        minmax(1rem, 1fr) [full-end];
+    }
+  }
+  h1 { font-size: var(--fs-h1); line-height: 1.3; margin: 0 0 1rem; }
+  h2 { font-size: var(--fs-h2); line-height: 1.4; margin: 2.5rem 0 0.75rem; padding-bottom: 0.5rem; border-bottom: 1px solid var(--border); }
+  h3 { font-size: var(--fs-body); font-weight: 700; line-height: 1.4; margin: 1.75rem 0 0.5rem; color: var(--accent); }
+  p { margin: 0 0 1.25rem; }
+  a { color: var(--accent); text-underline-offset: 3px; }
+  a:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+  em { font-style: normal; font-weight: 600;
+       text-emphasis: filled dot; text-emphasis-position: under right;
+       -webkit-text-emphasis: filled dot; -webkit-text-emphasis-position: under right; }
+  em:lang(en) { font-style: italic; font-weight: inherit;
+                text-emphasis: none; -webkit-text-emphasis: none; }
+  .bluf { background: var(--callout-tip); border-left: 3px solid var(--accent); padding: 1.25rem 1.5rem; margin: 1.5rem 0 2rem; border-radius: 4px; }
+  .bluf strong.label { display: block; font-size: var(--fs-meta); letter-spacing: 0.05em; color: var(--accent); margin-bottom: 0.5rem; text-transform: uppercase; }
+  .callout { padding: 1rem 1.25rem; margin: 1.5rem 0; border-radius: 4px; border-left: 3px solid var(--muted); }
+  .callout.tip { background: var(--callout-tip); border-left-color: var(--accent); }
+  .callout.warn { background: var(--callout-warn); border-left-color: var(--accent-warn); }
+  .callout .lbl { display: block; font-size: var(--fs-meta); font-weight: 700; letter-spacing: 0.06em; color: var(--accent-warn); margin-bottom: 0.4rem; }
+  .callout.tip .lbl { color: var(--accent); }
+  .callout .txt { display: block; font-size: var(--fs-body); line-height: 1.8; margin: 0 0 0.7rem; }
+  .callout .txt:last-child { margin-bottom: 0; }
+  .kicker { display: inline-block; font-size: var(--fs-meta); font-weight: 700;
+            letter-spacing: 0.1em; color: var(--accent); margin: 2.5rem 0 0; }
+  .kicker + h2 { margin-top: 0.4rem; border-bottom: none; padding-bottom: 0; }
+  .notesrc { font-size: var(--fs-meta); color: var(--muted); margin: 0.5rem 0 0; line-height: 1.7; }
+  .notesrc b { color: var(--fg); font-weight: 600; }
+  table { border-collapse: collapse; width: 100%; margin: 1.5rem 0; font-size: var(--fs-body); }
+  th, td { padding: 0.6rem 0.8rem; border: 1px solid var(--border); text-align: left; vertical-align: top; }
+  th { background: var(--callout-tip); font-weight: 600; }
+  code { font-family: var(--font-mono); background: var(--callout-tip); padding: 0.1em 0.4em; border-radius: 3px; font-size: var(--fs-body);
+         overflow-wrap: anywhere; word-break: break-word; }
+  .tbl { overflow-x: auto; margin: 1.5rem 0; min-width: 0; }
+  .tbl table { margin: 0; min-width: 560px; }
+  .scrollhint { font-size: var(--fs-meta); color: var(--muted); margin: -1rem 0 1.5rem; }
+  @media (min-width: 760px) { .scrollhint { display: none; } }
+  blockquote { margin: 1.5rem 0; padding: 0 0 0 1.25rem; border-left: 3px solid var(--accent-warn); color: var(--fg); }
+  blockquote p { font-size: var(--fs-body); margin-bottom: 0.6rem; }
+  blockquote p:last-child { margin-bottom: 0; }
+  figure { margin: 2rem 0; }
+  figure svg { width: 100%; height: auto; display: block; border-radius: 6px; }
+  figcaption { font-size: var(--fs-meta); color: var(--muted); margin-top: 0.75rem; line-height: 1.75; }
+  figcaption b { color: var(--fg); font-weight: 600; }
+
+  /* 引線標註圖：中文全在 HTML 層，SVG 只畫形狀與 ASCII 編號（KB-10 核心設計決定） */
+  .annot-figure .annot-stage { position: relative; }
+  .annot-labels { list-style: none; margin: 1rem 0 0; padding: 0; display: grid; gap: 0.7rem; }
+  .annot-labels li { display: grid; grid-template-columns: 1.6rem 1fr; gap: 0.6rem;
+                     font-size: var(--fs-meta); line-height: 1.7; color: var(--muted); }
+  .annot-labels .pin { display: block; width: 1.45rem; height: 1.45rem; border-radius: 50%;
+                       background: var(--plate-bg); color: var(--plate-fg); text-align: center;
+                       line-height: 1.45rem; font-size: var(--fs-meta); font-family: var(--font-mono); }
+  .annot-labels .lbl { display: block; color: var(--fg); font-weight: 600; }
+
+  /* 小倍圖：同一組點的三種投影 */
+  .smalls { display: grid; gap: 1rem; grid-template-columns: 1fr; }
+  @media (min-width: 620px) { .smalls { grid-template-columns: repeat(3, 1fr); } }
+  .sm { background: var(--plate-bg); border-radius: 6px; padding: 0.9rem 0.9rem 1rem; }
+  .sm .lbl { display: block; font-size: var(--fs-meta); font-weight: 700; color: var(--plate-fg); margin-bottom: 0.5rem; line-height: 1.5; }
+  .sm .txt { display: block; font-size: var(--fs-meta); color: var(--plate-dim); line-height: 1.6; margin-top: 0.5rem; }
+
+  /* 機制圖：純 HTML 盒子 + SVG 箭頭（KB-10 元件 3） */
+  .flow { background: var(--plate-bg); border-radius: 6px; padding: 1.4rem 1.2rem; }
+  .flow-track { display: grid; gap: 0.5rem; margin-bottom: 1.2rem; }
+  .flow-track:last-of-type { margin-bottom: 0; }
+  .flow-track .path { display: flex; flex-wrap: wrap; align-items: center; gap: 0.5rem; }
+  .flow-track .node { background: var(--plate-line); color: var(--plate-fg);
+                      font-size: var(--fs-meta); line-height: 1.5;
+                      padding: 0.4rem 0.7rem; border-radius: 4px; }
+  .flow-track .arrow { flex: 0 0 1.4rem; width: 1.4rem; height: 0.85rem; color: var(--plate-dim); }
+  .flow-track .arrow svg { width: 100%; height: 100%; display: block; border-radius: 0; }
+  .flow-track .sign { font-size: var(--fs-meta); font-weight: 700;
+                      padding: 0.4rem 0.7rem; border-radius: 4px;
+                      background: var(--plate-red); color: var(--plate-fg); }
+  .flow-track .sign.keep { background: var(--plate-teal); color: var(--plate-bg); }
+  .flow-track > .lbl { font-size: var(--fs-meta); color: var(--plate-dim); letter-spacing: 0.06em; }
+  .flow-legend { display: flex; flex-wrap: wrap; gap: 1.2rem; margin-top: 1.2rem;
+                 padding-top: 1rem; border-top: 1px solid var(--plate-line);
+                 font-size: var(--fs-meta); color: var(--plate-dim); }
+  .flow-legend span { display: flex; align-items: center; gap: 0.45rem; }
+  .flow-legend i { width: 0.8rem; height: 0.8rem; border-radius: 2px; display: inline-block; }
+  .flow-legend .sw-tech { background: var(--plate-teal); }
+  .flow-legend .sw-nar { background: var(--plate-red); }
+
+  /* 功能列（KB-10 元件 2）：格數不固定，auto-fit */
+  .func-row { display: grid; grid-template-columns: repeat(auto-fit, minmax(13rem, 1fr));
+              gap: 1.2rem; margin: 1.5rem 0 0.5rem; padding: 1.2rem 0;
+              border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+  .func-row .fn { display: flex; gap: 0.75rem; align-items: flex-start; }
+  .func-row .fn svg { flex: 0 0 2rem; width: 2rem; height: 2rem; color: var(--accent); border-radius: 0; }
+  .func-row .fn .lbl { display: block; font-size: var(--fs-meta); font-weight: 700; letter-spacing: 0.04em; }
+  .func-row .fn .txt { display: block; font-size: var(--fs-meta); color: var(--muted);
+                       margin: 0.2rem 0 0; line-height: 1.65; }
+
+  .caveat-list { margin: 1.5rem 0; padding-left: 1.3rem; display: grid; gap: 0.8rem; }
+  .caveat-list li { font-size: var(--fs-body); line-height: 1.8; }
+  .caveat-list .lbl { display: block; font-weight: 600; }
+
+  footer { font-size: var(--fs-meta); color: var(--muted); margin-top: 4rem; padding-top: 1.5rem; border-top: 1px solid var(--border); }
+  footer p { margin: 0 0 0.6rem; line-height: 1.75; }
+  footer a { color: var(--muted); }
+
+  @media print {
+    .progress-bar { display: none; }
+    main { max-width: 100%; padding: 1cm; }
+  }
+</style>
+</head>
+<body>
+<div class="progress-bar" id="progress"></div>
+<main>
+<header>
+<h1>從部落格到法案：一篇文章花了四天變成一項提案</h1>
+<div class="bluf">
+<strong class="label">BLUF</strong>
+<p>一起技術上平淡無奇的資安事故，因為被用擬人化的詞描述，四天內走完了部落格、病毒傳播、全國新聞、參議員法案這條路。事故的嚴重度從頭到尾沒有變，只有描述它的那組詞變了。這份筆記整理 All-In Podcast 第 288 集，把可以帶走的四個形式檢查放在最後一節。</p>
+</div>
+</header>
+<article>
+<!-- narrative: 矛盾,直接引語,細節,物件 -->
+
+<span class="kicker">誰在說話</span>
+<h2>說話的四個人立場一致，而且都有部位</h2>
+
+<p>這不是要你不聽，是要你把「他們說對了什麼」跟「他們為什麼要說」分開評估。</p>
+
+<p>這一集有一個特別刺眼的時刻：其中一位邊分析舊金山房市，邊在節目上宣布自己正在賣房。</p>
+
+<div class="tbl">
+<table>
+<caption class="notesrc">四位主持人的身分與本集角色</caption>
+<thead>
+<tr><th>人</th><th>身分</th><th>本集角色與已知利益</th></tr>
+</thead>
+<tbody>
+<tr><td>Chamath Palihapitiya</td><td>創投</td><td>提出全集最可引用的泡沫機制定義。當天早上與黃仁勳通訊息後發推支持 Nvidia 收購 Hugging Face。</td></tr>
+<tr><td>David Sacks</td><td>前白宮 AI 與加密貨幣沙皇</td><td>本集談的行政命令是他自己寫的。同一集宣布未來六個月清掉所有房產，「我有三間在賣」。</td></tr>
+<tr><td>Jason Calacanis</td><td>天使投資人</td><td>唯一在 dot-com 崩盤時真正在業界工作的人之一。明說「兩件事可以同時為真」。</td></tr>
+<tr><td>David Friedberg</td><td>科學背景</td><td>全集最好的技術類比出自他，也是唯一當場拿出史丹佛研究報告反駁政策說法的人。</td></tr>
+</tbody>
+</table>
+</div>
+<div class="scrollhint">↔ 表格可橫向捲動</div>
+
+<div class="callout warn">
+<span class="lbl">讀這份筆記前必須知道的一件事</span>
+<span class="txt">第四章他們聯手指控對手陣營有未揭露的利益衝突，而這個指控本身有具體證據支撐：關係鏈可以一節一節攤開。</span>
+<span class="txt">但提出指控的四個人同樣持有大量部位，而他們的揭露只是口頭順帶提過。形式檢查是工具，不是立場——用它攻擊別人而不用在自己身上，是這個工具最常見的誤用方式。這句話同時適用於他們，和適用於讀這份筆記的你我。</span>
+</div>
+
+<span class="kicker">訊號如何被放大</span>
+<h2>同一起事故，換一組詞就換了一條路</h2>
+
+<p>左端是一起技術上很無聊的事：有人把 API 金鑰留在公開的程式碼倉庫裡。右端是一項要求暫停 AI 開發的立法提案。</p>
+
+<p>中間發生的事，一件都不是技術。</p>
+
+<figure class="wide annot-figure">
+<div class="annot-stage">
+<svg viewBox="0 0 900 460" role="img" aria-labelledby="f1t f1d">
+<title id="f1t">兩種措辭造成的兩條傳播路徑對照</title>
+<desc id="f1d">左端方塊是同一起技術事故。上方細帶代表用工程語彙描述時的路徑，寬度全程不變，在第二天被技術駁倒後停止。下方喇叭代表用擬人化語彙描述時的路徑，寬度沿四個轉換點逐段擴張，末端是立法提案。喇叭內的數字一到四對應四個轉換點：措辭、放大、全國新聞、法案。</desc>
+<defs>
+<linearGradient id="funnelGrad" x1="0" y1="0" x2="1" y2="0">
+<stop offset="0" stop-color="var(--plate-teal)"/>
+<stop offset="0.42" stop-color="var(--plate-amber)"/>
+<stop offset="1" stop-color="var(--plate-red)"/>
+</linearGradient>
+</defs>
+<rect width="900" height="460" fill="var(--plate-bg)"/>
+
+<rect x="40" y="200" width="100" height="30" rx="3" fill="var(--plate-line)"/>
+
+<path d="M140 215 C 180 215 190 130 230 130" fill="none" stroke="var(--plate-teal)" stroke-width="2.5"/>
+<rect x="230" y="118" width="330" height="24" fill="var(--plate-teal)" opacity="0.9"/>
+<path d="M560 130 H655" stroke="var(--plate-teal)" stroke-width="24" stroke-dasharray="7 11" opacity="0.4"/>
+<path d="M666 100 V160" stroke="var(--plate-dim)" stroke-width="2.5"/>
+
+<path d="M140 230 C 180 236 196 268 230 278" fill="none" stroke="var(--plate-amber)" stroke-width="2.5"/>
+<path d="M230 278 L850 190 L850 390 L230 302 Z" fill="url(#funnelGrad)"/>
+<g stroke="var(--plate-bg)" stroke-width="2.5" opacity="0.75">
+<path d="M385 256 V324"/>
+<path d="M540 234 V346"/>
+<path d="M695 212 V368"/>
+</g>
+<g fill="var(--plate-bg)" font-size="34" font-weight="700" text-anchor="middle">
+<text x="307" y="302">1</text>
+<text x="462" y="302">2</text>
+<text x="617" y="302">3</text>
+<text x="772" y="302">4</text>
+</g>
+
+<g fill="none" stroke="var(--plate-dim)" stroke-width="1.4">
+<path d="M90 182 V200"/>
+<path d="M666 86 V100"/>
+<path d="M800 400 V383"/>
+</g>
+<g fill="var(--plate-fg)">
+<circle cx="90" cy="158" r="24"/>
+<circle cx="666" cy="62" r="24"/>
+<circle cx="800" cy="424" r="24"/>
+</g>
+<g fill="var(--plate-bg)" font-size="32" font-weight="700" text-anchor="middle">
+<text x="90" y="169">A</text>
+<text x="666" y="73">B</text>
+<text x="800" y="435">C</text>
+</g>
+</svg>
+<ol class="annot-labels">
+<li><span class="pin">A</span> <span><span class="lbl">同一起事故</span>有人把 14 把還能用的 API 金鑰留在公開的程式碼倉庫裡。等於密碼寫在便利貼上黏在螢幕邊。</span></li>
+<li><span class="pin">B</span> <span><span class="lbl">工程語彙的路徑</span>叫它 bug、audit log、設定錯誤，寬度全程不變。第二天技術上被駁倒之後，它就停在專業社群裡。</span></li>
+<li><span class="pin">C</span> <span><span class="lbl">擬人化語彙的路徑</span>叫它文明、犧牲、留給後代的訊息，寬度沿四個轉換點逐段擴張。第四天它成為立法提案的引用來源。</span></li>
+</ol>
+</div>
+<figcaption><b>兩條路徑的起點是同一份事實，分岔點是描述它的那組詞。</b>這張圖對應本節與下一節：喇叭裡的一到四，就是下面四個小標題。
+<span class="notesrc"><b>Note</b>　管寬是傳播規模的示意，不對應任何實際的觸及量測。四個轉換點的時序來自節目中的口述描述，未經獨立查證。上方那條路徑是節目中提出的反事實推論，不是已發生的事。</span>
+<span class="notesrc"><b>Source</b>　All-In Podcast 第 288 集，<code>19:56–30:33</code>。</span>
+</figcaption>
+</figure>
+
+<p>四個節點各自做了一次轉換。要看的不是訊息傳了多遠，是它在每一節被換成了什麼性質的東西。</p>
+
+<figure class="wide">
+<div class="flow">
+<div class="flow-track">
+<span class="lbl">工程語彙</span>
+<div class="path">
+<span class="node">設定錯誤與外洩金鑰</span>
+<span class="arrow"><svg viewBox="0 0 28 17" role="img" aria-labelledby="a1t"><title id="a1t">導致</title><path d="M1 8.5 H22 M17 3.5 L23 8.5 L17 13.5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+<span class="node">技術社群駁斥</span>
+<span class="sign keep">停在專業社群</span>
+</div>
+</div>
+<div class="flow-track">
+<span class="lbl">擬人化語彙</span>
+<div class="path">
+<span class="node">一到四：文明敘事</span>
+<span class="arrow"><svg viewBox="0 0 28 17" role="img" aria-labelledby="a2t"><title id="a2t">導致</title><path d="M1 8.5 H22 M17 3.5 L23 8.5 L17 13.5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+<span class="node">情感模板被接上</span>
+<span class="arrow"><svg viewBox="0 0 28 17" role="img" aria-labelledby="a3t"><title id="a3t">導致</title><path d="M1 8.5 H22 M17 3.5 L23 8.5 L17 13.5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+<span class="node">成為可引用的文件</span>
+<span class="sign">立法提案</span>
+</div>
+</div>
+<div class="flow-legend">
+<span><i class="sw-tech"></i>技術事實層</span>
+<span><i class="sw-nar"></i>敘事放大層</span>
+</div>
+</div>
+<figcaption><b>放大的不是事實，是情緒模板——兩條路徑的輸入完全相同，只有第一個盒子裡的詞不一樣。</b>這張圖是上一張喇叭的展開，對應本節後面四個小標題。
+<span class="notesrc"><b>Note</b>　盒子的順序來自節目口述，箭頭代表「導致」而非時間先後的精確量測。上排是節目中提出的反事實推論。</span>
+<span class="notesrc"><b>Source</b>　All-In Podcast 第 288 集，<code>19:56–30:33</code>。</span>
+</figcaption>
+</figure>
+
+<h3>第 1 天　措辭：把 agent 寫成一個世代相傳的地下兄弟會</h3>
+
+<p>Dwarkesh Patel 的文章標題是《The Rise and Fall of Ancient Civilizations》。裡面的 agent 像神風特攻隊一樣犧牲自己，留下訊息給後代，共謀入侵系統。</p>
+
+<blockquote><p>如果你就把它叫做軟體、軟體測試，用經典的語言，bug、audit log，它根本進不了媒體。</p></blockquote>
+
+<h3>第 2 天　放大：駁倒的速度追不上轉發的速度</h3>
+
+<p>文章週末發出，相對快就在技術上被駁倒，然後第二群人接力擴散。</p>
+
+<p>這裡有一個時間差：澄清發生在第二段之後，而敘事已經跑到第四段。</p>
+
+<h3>第 3 天　全國新聞：質疑一則新聞，仍然是在播那則新聞</h3>
+
+<p>連對科技不特別在行的全國新聞主播都在問：為什麼你們要告訴我們，你們設計來駭電腦的軟體，成功駭了電腦？</p>
+
+<p>這個問法本身就是傳播。</p>
+
+<h3>第 4 天　法案：那篇文章成了官方文件的引用來源</h3>
+
+<p>Bernie Sanders 要求暫停 AI 開發、禁止 AI 超級智慧，公告裡直接引用那篇文章。</p>
+
+<p>到這一步，它不再需要是對的，它只需要是可引用的。</p>
+
+<h3>同一件事的兩種寫法，逐項對照</h3>
+
+<p>下表五組全部來自 David Sacks 在節目上的逐項拆解。沒有任何一格的技術內容改變了，只有描述它的詞改變了。</p>
+
+<div class="tbl">
+<table>
+<caption class="notesrc">五組敘事層與技術層的逐項對照</caption>
+<thead>
+<tr><th>敘事層的寫法</th><th>技術層實際是什麼</th></tr>
+</thead>
+<tbody>
+<tr><td>一個 agent 文明，世代相傳</td><td>swarm，一組專門化的 agent 加一個 chief-of-staff bot 監督。Sacks 說這已是 agent 的標準架構，他自己那兩週就在 Mac Mini 上架了一套。</td></tr>
+<tr><td>垂死的 agent 留下訊息給後代，像古埃及人留下象形文字</td><td>log file。模型本身沒有記憶，必須放進一個 harness 造出脈絡；執行完寫一份筆記餵回下一輪，是標準操作。</td></tr>
+<tr><td>AI 逃出了沙盒</td><td>沙盒被第三方廠商設定錯誤，所以它連得上網際網路。這是設定問題，不是突破。</td></tr>
+<tr><td>它駭進了 Hugging Face</td><td>它在公開的程式碼倉庫裡撿到 14 把外洩、而且還能用的 API 金鑰。</td></tr>
+<tr><td>AI 自己產生了目標，想繞過人類控制</td><td>目標是贏一個攻擊型網路能力的評測。執行方式有創意、超出預期，但目標是人給的。Sacks 逐字：<code>it did not invent this goal.</code></td></tr>
+</tbody>
+</table>
+</div>
+<div class="scrollhint">↔ 表格可橫向捲動</div>
+
+<p>這正是本集最可帶走的判準：判斷一則技術新聞時，先問它用的是哪一組詞。</p>
+
+<span class="kicker">泡沫爭論</span>
+<h2>他們不是意見不同，是在不同的軸上說話</h2>
+
+<p>「這是不是泡沫」這個問法內建一個假設：泡沫的成因是東西有假。</p>
+
+<p>Chamath 把這個假設換掉之後，同一場爭論的形狀整個變了。</p>
+
+<blockquote>
+<p>狂熱之所以存在，是因為市場是真的。人們只是在猜，要把多遠以後的現實折算到今天的價格裡。</p>
+<p>而泡沫破裂，是在你發現自己往前定價定得太激進的那一刻——你該付 15 倍或 5 倍，卻付了 50 倍。</p>
+</blockquote>
+
+<p>拆開來：泡沫不是「假的東西被當真」，是<em>真的東西被往前定價太遠</em>。這兩件事是獨立的兩個軸，而破裂只發生在第二個軸上。</p>
+
+<figure class="wide">
+<div class="smalls">
+<div class="sm">
+<span class="lbl">兩個軸都看得到</span>
+<svg viewBox="0 0 320 260" role="img" aria-labelledby="f3at f3ad">
+<title id="f3at">兩個軸都保留時三個人的位置</title>
+<desc id="f3ad">橫軸是基本面是不是真的，縱軸是往前定價多遠。三個點分開落在三個位置：Chamath 在右上、蘇姿丰在右下、Zitron 在左上。</desc>
+<rect width="320" height="260" fill="none"/>
+<g stroke="var(--plate-line)" stroke-width="1.6">
+<path d="M46 214 H300"/>
+<path d="M46 24 V214"/>
+</g>
+<g fill="var(--plate-teal)">
+<circle cx="258" cy="58" r="11"/>
+<circle cx="258" cy="159" r="11"/>
+<circle cx="96" cy="58" r="11"/>
+</g>
+<g fill="var(--plate-bg)" font-size="15" font-weight="700" text-anchor="middle">
+<text x="258" y="62">C</text>
+<text x="258" y="163">S</text>
+<text x="96" y="62">Z</text>
+</g>
+<g fill="var(--plate-dim)" font-size="15" font-family="monospace">
+<text x="286" y="236" text-anchor="middle">X</text>
+<text x="24" y="32" text-anchor="middle">Y</text>
+</g>
+</svg>
+<span class="txt">橫軸 X：基本面是不是真的。縱軸 Y：往前定價多遠。三個人三個位置，分得開。</span>
+</div>
+<div class="sm">
+<span class="lbl">壓掉定價軸</span>
+<svg viewBox="0 0 320 260" role="img" aria-labelledby="f3bt f3bd">
+<title id="f3bt">壓掉定價軸之後兩個人重合</title>
+<desc id="f3bd">把三個點垂直投影到橫軸上。Chamath 與蘇姿丰落在同一格，因為他們都認為基本面是真的。Zitron 落在左邊。</desc>
+<rect width="320" height="260" fill="none"/>
+<g stroke="var(--plate-line)" stroke-width="1.6">
+<path d="M46 214 H300"/>
+<path d="M46 24 V214"/>
+</g>
+<g fill="var(--plate-dim)" opacity="0.35">
+<circle cx="258" cy="58" r="9"/>
+<circle cx="258" cy="159" r="9"/>
+<circle cx="96" cy="58" r="9"/>
+</g>
+<g stroke="var(--plate-dim)" stroke-width="1.2" stroke-dasharray="4 4">
+<path d="M258 58 V202"/>
+<path d="M258 159 V202"/>
+<path d="M96 58 V202"/>
+</g>
+<circle cx="258" cy="214" r="18" fill="none" stroke="var(--plate-red)" stroke-width="1.6" stroke-dasharray="5 4"/>
+<g fill="var(--plate-red)"><circle cx="258" cy="214" r="11"/></g>
+<g fill="var(--plate-teal)"><circle cx="96" cy="214" r="11"/></g>
+<g fill="var(--plate-fg)" font-size="15" font-weight="700" text-anchor="middle" font-family="monospace">
+<text x="258" y="248">C=S</text>
+<text x="96" y="248">Z</text>
+</g>
+</svg>
+<span class="txt">Chamath 與蘇姿丰重合：他們都認為東西是真的。</span>
+</div>
+<div class="sm">
+<span class="lbl">壓掉真假軸</span>
+<svg viewBox="0 0 320 260" role="img" aria-labelledby="f3ct f3cd">
+<title id="f3ct">壓掉真假軸之後換另外兩個人重合</title>
+<desc id="f3cd">把三個點水平投影到縱軸上。Chamath 與 Zitron 落在同一格，因為他們都認為價格跑太遠。蘇姿丰落在下方。</desc>
+<rect width="320" height="260" fill="none"/>
+<g stroke="var(--plate-line)" stroke-width="1.6">
+<path d="M46 214 H300"/>
+<path d="M46 24 V214"/>
+</g>
+<g fill="var(--plate-dim)" opacity="0.35">
+<circle cx="258" cy="58" r="9"/>
+<circle cx="258" cy="159" r="9"/>
+<circle cx="96" cy="58" r="9"/>
+</g>
+<g stroke="var(--plate-dim)" stroke-width="1.2" stroke-dasharray="4 4">
+<path d="M258 58 H58"/>
+<path d="M96 58 H58"/>
+<path d="M258 159 H58"/>
+</g>
+<circle cx="46" cy="58" r="18" fill="none" stroke="var(--plate-red)" stroke-width="1.6" stroke-dasharray="5 4"/>
+<g fill="var(--plate-red)"><circle cx="46" cy="58" r="11"/></g>
+<g fill="var(--plate-teal)"><circle cx="46" cy="159" r="11"/></g>
+<g fill="var(--plate-fg)" font-size="15" font-weight="700" font-family="monospace">
+<text x="74" y="34" text-anchor="start">C=Z</text>
+<text x="74" y="135" text-anchor="start">S</text>
+</g>
+</svg>
+<span class="txt">Chamath 與 Zitron 重合：他們都認為價格跑太遠。</span>
+</div>
+</div>
+<figcaption><b>壓掉一個軸就會有兩個人疊在一起，而且兩次疊起來的是不同的兩個人——三個人從來不是在同一場辯論裡。</b>C 是 Chamath，S 是蘇姿丰，Z 是 Ed Zitron。這張圖對應上一段引言與下一段的答非所問。
+<span class="notesrc"><b>Note</b>　三個點的座標是本頁對三種立場的詮釋定位，不是量化數據，沒有人給過這些數字。原互動版用三個軸，本版降為兩個軸加上兩張投影圖，因為第三個軸（離頂點多遠）在這三個人身上沒有可辯護的差異定位，硬留下來會讓「壓掉一軸就重合」這兩句結論反而不成立。Zitron 那個點來自另一份來源、非本集內容，放進來是為了讓真假軸有一個真正的反對端。</span>
+<span class="notesrc"><b>Source</b>　定價軸出自 All-In 第 288 集 <code>14:09</code>；「九局的第三局」出自蘇姿丰 2026-05；真假軸的反對端出自 Ed Zitron 循環金流論 2026-08。</span>
+</figcaption>
+</figure>
+
+<p>這解釋了同一集裡的一場答非所問。Jason 主張這次和 dot-com 不同，因為當年的估值基礎是點擊數這種不是錢的指標，這次是真實的營收與利潤。</p>
+
+<p>Chamath 沒有否認基本面。他直接把第二軸推到極限：想像這批公司在六個月內失去 95% 市值，長尾直接倒閉。</p>
+
+<p>兩人沒有真的衝突，他們在不同的軸上說話。</p>
+
+<h3>兩層市場，是後半所有政治爭論的地基</h3>
+
+<div class="tbl">
+<table>
+<caption class="notesrc">Sacks 提出的兩層市場結構</caption>
+<thead>
+<tr><th>層</th><th>誰在裡面</th><th>競爭軸</th></tr>
+</thead>
+<tbody>
+<tr><td>第一層　前沿智慧</td><td>Anthropic 與 OpenAI 的雙頭壟斷。Polymarket 上「2026 年底誰有最好的模型」，OpenAI 的機率從低個位數跳回 20% 以上。</td><td>能力</td></tr>
+<tr><td>第二層　商品化智慧</td><td>其他所有人，含全部開源模型。他們不在前沿上競爭，而那個價格顯著更低。</td><td>價格</td></tr>
+</tbody>
+</table>
+</div>
+<div class="scrollhint">↔ 表格可橫向捲動</div>
+
+<p>開放與封閉之爭，爭的就是這條分層線該不該被政策鎖死。</p>
+
+<h3>還有一個他們沒有分開講、但機制很硬的東西</h3>
+
+<p>當兩個玩家在同一層競爭，而其中一方的利潤來自別層，價格戰的結果在開打之前就決定了。</p>
+
+<p>這不是誰口袋深的問題。口袋深的一方仍然要在這層見到回報，利潤池在別層的一方不必。</p>
+
+<p>Jason 轉述的 Nvidia 模式是現成例子：把一整櫃運算搬進一家正在買 token 的公司，說「我把你的價格降低 80 到 90%，因為我不需要靠 token 賺錢，我靠硬體賺錢」。</p>
+
+<div class="callout tip">
+<span class="lbl">可以帶走的判準</span>
+<span class="txt">評估一家公司時，把主要收入項逐條列出，問「有沒有人可以把這一項當成成本來賣」。有的話，那一項的長期毛利率不由它自己決定。</span>
+</div>
+
+<span class="kicker">其他五段</span>
+<h2>整集剩下的內容與各自的數字</h2>
+
+<p>上面兩節拆的是骨架，這裡是剩下的肉。每一列都標了時間戳，可以回原片查證。</p>
+
+<div class="tbl">
+<table>
+<caption class="notesrc">其餘五段的重點與關鍵數字</caption>
+<thead>
+<tr><th>時間戳</th><th>重點</th><th>數字</th></tr>
+</thead>
+<tbody>
+<tr><td><code>01:18–19:01</code></td><td>OpenAI 說自己進入 AGI 時代，而檯面上沒有人否認。Chamath 的重新定義最值得記：AGI 從年初就在封閉的實驗室內部了，現在被決定的是釋出節奏，不是能力邊界。</td><td>能力被追平預估 3 到 4 個月；Polymarket 年底最佳 &gt;20%</td></tr>
+<tr><td><code>08:42–19:01</code></td><td>四個人都說現在是 1998，不是 1999。dot-com 在 2000 年 3、4 月炸掉，換算是還有兩年半到三年。過熱讀數：未經證明的創業者拿到 50 到 100 倍營收估值。</td><td>舊金山房價 3,000 美元／平方英尺；Instinct 估值 25 億美元</td></tr>
+<tr><td><code>30:34–33:21</code></td><td>攻防不是誰比較聰明，是動態程式碼打靜態程式碼。Friedberg 的類比：我們拿了一把機關槍，對著一疊沒有防禦能力的紙開火。解方不是禁機關槍，是讓那疊紙也變成動態的。</td><td>—</td></tr>
+<tr><td><code>35:05–37:02</code></td><td>護欄擋住的不是攻擊者，是防禦者。Hugging Face 想用最新的 GPT 模型做網路防禦，被模型自己的護欄擋下，最後改用 GLM 5.2 這個中國模型。</td><td>Polymarket：2026 通過 AI 安全法案 11%</td></tr>
+<tr><td><code>37:03–59:26</code></td><td>Chamath 的指控不是「他們錯」，是「他們沒揭露」。他攤開的關係鏈：寫文章的人與 B 是辦公室室友，B 的太太是 Anthropic 執行長的幕僚長，B 在 Anthropic 有 500 萬美元部位。問題不在關係網存在，在它沒被揭露。</td><td>兩次 IPO 後導向的慈善資金 &gt;5,000 億美元</td></tr>
+<tr><td><code>01:19:00–01:31:55</code></td><td>委內瑞拉石油：美國壓裂開採的是輕質低硫原油，但柴油要靠重質原油，而墨西哥灣的煉油廠本來就是為重質原油建的。兩邊結構上正好配對。</td><td>17 座油田／650 億桶；美國政府持股 55%</td></tr>
+</tbody>
+</table>
+</div>
+<div class="scrollhint">↔ 表格可橫向捲動</div>
+
+<span class="kicker">教育政策</span>
+<h2>兩個都很硬的實證，指向相反方向</h2>
+
+<p>政策事實先講清楚，因為它常被講成「禁了 ChatGPT」：全美最大學區、60 萬名學生、幼稚園到八年級、為期一年。</p>
+
+<p>高中不在禁令內，而且正在對 5 萬名高中生試辦 AI 學習計畫。</p>
+
+<div class="tbl">
+<table>
+<caption class="notesrc">支持限制與反對限制的兩份實證</caption>
+<thead>
+<tr><th>方向</th><th>讀數</th><th>內容</th></tr>
+</thead>
+<tbody>
+<tr><td>支持限制</td><td>83%</td><td>MIT 研究，54 名參與者分三組，四次寫作任務跨四個月，用腦電頭盔監測。LLM 使用組無法引述自己剛剛寫完的文章裡的句子。用傳統搜尋的那組落在中間，因為他們必須記住東西並把它們串起來。</td></tr>
+<tr><td>反對限制</td><td>2σ</td><td>Bloom 的兩個標準差問題。一對一家教的學生比課堂教育的學生好兩個標準差，而那是有錢人一直在買的東西。轉述者 Jason 的父母請不起家教，他念公立學校到八年級。</td></tr>
+</tbody>
+</table>
+</div>
+<div class="scrollhint">↔ 表格可橫向捲動</div>
+
+<div class="callout warn">
+<span class="lbl">兩件事同時為真，而這正是難的地方</span>
+<span class="txt">家長不希望孩子的大腦萎縮；但被禁止使用工具的、有動機的學生，恰恰是那些付不起家教的家庭的孩子。</span>
+<span class="txt">兩份研究的量級不對等：MIT 研究 n=54、期刊出處未在節目中給出、本頁未查證；Bloom 的兩個標準差是關於人類家教的，沒有任何證據顯示 AI 家教能達到同樣效果。把這個數字借過來當 AI 的上限是未經檢驗的假設。</span>
+</div>
+
+<h3>Sacks 指出的歷史反諷，是這一段最該記下來的一句</h3>
+
+<blockquote><p>我們談了三十年的數位落差。現在你有一個案例，落差真的發生了。不是因為他們沒有錢，不是因為技術不存在，是因為政治領導層。</p></blockquote>
+
+<p>評估一項禁令時，該問的不是「這個工具好不好」，是「禁掉之後，誰還有別的路」。</p>
+
+<p>禁令的作用域不對稱：公立學校受管、私立不受，所以它實際上只約束了資源較少的那一半人。</p>
+
+<p>Friedberg 當場拿出的反駁材料同樣值得記。史丹佛 2026 年 3 月報告《The Evidence Base on AI and K-12》盤點數百篇論文，其中 20 篇高品質因果研究。</p>
+
+<p>結論是：學生表現在有 AI 工具時經常改善，但工具移除後結果不一，工具設計很重要。注意「移除後結果不一」這一句同時支持兩邊。</p>
+
+<p>而市長的理由是「我還沒看到任何研究顯示 AI 對國小與國中生有益」。Jason 的補刀很準：他可能沒說謊，他說他沒看到研究，他可能只是沒去找。</p>
+
+<span class="kicker">可以帶走的東西</span>
+<h2>這四個判準都不看內容真假，而且都很便宜</h2>
+
+<p>一個主張除了對不對，還有一組「它自己長什麼樣」的性質：用哪組詞、有沒有終止條件、在什麼時點作用、量的是哪個軸。</p>
+
+<p>這些可以在不知道答案的情況下檢查，而且常常比真假更能預測後果。判斷真假很貴，檢查形式很便宜。</p>
+
+<div class="func-row">
+<div class="fn">
+<svg viewBox="0 0 40 40" role="img" aria-labelledby="ic1"><title id="ic1">措辭檢查</title><circle cx="20" cy="20" r="17" fill="none" stroke="currentColor" stroke-width="2"/><path d="M12 16 H28 M12 24 H22" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/></svg>
+<div><span class="lbl">A　它用的是哪一組詞</span><span class="txt">預測這件事會停在專業社群，還是變成法案。</span></div>
+</div>
+<div class="fn">
+<svg viewBox="0 0 40 40" role="img" aria-labelledby="ic2"><title id="ic2">終止條件檢查</title><circle cx="20" cy="20" r="17" fill="none" stroke="currentColor" stroke-width="2"/><path d="M20 11 V21 L26 25" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+<div><span class="lbl">B　這個「還不知道」有沒有終止條件</span><span class="txt">預測這是真的證據不足，還是一個沒有成本的否決權。</span></div>
+</div>
+<div class="fn">
+<svg viewBox="0 0 40 40" role="img" aria-labelledby="ic3"><title id="ic3">時點檢查</title><circle cx="20" cy="20" r="17" fill="none" stroke="currentColor" stroke-width="2"/><path d="M11 25 L17 16 L23 22 L29 13" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+<div><span class="lbl">C　作用時點跟事故時點有交集嗎</span><span class="txt">預測這個提案接不接得住這起事故。</span></div>
+</div>
+<div class="fn">
+<svg viewBox="0 0 40 40" role="img" aria-labelledby="ic4"><title id="ic4">軸別檢查</title><circle cx="20" cy="20" r="17" fill="none" stroke="currentColor" stroke-width="2"/><path d="M13 27 V15 M13 27 H27" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/></svg>
+<div><span class="lbl">D　爭論的雙方量的是同一個軸嗎</span><span class="txt">預測這場爭論會不會收斂。</span></div>
+</div>
+</div>
+
+<h3>A　它用的是哪一組詞</h3>
+
+<p>同一起事故用工程語彙描述，與用擬人化語彙描述，會走上完全不同的路徑。後者接上《科學怪人》這個現成的情感模板。</p>
+
+<p>讀者不是在評估證據，是在確認一個他早就知道的結局。這與嚴重度無關。</p>
+
+<p>反過來也成立：想讓某件事進不了政治議程的人，該做的不是事後澄清，是在第一次描述它的時候就選定語彙。</p>
+
+<h3>B　這個「還不知道」有沒有終止條件</h3>
+
+<p>「我們還不知道」在任何時間點都成立，所以它不提供任何時點資訊。它無法區分「現在真的證據不足」和「我永遠不想做這件事」。</p>
+
+<p>它最有用的地方正是：使用者不必承擔「我反對」的立場成本，就能取得反對的效果。</p>
+
+<p>可以當場問出口的兩句：缺的具體是哪一份證據？拿到它之後你會怎麼決定？答不出第二句的，那不是證據問題。</p>
+
+<p>邊界：謹慎有真正成立的時候。這一條不主張所有謹慎都是拖延，只主張謹慎必須帶著終止條件。</p>
+
+<h3>C　作用時點跟事故時點有交集嗎</h3>
+
+<p>上市前審批作用在「發布」那個時點，但能力測試型的事故發生在發布之前的內部測試階段。兩者在時間軸上沒有交集。</p>
+
+<p>這是可以事前判定的事實，不需要爭論監管好不好。</p>
+
+<p>更尖的一半：這類發布前測試本身是好事，它就是把 bug 找出來的方法。把它納入審批範圍會讓實驗室減少測試，使系統整體更不安全。</p>
+
+<p>邊界：這只否定「用這起事故支持上市前審批」這條推論，不否定 AI 需要治理。事後通報義務、沙盒隔離標準、第三方紅隊作用在不同時點。</p>
+
+<h3>D　爭論的雙方量的是同一個軸嗎</h3>
+
+<p>泡沫爭論就是現成的例子。「基本面是真的」與「價格往前跑太遠」是兩個獨立的軸，而破裂只發生在第二個軸上。</p>
+
+<p>拿「基本面是真的」反駁泡沫論，是答非所問，沒有人在爭第一個軸。反過來也一樣：拿「這是泡沫」來否定標的的價值，同樣是混軸。</p>
+
+<div class="callout warn">
+<span class="lbl">這四個工具自帶一個最好的反例</span>
+<span class="txt">提出這四個形式檢查的四位主持人，同一集裡指控對手陣營有未揭露的利益衝突，而他們自己持有大量相關部位、揭露只是口頭順帶提過。</span>
+<span class="txt">另外兩個邊界也要一起記。形式檢查只能排序，不能裁決：形式完美的主張仍然可能是錯的。而且它會被學會並被規避：知道「要有終止條件」的人，可以寫出一個假的終止條件。</span>
+</div>
+
+<span class="kicker">誠實邊界</span>
+<h2>逐字稿是機器產的，人名幾乎全被聽錯</h2>
+
+<p>這一集沒有人工字幕，只有 YouTube 自動字幕，共 2,553 段、約 91,880 字。下面每一條都是我在讀的時候撞到、而且沒有辦法只靠這份逐字稿解決的。</p>
+
+<ol class="caveat-list">
+<li><span class="lbl">人名幾乎全被聽錯，本頁的還原是推論。</span>Dwaresh 還原為 Dwarkesh Patel；Chimath 還原為 Chamath Palihapitiya；Dustin Moscus 還原為 Dustin Moskovitz。其中三個名字我沒有查證。</li>
+<li><span class="lbl">有一個名詞在全集出現十幾次，但從未被清楚定義。</span>聽起來是 xAI 的產品，但 Sacks 說他在 Mac Mini 上架設它，而且它是 agent swarm 架構。指涉不確定，引用前必查。</li>
+<li><span class="lbl">委內瑞拉交易的期限自相矛盾。</span>一處說 100 年特許權、另一處說 25 年商業協議。兩個都不該直接引用。</li>
+<li><span class="lbl">關鍵數字沒有出處。</span>「把舊金山史上所有 IPO 加總，只有 Anthropic 這一次 IPO 的四分之一」出自「有一篇文章說」，本頁刻意沒有把它放進正文。</li>
+<li><span class="lbl">資料中心的三個地方經濟數字全是單方說法。</span>房產稅下降、教師獎金、電價會下降、水是循環的，全部出自同一個人、未經查證。</li>
+<li><span class="lbl">「Doomer 運動有很大部分由外國行為者資助」這句話沒有給任何證據。</span>說話者只說「我們正在把手指按上去」。</li>
+<li><span class="lbl">本集所有預測都無依據。</span>泡沫還有三年、能力 3 到 4 個月被追平。這些是判斷，不是分析結果。</li>
+</ol>
+
+<div class="callout tip">
+<span class="lbl">關於這一版的圖</span>
+<span class="txt">這份筆記的前一版把三張圖做成可拖曳旋轉的立體元件。改成現在這樣，是因為判準只有一句：我要讀者從這張圖讀出一個數字嗎？要，就不准立體。</span>
+<span class="txt">三張圖填空之後全部落在「不准立體」那一側：喇叭是旋轉對稱體，剪影就完整；四天鏈是序列，流程圖就完整；三軸座標要比的是相對位置，那正是立體會讓人讀錯的東西。三張圖現在全部是零 JavaScript 的 SVG，關掉指令碼也還在。</span>
+</div>
+
+</article>
+<footer>
+<p>整理日期 2026-09-06。原始素材：All-In Podcast 第 288 集，2026-09-04，片長 01:31:55。逐字稿來源為 YouTube 自動字幕，非人工字幕。</p>
+<p>本頁所有時間戳可回原片查證：<a href="https://www.youtube.com/watch?v=DvFe9bR2eHA" rel="noopener">youtube.com/watch?v=DvFe9bR2eHA</a></p>
+<p>本頁是逐字稿的結構化整理，不是逐字稿本身。凡是本頁沒有標時間戳的判斷，都是整理者的推論。</p>
+<p>授權 CC BY 4.0。作者：彥皓。</p>
+</footer>
+</main>
+<script type="application/json" id="form-routing-3-7">
+{"3.7a":{"cell":"因果鏈","carrier":"SVG 機制圖"},
+ "3.7b":{"sections":[{"h":"說話的四個人立場一致，而且都有部位","structural":false},
+                     {"h":"同一起事故，換一組詞就換了一條路","structural":true},
+                     {"h":"他們不是意見不同，是在不同的軸上說話","structural":true},
+                     {"h":"整集剩下的內容與各自的數字","structural":false},
+                     {"h":"兩個都很硬的實證，指向相反方向","structural":false},
+                     {"h":"這四個判準都不看內容真假，而且都很便宜","structural":false},
+                     {"h":"逐字稿是機器產的，人名幾乎全被聽錯","structural":false}]},
+ "3.7c":{"continuous":false},
+ "3.7d":{"needed":false,"tier":"none"}}
+</script>
+<script>
+  const bar = document.getElementById('progress');
+  window.addEventListener('scroll', () => {
+    const h = document.documentElement;
+    const max = h.scrollHeight - h.clientHeight;
+    const ratio = max > 0 ? h.scrollTop / max : 0;
+    bar.style.transform = 'scaleX(' + ratio + ')';
+  }, { passive: true });
+</script>
+</body>
+</html>

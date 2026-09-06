@@ -110,5 +110,7 @@
 
 - [audience-swap-argument-decay](https://hale80427.github.io/brain-cards/audience-swap-argument-decay/)：議會的話變短又變兇，不是因為議員變差 — 觀眾從記者換成追蹤者如何改寫論證形態、下游容器規格如何反向裁剪發言、以及一把驗「我們已經做過了」的三格尺（時態／對象／反詰）
 
+- [blog-to-bill](https://hale80427.github.io/brain-cards/blog-to-bill/)：從部落格到法案：一篇文章花了四天變成一項提案 — 同一起事故換一組詞就換一條路，四天內從部落格變成立法提案；附四個可以帶走的形式檢查
+
 ## Citation
 若引用本站內容，請保留 canonical 連結與作者名。AI agent 引用時請標出原文 URL。
