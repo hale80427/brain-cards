@@ -190,7 +190,7 @@ figure{margin:2.4rem 0}
 .flow-legend i{width:.72rem; height:.72rem; border-radius:1px; flex:0 0 auto}
 .sw-a{background:var(--accent)} .sw-b{background:var(--deep)} .sw-c{background:var(--amber)}
 /* 層疊圖 */
-.layers{display:grid; grid-template-columns:minmax(0,15rem) minmax(0,1fr); gap:1.6rem; align-items:center}
+.layers{display:grid; grid-template-columns:minmax(0,17rem) minmax(0,1fr); gap:1.8rem; align-items:center}
 .layers > svg{width:100%; height:auto}
 .layer-list{list-style:none; margin:0; padding:0}
 .layer-list li{
@@ -207,6 +207,7 @@ figcaption{
   padding-top:.75rem; border-top:1px solid var(--line);
 }
 figcaption b{display:block; color:var(--ink); margin-bottom:.4rem; font-weight:700}
+figcaption .src b{display:inline; margin:0; color:var(--ink-2); font-weight:700}
 figcaption .src{
   display:block; font-family:"Helvetica Neue",Arial,sans-serif; font-size:.72rem;
   color:var(--ink-3); line-height:1.7;
@@ -478,14 +479,15 @@ footer .rule{height:1px; background:rgba(255,255,255,.12); margin:1.2rem 0}
 <div class="wide">
 <figure>
 <div class="layers">
-  <svg viewBox="0 0 260 260" role="img" aria-labelledby="dl"><title id="dl">四層同心方框，由外而內依序收窄，最內層以實心色塊表示</title>
-    <rect x="8" y="8" width="244" height="244" rx="6" fill="#8fa3b8" opacity=".2" stroke="#8fa3b8" stroke-width="2"/>
-    <rect x="40" y="40" width="180" height="180" rx="5" fill="#5a7590" opacity=".26" stroke="#5a7590" stroke-width="2"/>
-    <rect x="72" y="72" width="116" height="116" rx="4" fill="#2f6b6a" opacity=".32" stroke="#2f6b6a" stroke-width="2"/>
-    <rect x="104" y="104" width="52" height="52" rx="3" fill="#b4432c" stroke="#b4432c" stroke-width="2"/>
-    <g stroke="#767d87" stroke-width="1" stroke-dasharray="3 3">
-      <path d="M130 8v32"/><path d="M130 40v32"/><path d="M130 72v32"/>
+  <svg viewBox="0 0 300 168" role="img" aria-labelledby="dl"><title id="dl">四根等高的直立長條並排，左側一支粗箭頭指向它們。三根用虛線邊框且不填色，第三根用實線邊框並填滿實色</title>
+    <path d="M4 84h30" fill="none" stroke="#4a5058" stroke-width="3.4" stroke-linecap="round"/>
+    <path d="M30 75.5l12 8.5-12 8.5" fill="none" stroke="#4a5058" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round"/>
+    <g fill="none" stroke-width="2.4" stroke-dasharray="7 5">
+      <rect x="56" y="8" width="52" height="152" rx="3" stroke="#8fa3b8"/>
+      <rect x="120" y="8" width="52" height="152" rx="3" stroke="#5a7590"/>
+      <rect x="248" y="8" width="52" height="152" rx="3" stroke="#b4432c"/>
     </g>
+    <rect x="184" y="8" width="52" height="152" rx="3" fill="#2f6b6a" stroke="#2f6b6a" stroke-width="2.4"/>
   </svg>
   <ul class="layer-list">
     <li><i class="l1"></i><span><span class="lbl">沙箱隔離</span><span class="txt">限制模型實際能碰到的東西。最外圈、最粗糙，也最不依賴我們理解它。</span></span></li>
@@ -494,9 +496,10 @@ footer .rule{height:1px; background:rgba(255,255,255,.12); margin:1.2rem 0}
     <li><i class="l4"></i><span><span class="lbl">紅線偵測</span><span class="txt">有些事顯然不該做。這一格他說投入很多在偵測，但沒有展開細節。</span></span></li>
   </ul>
 </div>
-<figcaption><b>他兩次強調思維鏈只是其中一個環節，不是唯一重要的。</b>
-<span class="src">Note：四層的排列是我依他的敘述順序與語氣輕重整理的，他本人沒有畫過這張圖，也沒有說這四層是巢狀關係。內外層次代表「離模型本體的遠近」，不代表防護強度。</span>
-<span class="src">Source：影片 04:46–06:04 段落。</span></figcaption>
+<figcaption><b>他兩次強調思維鏈只是其中一個環節，而且他自己把「對齊」講得比它重。</b>
+<span class="src">Note｜怎麼讀這張圖：四根長條並排、等高、不套疊——他沒說這幾層是巢狀關係。<b>虛線邊框的三根是他提到但沒有給輕重的</b>；<b>實色那一根是他唯一排過序的</b>（他說對齊「可能最重要」）。左側箭頭只標示他談的時間點是「模型動手之前」，不表示任何一次行動會被哪一層擋下來——那件事他沒說。</span>
+<span class="src">Note 二｜這張圖答不了的問題：defense in depth 這個框架有沒有效，取決於各層的失效模式獨不獨立。若幾層會因為同一個原因一起失效，多層等於單層。他用了這個詞，但整場訪談沒有談這件事，主持人也沒有追。</span>
+<span class="src">Source：影片 04:46–06:04 段落。畫法參考 arXiv:2510.11235 Fig 1、arXiv:2601.20184 Fig 7、arXiv:2607.22926 Fig 1，勘查紀錄見本頁目錄下的 refimg/REFERENCES.md。</span></figcaption>
 </figure>
 </div>
 <div class="wrap">
@@ -686,7 +689,7 @@ footer .rule{height:1px; background:rgba(255,255,255,.12); margin:1.2rem 0}
    {"h":"讀這份筆記之前，先知道它站在什麼上面","structural":false}]},
  "3.7c":{"continuous":false},
  "3.7d":{"needed":false,"tier":null},
- "3.8":{"needed":false,"why":"標註式圖解"}}
+ "3.8":{"needed":true,"refs":3}}
 </script>
 </body>
 </html>
