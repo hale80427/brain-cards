@@ -280,6 +280,7 @@ footer{border-top:1px solid var(--line); margin-top:56px; padding:28px 0 60px;
   <p>官方列了十六條行為差異。十一條的處置是「加一段系統提示」，不是改架構，而系統提示你自己改得動。</p>
   <p>但另外七條落在「改 harness 呼叫方式」那一欄，<strong>你一條都動不了</strong>，只能等 Anthropic。這一點是報告寫完後被異質票攻出來的，見 §7。</p>
   <p>真正在咬人的是三條，全在 §4。</p>
+  <p>⚠ 但提示詞配置那一塊，<strong>昨天的第 233 跑已經做過且更細</strong>，成果焊在 <code>fable-dispatch</code> 的 SKILL 裡。我開跑前沒跑 warroom 才重做了一次。§5 開頭有指路。</p>
 </section>
 
 <hr>
@@ -562,6 +563,15 @@ footer{border-top:1px solid var(--line); margin-top:56px; padding:28px 0 60px;
   <h2>六個缺口，以及各自誰動得了</h2>
   <p class="sec-sub">§3 那張表裡淡色底的六列。每條標了「你能不能自己改」——這一欄是異質票逼出來的，我原本的標題寫「立即可改」，那三個字是錯的。</p>
 
+  <div class="card warn">
+    <p class="card-h">動手之前先看這裡：這一塊昨天已經有人做過，而且做得更細</p>
+    <p>2026-09-05 的第 233 跑已經把同一份官方指南的十六節親取、凍存進 repo，並把差分焊進 <code>fable-dispatch</code> 的 SKILL 第二層，共十一條，逐條標了引文層級——規範句、範例 code block、還是能力描述。</p>
+    <p>那一棒的判準 5 逐字是「<strong>分出彥皓碰得到 vs API 層碰不到，不把不可用的條文寫成待辦</strong>」，SKILL 第 121 行逐字寫著「十六節裡本系統用得到的不到一半，五節是 API 層、彥皓碰不到」。</p>
+    <p><strong>那正是今天異質票攻我的那一句。昨天已經寫下來了，而我今天重做一遍並且做錯。</strong>根因是我開跑前沒跑 warroom 全盤重排，SessionStart 的提醒我略過了。</p>
+    <p>所以要改配置，<strong>先去看那裡</strong>：<code>Skills/fable-dispatch/SKILL.md</code> 的 D-1 到 D-3 與 F-5 到 F-11，還有凍存的官方原文 <code>docs/reference/anthropic-official/prompting-claude-fable-5-1_2026-09-05.md</code>（54,572 位元組）。</p>
+    <p>下面這六條是我這一棒的版本，價值在於它多了「誰動得了」這一欄與可直接複製的官方提示句。<strong>兩份對照著看，不要只看一份。</strong></p>
+  </div>
+
   <details>
     <summary><span class="tag tag-new">半條你能改</span> <span>02 · 工具呼叫之間幾乎不寫字，使用者看到它靜默好幾分鐘</span></summary>
     <div class="det-body">
@@ -772,6 +782,7 @@ footer{border-top:1px solid var(--line); margin-top:56px; padding:28px 0 60px;
     <li>官方 benchmark 沒有一項被獨立複現。發布時每個數字都是 Anthropic 自己跑的。Artificial Analysis 與 Vals AI 是獨立跑的，但題目不同。</li>
     <li>對齊層的負面引文，受詞多半是 Mythos 5.1，那是同權重、不同 safeguards 的版本，不全是 Fable 5.1。</li>
     <li>Reddit 的搜尋是「查無」不是「不存在」。索引層零命中，可能是工具沒索引到，不代表沒有負面回報。</li>
+    <li><strong>這份報告有一半是重複勞動。</strong>「提示詞工程配置」那一塊，2026-09-05 的第 233 跑已經做過且更細，而我開跑前沒跑 warroom 就沒發現。本報告真正零重複的是三塊：官方 System Card 的 212 頁讀數、第三方獨立覆核、以及成本悖論那一格。</li>
     <li>浮水印的說法不在 System Card 裡。對 212 頁全文搜 <code>watermark</code> 命中 0。那些說法只在發布頁與 platform docs。</li>
   </ul>
 </section>
