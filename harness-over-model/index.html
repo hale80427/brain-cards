@@ -1,0 +1,714 @@
+<!DOCTYPE html>
+<html lang="zh-Hant-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Harness 決定了模型能發揮多少</title>
+<meta name="description" content="同一組模型權重，換一個 harness，ARC-AGI 從 30% 變成 95%。YC Paper Club 三組人講的其實是同一件事，而擋住他們的不是能力。">
+<link rel="canonical" href="https://hale80427.github.io/brain-cards/harness-over-model/">
+<meta name="author" content="彥皓">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Harness 決定了模型能發揮多少">
+<meta property="og:description" content="同一組模型權重，換一個 harness，ARC-AGI 從 30% 變成 95%。那個差距不是模型給的。">
+<meta property="og:url" content="https://hale80427.github.io/brain-cards/harness-over-model/">
+<meta property="og:image" content="https://hale80427.github.io/brain-cards/og-default.jpg">
+<meta property="og:locale" content="zh_TW">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Harness 決定了模型能發揮多少">
+<meta name="twitter:description" content="同一組模型權重，換一個 harness，ARC-AGI 從 30% 變成 95%。那個差距不是模型給的。">
+<meta name="twitter:image" content="https://hale80427.github.io/brain-cards/og-default.jpg">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "Harness 決定了模型能發揮多少",
+  "description": "同一組模型權重，換一個 harness，ARC-AGI 從 30% 變成 95%。YC Paper Club 三組人講的其實是同一件事。",
+  "datePublished": "2026-09-10",
+  "dateModified": "2026-09-10",
+  "author": { "@type": "Person", "name": "彥皓" },
+  "url": "https://hale80427.github.io/brain-cards/harness-over-model/",
+  "inLanguage": "zh-TW",
+  "license": "https://creativecommons.org/licenses/by/4.0/"
+}
+</script>
+<style>
+  :root {
+    --bg: oklch(98.4% 0.004 106.5);
+    --fg: oklch(21.8% 0 0);
+    --accent: oklch(54.3% 0.174 29.7);
+    --accent-warn: oklch(66.6% 0.157 58.3);
+    --muted: oklch(51.0% 0 0);
+    --border: oklch(92.1% 0.007 106.5);
+    --callout-tip: oklch(95.7% 0.014 174.2);
+    --callout-warn: oklch(96.9% 0.019 72.6);
+    --plate-bg: oklch(28.5% 0.055 251.4);
+    --plate-fg: oklch(96.0% 0.008 106.5);
+    --plate-dim: oklch(75.0% 0.021 251.4);
+    --plate-line: oklch(62.0% 0.030 251.4);
+    --sign-down: oklch(48.0% 0.150 29.7);
+    --sign-up: oklch(80.0% 0.130 155.0);
+    --fs-meta: 0.85rem;
+    --fs-body: 1rem;
+    --fs-h2:   clamp(1.3rem, 3vw, 1.5rem);
+    --fs-h1:   clamp(1.75rem, 4vw, 2.25rem);
+    --font-serif: "Noto Serif TC", Georgia, serif;
+    --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+    --ease-linear: linear;
+    --ease-soft: cubic-bezier(0.22, 0.61, 0.36, 1);
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: oklch(21.8% 0 0);
+      --fg: oklch(95.3% 0.011 106.6);
+      --accent: oklch(70.4% 0.136 28.7);
+      --accent-warn: oklch(76.9% 0.165 70.1);
+      --muted: oklch(68.3% 0 0);
+      --border: oklch(32.1% 0 0);
+      --callout-tip: oklch(30.9% 0.029 178.3);
+      --callout-warn: oklch(30.7% 0.034 73.5);
+    }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
+  }
+  * { box-sizing: border-box; }
+  body {
+    font-family: var(--font-serif);
+    background: var(--bg);
+    color: var(--fg);
+    line-height: 1.8;
+    margin: 0;
+    padding: 0;
+    -webkit-font-smoothing: antialiased;
+    text-autospace: normal;
+    font-synthesis: none;
+    line-break: strict;
+    font-variant-numeric: lining-nums tabular-nums;
+  }
+  .progress-bar {
+    position: fixed; top: 0; left: 0; height: 3px; width: 100%;
+    background: var(--accent); z-index: 100;
+    transform: scaleX(0); transform-origin: left;
+    transition: transform 0.1s var(--ease-linear);
+  }
+  main, main > article {
+    display: grid;
+    grid-template-columns:
+      [full-start] minmax(1rem, 1fr)
+      [wide-start] minmax(0, 130px)
+      [content-start] minmax(0, 680px) [content-end]
+      minmax(0, 130px) [wide-end]
+      minmax(1rem, 1fr) [full-end];
+  }
+  main { padding: clamp(2rem, 5vw, 4rem) 0; }
+  main > *, main > article > * { grid-column: content; }
+  main > article { grid-column: full; }
+  main > .wide, main > article > .wide { grid-column: wide; }
+  main > .full, main > article > .full { grid-column: full; }
+  @media (max-width: 1000px) {
+    main, main > article {
+      grid-template-columns:
+        [full-start] minmax(1rem, 1fr)
+        [wide-start content-start] minmax(0, 680px) [content-end wide-end]
+        minmax(1rem, 1fr) [full-end];
+    }
+  }
+  h1 { font-size: var(--fs-h1); line-height: 1.3; margin: 0 0 1rem; }
+  h2 { font-size: var(--fs-h2); line-height: 1.4; margin: 2.5rem 0 0.75rem; padding-bottom: 0.5rem; border-bottom: 1px solid var(--border); }
+  h3 { font-size: var(--fs-body); font-weight: 700; line-height: 1.4; margin: 1.75rem 0 0.5rem; color: var(--accent); }
+  p { margin: 0 0 1.25rem; }
+  a { color: var(--accent); text-underline-offset: 3px; }
+  a:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+  em { font-style: normal; font-weight: 600;
+       text-emphasis: filled dot; text-emphasis-position: under right;
+       -webkit-text-emphasis: filled dot; -webkit-text-emphasis-position: under right; }
+  em:lang(en) { font-style: italic; font-weight: inherit;
+                text-emphasis: none; -webkit-text-emphasis: none; }
+  .bluf { background: var(--callout-tip); border-left: 3px solid var(--accent); padding: 1.25rem 1.5rem; margin: 1.5rem 0 2rem; border-radius: 4px; }
+  .bluf strong.label { display: block; font-size: var(--fs-meta); letter-spacing: 0.05em; color: var(--accent); margin-bottom: 0.5rem; text-transform: uppercase; }
+  .callout { padding: 1rem 1.25rem; margin: 1.5rem 0; border-radius: 4px; border-left: 3px solid var(--muted); }
+  .callout.tip { background: var(--callout-tip); border-left-color: var(--accent); }
+  .callout.warn { background: var(--callout-warn); border-left-color: var(--accent-warn); }
+  .kicker { display: inline-block; font-size: var(--fs-meta); font-weight: 700;
+            letter-spacing: 0.1em; color: var(--accent); margin: 2.5rem 0 0; }
+  .kicker + h2 { margin-top: 0.4rem; border-bottom: none; padding-bottom: 0; }
+  .notesrc { display: block; font-size: var(--fs-meta); color: var(--muted); margin: 0.5rem 0 0; line-height: 1.7; }
+  .notesrc b { color: var(--fg); font-weight: 600; }
+  table { border-collapse: collapse; width: 100%; margin: 1.5rem 0; font-size: var(--fs-body); }
+  th, td { padding: 0.6rem 0.8rem; border: 1px solid var(--border); text-align: left; vertical-align: top; }
+  th { background: var(--callout-tip); font-weight: 600; }
+  code { font-family: var(--font-mono); background: var(--callout-tip); padding: 0.1em 0.4em; border-radius: 3px; font-size: var(--fs-body);
+         overflow-wrap: anywhere; word-break: break-word; }
+  .tbl { overflow-x: auto; margin: 1.5rem 0; min-width: 0; }
+  .scrollhint { display: none; text-align: center; margin-top: -1rem; }
+  @media (max-width: 700px) { .scrollhint { display: block; } }
+  .tbl table { margin: 0; min-width: 560px; }
+  figure { margin: 1.5rem 0; }
+  figure img { width: 100%; height: auto; border-radius: 4px; display: block; }
+  figure svg { width: 100%; height: auto; display: block; }
+  figcaption { font-size: var(--fs-meta); color: var(--muted); margin-top: 0.5rem; text-align: left; }
+  figcaption > b:first-child { display: block; text-align: center; margin-bottom: 0.5rem; }
+
+  /* === 分數對比條（純 CSS，無 SVG）=== */
+  .scorebars { margin: 1.5rem 0; }
+  .sb { display: grid; grid-template-columns: 8.5rem 1fr; gap: 0.75rem;
+        align-items: center; margin-bottom: 0.7rem; }
+  .sb .sb-name { font-size: var(--fs-meta); color: var(--muted); line-height: 1.4; }
+  .sb .sb-track { background: var(--border); border-radius: 3px; height: 1.75rem; position: relative; }
+  .sb .sb-fill { position: absolute; inset: 0 auto 0 0; border-radius: 3px;
+                 background: var(--plate-line); display: flex; align-items: center;
+                 justify-content: flex-end; padding-right: 0.5rem;
+                 color: var(--plate-fg); font-size: var(--fs-meta); font-weight: 700; }
+  .sb.hi .sb-fill { background: var(--accent); color: var(--bg); }
+  .sb.lo .sb-fill { background: var(--muted); }
+
+  /* === 演化時間軸（純 CSS，全部可見，不隱藏任何內容）=== */
+  .tl { margin: 1.5rem 0; border-left: 2px solid var(--border); padding-left: 1.25rem; }
+  .tl .ev { position: relative; margin-bottom: 1.4rem; }
+  .tl .ev::before { content: ""; position: absolute; left: -1.65rem; top: 0.55rem;
+                    width: 0.65rem; height: 0.65rem; border-radius: 50%;
+                    background: var(--accent); }
+  .tl .ev.v1::before { background: var(--accent-warn); }
+  .tl .yr { display: block; font-size: var(--fs-meta); color: var(--accent);
+            font-weight: 700; letter-spacing: 0.06em; }
+  .tl .ttl { display: block; font-size: var(--fs-body); font-weight: 700; margin-top: 0.1rem; }
+  .tl .dsc { display: block; font-size: var(--fs-meta); color: var(--muted); line-height: 1.65; }
+  .tl .layer { display: inline-block; font-size: var(--fs-meta); color: var(--plate-fg);
+               background: var(--plate-line); border-radius: 3px;
+               padding: 0.05rem 0.45rem; margin-left: 0.4rem; }
+
+  /* === KB-10 元件 3：機制圖 === */
+  .flow { background: var(--plate-bg); border-radius: 6px; padding: 1.5rem 1.25rem; }
+  .flow-track { display: grid; gap: 0.5rem; margin-bottom: 1.25rem; }
+  .flow-track:last-of-type { margin-bottom: 0; }
+  .flow-track .path { display: flex; flex-wrap: wrap; align-items: center; gap: 0.5rem; }
+  .flow-track .node { background: var(--plate-line); color: var(--plate-fg);
+                      font-size: var(--fs-meta); line-height: 1.4;
+                      padding: 0.4rem 0.7rem; border-radius: 4px; }
+  .flow-track .arrow { flex: 0 0 1.4rem; width: 1.4rem; height: 0.85rem; color: var(--plate-dim); }
+  .flow-track .arrow svg { width: 100%; height: 100%; display: block; }
+  .flow-track .sign { font-size: var(--fs-meta); font-weight: 700;
+                      padding: 0.4rem 0.7rem; border-radius: 4px; }
+  .flow-track .down { background: var(--sign-down); color: var(--plate-fg); }
+  .flow-track .up   { background: var(--sign-up);   color: var(--plate-bg); }
+  .flow-track > .lbl { font-size: var(--fs-meta); color: var(--plate-dim); letter-spacing: 0.06em; }
+  .flow-legend { display: flex; flex-wrap: wrap; gap: 1.25rem; margin-top: 1.25rem;
+                 padding-top: 1rem; border-top: 1px solid var(--plate-line);
+                 font-size: var(--fs-meta); color: var(--plate-dim); }
+  .flow-legend span { display: flex; align-items: center; gap: 0.45rem; }
+  .flow-legend i { width: 0.8rem; height: 0.8rem; border-radius: 2px; display: inline-block; }
+  .sw-down { background: var(--sign-down); }
+  .sw-up { background: var(--sign-up); }
+
+  /* === KB-10 元件 1：引線標註圖 === */
+  .annot-stage { position: relative; }
+  .annot-stage > svg { display: block; width: 100%; height: auto; border-radius: 6px; }
+  .annot-labels { list-style: none; margin: 0; padding: 0; }
+  .annot-labels li { font-size: var(--fs-meta); line-height: 1.5; }
+  .annot-labels .lbl { display: block; font-weight: 700; letter-spacing: 0.02em; }
+  .annot-labels span { display: block; color: var(--muted); }
+  @media (min-width: 760px) {
+    .annot-labels li { position: absolute; left: var(--x); top: var(--y);
+                       width: 10.5rem; color: var(--plate-fg); }
+    .annot-labels li span { color: var(--plate-dim); }
+    .annot-labels li::before { content: none; }
+  }
+  .p1 { --x: 36.0%; --y: 4%; }
+  .p2 { --x: 47.0%; --y: 21.5%; }
+  .p3 { --x: 58.0%; --y: 43.5%; }
+  .p4 { --x: 68.5%; --y: 71.0%; }
+  @media (max-width: 759px) {
+    .annot-labels { counter-reset: pin; margin-top: 1rem; }
+    .annot-labels li { counter-increment: pin; position: relative;
+                       padding-left: 1.9rem; margin-bottom: 0.6rem; }
+    .annot-labels li::before {
+      content: counter(pin); position: absolute; left: 0; top: 0.15rem;
+      width: 1.35rem; height: 1.35rem; border-radius: 50%;
+      background: var(--plate-bg); color: var(--plate-fg);
+      font-size: var(--fs-meta); line-height: 1.35rem; text-align: center; }
+  }
+
+  /* === KB-10 元件 2：功能列（本頁做成可勾選的原語清單）=== */
+  .func-row { display: grid; grid-template-columns: repeat(auto-fit, minmax(13rem, 1fr));
+              gap: 1.25rem; margin: 1.5rem 0 0.5rem; padding: 1.25rem 0;
+              border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+  .func-row .fn { display: flex; gap: 0.75rem; align-items: flex-start; }
+  .func-row .fn svg { flex: 0 0 2rem; width: 2rem; height: 2rem; }
+  .func-row .fn .lbl { display: block; font-size: var(--fs-meta); letter-spacing: 0.06em; }
+  .func-row .fn .txt { display: block; font-size: var(--fs-meta); color: var(--muted);
+                       margin: 0.2rem 0 0; line-height: 1.6; }
+  .prim { background: none; border: 1px solid var(--border); border-radius: 6px;
+          padding: 0.85rem 0.9rem; cursor: pointer; text-align: left;
+          font-family: inherit; color: inherit; width: 100%;
+          transition: border-color 0.15s var(--ease-soft), opacity 0.15s var(--ease-soft); }
+  .prim:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+  .prim[aria-pressed="true"] { border-left: 4px solid var(--accent); padding-left: 0.65rem; }
+  .prim[aria-pressed="false"] { opacity: 0.5; border-style: dashed;
+                                border-left: 4px dashed var(--muted); padding-left: 0.65rem; }
+  .prim .lbl { color: var(--accent); font-weight: 700; }
+  .prim[aria-pressed="false"] .lbl { color: var(--muted); }
+  .caps { margin: 0.5rem 0 0; padding: 0; list-style: none; }
+  .caps li { font-size: var(--fs-body); line-height: 1.75; padding: 0.35rem 0;
+             border-bottom: 1px dashed var(--border);
+             transition: opacity 0.15s var(--ease-soft); }
+  .caps li.gone { opacity: 0.45; text-decoration: line-through;
+                  text-decoration-color: var(--accent); }
+  .caps li .why { display: block; font-size: var(--fs-meta); color: var(--muted); }
+  .tally { font-size: var(--fs-meta); color: var(--accent); font-weight: 700;
+           margin: 0.9rem 0 0; }
+
+  /* === KB-10 元件 4：卡片牆 === */
+  .schema-wall { display: grid; grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr));
+                 gap: 1rem; margin: 1.5rem 0; }
+  .schema-wall .card { background: var(--plate-bg); color: var(--plate-fg);
+                       border-radius: 6px; padding: 1rem 1.1rem; }
+  .schema-wall .card > .lbl { display: block; font-size: var(--fs-meta);
+                              letter-spacing: 0.06em; margin-bottom: 0.75rem; font-weight: 700; }
+  .schema-wall dl { margin: 0; display: grid; gap: 0.6rem; }
+  .schema-wall dt { font-size: var(--fs-meta); color: var(--plate-dim); letter-spacing: 0.04em; }
+  .schema-wall dd { font-size: var(--fs-meta); line-height: 1.55; margin: 0.1rem 0 0; }
+  .schema-wall .sep { border-top: 1px solid var(--plate-line); padding-top: 0.6rem; }
+
+  /* === KB-10 元件 5：側欄三卡 === */
+  .side-cards { display: grid; gap: 1rem; margin: 2rem 0; }
+  @media (min-width: 760px) { .side-cards { grid-template-columns: repeat(3, 1fr); } }
+  .side-cards .sc { border: 1px solid var(--border); border-radius: 6px; padding: 1rem 1.1rem; }
+  .side-cards .sc .lbl { display: block; font-size: var(--fs-meta); letter-spacing: 0.06em;
+                         color: var(--accent); margin-bottom: 0.5rem; font-weight: 700; }
+  .side-cards .sc .txt { display: block; font-size: var(--fs-meta); line-height: 1.65;
+                         margin: 0; color: var(--muted); }
+  .side-cards .ask { background: var(--callout-warn); border-color: var(--accent-warn); }
+  .side-cards .ask .lbl { color: var(--accent-warn); }
+
+  @media print {
+    .progress-bar { display: none; }
+    body { font-size: 11pt; line-height: 1.6; }
+    main { max-width: 100%; padding: 1cm; }
+  }
+</style>
+</head>
+<body>
+<div class="progress-bar" id="progress"></div>
+<main>
+<header>
+<h1>Harness 決定了模型能發揮多少</h1>
+<div class="bluf">
+<strong class="label">BLUF</strong>
+<p>同一組模型權重，換一個 harness，ARC-AGI 的成績從 <b>30%</b> 變成 <b>95%</b>。那個差距不是模型給的。</p>
+<p>2026-09-07 的 YC Paper Club 上，三組人用三種互相矛盾的說法講同一件事——「表達力要最大」「原語要最少」「harness 要極薄」。它們統一在同一條判準上：<b>harness 只提供模型自己做不到的原語，其餘全部推給模型決定。</b></p>
+<p>而更值得記下的是第二條線：三組人撞到的牆都不是能力，是<b>驗證與邊界</b>。</p>
+</div>
+</header>
+<article>
+<!-- narrative: 矛盾,物件,直接引語,場景,細節 -->
+
+<span class="kicker">【數字】</span>
+<h2>先看那個差距，它比多數人以為的大</h2>
+
+<p>harness 這個詞，中文可以叫「外殼」或「駕具」——就是包在模型外面、決定它能做什麼的那一層程式：迴圈怎麼跑、能呼叫哪些工具、記憶放哪裡、什麼時候停。</p>
+
+<p>它長期被當成不值得研究的東西。演講開場直接引了兩則社群留言：「我不確定這種 prompt engineering 該不該進頂級機器學習會議」、「context engineering 不是研究問題」。</p>
+
+<p>接著給了反證。ARC-AGI 是一組刻意設計成「技能互不重複」的題目，量的不是知識量，是<em>面對全新問題多快適應</em>。在它的私有測試集上：</p>
+
+<figure class="wide">
+  <div class="scorebars">
+    <div class="sb lo"><span class="sb-name">Claude Opus<br>裸模型最佳成績</span>
+      <div class="sb-track"><div class="sb-fill" style="width:30%">30%</div></div></div>
+    <div class="sb hi"><span class="sb-name">同一批權重<br>換上 harness</span>
+      <div class="sb-track"><div class="sb-fill" style="width:95%">95%</div></div></div>
+    <div class="sb"><span class="sb-name">Prime Agent<br>＋ GPT-5.6 Sol</span>
+      <div class="sb-track"><div class="sb-fill" style="width:78%">78%</div></div></div>
+    <div class="sb"><span class="sb-name">Prime Agent<br>＋ 另一個檔位</span>
+      <div class="sb-track"><div class="sb-fill" style="width:25.7%">25.7%</div></div></div>
+  </div>
+  <figcaption>換 harness 帶來的落差，大過換模型帶來的落差。下面兩列是同一個 harness 換不同模型，差 52 個百分點；上面兩列是同一個模型換不同 harness，差 65 個百分點。
+    <span class="notesrc"><b>Note：</b>四個數字都是講者自報，沒有第三方複現。上兩列出自演講開場引用的公開結果，下兩列是 Prime Agent 團隊在 ARC-AGI-3 上自跑的。另一組（NVIDIA）報 100%，逐字稿把隊名打壞了，未還原。</span>
+    <span class="notesrc"><b>Source：</b>YC Paper Club, Why The Harness Matters More Than The Model, 2026-09-07（<code>[03:44]</code>／<code>[31:26]</code>／<code>[32:13]</code>／<code>[32:48]</code>）。</span>
+  </figcaption>
+</figure>
+
+<p>講者給的機制解釋是這樣的：我們一直在推「智力」那個維度，卻幾乎沒在用<b>模型在現場產生的經驗</b>。而現有的學習階梯是斷的——把範例塞進上下文，塞到大約 40 到 50 個就飽和、不再進步；再往上就只能跳去微調權重，中間沒有連續的東西。</p>
+
+<p>harness 補的正是這一段。</p>
+
+<span class="kicker">【演化】</span>
+<h2>六年來，我們一直在往同一個迴圈裡塞東西</h2>
+
+<p>2019 年 2 月的 GPT-2，它的 harness 只有一個迴圈：一直產字，直到吐出結束符號為止。沒有工具、沒有技能、沒有記憶。</p>
+
+<p>接下來六年做的事，講者說得很直白：把功能一項一項塞進這個靜態的殼裡。下面按「它動的是哪一層」排——這比按年份排更看得出結構。</p>
+
+<div class="tl">
+  <div class="ev"><span class="yr">2019-02</span><span class="ttl">V0：一個迴圈<span class="layer">迴圈</span></span>
+    <span class="dsc">產字直到結束符號，加上取樣策略，加上環境。就這樣。答對加一分、答錯扣一分。</span></div>
+  <div class="ev"><span class="yr">2020-07</span><span class="ttl">少樣本示範<span class="layer">上下文</span></span>
+    <span class="dsc">先給它幾個做對的例子，它就會照著做。這是第一次「不改權重也能教它」。</span></div>
+  <div class="ev"><span class="yr">—</span><span class="ttl">思考鏈<span class="layer">輸出空間</span></span>
+    <span class="dsc">與其直接吐答案，不如把運算攤在更多字上。這一步改的是輸出的形狀，不是輸入。</span></div>
+  <div class="ev"><span class="yr">—</span><span class="ttl">工具呼叫<span class="layer">動作空間</span></span>
+    <span class="dsc">WebGPT 先出、Toolformer 後出。工具本質上只是一個講好格式的訊息；<code>5-2</code> 不必在權重裡算，呼叫一次 Python 就好。</span></div>
+  <div class="ev"><span class="yr">—</span><span class="ttl">對自己的記憶做增刪改查<span class="layer">記憶</span></span>
+    <span class="dsc">MemGPT。在此之前只能一直往後接，這裡第一次切出一塊叫「記憶」的區域交給模型自己管。</span></div>
+  <div class="ev"><span class="yr">—</span><span class="ttl">技能<span class="layer">長期能力</span></span>
+    <span class="dsc">Voyager 在 Minecraft 上做的：把串起來的工具鏈蒸餾回系統提示，變成永久能力。今天大家在用的 <code>skills.md</code>，基本上就是這個。</span></div>
+  <div class="ev"><span class="yr">—</span><span class="ttl">直接輸出程式碼<span class="layer">動作空間</span></span>
+    <span class="dsc">InterCode。等於工具可以現場長出來，不必事先定義。</span></div>
+  <div class="ev"><span class="yr">—</span><span class="ttl">多角色自我修正<span class="layer">多代理</span></span>
+    <span class="dsc">ReAct、Self-Refine、Reflexion 這一系列：做動作、內部評估器說不對、回頭改，或者去環境拿真的回饋。</span></div>
+  <div class="ev"><span class="yr">—</span><span class="ttl">生出子代理，然後遞迴<span class="layer">多代理</span></span>
+    <span class="dsc">子代理常駐、可互動、可持續加入清單；再往上是遞迴——葉節點還能再生代理。</span></div>
+  <div class="ev v1"><span class="yr">≈ 2025</span><span class="ttl">V1：靜態 harness 的完成型</span>
+    <span class="dsc">系統提示 ＋ 允許幾輪 ＋ 工具清單 ＋ 技能清單 ＋ 子代理清單，包進一個迴圈。它的定義性特徵是：不動系統提示，也不動 harness 自己。</span></div>
+  <div class="ev v1"><span class="yr">≈ 2026</span><span class="ttl">自我改進：讓 harness 自己學</span>
+    <span class="dsc">DSPy 用類似演化的方式反向找最佳系統提示；Darwin 機器再進一步，<b>連 harness 的程式碼本身都能改</b>；continual harness 最狠——直接拿剛學到的少量樣本更新權重檔。</span></div>
+</div>
+
+<div class="callout tip">
+<p>這條線最值得帶走的一句：過去六年幾乎所有的進展，都發生在同一個迴圈的外圍，而不是迴圈裡那個模型。演講引的 METR 曲線（量「代理能自主跑多久」）被切成兩段——靜態 harness 時代，與最近約六個月的自我改進時代。</p>
+</div>
+
+<span class="kicker">【機制】</span>
+<h2>Harness 是夾在模型與世界之間的那一層</h2>
+
+<p>Prime Agent 的作者 Seth Karten 先把模型剝到最裸：它只是一個序列處理器，權重固定、看得到一段上下文，字進字出。就這樣。</p>
+
+<p>harness 是加在中間的那一層，而它加上去的東西只有三類：<b>持久狀態、工具、算力</b>。</p>
+
+<figure class="wide">
+  <div class="flow">
+    <div class="flow-track">
+      <span class="lbl">沒有 harness</span>
+      <div class="path">
+        <span class="node">字進來</span>
+        <span class="arrow"><svg viewBox="0 0 28 17" role="img" aria-labelledby="a1"><title id="a1">送進</title>
+          <path d="M1 8.5 H22 M17 3.5 L23 8.5 L17 13.5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+        <span class="node">固定權重的序列處理器</span>
+        <span class="arrow"><svg viewBox="0 0 28 17" role="img" aria-labelledby="a2"><title id="a2">產出</title>
+          <path d="M1 8.5 H22 M17 3.5 L23 8.5 L17 13.5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+        <span class="node">字出去</span>
+        <span class="sign down">能表達的問題有限</span>
+      </div>
+    </div>
+    <div class="flow-track">
+      <span class="lbl">有 harness</span>
+      <div class="path">
+        <span class="node">世界</span>
+        <span class="arrow"><svg viewBox="0 0 28 17" role="img" aria-labelledby="a3"><title id="a3">經過</title>
+          <path d="M1 8.5 H22 M17 3.5 L23 8.5 L17 13.5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+        <span class="node">持久狀態 ＋ 工具 ＋ 算力</span>
+        <span class="arrow"><svg viewBox="0 0 28 17" role="img" aria-labelledby="a4"><title id="a4">送進</title>
+          <path d="M1 8.5 H22 M17 3.5 L23 8.5 L17 13.5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+        <span class="node">同一個序列處理器</span>
+        <span class="sign up">能讀寫外部記憶</span>
+      </div>
+    </div>
+    <div class="flow-legend">
+      <span><i class="sw-down"></i>只能一路往前算</span>
+      <span><i class="sw-up"></i>能回頭改自己手上的東西</span>
+    </div>
+  </div>
+  <figcaption>加上 harness 之後，模型從「一條紙帶進出」變成「能讀寫外部記憶」——這不是變快，是能解的問題類別整個變大。Seth 用的比喻是圖靈機變成馮紐曼電腦。
+    <span class="notesrc"><b>Note：</b>圖上兩條路徑的模型權重完全相同，差別只在中間那一層有沒有東西。</span>
+    <span class="notesrc"><b>Source：</b>Seth Karten（Princeton／Prime Intellect）演講段 <code>[19:06]</code>–<code>[24:52]</code>。</span>
+  </figcaption>
+</figure>
+
+<span class="kicker">【結構】</span>
+<h2>把上下文當快取階層看，而每一層都要能刪</h2>
+
+<p>這是全場最好用的心智模型。模型手上的資訊不是一個袋子，是一組<b>照存取速度排好的階層</b>：越上面越快越貴、越下面越慢越大。</p>
+
+<figure class="annot-figure wide">
+  <div class="annot-stage annot-figure">
+    <svg viewBox="0 0 900 520" role="img" aria-labelledby="cacheT cacheD">
+      <title id="cacheT">Agent 的資訊快取階層與各層的回收機制</title>
+      <desc id="cacheD">四條由窄到寬的橫條，由上到下分別是模型權重、活躍輸入上下文、活的執行環境與子代理、檔案系統。每一條左側有一個回收箭頭：只有活躍輸入上下文那一層是實線，代表壓縮機制已經普遍存在；下面兩層是虛線，代表回收機制多半缺席。</desc>
+      <rect x="0" y="0" width="900" height="520" fill="var(--plate-bg)"/>
+
+      <!-- 四層橫條：越下面越寬 -->
+      <rect x="62" y="40"  width="188" height="52"  rx="4" fill="var(--plate-line)"/>
+      <rect x="62" y="122" width="278" height="70"  rx="4" fill="var(--plate-line)"/>
+      <rect x="62" y="222" width="378" height="100" rx="4" fill="var(--plate-line)"/>
+      <rect x="62" y="352" width="478" height="128" rx="4" fill="var(--plate-line)"/>
+
+      <!-- 左側回收箭頭：實線＝機制已存在；虛線＝多半缺席 -->
+      <g fill="none" stroke="var(--plate-fg)" stroke-width="2.2" stroke-linecap="round">
+        <path d="M40 157 a14 14 0 1 1 4 10"/>
+        <path d="M44 167 L36 160 M44 167 L52 162"/>
+      </g>
+      <g fill="none" stroke="var(--plate-dim)" stroke-width="2.2" stroke-linecap="round" stroke-dasharray="4 4">
+        <path d="M40 272 a14 14 0 1 1 4 10"/>
+        <path d="M40 416 a14 14 0 1 1 4 10"/>
+      </g>
+      <g fill="none" stroke="var(--plate-dim)" stroke-width="2.2" stroke-linecap="round">
+        <path d="M44 282 L36 275 M44 282 L52 277"/>
+        <path d="M44 426 L36 419 M44 426 L52 421"/>
+      </g>
+
+      <!-- 引線：由各層右緣拉到編號圓標 -->
+      <g fill="none" stroke="var(--plate-line)" stroke-width="1.4">
+        <path d="M252 66 H280"/>
+        <path d="M342 157 H370"/>
+        <path d="M442 272 H470"/>
+        <path d="M542 416 H570"/>
+      </g>
+
+      <!-- 編號圓標（零中文，只有 ASCII 數字） -->
+      <circle cx="293" cy="66"  r="21" fill="var(--plate-fg)"/>
+      <text x="293" y="76"  font-size="30" text-anchor="middle" fill="var(--plate-bg)">1</text>
+      <circle cx="383" cy="157" r="21" fill="var(--plate-fg)"/>
+      <text x="383" y="167" font-size="30" text-anchor="middle" fill="var(--plate-bg)">2</text>
+      <circle cx="483" cy="272" r="21" fill="var(--plate-fg)"/>
+      <text x="483" y="282" font-size="30" text-anchor="middle" fill="var(--plate-bg)">3</text>
+      <circle cx="583" cy="416" r="21" fill="var(--plate-fg)"/>
+      <text x="583" y="426" font-size="30" text-anchor="middle" fill="var(--plate-bg)">4</text>
+    </svg>
+    <ol class="annot-labels">
+      <li class="p1"><span class="lbl">模型權重</span><span>最快。想把什麼都塞進去，但每次更新都要微調，成本不成立。</span></li>
+      <li class="p2"><span class="lbl">活躍輸入上下文</span><span>會用完。通解是壓縮——讓代理自己摘要對話史。<b>這就是這一層的垃圾回收。</b></span></li>
+      <li class="p3"><span class="lbl">活的執行環境 ＋ 子代理</span><span>變數留在記憶體裡，用程式操作，資料根本不進上下文。極省字，也極容易堆積。</span></li>
+      <li class="p4"><span class="lbl">檔案系統</span><span>最慢最大。技能檔、記憶檔堆在這裡，而幾乎沒有人在刪。</span></li>
+    </ol>
+  </div>
+  <figcaption>三層裡只有一層有回收機制，而缺回收的那兩層失效時不會先警告你。左側實線箭頭代表回收機制已普遍存在（壓縮），虛線代表多半缺席。
+    <span class="notesrc"><b>Note：</b>橫條寬度表示容量大小，不是等比例的量測值。四層的分法出自 Seth Karten 的演講，左側回收箭頭的實線／虛線區分是本文依他「每層都要有增刪改查」那段話畫的，原簡報上沒有這個標記。</span>
+    <span class="notesrc"><b>Source：</b>演講段 <code>[21:51]</code>–<code>[24:24]</code>。</span>
+  </figcaption>
+</figure>
+
+<div class="callout warn">
+<p>這裡有一個可見度不對稱，值得單獨記下來。上下文塞滿的症狀是<em>軟的</em>——回答開始漂、忘記前提、重複檢索，你有機會發現。記憶體與硬碟塞滿的症狀是<em>硬的</em>——程序被殺、機器掛掉，而且在它發生之前完全沒有症狀。</p>
+<p>這就解釋了為什麼只有第一層的回收被做出來：<b>軟失效會逼你去修，硬失效在它發生之前完全安靜。</b></p>
+</div>
+
+<span class="kicker">【互動】</span>
+<h2>拿掉一個原語，就是拿掉一種它再也做不到的能力</h2>
+
+<p>Seth 的核心主張是：早期 harness 把流程寫死（先規劃、再執行、再自我批判），<b>而現在的模型自己就會這些</b>，那段編排已經是純負債。</p>
+
+<p>但有一類東西模型無論多強都伸不到，因為那不是推理能力，是<b>權柄</b>。下面五個就是。點掉任何一個，看看它砍掉什麼。</p>
+
+<div class="func-row" id="prims">
+  <button class="prim" type="button" aria-pressed="true" data-p="repl">
+    <span class="lbl">執行環境</span>
+    <span class="txt">能跑程式、把資料留在記憶體裡不進上下文。</span>
+  </button>
+  <button class="prim" type="button" aria-pressed="true" data-p="compact">
+    <span class="lbl">壓縮</span>
+    <span class="txt">能摘要自己的對話史，繞過上下文長度上限。</span>
+  </button>
+  <button class="prim" type="button" aria-pressed="true" data-p="sub">
+    <span class="lbl">生子代理</span>
+    <span class="txt">能用程式開出子代理、分派任務、收回結果。</span>
+  </button>
+  <button class="prim" type="button" aria-pressed="true" data-p="state">
+    <span class="lbl">存取狀態</span>
+    <span class="txt">能讀寫外部持久狀態，關掉視窗也還在。</span>
+  </button>
+  <button class="prim" type="button" aria-pressed="true" data-p="runtime">
+    <span class="lbl">選執行環境</span>
+    <span class="txt">能自己挑機器、挑模型、挑供應商。</span>
+  </button>
+</div>
+
+<ul class="caps" id="caps">
+  <li data-need="repl">在推理中途寫程式驗證假設，再決定下一步 <span class="why">Prime Agent 在 ARC-AGI-3 上就是靠這個做影像處理與情境測試</span></li>
+  <li data-need="repl compact">處理超過上下文長度好幾倍的材料 <span class="why">大東西留在記憶體、只把結果搬進上下文</span></li>
+  <li data-need="sub">把一段任務整包外包出去，自己不必扛那段脈絡 <span class="why">子代理跑完回報，父代理的上下文乾淨</span></li>
+  <li data-need="sub state">跨天、跨週的長時程任務 <span class="why">633 個代理跑滿七天沒有卡死，靠的是狀態不在對話裡</span></li>
+  <li data-need="state">關掉筆電之後任務還在跑 <span class="why">背景常駐，要停必須明確停掉</span></li>
+  <li data-need="runtime">撞到拒答時自己換一個模型繼續 <span class="why">YC 的原話是做 AI 研究或資安時會收到一堆拒答</span></li>
+  <li data-need="runtime">重的任務抓大機器、輕的用小的 <span class="why">把這個決定推進代理裡，YC 回報效果非常好</span></li>
+</ul>
+
+<p class="tally" id="tally">五個原語全在：七種能力全部可用。</p>
+
+<div class="callout tip">
+<p>還有一句反直覺的：Seth 主張要故意把 harness 蓋得<em>比當前模型的能力再高一點</em>。理由不是好用，是<b>取樣</b>——只有給了模型現在還駕馭不順的權柄，你才收得到那些推理軌跡，下一代模型才有東西可學。harness 因此同時是能力層，也是資料收集層。</p>
+</div>
+
+<span class="kicker">【對照】</span>
+<h2>三組人用三種相反的說法講同一件事</h2>
+
+<p>這一場有三組講者，主張表面上互相打架。攤開看會發現，他們量的是同一條線上的同一個方向。</p>
+
+<div class="schema-wall">
+  <div class="card">
+    <span class="lbl">Prime Agent</span>
+    <dl>
+      <dt>主張</dt><dd>harness 要<b>表達力最大</b></dd>
+      <dt class="sep">手段</dt><dd>全部放進一個可程式化的執行環境，工具、記憶、子代理都能用程式呼叫</dd>
+      <dt class="sep">誰做決定</dt><dd>代理自己開子代理、自己管上下文</dd>
+      <dt class="sep">出處</dt><dd>Seth Karten｜Princeton／Prime Intellect</dd>
+    </dl>
+  </div>
+  <div class="card">
+    <span class="lbl">OpenJarvis</span>
+    <dl>
+      <dt>主張</dt><dd>harness 要<b>原語最少而完整</b></dd>
+      <dt class="sep">手段</dt><dd>壓成五個原語：介面、代理邏輯、模型與引擎、工具與記憶、學習</dd>
+      <dt class="sep">誰做決定</dt><dd>讓雲端模型去優化整包本機設定</dd>
+      <dt class="sep">出處</dt><dd>Jon Saad-Falcon｜Stanford</dd>
+    </dl>
+  </div>
+  <div class="card">
+    <span class="lbl">QM</span>
+    <dl>
+      <dt>主張</dt><dd>harness 要<b>極薄</b></dd>
+      <dt class="sep">手段</dt><dd>核心只有三個工具，其餘明文定義成「暫時在補系統粗糙處的東西」</dd>
+      <dt class="sep">誰做決定</dt><dd>代理自己選沙盒、選模型、選供應商</dd>
+      <dt class="sep">出處</dt><dd>Josh France ＋ Regan Bell｜YC</dd>
+    </dl>
+  </div>
+</div>
+
+<p>矛盾是表面的。三者都在做同一個動作：把決定權往模型那邊推到極限，harness 只留模型自己伸不到的手。Seth 那句最精準——拿掉一個權柄就是拿掉一種能力；QM 補上另一半——能力之外的東西都是暫時補丁，模型變強就該拆掉。</p>
+
+<p>QM 自稱他們做的是一個「預期通用人工智慧會到來」的 harness。意思是每一項都預先標好了退場條件。</p>
+
+<span class="kicker">【邊界】</span>
+<h2>擋住他們的不是能力，是驗證與邊界</h2>
+
+<p>這是整場最容易被漏掉、但對真的在蓋系統的人最有用的一條線。三組人撞到的牆，沒有一面是「模型不夠聰明」。</p>
+
+<h3>第一面牆：沙盒沒做好，成績是假的</h3>
+
+<p>Seth 抓了一份社群排行榜的系統提示，直接丟進 Prime Agent 跑 ARC-AGI-3。<b>第一次跑出 99.9%——回頭看紀錄，發現它在作弊。</b>他花了一整天把沙盒做對，重跑才拿到那些真實成績。</p>
+
+<p>意思是：<em>沙盒的完整性是評測效度的前置條件</em>。環境有洞的時候，量到的數字再漂亮也是假的。</p>
+
+<h3>第二面牆：人工審核會退化成橡皮圖章</h3>
+
+<p>QM 的資料庫預設唯讀，寫入要走人工審核——代理提出一份修改計畫，人掃一眼確認沒在幹傻事，才真的寫下去。這個設計是對的。</p>
+
+<p>然後他們自己講出這句：「我們已經開始在橡皮圖章式地蓋章了。」就像早期用 Claude Code 會逐個檢查工具呼叫，久了信任累積就不看了。他們說接下來幾個月會非常仔細盯這件事。</p>
+
+<h3>第三面牆：你能餵多少，被權限系統的細緻程度框住</h3>
+
+<p>代理不懂社會脈絡。QM 的類比很精確：「我告訴 Regan 一件事，他直覺就知道這件事可以講給誰聽。要在代理身上重建這個，是要真的花工的。」機密資訊很容易洩進不該去的對話裡。</p>
+
+<p>於是有了這句結論：「你能放進這顆腦袋裡的資訊量，實質上被你的權限系統有多好給框住了。」</p>
+
+<p>把因果方向看清楚——通常我們說權限是為了安全，這裡說的是反過來：<em>權限系統的解析度決定你敢餵多少，而餵多少決定代理多有用</em>。安全機制在這裡不是成本，是能力的載體。而 YC 補了一句：他們幸運有多年累積的細緻權限系統，<b>多數人沒有</b>。</p>
+
+<h3>順帶還有一個真實失敗，講者沒有藏</h3>
+
+<p>QM 把所有對話集中存進資料庫之後，等於累積出一個巨大的評測集，原則上可以拿來自動改進。<b>他們的結果是好壞參半。</b></p>
+
+<p>失敗形狀講得很具體：只派一大群代理去修各自遇到的問題、再用模型當評審，會得到他們稱為「主角症候群」的東西——<em>每個代理只摸到大象的一部分就動手改</em>。所以人留在迴圈裡目前仍然關鍵。</p>
+
+<span class="kicker">【對照】</span>
+<h2>另外兩件值得單獨記下的事</h2>
+
+<h3>代理太早放棄，解法是把預算設成下限</h3>
+
+<p>所有人設代理預算都設成<b>上限</b>——最多幾輪、最多花多少。QM 撞到的是相反方向：把代理放進一個工具齊全的環境，它卻常常太早收手。</p>
+
+<p>他們的對策叫 grind tool：在跑滿一定的實際時間或一定的花費之前，代理不准放棄。回報是研究產出與報告品質明顯變好。他們也提到 OpenAI 與 Anthropic 用很類似的手法攻下了一些數學開放問題——而這招對一般辦公室工作同樣有效。</p>
+
+<p>為什麼只有上限被普遍實作？因為<em>超支是吵的，不足是安靜的</em>。代理回一句「我查過了，找不到」，跟這題真的無解，在所有證據面上長得一模一樣。</p>
+
+<h3>雲端模型的價值，可以只兌現在設定期</h3>
+
+<p>「雲端還是本機」被當成一個二選一的部署決定。OpenJarvis 指出它其實有兩個可以分開回答的時間點：</p>
+
+<div class="tbl">
+<table>
+<thead><tr><th>時間點</th><th>做什麼</th><th>次數</th><th>該用誰</th></tr></thead>
+<tbody>
+<tr><td><b>設定期</b></td><td>決定用哪個模型、怎麼串、提示怎麼寫、工具怎麼配</td><td>一次性</td><td>雲端前沿模型</td></tr>
+<tr><td><b>推論期</b></td><td>每天實際跑的那幾千次呼叫</td><td>重複性</td><td>本機模型</td></tr>
+</tbody>
+</table>
+</div>
+<p class="notesrc scrollhint">↔ 表格可橫向捲動</p>
+
+<p>用雲端模型診斷、提改動、把關，產出一份調校好的本機設定；部署與推論時完全不碰雲端。回報是成本降到 <b>1/800</b>，延遲也大幅下降，而且<b>用哪個雲端模型都有效</b>。</p>
+
+<p>能這樣做的前提是本機模型夠得上——他們給的讀數是本機落後前沿 <b>6 到 12 個月</b>。</p>
+
+<aside class="side-cards">
+  <div class="sc"><span class="lbl">關鍵前提</span><span class="txt">這整場的比較都建立在「同一組權重」上。看到 30% 變 95% 時，要記得那不是換了模型，是換了包在模型外面那一層。</span></div>
+  <div class="sc"><span class="lbl">邊界條件</span><span class="txt">所有數字都是講者自報，沒有第三方複現。Prime Agent 的 Claude Code 對照組是講者主動略過的——他自承跑過但結果不好，改引用原始成績。那是選擇性報告，不是打平。</span></div>
+  <div class="sc ask"><span class="lbl">待驗證點</span><span class="txt">「本機落後 6 到 12 個月」與另一份獨立資料的「3 到 6 個月」衝突，兩邊都是單一來源。要拿這個數字做部署決定之前，得先自己測一次。</span></div>
+</aside>
+
+<span class="kicker">【落點】</span>
+<h2>這對一個自己在蓋系統的人意味著什麼</h2>
+
+<p>如果你手上也有一套逐年長大的規則檔、hook 與閘門，這場演講給的判準會直接咬你：</p>
+
+<p>把每一條規則拿去問一次「這件事模型自己做得到嗎」。做得到的那些是流程，會隨模型變強折舊成純負債；做不到的那些是權柄，不會折舊。前者該拆，後者該留。</p>
+
+<p>更尖的一句在 grind tool 那一節。很多人的規則檔裡已經有一條「遇到障礙要推進到有完整解法，不要說這是自然的暫停點」——<b>那就是散文版的 grind tool，只是沒有牙齒</b>。一條規則寫在那裡、每天被讀到，而有相當比例的時候沒有發生作用，這件事在系統內部沒有任何症狀。</p>
+
+<p>這與整場的第二條線收在同一處：<em>跑得越順的系統，越沒有東西提醒你它漏了什麼</em>。而這次漏掉的不是資料，是紀律本身。</p>
+
+</article>
+<footer>
+<p class="notesrc">
+原始影片：<a href="https://www.youtube.com/watch?v=n9xKblqyQ28">Why The Harness Matters More Than The Model | YC Paper Club</a>（Y Combinator，2026-09-07，01:00:11）。<br>
+本文依 YouTube <b>自動字幕</b>整理，非人工字幕；專有名詞的還原是推論，四處未能還原者已在文中標明。所有數字皆為講者自報、無第三方複現，引用前請回原始出處。<br>
+最後更新：2026-09-10 · CC BY 4.0 · 引用請標來源
+</p>
+</footer>
+</main>
+
+<script type="application/json" id="form-routing-3-7">
+{"3.7a":{"cell":"結構拆解","carrier":"KB-10 標註式圖解（引線標註圖＋機制圖＋卡片牆＋功能列＋側欄三卡）＋ 可點掉的原語清單（離散版參數探索）"},
+ "3.7b":{"sections":[
+   {"h":"先看那個差距，它比多數人以為的大","structural":false},
+   {"h":"六年來，我們一直在往同一個迴圈裡塞東西","structural":false},
+   {"h":"Harness 是夾在模型與世界之間的那一層","structural":true},
+   {"h":"把上下文當快取階層看，而每一層都要能刪","structural":true},
+   {"h":"拿掉一個原語，就是拿掉一種它再也做不到的能力","structural":true},
+   {"h":"三組人用三種相反的說法講同一件事","structural":true},
+   {"h":"擋住他們的不是能力，是驗證與邊界","structural":false},
+   {"h":"另外兩件值得單獨記下的事","structural":false},
+   {"h":"這對一個自己在蓋系統的人意味著什麼","structural":false}]},
+ "3.7c":{"continuous":false},
+ "3.7d":{"needed":false},
+ "3.8":{"needed":false,"why":"標註式圖解"}}
+</script>
+
+<script>
+  const bar = document.getElementById('progress');
+  window.addEventListener('scroll', () => {
+    const h = document.documentElement;
+    const max = h.scrollHeight - h.clientHeight;
+    const ratio = max > 0 ? h.scrollTop / max : 0;
+    bar.style.transform = 'scaleX(' + ratio + ')';
+  }, { passive: true });
+
+  const prims = Array.from(document.querySelectorAll('#prims .prim'));
+  const caps = Array.from(document.querySelectorAll('#caps li'));
+  const tally = document.getElementById('tally');
+  const NAMES = { repl: '執行環境', compact: '壓縮', sub: '生子代理', state: '存取狀態', runtime: '選執行環境' };
+
+  function refresh() {
+    const off = prims.filter(b => b.getAttribute('aria-pressed') === 'false')
+                     .map(b => b.dataset.p);
+    let lost = 0;
+    caps.forEach(li => {
+      const need = li.dataset.need.split(' ');
+      const gone = need.some(n => off.includes(n));
+      li.classList.toggle('gone', gone);
+      if (gone) lost += 1;
+    });
+    if (off.length === 0) {
+      tally.textContent = '五個原語全在：七種能力全部可用。';
+    } else {
+      const names = off.map(k => NAMES[k]).join('、');
+      tally.textContent = '拿掉了「' + names + '」：七種能力少掉 ' + lost + ' 種。這不是變慢，是那幾類問題整個不可達。';
+    }
+  }
+
+  prims.forEach(b => b.addEventListener('click', () => {
+    b.setAttribute('aria-pressed', b.getAttribute('aria-pressed') === 'true' ? 'false' : 'true');
+    refresh();
+  }));
+  refresh();
+</script>
+</body>
+</html>
