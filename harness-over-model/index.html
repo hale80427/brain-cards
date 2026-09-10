@@ -147,7 +147,7 @@
   figure img { width: 100%; height: auto; border-radius: 4px; display: block; }
   figure svg { width: 100%; height: auto; display: block; }
   figcaption { font-size: var(--fs-meta); color: var(--muted); margin-top: 0.5rem; text-align: left; }
-  figcaption > b:first-child { display: block; text-align: center; margin-bottom: 0.5rem; }
+  figcaption > .figlead { display: block; text-align: center; font-weight: 700; color: var(--fg); margin-bottom: 0.5rem; }
 
   /* === 分數對比條（純 CSS，無 SVG）=== */
   .scorebars { margin: 1.5rem 0; }
@@ -161,6 +161,11 @@
                  color: var(--plate-fg); font-size: var(--fs-meta); font-weight: 700; }
   .sb.hi .sb-fill { background: var(--accent); color: var(--bg); }
   .sb.lo .sb-fill { background: var(--muted); }
+  .sb.base .sb-fill { background: none; border: 2px dashed var(--accent-warn);
+                      color: var(--fg); justify-content: flex-end; }
+  .sb.ext .sb-track { background: none; border-bottom: 1px dotted var(--border); }
+  .sb.ext .sb-fill { background: none; border-bottom: 2px dotted var(--muted);
+                     border-radius: 0; color: var(--muted); align-items: flex-end; }
 
   /* === 演化時間軸（純 CSS，全部可見，不隱藏任何內容）=== */
   .tl { margin: 1.5rem 0; border-left: 2px solid var(--border); padding-left: 1.25rem; }
@@ -209,14 +214,18 @@
   .annot-labels span { display: block; color: var(--muted); }
   @media (min-width: 760px) {
     .annot-labels li { position: absolute; left: var(--x); top: var(--y);
-                       width: 10.5rem; color: var(--plate-fg); }
+                       width: 12.5rem; color: var(--plate-fg); }
     .annot-labels li span { color: var(--plate-dim); }
     .annot-labels li::before { content: none; }
   }
-  .p1 { --x: 36.0%; --y: 4%; }
-  .p2 { --x: 47.0%; --y: 21.5%; }
-  .p3 { --x: 58.0%; --y: 43.5%; }
-  .p4 { --x: 68.5%; --y: 71.0%; }
+  .p1 { --x: 67%; --y: 5%; }
+  .p2 { --x: 67%; --y: 23%; }
+  .p3 { --x: 67%; --y: 38%; }
+  .p4 { --x: 67%; --y: 50%; }
+  .p5 { --x: 67%; --y: 68%; }
+  .annot-labels .lv { font-family: var(--font-mono); font-weight: 700; }
+  .annot-labels .mech { font-variant-numeric: normal; letter-spacing: 0.01em; }
+  @media (min-width: 760px) { .annot-labels .mech { color: var(--plate-fg); } }
   @media (max-width: 759px) {
     .annot-labels { counter-reset: pin; margin-top: 1rem; }
     .annot-labels li { counter-increment: pin; position: relative;
@@ -313,20 +322,68 @@
 
 <figure class="wide">
   <div class="scorebars">
-    <div class="sb lo"><span class="sb-name">Claude Opus<br>裸模型最佳成績</span>
-      <div class="sb-track"><div class="sb-fill" style="width:30%">30%</div></div></div>
-    <div class="sb hi"><span class="sb-name">同一批權重<br>換上 harness</span>
-      <div class="sb-track"><div class="sb-fill" style="width:95%">95%</div></div></div>
+    <div class="sb base"><span class="sb-name">人類基線</span>
+      <div class="sb-track"><div class="sb-fill" style="width:95.4%">95.4%</div></div></div>
+    <div class="sb hi"><span class="sb-name">Prime Agent<br>＋ Opus 5</span>
+      <div class="sb-track"><div class="sb-fill" style="width:95.5%">95.5%</div></div></div>
     <div class="sb"><span class="sb-name">Prime Agent<br>＋ GPT-5.6 Sol</span>
-      <div class="sb-track"><div class="sb-fill" style="width:78%">78%</div></div></div>
-    <div class="sb"><span class="sb-name">Prime Agent<br>＋ 另一個檔位</span>
+      <div class="sb-track"><div class="sb-fill" style="width:78.3%">78.3%</div></div></div>
+    <div class="sb"><span class="sb-name">Prime Agent<br>＋ Terra</span>
       <div class="sb-track"><div class="sb-fill" style="width:25.7%">25.7%</div></div></div>
+    <div class="sb"><span class="sb-name">Prime Agent<br>＋ GLM 5.2</span>
+      <div class="sb-track"><div class="sb-fill" style="width:8.6%">8.6%</div></div></div>
+    <div class="sb lo"><span class="sb-name">Hermes Agent<br>＋ GPT-5.6 Sol</span>
+      <div class="sb-track"><div class="sb-fill" style="width:5.8%">5.8%</div></div></div>
+    <div class="sb ext"><span class="sb-name">Opus 5<br>＋ ARC 官方 harness</span>
+      <div class="sb-track"><div class="sb-fill" style="width:30.2%">30.2%</div></div></div>
+    <div class="sb ext"><span class="sb-name">GPT-5.6 Sol<br>＋ Responses API</span>
+      <div class="sb-track"><div class="sb-fill" style="width:38.3%">38.3%</div></div></div>
+    <div class="sb ext"><span class="sb-name">GPT-5.6 Sol<br>＋ ARC 官方 harness</span>
+      <div class="sb-track"><div class="sb-fill" style="width:7.0%">7.0%</div></div></div>
   </div>
-  <figcaption>換 harness 帶來的落差，大過換模型帶來的落差。下面兩列是同一個 harness 換不同模型，差 52 個百分點；上面兩列是同一個模型換不同 harness，差 65 個百分點。
-    <span class="notesrc"><b>Note：</b>四個數字都是講者自報，沒有第三方複現。上兩列出自演講開場引用的公開結果，下兩列是 Prime Agent 團隊在 ARC-AGI-3 上自跑的。另一組（NVIDIA）報 100%，逐字稿把隊名打壞了，未還原。</span>
-    <span class="notesrc"><b>Source：</b>YC Paper Club, Why The Harness Matters More Than The Model, 2026-09-07（<code>[03:44]</code>／<code>[31:26]</code>／<code>[32:13]</code>／<code>[32:48]</code>）。</span>
+  <figcaption><span class="figlead">換 harness 的落差大過換模型的落差，而最好的那一格剛好跨過人類基線。</span>上面六列是 Prime Agent 這個 harness 換不同模型（外加一個換掉 harness 的對照），下面三列是外部參考點。同一個 Opus 5：配 ARC 官方 harness 是 30.2%，配 Prime Agent 是 95.5%——差 65.3 個百分點。而同一個 GPT-5.6 Sol 配三種不同 harness 分別是 7.0%、38.3%、78.3%。
+    <span class="notesrc"><b>Note：</b>全部讀自演講投影片〈Prime Agent scales to 95.5% with more output tokens and API cost〉的圖例，非逐字稿。原圖是兩張成本曲線（橫軸為每局輸出 token 數與估計 API 成本，皆為對數尺度），這裡只取終點值排成長條，因此讀不出「花多少錢達到」——原圖裡 95.5% 那條要到約 1,000 美元、25.7% 那條在 1,000 美元以下就走平。人類基線 95.4% 在原圖上是一條水平虛線。</span>
+    <span class="notesrc"><b>Source：</b>YC Paper Club, Why The Harness Matters More Than The Model, 2026-09-07，投影片 <code>[30:54]</code>。所有數字皆講者自報，無第三方複現。</span>
   </figcaption>
 </figure>
+
+<p>這裡有兩件逐字稿聽不出來、只有看投影片才知道的事。</p>
+
+<p><b>第一，那個「30%」不是裸模型。</b>它是 <code>Opus 5, ARC harness — 30.2%</code>，也就是 Opus 5 配 ARC 官方自己那套 harness。真正的裸模型分數這場沒有給。</p>
+
+<p><b>第二，95.4% 是人類基線。</b>所以 95.5% 的意思不是「很高」，是<em>剛好跨過人類</em>——而那條線在原圖上就畫在那裡。</p>
+
+<p>至於開場那句「harness 一號 vs 二號差 18 個百分點」，投影片給的是具體出處：Terminal-Bench 2 排行榜，同一個模型 Claude Opus 4.6 配兩個不同的 agent harness。</p>
+
+<div class="tbl">
+<table>
+<thead><tr><th>排名</th><th>Agent</th><th>模型</th><th>日期</th><th>提交者</th><th>準確率</th></tr></thead>
+<tbody>
+<tr><td>11</td><td>Meta-Harness</td><td>Claude Opus 4.6</td><td>2026-05-14</td><td>Stanford IRIS</td><td><b>76.4% ± 2.4</b></td></tr>
+<tr><td>50</td><td>Claude Code</td><td>Claude Opus 4.6</td><td>2026-02-07</td><td>Anthropic</td><td><b>58.0% ± 2.9</b></td></tr>
+</tbody>
+</table>
+</div>
+<p class="notesrc scrollhint">↔ 表格可橫向捲動</p>
+
+<div class="callout warn">
+<p>這張表有一個未控變因，投影片沒有提。兩筆的日期差了三個月（2026-02-07 vs 2026-05-14）。三個月裡榜單環境、題目版本或評分方式有沒有動過，從這張截圖讀不出來。⇒ 那 18.4 個百分點裡有多少是 harness 給的、多少是時間給的，<em>這份材料答不了</em>。</p>
+</div>
+
+<p>投影片上還有一組逐字稿沒講清楚的讀數。Prime Agent 在長時程與 coding 評測上與各家 harness 對打，結果是：</p>
+
+<div class="func-row">
+  <div class="fn"><div><span class="lbl">GLM-5.2 對 Pi-mono</span><span class="txt">8 / 9</span></div></div>
+  <div class="fn"><div><span class="lbl">Opus 5 對 Claude Code</span><span class="txt">6 / 9</span></div></div>
+  <div class="fn"><div><span class="lbl">GPT-5.6 Sol 對 Codex</span><span class="txt">6 / 9</span></div></div>
+</div>
+
+<p>合起來就是投影片標題那句：27 組比較裡有 20 組 Prime Agent 的點估計較高。</p>
+
+<div class="callout warn">
+<p><b>這裡有兩件事要一起看。</b>第一，投影片用的詞是「較高的<em>點估計</em>」——那不是統計顯著，沒有做檢定。第二，<code>Opus 5 對 Claude Code</code> 那格是 6/9，意思是<b>另外三組輸給 Claude Code</b>。</p>
+<p>⇒ 這修正了一件事。講者在 ARC-AGI-3 那一格說「Claude Code 我跑過但結果不好，所以我引用原始成績」，那句成立；<em>但在這一格他確實報了 Claude Code，而讀數是 6 比 3 不是 9 比 0</em>。這比只聽逐字稿得到的印象保守得多。</p>
+</div>
 
 <p>講者給的機制解釋是這樣的：我們一直在推「智力」那個維度，卻幾乎沒在用<b>模型在現場產生的經驗</b>。而現有的學習階梯是斷的——把範例塞進上下文，塞到大約 40 到 50 個就飽和、不再進步；再往上就只能跳去微調權重，中間沒有連續的東西。</p>
 
@@ -340,7 +397,7 @@
 <p>接下來六年做的事，講者說得很直白：把功能一項一項塞進這個靜態的殼裡。下面按「它動的是哪一層」排——這比按年份排更看得出結構。</p>
 
 <div class="tl">
-  <div class="ev"><span class="yr">2019-02</span><span class="ttl">V0：一個迴圈<span class="layer">迴圈</span></span>
+  <div class="ev"><span class="yr">2019-02</span><span class="ttl">harness <code>v0</code>：一個迴圈<span class="layer">迴圈</span></span>
     <span class="dsc">產字直到結束符號，加上取樣策略，加上環境。就這樣。答對加一分、答錯扣一分。</span></div>
   <div class="ev"><span class="yr">2020-07</span><span class="ttl">少樣本示範<span class="layer">上下文</span></span>
     <span class="dsc">先給它幾個做對的例子，它就會照著做。這是第一次「不改權重也能教它」。</span></div>
@@ -358,10 +415,10 @@
     <span class="dsc">ReAct、Self-Refine、Reflexion 這一系列：做動作、內部評估器說不對、回頭改，或者去環境拿真的回饋。</span></div>
   <div class="ev"><span class="yr">—</span><span class="ttl">生出子代理，然後遞迴<span class="layer">多代理</span></span>
     <span class="dsc">子代理常駐、可互動、可持續加入清單；再往上是遞迴——葉節點還能再生代理。</span></div>
-  <div class="ev v1"><span class="yr">≈ 2025</span><span class="ttl">V1：靜態 harness 的完成型</span>
+  <div class="ev v1"><span class="yr">≈ 2025</span><span class="ttl">harness <code>v1</code>：靜態版的完成型</span>
     <span class="dsc">系統提示 ＋ 允許幾輪 ＋ 工具清單 ＋ 技能清單 ＋ 子代理清單，包進一個迴圈。它的定義性特徵是：不動系統提示，也不動 harness 自己。</span></div>
   <div class="ev v1"><span class="yr">≈ 2026</span><span class="ttl">自我改進：讓 harness 自己學</span>
-    <span class="dsc">DSPy 用類似演化的方式反向找最佳系統提示；Darwin 機器再進一步，<b>連 harness 的程式碼本身都能改</b>；continual harness 最狠——直接拿剛學到的少量樣本更新權重檔。</span></div>
+    <span class="dsc">DSPy 用類似演化的方式反向找最佳系統提示；Darwin 機器再進一步，連 harness 的程式碼本身都能改；continual harness 最狠——直接拿剛學到的少量樣本更新權重檔。</span></div>
 </div>
 
 <div class="callout tip">
@@ -408,7 +465,7 @@
       <span><i class="sw-up"></i>能回頭改自己手上的東西</span>
     </div>
   </div>
-  <figcaption>加上 harness 之後，模型從「一條紙帶進出」變成「能讀寫外部記憶」——這不是變快，是能解的問題類別整個變大。Seth 用的比喻是圖靈機變成馮紐曼電腦。
+  <figcaption><span class="figlead">加上 harness 之後，模型從「一條紙帶進出」變成「能讀寫外部記憶」——這不是變快，是能解的問題類別整個變大。</span>Seth 用的比喻是圖靈機變成馮紐曼電腦。
     <span class="notesrc"><b>Note：</b>圖上兩條路徑的模型權重完全相同，差別只在中間那一層有沒有東西。</span>
     <span class="notesrc"><b>Source：</b>Seth Karten（Princeton／Prime Intellect）演講段 <code>[19:06]</code>–<code>[24:52]</code>。</span>
   </figcaption>
@@ -421,108 +478,99 @@
 
 <figure class="annot-figure wide">
   <div class="annot-stage annot-figure">
-    <svg viewBox="0 0 900 520" role="img" aria-labelledby="cacheT cacheD">
-      <title id="cacheT">Agent 的資訊快取階層與各層的回收機制</title>
-      <desc id="cacheD">四條由窄到寬的橫條，由上到下分別是模型權重、活躍輸入上下文、活的執行環境與子代理、檔案系統。每一條左側有一個回收箭頭：只有活躍輸入上下文那一層是實線，代表壓縮機制已經普遍存在；下面兩層是虛線，代表回收機制多半缺席。</desc>
-      <rect x="0" y="0" width="900" height="520" fill="var(--plate-bg)"/>
+    <svg viewBox="0 0 900 760" role="img" aria-labelledby="cacheT cacheD">
+      <title id="cacheT">系統狀態橫跨權重、上下文、工作階段與磁碟的四層結構</title>
+      <desc id="cacheD">四條橫條由上到下、由寬到窄排列，最上面最寬的是 L3 磁碟狀態，接著是 L2 執行環境與子代理，然後一條橘色虛線標出模型上下文邊界，邊界下方是 L1 活躍上下文與最下面最窄的 L0 模型權重。每一層右側都連到一個編號圓標，對應右欄的名稱、內容與該層的回收機制。虛線那一條把上兩層與下兩層分開：邊界以下在模型的上下文之內，邊界以上在外面。</desc>
+      <rect x="0" y="0" width="900" height="760" fill="var(--plate-bg)"/>
 
-      <!-- 四層橫條：越下面越寬 -->
-      <rect x="62" y="40"  width="188" height="52"  rx="4" fill="var(--plate-line)"/>
-      <rect x="62" y="122" width="278" height="70"  rx="4" fill="var(--plate-line)"/>
-      <rect x="62" y="222" width="378" height="100" rx="4" fill="var(--plate-line)"/>
-      <rect x="62" y="352" width="478" height="128" rx="4" fill="var(--plate-line)"/>
+      <rect x="40" y="40"  width="478" height="100" rx="4" fill="var(--plate-line)"/>
+      <rect x="40" y="180" width="378" height="100" rx="4" fill="var(--plate-line)"/>
+      <rect x="40" y="390" width="278" height="90"  rx="4" fill="var(--plate-line)"/>
+      <rect x="40" y="530" width="188" height="80"  rx="4" fill="var(--plate-line)"/>
 
-      <!-- 左側回收箭頭：實線＝機制已存在；虛線＝多半缺席 -->
-      <g fill="none" stroke="var(--plate-fg)" stroke-width="2.2" stroke-linecap="round">
-        <path d="M40 157 a14 14 0 1 1 4 10"/>
-        <path d="M44 167 L36 160 M44 167 L52 162"/>
-      </g>
-      <g fill="none" stroke="var(--plate-dim)" stroke-width="2.2" stroke-linecap="round" stroke-dasharray="4 4">
-        <path d="M40 272 a14 14 0 1 1 4 10"/>
-        <path d="M40 416 a14 14 0 1 1 4 10"/>
-      </g>
-      <g fill="none" stroke="var(--plate-dim)" stroke-width="2.2" stroke-linecap="round">
-        <path d="M44 282 L36 275 M44 282 L52 277"/>
-        <path d="M44 426 L36 419 M44 426 L52 421"/>
-      </g>
+      <path d="M40 330 H520" fill="none" stroke="var(--accent-warn)" stroke-width="2.6" stroke-dasharray="10 7"/>
 
-      <!-- 引線：由各層右緣拉到編號圓標 -->
       <g fill="none" stroke="var(--plate-line)" stroke-width="1.4">
-        <path d="M252 66 H280"/>
-        <path d="M342 157 H370"/>
-        <path d="M442 272 H470"/>
-        <path d="M542 416 H570"/>
+        <path d="M518 90  H556"/>
+        <path d="M418 230 H556"/>
+        <path d="M520 330 H556"/>
+        <path d="M318 435 H556"/>
+        <path d="M228 570 H556"/>
       </g>
 
-      <!-- 編號圓標（零中文，只有 ASCII 數字） -->
-      <circle cx="293" cy="66"  r="21" fill="var(--plate-fg)"/>
-      <text x="293" y="76"  font-size="30" text-anchor="middle" fill="var(--plate-bg)">1</text>
-      <circle cx="383" cy="157" r="21" fill="var(--plate-fg)"/>
-      <text x="383" y="167" font-size="30" text-anchor="middle" fill="var(--plate-bg)">2</text>
-      <circle cx="483" cy="272" r="21" fill="var(--plate-fg)"/>
-      <text x="483" y="282" font-size="30" text-anchor="middle" fill="var(--plate-bg)">3</text>
-      <circle cx="583" cy="416" r="21" fill="var(--plate-fg)"/>
-      <text x="583" y="426" font-size="30" text-anchor="middle" fill="var(--plate-bg)">4</text>
+      <circle cx="578" cy="90"  r="21" fill="var(--plate-fg)"/>
+      <text x="578" y="98"  font-size="30" text-anchor="middle" fill="var(--plate-bg)">1</text>
+      <circle cx="578" cy="230" r="21" fill="var(--plate-fg)"/>
+      <text x="578" y="238" font-size="30" text-anchor="middle" fill="var(--plate-bg)">2</text>
+      <circle cx="578" cy="330" r="21" fill="var(--accent-warn)"/>
+      <text x="578" y="338" font-size="30" text-anchor="middle" fill="var(--plate-bg)">3</text>
+      <circle cx="578" cy="435" r="21" fill="var(--plate-fg)"/>
+      <text x="578" y="443" font-size="30" text-anchor="middle" fill="var(--plate-bg)">4</text>
+      <circle cx="578" cy="570" r="21" fill="var(--plate-fg)"/>
+      <text x="578" y="578" font-size="30" text-anchor="middle" fill="var(--plate-bg)">5</text>
     </svg>
     <ol class="annot-labels">
-      <li class="p1"><span class="lbl">模型權重</span><span>最快。想把什麼都塞進去，但每次更新都要微調，成本不成立。</span></li>
-      <li class="p2"><span class="lbl">活躍輸入上下文</span><span>會用完。通解是壓縮——讓代理自己摘要對話史。<b>這就是這一層的垃圾回收。</b></span></li>
-      <li class="p3"><span class="lbl">活的執行環境 ＋ 子代理</span><span>變數留在記憶體裡，用程式操作，資料根本不進上下文。極省字，也極容易堆積。</span></li>
-      <li class="p4"><span class="lbl">檔案系統</span><span>最慢最大。技能檔、記憶檔堆在這裡，而幾乎沒有人在刪。</span></li>
+      <li class="p1"><span class="lbl"><span class="lv">L3</span> 磁碟狀態</span><span>歷史、記憶、技能、提示、子代理規格。最慢最大。</span><span class="mech">回收＝refinement</span></li>
+      <li class="p2"><span class="lbl"><span class="lv">L2</span> 執行環境與子代理</span><span>程式、工具、留著的變數。</span><span class="mech">回收＝agentic garbage collection</span></li>
+      <li class="p3"><span class="lbl">模型上下文邊界</span><span>這條線以下模型看得到，以上看不到。</span></li>
+      <li class="p4"><span class="lbl"><span class="lv">L1</span> 活躍上下文</span><span>單次呼叫裡看得到的工作狀態。會用完。</span><span class="mech">回收＝compaction</span></li>
+      <li class="p5"><span class="lbl"><span class="lv">L0</span> 模型權重</span><span>學到的運算與先驗知識。改它最貴。</span><span class="mech">回收＝fine-tuning</span></li>
     </ol>
   </div>
-  <figcaption>三層裡只有一層有回收機制，而缺回收的那兩層失效時不會先警告你。左側實線箭頭代表回收機制已普遍存在（壓縮），虛線代表多半缺席。
-    <span class="notesrc"><b>Note：</b>橫條寬度表示容量大小，不是等比例的量測值。四層的分法出自 Seth Karten 的演講，左側回收箭頭的實線／虛線區分是本文依他「每層都要有增刪改查」那段話畫的，原簡報上沒有這個標記。</span>
-    <span class="notesrc"><b>Source：</b>演講段 <code>[21:51]</code>–<code>[24:24]</code>。</span>
+  <figcaption><span class="figlead">四層各有自己的回收機制，而其中兩層在模型看不見的地方——harness 的工作就是跨過那條線。</span>橫條寬度表示容量大小，愈上面愈大愈慢。橘色虛線是模型上下文邊界：<code>L0</code> 與 <code>L1</code> 在模型的上下文之內，<code>L2</code> 與 <code>L3</code> 在外面。
+    <span class="notesrc"><b>Note：</b>四層的編號、名稱、內容與四個回收機制的名稱逐字讀自投影片〈System state spans weights, context, sessions, and disk〉，含那條 <code>MODEL-CONTEXT BOUNDARY</code>。橫條寬度表示容量是本文加的視覺編碼，原投影片是三欄文字表、沒有圖形。⚠ 本文先前依逐字稿寫成「只有一層有回收機制」——投影片上四層全部都有，那句是本文的推論而非講者的主張，已更正。</span>
+    <span class="notesrc"><b>Source：</b>投影片 <code>[22:24]</code>；口述段 <code>[21:51]</code>–<code>[24:24]</code>。</span>
   </figcaption>
 </figure>
 
 <div class="callout warn">
-<p>這裡有一個可見度不對稱，值得單獨記下來。上下文塞滿的症狀是<em>軟的</em>——回答開始漂、忘記前提、重複檢索，你有機會發現。記憶體與硬碟塞滿的症狀是<em>硬的</em>——程序被殺、機器掛掉，而且在它發生之前完全沒有症狀。</p>
-<p>這就解釋了為什麼只有第一層的回收被做出來：<b>軟失效會逼你去修，硬失效在它發生之前完全安靜。</b></p>
+<p><b>以下這一段是本文的推論，不是講者的主張，請分開讀。</b>投影片把四層的回收機制並列，語氣上四者地位相同。但實務上它們的成熟度差很多——壓縮（<code>L1</code>）幾乎每個 harness 都有，微調（<code>L0</code>）有成熟工具鏈，而 <code>L2</code> 的變數與閒置子代理、<code>L3</code> 的技能與記憶檔，多數系統只增不刪。</p>
+<p>一個可能的解釋是可見度不對稱：<code>L1</code> 塞滿的症狀是<em>軟的</em>——回答開始漂、忘記前提、重複檢索，你有機會發現。<code>L2</code> 與 <code>L3</code> 塞滿的症狀是<em>硬的</em>——程序被殺、機器掛掉，而且在它發生之前完全沒有症狀。軟失效會逼你去修，硬失效在它發生之前完全安靜。</p>
+<p>⚠ 這個解釋這場演講沒有給，也沒有任何讀數支持它。它是一個待驗證的猜測。</p>
 </div>
 
 <span class="kicker">【互動】</span>
 <h2>拿掉一個原語，就是拿掉一種它再也做不到的能力</h2>
 
-<p>Seth 的核心主張是：早期 harness 把流程寫死（先規劃、再執行、再自我批判），<b>而現在的模型自己就會這些</b>，那段編排已經是純負債。</p>
+<p>Seth 的核心主張是：早期 harness 把流程寫死（先規劃、再執行、再自我批判），而現在的模型自己就會這些，那段編排已經是純負債。</p>
 
-<p>但有一類東西模型無論多強都伸不到，因為那不是推理能力，是<b>權柄</b>。下面五個就是。點掉任何一個，看看它砍掉什麼。</p>
+<p>但有一類東西模型無論多強都伸不到，因為那不是推理能力，是<b>權柄</b>。投影片把它們列成五個可組合的動作。點掉任何一個，看看它砍掉什麼。</p>
 
 <div class="func-row" id="prims">
-  <button class="prim" type="button" aria-pressed="true" data-p="repl">
-    <span class="lbl">執行環境</span>
-    <span class="txt">能跑程式、把資料留在記憶體裡不進上下文。</span>
+  <button class="prim" type="button" aria-pressed="true" data-p="program">
+    <span class="lbl">program</span>
+    <span class="txt">寫程式並執行，把資料留在記憶體裡不進上下文。</span>
   </button>
-  <button class="prim" type="button" aria-pressed="true" data-p="compact">
-    <span class="lbl">壓縮</span>
-    <span class="txt">能摘要自己的對話史，繞過上下文長度上限。</span>
-  </button>
-  <button class="prim" type="button" aria-pressed="true" data-p="sub">
-    <span class="lbl">生子代理</span>
-    <span class="txt">能用程式開出子代理、分派任務、收回結果。</span>
+  <button class="prim" type="button" aria-pressed="true" data-p="subagent">
+    <span class="lbl">subagent</span>
+    <span class="txt">用程式開出子代理、分派任務、收回結果。</span>
   </button>
   <button class="prim" type="button" aria-pressed="true" data-p="state">
-    <span class="lbl">存取狀態</span>
-    <span class="txt">能讀寫外部持久狀態，關掉視窗也還在。</span>
+    <span class="lbl">state</span>
+    <span class="txt">讀寫上下文之外的持久狀態，關掉視窗也還在。</span>
   </button>
-  <button class="prim" type="button" aria-pressed="true" data-p="runtime">
-    <span class="lbl">選執行環境</span>
-    <span class="txt">能自己挑機器、挑模型、挑供應商。</span>
+  <button class="prim" type="button" aria-pressed="true" data-p="tool">
+    <span class="lbl">tool</span>
+    <span class="txt">呼叫外部服務、查資料、動檔案。</span>
+  </button>
+  <button class="prim" type="button" aria-pressed="true" data-p="feedback">
+    <span class="lbl">feedback</span>
+    <span class="txt">接不同的回饋來源，包括從環境拿回真實成敗。</span>
   </button>
 </div>
 
 <ul class="caps" id="caps">
-  <li data-need="repl">在推理中途寫程式驗證假設，再決定下一步 <span class="why">Prime Agent 在 ARC-AGI-3 上就是靠這個做影像處理與情境測試</span></li>
-  <li data-need="repl compact">處理超過上下文長度好幾倍的材料 <span class="why">大東西留在記憶體、只把結果搬進上下文</span></li>
-  <li data-need="sub">把一段任務整包外包出去，自己不必扛那段脈絡 <span class="why">子代理跑完回報，父代理的上下文乾淨</span></li>
-  <li data-need="sub state">跨天、跨週的長時程任務 <span class="why">633 個代理跑滿七天沒有卡死，靠的是狀態不在對話裡</span></li>
+  <li data-need="program">在推理中途寫程式驗證假設，再決定下一步 <span class="why">Prime Agent 在 ARC-AGI-3 上就是靠這個做影像處理與情境測試</span></li>
+  <li data-need="program state">處理超過上下文長度好幾倍的材料 <span class="why">大東西留在記憶體或磁碟，只把結果搬進上下文</span></li>
+  <li data-need="subagent">把一段任務整包外包出去，自己不必扛那段脈絡 <span class="why">子代理跑完回報，父代理的上下文乾淨</span></li>
+  <li data-need="subagent state">跨天、跨週的長時程任務 <span class="why">633 個代理跑滿七天沒有卡死，靠的是狀態不在對話裡</span></li>
   <li data-need="state">關掉筆電之後任務還在跑 <span class="why">背景常駐，要停必須明確停掉</span></li>
-  <li data-need="runtime">撞到拒答時自己換一個模型繼續 <span class="why">YC 的原話是做 AI 研究或資安時會收到一堆拒答</span></li>
-  <li data-need="runtime">重的任務抓大機器、輕的用小的 <span class="why">把這個決定推進代理裡，YC 回報效果非常好</span></li>
+  <li data-need="tool">碰得到對話之外的世界 <span class="why">查資料、動檔案、呼叫服務——這是最早被加進 harness 的一格</span></li>
+  <li data-need="feedback">從環境拿回真實成敗，而不是自己猜對不對 <span class="why">內部評估器會自我催眠，環境不會</span></li>
+  <li data-need="feedback program">改完再驗一次、驗不過再改 <span class="why">迴圈要成立，需要「能驗」與「能改」同時在手上</span></li>
 </ul>
 
-<p class="tally" id="tally">五個原語全在：七種能力全部可用。</p>
+<p class="tally" id="tally">五個原語全在：八種能力全部可用。</p>
 
 <div class="callout tip">
 <p>還有一句反直覺的：Seth 主張要故意把 harness 蓋得<em>比當前模型的能力再高一點</em>。理由不是好用，是<b>取樣</b>——只有給了模型現在還駕馭不順的權柄，你才收得到那些推理軌跡，下一代模型才有東西可學。harness 因此同時是能力層，也是資料收集層。</p>
@@ -630,7 +678,7 @@
 
 <aside class="side-cards">
   <div class="sc"><span class="lbl">關鍵前提</span><span class="txt">這整場的比較都建立在「同一組權重」上。看到 30% 變 95% 時，要記得那不是換了模型，是換了包在模型外面那一層。</span></div>
-  <div class="sc"><span class="lbl">邊界條件</span><span class="txt">所有數字都是講者自報，沒有第三方複現。Prime Agent 的 Claude Code 對照組是講者主動略過的——他自承跑過但結果不好，改引用原始成績。那是選擇性報告，不是打平。</span></div>
+  <div class="sc"><span class="lbl">邊界條件</span><span class="txt">所有數字都是講者自報，沒有第三方複現。ARC-AGI-3 那一格的 Claude Code 對照組是講者主動略過的；但長時程與 coding 那一格他有報，讀數是 6 比 3。兩格要分開讀。</span></div>
   <div class="sc ask"><span class="lbl">待驗證點</span><span class="txt">「本機落後 6 到 12 個月」與另一份獨立資料的「3 到 6 個月」衝突，兩邊都是單一來源。要拿這個數字做部署決定之前，得先自己測一次。</span></div>
 </aside>
 
@@ -649,7 +697,7 @@
 <footer>
 <p class="notesrc">
 原始影片：<a href="https://www.youtube.com/watch?v=n9xKblqyQ28">Why The Harness Matters More Than The Model | YC Paper Club</a>（Y Combinator，2026-09-07，01:00:11）。<br>
-本文依 YouTube <b>自動字幕</b>整理，非人工字幕；專有名詞的還原是推論，四處未能還原者已在文中標明。所有數字皆為講者自報、無第三方複現，引用前請回原始出處。<br>
+本文依 YouTube <b>自動字幕</b>整理，非人工字幕。<b>2026-09-10 補做畫面層</b>：抽出 128 張投影片畫面逐張比對，據此更正六處——「30%」的正確出處是 Opus 5 配 ARC 官方 harness 的 30.2% 而非裸模型；補上人類基線 95.4%；「18%」的出處是 Terminal-Bench 2 排行榜第 11 名對第 50 名；快取階層的層序、<code>L0</code> 編號與模型上下文邊界照投影片重畫，並撤回本文原先「只有一層有回收機制」那句推論；五個原語改用投影片上的官方名稱；補上 27 組比較 20 組較高的拆解。逐字稿中原本還原不出的 <code>Terra</code> 與 <code>Hermes Agent</code> 也由投影片解出。所有數字皆為講者自報、無第三方複現，引用前請回原始出處。<br>
 最後更新：2026-09-10 · CC BY 4.0 · 引用請標來源
 </p>
 </footer>
@@ -684,7 +732,7 @@
   const prims = Array.from(document.querySelectorAll('#prims .prim'));
   const caps = Array.from(document.querySelectorAll('#caps li'));
   const tally = document.getElementById('tally');
-  const NAMES = { repl: '執行環境', compact: '壓縮', sub: '生子代理', state: '存取狀態', runtime: '選執行環境' };
+  const NAMES = { program: 'program', subagent: 'subagent', state: 'state', tool: 'tool', feedback: 'feedback' };
 
   function refresh() {
     const off = prims.filter(b => b.getAttribute('aria-pressed') === 'false')
@@ -697,10 +745,10 @@
       if (gone) lost += 1;
     });
     if (off.length === 0) {
-      tally.textContent = '五個原語全在：七種能力全部可用。';
+      tally.textContent = '五個原語全在：八種能力全部可用。';
     } else {
       const names = off.map(k => NAMES[k]).join('、');
-      tally.textContent = '拿掉了「' + names + '」：七種能力少掉 ' + lost + ' 種。這不是變慢，是那幾類問題整個不可達。';
+      tally.textContent = '拿掉了 ' + names + '：八種能力少掉 ' + lost + ' 種。這不是變慢，是那幾類問題整個不可達。';
     }
   }
 
